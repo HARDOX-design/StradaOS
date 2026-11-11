@@ -19,6 +19,31 @@ go() { adb shell am start -n $ACT --es prueba "$1" >/dev/null; sleep "${2:-5}"; 
 prep() { go pista-demo 3; }   # la canción de ejemplo se vuelve a poner tras cada cambio de diseño
 adb shell am start -n $ACT --es prueba saltar >/dev/null; sleep 15
 go demo-aceite 6
+if [ "$MODO" = proyecto ]; then
+  # Imágenes del proyecto (README, tiendas, página): una de cada función, alternando oscuro y claro
+  if [ -s colombia.map ]; then
+    adb shell mkdir -p /sdcard/Download
+    adb push colombia.map /sdcard/Download/colombia.map | tail -1
+    go mapa-archivo:/sdcard/Download/colombia.map 8
+  fi
+  down() { adb shell input swipe 1300 1000 1300 250 500; sleep 2; }
+  for L in es en; do
+    go idioma:$L 8
+    if [ $L = es ]; then go unidad:kmh 4; else go unidad:auto 4; fi
+    go tema:oscuro 6; go diseno:base 6; prep; sleep 30; shot $L-1-oscuro-inicio
+    go tema:claro 6; go diseno:compacta 4; go diseno:plegar 6; prep; sleep 20; shot $L-2-claro-mapa
+    go tema:oscuro 6; go diseno:base 4; go diseno:izq 4; go diseno:sinauto 4; go diseno:lateral 6; prep; sleep 20; shot $L-3-oscuro-lateral
+    go tema:claro 6; go diseno:base 4; go diseno:izq 6; prep; sleep 20; shot $L-4-claro-izquierda
+    go diseno:base 6; go tema:oscuro 6; go ajustes:5 6; down; down; down; sleep 2; shot $L-5-oscuro-ajustes-mapa
+    go mapa-lista:south-america/ 14; shot $L-6-oscuro-descarga
+    adb shell input keyevent 4; sleep 2; adb shell input keyevent 4; sleep 2
+    go tema:claro 6; go ajustes:2 6; down; sleep 2; shot $L-7-claro-ajustes-diseno
+    adb shell input keyevent 4; sleep 2
+  done
+  kill $GEO 2>/dev/null
+  ls -l $OUT
+  exit 0
+fi
 for L in es en; do
   go idioma:$L 8
   if [ $L = es ]; then go unidad:kmh 4; else go unidad:auto 4; fi
