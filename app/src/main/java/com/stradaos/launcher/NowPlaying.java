@@ -24,7 +24,6 @@ public class NowPlaying {
         public long durationMs = -1;     // -1 = desconocido
         public long positionMs = -1;     // -1 = desconocido
         public Bitmap art;
-        public String artUri;            // dirección de la carátula si la app no manda la imagen (MediaSession)
         public boolean artSet;           // true si este aviso trae carátula (o la borra)
         public boolean clear;            // no hay nada sonando
         public String origin = "bc";     // rcc = control remoto del sistema, bt = Bluetooth, unit = apps del equipo, bc = reproductores

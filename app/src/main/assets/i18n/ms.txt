@@ -578,11 +578,3 @@ se cortó la descarga	muat turun terputus
 Sin señal GPS · mapa sin conexión	Tiada isyarat GPS · peta luar talian
 Sin señal GPS ni internet	Tiada isyarat GPS atau internet
 Sin señal GPS · última posición	Tiada isyarat GPS · kedudukan terakhir
-Carátulas	Kulit album
-Buscar carátulas en internet	Cari kulit album dalam talian
-Si la app o el Bluetooth no mandan la carátula, se busca por artista y canción (iTunes o Deezer). Solo se envían esos dos datos	Jika aplikasi atau Bluetooth tidak menghantar kulit album, ia dicari mengikut artis dan lagu (iTunes atau Deezer). Hanya dua data itu dihantar
-Carátulas de tu música guardada	Kulit album daripada muzik yang disimpan
-Permite leer la música de la pantalla o de la USB para mostrar la carátula de tus MP3	Membenarkan membaca muzik pada skrin atau pemacu USB untuk menunjukkan kulit album MP3 anda
-Borrar carátulas guardadas	Padam kulit album yang disimpan
-Si alguna salió equivocada: se vuelven a buscar	Jika ada yang salah: ia akan dicari semula
-Carátulas borradas	Kulit album dipadam

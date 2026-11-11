@@ -141,12 +141,6 @@ public class MediaWatcher {
                 if (art == null) art = m.getBitmap(MediaMetadata.METADATA_KEY_DISPLAY_ICON);
                 t.art = art;
                 t.artSet = true;
-                if (art == null) {   // algunas apps solo dan la dirección de la imagen
-                    String u = m.getString(MediaMetadata.METADATA_KEY_ALBUM_ART_URI);
-                    if (u == null) u = m.getString(MediaMetadata.METADATA_KEY_ART_URI);
-                    if (u == null) u = m.getString(MediaMetadata.METADATA_KEY_DISPLAY_ICON_URI);
-                    t.artUri = u;
-                }
             }
             PlaybackState st = current.getPlaybackState();
             if (st != null) {

@@ -578,11 +578,3 @@ se cortó la descarga	der Download wurde unterbrochen
 Sin señal GPS · mapa sin conexión	Kein GPS-Signal · Offline-Karte
 Sin señal GPS ni internet	Weder GPS-Signal noch Internet
 Sin señal GPS · última posición	Kein GPS-Signal · letzte Position
-Carátulas	Cover
-Buscar carátulas en internet	Cover im Internet suchen
-Si la app o el Bluetooth no mandan la carátula, se busca por artista y canción (iTunes o Deezer). Solo se envían esos dos datos	Wenn die App oder Bluetooth kein Cover sendet, wird es nach Künstler und Titel gesucht (iTunes oder Deezer). Nur diese zwei Angaben werden gesendet
-Carátulas de tu música guardada	Cover deiner gespeicherten Musik
-Permite leer la música de la pantalla o de la USB para mostrar la carátula de tus MP3	Erlaubt das Lesen der Musik auf dem Bildschirm oder USB-Stick, um die Cover deiner MP3s anzuzeigen
-Borrar carátulas guardadas	Gespeicherte Cover löschen
-Si alguna salió equivocada: se vuelven a buscar	Falls eines falsch ist: sie werden neu gesucht
-Carátulas borradas	Cover gelöscht

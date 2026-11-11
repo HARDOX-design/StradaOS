@@ -578,11 +578,3 @@ se cortó la descarga	the download was interrupted
 Sin señal GPS · mapa sin conexión	No GPS signal · offline map
 Sin señal GPS ni internet	No GPS signal or internet
 Sin señal GPS · última posición	No GPS signal · last position
-Carátulas	Album art
-Buscar carátulas en internet	Find album art online
-Si la app o el Bluetooth no mandan la carátula, se busca por artista y canción (iTunes o Deezer). Solo se envían esos dos datos	If the app or Bluetooth doesn't send the album art, it's looked up by artist and song (iTunes or Deezer). Only those two are sent
-Carátulas de tu música guardada	Album art from your saved music
-Permite leer la música de la pantalla o de la USB para mostrar la carátula de tus MP3	Allows reading the music on the screen or USB drive to show your MP3s' album art
-Borrar carátulas guardadas	Clear saved album art
-Si alguna salió equivocada: se vuelven a buscar	If one is wrong: they'll be looked up again
-Carátulas borradas	Album art cleared

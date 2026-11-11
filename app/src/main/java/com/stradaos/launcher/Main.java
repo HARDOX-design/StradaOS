@@ -140,9 +140,6 @@ public class Main extends Activity {
     // estado de la pista
     private String curTitle, curArtist, curSource;
     private Bitmap curArt;
-    // carátula de respaldo (ArtFinder) cuando la fuente no la manda; nunca reemplaza a curArt
-    private Bitmap foundArt;
-    private String foundKey, foundFrom, artAsked, curArtUri;
     private long durMs = -1, posBaseMs = 0, posBaseAt = 0;
     private boolean posKnown;
     private String curOrigin;
@@ -428,11 +425,6 @@ public class Main extends Activity {
 
     /** Android 6+: respuesta a la solicitud de permisos. */
     public void onRequestPermissionsResult(int req, String[] perms, int[] res) {
-        if (req == REQ_STORAGE_ART) {
-            artAsked = null; renderTrack();
-            if (settingsView != null) showSettings(6);
-            return;
-        }
         if (req == REQ_STORAGE_W) {   // con o sin permiso se sigue (sin él, el mapa se guarda en la carpeta de la app)
             h.post(new Runnable() { public void run() { chooseMapToDownload(""); } });
             return;
@@ -578,15 +570,6 @@ public class Main extends Activity {
                 else if (v.startsWith("mapa-zoom:")) { if (liveMap != null) liveMap.setZoom(Integer.parseInt(v.substring(10))); }
                 else if ("mapa-buscar".equals(v)) pickMapFile();
                 else if ("mapa-diag".equals(v)) showMapDiag();
-                else if (v.startsWith("caratula:")) {
-                    // simula una canción por Bluetooth (solo textos, sin carátula): «caratula:Artista|Título»
-                    String[] p = v.substring(9).split("\\|", 2);
-                    NowPlaying.Track t = new NowPlaying.Track();
-                    t.origin = "bt"; t.source = "Bluetooth"; t.artist = p[0]; t.title = p.length > 1 ? p[1] : p[0];
-                    t.playing = true; t.durationMs = 200000; t.positionMs = 30000;
-                    showTrack(t);
-                }
-                else if ("reproductor-diag".equals(v)) showPlayerDiag();
                 else if (v.startsWith("mapa-lista")) chooseMapToDownload(v.length() > 11 ? v.substring(11) : "");
                 else if (v.startsWith("mapa-descargar:")) { String pth = v.substring(15); MapDownload.start(Main.this, pth, pth.substring(pth.lastIndexOf('/') + 1)); }
                 else if ("mapa-pausar".equals(v)) MapDownload.stop(false);
@@ -2265,7 +2248,6 @@ public class Main extends Activity {
             curOrigin = null;
             curTitle = curArtist = curSource = null;
             curArt = null;
-            curArtUri = null;
             durMs = -1;
             posKnown = false;
             playingState = false;
@@ -2279,7 +2261,6 @@ public class Main extends Activity {
             posKnown = true;
             durMs = -1;
             if (!t.artSet) curArt = null;
-            curArtUri = null;
             // ¿La notificación de Open Headunit ya trae la carátula de esta canción?
             if (!t.artSet && NotifArt.lastArt != null && textsMatch(NotifArt.lastTexts, t.title)) {
                 curArt = NotifArt.lastArt;
@@ -2293,7 +2274,6 @@ public class Main extends Activity {
         if (t.source != null) curSource = t.source;
         if (t.durationMs > 0) durMs = t.durationMs;
         if (t.artSet) curArt = t.art;
-        if (t.artUri != null) curArtUri = t.artUri;
         long pos = currentPos();
         if (t.positionMs >= 0) { pos = t.positionMs; posKnown = true; }
         if (t.playing != null) {
@@ -2415,9 +2395,7 @@ public class Main extends Activity {
     private void showPlayerDiag() {
         String msg = "Fuente: " + curOrigin + " / " + curSource
                 + "\nPista: " + curTitle + " — " + curArtist
-                + "\nCarátula: " + (curArt != null ? "de la app (" + curArt.getWidth() + "x" + curArt.getHeight() + ")"
-                    : shownArt() != null ? "encontrada en " + foundFrom : "no")
-                + "\nBúsqueda de carátulas: " + ArtFinder.lastInfo + (prefs.getBoolean("art_online", true) ? "" : " · internet desactivado")
+                + "\nCarátula: " + (curArt != null ? curArt.getWidth() + "x" + curArt.getHeight() : "no")
                 + "\n\nLector de notificaciones (accesibilidad): " + (NotifArt.running ? "ACTIVO" : "apagado")
                 + "\nÚltima notificación de Open Headunit: " + (NotifArt.lastAt == 0 ? "ninguna"
                     : ((SystemClock.elapsedRealtime() - NotifArt.lastAt) / 1000) + " s, carátula "
@@ -2463,38 +2441,6 @@ public class Main extends Activity {
         return (sec / 60) + ":" + (sec % 60 < 10 ? "0" : "") + (sec % 60);
     }
 
-    /** Carátula que se muestra: la de la fuente; si no hay, la encontrada por ArtFinder para esta misma canción. */
-    private Bitmap shownArt() {
-        if (curArt != null) return curArt;
-        String k = ArtFinder.key(curTitle, curArtist);
-        return k != null && k.equals(foundKey) ? foundArt : null;
-    }
-
-    /** Si la fuente no mandó carátula, la busca (con una pausa, por si la fuente la manda un instante después). */
-    private void askArt() {
-        if (curArt != null || curTitle == null) return;
-        String k = ArtFinder.key(curTitle, curArtist);
-        if (k == null || k.equals(foundKey) || k.equals(artAsked)) return;
-        artAsked = k;
-        h.removeCallbacks(artLookup);
-        h.postDelayed(artLookup, 1500);
-    }
-
-    private final Runnable artLookup = new Runnable() {
-        public void run() {
-            if (curArt != null || curTitle == null) return;
-            final String want = ArtFinder.key(curTitle, curArtist);
-            if (want == null || !want.equals(artAsked)) return;
-            ArtFinder.find(Main.this, curTitle, curArtist, null, curArtUri, prefs.getBoolean("art_online", true), new ArtFinder.Callback() {
-                public void onArt(String key, Bitmap art, String from) {
-                    if (!key.equals(ArtFinder.key(curTitle, curArtist))) return;   // ya cambió la canción
-                    foundKey = key; foundArt = art; foundFrom = from;
-                    if (curArt == null) renderTrack();
-                }
-            });
-        }
-    };
-
     private void renderTrack() {
         if (trackTv == null) return;
         if (curTitle == null && curArtist == null) {
@@ -2510,8 +2456,7 @@ public class Main extends Activity {
             trackTv.setText(curTitle != null ? curTitle : (curSource != null ? I18n.t(curSource) : ""));
             artistTv.setText(aaOff ? I18n.t("Activa «Pista actual de AA» en Open Headunit") : (curArtist != null ? curArtist : ""));
             sourceTv.setText(curSource != null ? I18n.t(curSource).toUpperCase(I18n.loc) : "");
-            playerArt.setArt(shownArt());
-            if (!aaOff) askArt();
+            playerArt.setArt(curArt);
             updateProgress();
         }
         if (playIc != null) {
@@ -3676,7 +3621,7 @@ public class Main extends Activity {
             .setPositiveButton("OK", null).show();
     }
 
-    private static final int REQ_STORAGE = 79, REQ_STORAGE_W = 80, REQ_STORAGE_ART = 81;
+    private static final int REQ_STORAGE = 79, REQ_STORAGE_W = 80;
 
     /** Busca archivos .map en la memoria y en las USB, y deja elegir uno. */
     private void pickMapFile() {
@@ -3777,24 +3722,6 @@ public class Main extends Activity {
                 catch (Throwable e) { toast("No se pudo abrir el ajuste"); }
             }});
         row(c, "Diagnóstico del reproductor", "Fuente activa, lector de notificaciones y Bluetooth", null, new Runnable() { public void run() { showPlayerDiag(); } });
-        LinearLayout ca = section(body, "Carátulas");
-        toggle(ca, "Buscar carátulas en internet", "Si la app o el Bluetooth no mandan la carátula, se busca por artista y canción (iTunes o Deezer). Solo se envían esos dos datos",
-            prefs.getBoolean("art_online", true), new IntCb() { public void on(int i) {
-                prefs.edit().putBoolean("art_online", i == 1).apply();
-                artAsked = null; renderTrack(); showSettings(6);
-            }});
-        if (!ArtFinder.libraryAllowed(this)) {
-            row(ca, "Carátulas de tu música guardada", "Permite leer la música de la pantalla o de la USB para mostrar la carátula de tus MP3", "Desactivado",
-                new Runnable() { public void run() {
-                    if (SDK >= 23) requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, REQ_STORAGE_ART);
-                }});
-        }
-        row(ca, "Borrar carátulas guardadas", "Si alguna salió equivocada: se vuelven a buscar", null, new Runnable() { public void run() {
-            ArtFinder.clearCache(Main.this);
-            foundKey = null; foundArt = null; artAsked = null;
-            renderTrack();
-            toast("Carátulas borradas");
-        }});
         LinearLayout b = section(body, "Audio Bluetooth");
         row(b, "¿La música Bluetooth se corta o no aparece?", "Qué hacer en cada caso", null, new Runnable() { public void run() { btHelp(); } });
         toggle(b, "Volver al Bluetooth al desconectar Android Auto", "Al quitar el cable, abre un instante la app de música Bluetooth para que el sonido siga por Bluetooth",

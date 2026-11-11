@@ -578,11 +578,3 @@ se cortó la descarga	o download foi interrompido
 Sin señal GPS · mapa sin conexión	Sem sinal de GPS · mapa offline
 Sin señal GPS ni internet	Sem sinal de GPS nem internet
 Sin señal GPS · última posición	Sem sinal de GPS · última posição
-Carátulas	Capas
-Buscar carátulas en internet	Buscar capas na internet
-Si la app o el Bluetooth no mandan la carátula, se busca por artista y canción (iTunes o Deezer). Solo se envían esos dos datos	Se o app ou o Bluetooth não enviam a capa, ela é buscada por artista e música (iTunes ou Deezer). Só esses dois dados são enviados
-Carátulas de tu música guardada	Capas da sua música salva
-Permite leer la música de la pantalla o de la USB para mostrar la carátula de tus MP3	Permite ler a música da tela ou do pendrive para mostrar a capa dos seus MP3
-Borrar carátulas guardadas	Apagar capas salvas
-Si alguna salió equivocada: se vuelven a buscar	Se alguma saiu errada: elas são buscadas de novo
-Carátulas borradas	Capas apagadas
