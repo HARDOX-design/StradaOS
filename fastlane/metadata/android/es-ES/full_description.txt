@@ -1,15 +1,14 @@
 <p><b>StradaOS</b> le da una nueva vida a la pantalla Android de tu carro: reemplaza el menú genérico de fábrica por una pantalla de inicio moderna, sin flashear nada y sin tocar el sistema.</p>
-<p>Está pensado para las radios chinas que dicen «Android 6 o superior» pero por dentro corren Android 4.x, donde ya no funciona la Play Store y casi ninguna app se instala. También funciona en pantallas modernas.</p>
+<p>Está pensado para las radios que dicen «Android 6 o superior» pero por dentro corren Android 4.x, donde ya no funciona la Play Store y casi ninguna app se instala. También funciona en pantallas modernas.</p>
 <p><b>Funciones</b></p>
 <ul>
-<li>Pantalla de inicio con tu vehículo (foto con el fondo quitado automáticamente), velocímetro por GPS, reloj y clima.</li>
-<li>Mapa en vivo de tu ciudad con tu posición.</li>
+<li>Mapa en vivo y sin conexión: descarga el mapa de tu país desde la app y úsalo sin internet.</li>
 <li>Botones de Android Auto y CarPlay: abre la app de proyección de tu pantalla o Open Headunit.</li>
-<li>Reproductor con carátula, título, artista y progreso de lo que suene por Bluetooth o Android Auto.</li>
-<li>Barra inferior a tu medida: cada botón abre la app que quieras (con su ícono y nombre) o una función como Radio, Cámara o Android Auto. La cámara de reversa sigue funcionando.</li>
-<li>Tu app de música y de navegación preferidas (Spotify, Waze, Maps, OsmAnd…).</li>
-<li>En español, inglés, portugués, italiano y alemán.</li>
-<li>Modo oscuro, claro o automático y 10 colores de acento.</li>
-<li>Avisos de actualización desde GitHub, con código QR para descargar desde el celular.</li>
+<li>Tu música en el inicio: título, artista y tiempo de lo que suena por Bluetooth; con Android Auto, también la carátula.</li>
+<li>Velocímetro por GPS, clima, reloj, recordatorio de cambio de aceite y la foto de tu vehículo con el fondo quitado.</li>
+<li>Diseña tu inicio: reproductor a la izquierda o a la derecha, barra normal, compacta o lateral, y Android Auto y CarPlay plegables.</li>
+<li>Barra inferior a tu medida y apps ocultables. La cámara de reversa sigue funcionando.</li>
+<li>Modo oscuro, claro o automático, 10 colores y 6 idiomas.</li>
+<li>Avisos de actualización con código QR.</li>
 </ul>
-<p>Compatible desde Android 4.1. Gratis, sin anuncios y de código abierto (GPL-3.0).</p>
+<p>Compatible desde Android 4.1. Pesa menos de 1 MB. Gratis, sin anuncios y de código abierto (GPL-3.0).</p>
