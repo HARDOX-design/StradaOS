@@ -1019,7 +1019,7 @@ public class Main extends Activity {
     private float fromUnit(float v) { return useMph() ? v / 0.621371f : v; }
     private String unit() { return useMph() ? "mi" : "km"; }
     private String fmtDist(float km) {
-        return java.text.NumberFormat.getIntegerInstance(I18n.loc).format(Math.round(toUnit(km))) + " " + unit();
+        return I18n.integer(Math.round(toUnit(km))) + " " + unit();
     }
 
     /** Distancia medida por el GPS (también con StradaOS detrás de otras apps). */
@@ -2086,8 +2086,8 @@ public class Main extends Activity {
         Date now = new Date();
         String fmt = prefs.getString("clock", "auto");
         boolean h24 = "24".equals(fmt) || ("auto".equals(fmt) && android.text.format.DateFormat.is24HourFormat(this));
-        timeTv.setText(new SimpleDateFormat(h24 ? "HH:mm" : "h:mm a", I18n.loc).format(now));
-        String d = new SimpleDateFormat(I18n.datePattern(), I18n.loc).format(now);
+        timeTv.setText(I18n.sdf(h24 ? "HH:mm" : "h:mm a").format(now));
+        String d = I18n.sdf(I18n.datePattern()).format(now);
         dateTv.setText(d.substring(0, 1).toUpperCase(I18n.loc) + d.substring(1));
         int hr = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         String saludo = I18n.t(hr >= 5 && hr < 12 ? "Buenos días" : (hr >= 12 && hr < 19 ? "Buenas tardes" : "Buenas noches"));
@@ -2660,7 +2660,7 @@ public class Main extends Activity {
         }
     }
 
-    /** Cambia el idioma («auto», «es», «en», «pt», «it», «de», «ms») y reconstruye la pantalla. */
+    /** Cambia el idioma («auto», «es», «en», «pt», «it», «de», «ms», «ar») y reconstruye la pantalla. */
     private void setLanguage(String code) {
         prefs.edit().putString("lang", code).apply();
         I18n.set(this, "auto".equals(code) ? I18n.system() : code);
@@ -2671,7 +2671,7 @@ public class Main extends Activity {
     private void wizard() {
         int sel = Math.max(0, java.util.Arrays.asList(I18n.CODES).indexOf(I18n.lang));
         wizardDlg = new android.app.AlertDialog.Builder(this, dlg())
-            .setTitle("Idioma · Language · Lingua · Sprache · Bahasa")
+            .setTitle("Idioma · Language · Lingua · Sprache · Bahasa · اللغة")
             .setSingleChoiceItems(I18n.NAMES, sel, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface d, int w) {
                     d.dismiss();
@@ -3565,7 +3565,7 @@ public class Main extends Activity {
 
     private void showMapList(final String folder, final java.util.List<MapDownload.Entry> list) {
         String[] items = new String[list.size()];
-        java.text.DateFormat df = java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT, I18n.loc);
+        java.text.DateFormat df = I18n.latin(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT, I18n.loc));
         for (int i = 0; i < items.length; i++) {
             MapDownload.Entry e = list.get(i);
             if (e.dir) items[i] = e.name + (folder.length() > 0 ? "  ·  " + I18n.t("por regiones") : "") + "  ›";
