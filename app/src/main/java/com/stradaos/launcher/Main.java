@@ -1716,7 +1716,6 @@ public class Main extends Activity {
         panelWxDesc.setText(I18n.t(Weather.describe(n.code)));
         Weather.Day d = n.today();
         String hl = d != null ? I18n.t("Máx " + deg(d.hi) + " · Mín " + deg(d.lo)) : (n.city != null ? n.city : "");
-        if (d != null && d.rain > 0 && panelWxHours != null) hl += " · " + I18n.t("Lluvia " + I18n.integer(d.rain) + "%");
         panelWxHiLo.setText(hl);
         if (panelWxHours != null) {
             panelWxHours.removeAllViews();
