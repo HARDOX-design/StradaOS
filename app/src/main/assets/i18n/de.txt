@@ -578,3 +578,70 @@ se cortó la descarga	der Download wurde unterbrochen
 Sin señal GPS · mapa sin conexión	Kein GPS-Signal · Offline-Karte
 Sin señal GPS ni internet	Weder GPS-Signal noch Internet
 Sin señal GPS · última posición	Kein GPS-Signal · letzte Position
+# 2.17: tema por horario o del sistema, íconos de Wi-Fi y Bluetooth, barra, diagnóstico del mapa
+Automático: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)	Automatisch: nach Uhrzeit. System: folgt dem Dunkelmodus des Bildschirms (manche schalten ihn mit dem Licht um)
+Oscuro desde	Dunkel ab
+Claro desde	Hell ab
+Íconos de Wi-Fi y Bluetooth	WLAN- und Bluetooth-Symbole
+Arriba, junto al clima. Toca para encender o apagar; déjalo presionado para abrir sus ajustes	Oben, neben dem Wetter. Tippen zum Ein- oder Ausschalten; gedrückt halten öffnet die Einstellungen
+¿Apagar el Wi-Fi?	WLAN ausschalten?
+La pantalla se queda sin internet (mapa en vivo, clima y actualizaciones).	Der Bildschirm hat dann kein Internet (Live-Karte, Wetter und Updates).
+Apagar	Ausschalten
+Esta pantalla no deja cambiar el Wi-Fi desde otra app: abre sus ajustes	Dieser Bildschirm lässt andere Apps das WLAN nicht ändern: Einstellungen werden geöffnet
+Encendiendo el Wi-Fi…	WLAN wird eingeschaltet…
+Wi-Fi apagado	WLAN aus
+¿Apagar el Bluetooth?	Bluetooth ausschalten?
+Se desconecta el celular (música y llamadas).	Das Handy wird getrennt (Musik und Anrufe).
+Esta pantalla no deja cambiar el Bluetooth desde otra app: abre sus ajustes	Dieser Bildschirm lässt andere Apps Bluetooth nicht ändern: Einstellungen werden geöffnet
+Encendiendo el Bluetooth…	Bluetooth wird eingeschaltet…
+Bluetooth apagado	Bluetooth aus
+Lado de la barra lateral	Seite der Seitenleiste
+Automático: del lado del reproductor	Automatisch: auf der Seite des Players
+Nombres de los botones	Namen der Tasten
+Debajo de cada ícono de la barra	Unter jedem Symbol der Leiste
+Permiso de ubicación: {}	Standortberechtigung: {}
+NO (toca el letrero del mapa)	NEIN (tippe auf das Kartenschild)
+sí	ja
+GPS del equipo: {} · ubicación por red: {}	GPS des Geräts: {} · Netzwerkortung: {}
+no encontrado	nicht gefunden
+encendido	an
+apagado	aus
+encendida	an
+apagada	aus
+Última señal: {}	Letztes Signal: {}
+ninguna desde que abrió StradaOS	keins seit dem Start von StradaOS
+hace {} s	vor {} s
+hace {} min	vor {} min
+Buscando desde hace {} min	Suche seit {} min
+Posición: {}	Position: {}
+sin GPS	kein GPS
+Zoom: {}	Zoom: {}
+Mapa sin conexión: {}	Offline-Karte: {}
+ninguno	keine
+error: {}	Fehler: {}
+{} · en uso	{} · in Verwendung
+{} · fuera del área del archivo	{} · außerhalb des Dateibereichs
+Teselas dibujadas desde el archivo: {} · {} ms cada una	Aus der Datei gezeichnete Kacheln: {} · je {} ms
+Proveedor: {}	Anbieter: {}
+{} · ninguna fuente respondió ({} vueltas)	{} · keine Quelle antwortete ({} Runden)
+Teselas descargadas: {} · en caché: {}	Heruntergeladene Kacheln: {} · im Cache: {}
+Errores seguidos: {}	Fehler in Folge: {}
+Último error: {}	Letzter Fehler: {}
+Fuentes probadas:	Getestete Quellen:
+• {}: {}	• {}: {}
+sin probar	nicht getestet
+certificado	Zertifikat
+OSM Alemania	OSM Deutschland
+OSM Francia	OSM Frankreich
+OSM Humanitario	OSM Humanitär
+Esri gris oscuro	Esri dunkelgrau
+sin iniciar	nicht gestartet
+TLS listo ({}), {} raíces	TLS bereit ({}), {} Wurzeln
+TLS listo ({}), {} raíces, {} omitidas	TLS bereit ({}), {} Wurzeln, {} übersprungen
+TLS no disponible: {}	TLS nicht verfügbar: {}
+Íconos de Wi-Fi y Bluetooth arriba	WLAN- und Bluetooth-Symbole oben
+Bluetooth: estado del celular desde la app de fábrica; toca para abrirla	Bluetooth: Handystatus aus der Werks-App; tippen öffnet sie
+Tema según el modo oscuro del sistema	Design nach dem Dunkelmodus des Systems
+Pantallas que lo cambian (p. ej. con las luces)	Bildschirme, die ihn umschalten (z. B. mit dem Licht)
+el sistema está en modo oscuro	das System ist im Dunkelmodus
+el sistema está en modo claro	das System ist im Hellmodus

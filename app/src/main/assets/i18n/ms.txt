@@ -578,3 +578,70 @@ se cortó la descarga	muat turun terputus
 Sin señal GPS · mapa sin conexión	Tiada isyarat GPS · peta luar talian
 Sin señal GPS ni internet	Tiada isyarat GPS atau internet
 Sin señal GPS · última posición	Tiada isyarat GPS · kedudukan terakhir
+# 2.17: tema por horario o del sistema, íconos de Wi-Fi y Bluetooth, barra, diagnóstico del mapa
+Automático: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)	Automatik: ikut jadual. Sistem: ikut mod gelap skrin (sesetengah skrin menukarnya apabila lampu dinyalakan)
+Oscuro desde	Gelap dari
+Claro desde	Cerah dari
+Íconos de Wi-Fi y Bluetooth	Ikon Wi-Fi dan Bluetooth
+Arriba, junto al clima. Toca para encender o apagar; déjalo presionado para abrir sus ajustes	Di atas, di sebelah cuaca. Ketik untuk hidup atau matikan; tekan lama untuk buka tetapannya
+¿Apagar el Wi-Fi?	Matikan Wi-Fi?
+La pantalla se queda sin internet (mapa en vivo, clima y actualizaciones).	Skrin akan hilang internet (peta langsung, cuaca dan kemas kini).
+Apagar	Matikan
+Esta pantalla no deja cambiar el Wi-Fi desde otra app: abre sus ajustes	Skrin ini tidak benarkan aplikasi lain menukar Wi-Fi: membuka tetapannya
+Encendiendo el Wi-Fi…	Menghidupkan Wi-Fi…
+Wi-Fi apagado	Wi-Fi dimatikan
+¿Apagar el Bluetooth?	Matikan Bluetooth?
+Se desconecta el celular (música y llamadas).	Telefon akan terputus (muzik dan panggilan).
+Esta pantalla no deja cambiar el Bluetooth desde otra app: abre sus ajustes	Skrin ini tidak benarkan aplikasi lain menukar Bluetooth: membuka tetapannya
+Encendiendo el Bluetooth…	Menghidupkan Bluetooth…
+Bluetooth apagado	Bluetooth dimatikan
+Lado de la barra lateral	Kedudukan bar sisi
+Automático: del lado del reproductor	Automatik: di sebelah pemain muzik
+Nombres de los botones	Nama butang
+Debajo de cada ícono de la barra	Di bawah setiap ikon bar
+Permiso de ubicación: {}	Kebenaran lokasi: {}
+NO (toca el letrero del mapa)	TIDAK (ketik label peta)
+sí	ya
+GPS del equipo: {} · ubicación por red: {}	GPS unit: {} · lokasi rangkaian: {}
+no encontrado	tidak dijumpai
+encendido	hidup
+apagado	mati
+encendida	hidup
+apagada	mati
+Última señal: {}	Isyarat terakhir: {}
+ninguna desde que abrió StradaOS	tiada sejak StradaOS dibuka
+hace {} s	{} s lalu
+hace {} min	{} min lalu
+Buscando desde hace {} min	Mencari sejak {} min
+Posición: {}	Kedudukan: {}
+sin GPS	tiada GPS
+Zoom: {}	Zum: {}
+Mapa sin conexión: {}	Peta luar talian: {}
+ninguno	tiada
+error: {}	ralat: {}
+{} · en uso	{} · sedang digunakan
+{} · fuera del área del archivo	{} · di luar kawasan fail
+Teselas dibujadas desde el archivo: {} · {} ms cada una	Jubin dilukis daripada fail: {} · {} ms setiap satu
+Proveedor: {}	Pembekal: {}
+{} · ninguna fuente respondió ({} vueltas)	{} · tiada sumber menjawab ({} pusingan)
+Teselas descargadas: {} · en caché: {}	Jubin dimuat turun: {} · dalam cache: {}
+Errores seguidos: {}	Ralat berturut-turut: {}
+Último error: {}	Ralat terakhir: {}
+Fuentes probadas:	Sumber dicuba:
+• {}: {}	• {}: {}
+sin probar	belum dicuba
+certificado	sijil
+OSM Alemania	OSM Jerman
+OSM Francia	OSM Perancis
+OSM Humanitario	OSM Kemanusiaan
+Esri gris oscuro	Esri kelabu gelap
+sin iniciar	belum bermula
+TLS listo ({}), {} raíces	TLS sedia ({}), {} akar
+TLS listo ({}), {} raíces, {} omitidas	TLS sedia ({}), {} akar, {} dilangkau
+TLS no disponible: {}	TLS tidak tersedia: {}
+Íconos de Wi-Fi y Bluetooth arriba	Ikon Wi-Fi dan Bluetooth di atas
+Bluetooth: estado del celular desde la app de fábrica; toca para abrirla	Bluetooth: status telefon daripada aplikasi kilang; ketik untuk membukanya
+Tema según el modo oscuro del sistema	Tema ikut mod gelap sistem
+Pantallas que lo cambian (p. ej. con las luces)	Skrin yang menukarnya (cth. dengan lampu)
+el sistema está en modo oscuro	sistem dalam mod gelap
+el sistema está en modo claro	sistem dalam mod cerah

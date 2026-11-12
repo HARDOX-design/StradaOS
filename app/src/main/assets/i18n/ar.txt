@@ -578,11 +578,70 @@ se cortó la descarga	انقطع التنزيل
 Sin señal GPS · mapa sin conexión	لا توجد إشارة GPS · خريطة بلا اتصال
 Sin señal GPS ni internet	لا توجد إشارة GPS ولا إنترنت
 Sin señal GPS · última posición	لا توجد إشارة GPS · آخر موقع
-Carátulas	أغلفة الألبومات
-Buscar carátulas en internet	البحث عن الأغلفة على الإنترنت
-Si la app o el Bluetooth no mandan la carátula, se busca por artista y canción (iTunes o Deezer). Solo se envían esos dos datos	إذا لم يرسل التطبيق أو البلوتوث غلاف الألبوم، يُبحث عنه بالفنان والأغنية (iTunes أو Deezer). تُرسل هاتان المعلومتان فقط
-Carátulas de tu música guardada	أغلفة موسيقاك المحفوظة
-Permite leer la música de la pantalla o de la USB para mostrar la carátula de tus MP3	يسمح بقراءة الموسيقى في الشاشة أو على ذاكرة USB لعرض أغلفة ملفات MP3 لديك
-Borrar carátulas guardadas	مسح الأغلفة المحفوظة
-Si alguna salió equivocada: se vuelven a buscar	إذا ظهر غلاف خاطئ: سيُعاد البحث عنها
-Carátulas borradas	تم مسح الأغلفة
+# 2.17: tema por horario o del sistema, íconos de Wi-Fi y Bluetooth, barra, diagnóstico del mapa
+Automático: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)	تلقائي: حسب الجدول. النظام: يتبع الوضع الداكن للشاشة (بعض الشاشات تغيّره عند تشغيل الأضواء)
+Oscuro desde	داكن من
+Claro desde	فاتح من
+Íconos de Wi-Fi y Bluetooth	أيقونات Wi-Fi وبلوتوث
+Arriba, junto al clima. Toca para encender o apagar; déjalo presionado para abrir sus ajustes	في الأعلى بجانب الطقس. المس للتشغيل أو الإيقاف؛ اضغط مطولًا لفتح الإعدادات
+¿Apagar el Wi-Fi?	إيقاف Wi-Fi؟
+La pantalla se queda sin internet (mapa en vivo, clima y actualizaciones).	ستفقد الشاشة الاتصال بالإنترنت (الخريطة المباشرة والطقس والتحديثات).
+Apagar	إيقاف
+Esta pantalla no deja cambiar el Wi-Fi desde otra app: abre sus ajustes	هذه الشاشة لا تسمح لتطبيق آخر بتغيير Wi-Fi: سيتم فتح الإعدادات
+Encendiendo el Wi-Fi…	جارٍ تشغيل Wi-Fi…
+Wi-Fi apagado	تم إيقاف Wi-Fi
+¿Apagar el Bluetooth?	إيقاف البلوتوث؟
+Se desconecta el celular (música y llamadas).	سينقطع اتصال الهاتف (الموسيقى والمكالمات).
+Esta pantalla no deja cambiar el Bluetooth desde otra app: abre sus ajustes	هذه الشاشة لا تسمح لتطبيق آخر بتغيير البلوتوث: سيتم فتح الإعدادات
+Encendiendo el Bluetooth…	جارٍ تشغيل البلوتوث…
+Bluetooth apagado	تم إيقاف البلوتوث
+Lado de la barra lateral	جانب الشريط الجانبي
+Automático: del lado del reproductor	تلقائي: في جهة المشغّل
+Nombres de los botones	أسماء الأزرار
+Debajo de cada ícono de la barra	أسفل كل أيقونة في الشريط
+Permiso de ubicación: {}	إذن الموقع: {}
+NO (toca el letrero del mapa)	لا (المس لافتة الخريطة)
+sí	نعم
+GPS del equipo: {} · ubicación por red: {}	GPS الجهاز: {} · الموقع عبر الشبكة: {}
+no encontrado	غير موجود
+encendido	مُشغّل
+apagado	متوقف
+encendida	مُشغّلة
+apagada	متوقفة
+Última señal: {}	آخر إشارة: {}
+ninguna desde que abrió StradaOS	لا شيء منذ فتح StradaOS
+hace {} s	منذ {} ث
+hace {} min	منذ {} د
+Buscando desde hace {} min	البحث منذ {} د
+Posición: {}	الموقع: {}
+sin GPS	بدون GPS
+Zoom: {}	التكبير: {}
+Mapa sin conexión: {}	الخريطة دون اتصال: {}
+ninguno	لا يوجد
+error: {}	خطأ: {}
+{} · en uso	{} · قيد الاستخدام
+{} · fuera del área del archivo	{} · خارج منطقة الملف
+Teselas dibujadas desde el archivo: {} · {} ms cada una	مربعات مرسومة من الملف: {} · {} مللي ث لكل منها
+Proveedor: {}	المزوّد: {}
+{} · ninguna fuente respondió ({} vueltas)	{} · لم يستجب أي مصدر ({} جولات)
+Teselas descargadas: {} · en caché: {}	مربعات تم تنزيلها: {} · في الذاكرة المؤقتة: {}
+Errores seguidos: {}	أخطاء متتالية: {}
+Último error: {}	آخر خطأ: {}
+Fuentes probadas:	المصادر المجرّبة:
+• {}: {}	• {}: {}
+sin probar	لم يُجرَّب
+certificado	الشهادة
+OSM Alemania	OSM ألمانيا
+OSM Francia	OSM فرنسا
+OSM Humanitario	OSM الإنساني
+Esri gris oscuro	Esri رمادي داكن
+sin iniciar	لم يبدأ
+TLS listo ({}), {} raíces	TLS جاهز ({})، {} جذور
+TLS listo ({}), {} raíces, {} omitidas	TLS جاهز ({})، {} جذور، {} مُتجاهلة
+TLS no disponible: {}	TLS غير متاح: {}
+Íconos de Wi-Fi y Bluetooth arriba	أيقونات Wi-Fi والبلوتوث في الأعلى
+Bluetooth: estado del celular desde la app de fábrica; toca para abrirla	البلوتوث: حالة الهاتف من تطبيق المصنع؛ المس لفتحه
+Tema según el modo oscuro del sistema	سمة تتبع الوضع الداكن للنظام
+Pantallas que lo cambian (p. ej. con las luces)	الشاشات التي تغيّره (مثلًا مع الأضواء)
+el sistema está en modo oscuro	النظام في الوضع الداكن
+el sistema está en modo claro	النظام في الوضع الفاتح

@@ -3206,7 +3206,7 @@ public class Main extends Activity {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.HOUR_OF_DAY, m / 60);
         c.set(Calendar.MINUTE, m % 60);
-        return new SimpleDateFormat(h24 ? "HH:mm" : "h:mm a", I18n.loc).format(c.getTime());
+        return I18n.sdf(h24 ? "HH:mm" : "h:mm a").format(c.getTime());
     }
 
     private void askDarkTime(final String key, int def, String title) {
@@ -4059,6 +4059,9 @@ public class Main extends Activity {
         compatLine(b, "CarPlay", "Pantalla con CarPlay o adaptador USB", carPlayApp() != null, carPlayApp() != null ? labelOf(carPlayApp()) : "no detectado");
         compatLine(b, "Mapa con internet seguro (TLS 1.2)", "Android 4.1+ (StradaOS lo activa)", true, SDK < 20 ? "en Android 4.x solo algunos servidores de mapas responden" : null);
         compatLine(b, "Instalar actualizaciones desde la app", "Android 4.1+", true, SDK >= 26 ? "pide permiso «Instalar apps desconocidas»" : null);
+        compatLine(b, "Íconos de Wi-Fi y Bluetooth arriba", "Android 4.1+", true, clwBt ? "Bluetooth: estado del celular desde la app de fábrica; toca para abrirla" : null);
+        compatLine(b, "Tema según el modo oscuro del sistema", "Pantallas que lo cambian (p. ej. con las luces)", true,
+            systemNight() ? "el sistema está en modo oscuro" : "el sistema está en modo claro");
         new TB(this, dlg()).setTitle("Compatibilidad").setMessage(b.toString().trim()).setPositiveButton("OK", null).show();
     }
 

@@ -578,3 +578,70 @@ se cortó la descarga	il download si è interrotto
 Sin señal GPS · mapa sin conexión	Nessun segnale GPS · mappa offline
 Sin señal GPS ni internet	Nessun segnale GPS né internet
 Sin señal GPS · última posición	Nessun segnale GPS · ultima posizione
+# 2.17: tema por horario o del sistema, íconos de Wi-Fi y Bluetooth, barra, diagnóstico del mapa
+Automático: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)	Automatico: a orario. Sistema: segue la modalità scura dello schermo (alcuni la attivano accendendo i fari)
+Oscuro desde	Scuro dalle
+Claro desde	Chiaro dalle
+Íconos de Wi-Fi y Bluetooth	Icone Wi-Fi e Bluetooth
+Arriba, junto al clima. Toca para encender o apagar; déjalo presionado para abrir sus ajustes	In alto, accanto al meteo. Tocca per accendere o spegnere; tieni premuto per aprire le impostazioni
+¿Apagar el Wi-Fi?	Spegnere il Wi-Fi?
+La pantalla se queda sin internet (mapa en vivo, clima y actualizaciones).	Lo schermo resta senza internet (mappa dal vivo, meteo e aggiornamenti).
+Apagar	Spegni
+Esta pantalla no deja cambiar el Wi-Fi desde otra app: abre sus ajustes	Questo schermo non permette ad altre app di cambiare il Wi-Fi: apro le impostazioni
+Encendiendo el Wi-Fi…	Accensione del Wi-Fi…
+Wi-Fi apagado	Wi-Fi spento
+¿Apagar el Bluetooth?	Spegnere il Bluetooth?
+Se desconecta el celular (música y llamadas).	Il telefono si disconnette (musica e chiamate).
+Esta pantalla no deja cambiar el Bluetooth desde otra app: abre sus ajustes	Questo schermo non permette ad altre app di cambiare il Bluetooth: apro le impostazioni
+Encendiendo el Bluetooth…	Accensione del Bluetooth…
+Bluetooth apagado	Bluetooth spento
+Lado de la barra lateral	Lato della barra laterale
+Automático: del lado del reproductor	Automatico: dal lato del lettore
+Nombres de los botones	Nomi dei pulsanti
+Debajo de cada ícono de la barra	Sotto ogni icona della barra
+Permiso de ubicación: {}	Permesso di posizione: {}
+NO (toca el letrero del mapa)	NO (tocca l'etichetta della mappa)
+sí	sì
+GPS del equipo: {} · ubicación por red: {}	GPS del dispositivo: {} · posizione da rete: {}
+no encontrado	non trovato
+encendido	acceso
+apagado	spento
+encendida	accesa
+apagada	spenta
+Última señal: {}	Ultimo segnale: {}
+ninguna desde que abrió StradaOS	nessuno da quando si è aperto StradaOS
+hace {} s	{} s fa
+hace {} min	{} min fa
+Buscando desde hace {} min	In ricerca da {} min
+Posición: {}	Posizione: {}
+sin GPS	senza GPS
+Zoom: {}	Zoom: {}
+Mapa sin conexión: {}	Mappa offline: {}
+ninguno	nessuno
+error: {}	errore: {}
+{} · en uso	{} · in uso
+{} · fuera del área del archivo	{} · fuori dall'area del file
+Teselas dibujadas desde el archivo: {} · {} ms cada una	Tessere disegnate dal file: {} · {} ms ciascuna
+Proveedor: {}	Fornitore: {}
+{} · ninguna fuente respondió ({} vueltas)	{} · nessuna fonte ha risposto ({} giri)
+Teselas descargadas: {} · en caché: {}	Tessere scaricate: {} · in cache: {}
+Errores seguidos: {}	Errori consecutivi: {}
+Último error: {}	Ultimo errore: {}
+Fuentes probadas:	Fonti provate:
+• {}: {}	• {}: {}
+sin probar	non provata
+certificado	certificato
+OSM Alemania	OSM Germania
+OSM Francia	OSM Francia
+OSM Humanitario	OSM Umanitario
+Esri gris oscuro	Esri grigio scuro
+sin iniciar	non avviato
+TLS listo ({}), {} raíces	TLS pronto ({}), {} radici
+TLS listo ({}), {} raíces, {} omitidas	TLS pronto ({}), {} radici, {} omesse
+TLS no disponible: {}	TLS non disponibile: {}
+Íconos de Wi-Fi y Bluetooth arriba	Icone Wi-Fi e Bluetooth in alto
+Bluetooth: estado del celular desde la app de fábrica; toca para abrirla	Bluetooth: stato del telefono dall'app di fabbrica; tocca per aprirla
+Tema según el modo oscuro del sistema	Tema secondo la modalità scura del sistema
+Pantallas que lo cambian (p. ej. con las luces)	Schermi che lo cambiano (es. con i fari)
+el sistema está en modo oscuro	il sistema è in modalità scura
+el sistema está en modo claro	il sistema è in modalità chiara

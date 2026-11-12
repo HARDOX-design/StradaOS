@@ -578,3 +578,70 @@ se cortó la descarga	o download foi interrompido
 Sin señal GPS · mapa sin conexión	Sem sinal de GPS · mapa offline
 Sin señal GPS ni internet	Sem sinal de GPS nem internet
 Sin señal GPS · última posición	Sem sinal de GPS · última posição
+# 2.17: tema por horario o del sistema, íconos de Wi-Fi y Bluetooth, barra, diagnóstico del mapa
+Automático: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)	Automático: por horário. Sistema: segue o modo escuro da tela (algumas mudam ao acender os faróis)
+Oscuro desde	Escuro a partir de
+Claro desde	Claro a partir de
+Íconos de Wi-Fi y Bluetooth	Ícones de Wi-Fi e Bluetooth
+Arriba, junto al clima. Toca para encender o apagar; déjalo presionado para abrir sus ajustes	No topo, ao lado do clima. Toque para ligar ou desligar; mantenha pressionado para abrir os ajustes
+¿Apagar el Wi-Fi?	Desligar o Wi-Fi?
+La pantalla se queda sin internet (mapa en vivo, clima y actualizaciones).	A tela fica sem internet (mapa ao vivo, clima e atualizações).
+Apagar	Desligar
+Esta pantalla no deja cambiar el Wi-Fi desde otra app: abre sus ajustes	Esta tela não deixa outro app mudar o Wi-Fi: abrindo os ajustes
+Encendiendo el Wi-Fi…	Ligando o Wi-Fi…
+Wi-Fi apagado	Wi-Fi desligado
+¿Apagar el Bluetooth?	Desligar o Bluetooth?
+Se desconecta el celular (música y llamadas).	O celular será desconectado (música e chamadas).
+Esta pantalla no deja cambiar el Bluetooth desde otra app: abre sus ajustes	Esta tela não deixa outro app mudar o Bluetooth: abrindo os ajustes
+Encendiendo el Bluetooth…	Ligando o Bluetooth…
+Bluetooth apagado	Bluetooth desligado
+Lado de la barra lateral	Lado da barra lateral
+Automático: del lado del reproductor	Automático: do lado do player
+Nombres de los botones	Nomes dos botões
+Debajo de cada ícono de la barra	Embaixo de cada ícone da barra
+Permiso de ubicación: {}	Permissão de localização: {}
+NO (toca el letrero del mapa)	NÃO (toque no aviso do mapa)
+sí	sim
+GPS del equipo: {} · ubicación por red: {}	GPS do aparelho: {} · localização por rede: {}
+no encontrado	não encontrado
+encendido	ligado
+apagado	desligado
+encendida	ligada
+apagada	desligada
+Última señal: {}	Último sinal: {}
+ninguna desde que abrió StradaOS	nenhum desde que o StradaOS abriu
+hace {} s	há {} s
+hace {} min	há {} min
+Buscando desde hace {} min	Procurando há {} min
+Posición: {}	Posição: {}
+sin GPS	sem GPS
+Zoom: {}	Zoom: {}
+Mapa sin conexión: {}	Mapa offline: {}
+ninguno	nenhum
+error: {}	erro: {}
+{} · en uso	{} · em uso
+{} · fuera del área del archivo	{} · fora da área do arquivo
+Teselas dibujadas desde el archivo: {} · {} ms cada una	Blocos desenhados do arquivo: {} · {} ms cada
+Proveedor: {}	Provedor: {}
+{} · ninguna fuente respondió ({} vueltas)	{} · nenhuma fonte respondeu ({} voltas)
+Teselas descargadas: {} · en caché: {}	Blocos baixados: {} · em cache: {}
+Errores seguidos: {}	Erros seguidos: {}
+Último error: {}	Último erro: {}
+Fuentes probadas:	Fontes testadas:
+• {}: {}	• {}: {}
+sin probar	não testada
+certificado	certificado
+OSM Alemania	OSM Alemanha
+OSM Francia	OSM França
+OSM Humanitario	OSM Humanitário
+Esri gris oscuro	Esri cinza escuro
+sin iniciar	não iniciado
+TLS listo ({}), {} raíces	TLS pronto ({}), {} raízes
+TLS listo ({}), {} raíces, {} omitidas	TLS pronto ({}), {} raízes, {} omitidas
+TLS no disponible: {}	TLS indisponível: {}
+Íconos de Wi-Fi y Bluetooth arriba	Ícones de Wi-Fi e Bluetooth no topo
+Bluetooth: estado del celular desde la app de fábrica; toca para abrirla	Bluetooth: estado do celular pelo app de fábrica; toque para abri-lo
+Tema según el modo oscuro del sistema	Tema conforme o modo escuro do sistema
+Pantallas que lo cambian (p. ej. con las luces)	Telas que o mudam (ex.: com os faróis)
+el sistema está en modo oscuro	o sistema está no modo escuro
+el sistema está en modo claro	o sistema está no modo claro
