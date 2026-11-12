@@ -1114,7 +1114,11 @@ public class Main extends Activity {
         Bitmap photo = CarPhoto.load(this);
         if (photo != null) {
             ImageView car = new ImageView(this);
-            car.setImageBitmap(photo);
+            // 2.18: una foto con fondo (sin recortar) llena el recuadro con esquinas redondas; la recortada, como siempre
+            boolean cutout = false;
+            try { cutout = CarPhoto.hasTransparency(photo); } catch (Throwable ignored) { }
+            if (cutout) car.setImageBitmap(photo);
+            else car.setImageBitmap(CarPhoto.cardCrop(photo, (int) (264 * s), (int) ((160 + dy) * s), 16 * s));
             car.setScaleType(ImageView.ScaleType.FIT_CENTER);
             place(card, car, 18, 78, 264, 160 + dy);
             car.setOnLongClickListener(new View.OnLongClickListener() {
@@ -1129,8 +1133,11 @@ public class Main extends Activity {
             ic.setAlpha(0.35f);
             ph.addView(ic, new LinearLayout.LayoutParams((int) (72 * s), (int) (72 * s)));
             TextView t = tv("Toca para poner la foto de tu vehículo", 12, MUTED, false);
-            t.setPadding(0, (int) (6 * s), 0, 0);
-            ph.addView(t);
+            t.setSingleLine(false);   // con fuentes anchas (Samsung) se salía por la izquierda
+            t.setMaxLines(2);
+            t.setGravity(Gravity.CENTER);
+            t.setPadding((int) (12 * s), (int) (6 * s), (int) (12 * s), 0);
+            ph.addView(t, new LinearLayout.LayoutParams(-1, -2));
             place(card, ph, 18, 82, 264, 152 + dy);
             ph.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) { pickPhoto(); }
@@ -3271,35 +3278,39 @@ public class Main extends Activity {
     }
 
     private void processPhoto(final CarPhoto.Opener opener) {
-        final ProgressDialogLite pd = new ProgressDialogLite("Quitando el fondo…");
+        // 2.18 (Andrés): ya no se quita el fondo solo; la foto se usa tal cual (derecha) y quitarlo es opcional
+        final ProgressDialogLite pd = new ProgressDialogLite("Abriendo la foto…");
         new Thread(new Runnable() {
             public void run() {
-                Bitmap src = null, cut = null;
+                Bitmap src = null;
                 String err = null;
                 boolean already = false;
                 try {
                     src = CarPhoto.decode(opener);
                     already = CarPhoto.hasTransparency(src);
-                    cut = already ? src : CarPhoto.removeBackground(src, 1);
                 } catch (Throwable e) {
                     err = e.getMessage();
                 }
-                final Bitmap fsrc = src, fcut = cut;
+                final Bitmap fsrc = src;
                 final String ferr = err;
                 final boolean falready = already;
                 runOnUiThread(new Runnable() {
                     public void run() {
                         pd.dismiss();
                         if (fsrc == null) { toast("No se pudo abrir la imagen" + (ferr != null ? ": " + ferr : "")); return; }
-                        previewPhoto(fsrc, fcut, 1, falready);
+                        previewPhoto(fsrc, null, 0, falready);
                     }
                 });
             }
         }).start();
     }
 
-    private void previewPhoto(final Bitmap src, final Bitmap cut, final int strength, boolean already) {
-        final Bitmap shown = CarPhoto.fitToCard(cut != null ? cut : src);
+    /**
+     * Vista previa de la foto. Sin recortar: se guarda tal cual (achicada). «Quitar el fondo» es opcional y se puede
+     * repetir con más fuerza; «Usar la foto original» vuelve a la foto completa.
+     */
+    private void previewPhoto(final Bitmap src, final Bitmap cut, final int strength, final boolean already) {
+        final Bitmap shown = cut != null ? CarPhoto.fitToCard(cut) : already ? CarPhoto.fitToCard(src) : CarPhoto.scaled(src, 900);
         FrameLayout box = new FrameLayout(this);
         box.setBackgroundColor(CARD);
         int pad = (int) (16 * s);
@@ -3309,24 +3320,25 @@ public class Main extends Activity {
         iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
         box.addView(iv, new FrameLayout.LayoutParams((int) (396 * s), (int) (240 * s)));
         String title = already ? "La foto ya trae fondo transparente"
-                : cut == null ? "No se detectó un fondo liso (se usará tal cual)"
-                : "Vista previa · nivel " + (strength + 1) + " de 4" + (strength >= 2 ? " (también quita el reflejo del piso)" : "");
-        // 2.18 (Tinoyevski #18): usar la foto tal cual, sin recortar ni quitar el fondo (paisajes, fotos con fondo…)
+                : cut == null ? "Vista previa"
+                : "Sin fondo · nivel " + (strength + 1) + " de 4" + (strength >= 2 ? " (también quita el reflejo del piso)" : "");
         LinearLayout col = new LinearLayout(this);
         col.setOrientation(LinearLayout.VERTICAL);
         col.addView(box);
         final AlertDialog[] dref = new AlertDialog[1];
-        if (!already) {
-            TextView raw = tv("Usar la foto original, sin recortar ni quitar el fondo", 14, RED, true);
-            raw.setSingleLine(false);
-            raw.setGravity(Gravity.CENTER);
-            raw.setPadding(pad, pad / 2, pad, pad / 2);
-            raw.setOnClickListener(new View.OnClickListener() { public void onClick(View v) {
+        if (cut != null) {
+            // botón de verdad (no un letrero): volver a la foto completa
+            TextView back = tv("Usar la foto original, con fondo", 14, TEXT, true);
+            back.setGravity(Gravity.CENTER);
+            back.setBackground(round(BTN, 12));
+            back.setPadding(pad, (int) (12 * s), pad, (int) (12 * s));
+            back.setOnClickListener(new View.OnClickListener() { public void onClick(View v) {
                 if (dref[0] != null) try { dref[0].dismiss(); } catch (Throwable ignored) { }
-                if (CarPhoto.save(Main.this, CarPhoto.scaled(src, 900))) { toast("Foto guardada"); rebuild(); }
-                else toast("No se pudo guardar la foto");
+                previewPhoto(src, null, 0, false);
             }});
-            col.addView(raw);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(-1, -2);
+            lp.setMargins(pad, pad / 2, pad, 0);
+            col.addView(back, lp);
         }
         AlertDialog.Builder b = new TB(this, dlg())
             .setTitle(title)
@@ -3339,14 +3351,21 @@ public class Main extends Activity {
             })
             .setNegativeButton("Cancelar", null);
         if (!already && strength < 3) {
-            b.setNeutralButton("Quitar más fondo", new DialogInterface.OnClickListener() {
+            b.setNeutralButton(cut == null ? "Quitar el fondo" : "Quitar más fondo", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface d, int w) {
-                    final ProgressDialogLite pd = new ProgressDialogLite("Quitando más fondo…");
+                    final int next = cut == null ? 1 : strength + 1;
+                    final ProgressDialogLite pd = new ProgressDialogLite("Quitando el fondo…");
                     new Thread(new Runnable() {
                         public void run() {
-                            final Bitmap c2 = CarPhoto.removeBackground(src, strength + 1);
+                            Bitmap c2 = null;
+                            try { c2 = CarPhoto.removeBackground(src, next); } catch (Throwable ignored) { }
+                            final Bitmap fc2 = c2;
                             runOnUiThread(new Runnable() {
-                                public void run() { pd.dismiss(); previewPhoto(src, c2 != null ? c2 : cut, strength + 1, false); }
+                                public void run() {
+                                    pd.dismiss();
+                                    if (fc2 == null && cut == null) { toast("No se detectó un fondo liso: se usa la foto tal cual"); previewPhoto(src, null, 0, false); }
+                                    else previewPhoto(src, fc2 != null ? fc2 : cut, fc2 != null ? next : strength, false);
+                                }
                             });
                         }
                     }).start();
@@ -3760,7 +3779,7 @@ public class Main extends Activity {
         row(c, "Nombre del vehículo", null, prefs.getString("car_name", "Mi vehículo"), edit("car_name", "Nombre del vehículo", "Mi vehículo"));
         row(c, "Etiqueta", "Versión o placa. Déjala vacía para ocultarla", prefs.getString("car_tag", ""), edit("car_tag", "Etiqueta (vacío para ocultarla)", ""));
         LinearLayout f = section(body, "Foto");
-        row(f, "Foto del vehículo", "Se le quita el fondo automáticamente, o la puedes usar tal cual", CarPhoto.load(this) != null ? "Configurada" : "Sin foto",
+        row(f, "Foto del vehículo", "Se usa tal cual; si quieres, le puedes quitar el fondo", CarPhoto.load(this) != null ? "Configurada" : "Sin foto",
             new Runnable() { public void run() { photoMenu(); } });
         LinearLayout o = section(body, "Cambio de aceite");
         toggle(o, "Recordatorio de cambio de aceite", "Se muestra al lado de la velocidad y avisa cuando toca", oilOn(), new IntCb() { public void on(int i) {

@@ -680,3 +680,11 @@ Automático: del lado del reproductor (el del conductor)	Automatik: di sebelah p
 Usar la foto original, sin recortar ni quitar el fondo	Guna foto asal, tanpa memotong atau membuang latar belakang
 Se le quita el fondo automáticamente, o la puedes usar tal cual	Latar belakang dibuang secara automatik, atau anda boleh gunakannya seadanya
 Lluvia {}	Hujan {}
+Abriendo la foto…	Membuka foto…
+Vista previa	Pratonton
+Sin fondo · nivel {} de 4	Tanpa latar · tahap {} daripada 4
+Sin fondo · nivel {} de 4 (también quita el reflejo del piso)	Tanpa latar · tahap {} daripada 4 (juga membuang pantulan lantai)
+Usar la foto original, con fondo	Guna foto asal, dengan latar
+Quitar el fondo	Buang latar
+No se detectó un fondo liso: se usa la foto tal cual	Tiada latar rata dikesan: foto digunakan seadanya
+Se usa tal cual; si quieres, le puedes quitar el fondo	Digunakan seadanya; jika mahu, anda boleh buang latarnya

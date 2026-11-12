@@ -680,3 +680,11 @@ Automático: del lado del reproductor (el del conductor)	Automatic: on the playe
 Usar la foto original, sin recortar ni quitar el fondo	Use the original photo, without cropping or removing the background
 Se le quita el fondo automáticamente, o la puedes usar tal cual	The background is removed automatically, or you can use it as is
 Lluvia {}	Rain {}
+Abriendo la foto…	Opening the photo…
+Vista previa	Preview
+Sin fondo · nivel {} de 4	Background removed · level {} of 4
+Sin fondo · nivel {} de 4 (también quita el reflejo del piso)	Background removed · level {} of 4 (also removes the floor reflection)
+Usar la foto original, con fondo	Use the original photo, with background
+Quitar el fondo	Remove background
+No se detectó un fondo liso: se usa la foto tal cual	No plain background found: the photo is used as is
+Se usa tal cual; si quieres, le puedes quitar el fondo	Used as is; you can remove the background if you want

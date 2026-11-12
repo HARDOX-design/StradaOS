@@ -35,6 +35,16 @@ public class CarPhoto {
         Bitmap bmp = BitmapFactory.decodeStream(in, null, d);
         in.close();
         if (bmp == null) throw new Exception("No es una imagen válida");
+        // fotos del celular: vienen acostadas y la orientación va en el EXIF (2.18: antes salían volteadas)
+        int deg = 0;
+        try { in = o.open(); deg = exifRotation(in); in.close(); } catch (Throwable ignored) { }
+        if (deg != 0) {
+            Matrix m = new Matrix();
+            m.postRotate(deg);
+            Bitmap r = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), m, true);
+            if (r != bmp) bmp.recycle();
+            bmp = r;
+        }
         float k = Math.min(1f, MAX / (float) Math.max(bmp.getWidth(), bmp.getHeight()));
         if (k < 1f) {
             Bitmap sc = Bitmap.createScaledBitmap(bmp, Math.round(bmp.getWidth() * k), Math.round(bmp.getHeight() * k), true);
@@ -42,6 +52,71 @@ public class CarPhoto {
             bmp = sc;
         }
         return bmp.isMutable() && bmp.getConfig() == Bitmap.Config.ARGB_8888 ? bmp : bmp.copy(Bitmap.Config.ARGB_8888, true);
+    }
+
+    /**
+     * Rotación del EXIF de un JPEG (0, 90, 180 o 270), leída a mano: ExifInterface con InputStream es de Android 7+
+     * y StradaOS funciona desde Android 4.1. Si no es JPEG o no trae el dato, 0.
+     */
+    static int exifRotation(InputStream in) throws Exception {
+        java.io.DataInputStream d = new java.io.DataInputStream(new java.io.BufferedInputStream(in, 65536));
+        if (d.readUnsignedShort() != 0xFFD8) return 0;
+        for (int seg = 0; seg < 64; seg++) {
+            int marker = d.readUnsignedShort();
+            if ((marker & 0xFF00) != 0xFF00 || marker == 0xFFDA || marker == 0xFFD9) return 0;
+            int len = d.readUnsignedShort() - 2;
+            if (len < 0) return 0;
+            if (marker != 0xFFE1) { skip(d, len); continue; }
+            byte[] b = new byte[len];
+            d.readFully(b);
+            if (len < 14 || b[0] != 'E' || b[1] != 'x' || b[2] != 'i' || b[3] != 'f') continue;
+            int t = 6;   // empieza la cabecera TIFF
+            boolean le = b[t] == 'I';
+            int ifd = u32(b, t + 4, le);
+            int p = t + ifd;
+            if (p + 2 > len) return 0;
+            int n = u16(b, p, le);
+            for (int i = 0; i < n; i++) {
+                int e = p + 2 + i * 12;
+                if (e + 12 > len) return 0;
+                if (u16(b, e, le) == 0x0112) {
+                    int v = u16(b, e + 8, le);
+                    return v == 6 ? 90 : v == 3 ? 180 : v == 8 ? 270 : 0;
+                }
+            }
+            return 0;
+        }
+        return 0;
+    }
+
+    private static void skip(java.io.DataInputStream d, int n) throws Exception {
+        while (n > 0) { int k = d.skipBytes(n); if (k <= 0) { d.readByte(); k = 1; } n -= k; }
+    }
+
+    private static int u16(byte[] b, int i, boolean le) {
+        int a = b[i] & 0xFF, c = b[i + 1] & 0xFF;
+        return le ? a | (c << 8) : (a << 8) | c;
+    }
+
+    private static int u32(byte[] b, int i, boolean le) {
+        return le ? u16(b, i, true) | (u16(b, i + 2, true) << 16) : (u16(b, i, false) << 16) | u16(b, i + 2, false);
+    }
+
+    /** Foto con fondo (no recortada) para la tarjeta: recortada al centro a la proporción w:h y con esquinas redondas. */
+    public static Bitmap cardCrop(Bitmap src, int w, int h, float radius) {
+        if (w <= 0 || h <= 0) return src;
+        Bitmap out = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(out);
+        float k = Math.max(w / (float) src.getWidth(), h / (float) src.getHeight());
+        Matrix m = new Matrix();
+        m.postScale(k, k);
+        m.postTranslate((w - src.getWidth() * k) / 2f, (h - src.getHeight() * k) / 2f);
+        android.graphics.BitmapShader sh = new android.graphics.BitmapShader(src, android.graphics.Shader.TileMode.CLAMP, android.graphics.Shader.TileMode.CLAMP);
+        sh.setLocalMatrix(m);
+        Paint pt = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
+        pt.setShader(sh);
+        c.drawRoundRect(new android.graphics.RectF(0, 0, w, h), radius, radius, pt);
+        return out;
     }
 
     /** true si la imagen ya trae fondo transparente (PNG recortado). */

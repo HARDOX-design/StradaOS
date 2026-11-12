@@ -680,3 +680,11 @@ Automático: del lado del reproductor (el del conductor)	Automatico: dal lato de
 Usar la foto original, sin recortar ni quitar el fondo	Usa la foto originale, senza ritagliare né togliere lo sfondo
 Se le quita el fondo automáticamente, o la puedes usar tal cual	Lo sfondo viene tolto automaticamente, oppure puoi usarla così com'è
 Lluvia {}	Pioggia {}
+Abriendo la foto…	Apertura della foto…
+Vista previa	Anteprima
+Sin fondo · nivel {} de 4	Senza sfondo · livello {} di 4
+Sin fondo · nivel {} de 4 (también quita el reflejo del piso)	Senza sfondo · livello {} di 4 (toglie anche il riflesso del pavimento)
+Usar la foto original, con fondo	Usa la foto originale, con lo sfondo
+Quitar el fondo	Togli lo sfondo
+No se detectó un fondo liso: se usa la foto tal cual	Nessuno sfondo uniforme trovato: la foto si usa così com'è
+Se usa tal cual; si quieres, le puedes quitar el fondo	Si usa così com'è; se vuoi, puoi togliere lo sfondo

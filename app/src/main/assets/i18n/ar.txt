@@ -680,3 +680,11 @@ Automático: del lado del reproductor (el del conductor)	تلقائي: في جه
 Usar la foto original, sin recortar ni quitar el fondo	استخدم الصورة الأصلية دون قص أو إزالة الخلفية
 Se le quita el fondo automáticamente, o la puedes usar tal cual	تتم إزالة الخلفية تلقائيًا، أو يمكنك استخدامها كما هي
 Lluvia {}	مطر {}
+Abriendo la foto…	جارٍ فتح الصورة…
+Vista previa	معاينة
+Sin fondo · nivel {} de 4	بدون خلفية · المستوى {} من 4
+Sin fondo · nivel {} de 4 (también quita el reflejo del piso)	بدون خلفية · المستوى {} من 4 (يزيل أيضًا انعكاس الأرضية)
+Usar la foto original, con fondo	استخدم الصورة الأصلية مع الخلفية
+Quitar el fondo	إزالة الخلفية
+No se detectó un fondo liso: se usa la foto tal cual	لم يتم العثور على خلفية سادة: ستُستخدم الصورة كما هي
+Se usa tal cual; si quieres, le puedes quitar el fondo	تُستخدم كما هي؛ ويمكنك إزالة الخلفية إن أردت
