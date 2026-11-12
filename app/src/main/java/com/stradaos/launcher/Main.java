@@ -106,12 +106,13 @@ public class Main extends Activity {
     // ── diseño del inicio (Bloque 2) ──
     /** Ancho de la barra lateral de botones (modo «Lateral»). */
     static final float RAIL = 96;
-    private boolean sideDock, compactDock, playerLeft, showCar;
+    private boolean sideDock, compactDock, playerLeft, showCar, railLeft, dockLabels;
     /** x donde empieza el área de tarjetas (con la barra lateral a la izquierda), alto de las tarjetas y arriba del dock. */
     private float ox, cardH = 380, dockTop = 456, boardH = 600;
     /** Columnas: x de la tarjeta del vehículo, del mapa y del reproductor, y anchos del mapa y del reproductor. */
     private float carX = 16, mapX = 328, mapW = 420, audX = 760, audW = 248;
     private TextView topSpeedTv, topOilTv;
+    private ImageView wifiIc, btIc;
     /** Reproductor vertical (tarjeta alta, p. ej. con la barra lateral): carátula y botones más grandes. */
     private boolean tallPlayer;
     /** Escala de 1024x600 para Ajustes, el cajón y sus ventanas: con la barra lateral el inicio se agranda, pero
@@ -458,6 +459,18 @@ public class Main extends Activity {
         if (hasFocus) immersive();
     }
 
+    /** Tema «Sistema»: la pantalla pasó a modo oscuro o claro (p. ej. al encender las luces): se cambia al instante. */
+    @Override
+    public void onConfigurationChanged(android.content.res.Configuration c) {
+        super.onConfigurationChanged(c);
+        try {
+            if (prefs == null || !"system".equals(prefs.getString("theme", "dark")) || root == null) return;
+            boolean was = LIGHT;
+            applyTheme();
+            if (was != LIGHT) { applyAccent(); rebuild(); }
+        } catch (Throwable e) { Guard.log("Cambio de tema del sistema: " + e); }
+    }
+
     @Override
     protected void onNewIntent(Intent i) {
         super.onNewIntent(i);
@@ -508,8 +521,8 @@ public class Main extends Activity {
                     curArt = art;
                     renderTrack();
                 }
-                else if ("tema:claro".equals(v) || "tema:oscuro".equals(v)) {
-                    prefs.edit().putString("theme", "tema:claro".equals(v) ? "light" : "dark").apply();
+                else if ("tema:claro".equals(v) || "tema:oscuro".equals(v) || "tema:sistema".equals(v)) {
+                    prefs.edit().putString("theme", "tema:claro".equals(v) ? "light" : "tema:sistema".equals(v) ? "system" : "dark").apply();
                     applyTheme(); applyAccent(); rebuild();
                 }
                 else if (v.startsWith("diseno:")) {
@@ -523,7 +536,11 @@ public class Main extends Activity {
                     else if ("normal".equals(d) || "compacta".equals(d) || "lateral".equals(d))
                         e.putString("dock_mode", "lateral".equals(d) ? "side" : "compacta".equals(d) ? "compact" : "normal");
                     else if ("plegar".equals(d)) e.putBoolean("aa_panel_open", false);
-                    else if ("base".equals(d)) e.remove("player_side").remove("show_car").remove("dock_mode").remove("aa_panel_open");
+                    else if ("sinnombres".equals(d)) e.putBoolean("dock_labels", false);
+                    else if ("railizq".equals(d) || "railder".equals(d)) e.putString("rail_side", "railizq".equals(d) ? "left" : "right");
+                    else if ("siniconos".equals(d)) e.putBoolean("status_icons", false);
+                    else if ("base".equals(d)) e.remove("player_side").remove("show_car").remove("dock_mode").remove("aa_panel_open")
+                            .remove("dock_labels").remove("rail_side").remove("status_icons");
                     e.apply();
                     rebuild();
                 }
@@ -730,6 +747,7 @@ public class Main extends Activity {
             if (++usbTick % 5 == 0) guardUsb();
             if (bt != null && bt.isConnected() && (++btPoll % 3 == 0 || curTitle == null)) bt.refresh();
             updatePlayIcon();
+            updateStatusIcons();
             if (++themeTick % 30 == 0) {
                 boolean was = LIGHT;
                 applyTheme();
@@ -777,6 +795,10 @@ public class Main extends Activity {
         compactDock = "compact".equals(dm);
         playerLeft = "left".equals(prefs.getString("player_side", "right"));
         showCar = prefs.getBoolean("show_car", true);
+        // barra lateral: del lado del reproductor (como siempre) o fija a la izquierda / derecha (2.17, Druids07)
+        String rs = prefs.getString("rail_side", "auto");
+        railLeft = "left".equals(rs) || (!"right".equals(rs) && playerLeft);
+        dockLabels = prefs.getBoolean("dock_labels", true);
         // Lienzo virtual: 1024x600. Con la barra lateral los botones salen de abajo y el lienzo queda más bajo
         // (1128x460): en pantallas bajas y anchas como 1280x480 todo se ve ~30 % más grande.
         float dw = 1024 + (sideDock ? RAIL + 8 : 0), dh = sideDock ? 460 : 600;
@@ -789,8 +811,9 @@ public class Main extends Activity {
         if (sideDock && H / s > dh + 1) dh = H / s;
         uiS = Math.min(W / 1024f, H / 600f);
         boardH = dh;
-        ox = sideDock && playerLeft ? RAIL + 8 : 0;   // la barra lateral va del lado del reproductor (el del conductor)
-        dockTop = sideDock ? dh : compactDock ? 500 : 456;
+        ox = sideDock && railLeft ? RAIL + 8 : 0;   // la barra lateral, por defecto del lado del reproductor (el del conductor)
+        // compacta (2.17, Druids07): más baja que antes (500), con menos espacio arriba y abajo
+        dockTop = sideDock ? dh : compactDock ? 512 : 456;
         cardH = sideDock ? dh - 80 : dockTop - 76;
         layoutColumns();
         getWindow().setBackgroundDrawable(new ColorDrawable(sim > 0 ? Color.BLACK : BG));
@@ -819,6 +842,7 @@ public class Main extends Activity {
         settingsView = null;
         updateClock();
         refreshStates();
+        updateStatusIcons();
         showWeather();
         if (settingsCat >= 0) showSettings(settingsCat);
     }
@@ -891,6 +915,22 @@ public class Main extends Activity {
         weatherBox.addView(sep, new LinearLayout.LayoutParams(Math.max(1, (int) s), (int) (18 * s)));
         if (!showCar) sep.setVisibility(View.GONE);   // sin saludo, sin separador
         weatherBox.setVisibility(View.GONE);
+        // Íconos de Wi-Fi y Bluetooth (2.17, Reinaldo y Daniel): ver si están activos sin abrir los ajustes
+        wifiIc = null;
+        btIc = null;
+        if (prefs.getBoolean("status_icons", true)) {
+            LinearLayout st = new LinearLayout(this);
+            st.setGravity(Gravity.CENTER_VERTICAL);
+            st.setPadding(0, 0, (int) (8 * s), 0);
+            wifiIc = statusIcon(st, "wifi", new Runnable() { public void run() { toggleWifi(); } },
+                new Runnable() { public void run() { openSettingsPage(Settings.ACTION_WIFI_SETTINGS, new Runnable() { public void run() { openSystemSettings(); } }); } });
+            btIc = statusIcon(st, "bluetooth", new Runnable() { public void run() { toggleBt(); } },
+                new Runnable() { public void run() {
+                    if (clwBt) openSlot(1);
+                    else openSettingsPage(Settings.ACTION_BLUETOOTH_SETTINGS, new Runnable() { public void run() { openSlot(1); } });
+                } });
+            right.addView(st);
+        }
         right.addView(weatherBox);
         greetTv = tv("", 15, SOFT, false);
         greetTv.setPadding((int) (14 * s), 0, 0, 0);
@@ -906,6 +946,139 @@ public class Main extends Activity {
         greetTv.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { openSettings(); }
         });
+    }
+
+    private ImageView statusIcon(LinearLayout parent, String name, final Runnable tap, final Runnable hold) {
+        FrameLayout f = new FrameLayout(this);
+        ImageView iv = icon(name, 20);
+        iv.setTag(name);
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams((int) (20 * s), (int) (20 * s));
+        lp.gravity = Gravity.CENTER;
+        f.addView(iv, lp);
+        parent.addView(f, new LinearLayout.LayoutParams((int) (36 * s), (int) (32 * s)));
+        f.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { tap.run(); } });
+        f.setOnLongClickListener(new View.OnLongClickListener() { public boolean onLongClick(View v) { hold.run(); return true; } });
+        return iv;
+    }
+
+    private void setStatusIcon(ImageView iv, int state, String on, String off, String connected) {
+        View box = (View) iv.getParent();
+        if (state < 0) { box.setVisibility(View.GONE); return; }
+        box.setVisibility(View.VISIBLE);
+        String name = state == 0 ? off : state == 2 ? connected : on;
+        if (!name.equals(iv.getTag())) {
+            iv.setImageBitmap(asset("ic/" + name + ".png"));
+            iv.setTag(name);
+        }
+        iv.setAlpha(state == 2 ? 1f : 0.45f);
+    }
+
+    /** Arriba: Wi-Fi y Bluetooth (atenuado = encendido sin conexión; tachado = apagado). */
+    private void updateStatusIcons() {
+        if (wifiIc != null) setStatusIcon(wifiIc, wifiState(), "wifi", "wifi_off", "wifi");
+        if (btIc != null) setStatusIcon(btIc, btState(), "bluetooth", "bluetooth_disabled", "bluetooth_connected");
+    }
+
+    private final Runnable statusRefresh = new Runnable() { public void run() { updateStatusIcons(); } };
+
+    private android.net.wifi.WifiManager wifiMgr() {
+        try { return (android.net.wifi.WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE); }
+        catch (Throwable e) { return null; }
+    }
+
+    /** -1 sin Wi-Fi, 0 apagado, 1 encendido sin conexión, 2 conectado. */
+    private int wifiState() {
+        try {
+            android.net.wifi.WifiManager wm = wifiMgr();
+            if (wm == null) return -1;
+            if (!wm.isWifiEnabled()) return 0;
+            android.net.ConnectivityManager cm = (android.net.ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+            android.net.NetworkInfo ni = cm != null ? cm.getNetworkInfo(android.net.ConnectivityManager.TYPE_WIFI) : null;
+            return ni != null && ni.isConnected() ? 2 : 1;
+        } catch (Throwable e) { return -1; }
+    }
+
+    /**
+     * -1 sin Bluetooth, 0 apagado, 1 encendido sin celular, 2 celular conectado. En pantallas Clinkway el Bluetooth es
+     * un módulo aparte de Android: el estado sale de su servicio (nunca «apagado»).
+     */
+    private int btState() {
+        try {
+            if (clwBt) {
+                Boolean a = bt != null ? bt.a2dp() : null;
+                return a != null && a ? 2 : 1;
+            }
+            android.bluetooth.BluetoothAdapter ad = android.bluetooth.BluetoothAdapter.getDefaultAdapter();
+            if (ad == null) return -1;
+            if (!ad.isEnabled()) return 0;
+            for (int p : new int[]{2 /* A2DP */, 1 /* HEADSET */, 11 /* A2DP_SINK */, 16 /* HEADSET_CLIENT */}) {
+                try { if (ad.getProfileConnectionState(p) == android.bluetooth.BluetoothProfile.STATE_CONNECTED) return 2; }
+                catch (Throwable ignored) { }
+            }
+            return 1;
+        } catch (Throwable e) { return -1; }
+    }
+
+    private void toggleWifi() {
+        final android.net.wifi.WifiManager wm = wifiMgr();
+        if (wm == null) return;
+        final boolean on = wm.isWifiEnabled();
+        if (on && wifiState() == 2) {
+            new TB(this, dlg()).setTitle("¿Apagar el Wi-Fi?")
+                .setMessage("La pantalla se queda sin internet (mapa en vivo, clima y actualizaciones).")
+                .setPositiveButton("Apagar", new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) { setWifi(wm, false); } })
+                .setNegativeButton("Cancelar", null).show();
+        } else setWifi(wm, !on);
+    }
+
+    private void setWifi(android.net.wifi.WifiManager wm, boolean v) {
+        boolean ok = false;
+        try { ok = wm.setWifiEnabled(v); } catch (Throwable ignored) { }
+        if (!ok) {
+            toast("Esta pantalla no deja cambiar el Wi-Fi desde otra app: abre sus ajustes");
+            openSettingsPage(Settings.ACTION_WIFI_SETTINGS, new Runnable() { public void run() { openSystemSettings(); } });
+        } else toast(v ? "Encendiendo el Wi-Fi…" : "Wi-Fi apagado");
+        h.postDelayed(statusRefresh, 800);
+        h.postDelayed(statusRefresh, 3000);
+    }
+
+    private void toggleBt() {
+        if (clwBt) { openSlot(1); return; }
+        final android.bluetooth.BluetoothAdapter ad;
+        try { ad = android.bluetooth.BluetoothAdapter.getDefaultAdapter(); } catch (Throwable e) { return; }
+        if (ad == null) return;
+        final boolean on = ad.isEnabled();
+        if (on && btState() == 2) {
+            new TB(this, dlg()).setTitle("¿Apagar el Bluetooth?")
+                .setMessage("Se desconecta el celular (música y llamadas).")
+                .setPositiveButton("Apagar", new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) { setBt(ad, false); } })
+                .setNegativeButton("Cancelar", null).show();
+        } else setBt(ad, !on);
+    }
+
+    private void setBt(android.bluetooth.BluetoothAdapter ad, boolean v) {
+        boolean ok = false;
+        try { ok = v ? ad.enable() : ad.disable(); } catch (Throwable ignored) { }
+        if (!ok) {
+            toast("Esta pantalla no deja cambiar el Bluetooth desde otra app: abre sus ajustes");
+            openSettingsPage(Settings.ACTION_BLUETOOTH_SETTINGS, new Runnable() { public void run() { openSlot(1); } });
+        } else toast(v ? "Encendiendo el Bluetooth…" : "Bluetooth apagado");
+        h.postDelayed(statusRefresh, 800);
+        h.postDelayed(statusRefresh, 3000);
+    }
+
+    /**
+     * Abre una pantalla de los Ajustes de Android (Wi-Fi, Bluetooth). En Android 10+, si el launcher de fábrica no
+     * muestra los Ajustes de Android, no se abren (lección de la TS10: quedaba todo en negro) y se usa la alternativa.
+     */
+    private void openSettingsPage(String action, Runnable fallback) {
+        if (SDK >= 29) {
+            boolean aospVisible = false;
+            for (ResolveInfo r : apps) if ("com.android.settings".equals(r.activityInfo.packageName)) { aospVisible = true; break; }
+            if (!aospVisible) { fallback.run(); return; }
+        }
+        try { startActivity(new Intent(action).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)); }
+        catch (Throwable e) { fallback.run(); }
     }
 
     private void buildCarCard() {
@@ -1537,7 +1710,7 @@ public class Main extends Activity {
             + " · ubicación por red: " + (netOn ? "encendida" : "apagada")
             + "\nÚltima señal: " + (ago < 0 ? "ninguna desde que abrió StradaOS" : ago < 120 ? "hace " + ago + " s" : "hace " + (ago / 60) + " min")
             + (gpsStartAt > 0 ? "\nBuscando desde hace " + ((SystemClock.elapsedRealtime() - gpsStartAt) / 60000) + " min" : "");
-        return head + "\n\n" + (liveMap != null ? liveMap.diag() : "Mapa en vivo apagado");
+        return I18n.lines(head + "\n\n" + (liveMap != null ? liveMap.diag() : "Mapa en vivo apagado"));
     }
 
     private void showMapDiag() {
@@ -1603,16 +1776,18 @@ public class Main extends Activity {
             place(card, play, x0 + bs + gap, yb, ps, ps);
             place(card, next, x0 + bs + gap + ps + gap, yb + (ps - bs) / 2, bs, bs);
         } else {
-        place(card, playerArt, 34 + dx, 34 + dy, 180, 180);
+        // carátula un poco más chica y textos más arriba y más altos: con fuentes de sistema altas (Android 13+)
+        // la última línea quedaba cortada contra el botón ▶ (issue #18)
+        place(card, playerArt, 38 + dx, 32 + dy, 172, 172);
         trackTv = tv("Nada sonando", 17, TEXT, true);
-        trackTv.setGravity(Gravity.CENTER_HORIZONTAL);
-        place(card, trackTv, 14, 222 + dy, audW - 28, 24);
+        trackTv.setGravity(Gravity.CENTER);
+        place(card, trackTv, 14, 210 + dy, audW - 28, 28);
         artistTv = tv("Radio, Bluetooth o USB", 13, MUTED, false);
-        artistTv.setGravity(Gravity.CENTER_HORIZONTAL);
-        place(card, artistTv, 14, 250 + dy, audW - 28, 20);
+        artistTv.setGravity(Gravity.CENTER);
+        place(card, artistTv, 14, 240 + dy, audW - 28, 22);
         timePosTv = tv("", 12, MUTED, false);
-        timePosTv.setGravity(Gravity.CENTER_HORIZONTAL);
-        place(card, timePosTv, 14, 274 + dy, audW - 28, 18);
+        timePosTv.setGravity(Gravity.CENTER);
+        place(card, timePosTv, 14, 264 + dy, audW - 28, 20);
         // botones más grandes (antes 52/64): se tocan mejor con el carro en marcha
         prev = circleIcon("skip_previous", 60, 30, BTN);
         play = circleIcon("play_arrow", 74, 36, RED);
@@ -1725,9 +1900,9 @@ public class Main extends Activity {
 
     private void buildDock() {
         // tamaños según la barra: normal (como siempre), compacta (menos alta) o lateral (botones al costado)
-        final float cs = sideDock ? 40 : compactDock ? 52 : 64;          // círculo
-        final float lblSize = sideDock ? 10 : compactDock ? 12 : 13, lblPad = sideDock ? 2 : compactDock ? 4 : 8;
-        final float railX = playerLeft ? 16 : 1016 + ex, step = (boardH - 24) / 7f;
+        final float cs = sideDock ? (dockLabels ? 40 : 48) : compactDock ? 50 : 64;          // círculo
+        final float lblSize = sideDock ? 10 : compactDock ? 12 : 13, lblPad = sideDock ? 2 : compactDock ? 2 : 8;
+        final float railX = railLeft ? 16 : 1016 + ex, step = (boardH - 24) / 7f;
         if (sideDock) {
             View rail = new View(this);
             rail.setBackground(round(DOCK, 20));
@@ -1757,15 +1932,19 @@ public class Main extends Activity {
                 String id = t.startsWith("fn:") ? t.substring(3) : DOCK_DEFAULT[i];
                 b.addView(circleIcon(dockFn(id)[2], cs, cs * 0.44f, CIRCLE), new LinearLayout.LayoutParams((int) (cs * s), (int) (cs * s)));
             }
-            TextView l = tv(dockName(i), lblSize, SOFT, false);
-            l.setGravity(Gravity.CENTER_HORIZONTAL);
-            l.setSingleLine(true);
-            l.setEllipsize(android.text.TextUtils.TruncateAt.END);
-            l.setPadding(0, (int) (lblPad * s), 0, 0);
-            b.addView(l, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            if (dockLabels) {
+                TextView l = tv(dockName(i), lblSize, SOFT, false);
+                l.setGravity(Gravity.CENTER_HORIZONTAL);
+                l.setSingleLine(true);
+                l.setEllipsize(android.text.TextUtils.TruncateAt.END);
+                l.setPadding(0, (int) (lblPad * s), 0, 0);
+                b.addView(l, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            } else {
+                b.setGravity(Gravity.CENTER);   // sin nombres: el círculo queda centrado en la franja
+            }
             if (sideDock) { b.setGravity(Gravity.CENTER); place(board, b, railX, 12 + step * i, RAIL, step); }
-            else if (compactDock) place(board, b, 38 + (138 + ex / 6) * i, dockTop + 9, 120, 86);
-            else place(board, b, 38 + (138 + ex / 6) * i, 474, 120, 110);
+            else if (compactDock) { b.setGravity(Gravity.CENTER); place(board, b, 38 + (138 + ex / 6) * i, dockTop + 4, 120, 600 - dockTop - 8); }
+            else place(board, b, 38 + (138 + ex / 6) * i, dockLabels ? 474 : 462, 120, dockLabels ? 110 : 132);
             b.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) { runDock(idx); }
             });
@@ -2118,7 +2297,7 @@ public class Main extends Activity {
         if (!ok) lastFix = 0;
         float v = useMph() ? kmh * 0.621371f : kmh;
         speedTv.setText(ok ? String.valueOf(Math.round(kmh < 2 ? 0 : v)) : "--");
-        if (topSpeedTv != null) topSpeedTv.setText(ok ? Math.round(kmh < 2 ? 0 : v) + " " + (useMph() ? "mph" : "km/h") : "");
+        if (topSpeedTv != null) topSpeedTv.setText((ok ? String.valueOf(Math.round(kmh < 2 ? 0 : v)) : "--") + " " + (useMph() ? "mph" : "km/h"));
         int gs = ok ? 0 : gpsState();
         gpsTv.setText(ok ? "GPS" : I18n.t(gs == 1 ? "Sin permiso" : gs == 2 ? "GPS apagado" : "Buscando GPS"));
         gpsDot.setBackground(round(ok ? 0xFF3DDC84 : MUTED, 4));
@@ -2993,14 +3172,61 @@ public class Main extends Activity {
 
     private void applyTheme() {
         String mode = prefs.getString("theme", "dark");
-        int hr = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        LIGHT = "light".equals(mode) || ("auto".equals(mode) && hr >= 6 && hr < 18);
+        LIGHT = "light".equals(mode) || ("auto".equals(mode) && !darkHours()) || ("system".equals(mode) && !systemNight());
         if (LIGHT) {
             BG = 0xFFE9ECF1; CARD = 0xFFFFFFFF; INNER = 0xFFF1F3F7; BTN = 0xFFE2E6EC; DOCK = 0xFFDDE1E8;
             TEXT = 0xFF14161B; MUTED = 0xFF6B7280; SOFT = 0xFF3A404C; CIRCLE = 0xFFFFFFFF; ICON = 0xFF2B303A;
         } else {
             BG = 0xFF15171C; CARD = 0xFF1E2128; INNER = 0xFF262A33; BTN = 0xFF2A2E37; DOCK = 0xFF0D0E11;
             TEXT = 0xFFF2F3F5; MUTED = 0xFF8B9099; SOFT = 0xFFC5C8CE; CIRCLE = 0xFF23262E; ICON = 0xFFFFFFFF;
+        }
+    }
+
+    /** Modo automático: ¿estamos en el horario oscuro? (por defecto de 6 p. m. a 6 a. m., como siempre). */
+    private boolean darkHours() {
+        Calendar c = Calendar.getInstance();
+        int m = c.get(Calendar.HOUR_OF_DAY) * 60 + c.get(Calendar.MINUTE);
+        int a = prefs.getInt("dark_start", 18 * 60), b = prefs.getInt("dark_end", 6 * 60);
+        if (a == b) return false;
+        return a < b ? (m >= a && m < b) : (m >= a || m < b);
+    }
+
+    /** Modo «Sistema»: sigue el modo oscuro de la pantalla (algunas lo activan al encender las luces del carro). */
+    private boolean systemNight() {
+        try {
+            return (getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
+                    == android.content.res.Configuration.UI_MODE_NIGHT_YES;
+        } catch (Throwable e) { return false; }
+    }
+
+    /** Hora del día (minutos) con el formato elegido en Ajustes → Reloj. */
+    private String fmtMinutes(int m) {
+        String fmt = prefs.getString("clock", "auto");
+        boolean h24 = "24".equals(fmt) || ("auto".equals(fmt) && android.text.format.DateFormat.is24HourFormat(this));
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, m / 60);
+        c.set(Calendar.MINUTE, m % 60);
+        return new SimpleDateFormat(h24 ? "HH:mm" : "h:mm a", I18n.loc).format(c.getTime());
+    }
+
+    private void askDarkTime(final String key, int def, String title) {
+        int cur = prefs.getInt(key, def);
+        String fmt = prefs.getString("clock", "auto");
+        boolean h24 = "24".equals(fmt) || ("auto".equals(fmt) && android.text.format.DateFormat.is24HourFormat(this));
+        try {
+            android.app.TimePickerDialog d = new android.app.TimePickerDialog(this, dlg(), new android.app.TimePickerDialog.OnTimeSetListener() {
+                public void onTimeSet(android.widget.TimePicker v, int hh, int mm) {
+                    prefs.edit().putInt(key, hh * 60 + mm).apply();
+                    boolean was = LIGHT;
+                    applyTheme();
+                    if (was != LIGHT) { applyAccent(); rebuild(); }
+                    showSettings(2);
+                }
+            }, cur / 60, cur % 60, h24);
+            d.setTitle(I18n.t(title));
+            d.show();
+        } catch (Throwable e) {
+            Guard.log("Selector de hora: " + e);
         }
     }
 
@@ -3302,16 +3528,30 @@ public class Main extends Activity {
         }});
         LinearLayout c = section(body, "Tema");
         String t = prefs.getString("theme", "dark");
-        segmented(c, "Modo", "Automático: claro de 6 a.m. a 6 p.m.", new String[]{"Oscuro", "Claro", "Automático"},
-            "light".equals(t) ? 1 : "auto".equals(t) ? 2 : 0, new IntCb() { public void on(int i) {
-                prefs.edit().putString("theme", i == 1 ? "light" : i == 2 ? "auto" : "dark").apply();
-                applyTheme(); applyAccent(); rebuild();
+        final String[] themes = {"dark", "light", "auto", "system"};
+        segmented(c, "Modo", "Automático: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)",
+            new String[]{"Oscuro", "Claro", "Automático", "Sistema"},
+            Math.max(0, java.util.Arrays.asList(themes).indexOf(t)), new IntCb() { public void on(int i) {
+                prefs.edit().putString("theme", themes[i]).apply();
+                applyTheme(); applyAccent(); rebuild(); showSettings(2);
             }});
+        if ("auto".equals(t)) {
+            row(c, "Oscuro desde", null, fmtMinutes(prefs.getInt("dark_start", 18 * 60)), new Runnable() { public void run() {
+                askDarkTime("dark_start", 18 * 60, "Oscuro desde");
+            }});
+            row(c, "Claro desde", null, fmtMinutes(prefs.getInt("dark_end", 6 * 60)), new Runnable() { public void run() {
+                askDarkTime("dark_end", 6 * 60, "Claro desde");
+            }});
+        }
         // Diseño del inicio (Bloque 2: comentarios de Reddit — Druids07, chiripiscuis, bouff1053, iitsFxcuu)
         LinearLayout lay = section(body, "Diseño del inicio");
         segmented(lay, "Reproductor de música", "Ponlo del lado del conductor para tenerlo a la mano", new String[]{"Derecha", "Izquierda"},
             playerLeft ? 1 : 0, new IntCb() { public void on(int i) {
                 prefs.edit().putString("player_side", i == 1 ? "left" : "right").apply(); rebuild();
+            }});
+        toggle(lay, "Íconos de Wi-Fi y Bluetooth", "Arriba, junto al clima. Toca para encender o apagar; déjalo presionado para abrir sus ajustes",
+            prefs.getBoolean("status_icons", true), new IntCb() { public void on(int i) {
+                prefs.edit().putBoolean("status_icons", i == 1).apply(); rebuild();
             }});
         toggle(lay, "Tarjeta del vehículo", "Si la ocultas, la velocidad pasa arriba y el mapa y el reproductor ganan espacio", showCar, new IntCb() { public void on(int i) {
             prefs.edit().putBoolean("show_car", i == 1).apply(); rebuild();
@@ -3320,6 +3560,16 @@ public class Main extends Activity {
             sideDock ? 2 : compactDock ? 1 : 0, new IntCb() { public void on(int i) {
                 prefs.edit().putString("dock_mode", i == 2 ? "side" : i == 1 ? "compact" : "normal").apply(); rebuild();
             }});
+        if (sideDock) {
+            String rs = prefs.getString("rail_side", "auto");
+            segmented(lay, "Lado de la barra lateral", "Automático: del lado del reproductor", new String[]{"Automático", "Izquierda", "Derecha"},
+                "left".equals(rs) ? 1 : "right".equals(rs) ? 2 : 0, new IntCb() { public void on(int i) {
+                    prefs.edit().putString("rail_side", i == 1 ? "left" : i == 2 ? "right" : "auto").apply(); rebuild();
+                }});
+        }
+        toggle(lay, "Nombres de los botones", "Debajo de cada ícono de la barra", dockLabels, new IntCb() { public void on(int i) {
+            prefs.edit().putBoolean("dock_labels", i == 1).apply(); rebuild();
+        }});
         LinearLayout a = section(body, "Color de acento");
         LinearLayout r = rowBase(a, "Color", "Botones, anillo del reproductor, ruta y etiquetas");
         LinearLayout dots = new LinearLayout(this);

@@ -113,6 +113,18 @@ public class I18n {
         return tr(s, 0);
     }
 
+    /** Texto de varias líneas (diagnósticos): se traduce cada línea por separado. */
+    static String lines(String s) {
+        if (s == null || "es".equals(lang)) return s;
+        String[] ls = s.split("\n", -1);
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; i < ls.length; i++) {
+            if (i > 0) b.append('\n');
+            b.append(ls[i].length() == 0 ? "" : t(ls[i]));
+        }
+        return b.toString();
+    }
+
     /** Texto con %s, %d… (formato de Java) traducido y luego completado. */
     static String f(String es, Object... args) {
         return String.format(loc, t(es), args);

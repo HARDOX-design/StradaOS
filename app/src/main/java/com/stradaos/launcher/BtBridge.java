@@ -180,7 +180,9 @@ public class BtBridge {
         new Thread(new Runnable() {
             public void run() {
                 try {
-                    if (!bool(b, T_A2DP)) { wasPlaying = null; return; }
+                    boolean on = bool(b, T_A2DP);
+                    a2dp = on;
+                    if (!on) { wasPlaying = null; return; }
                     boolean playing = bool(b, T_IS_PLAYING);
                     boolean rising = playing && Boolean.FALSE.equals(wasPlaying);
                     wasPlaying = playing;
@@ -202,6 +204,10 @@ public class BtBridge {
 
     public boolean isConnected() { return binder != null && binder.isBinderAlive(); }
 
+    /** Último estado leído del celular conectado por Bluetooth (null = todavía no se sabe). Para el ícono de arriba. */
+    private volatile Boolean a2dp;
+    public Boolean a2dp() { return isConnected() ? a2dp : null; }
+
     /** Lee el estado actual en un hilo aparte y lo entrega en la UI. */
     public void refresh() {
         final IBinder b = binder;
@@ -213,7 +219,9 @@ public class BtBridge {
                     t.origin = "bt";
                     t.source = "Bluetooth";
                     t.polled = true;
-                    if (!bool(b, T_A2DP)) {
+                    boolean on = bool(b, T_A2DP);
+                    a2dp = on;
+                    if (!on) {
                         t.clear = true;
                     } else {
                         call(b, T_REFRESH);                 // pide a la app que reenvíe la info
