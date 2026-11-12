@@ -8,7 +8,7 @@
 <li>GPS speedometer, weather, clock, oil change reminder and a photo of your vehicle with its background removed.</li>
 <li>Design your home screen: player on the left or right, normal, compact or side button bar, and foldable Android Auto and CarPlay buttons.</li>
 <li>A bottom bar your way and hideable apps. The reverse camera keeps working.</li>
-<li>Dark, light or automatic theme, 10 colors and 6 languages.</li>
+<li>Dark, light, scheduled or system theme, 10 colors and 7 languages.</li>
 <li>Update notices with a QR code.</li>
 </ul>
 <p>Works on Android 4.1+. Under 1 MB. Free, no ads, open source (GPL-3.0).</p>

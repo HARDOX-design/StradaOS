@@ -1,0 +1,1 @@
+Scheduled or system theme, Wi-Fi and Bluetooth icons at the top, bar without labels or side bar on either side, Arabic, and fixes for the player and map diagnostics.
