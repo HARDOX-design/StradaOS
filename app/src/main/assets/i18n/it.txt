@@ -579,7 +579,7 @@ Sin señal GPS · mapa sin conexión	Nessun segnale GPS · mappa offline
 Sin señal GPS ni internet	Nessun segnale GPS né internet
 Sin señal GPS · última posición	Nessun segnale GPS · ultima posizione
 # 2.17: tema por horario o del sistema, íconos de Wi-Fi y Bluetooth, barra, diagnóstico del mapa
-Automático: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)	Automatico: a orario. Sistema: segue la modalità scura dello schermo (alcuni la attivano accendendo i fari)
+Auto: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)	Auto: a orario. Sistema: segue la modalità scura dello schermo (alcuni la attivano accendendo i fari)
 Oscuro desde	Scuro dalle
 Claro desde	Chiaro dalle
 Íconos de Wi-Fi y Bluetooth	Icone Wi-Fi e Bluetooth

@@ -3529,8 +3529,8 @@ public class Main extends Activity {
         LinearLayout c = section(body, "Tema");
         String t = prefs.getString("theme", "dark");
         final String[] themes = {"dark", "light", "auto", "system"};
-        segmented(c, "Modo", "Automático: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)",
-            new String[]{"Oscuro", "Claro", "Automático", "Sistema"},
+        segmented(c, "Modo", "Auto: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)",
+            new String[]{"Oscuro", "Claro", "Auto", "Sistema"},
             Math.max(0, java.util.Arrays.asList(themes).indexOf(t)), new IntCb() { public void on(int i) {
                 prefs.edit().putString("theme", themes[i]).apply();
                 applyTheme(); applyAccent(); rebuild(); showSettings(2);

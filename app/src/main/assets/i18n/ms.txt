@@ -579,7 +579,7 @@ Sin señal GPS · mapa sin conexión	Tiada isyarat GPS · peta luar talian
 Sin señal GPS ni internet	Tiada isyarat GPS atau internet
 Sin señal GPS · última posición	Tiada isyarat GPS · kedudukan terakhir
 # 2.17: tema por horario o del sistema, íconos de Wi-Fi y Bluetooth, barra, diagnóstico del mapa
-Automático: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)	Automatik: ikut jadual. Sistem: ikut mod gelap skrin (sesetengah skrin menukarnya apabila lampu dinyalakan)
+Auto: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)	Auto: ikut jadual. Sistem: ikut mod gelap skrin (sesetengah skrin menukarnya apabila lampu dinyalakan)
 Oscuro desde	Gelap dari
 Claro desde	Cerah dari
 Íconos de Wi-Fi y Bluetooth	Ikon Wi-Fi dan Bluetooth

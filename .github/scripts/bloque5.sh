@@ -8,7 +8,7 @@ adb wait-for-device
 for i in $(seq 1 100); do [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = "1" ] && break; sleep 3; done
 sleep 15
 adb shell input keyevent 82 || true
-adb install -r -g prueba.apk | tail -1
+if [ "$API" -ge 23 ]; then adb install -r -g prueba.apk | tail -1; else adb install -r prueba.apk | tail -1; fi
 shot() {
   rm -f /tmp/shot.png; rm -rf /tmp/emushot; mkdir -p /tmp/emushot
   adb shell screencap -p /data/local/tmp/s.png >/dev/null 2>&1 && adb pull /data/local/tmp/s.png /tmp/shot.png >/dev/null 2>&1
