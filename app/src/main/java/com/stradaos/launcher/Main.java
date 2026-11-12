@@ -3450,8 +3450,10 @@ public class Main extends Activity {
             final int idx = i;
             TextView o = tv(opts[i], 13, i == sel ? Color.WHITE : SOFT, i == sel);
             o.setGravity(Gravity.CENTER);
-            o.setEllipsize(null);   // en Android 11 la última letra salía cortada («Clarc»): sin recorte y 2 px de margen
-            o.setPadding((int) (14 * s), (int) (7 * s), (int) (16 * s), (int) (7 * s));
+            // en Android 11+ la «o» final salía cortada («Clarc»): un espacio al final le da aire a la última letra
+            o.setText(o.getText() + " ");
+            o.setEllipsize(null);
+            o.setPadding((int) (15 * s), (int) (7 * s), (int) (12 * s), (int) (7 * s));
             if (i == sel) o.setBackground(round(RED, 15));
             o.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { cb.on(idx); } });
             g.addView(o);
