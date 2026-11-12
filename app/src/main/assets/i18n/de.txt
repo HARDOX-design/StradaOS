@@ -645,3 +645,38 @@ Tema según el modo oscuro del sistema	Design nach dem Dunkelmodus des Systems
 Pantallas que lo cambian (p. ej. con las luces)	Bildschirme, die ihn umschalten (z. B. mit dem Licht)
 el sistema está en modo oscuro	das System ist im Dunkelmodus
 el sistema está en modo claro	das System ist im Hellmodus
+# 2.18: botones de conexión, clima detallado, ocultar velocidad/aceite/reproductor, botón del navegador, foto tal cual
+Cargando…	Wird geladen…
+Esperando la ubicación…	Warte auf Standort…
+Máx {} · Mín {}	Max {} · Min {}
+Sensación {}	Gefühlt {}
+Humedad {}	Feuchtigkeit {}
+Viento {}	Wind {}
+PRÓXIMAS HORAS	NÄCHSTE STUNDEN
+PRÓXIMOS DÍAS	NÄCHSTE TAGE
+Ahora	Jetzt
+Hoy	Heute
+El clima está apagado en Ajustes → Mapa y clima	Das Wetter ist aus unter Einstellungen → Karte und Wetter
+Esperando la ubicación para el clima…	Warte auf Standort für das Wetter…
+Cargando el clima…	Wetter wird geladen…
+Velocidad y servicio	Geschwindigkeit und Service
+En la tarjeta del vehículo (o arriba si la ocultas). Apágalo si tu carro o pantalla no tiene GPS: la foto ocupa ese espacio	Auf der Fahrzeugkarte (oder oben, wenn du sie ausblendest). Schalte es aus, wenn Auto oder Bildschirm kein GPS hat: das Foto nimmt den Platz ein
+Aceite en el inicio	Öl auf dem Startbildschirm
+Junto a la velocidad. Aunque lo ocultes, el aviso del cambio de aceite sigue saliendo	Neben der Geschwindigkeit. Auch ausgeblendet erscheint der Ölwechsel-Hinweis weiterhin
+Tarjeta del reproductor	Player-Karte
+Si la ocultas, el mapa gana espacio	Wenn du sie ausblendest, bekommt die Karte mehr Platz
+Botones de conexión	Verbindungstasten
+Con uno o ninguno, el clima ocupa el espacio libre del mapa	Mit einer oder keiner zeigt das Wetter den freien Platz auf der Karte
+Android Auto y CarPlay	Android Auto und CarPlay
+Solo Android Auto	Nur Android Auto
+Solo CarPlay	Nur CarPlay
+Botón del navegador	Navigationstaste
+El botón redondo del mapa que abre tu app de navegación	Die runde Kartentaste, die deine Navigations-App öffnet
+Grande	Groß
+Muy grande	Sehr groß
+Oculto	Ausgeblendet
+Lado del botón del navegador	Seite der Navigationstaste
+Automático: del lado del reproductor (el del conductor)	Automatisch: auf der Seite des Players (Fahrerseite)
+Usar la foto original, sin recortar ni quitar el fondo	Originalfoto verwenden, ohne Zuschneiden und ohne Hintergrund zu entfernen
+Se le quita el fondo automáticamente, o la puedes usar tal cual	Der Hintergrund wird automatisch entfernt, oder du nutzt es so, wie es ist
+Lluvia {}	Regen {}

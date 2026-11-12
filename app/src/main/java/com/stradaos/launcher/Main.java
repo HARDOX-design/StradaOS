@@ -106,7 +106,7 @@ public class Main extends Activity {
     // ── diseño del inicio (Bloque 2) ──
     /** Ancho de la barra lateral de botones (modo «Lateral»). */
     static final float RAIL = 96;
-    private boolean sideDock, compactDock, playerLeft, showCar, railLeft, dockLabels;
+    private boolean sideDock, compactDock, playerLeft, showCar, railLeft, dockLabels, showPlayer, carSpeed, oilHome;
     /** x donde empieza el área de tarjetas (con la barra lateral a la izquierda), alto de las tarjetas y arriba del dock. */
     private float ox, cardH = 380, dockTop = 456, boardH = 600;
     /** Columnas: x de la tarjeta del vehículo, del mapa y del reproductor, y anchos del mapa y del reproductor. */
@@ -127,6 +127,9 @@ public class Main extends Activity {
     private double wLat = Double.NaN, wLon = Double.NaN;
     private long weatherAt;
     private Weather.Now weatherNow;
+    private LinearLayout panelWx, panelWxHours;
+    private ImageView panelWxIc;
+    private TextView panelWxTemp, panelWxDesc, panelWxHiLo;
     private FrameLayout settingsView;
     private int settingsCat = -1;
     private TextView timeTv, dateTv, greetTv, speedTv, gpsTv, aaBtnTv, aaSubTv, trackTv, artistTv, carTv, chipTv;
@@ -539,8 +542,15 @@ public class Main extends Activity {
                     else if ("sinnombres".equals(d)) e.putBoolean("dock_labels", false);
                     else if ("railizq".equals(d) || "railder".equals(d)) e.putString("rail_side", "railizq".equals(d) ? "left" : "right");
                     else if ("siniconos".equals(d)) e.putBoolean("status_icons", false);
+                    else if ("sinvelocidad".equals(d)) e.putBoolean("car_speed", false);
+                    else if ("sinaceite".equals(d)) e.putBoolean("oil_home", false);
+                    else if ("sinreproductor".equals(d)) e.putBoolean("show_player", false);
+                    else if (d.startsWith("conexion-")) e.putString("conn_buttons", d.substring(9));
+                    else if (d.startsWith("nav-")) e.putInt("nav_btn_size", Integer.parseInt(d.substring(4)));
+                    else if ("navizq".equals(d)) e.putString("nav_btn_side", "left");
                     else if ("base".equals(d)) e.remove("player_side").remove("show_car").remove("dock_mode").remove("aa_panel_open")
-                            .remove("dock_labels").remove("rail_side").remove("status_icons");
+                            .remove("dock_labels").remove("rail_side").remove("status_icons").remove("car_speed").remove("oil_home")
+                            .remove("show_player").remove("conn_buttons").remove("nav_btn_size").remove("nav_btn_side");
                     e.apply();
                     rebuild();
                 }
@@ -551,6 +561,7 @@ public class Main extends Activity {
                 else if ("fijar-inicio".equals(v)) makeDefaultHome();
                 else if (v.startsWith("sim:")) { prefs.edit().putInt("sim_screen", Integer.parseInt(v.substring(4))).apply(); rebuild(); }
                 else if ("diag-mapa".equals(v)) showMapDiag();
+                else if ("clima".equals(v)) showWeatherDetail();
                 else if ("demo-aceite".equals(v)) {
                     prefs.edit().putBoolean("oil_on", true).putFloat("odo_base_km", 44200).putFloat("odo_gps_m", 0)
                         .putFloat("oil_last_km", 40000).putFloat("oil_interval_km", 5000).putFloat("oil_snooze_km", 0).apply();
@@ -795,6 +806,10 @@ public class Main extends Activity {
         compactDock = "compact".equals(dm);
         playerLeft = "left".equals(prefs.getString("player_side", "right"));
         showCar = prefs.getBoolean("show_car", true);
+        // 2.18: ocultar el reproductor (el mapa gana espacio), la velocidad y el servicio (carros sin GPS) y el aceite
+        showPlayer = prefs.getBoolean("show_player", true);
+        carSpeed = prefs.getBoolean("car_speed", true);
+        oilHome = carSpeed && prefs.getBoolean("oil_home", true);
         // barra lateral: del lado del reproductor (como siempre) o fija a la izquierda / derecha (2.17, Druids07)
         String rs = prefs.getString("rail_side", "auto");
         railLeft = "left".equals(rs) || (!"right".equals(rs) && playerLeft);
@@ -855,7 +870,8 @@ public class Main extends Activity {
         float content = 1024 + ex;
         audW = showCar ? 248 : 300;
         float carW = showCar ? 300 : 0;
-        float leftW = playerLeft ? audW : carW, rightW = playerLeft ? carW : audW;
+        float audSlot = showPlayer ? audW : 0;
+        float leftW = playerLeft ? audSlot : carW, rightW = playerLeft ? carW : audSlot;
         float x0 = ox + 16;
         mapX = x0 + (leftW > 0 ? leftW + 12 : 0);
         mapW = content - 32 - leftW - rightW - (leftW > 0 ? 12 : 0) - (rightW > 0 ? 12 : 0);
@@ -874,14 +890,14 @@ public class Main extends Activity {
         row.addView(timeTv);
         row.addView(dateTv);
         topSpeedTv = null;
-        if (!showCar) {
+        if (!showCar && carSpeed) {
             // sin tarjeta del vehículo, la velocidad se muestra aquí
             topSpeedTv = tv("", 15, TEXT, true);
             topSpeedTv.setPadding((int) (16 * s), 0, 0, 0);
             row.addView(topSpeedTv);
         }
         topOilTv = null;
-        if (!showCar) {
+        if (!showCar && oilHome) {
             // …y también el aceite (toca para abrir su menú), para que no se pierda al ocultar la tarjeta
             topOilTv = tv("", 13, TEXT, true);
             topOilTv.setBackground(round(CIRCLE, 12));
@@ -915,6 +931,7 @@ public class Main extends Activity {
         weatherBox.addView(sep, new LinearLayout.LayoutParams(Math.max(1, (int) s), (int) (18 * s)));
         if (!showCar) sep.setVisibility(View.GONE);   // sin saludo, sin separador
         weatherBox.setVisibility(View.GONE);
+        weatherBox.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { showWeatherDetail(); } });
         // Íconos de Wi-Fi y Bluetooth (2.17, Reinaldo y Daniel): ver si están activos sin abrir los ajustes
         wifiIc = null;
         btIc = null;
@@ -1083,7 +1100,8 @@ public class Main extends Activity {
 
     private void buildCarCard() {
         final FrameLayout card = card(carX, 64, 300, cardH, CARD);
-        final float dy = cardH - 380;   // barra de abajo compacta: la foto crece y la velocidad baja
+        // barra de abajo compacta: la foto crece y la velocidad baja; sin velocidad (carros sin GPS) la foto llena el resto
+        final float dy = cardH - 380 + (carSpeed ? 0 : 130);
         carTv = tv(prefs.getString("car_name", "Mi vehículo"), 20, TEXT, true);
         place(card, carTv, 20, 16, 260, 26);
         TextView chip = tv(prefs.getString("car_tag", ""), 11, Color.WHITE, true);
@@ -1122,6 +1140,7 @@ public class Main extends Activity {
         FrameLayout box = new FrameLayout(this);
         box.setBackground(round(INNER, 16));
         place(card, box, 12, 250 + dy, 276, 118);
+        if (!carSpeed) box.setVisibility(View.GONE);   // se arma igual: setGps y el kilometraje siguen funcionando
 
         LinearLayout lbl = new LinearLayout(this);
         lbl.setGravity(Gravity.CENTER_VERTICAL);
@@ -1152,7 +1171,8 @@ public class Main extends Activity {
         sv.addView(speedTv);
         sv.addView(kmh);
         placeWrap(box, sv, 16, 34);
-        buildOilBadge(box);
+        if (oilHome) buildOilBadge(box);
+        else { oilValTv = null; oilBar = null; oilBarBg = null; }
         // Oculta: se arma igual (la velocidad y el aceite siguen actualizándose sin fallar) pero no se muestra.
         if (!showCar) board.removeView(card);
         setGps(false, 0);
@@ -1512,13 +1532,26 @@ public class Main extends Activity {
             public void onClick(View v) { fixGps(); }
         });
 
-        final float panelY = cardH - 96, panelW = mapW - 24;
+        // 2.18: qué botones de conexión se ven (Reinaldo, MIGSGx #12). Con uno o ninguno, el clima usa el espacio libre.
+        String cm = prefs.getString("conn_buttons", "both");
+        boolean showAa = "both".equals(cm) || "aa".equals(cm), showCp = "both".equals(cm) || "cp".equals(cm);
+        int nBtn = (showAa ? 1 : 0) + (showCp ? 1 : 0);
+        boolean wx = nBtn < 2 && prefs.getBoolean("weather_on", true);
+        boolean hasPanel = nBtn > 0 || wx;
+        final float panelY = hasPanel ? cardH - 96 : cardH, panelW = mapW - 24;
         final FrameLayout panel = new FrameLayout(this);
         panel.setBackground(round((CARD & 0x00FFFFFF) | 0xEB000000, 16));
         place(card, panel, 12, panelY, panelW, 84);
+        if (!hasPanel) panel.setVisibility(View.GONE);
 
-        final View navBtn = circleIcon("map", 52, 26, (CARD & 0x00FFFFFF) | 0xEB000000);
-        place(card, navBtn, mapW - 64, panelY - 64, 52, 52);
+        // botón redondo del navegador: tamaño, lado u oculto (Tinoyevski #18, Andrés). Normal = el de siempre.
+        int nbSize = prefs.getInt("nav_btn_size", 0);   // 0 normal, 1 grande, 2 muy grande, 3 oculto
+        float nb = nbSize == 1 ? 68 : nbSize == 2 ? 84 : 52;
+        String nbSide = prefs.getString("nav_btn_side", "auto");
+        boolean nbLeft = "left".equals(nbSide) || ("auto".equals(nbSide) && playerLeft);
+        final View navBtn = circleIcon("map", nb, nb / 2, (CARD & 0x00FFFFFF) | 0xEB000000);
+        place(card, navBtn, nbLeft ? 12 : mapW - 12 - nb, panelY - 12 - nb, nb, nb);
+        if (nbSize == 3) navBtn.setVisibility(View.GONE);
         navBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { openNavApp(); }
         });
@@ -1526,14 +1559,27 @@ public class Main extends Activity {
             public boolean onLongClick(View v) { pickFor("nav_app", "Navegación"); return true; }
         });
 
-        float btnW = (panelW - 28) / 2;
-        View aa = projButton("navigation", "Android Auto", RED, true);
-        aaBtnTv = (TextView) aa.getTag();
-        place(panel, aa, 10, 10, btnW, 64);
-        View cp = projButton("phone_iphone", "CarPlay", BTN, false);
-        cpSubTv = (TextView) cp.getTag();
-        place(panel, cp, 18 + btnW, 10, btnW, 64);
+        float slotW = (panelW - 28) / 2, fullW = panelW - 20;
+        View aa = null, cp = null;
+        aaBtnTv = null; aaSubTv = null; cpSubTv = null;
+        float x = 10;
+        if (showAa) {
+            aa = projButton("navigation", "Android Auto", RED, true);
+            aaBtnTv = (TextView) aa.getTag();
+            float w = nBtn == 2 || wx ? slotW : fullW;
+            place(panel, aa, x, 10, w, 64);
+            x += w + 8;
+        }
+        if (showCp) {
+            cp = projButton("phone_iphone", "CarPlay", BTN, false);
+            cpSubTv = (TextView) cp.getTag();
+            float w = nBtn == 2 || wx ? slotW : fullW;
+            place(panel, cp, x, 10, w, 64);
+            x += w + 8;
+        }
         aaSubTv = aaBtnTv;
+        panelWx = null;
+        if (wx) buildPanelWeather(panel, x, nBtn == 0 ? fullW : slotW, nBtn == 0);
 
         // Android Auto / CarPlay plegables: una flechita los esconde para ver todo el mapa (Druids07, idea de Andrés).
         // Tocar o deslizar la flechita hacia arriba los muestra; hacia abajo (o deslizar los botones) los esconde.
@@ -1546,6 +1592,7 @@ public class Main extends Activity {
         place(card, handle, (mapW - 64) / 2, panelY - 28, 64, 24);
         final float shift = 96 * s;
         final View[] moving = {panel, navBtn, handle};
+        if (!hasPanel) handle.setVisibility(View.GONE);
         final boolean open0 = prefs.getBoolean("aa_panel_open", true);
         for (View v : moving) v.setTranslationY(open0 ? 0 : shift);
         chev.setRotation(open0 ? 90 : -90);
@@ -1586,22 +1633,206 @@ public class Main extends Activity {
                 return true;
             }
         };
-        aa.setOnTouchListener(swipeDown);
-        cp.setOnTouchListener(swipeDown);
-
-        aa.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { openAndroidAuto(); }
-        });
-        aa.setOnLongClickListener(new View.OnLongClickListener() {
-            public boolean onLongClick(View v) { chooseConnection(null); return true; }
-        });
-        cp.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { openCarPlay(); }
-        });
-        cp.setOnLongClickListener(new View.OnLongClickListener() {
-            public boolean onLongClick(View v) { pickFor("carplay", "CarPlay"); return true; }
-        });
+        if (panelWx != null) panelWx.setOnTouchListener(swipeDown);
+        if (aa != null) {
+            aa.setOnTouchListener(swipeDown);
+            aa.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) { openAndroidAuto(); }
+            });
+            aa.setOnLongClickListener(new View.OnLongClickListener() {
+                public boolean onLongClick(View v) { chooseConnection(null); return true; }
+            });
+        }
+        if (cp != null) {
+            cp.setOnTouchListener(swipeDown);
+            cp.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) { openCarPlay(); }
+            });
+            cp.setOnLongClickListener(new View.OnLongClickListener() {
+                public boolean onLongClick(View v) { pickFor("carplay", "CarPlay"); return true; }
+            });
+        }
         updateMapTag();
+    }
+
+    /**
+     * Clima en el panel del mapa (2.18, Reinaldo): ícono, temperatura, estado y máx/mín. A todo el ancho (sin botones
+     * de conexión) también muestra las próximas horas. Tocarlo abre el detalle.
+     */
+    private void buildPanelWeather(FrameLayout panel, float x, float w, boolean wide) {
+        LinearLayout b = new LinearLayout(this);
+        b.setGravity(Gravity.CENTER_VERTICAL);
+        b.setBackground(round(BTN, 14));
+        b.setPadding((int) (12 * s), 0, (int) (10 * s), 0);
+        panelWxIc = icon("cloud", 30);
+        b.addView(panelWxIc, new LinearLayout.LayoutParams((int) (30 * s), (int) (30 * s)));
+        panelWxTemp = tv("--°", 22, TEXT, true);
+        panelWxTemp.setPadding((int) (8 * s), 0, (int) (8 * s), 0);
+        b.addView(panelWxTemp);
+        LinearLayout col = new LinearLayout(this);
+        col.setOrientation(LinearLayout.VERTICAL);
+        panelWxDesc = tv("Clima", 13, TEXT, true);
+        panelWxHiLo = tv("", 11, MUTED, false);
+        panelWxHiLo.setPadding(0, (int) (3 * s), 0, 0);
+        col.addView(panelWxDesc);
+        col.addView(panelWxHiLo);
+        b.addView(col, new LinearLayout.LayoutParams(0, -2, 1));
+        panelWxHours = null;
+        if (wide) {
+            panelWxHours = new LinearLayout(this);
+            panelWxHours.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+            b.addView(panelWxHours, new LinearLayout.LayoutParams(-2, -1));
+        }
+        place(panel, b, x, 10, w, 64);
+        b.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { showWeatherDetail(); } });
+        panelWx = b;
+        showPanelWeather();
+    }
+
+    private String deg(double t) { return I18n.integer(Math.round(t)) + "°"; }
+
+    private String hourLabel(int hh) {
+        String fmt = prefs.getString("clock", "auto");
+        boolean h24 = "24".equals(fmt) || ("auto".equals(fmt) && android.text.format.DateFormat.is24HourFormat(this));
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, hh);
+        c.set(Calendar.MINUTE, 0);
+        return I18n.sdf(h24 ? "HH:mm" : "h a").format(c.getTime());
+    }
+
+    private void showPanelWeather() {
+        if (panelWx == null) return;
+        Weather.Now n = weatherNow;
+        if (n == null) {
+            panelWxIc.setImageBitmap(asset("ic/cloud.png"));
+            panelWxTemp.setText("--°");
+            panelWxDesc.setText(I18n.t("Clima"));
+            panelWxHiLo.setText(I18n.t(Double.isNaN(wLat) ? "Esperando la ubicación…" : "Cargando…"));
+            if (panelWxHours != null) panelWxHours.removeAllViews();
+            return;
+        }
+        panelWxIc.setImageBitmap(asset("ic/" + Weather.icon(n.code, n.day) + ".png"));
+        panelWxTemp.setText(deg(n.temp));
+        panelWxDesc.setText(I18n.t(Weather.describe(n.code)));
+        Weather.Day d = n.today();
+        String hl = d != null ? I18n.t("Máx " + deg(d.hi) + " · Mín " + deg(d.lo)) : (n.city != null ? n.city : "");
+        if (d != null && d.rain > 0 && panelWxHours != null) hl += " · " + I18n.t("Lluvia " + I18n.integer(d.rain) + "%");
+        panelWxHiLo.setText(hl);
+        if (panelWxHours != null) {
+            panelWxHours.removeAllViews();
+            for (int i = 1; i < n.hours.size() && i <= 3; i++) {
+                Weather.Hour hr = n.hours.get(i);
+                LinearLayout c = new LinearLayout(this);
+                c.setOrientation(LinearLayout.VERTICAL);
+                c.setGravity(Gravity.CENTER_HORIZONTAL);
+                c.addView(tv(hourLabel(hr.hour), 10, MUTED, false));
+                ImageView ic = icon(Weather.icon(hr.code, hr.day), 16);
+                c.addView(ic, new LinearLayout.LayoutParams((int) (16 * s), (int) (16 * s)));
+                c.addView(tv(deg(hr.temp), 12, TEXT, true));
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams((int) (52 * s), -2);
+                panelWxHours.addView(c, lp);
+            }
+        }
+    }
+
+    /** Probabilidad de lluvia con el ícono del paraguas (vacío si no va a llover). */
+    private View rainView(int pct, float size, int gravity) {
+        LinearLayout l = new LinearLayout(this);
+        l.setGravity(gravity);
+        if (pct > 0) {
+            ImageView u = icon("umbrella", size);
+            u.setAlpha(0.6f);
+            l.addView(u, new LinearLayout.LayoutParams((int) (size * s), (int) (size * s)));
+            TextView t = tv(I18n.integer(pct) + "%", size, MUTED, false);
+            t.setPadding((int) (3 * s), 0, 0, 0);
+            l.addView(t);
+        } else l.addView(tv(" ", size, MUTED, false));
+        return l;
+    }
+
+    /** Detalle del clima: ahora, próximas horas y los próximos días (tocando el clima de arriba o el del panel). */
+    private void showWeatherDetail() {
+        final Weather.Now n = weatherNow;
+        if (!prefs.getBoolean("weather_on", true)) { toast("El clima está apagado en Ajustes → Mapa y clima"); return; }
+        if (n == null) { toast(Double.isNaN(wLat) ? "Esperando la ubicación para el clima…" : "Cargando el clima…"); refreshWeatherNow(); return; }
+        int pad = (int) (20 * s);
+        LinearLayout box = new LinearLayout(this);
+        box.setOrientation(LinearLayout.VERTICAL);
+        box.setPadding(pad, pad / 2, pad, pad / 2);
+
+        LinearLayout head = new LinearLayout(this);
+        head.setGravity(Gravity.CENTER_VERTICAL);
+        head.addView(icon(Weather.icon(n.code, n.day), 48), new LinearLayout.LayoutParams((int) (48 * s), (int) (48 * s)));
+        TextView big = tv(deg(n.temp) + n.unit, 40, TEXT, true);
+        big.setPadding((int) (14 * s), 0, (int) (16 * s), 0);
+        head.addView(big);
+        LinearLayout hc = new LinearLayout(this);
+        hc.setOrientation(LinearLayout.VERTICAL);
+        hc.addView(tv(Weather.describe(n.code), 17, TEXT, true));
+        StringBuilder extra = new StringBuilder();
+        if (!Double.isNaN(n.feels)) extra.append(I18n.t("Sensación " + deg(n.feels)));
+        if (n.humidity >= 0) extra.append(extra.length() > 0 ? " · " : "").append(I18n.t("Humedad " + I18n.integer(n.humidity) + "%"));
+        if (!Double.isNaN(n.wind)) extra.append(extra.length() > 0 ? " · " : "").append(I18n.t("Viento " + I18n.integer(Math.round(n.wind)) + " " + n.windUnit));
+        TextView ex2 = tv(extra.toString(), 13, MUTED, false);
+        ex2.setSingleLine(false);
+        ex2.setPadding(0, (int) (4 * s), 0, 0);
+        hc.addView(ex2);
+        head.addView(hc, new LinearLayout.LayoutParams(0, -2, 1));
+        box.addView(head);
+
+        if (!n.hours.isEmpty()) {
+            TextView ht = tv("PRÓXIMAS HORAS", 11, MUTED, true);
+            ht.setPadding(0, (int) (16 * s), 0, (int) (6 * s));
+            box.addView(ht);
+            android.widget.HorizontalScrollView hs = new android.widget.HorizontalScrollView(this);
+            hs.setHorizontalScrollBarEnabled(false);
+            LinearLayout hrow = new LinearLayout(this);
+            for (int i = 0; i < n.hours.size(); i++) {
+                Weather.Hour hr = n.hours.get(i);
+                LinearLayout c = new LinearLayout(this);
+                c.setOrientation(LinearLayout.VERTICAL);
+                c.setGravity(Gravity.CENTER_HORIZONTAL);
+                c.addView(tv(i == 0 ? I18n.t("Ahora") : hourLabel(hr.hour), 11, MUTED, false));
+                c.addView(icon(Weather.icon(hr.code, hr.day), 22), new LinearLayout.LayoutParams((int) (22 * s), (int) (22 * s)));
+                c.addView(tv(deg(hr.temp), 14, TEXT, true));
+                c.addView(rainView(hr.rain, 10, Gravity.CENTER_HORIZONTAL));
+                hrow.addView(c, new LinearLayout.LayoutParams((int) (64 * s), -2));
+            }
+            hs.addView(hrow);
+            box.addView(hs);
+        }
+        if (n.days.size() > 1) {
+            TextView dt = tv("PRÓXIMOS DÍAS", 11, MUTED, true);
+            dt.setPadding(0, (int) (14 * s), 0, (int) (4 * s));
+            box.addView(dt);
+            java.text.SimpleDateFormat in = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US);
+            for (int i = 0; i < n.days.size(); i++) {
+                Weather.Day d = n.days.get(i);
+                String name;
+                if (i == 0) name = I18n.t("Hoy");
+                else {
+                    try { name = I18n.sdf("EEEE").format(in.parse(d.date)); } catch (Throwable e) { name = d.date; }
+                    if (name.length() > 0) name = Character.toUpperCase(name.charAt(0)) + name.substring(1);
+                }
+                LinearLayout r = new LinearLayout(this);
+                r.setGravity(Gravity.CENTER_VERTICAL);
+                r.setPadding(0, (int) (4 * s), 0, (int) (4 * s));
+                r.addView(tv(name, 14, TEXT, false), new LinearLayout.LayoutParams(0, -2, 1));
+                r.addView(icon(Weather.icon(d.code, true), 20), new LinearLayout.LayoutParams((int) (20 * s), (int) (20 * s)));
+                r.addView(rainView(d.rain, 12, Gravity.RIGHT | Gravity.CENTER_VERTICAL), new LinearLayout.LayoutParams((int) (64 * s), -2));
+                TextView t = tv(deg(d.hi) + " / " + deg(d.lo), 14, TEXT, true);
+                t.setGravity(Gravity.RIGHT);
+                r.addView(t, new LinearLayout.LayoutParams((int) (100 * s), -2));
+                box.addView(r);
+            }
+        }
+        android.widget.ScrollView sv = new android.widget.ScrollView(this);
+        sv.addView(box);
+        new TB(this, dlg())
+            .setTitle(n.city != null ? n.city : I18n.t("Clima"))
+            .setView(sv)
+            .setPositiveButton("Cerrar", null)
+            .show();
     }
 
     /** Botón de proyección: ícono + título + subtítulo (el subtítulo se guarda en getTag()). */
@@ -1828,6 +2059,8 @@ public class Main extends Activity {
             public void onClick(View v) { openMusicApp(); }
         });
         renderTrack();
+        // Oculta (2.18): se arma igual (la música sigue actualizándose sin fallar) pero no se muestra
+        if (!showPlayer) board.removeView(card);
     }
 
     private void buildWebCard() {
@@ -3079,9 +3312,26 @@ public class Main extends Activity {
         String title = already ? "La foto ya trae fondo transparente"
                 : cut == null ? "No se detectó un fondo liso (se usará tal cual)"
                 : "Vista previa · nivel " + (strength + 1) + " de 4" + (strength >= 2 ? " (también quita el reflejo del piso)" : "");
+        // 2.18 (Tinoyevski #18): usar la foto tal cual, sin recortar ni quitar el fondo (paisajes, fotos con fondo…)
+        LinearLayout col = new LinearLayout(this);
+        col.setOrientation(LinearLayout.VERTICAL);
+        col.addView(box);
+        final AlertDialog[] dref = new AlertDialog[1];
+        if (!already) {
+            TextView raw = tv("Usar la foto original, sin recortar ni quitar el fondo", 14, RED, true);
+            raw.setSingleLine(false);
+            raw.setGravity(Gravity.CENTER);
+            raw.setPadding(pad, pad / 2, pad, pad / 2);
+            raw.setOnClickListener(new View.OnClickListener() { public void onClick(View v) {
+                if (dref[0] != null) try { dref[0].dismiss(); } catch (Throwable ignored) { }
+                if (CarPhoto.save(Main.this, CarPhoto.scaled(src, 900))) { toast("Foto guardada"); rebuild(); }
+                else toast("No se pudo guardar la foto");
+            }});
+            col.addView(raw);
+        }
         AlertDialog.Builder b = new TB(this, dlg())
             .setTitle(title)
-            .setView(box)
+            .setView(col)
             .setPositiveButton("Usar esta", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface d, int w) {
                     if (CarPhoto.save(Main.this, shown)) { toast("Foto guardada"); rebuild(); }
@@ -3104,7 +3354,7 @@ public class Main extends Activity {
                 }
             });
         }
-        b.show();
+        dref[0] = b.show();
     }
 
     /** Diálogo de espera simple (compatible con Android 4.1). */
@@ -3249,6 +3499,7 @@ public class Main extends Activity {
     private void refreshWeatherNow() { weatherAt = 0; weatherNow = null; maybeWeather(); }
 
     private void showWeather() {
+        showPanelWeather();
         if (weatherBox == null) return;
         if (!prefs.getBoolean("weather_on", true) || weatherNow == null) { weatherBox.setVisibility(View.GONE); return; }
         weatherBox.setVisibility(View.VISIBLE);
@@ -3440,6 +3691,21 @@ public class Main extends Activity {
         }
     }
 
+    /** Fila que muestra la opción elegida y abre una lista para cambiarla (cuando las opciones no caben en botones). */
+    private void choice(LinearLayout card, final String title, String sub, final String[] opts, final int sel, final IntCb cb) {
+        row(card, title, sub, I18n.t(opts[Math.max(0, Math.min(opts.length - 1, sel))]), new Runnable() { public void run() {
+            String[] tr = new String[opts.length];
+            for (int i = 0; i < opts.length; i++) tr[i] = I18n.t(opts[i]);
+            new android.app.AlertDialog.Builder(Main.this, dlg())
+                .setTitle(I18n.t(title))
+                .setSingleChoiceItems(tr, sel, new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) {
+                    d.dismiss();
+                    cb.on(w);
+                }})
+                .show();
+        }});
+    }
+
     private void segmented(LinearLayout card, String title, String sub, String[] opts, int sel, final IntCb cb) {
         LinearLayout r = rowBase(card, title, sub);
         LinearLayout g = new LinearLayout(this);
@@ -3495,7 +3761,7 @@ public class Main extends Activity {
         row(c, "Nombre del vehículo", null, prefs.getString("car_name", "Mi vehículo"), edit("car_name", "Nombre del vehículo", "Mi vehículo"));
         row(c, "Etiqueta", "Versión o placa. Déjala vacía para ocultarla", prefs.getString("car_tag", ""), edit("car_tag", "Etiqueta (vacío para ocultarla)", ""));
         LinearLayout f = section(body, "Foto");
-        row(f, "Foto del vehículo", "Se recorta y se le quita el fondo automáticamente", CarPhoto.load(this) != null ? "Configurada" : "Sin foto",
+        row(f, "Foto del vehículo", "Se le quita el fondo automáticamente, o la puedes usar tal cual", CarPhoto.load(this) != null ? "Configurada" : "Sin foto",
             new Runnable() { public void run() { photoMenu(); } });
         LinearLayout o = section(body, "Cambio de aceite");
         toggle(o, "Recordatorio de cambio de aceite", "Se muestra al lado de la velocidad y avisa cuando toca", oilOn(), new IntCb() { public void on(int i) {
@@ -3559,6 +3825,38 @@ public class Main extends Activity {
         toggle(lay, "Tarjeta del vehículo", "Si la ocultas, la velocidad pasa arriba y el mapa y el reproductor ganan espacio", showCar, new IntCb() { public void on(int i) {
             prefs.edit().putBoolean("show_car", i == 1).apply(); rebuild();
         }});
+        toggle(lay, "Velocidad y servicio", "En la tarjeta del vehículo (o arriba si la ocultas). Apágalo si tu carro o pantalla no tiene GPS: la foto ocupa ese espacio",
+            carSpeed, new IntCb() { public void on(int i) {
+                prefs.edit().putBoolean("car_speed", i == 1).apply(); rebuild();
+            }});
+        if (carSpeed) {
+            toggle(lay, "Aceite en el inicio", "Junto a la velocidad. Aunque lo ocultes, el aviso del cambio de aceite sigue saliendo",
+                oilHome, new IntCb() { public void on(int i) {
+                    prefs.edit().putBoolean("oil_home", i == 1).apply(); rebuild();
+                }});
+        }
+        toggle(lay, "Tarjeta del reproductor", "Si la ocultas, el mapa gana espacio", showPlayer, new IntCb() { public void on(int i) {
+            prefs.edit().putBoolean("show_player", i == 1).apply(); rebuild();
+        }});
+        final String[] connKeys = {"both", "aa", "cp", "none"};
+        choice(lay, "Botones de conexión", "Con uno o ninguno, el clima ocupa el espacio libre del mapa",
+            new String[]{"Android Auto y CarPlay", "Solo Android Auto", "Solo CarPlay", "Ninguno"},
+            Math.max(0, java.util.Arrays.asList(connKeys).indexOf(prefs.getString("conn_buttons", "both"))), new IntCb() { public void on(int i) {
+                prefs.edit().putString("conn_buttons", connKeys[i]).apply(); rebuild();
+            }});
+        final int nbSize = prefs.getInt("nav_btn_size", 0);
+        choice(lay, "Botón del navegador", "El botón redondo del mapa que abre tu app de navegación",
+            new String[]{"Normal", "Grande", "Muy grande", "Oculto"}, nbSize, new IntCb() { public void on(int i) {
+                prefs.edit().putInt("nav_btn_size", i).apply(); rebuild();
+            }});
+        if (nbSize != 3) {
+            final String[] sideKeys = {"auto", "left", "right"};
+            segmented(lay, "Lado del botón del navegador", "Automático: del lado del reproductor (el del conductor)",
+                new String[]{"Automático", "Izquierda", "Derecha"},
+                Math.max(0, java.util.Arrays.asList(sideKeys).indexOf(prefs.getString("nav_btn_side", "auto"))), new IntCb() { public void on(int i) {
+                    prefs.edit().putString("nav_btn_side", sideKeys[i]).apply(); rebuild();
+                }});
+        }
         segmented(lay, "Barra de botones", "Lateral: los botones van al costado y todo se ve más grande en pantallas bajas como 1280×480", new String[]{"Normal", "Compacta", "Lateral"},
             sideDock ? 2 : compactDock ? 1 : 0, new IntCb() { public void on(int i) {
                 prefs.edit().putString("dock_mode", i == 2 ? "side" : i == 1 ? "compact" : "normal").apply(); rebuild();
@@ -4405,18 +4703,20 @@ public class Main extends Activity {
     }
 
     private void refreshStates() {
-        if (aaBtnTv == null) return;
-        String nat = nativeProjectionApp();
-        String aaSaved = prefs.getString("aa", null);
-        String chosen = prefs.getString("conn_app", null);
-        if (aaSaved != null) aaBtnTv.setText(labelOf(aaSaved));
-        else if (chosen != null && installed(chosen)) aaBtnTv.setText(labelOf(chosen));
-        else if (connCandidates().size() > 1) aaBtnTv.setText(I18n.t("Toca para elegir"));
-        else if (nat != null) aaBtnTv.setText(labelOf(nat));
-        else if (installed(PKG_HUR)) aaBtnTv.setText("Open Headunit · USB");
-        else aaBtnTv.setText(I18n.t("Toca para instalar"));
+        if (aaBtnTv == null && cpSubTv == null) return;
+        if (aaBtnTv != null) {   // 2.18: con «Solo CarPlay» no hay botón de Android Auto
+            String nat = nativeProjectionApp();
+            String aaSaved = prefs.getString("aa", null);
+            String chosen = prefs.getString("conn_app", null);
+            if (aaSaved != null) aaBtnTv.setText(labelOf(aaSaved));
+            else if (chosen != null && installed(chosen)) aaBtnTv.setText(labelOf(chosen));
+            else if (connCandidates().size() > 1) aaBtnTv.setText(I18n.t("Toca para elegir"));
+            else if (nat != null) aaBtnTv.setText(labelOf(nat));
+            else if (installed(PKG_HUR)) aaBtnTv.setText("Open Headunit · USB");
+            else aaBtnTv.setText(I18n.t("Toca para instalar"));
+        }
         String cpApp = carPlayApp();
-        cpSubTv.setText(cpApp != null ? labelOf(cpApp) : I18n.t("Pantalla o adaptador"));
+        if (cpSubTv != null) cpSubTv.setText(cpApp != null ? labelOf(cpApp) : I18n.t("Pantalla o adaptador"));
         updatePlayIcon();
     }
 

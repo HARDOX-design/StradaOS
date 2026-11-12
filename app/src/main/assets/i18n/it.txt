@@ -645,3 +645,38 @@ Tema según el modo oscuro del sistema	Tema secondo la modalità scura del siste
 Pantallas que lo cambian (p. ej. con las luces)	Schermi che lo cambiano (es. con i fari)
 el sistema está en modo oscuro	il sistema è in modalità scura
 el sistema está en modo claro	il sistema è in modalità chiara
+# 2.18: botones de conexión, clima detallado, ocultar velocidad/aceite/reproductor, botón del navegador, foto tal cual
+Cargando…	Caricamento…
+Esperando la ubicación…	In attesa della posizione…
+Máx {} · Mín {}	Max {} · Min {}
+Sensación {}	Percepita {}
+Humedad {}	Umidità {}
+Viento {}	Vento {}
+PRÓXIMAS HORAS	PROSSIME ORE
+PRÓXIMOS DÍAS	PROSSIMI GIORNI
+Ahora	Ora
+Hoy	Oggi
+El clima está apagado en Ajustes → Mapa y clima	Il meteo è spento in Impostazioni → Mappa e meteo
+Esperando la ubicación para el clima…	In attesa della posizione per il meteo…
+Cargando el clima…	Caricamento del meteo…
+Velocidad y servicio	Velocità e manutenzione
+En la tarjeta del vehículo (o arriba si la ocultas). Apágalo si tu carro o pantalla no tiene GPS: la foto ocupa ese espacio	Nella scheda del veicolo (o in alto se la nascondi). Spegnilo se l'auto o lo schermo non ha GPS: la foto occupa quello spazio
+Aceite en el inicio	Olio nella schermata iniziale
+Junto a la velocidad. Aunque lo ocultes, el aviso del cambio de aceite sigue saliendo	Accanto alla velocità. Anche se lo nascondi, l'avviso del cambio olio continua ad apparire
+Tarjeta del reproductor	Scheda del lettore
+Si la ocultas, el mapa gana espacio	Se la nascondi, la mappa guadagna spazio
+Botones de conexión	Pulsanti di connessione
+Con uno o ninguno, el clima ocupa el espacio libre del mapa	Con uno o nessuno, il meteo occupa lo spazio libero della mappa
+Android Auto y CarPlay	Android Auto e CarPlay
+Solo Android Auto	Solo Android Auto
+Solo CarPlay	Solo CarPlay
+Botón del navegador	Pulsante del navigatore
+El botón redondo del mapa que abre tu app de navegación	Il pulsante rotondo della mappa che apre la tua app di navigazione
+Grande	Grande
+Muy grande	Molto grande
+Oculto	Nascosto
+Lado del botón del navegador	Lato del pulsante del navigatore
+Automático: del lado del reproductor (el del conductor)	Automatico: dal lato del lettore (quello del conducente)
+Usar la foto original, sin recortar ni quitar el fondo	Usa la foto originale, senza ritagliare né togliere lo sfondo
+Se le quita el fondo automáticamente, o la puedes usar tal cual	Lo sfondo viene tolto automaticamente, oppure puoi usarla così com'è
+Lluvia {}	Pioggia {}

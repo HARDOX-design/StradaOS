@@ -163,6 +163,14 @@ public class CarPhoto {
         return 255;
     }
 
+    /** La foto tal cual (2.18), solo achicada para no gastar memoria: lado mayor ≤ max. */
+    public static Bitmap scaled(Bitmap b, int max) {
+        int w = b.getWidth(), h = b.getHeight();
+        float k = Math.min(1f, max / (float) Math.max(w, h));
+        if (k >= 1f) return b;
+        return Bitmap.createScaledBitmap(b, Math.max(1, Math.round(w * k)), Math.max(1, Math.round(h * k)), true);
+    }
+
     /** Recorta a lo visible y ajusta al recuadro del launcher (proporción 264x160), sin deformar. */
     public static Bitmap fitToCard(Bitmap b) {
         int w = b.getWidth(), h = b.getHeight();

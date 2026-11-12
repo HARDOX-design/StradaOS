@@ -645,3 +645,38 @@ Tema según el modo oscuro del sistema	Tema conforme o modo escuro do sistema
 Pantallas que lo cambian (p. ej. con las luces)	Telas que o mudam (ex.: com os faróis)
 el sistema está en modo oscuro	o sistema está no modo escuro
 el sistema está en modo claro	o sistema está no modo claro
+# 2.18: botones de conexión, clima detallado, ocultar velocidad/aceite/reproductor, botón del navegador, foto tal cual
+Cargando…	Carregando…
+Esperando la ubicación…	Aguardando a localização…
+Máx {} · Mín {}	Máx {} · Mín {}
+Sensación {}	Sensação {}
+Humedad {}	Umidade {}
+Viento {}	Vento {}
+PRÓXIMAS HORAS	PRÓXIMAS HORAS
+PRÓXIMOS DÍAS	PRÓXIMOS DIAS
+Ahora	Agora
+Hoy	Hoje
+El clima está apagado en Ajustes → Mapa y clima	O clima está desligado em Ajustes → Mapa e clima
+Esperando la ubicación para el clima…	Aguardando a localização para o clima…
+Cargando el clima…	Carregando o clima…
+Velocidad y servicio	Velocidade e manutenção
+En la tarjeta del vehículo (o arriba si la ocultas). Apágalo si tu carro o pantalla no tiene GPS: la foto ocupa ese espacio	No cartão do veículo (ou no topo se você ocultá-lo). Desligue se o carro ou a tela não tiver GPS: a foto ocupa esse espaço
+Aceite en el inicio	Óleo na tela inicial
+Junto a la velocidad. Aunque lo ocultes, el aviso del cambio de aceite sigue saliendo	Ao lado da velocidade. Mesmo oculto, o aviso de troca de óleo continua aparecendo
+Tarjeta del reproductor	Cartão do player
+Si la ocultas, el mapa gana espacio	Se você ocultar, o mapa ganha espaço
+Botones de conexión	Botões de conexão
+Con uno o ninguno, el clima ocupa el espacio libre del mapa	Com um ou nenhum, o clima ocupa o espaço livre do mapa
+Android Auto y CarPlay	Android Auto e CarPlay
+Solo Android Auto	Só Android Auto
+Solo CarPlay	Só CarPlay
+Botón del navegador	Botão do navegador
+El botón redondo del mapa que abre tu app de navegación	O botão redondo do mapa que abre seu app de navegação
+Grande	Grande
+Muy grande	Muito grande
+Oculto	Oculto
+Lado del botón del navegador	Lado do botão do navegador
+Automático: del lado del reproductor (el del conductor)	Automático: do lado do player (o do motorista)
+Usar la foto original, sin recortar ni quitar el fondo	Usar a foto original, sem cortar nem remover o fundo
+Se le quita el fondo automáticamente, o la puedes usar tal cual	O fundo é removido automaticamente, ou você pode usá-la como está
+Lluvia {}	Chuva {}

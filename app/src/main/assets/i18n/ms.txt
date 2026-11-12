@@ -645,3 +645,38 @@ Tema según el modo oscuro del sistema	Tema ikut mod gelap sistem
 Pantallas que lo cambian (p. ej. con las luces)	Skrin yang menukarnya (cth. dengan lampu)
 el sistema está en modo oscuro	sistem dalam mod gelap
 el sistema está en modo claro	sistem dalam mod cerah
+# 2.18: botones de conexión, clima detallado, ocultar velocidad/aceite/reproductor, botón del navegador, foto tal cual
+Cargando…	Memuatkan…
+Esperando la ubicación…	Menunggu lokasi…
+Máx {} · Mín {}	Maks {} · Min {}
+Sensación {}	Terasa seperti {}
+Humedad {}	Kelembapan {}
+Viento {}	Angin {}
+PRÓXIMAS HORAS	JAM BERIKUTNYA
+PRÓXIMOS DÍAS	HARI BERIKUTNYA
+Ahora	Sekarang
+Hoy	Hari ini
+El clima está apagado en Ajustes → Mapa y clima	Cuaca dimatikan dalam Tetapan → Peta dan cuaca
+Esperando la ubicación para el clima…	Menunggu lokasi untuk cuaca…
+Cargando el clima…	Memuatkan cuaca…
+Velocidad y servicio	Kelajuan dan servis
+En la tarjeta del vehículo (o arriba si la ocultas). Apágalo si tu carro o pantalla no tiene GPS: la foto ocupa ese espacio	Pada kad kenderaan (atau di atas jika anda sembunyikannya). Matikan jika kereta atau skrin tiada GPS: foto akan mengisi ruang itu
+Aceite en el inicio	Minyak di skrin utama
+Junto a la velocidad. Aunque lo ocultes, el aviso del cambio de aceite sigue saliendo	Di sebelah kelajuan. Walaupun disembunyikan, amaran tukar minyak tetap muncul
+Tarjeta del reproductor	Kad pemain muzik
+Si la ocultas, el mapa gana espacio	Jika disembunyikan, peta mendapat lebih ruang
+Botones de conexión	Butang sambungan
+Con uno o ninguno, el clima ocupa el espacio libre del mapa	Dengan satu atau tiada, cuaca mengisi ruang kosong pada peta
+Android Auto y CarPlay	Android Auto dan CarPlay
+Solo Android Auto	Android Auto sahaja
+Solo CarPlay	CarPlay sahaja
+Botón del navegador	Butang navigasi
+El botón redondo del mapa que abre tu app de navegación	Butang bulat peta yang membuka aplikasi navigasi anda
+Grande	Besar
+Muy grande	Sangat besar
+Oculto	Disembunyikan
+Lado del botón del navegador	Kedudukan butang navigasi
+Automático: del lado del reproductor (el del conductor)	Automatik: di sebelah pemain muzik (sebelah pemandu)
+Usar la foto original, sin recortar ni quitar el fondo	Guna foto asal, tanpa memotong atau membuang latar belakang
+Se le quita el fondo automáticamente, o la puedes usar tal cual	Latar belakang dibuang secara automatik, atau anda boleh gunakannya seadanya
+Lluvia {}	Hujan {}

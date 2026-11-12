@@ -645,3 +645,38 @@ Tema según el modo oscuro del sistema	سمة تتبع الوضع الداكن �
 Pantallas que lo cambian (p. ej. con las luces)	الشاشات التي تغيّره (مثلًا مع الأضواء)
 el sistema está en modo oscuro	النظام في الوضع الداكن
 el sistema está en modo claro	النظام في الوضع الفاتح
+# 2.18: botones de conexión, clima detallado, ocultar velocidad/aceite/reproductor, botón del navegador, foto tal cual
+Cargando…	جارٍ التحميل…
+Esperando la ubicación…	في انتظار الموقع…
+Máx {} · Mín {}	العظمى {} · الصغرى {}
+Sensación {}	المحسوسة {}
+Humedad {}	الرطوبة {}
+Viento {}	الرياح {}
+PRÓXIMAS HORAS	الساعات القادمة
+PRÓXIMOS DÍAS	الأيام القادمة
+Ahora	الآن
+Hoy	اليوم
+El clima está apagado en Ajustes → Mapa y clima	الطقس متوقف في الإعدادات ← الخريطة والطقس
+Esperando la ubicación para el clima…	في انتظار الموقع لعرض الطقس…
+Cargando el clima…	جارٍ تحميل الطقس…
+Velocidad y servicio	السرعة والصيانة
+En la tarjeta del vehículo (o arriba si la ocultas). Apágalo si tu carro o pantalla no tiene GPS: la foto ocupa ese espacio	في بطاقة المركبة (أو في الأعلى إذا أخفيتها). أوقفه إذا لم يكن في سيارتك أو شاشتك GPS: ستشغل الصورة تلك المساحة
+Aceite en el inicio	الزيت في الشاشة الرئيسية
+Junto a la velocidad. Aunque lo ocultes, el aviso del cambio de aceite sigue saliendo	بجانب السرعة. حتى لو أخفيته، سيظل تنبيه تغيير الزيت يظهر
+Tarjeta del reproductor	بطاقة المشغّل
+Si la ocultas, el mapa gana espacio	إذا أخفيتها، تحصل الخريطة على مساحة أكبر
+Botones de conexión	أزرار الاتصال
+Con uno o ninguno, el clima ocupa el espacio libre del mapa	مع زر واحد أو بدون أزرار، يملأ الطقس المساحة الفارغة في الخريطة
+Android Auto y CarPlay	Android Auto وCarPlay
+Solo Android Auto	Android Auto فقط
+Solo CarPlay	CarPlay فقط
+Botón del navegador	زر الملاحة
+El botón redondo del mapa que abre tu app de navegación	زر الخريطة الدائري الذي يفتح تطبيق الملاحة
+Grande	كبير
+Muy grande	كبير جدًا
+Oculto	مخفي
+Lado del botón del navegador	جانب زر الملاحة
+Automático: del lado del reproductor (el del conductor)	تلقائي: في جهة المشغّل (جهة السائق)
+Usar la foto original, sin recortar ni quitar el fondo	استخدم الصورة الأصلية دون قص أو إزالة الخلفية
+Se le quita el fondo automáticamente, o la puedes usar tal cual	تتم إزالة الخلفية تلقائيًا، أو يمكنك استخدامها كما هي
+Lluvia {}	مطر {}

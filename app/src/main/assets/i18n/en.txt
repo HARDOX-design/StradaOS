@@ -645,3 +645,38 @@ Tema según el modo oscuro del sistema	Theme that follows the system dark mode
 Pantallas que lo cambian (p. ej. con las luces)	Screens that switch it (e.g. with the headlights)
 el sistema está en modo oscuro	the system is in dark mode
 el sistema está en modo claro	the system is in light mode
+# 2.18: botones de conexión, clima detallado, ocultar velocidad/aceite/reproductor, botón del navegador, foto tal cual
+Cargando…	Loading…
+Esperando la ubicación…	Waiting for location…
+Máx {} · Mín {}	High {} · Low {}
+Sensación {}	Feels like {}
+Humedad {}	Humidity {}
+Viento {}	Wind {}
+PRÓXIMAS HORAS	NEXT HOURS
+PRÓXIMOS DÍAS	NEXT DAYS
+Ahora	Now
+Hoy	Today
+El clima está apagado en Ajustes → Mapa y clima	Weather is off in Settings → Map & weather
+Esperando la ubicación para el clima…	Waiting for location to get the weather…
+Cargando el clima…	Loading the weather…
+Velocidad y servicio	Speed and service
+En la tarjeta del vehículo (o arriba si la ocultas). Apágalo si tu carro o pantalla no tiene GPS: la foto ocupa ese espacio	On the vehicle card (or at the top if you hide it). Turn it off if your car or screen has no GPS: the photo takes that space
+Aceite en el inicio	Oil on the home screen
+Junto a la velocidad. Aunque lo ocultes, el aviso del cambio de aceite sigue saliendo	Next to the speed. Even if you hide it, the oil change alert still shows up
+Tarjeta del reproductor	Player card
+Si la ocultas, el mapa gana espacio	If you hide it, the map gets more space
+Botones de conexión	Connection buttons
+Con uno o ninguno, el clima ocupa el espacio libre del mapa	With one or none, the weather fills the free space on the map
+Android Auto y CarPlay	Android Auto and CarPlay
+Solo Android Auto	Android Auto only
+Solo CarPlay	CarPlay only
+Botón del navegador	Navigation button
+El botón redondo del mapa que abre tu app de navegación	The round map button that opens your navigation app
+Grande	Large
+Muy grande	Extra large
+Oculto	Hidden
+Lado del botón del navegador	Navigation button side
+Automático: del lado del reproductor (el del conductor)	Automatic: on the player's side (the driver's side)
+Usar la foto original, sin recortar ni quitar el fondo	Use the original photo, without cropping or removing the background
+Se le quita el fondo automáticamente, o la puedes usar tal cual	The background is removed automatically, or you can use it as is
+Lluvia {}	Rain {}
