@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="acc_desc">يتيح لـ StradaOS عرض غلاف الألبوم والمقطع من Android Auto عبر قراءة إشعار Open Headunit. لا يقرأ أي شيء آخر.</string>
+    <string name="acc_label">غلاف ألبوم Android Auto</string>
+</resources>

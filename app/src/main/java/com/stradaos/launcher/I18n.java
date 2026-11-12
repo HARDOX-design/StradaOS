@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Idiomas de StradaOS (español, inglés, portugués, italiano, alemán, malayo). El código se escribe en español y cada texto se traduce al
+ * Idiomas de StradaOS (español, inglés, portugués, italiano, alemán, malayo, árabe). El código se escribe en español y cada texto se traduce al
  * mostrarse (tv(), toast(), ventanas TB, etc.) buscándolo en assets/i18n/LANG.txt.
  *
  * Formato del archivo: una línea por texto, «español<TAB>traducción». «\n» representa un salto de línea.
@@ -21,11 +21,13 @@ import java.util.regex.Pattern;
  * tabla. En la traducción, {1}, {2}… permiten cambiar el orden. Si un texto no está en la tabla queda en español.
  */
 public class I18n {
-    static final String[] CODES = {"es", "en", "pt", "it", "de", "ms"};
-    static final String[] NAMES = {"Español", "English", "Português", "Italiano", "Deutsch", "Melayu"};
+    static final String[] CODES = {"es", "en", "pt", "it", "de", "ms", "ar"};
+    static final String[] NAMES = {"Español", "English", "Português", "Italiano", "Deutsch", "Melayu", "العربية"};
 
     static String lang = "es";
     static Locale loc = new Locale("es", "CO");
+    /** Locale de los números: en árabe se usan dígitos latinos (0-9), no ٠-٩. */
+    static Locale num = loc;
     private static final HashMap<String, String> map = new HashMap<String, String>();
     private static final List<Pat> pats = new ArrayList<Pat>();
     private static final HashMap<String, String> cache = new HashMap<String, String>();
@@ -36,7 +38,7 @@ public class I18n {
         int lit;   // letras fijas: se prueban primero los patrones más específicos
     }
 
-    /** Idioma guardado («auto», «es», «en», «pt», «it», «de», «ms»). Instalaciones anteriores a los idiomas siguen en español. */
+    /** Idioma guardado («auto», «es», «en», «pt», «it», «de», «ms», «ar»). Instalaciones anteriores a los idiomas siguen en español. */
     static String pref(SharedPreferences p) {
         String v = p.getString("lang", null);
         if (v == null) {
@@ -63,7 +65,9 @@ public class I18n {
         lang = code;
         loc = "en".equals(code) ? Locale.US : "pt".equals(code) ? new Locale("pt", "BR")
             : "it".equals(code) ? Locale.ITALY : "de".equals(code) ? Locale.GERMANY
-            : "ms".equals(code) ? new Locale("ms", "MY") : new Locale("es", "CO");
+            : "ms".equals(code) ? new Locale("ms", "MY") : "ar".equals(code) ? new Locale("ar")
+            : new Locale("es", "CO");
+        num = "ar".equals(code) ? Locale.US : loc;
         map.clear();
         pats.clear();
         cache.clear();
@@ -127,7 +131,7 @@ public class I18n {
 
     /** Texto con %s, %d… (formato de Java) traducido y luego completado. */
     static String f(String es, Object... args) {
-        return String.format(loc, t(es), args);
+        return String.format(num, t(es), args);
     }
 
     private static synchronized String tr(String s, int depth) {
@@ -177,12 +181,32 @@ public class I18n {
         return out;
     }
 
+    /** Números enteros con el locale de los números (dígitos latinos en árabe). */
+    static String integer(long v) {
+        return java.text.NumberFormat.getIntegerInstance(num).format(v);
+    }
+
+    /** Fecha/hora con nombres del idioma pero dígitos latinos (en árabe, Android usaría ٠-٩). */
+    static java.text.DateFormat latin(java.text.DateFormat df) {
+        if (num != loc) {
+            java.text.NumberFormat nf = java.text.NumberFormat.getIntegerInstance(num);
+            nf.setGroupingUsed(false);
+            df.setNumberFormat(nf);
+        }
+        return df;
+    }
+
+    static java.text.SimpleDateFormat sdf(String pattern) {
+        return (java.text.SimpleDateFormat) latin(new java.text.SimpleDateFormat(pattern, loc));
+    }
+
     /** Patrón de la fecha de la pantalla de inicio. */
     static String datePattern() {
         if ("en".equals(lang)) return "EEEE, MMMM d";
         if ("it".equals(lang)) return "EEEE d MMMM";
         if ("de".equals(lang)) return "EEEE, d. MMMM";
         if ("ms".equals(lang)) return "EEEE, d MMMM";
+        if ("ar".equals(lang)) return "EEEE، d MMMM";
         return "EEEE, d 'de' MMMM";
     }
 }

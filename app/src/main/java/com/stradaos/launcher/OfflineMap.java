@@ -742,7 +742,7 @@ public class OfflineMap {
     }
 
     String describe() {
-        java.text.DateFormat df = java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM, I18n.loc);
+        java.text.DateFormat df = I18n.latin(java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM, I18n.loc));
         return file.getName() + " · " + (fileSize / (1024 * 1024)) + " MB · " + df.format(new java.util.Date(mapDate));
     }
 }
