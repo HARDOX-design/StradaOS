@@ -927,20 +927,18 @@ public class Main extends Activity {
             row.addView(topSpeedTv);
         }
         topOilTv = null;
+        topIconName = null;
         if (!showCar && oilHome) {
             // …y también el aceite (toca para abrir su menú), para que no se pierda al ocultar la tarjeta
             topOilTv = tv("", 13, TEXT, true);
             topOilTv.setBackground(round(CIRCLE, 12));
             topOilTv.setPadding((int) (10 * s), (int) (4 * s), (int) (12 * s), (int) (4 * s));
-            android.graphics.drawable.BitmapDrawable di = new android.graphics.drawable.BitmapDrawable(getResources(), asset("ic/water_drop.png"));
-            di.setBounds(0, 0, (int) (14 * s), (int) (14 * s));
-            if (ICON != 0xFFFFFFFF) di.setColorFilter(ICON, android.graphics.PorterDuff.Mode.SRC_IN);
-            topOilTv.setCompoundDrawables(di, null, null, null);
+            setTopIcon("water_drop");
             topOilTv.setCompoundDrawablePadding((int) (6 * s));
             LinearLayout.LayoutParams olp = new LinearLayout.LayoutParams(-2, -2);
             olp.leftMargin = (int) (14 * s);
             row.addView(topOilTv, olp);
-            topOilTv.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { oilMenu(); } });
+            topOilTv.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { badgeMenu(); } });
         }
         placeWrap(board, row, ox + 24, 10);
 
@@ -1338,6 +1336,7 @@ public class Main extends Activity {
         badgeTask = ni;
         if (ni >= 0) { showTaskBadge(ni); return; }
         if (oilLblTv != null) { oilLblTv.setText(I18n.t("Aceite")); oilIc.setImageBitmap(asset("ic/water_drop.png")); }
+        setTopIcon("water_drop");
         if (topOilTv != null) {
             float l = oilNextKm() - odoKm();
             float iv = Math.max(1, prefs.getFloat("oil_interval_km", 5000));
@@ -1675,12 +1674,24 @@ public class Main extends Activity {
         return bi;
     }
 
+    /** Ícono de la píldora de arriba (aceite o el mantenimiento que se esté mostrando). */
+    private String topIconName;
+    private void setTopIcon(String name) {
+        if (topOilTv == null || name.equals(topIconName) && topOilTv.getCompoundDrawables()[0] != null) return;
+        topIconName = name;
+        android.graphics.drawable.BitmapDrawable di = new android.graphics.drawable.BitmapDrawable(getResources(), asset("ic/" + name + ".png"));
+        di.setBounds(0, 0, (int) (14 * s), (int) (14 * s));
+        if (ICON != 0xFFFFFFFF) di.setColorFilter(ICON, android.graphics.PorterDuff.Mode.SRC_IN);
+        topOilTv.setCompoundDrawables(di, null, null, null);
+    }
+
     private void showTaskBadge(int i) {
         org.json.JSONObject o = maint().get(i);
         double f = taskFrac(o);
         String left = taskLeftText(o);
         boolean due = f <= 0, warn = f < 0.1;
         if (topOilTv != null) {
+            setTopIcon(taskIcon(o));
             topOilTv.setText(due ? I18n.t("¡Toca: " + taskName(o) + "!") : taskName(o) + ": " + left);
             topOilTv.setTextColor(warn ? RED : TEXT);
         }
