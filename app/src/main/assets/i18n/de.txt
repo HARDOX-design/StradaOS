@@ -752,6 +752,15 @@ Es hora de: {}	Zeit für: {}
 Cada {}	Alle {}
 cada {} mes	alle {} Monat
 cada {} meses	alle {} Monate
+¿Cada cuánto tiempo?	Wie oft?
+Días	Tage
+Semanas	Wochen
+Meses	Monate
+cada día	jeden Tag
+cada semana	jede Woche
+cada mes	jeden Monat
+cada {} días	alle {} Tage
+cada {} semanas	alle {} Wochen
 (lo primero)	(was zuerst eintritt)
 {} meses	{} Monate
 {} día	{} Tag

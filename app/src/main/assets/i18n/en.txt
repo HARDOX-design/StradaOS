@@ -752,6 +752,15 @@ Es hora de: {}	Time for: {}
 Cada {}	Every {}
 cada {} mes	every {} month
 cada {} meses	every {} months
+¿Cada cuánto tiempo?	How often?
+Días	Days
+Semanas	Weeks
+Meses	Months
+cada día	every day
+cada semana	every week
+cada mes	every month
+cada {} días	every {} days
+cada {} semanas	every {} weeks
 (lo primero)	(whichever first)
 {} meses	{} months
 {} día	{} day

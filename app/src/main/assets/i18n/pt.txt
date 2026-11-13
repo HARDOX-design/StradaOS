@@ -752,6 +752,15 @@ Es hora de: {}	Hora de: {}
 Cada {}	A cada {}
 cada {} mes	a cada {} mês
 cada {} meses	a cada {} meses
+¿Cada cuánto tiempo?	De quanto em quanto tempo?
+Días	Dias
+Semanas	Semanas
+Meses	Meses
+cada día	todo dia
+cada semana	toda semana
+cada mes	todo mês
+cada {} días	a cada {} dias
+cada {} semanas	a cada {} semanas
 (lo primero)	(o que vier primeiro)
 {} meses	{} meses
 {} día	{} dia

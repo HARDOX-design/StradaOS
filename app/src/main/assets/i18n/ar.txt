@@ -752,6 +752,15 @@ Es hora de: {}	حان وقت: {}
 Cada {}	كل {}
 cada {} mes	كل {} شهر
 cada {} meses	كل {} أشهر
+¿Cada cuánto tiempo?	كل كم من الوقت؟
+Días	أيام
+Semanas	أسابيع
+Meses	أشهر
+cada día	كل يوم
+cada semana	كل أسبوع
+cada mes	كل شهر
+cada {} días	كل {} أيام
+cada {} semanas	كل {} أسابيع
 (lo primero)	(أيهما أقرب)
 {} meses	{} أشهر
 {} día	{} يوم

@@ -752,6 +752,15 @@ Es hora de: {}	È ora di: {}
 Cada {}	Ogni {}
 cada {} mes	ogni {} mese
 cada {} meses	ogni {} mesi
+¿Cada cuánto tiempo?	Ogni quanto tempo?
+Días	Giorni
+Semanas	Settimane
+Meses	Mesi
+cada día	ogni giorno
+cada semana	ogni settimana
+cada mes	ogni mese
+cada {} días	ogni {} giorni
+cada {} semanas	ogni {} settimane
 (lo primero)	(ciò che arriva prima)
 {} meses	{} mesi
 {} día	{} giorno

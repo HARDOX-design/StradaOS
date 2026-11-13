@@ -752,6 +752,15 @@ Es hora de: {}	Masa untuk: {}
 Cada {}	Setiap {}
 cada {} mes	setiap {} bulan
 cada {} meses	setiap {} bulan
+¿Cada cuánto tiempo?	Berapa kerap?
+Días	Hari
+Semanas	Minggu
+Meses	Bulan
+cada día	setiap hari
+cada semana	setiap minggu
+cada mes	setiap bulan
+cada {} días	setiap {} hari
+cada {} semanas	setiap {} minggu
 (lo primero)	(yang mana dahulu)
 {} meses	{} bulan
 {} día	{} hari

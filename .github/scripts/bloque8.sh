@@ -1,5 +1,5 @@
 #!/bin/bash
-# Bloque 8 (2.20): velocímetro analógico/mixto, sobre el mapa, y mantenimientos a medida.
+# Bloque 8 (2.20 / 2.20.1): velocímetro analógico/mixto y mantenimientos a medida.
 API=$1; OUT=$2; mkdir -p $OUT
 PKG=com.stradaos.launcher.debug
 ACT=$PKG/com.stradaos.launcher.Main
@@ -21,16 +21,18 @@ shot() {
 go() { adb shell am start -n $ACT --es prueba "$1" >/dev/null; sleep "${2:-5}"; }
 adb shell am start -n $ACT --es prueba saltar >/dev/null; sleep 25
 go idioma:es 6; go tema:oscuro 6; go inicio 4
-go diseno:velo-2 5; go vel:85 3; shot 01-mixto-85
-go diseno:sinauto 4; go diseno:velomapa 4; go diseno:esquina-tl 5; go vel:60 3; shot 02-mapa-arriba-izq
-go diseno:esquina-br 5; go vel:60 3; shot 03-mapa-abajo-der
-go diseno:esquina-bl 4; go diseno:velotam-2 5; go vel:60 3; shot 04-mapa-abajo-izq-grande
-go diseno:velotam-0 4; go diseno:esquina-tr 5; go vel:60 3; shot 05-mapa-arriba-der-pequeno
-go diseno:base 4; go diseno:velo-2 4
-go demo-aceite 5; go demo-mant 6; shot 06-inicio-mantenimiento
-go menu-mant 4; shot 07-menu-mantenimiento
+# 2.20.1: velocímetro centrado y más grande, mantenimiento debajo; tiempo en días/semanas/meses
+go demo-aceite 5; go demo-mant 6
+go diseno:velo-1 5; go vel:85 3; shot 01-analogico-mant
+go diseno:velo-2 5; go vel:85 3; shot 02-mixto-mant
+go diseno:sinnombres 5; go vel:120 3; shot 03-mixto-barra-compacta
+go diseno:base 4; go diseno:velo-2 4; go diseno:sinaceite 5; go vel:40 3; shot 04-mixto-sin-mant
+go diseno:base 4; go diseno:velo-1 4; go tema:claro 6; go vel:60 3; shot 05-analogico-claro
+go tema:oscuro 6; go idioma:en 6; go diseno:velo-2 4; go vel:60 3; shot 06-mixto-ingles
+go idioma:es 6; go tiempo-mant 4; shot 07-cada-cuanto-tiempo
 adb shell input keyevent 4; sleep 2
-for c in 1 2 3 4 5 6 7 8 9 10; do go ajustes:$c 6; shot 1$((c+0))-ajustes-$c; adb shell input swipe 640 500 640 120 600; sleep 2; shot 1$((c+0))-ajustes-$c-b; done
+go ajustes:2 6; shot 08-lista-mantenimientos
+go inicio 3; go diseno:base 4; go vel:85 3; shot 09-digital-sin-cambios
 go inicio 3; go diseno:base 4
 adb logcat -d | grep -E "FATAL EXCEPTION|AndroidRuntime: (java|Caused|\tat com.stradaos)" | tail -40 > $OUT/logcat.txt
 if grep -q "com.stradaos" $OUT/logcat.txt; then echo "CIERRE" > $OUT/CIERRES.txt; fi
