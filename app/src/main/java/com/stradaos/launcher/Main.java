@@ -1236,7 +1236,8 @@ public class Main extends Activity {
             place(box, carGauge, 4 + (268 - d) / 2, top, d, d);
             g.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
             gpsTv.setTextSize(TypedValue.COMPLEX_UNIT_PX, gpsTv.getTextSize() * 10f / 11f);
-            place(box, g, 174, 3, 94, 16);   // esquina de arriba a la derecha, fuera del aro
+            box.removeView(g);   // ya estaba puesto: se vuelve a poner en la esquina de arriba a la derecha, fuera del aro
+            place(box, g, 174, 3, 94, 16);
             if (oilHome) {
                 float bw = Math.min(250, r * 1.3f);
                 buildOilBadgeCentered(box, 4 + 134 - bw / 2, cy + r * 0.42f, bw);
