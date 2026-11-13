@@ -556,6 +556,8 @@ public class Main extends Activity {
                     else if ("sinbarra".equals(d)) e.putString("dock_mode", "none");
                     else if (d.startsWith("velo-")) e.putInt("speedo", Integer.parseInt(d.substring(5)));
                     else if ("velomapa".equals(d)) e.putBoolean("map_gauge", true);
+                    else if (d.startsWith("esquina-")) e.putString("map_gauge_corner", d.substring(8));
+                    else if (d.startsWith("velotam-")) e.putInt("map_gauge_size", Integer.parseInt(d.substring(8)));
                     else if (d.startsWith("botones-")) e.putInt("dock_count", Integer.parseInt(d.substring(8)));
                     else if (d.startsWith("iconos-")) e.putInt("dock_icon_size", Integer.parseInt(d.substring(7)));
                     else if ("estiloapps".equals(d)) e.putString("dock_style", "apps");
@@ -564,7 +566,7 @@ public class Main extends Activity {
                             .remove("dock_labels").remove("rail_side").remove("status_icons").remove("car_speed").remove("oil_home")
                             .remove("show_player").remove("conn_buttons").remove("nav_btn_size").remove("nav_btn_side")
                             .remove("dock_count").remove("dock_icon_size").remove("dock_style").remove("font_size")
-                            .remove("speedo").remove("map_gauge");
+                            .remove("speedo").remove("map_gauge").remove("map_gauge_corner").remove("map_gauge_size");
                     e.apply();
                     rebuild();
                 }
