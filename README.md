@@ -40,7 +40,7 @@
 
 **A tu medida**
 - Cada botón de la barra abre la app o la función que quieras. Oculta las apps que no usas.
-- 7 idiomas (español, inglés, portugués, italiano, alemán, malayo y árabe), km/h o mph.
+- 8 idiomas (español, inglés, portugués, italiano, alemán, malayo, árabe y turco), km/h o mph.
 - Avisos de actualización con código QR. Pesa **menos de 1 MB**.
 
 👉 Novedades de cada versión en [Releases](https://github.com/lordnordic-debug/StradaOS/releases).
@@ -103,7 +103,7 @@ StradaOS es un proyecto independiente, no afiliado a Google, Apple ni a ningún 
 
 ### English
 
-**StradaOS** is a free, ad-free, open-source launcher for Android car head units (Android 4.1+, under 1 MB). It installs like any app, without flashing. Live and **offline maps** (download your country from the app), Android Auto and CarPlay buttons, a media card for Bluetooth and Android Auto, speedometer, weather, oil change reminder, a customizable layout (player left or right, compact or side bar), light/dark themes and 7 languages. [Website](https://lordnordic-debug.github.io/StradaOS/?lang=en) · [Download](https://github.com/lordnordic-debug/StradaOS/releases/latest)
+**StradaOS** is a free, ad-free, open-source launcher for Android car head units (Android 4.1+, under 1 MB). It installs like any app, without flashing. Live and **offline maps** (download your country from the app), Android Auto and CarPlay buttons, a media card for Bluetooth and Android Auto, speedometer, weather, oil change reminder, a customizable layout (player left or right, compact or side bar), light/dark themes and 8 languages. [Website](https://lordnordic-debug.github.io/StradaOS/?lang=en) · [Download](https://github.com/lordnordic-debug/StradaOS/releases/latest)
 
 ### Português
 

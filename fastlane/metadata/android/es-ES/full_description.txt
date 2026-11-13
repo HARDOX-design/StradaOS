@@ -8,7 +8,7 @@
 <li>Velocímetro por GPS, clima, reloj, recordatorio de cambio de aceite y la foto de tu vehículo con el fondo quitado.</li>
 <li>Diseña tu inicio: reproductor a la izquierda o a la derecha, barra normal, compacta o lateral, y Android Auto y CarPlay plegables.</li>
 <li>Barra inferior a tu medida y apps ocultables. La cámara de reversa sigue funcionando.</li>
-<li>Modo oscuro, claro, por horario o del sistema, 10 colores y 7 idiomas.</li>
+<li>Modo oscuro, claro, por horario o del sistema, 10 colores y 8 idiomas.</li>
 <li>Avisos de actualización con código QR.</li>
 </ul>
 <p>Compatible desde Android 4.1. Pesa menos de 1 MB. Gratis, sin anuncios y de código abierto (GPL-3.0).</p>

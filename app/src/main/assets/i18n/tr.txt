@@ -752,6 +752,15 @@ Es hora de: {}	Zamanı geldi: {}
 Cada {}	Her {}
 cada {} mes	her {} ay
 cada {} meses	her {} ay
+¿Cada cuánto tiempo?	Ne sıklıkla?
+Días	Gün
+Semanas	Hafta
+Meses	Ay
+cada día	her gün
+cada semana	her hafta
+cada mes	her ay
+cada {} días	her {} günde bir
+cada {} semanas	her {} haftada bir
 (lo primero)	(önce hangisi gelirse)
 {} meses	{} ay
 {} día	{} gün

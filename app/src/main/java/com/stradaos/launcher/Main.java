@@ -3780,7 +3780,7 @@ public class Main extends Activity {
     private void wizard() {
         int sel = Math.max(0, java.util.Arrays.asList(I18n.CODES).indexOf(I18n.lang));
         wizardDlg = new android.app.AlertDialog.Builder(this, dlg())
-            .setTitle("Idioma · Language · Lingua · Sprache · Bahasa · اللغة")
+            .setTitle("Idioma · Language · Lingua · Sprache · Bahasa · Dil · اللغة")
             .setSingleChoiceItems(I18n.NAMES, sel, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface d, int w) {
                     d.dismiss();
