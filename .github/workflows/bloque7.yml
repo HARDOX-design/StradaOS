@@ -1,0 +1,72 @@
+name: Bloque 7 (capturas)
+
+# Manual: capturas de las opciones nuevas de la 2.19 en emuladores. Quedan en la rama «bloque7-capturas».
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  emulador:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { api: 16, arch: x86 }
+          - { api: 30, arch: x86_64 }
+          - { api: 34, arch: x86_64 }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Descargar StradaOS Prueba
+        run: curl -fsSL --retry 5 -o prueba.apk "https://github.com/${GITHUB_REPOSITORY}/releases/download/prueba/StradaOS-prueba.apk"
+      - name: Descargar un pack de íconos (Arcticons, F-Droid)
+        run: |
+          VC=$(curl -fsSL --retry 3 https://f-droid.org/api/v1/packages/com.donnnno.arcticons | python3 -c "import sys,json; print(json.load(sys.stdin)['suggestedVersionCode'])") || true
+          [ -n "$VC" ] && curl -fsSL --retry 3 -o pack.apk "https://f-droid.org/repo/com.donnnno.arcticons_${VC}.apk" || echo "sin pack"
+          ls -la pack.apk || true
+      - name: Activar KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Emulador Android API ${{ matrix.api }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api }}
+          arch: ${{ matrix.arch }}
+          target: default
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -skin 1024x600
+          emulator-boot-timeout: 900
+          script: bash .github/scripts/bloque7.sh ${{ matrix.api }} capturas/api${{ matrix.api }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bloque7-api${{ matrix.api }}
+          path: capturas/
+
+  publicar:
+    needs: emulador
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: bloque7-*
+          path: out
+          merge-multiple: true
+      - name: Subir capturas
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd out
+          echo "# Bloque 7 · ${GITHUB_SHA::7}" > README.md
+          git init -q -b bloque7-capturas
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Capturas bloque 7 (${GITHUB_SHA::7})"
+          git push -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" bloque7-capturas
