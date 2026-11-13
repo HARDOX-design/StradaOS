@@ -16,8 +16,8 @@ android {
         minSdk 16
         // 28 a propósito: mantiene el comportamiento probado en pantallas viejas y nuevas.
         targetSdk 28
-        versionCode 48
-        versionName '2.18.0'
+        versionCode 49
+        versionName '2.19.0'
         manifestPlaceholders = [appLabel: 'StradaOS']
     }
 

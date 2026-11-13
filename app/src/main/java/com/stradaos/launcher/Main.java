@@ -3789,6 +3789,8 @@ public class Main extends Activity {
         r.setPadding(0, (int) (12 * s), 0, (int) (12 * s));
         LinearLayout col = new LinearLayout(this);
         col.setOrientation(LinearLayout.VERTICAL);
+        // separación con el control de la derecha: con letra XL el texto quedaba pegado a los botones (2.19)
+        col.setPadding(0, 0, (int) (16 * s), 0);
         TextView t = tv(title, 15, TEXT, true);
         t.setSingleLine(false);
         col.addView(t);
