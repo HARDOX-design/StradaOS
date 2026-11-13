@@ -3318,7 +3318,9 @@ public class Main extends Activity {
         ImageView iv = new ImageView(this);
         iv.setImageBitmap(shown);
         iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        box.addView(iv, new FrameLayout.LayoutParams((int) (396 * s), (int) (240 * s)));
+        FrameLayout.LayoutParams ivlp = new FrameLayout.LayoutParams((int) (396 * s), (int) (240 * s));
+        ivlp.gravity = Gravity.CENTER;   // en pantallas anchas la foto quedaba pegada a la izquierda
+        box.addView(iv, ivlp);
         String title = already ? "La foto ya trae fondo transparente"
                 : cut == null ? "Vista previa"
                 : "Sin fondo · nivel " + (strength + 1) + " de 4" + (strength >= 2 ? " (también quita el reflejo del piso)" : "");
