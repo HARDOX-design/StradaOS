@@ -1,0 +1,758 @@
+# StradaOS · traducción tr. Formato: español<TAB>traducción. Ver I18n.java.
+Radio	Radyo
+Cámara	Kamera
+Archivos	Dosyalar
+Ajustes	Ayarlar
+Música	Müzik
+Navegación	Navigasyon
+Navegador	Tarayıcı
+Navegador web	Web tarayıcı
+Equipo	Ünite
+Elige primero la app de música Bluetooth	Önce Bluetooth müzik uygulamasını seçin
+Música Bluetooth	Bluetooth müziği
+No se pudo abrir la app	Uygulama açılamadı
+Mi app	Uygulamam
+Mi vehículo	Aracım
+Toca para poner la foto de tu vehículo	Araç fotoğrafınızı eklemek için dokunun
+Velocidad	Hız
+Diagnóstico del mapa	Harita teşhisi
+Buscando GPS…	GPS aranıyor…
+Buscando GPS	GPS aranıyor
+En vivo · sin internet	Canlı · internetsiz
+Última posición · sin internet	Son konum · internetsiz
+Mapa en vivo	Canlı harita
+Última posición conocida	Bilinen son konum
+Nada sonando	Çalan bir şey yok
+Radio, Bluetooth o USB	Radyo, Bluetooth veya USB
+Internet desde la pantalla	Ekrandan internet
+No se pudo abrir «{}». Déjalo presionado para elegir otra app.	«{}» açılamadı. Başka bir uygulama seçmek için basılı tutun.
+Botón {} · {}	Düğme {} · {}
+Cambiar app o función	Uygulamayı veya işlevi değiştir
+Cambiar el nombre	Yeniden adlandır
+Restablecer ({})	Sıfırla ({})
+Botón restablecido	Düğme sıfırlandı
+Cerrar	Kapat
+Cerrar  ✕	Kapat  ✕
+★  Funciones de StradaOS (Música, Navegación, Android Auto…)	★  StradaOS işlevleri (Müzik, Navigasyon, Android Auto…)
+¿Qué abre el botón {}?	{} düğmesi ne açıyor?
+Función del botón {}	{} düğmesinin işlevi
+Nombre del botón {} (vacío = el de la app)	{} düğmesinin adı (boş = uygulamanın adı)
+Guardar	Kaydet
+Cancelar	İptal
+Guardado: {}	Kaydedildi: {}
+Elige tu app de música	Müzik uygulamanızı seçin
+Elige tu app de navegación	Navigasyon uygulamanızı seçin
+Automático · {}	Otomatik · {}
+{}\n    → {}	{}\n    → {}
+Buenos días	Günaydın
+Buenas tardes	İyi günler
+Buenas noches	İyi akşamlar
+Diagnóstico del reproductor	Oynatıcı teşhisi
+Accesibilidad	Erişilebilirlik
+Activa «Carátula de Android Auto» (StradaOS)	«Android Auto albüm kapağı»nı açın (StradaOS)
+No se pudo abrir Accesibilidad	Erişilebilirlik açılamadı
+Activa «Pista actual de AA» en Open Headunit	Open Headunit'te «AA geçerli parça»yı açın
+«Ninguna aplic. funciona con este accesorio USB»	«Bu USB aksesuarıyla hiçbir uygulama çalışmıyor»
+Ese aviso lo causa una app de espejo de fábrica (EasyConnection/CarbitLink) que toma el USB antes que la app que elegiste.\n\n1. Desconecta el celular.\n2. Ajustes → Aplicaciones → EasyConnection → «Borrar datos».\n3. Apaga y enciende el carro.\n4. En Open Headunit → USB, si tu celular aparece como «Ignorado», tócalo para permitirlo.	Bu uyarıya, USB'yi seçtiğiniz uygulamadan önce tutan fabrika yansıtma uygulaması (EasyConnection/CarbitLink) neden olur.\n\n1. Telefonun bağlantısını kesin.\n2. Ayarlar → Uygulamalar → EasyConnection → «Verileri sil».\n3. Aracı kapatıp açın.\n4. Open Headunit → USB bölümünde telefonunuz «Yoksayıldı» görünüyorsa izin vermek için dokunun.
+Abrir EasyConnection	EasyConnection'ı aç
+No hay apps de espejo instaladas	Yansıtma uygulaması yüklü değil
+Exportando… puede tardar un minuto	Dışa aktarılıyor… bir dakika sürebilir
+Diagnóstico listo	Teşhis hazır
+Se guardó en:\n{}\n\nCopia la carpeta StradaDiag a una memoria USB y adjúntala en un «issue» del repositorio de StradaOS en GitHub.	Şuraya kaydedildi:\n{}\n\nStradaDiag klasörünü bir USB belleğe kopyalayın ve GitHub'daki StradaOS deposunda bir «issue»ya ekleyin.
+12 horas	12 saat
+24 horas	24 saat
+Automático	Otomatik
+Automática	Otomatik
+Auto	Oto
+12 horas (a.m./p.m.)	12 saat (öö/ös)
+Formato de hora	Saat biçimi
+Se aplicará al reiniciar StradaOS	StradaOS yeniden başlatılınca uygulanır
+Rojo	Kırmızı
+Naranja	Turuncu
+Amarillo	Sarı
+Verde	Yeşil
+Turquesa	Turkuaz
+Azul	Mavi
+Morado	Mor
+Rosa	Pembe
+Plata	Gümüş
+Bienvenido a StradaOS	StradaOS'a hoş geldiniz
+Vamos a dejar el launcher a tu gusto: tu nombre, tu vehículo, el color y la foto. Toma menos de un minuto y lo puedes cambiar después en el engranaje ⚙.	Başlatıcıyı size göre ayarlayalım: adınız, aracınız, renk ve fotoğraf. Bir dakikadan kısa sürer ve sonra dişli ⚙ simgesinden değiştirebilirsiniz.
+Empezar	Başla
+¿Cómo te llamas?	Adınız nedir?
+Nombre del vehículo (ej.: Mazda 2, Spark GT)	Araç adı (örn.: Mazda 2, Spark GT)
+Etiqueta corta (versión o placa). Déjalo vacío si no quieres	Kısa etiket (donanım veya plaka). İstemiyorsanız boş bırakın
+Después	Sonra
+No encontrada	Bulunamadı
+¿Qué app abre cada botón?	Her düğme hangi uygulamayı açar?
+Están bien	Uygun
+Siguiente	İleri
+Color de acento	Vurgu rengi
+Elegir otra foto	Başka fotoğraf seç
+Quitar la foto	Fotoğrafı kaldır
+Elegir foto	Fotoğraf seç
+Foto del vehículo	Araç fotoğrafı
+¿De dónde sacamos la foto?	Fotoğrafı nereden alalım?
+Consejo: usa una foto del carro de lado o de frente con fondo liso (blanco, gris o cielo). El fondo se quita solo.	İpucu: aracın yandan veya önden, düz fonlu (beyaz, gri veya gökyüzü) bir fotoğrafını kullanın. Fon kendiliğinden kaldırılır.
+Memoria / USB	Depolama / USB
+Galería	Galeri
+Elige la foto	Fotoğrafı seçin
+Buscando fotos…	Fotoğraflar aranıyor…
+No encontré fotos (.jpg/.png). Cópialas a la memoria USB o a Download.	Fotoğraf bulunamadı (.jpg/.png). Bunları USB belleğe veya Download klasörüne kopyalayın.
+Quitando el fondo…	Fon kaldırılıyor…
+No se pudo abrir la imagen	Görsel açılamadı
+No se pudo abrir la imagen: {}	Görsel açılamadı: {}
+La foto ya trae fondo transparente	Fotoğrafın fonu zaten saydam
+No se detectó un fondo liso (se usará tal cual)	Düz fon algılanmadı (olduğu gibi kullanılacak)
+Vista previa · nivel {} de 4	Önizleme · 4 üzerinden {} düzeyi
+Vista previa · nivel {} de 4 (también quita el reflejo del piso)	Önizleme · 4 üzerinden {} düzeyi (zemin yansımasını da kaldırır)
+Usar esta	Bunu kullan
+Foto guardada	Fotoğraf kaydedildi
+No se pudo guardar la foto	Fotoğraf kaydedilemedi
+Quitar más fondo	Daha fazla fon kaldır
+Quitando más fondo…	Daha fazla fon kaldırılıyor…
+No es una imagen válida	Geçerli bir görsel değil
+App elegida	Seçilen uygulama
+CarPlay necesita un chip de autenticación de Apple dentro del equipo, así que no se puede activar solo con una app.\n\n• Si tu pantalla trae CarPlay integrado, deja presionado este botón y elige su app (ZLink, CarLink, TLink…).\n• Si no, puedes usar un adaptador CarPlay USB para pantallas Android (tipo Carlinkit/AutoKit): instala su app y este botón la abrirá.	CarPlay, ünitenin içinde Apple kimlik doğrulama çipi gerektirir; bu yüzden yalnızca bir uygulamayla etkinleştirilemez.\n\n• Ekranınızda yerleşik CarPlay varsa bu düğmeyi basılı tutun ve uygulamasını seçin (ZLink, CarLink, TLink…).\n• Yoksa Android ekranlar için bir USB CarPlay adaptörü kullanabilirsiniz (Carlinkit/AutoKit türü): uygulamasını kurun, bu düğme onu açacaktır.
+Entendido	Anladım
+Elegir app	Uygulama seç
+Volver al inicio	Ana ekrana dön
+Tu vehículo	Aracınız
+Apariencia	Görünüm
+Conexión	Bağlantı
+Accesos y apps	Kısayollar ve uygulamalar
+Mapa y clima	Harita ve hava durumu
+Sistema	Sistem
+Acerca de	Hakkında
+Datos	Bilgiler
+Tu nombre	Adınız
+Aparece en el saludo de la pantalla de inicio	Ana ekrandaki karşılamada görünür
+Nombre del vehículo	Araç adı
+Etiqueta	Etiket
+Versión o placa. Déjala vacía para ocultarla	Donanım veya plaka. Gizlemek için boş bırakın
+Etiqueta (vacío para ocultarla)	Etiket (gizlemek için boş)
+Foto	Fotoğraf
+Se recorta y se le quita el fondo automáticamente	Otomatik olarak kırpılır ve fonu kaldırılır
+Configurada	Ayarlı
+Sin foto	Fotoğraf yok
+Idioma	Dil
+Automático: el del sistema	Otomatik: sistemin dili
+Tema	Tema
+Modo	Mod
+Automático: claro de 6 a.m. a 6 p.m.	Otomatik: 06.00-18.00 arası açık
+Oscuro	Koyu
+Claro	Açık
+Color	Renk
+Botones, anillo del reproductor, ruta y etiquetas	Düğmeler, oynatıcı halkası, rota ve etiketler
+Reloj	Saat
+Celular	Telefon
+Cómo conectar el celular	Telefon nasıl bağlanır
+La app que se abre al conectar por USB	USB ile bağlanınca açılan uygulama
+Preguntar	Sor
+App de Android Auto	Android Auto uygulaması
+Botón naranja de la tarjeta central	Orta karttaki turuncu düğme
+App de CarPlay	CarPlay uygulaması
+Requiere pantalla con CarPlay o un adaptador	CarPlay'li bir ekran veya adaptör gerekir
+Ninguna	Hiçbiri
+Ninguno	Hiçbiri
+Ayuda	Yardım
+El celular dice «Ninguna aplic. funciona…»	Telefon «Hiçbir uygulama çalışmıyor…» diyor
+Cómo evitar que EasyConnection tome el USB	EasyConnection'ın USB'yi alması nasıl önlenir
+Barra inferior (déjalos presionados en el inicio para cambiarlos)	Alt çubuk (değiştirmek için ana ekranda basılı tutun)
+App: {}	Uygulama: {}
+Función: {}	İşlev: {}
+Apps preferidas	Tercih edilen uygulamalar
+Se abre al tocar el reproductor	Oynatıcıya dokununca açılır
+Toca para elegir	Seçmek için dokunun
+Se abre con el botón del mapa	Harita düğmesiyle açılır
+Apps de cada función	Her işlevin uygulaması
+La app que hace sonar el Bluetooth (se usa para pasar el sonido)	Bluetooth sesini çalan uygulama (sesi geçirmek için kullanılır)
+Revisar todos los botones	Tüm düğmeleri gözden geçir
+Lista rápida de qué abre cada uno, como en el asistente	Kurulum sihirbazındaki gibi, her birinin ne açtığının hızlı listesi
+Restablecer	Sıfırla
+Restablecer accesos	Kısayolları sıfırla
+La barra vuelve a lo de siempre y se buscan las apps de fábrica	Çubuk varsayılana döner ve fabrika uygulamaları yeniden aranır
+Accesos restablecidos	Kısayollar sıfırlandı
+Clima	Hava durumu
+Mostrar el clima	Hava durumunu göster
+Arriba, junto al saludo (necesita internet)	Üstte, karşılamanın yanında (internet gerekir)
+Unidad	Birim
+Ciudad	Şehir
+Vacío = automática por GPS	Boş = GPS ile otomatik
+{} (GPS)	{} (GPS)
+Ciudad (vacío = automática por GPS)	Şehir (boş = GPS ile otomatik)
+App de navegación preferida	Tercih edilen navigasyon uygulaması
+Se abre con el botón del mapa (Waze, Maps, OsmAnd…)	Harita düğmesiyle açılır (Waze, Maps, OsmAnd…)
+Mapa	Harita
+Brillo del mapa	Harita parlaklığı
+Solo en modo oscuro	Yalnızca koyu modda
+Bajo	Düşük
+Medio	Orta
+Alto	Yüksek
+Fuentes probadas y errores	Denenen kaynaklar ve hatalar
+Mapa no disponible	Harita kullanılamıyor
+Fuente del mapa (avanzado)	Harita kaynağı (gelişmiş)
+URL propia con {z}/{x}/{y}	{z}/{x}/{y} ile özel URL
+Personalizada	Özel
+URL de teselas {z}/{x}/{y} (vacío = automático)	Döşeme URL'si {z}/{x}/{y} (boş = otomatik)
+© colaboradores de OpenStreetMap	© OpenStreetMap katkıcıları
+App de música	Müzik uygulaması
+App de música preferida	Tercih edilen müzik uygulaması
+Se abre al tocar el reproductor del inicio	Ana ekrandaki oynatıcıya dokununca açılır
+Pista en reproducción	Çalan parça
+Carátula de Android Auto	Android Auto albüm kapağı
+Lee la notificación de Open Headunit (accesibilidad)	Open Headunit bildirimini okur (erişilebilirlik)
+Activada	Açık
+Desactivada	Kapalı
+Activado	Açık
+Desactivado	Kapalı
+Música de cualquier app	Herhangi bir uygulamadan müzik
+Android 5+: acceso a notificaciones	Android 5+: bildirim erişimi
+No se pudo abrir el ajuste	Ayar açılamadı
+Fuente activa, lector de notificaciones y Bluetooth	Etkin kaynak, bildirim okuyucu ve Bluetooth
+Audio Bluetooth	Bluetooth sesi
+Volver al Bluetooth al desconectar Android Auto	Android Auto bağlantısı kesilince Bluetooth'a dön
+Al quitar el cable, abre un instante la app de música Bluetooth para que el sonido siga por Bluetooth	Kablo çıkarıldığında sesin Bluetooth üzerinden devam etmesi için Bluetooth müzik uygulamasını bir an açar
+Escuchar el Bluetooth	Bluetooth'u dinle
+En esta pantalla, toca ▶ en el inicio: StradaOS pasa el sonido a Bluetooth (por ejemplo, si venías de la radio)	Bu ekranda ana ekrandaki ▶ simgesine dokunun: StradaOS sesi Bluetooth'a geçirir (örneğin radyodan geliyorsanız)
+Pasar a Bluetooth al dar play en el celular (en prueba)	Telefonda oynat'a basınca Bluetooth'a geç (deneme)
+Abre un instante «Audio Bluetooth» y vuelve. En algunas pantallas no detecta el play del celular	«Bluetooth sesi»ni bir an açar ve geri döner. Bazı ekranlarda telefondan gelen oynat'ı algılamaz
+Probar ahora	Şimdi dene
+Abre «Audio Bluetooth» un instante y vuelve al inicio	«Bluetooth sesi»ni bir an açar ve ana ekrana döner
+Abrir la app de música Bluetooth al conectar el celular	Telefon bağlanınca Bluetooth müzik uygulamasını aç
+Para pantallas que solo dejan sonar el Bluetooth con su app abierta: la abre un momento y vuelve al inicio	Bluetooth'u yalnızca kendi uygulaması açıkken çalan ekranlar için: uygulamayı bir an açar ve ana ekrana döner
+App de música Bluetooth	Bluetooth müzik uygulaması
+La que hace sonar el Bluetooth en esta pantalla	Bu ekranda Bluetooth sesini çalan uygulama
+Tiempo antes de volver al inicio	Ana ekrana dönmeden önceki süre
+Súbelo si el audio se corta al volver	Dönerken ses kesiliyorsa artırın
+Abre la app de música Bluetooth y vuelve al inicio	Bluetooth müzik uygulamasını açar ve ana ekrana döner
+Avanzado	Gelişmiş
+Avisos extra de música	Ek müzik bildirimleri
+Nombres de avisos (broadcast) de otros equipos	Diğer ünitelerin yayın (broadcast) adları
+Configurados	Ayarlı
+Acciones de aviso extra (separadas por coma)	Ek yayın eylemleri (virgülle ayrılmış)
+Ajustes del equipo	Ünite ayarları
+Los ajustes de la pantalla (los de la marca si los tiene)	Ekranın ayarları (varsa markanın kendi ayarları)
+Asistente de configuración inicial	İlk kurulum sihirbazı
+Nombre, vehículo, color y foto	Ad, araç, renk ve fotoğraf
+Compatibilidad	Uyumluluk
+Qué funciona en esta pantalla	Bu ekranda neler çalışıyor
+Cada función, desde qué Android sirve y su estado aquí	Her işlev, hangi Android sürümünden itibaren çalıştığı ve buradaki durumu
+Soporte	Destek
+Exportar diagnóstico	Teşhisi dışa aktar
+Guarda información de las apps de audio en la memoria interna	Ses uygulamalarının bilgilerini dahili belleğe kaydeder
+Esta pantalla:	Bu ekran:
+Ojo: la pantalla dice Android {}, pero por dentro es {}.	Dikkat: ekran Android {} diyor, ama içinde aslında {} var.
+Requiere:	Gerekli:
+Aquí:	Burada:
+Inicio, mapa, clima, velocímetro	Ana ekran, harita, hava durumu, hız göstergesi
+Pista y carátula por Bluetooth	Bluetooth ile parça ve albüm kapağı
+app Bluetooth de fábrica detectada	fabrika Bluetooth uygulaması bulundu
+depende de la marca	markaya bağlı
+Botón ▶ del inicio pasa el sonido a Bluetooth	Ana ekrandaki ▶ düğmesi sesi Bluetooth'a geçirir
+Pantallas Clinkway / Autochips	Clinkway / Autochips ekranlar
+funciona aunque vengas de la radio	radyodan geliyor olsanız da çalışır
+en otras marcas: «Abrir la app de música Bluetooth al conectar»	diğer markalarda: «Telefon bağlanınca Bluetooth müzik uygulamasını aç»
+activado	açık
+activada	açık
+desactivado; en algunas pantallas no detecta el play del celular	kapalı; bazı ekranlarda telefondan gelen oynat'ı algılamaz
+Carátula de Android Auto (Open Headunit)	Android Auto albüm kapağı (Open Headunit)
+Android 4.1+ · accesibilidad	Android 4.1+ · erişilebilirlik
+falta activar la accesibilidad	erişilebilirlik henüz açılmadı
+Música de cualquier app (Spotify, YouTube…)	Herhangi bir uygulamadan müzik (Spotify, YouTube…)
+falta dar acceso a notificaciones	bildirim erişimi henüz verilmedi
+no disponible en {}	{} üzerinde kullanılamıyor
+Android Auto con Open Headunit	Open Headunit ile Android Auto
+Android 4.1+ · cable USB	Android 4.1+ · USB kablosu
+Open Headunit instalado	Open Headunit kurulu
+falta instalar Open Headunit	Open Headunit henüz kurulmadı
+Android Auto / CarPlay de la pantalla	Ekranın kendi Android Auto / CarPlay'i
+Si la pantalla lo trae	Ekranda varsa
+no detectado	algılanmadı
+Pantalla con CarPlay o adaptador USB	CarPlay'li ekran veya USB adaptör
+Mapa con internet seguro (TLS 1.2)	Güvenli internete sahip harita (TLS 1.2)
+Android 4.1+ (StradaOS lo activa)	Android 4.1+ (StradaOS etkinleştirir)
+en Android 4.x solo algunos servidores de mapas responden	Android 4.x'te yalnızca bazı harita sunucuları yanıt verir
+Instalar actualizaciones desde la app	Güncellemeleri uygulamadan kur
+pide permiso «Instalar apps desconocidas»	«Bilinmeyen uygulamaları yükle» izni ister
+No hay fallos registrados	Kayıtlı çökme yok
+Registro de fallos	Çökme kaydı
+Borrar	Temizle
+Registro borrado	Kayıt temizlendi
+Gratis y de código abierto. Una nueva vida para las pantallas Android del carro.	Ücretsiz ve açık kaynak. Arabanın Android ekranlarına yeni bir hayat.
+Versión	Sürüm
+Android de la pantalla	Ekranın Android sürümü
+Real: {} · ver qué funciona aquí	Gerçek: {} · burada nelerin çalıştığını gör
+Cierres inesperados o bloqueos de StradaOS en esta pantalla	Bu ekranda StradaOS'un beklenmedik kapanmaları veya kilitlenmeleri
+Sin fallos	Çökme yok
+Ver	Gör
+Actualizaciones	Güncellemeler
+Instalado desde {}	{} üzerinden kuruldu
+Las actualizaciones llegan por esa app	Güncellemeler o uygulama üzerinden gelir
+Avisar también de versiones en GitHub	GitHub'daki sürümleri de bildir
+Comprobar actualizaciones automáticamente	Güncellemeleri otomatik denetle
+Opcional: las descargas de GitHub no pasan por la revisión de la tienda	İsteğe bağlı: GitHub indirmeleri mağaza denetiminden geçmez
+Al abrir StradaOS con internet, una vez al día	StradaOS internetle açıldığında, günde bir kez
+Actualizaciones desde GitHub	GitHub'dan güncellemeler
+Instalaste StradaOS desde {}. Si activas esto, StradaOS revisará una vez al día las versiones publicadas en github.com/{} y te ofrecerá descargarlas desde ahí.\n\nEsas descargas no pasan por la revisión de la tienda. Puede que GitHub tenga una versión un poco antes que la tienda.	StradaOS'u {} üzerinden kurdunuz. Bunu açarsanız StradaOS günde bir kez github.com/{} adresinde yayımlanan sürümleri denetler ve oradan indirmeyi önerir.\n\nBu indirmeler mağaza denetiminden geçmez. GitHub'da bir sürüm mağazadan biraz önce olabilir.
+Activar	Aç
+Canal de actualizaciones	Güncelleme kanalı
+Buscar actualizaciones	Güncellemeleri denetle
+Aún no se ha comprobado	Henüz denetlenmedi
+Última comprobación: {}	Son denetim: {}
+Comunidad	Topluluk
+Dar una estrella en GitHub	GitHub'da yıldız ver
+Ayuda a que más personas encuentren StradaOS	Daha fazla kişinin StradaOS'u bulmasına yardımcı olur
+Dar una estrella ⭐	Yıldız ver ⭐
+Abre el repositorio y toca «Star». ¡Gracias!	Depoyu açın ve «Star»a dokunun. Teşekkürler!
+Donar	Bağış yap
+Si StradaOS revivió tu pantalla, invítame un café	StradaOS ekranınızı hayata döndürdüyse bana bir kahve ısmarlayın
+Apoya el proyecto ☕	Projeyi destekle ☕
+StradaOS es gratis. Las donaciones ayudan a mantenerlo y a probarlo en más pantallas.	StradaOS ücretsizdir. Bağışlar onu sürdürmeye ve daha fazla ekranda test etmeye yardımcı olur.
+Reportar un problema o sugerir algo	Sorun bildir veya öneri sun
+Crea un «issue» en GitHub (adjunta el diagnóstico)	GitHub'da bir «issue» oluşturun (teşhisi ekleyin)
+Reportar un problema	Sorun bildir
+Cuenta tu modelo de pantalla y su versión de Android. Puedes adjuntar la carpeta StradaDiag (Sistema → Exportar diagnóstico).	Ekran modelinizi ve Android sürümünü yazın. StradaDiag klasörünü ekleyebilirsiniz (Sistem → Teşhisi dışa aktar).
+Código fuente	Kaynak kodu
+Licencia GPL-3.0	GPL-3.0 lisansı
+Créditos y licencias	Katkılar ve lisanslar
+Licencia	Lisans
+Mapas	Haritalar
+© colaboradores de OpenStreetMap, OpenTopoMap, Esri	© OpenStreetMap katkıcıları, OpenTopoMap, Esri
+Open Headunit (GPL-3.0) · Android Auto es marca de Google	Open Headunit (GPL-3.0) · Android Auto, Google'ın ticari markasıdır
+Códigos QR	QR kodları
+Íconos	Simgeler
+Certificados raíz	Kök sertifikalar
+Buscando actualizaciones…	Güncellemeler denetleniyor…
+No se pudo comprobar	Denetlenemedi
+Esta pantalla no logró conectarse con GitHub ({}). Puedes revisar las versiones desde tu celular:	Bu ekran GitHub'a bağlanamadı ({}). Sürümleri telefonunuzdan denetleyebilirsiniz:
+Tienes la última versión ({})	En son sürüme sahipsiniz ({})
+Fuentes consultadas:\n{}	Denetlenen kaynaklar:\n{}
+cifrado no compatible	şifreleme desteklenmiyor
+sin internet	internet yok
+sin internet / DNS	internet yok / DNS
+tiempo agotado	zaman aşımı
+error de red	ağ hatası
+tu tienda de apps	uygulama mağazanız
+Tienes la {} · nueva: {}	Sizde {} var · yeni: {}
+Mejoras y correcciones.	İyileştirmeler ve düzeltmeler.
+Nueva versión de StradaOS	Yeni StradaOS sürümü
+Tienes la {} · en GitHub: {}\nActualiza desde {} cuando llegue. Descargar de GitHub omite la revisión de la tienda.	Sizde {} var · GitHub'da: {}\nGeldiğinde {} üzerinden güncelleyin. GitHub'dan indirmek mağaza denetimini atlar.
+Ver en GitHub	GitHub'da gör
+Descarga desde GitHub:	GitHub'dan indir:
+Descargar e instalar	İndir ve kur
+Descarga la nueva versión desde:	Yeni sürümü şuradan indirin:
+Omitir esta versión	Bu sürümü atla
+Más tarde	Daha sonra
+Descargando StradaOS {}…	StradaOS {} indiriliyor…
+Descárgala desde tu celular	Telefonunuzdan indirin
+Esta pantalla no pudo descargar el archivo. Escanea el código, descarga el APK y pásalo por USB.	Bu ekran dosyayı indiremedi. Kodu tarayın, APK'yı indirin ve USB ile aktarın.
+¿Disfrutando StradaOS?	StradaOS'u beğendiniz mi?
+Si te gusta usar StradaOS, dale una estrella en GitHub. Y si revivió tu pantalla, considera invitarme un café ☕	StradaOS'u kullanmayı seviyorsanız GitHub'da bir yıldız verin. Ekranınızı hayata döndürdüyse bir kahve ısmarlamayı düşünün ☕
+Dar una estrella	Yıldız ver
+StradaOS es gratis. Las donaciones ayudan a mantenerlo.	StradaOS ücretsizdir. Bağışlar onu sürdürmeye yardımcı olur.
+Escanéalo con la cámara de tu celular o entra a:	Telefonunuzun kamerasıyla tarayın veya şuraya gidin:
+Abrir aquí	Burada aç
+No hay navegador disponible	Kullanılabilir tarayıcı yok
+Open Headunit · USB	Open Headunit · USB
+Toca para instalar	Kurmak için dokunun
+Pantalla o adaptador	Ekran veya adaptör
+Elige la app de ajustes de tu pantalla	Ekranınızın ayarlar uygulamasını seçin
+No se pudieron abrir los ajustes	Ayarlar açılamadı
+No encontré la app de {}. Elígela de la lista.	{} uygulamasını bulamadım. Listeden seçin.
+↺  Automático (por defecto)	↺  Otomatik (varsayılan)
+¿Qué app abre «{}»?	«{}» hangi uygulamayı açar?
+Restablecido	Sıfırlandı
+Esta pantalla no trae Android Auto integrado.\n\nInstala la app gratuita «Open Headunit» (github.com/andreknieriem/headunit-revived): copia su APK en la memoria USB o en Download y vuelve a tocar el botón. Luego conecta el celular por cable USB.	Bu ekranda yerleşik Android Auto yok.\n\nÜcretsiz «Open Headunit» uygulamasını kurun (github.com/andreknieriem/headunit-revived): APK'sını USB belleğe veya Download klasörüne kopyalayın ve düğmeye yeniden dokunun. Sonra telefonu USB kablosuyla bağlayın.
+Android Auto por cable USB (necesita la app Android Auto en el celular)	USB kablosuyla Android Auto (telefonda Android Auto uygulaması gerekir)
+Espejo de pantalla (necesita la app CarbitLink en el celular)	Ekran yansıtma (telefonda CarbitLink uygulaması gerekir)
+Android Auto / CarPlay integrados en la pantalla	Ekranda yerleşik Android Auto / CarPlay
+Otra app…	Başka uygulama…
+¿Cómo quieres conectar tu celular?	Telefonunuzu nasıl bağlamak istersiniz?
+Conexión: {}. Cámbiala dejando presionado el botón.	Bağlantı: {}. Düğmeyi basılı tutarak değiştirin.
+el navegador	tarayıcı
+«{}» necesita un Android más nuevo que el de esta pantalla. Abro el navegador de fábrica.	«{}» bu ekrandakinden daha yeni bir Android gerektiriyor. Fabrika tarayıcısını açıyorum.
+No encontré un navegador. Déjalo presionado para elegir uno.	Tarayıcı bulunamadı. Birini seçmek için basılı tutun.
+Permite «Instalar apps desconocidas» para StradaOS y vuelve a tocar.	StradaOS için «Bilinmeyen uygulamaları yükle»ye izin verin ve yeniden dokunun.
+Activa «Orígenes desconocidos» y vuelve a tocar.	«Bilinmeyen kaynaklar»ı açın ve yeniden dokunun.
+No se pudo preparar {}	{} hazırlanamadı
+No se pudo abrir el instalador para {}	{} için yükleyici açılamadı
+Aplicaciones  ·  Android {} (API {})	Uygulamalar  ·  Android {} (API {})
+Despejado	Açık
+Parcialmente nublado	Parçalı bulutlu
+Nublado	Bulutlu
+Niebla	Sisli
+Llovizna	Çisenti
+Lluvia	Yağmurlu
+Nieve	Kar
+Tormenta	Fırtına
+Mapa en vivo apagado	Canlı harita kapalı
+Rendimiento	Performans
+Apágalo si la pantalla va lenta: queda un mapa de adorno y el velocímetro sigue funcionando	Ekran yavaşsa kapatın: süs amaçlı bir harita kalır ve hız göstergesi çalışmaya devam eder
+StradaOS aún no es tu pantalla de inicio	StradaOS henüz ana ekranınız değil
+Por eso al encender el carro o al tocar Inicio aparece el menú de fábrica.\n\nToca «Fijar ahora», elige StradaOS y luego «Siempre».	Bu yüzden arabayı çalıştırınca veya Ana ekran'a dokununca fabrika menüsü görünür.\n\n«Şimdi ayarla»ya dokunun, StradaOS'u seçin ve ardından «Her zaman»ı seçin.
+Fijar ahora	Şimdi ayarla
+Ahora no	Şimdi değil
+No volver a preguntar	Bir daha sorma
+Elige StradaOS y toca «Siempre»	StradaOS'u seçin ve «Her zaman»a dokunun
+Listo: StradaOS es tu pantalla de inicio	Tamam: StradaOS artık ana ekranınız
+Fijar StradaOS a mano	StradaOS'u elle ayarla
+Algunas pantallas no muestran la lista para elegir. Prueba así:\n\n1. Toca el botón Inicio (la casita) de la pantalla. Si pregunta qué app usar, elige StradaOS → Siempre.\n2. Si no pregunta: en los ajustes de la pantalla busca Aplicaciones → Aplicaciones predeterminadas → Pantalla de inicio (o «App de inicio») y elige StradaOS.\n3. Con Android 10 o más nuevo, no lo elijas desde el modo fábrica de la pantalla («Launcher», «Interfaz» o «UI»): en algunas marcas eso deja las demás apps sin poder abrirse. En Android 4 a 9 sí puedes usar esa opción.\n\nSi tu pantalla siempre vuelve a su menú de fábrica al encender, activa «Abrir StradaOS al encender» en Ajustes → Sistema.	Bazı ekranlar seçim listesini göstermez. Şöyle deneyin:\n\n1. Ekranın Ana ekran düğmesine (ev simgesi) dokunun. Hangi uygulamanın kullanılacağını sorarsa StradaOS → Her zaman seçin.\n2. Sormuyorsa: ekranın ayarlarında Uygulamalar → Varsayılan uygulamalar → Ana ekran (veya «Ana uygulama») bölümünü bulun ve StradaOS'u seçin.\n3. Android 10 veya daha yenide, ekranın fabrika modundan («Launcher», «Arayüz» veya «UI») seçmeyin: bazı markalarda bu, diğer uygulamaların açılamamasına yol açar. Android 4 ile 9 arasında bu seçeneği kullanabilirsiniz.\n\nEkranınız açılışta her zaman fabrika menüsüne dönüyorsa Ayarlar → Sistem bölümünde «StradaOS'u açılışta aç»ı etkinleştirin.
+Pantalla de inicio	Ana ekran
+La que aparece al encender y al tocar Inicio	Açılışta ve Ana ekran'a dokununca görünen ekran
+StradaOS ✓	StradaOS ✓
+Otra · toca para cambiar	Başka · değiştirmek için dokunun
+Abrir StradaOS al encender	StradaOS'u açılışta aç
+Para pantallas que siempre arrancan en su menú de fábrica (Android 4 a 9)	Her zaman fabrika menüsünde başlayan ekranlar için (Android 4-9)
+¿La música Bluetooth se corta o no aparece?	Bluetooth müziği kesiliyor veya görünmüyor mu?
+Qué hacer en cada caso	Her durumda ne yapmalı
+• Se corta al salir de la app Bluetooth: sal con el botón Inicio (la casita), no con Atrás. Atrás cierra la app de fábrica y con ella la música.\n\n• No suena hasta abrir la app Bluetooth: activa «Abrir la app de música Bluetooth al conectar el celular» (aquí mismo). Abre la app un instante y vuelve al inicio.\n\n• La canción no aparece en el inicio (Android 5 o más nuevo): activa «Música de cualquier app» arriba y dale acceso a notificaciones a StradaOS.\n\n• Revisa en Ajustes → Accesos y apps que «Música Bluetooth» sea la app Bluetooth de tu pantalla.	• Bluetooth uygulamasından çıkınca kesiliyor: Geri yerine Ana ekran düğmesiyle (ev simgesi) çıkın. Geri, fabrika uygulamasını ve onunla birlikte müziği kapatır.\n\n• Bluetooth uygulamasını açana kadar ses çıkmıyor: «Telefon bağlanınca Bluetooth müzik uygulamasını aç»ı (tam burada) etkinleştirin. Uygulamayı bir an açar ve ana ekrana döner.\n\n• Şarkı ana ekranda görünmüyor (Android 5 veya daha yeni): yukarıdaki «Herhangi bir uygulamadan müzik»i etkinleştirin ve StradaOS'a bildirim erişimi verin.\n\n• Ayarlar → Kısayollar ve uygulamalar bölümünde «Bluetooth müziği»nin ekranınızın Bluetooth uygulaması olduğunu kontrol edin.
+Sin permiso	İzin yok
+GPS apagado	GPS kapalı
+Unidades	Birimler
+Automático: mph en EE. UU. y Reino Unido	Otomatik: ABD ve Birleşik Krallık'ta mph
+Permisos → Ubicación → Permitir	İzinler → Konum → İzin ver
+Activa la ubicación para StradaOS en los ajustes de la pantalla	Ekranın ayarlarında StradaOS için konumu açın
+Activa la ubicación (GPS)	Konumu (GPS) aç
+Activa la ubicación (GPS) en los ajustes de la pantalla	Ekranın ayarlarında konumu (GPS) açın
+Sin permiso de ubicación · toca aquí	Konum izni yok · buraya dokunun
+Ubicación apagada · toca aquí	Konum kapalı · buraya dokunun
+Sin señal GPS · toca aquí	GPS sinyali yok · buraya dokunun
+Versión de prueba	Deneme sürümü
+Simular pantalla	Ekranı benzet
+Para probar otros tamaños en una tablet o celular	Tablet veya telefonda başka boyutları denemek için
+Real	Gerçek
+Aceite	Yağ
+Configurar	Ayarla
+¡Cambiar!	Değiştir!
+Kilometraje estimado	Tahmini kilometre
+Próximo cambio	Sonraki değişim
+Faltan {}	{} kaldı
+¡Ya toca!	Zamanı geldi!
+Cambio de aceite	Yağ değişimi
+Ya hice el cambio de aceite	Yağ değişimini yaptım
+Corregir el kilometraje actual	Geçerli kilometreyi düzelt
+Cambiar cada cuánto se hace	Ne sıklıkla yapıldığını değiştir
+Desactivar el recordatorio	Hatırlatıcıyı kapat
+Recordatorio de cambio de aceite	Yağ değişimi hatırlatıcısı
+StradaOS no puede leer el kilometraje del tablero del carro. Escríbelo una vez y StradaOS le irá sumando lo que recorras con el GPS, para avisarte cuando toque el cambio.\n\nDe vez en cuando puedes corregirlo con el valor real del tablero.	StradaOS arabanın gösterge panelindeki kilometreyi okuyamaz. Bir kez girin; StradaOS GPS ile kat ettiğiniz mesafeyi ekleyerek değişim zamanı geldiğinde sizi uyarır.\n\nAra sıra gösterge panelindeki gerçek değerle düzeltebilirsiniz.
+¿A cuántos {} fue el último cambio de aceite?	Son yağ değişimi kaç {}de yapıldı?
+Kilometraje actual del tablero	Gösterge panelindeki geçerli kilometre
+¿Cada cuántos {} cambias el aceite?	Yağı kaç {}de bir değiştiriyorsunuz?
+Escribe un número válido	Geçerli bir sayı girin
+Kilometraje del tablero al hacer el cambio	Değişim sırasında gösterge panelindeki kilometre
+Es hora del cambio de aceite	Yağ değişimi zamanı
+El kilometraje estimado es ≈ {} y ya toca el cambio de aceite (cada {}).	Tahmini kilometre ≈ {} ve yağ değişiminin zamanı geldi (her {}).
+¿Ya lo hiciste?	Yaptınız mı?
+Ya lo hice	Yaptım
+Aún no	Henüz değil
+Se muestra al lado de la velocidad y avisa cuando toca	Hızın yanında gösterilir ve zamanı gelince uyarır
+Kilometraje actual	Geçerli kilometre
+Estimado con el GPS. Corrígelo con el del tablero cuando quieras	GPS ile tahmin edilir. İstediğiniz zaman gösterge panelindeki değerle düzeltin
+Cada cuánto	Ne sıklıkla
+Orientación del mapa	Harita yönü
+El mapa apunta	Harita yönü
+Según tu dirección: gira con el carro mientras te mueves	Gidiş yönünüze göre: sürerken arabayla birlikte döner
+Norte arriba	Kuzey yukarı
+Según tu dirección	Gidiş yönü
+# 2.13: aceite (último cambio, unidad) y apps ocultas del cajón
+Último cambio	Son değişim
+Corregir el último cambio	Son değişimi düzelt
+¿Tu tablero marca kilómetros o millas?	Gösterge paneliniz kilometre mi mil mi gösteriyor?
+Kilómetros (km)	Kilometre (km)
+Millas (mi)	Mil (mi)
+Revisa el último cambio	Son değişimi kontrol et
+El último cambio ({}) queda por encima del kilometraje actual ({}). ¿Lo escribiste en otra unidad?	Son değişim ({}) geçerli kilometrenin ({}) üzerinde kalıyor. Farklı bir birimde mi yazdınız?
+Corregir	Düzelt
+Guardar igual	Yine de kaydet
+Kilometraje del tablero cuando se hizo	Yapıldığında gösterge panelindeki kilometre
+Ocultas: {}	Gizli: {}
+Ocultar del cajón	Uygulama çekmecesinden gizle
+Información de la app	Uygulama bilgisi
+Oculta. Para volver a verla: Ajustes → Accesos y apps → Apps ocultas	Gizli. Yeniden görmek için: Ayarlar → Kısayollar ve uygulamalar → Gizli uygulamalar
+Cajón de apps	Uygulama çekmecesi
+Apps ocultas	Gizli uygulamalar
+No se ven en el cajón, pero siguen instaladas y se pueden poner en los botones	Çekmecede görünmezler ama kurulu kalırlar ve düğmelere atanabilirler
+Buscar app	Uygulama ara
+Apps ocultas en el cajón	Çekmecede gizlenen uygulamalar
+Se muestran todas las apps	Tüm uygulamalar gösteriliyor
+Apps ocultas: {}	Gizli uygulamalar: {}
+# 2.14: desinstalar desde el cajón
+Desinstalar	Kaldır
+# 2.14: salir de StradaOS (issue #9)
+Salir de StradaOS	StradaOS'tan çık
+Abrir el launcher de fábrica	Fabrika başlatıcısını aç
+Sale de StradaOS sin desinstalarlo	StradaOS'u kaldırmadan ondan çıkar
+Desactivar StradaOS	StradaOS'u devre dışı bırak
+Si la pantalla quedó atrapada en StradaOS: se apaga solo, sin ventanas de Android	Ekran StradaOS'ta kilitli kaldıysa: Android pencereleri olmadan kendini kapatır
+Desinstalar StradaOS	StradaOS'u kaldır
+Android pide confirmar	Android onay ister
+No encontré otra pantalla de inicio en este equipo	Bu cihazda başka bir ana ekran bulamadım
+¿Cuál es el launcher de fábrica?	Hangisi fabrika başlatıcısı?
+No se pudo abrir	Açılamadı
+No encontré otra pantalla de inicio: StradaOS no se puede desactivar en este equipo	Başka bir ana ekran bulamadım: StradaOS bu cihazda devre dışı bırakılamaz
+¿Desactivar StradaOS?	StradaOS devre dışı bırakılsın mı?
+StradaOS deja de ser la pantalla de inicio, ya no se abre al encender y vuelve el launcher de fábrica. No pide confirmaciones de Android, así que sirve aunque la pantalla haya quedado atrapada.\n\nPara volver a usarlo después: desinstálalo desde los ajustes de la pantalla e instálalo de nuevo.	StradaOS artık ana ekran olmaz, açılışta açılmaz ve fabrika başlatıcısı geri gelir. Android onayı istemez, bu yüzden ekran kilitli kalsa bile işe yarar.\n\nDaha sonra yeniden kullanmak için: ekranın ayarlarından kaldırın ve tekrar kurun.
+Desactivar	Devre dışı bırak
+# 2.15: diseño del inicio
+Diseño del inicio	Ana ekran düzeni
+Reproductor de música	Müzik oynatıcı
+Ponlo del lado del conductor para tenerlo a la mano	Elinizin altında olsun diye sürücü tarafına koyun
+Derecha	Sağ
+Izquierda	Sol
+Tarjeta del vehículo	Araç kartı
+Si la ocultas, la velocidad pasa arriba y el mapa y el reproductor ganan espacio	Gizlerseniz hız yukarı taşınır, harita ve oynatıcı daha fazla yer kazanır
+Barra de botones	Düğme çubuğu
+Lateral: los botones van al costado y todo se ve más grande en pantallas bajas como 1280×480	Yan: düğmeler yana geçer ve 1280×480 gibi kısa ekranlarda her şey daha büyük görünür
+Normal	Normal
+Compacta	Kompakt
+Lateral	Yan
+Aceite: configurar	Yağ: ayarla
+¡Cambiar aceite!	Yağı değiştir!
+Aceite: {}	Yağ: {}
+Mapa sin conexión	Çevrimdışı harita
+Archivo del mapa	Harita dosyası
+Un archivo .map (p. ej. colombia.map) en la memoria de la pantalla o en una USB: el mapa se ve sin internet	Ekranın belleğinde veya bir USB'de .map dosyası (örn. colombia.map): harita internetsiz çalışır
+Error	Hata
+No se pudo abrir: {}	Açılamadı: {}
+Toca para dejar de usarlo	Kullanmayı bırakmak için dokun
+Mapa sin conexión quitado	Çevrimdışı harita kaldırıldı
+¿Dónde consigo el mapa?	Haritayı nereden alabilirim?
+Mapas gratis de OpenStreetMap por país	Ülkeye göre ücretsiz OpenStreetMap haritaları
+Buscando mapas…	Haritalar aranıyor
+No se encontró ningún mapa	Harita bulunamadı
+No hay archivos .map en la memoria de la pantalla ni en las USB conectadas. Toca «Cómo conseguirlo» para ver de dónde bajarlo.	Ekranın belleğinde veya bağlı USB sürücülerde .map dosyası yok. Nereden indireceğini görmek için "Nasıl alınır" seçeneğine dokun.
+Cómo conseguirlo	Nasıl alınır
+Elige el mapa	Haritayı seç
+No se pudo usar este archivo	Bu dosya kullanılamıyor
+Debe ser un mapa de mapsforge (.map) copiado completo.	Eksiksiz kopyalanmış bir mapsforge haritası (.map) olmalı.
+Mapa sin conexión listo: {}	Çevrimdışı harita hazır: {}
+Sin permiso de almacenamiento no se pueden buscar mapas	Depolama izni olmadan harita aranamaz
+Última posición · mapa sin conexión	Son konum • çevrimdışı harita
+no se encuentra el archivo	dosya bulunamadı
+sin permiso para leer el archivo	dosyayı okuma izni yok
+no es un mapa de mapsforge (.map)	mapsforge haritası (.map) değil
+el archivo está incompleto (¿se copió entero?)	dosya eksik (tamamen kopyalandı mı?)
+1. En un computador o celular, descarga el mapa de tu país (formato mapsforge, gratis):\ndownload.mapsforge.org/maps/v5\n\nColombia:\ndownload.mapsforge.org/maps/v5/south-america/colombia.map\n\n2. Cópialo a una memoria USB o a la carpeta Download de la pantalla.\n\n3. En Ajustes → Mapa y clima → Mapa sin conexión, toca «Archivo del mapa» y elígelo.\n\nEl mapa se usa en el inicio incluso con internet. Para actualizarlo, descarga uno nuevo y reemplaza el archivo.	1. Bir bilgisayarda veya telefonda ülkenin haritasını indir (mapsforge biçimi, ücretsiz):\ndownload.mapsforge.org/maps/v5\n\nKolombiya:\ndownload.mapsforge.org/maps/v5/south-america/colombia.map\n\n2. Bir USB belleğe veya ekranın Download klasörüne kopyala.\n\n3. Ayarlar → Harita ve hava durumu → Çevrimdışı harita bölümünde "Harita dosyası"na dokunup seç.\n\nHarita internete bağlıyken bile ana ekranda kullanılır. Güncellemek için yenisini indir ve dosyayı değiştir.
+Toca para dejar de usarlo o borrarlo	Kullanmayı bırakmak veya silmek için dokun
+Descargar un mapa	Harita indir
+Elige tu país: se descarga gratis de OpenStreetMap (mapsforge) y se usa sin internet	Ülkeni seç: OpenStreetMap'ten (mapsforge) ücretsiz indirilir ve internetsiz çalışır
+Cargando la lista de mapas…	Harita listesi yükleniyor
+No se pudo cargar la lista de mapas	Harita listesi yüklenemedi
+Revisa la conexión a internet e inténtalo de nuevo.	İnternet bağlantını kontrol edip tekrar dene.
+por regiones	bölgeye göre
+Elige el continente	Kıtayı seç
+Tamaño	Boyut
+Se guarda en	Kaydedileceği yer
+Espacio libre	Boş alan
+memoria	bellek
+Usa datos: mejor con WiFi o un plan amplio. Puedes seguir usando la pantalla; si se corta la señal o la apagas, la descarga continúa después.	Veri kullanır: en iyisi WiFi veya geniş bir tarife. Ekranı kullanmaya devam edebilirsin; sinyal kesilirse veya kapatırsan indirme sonra devam eder.
+No hay espacio suficiente en la memoria.	Bellekte yeterli boş alan yok.
+Descargar	İndir
+Descargando el mapa… puedes seguir usando la pantalla	Harita indiriliyor, ekranı kullanmaya devam edebilirsin
+Descarga en curso	İndirme sürüyor
+Descarga en pausa	İndirme duraklatıldı
+Pausar	Duraklat
+Continuar	Devam et
+Cancelar descarga	İndirmeyi iptal et
+Descarga cancelada	İndirme iptal edildi
+Este mapa lo descargó StradaOS. Puedes dejar de usarlo o borrarlo para liberar espacio.	Bu haritayı StradaOS indirdi. Alan açmak için kullanmayı bırakabilir veya silebilirsin.
+Puedes dejar de usar este mapa (el archivo no se borra).	Bu haritayı kullanmayı bırakabilirsin (dosya silinmez).
+Dejar de usarlo	Kullanmayı bırak
+Borrar el archivo	Dosyayı sil
+Mapa borrado	Harita silindi
+Mapa descargado y listo: {}	Harita indirildi ve hazır: {}
+Descargando	İndiriliyor
+África	Afrika
+Australia y Oceanía	Avustralya ve Okyanusya
+Centroamérica y el Caribe	Orta Amerika ve Karayipler
+Europa	Avrupa
+Norteamérica	Kuzey Amerika
+Rusia	Rusya
+Sudamérica	Güney Amerika
+sin conexión, reintentando…	bağlantı yok, tekrar deneniyor
+el archivo quedó incompleto	dosya eksik
+no se pudo guardar el archivo	dosya kaydedilemedi
+no hay espacio suficiente	yeterli alan yok
+se cortó la descarga	indirme kesildi
+Sin señal GPS · mapa sin conexión	GPS sinyali yok • çevrimdışı harita
+Sin señal GPS ni internet	GPS sinyali yok veya internet yok
+Sin señal GPS · última posición	GPS sinyali yok • son konum
+# 2.17: tema por horario o del sistema, íconos de Wi-Fi y Bluetooth, barra, diagnóstico del mapa
+Auto: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)	Otomatik: zamanlamaya göre. Sistem: ekranın koyu modunu izler (bazıları farları açınca değiştirir)
+Oscuro desde	Koyu mod başlangıcı
+Claro desde	Açık mod başlangıcı
+Íconos de Wi-Fi y Bluetooth	Wi-Fi ve Bluetooth simgeleri
+Arriba, junto al clima. Toca para encender o apagar; déjalo presionado para abrir sus ajustes	Üstte, hava durumunun yanında. Açmak veya kapatmak için dokunun; ayarlarını açmak için basılı tutun
+¿Apagar el Wi-Fi?	Wi-Fi kapatılsın mı?
+La pantalla se queda sin internet (mapa en vivo, clima y actualizaciones).	Ekran internetsiz kalır (canlı harita, hava durumu ve güncellemeler).
+Apagar	Kapat
+Esta pantalla no deja cambiar el Wi-Fi desde otra app: abre sus ajustes	Bu ekran, Wi-Fi'nin başka uygulamadan değiştirilmesine izin vermiyor: ayarlarını açar
+Encendiendo el Wi-Fi…	Wi-Fi açılıyor…
+Wi-Fi apagado	Wi-Fi kapalı
+¿Apagar el Bluetooth?	Bluetooth kapatılsın mı?
+Se desconecta el celular (música y llamadas).	Telefonun bağlantısı kesilir (müzik ve aramalar).
+Esta pantalla no deja cambiar el Bluetooth desde otra app: abre sus ajustes	Bu ekran, Bluetooth'un başka uygulamadan değiştirilmesine izin vermiyor: ayarlarını açar
+Encendiendo el Bluetooth…	Bluetooth açılıyor…
+Bluetooth apagado	Bluetooth kapalı
+Lado de la barra lateral	Kenar çubuğu konumu
+Automático: del lado del reproductor	Otomatik: oynatıcının bulunduğu taraf
+Nombres de los botones	Düğme adları
+Debajo de cada ícono de la barra	Çubuktaki her simgenin altında
+Permiso de ubicación: {}	Konum izni: {}
+NO (toca el letrero del mapa)	HAYIR (harita etiketine dokunun)
+sí	evet
+GPS del equipo: {} · ubicación por red: {}	Cihaz GPS'i: {} · ağ konumu: {}
+no encontrado	bulunamadı
+encendido	açık
+apagado	kapalı
+encendida	açık
+apagada	kapalı
+Última señal: {}	Son sinyal: {}
+ninguna desde que abrió StradaOS	StradaOS açıldığından beri yok
+hace {} s	{} sn önce
+hace {} min	{} dk önce
+Buscando desde hace {} min	{} dk'dır arıyor
+Posición: {}	Konum: {}
+sin GPS	GPS yok
+Zoom: {}	Yakınlaştırma: {}
+Mapa sin conexión: {}	Çevrimdışı harita: {}
+ninguno	hiçbiri
+error: {}	hata: {}
+{} · en uso	{} · kullanımda
+{} · fuera del área del archivo	{} · dosya alanının dışında
+Teselas dibujadas desde el archivo: {} · {} ms cada una	Dosyadan çizilen döşemeler: {} · her biri {} ms
+Proveedor: {}	Sağlayıcı: {}
+{} · ninguna fuente respondió ({} vueltas)	{} · hiçbir kaynak yanıt vermedi ({} tur)
+Teselas descargadas: {} · en caché: {}	İndirilen döşemeler: {} · önbellekte: {}
+Errores seguidos: {}	Üst üste hatalar: {}
+Último error: {}	Son hata: {}
+Fuentes probadas:	Denenen kaynaklar:
+• {}: {}	• {}: {}
+sin probar	denenmedi
+certificado	sertifika
+OSM Alemania	OSM Almanya
+OSM Francia	OSM Fransa
+OSM Humanitario	OSM İnsani
+Esri gris oscuro	Esri koyu gri
+sin iniciar	başlatılmadı
+TLS listo ({}), {} raíces	TLS hazır ({}), {} kök
+TLS listo ({}), {} raíces, {} omitidas	TLS hazır ({}), {} kök, {} atlandı
+TLS no disponible: {}	TLS kullanılamıyor: {}
+Íconos de Wi-Fi y Bluetooth arriba	Wi-Fi ve Bluetooth simgeleri üstte
+Bluetooth: estado del celular desde la app de fábrica; toca para abrirla	Bluetooth: telefon durumu fabrika uygulamasından; açmak için dokunun
+Tema según el modo oscuro del sistema	Sistemin koyu modunu izleyen tema
+Pantallas que lo cambian (p. ej. con las luces)	Onu değiştiren ekranlar (ör. farlarla)
+el sistema está en modo oscuro	sistem koyu modda
+el sistema está en modo claro	sistem açık modda
+# 2.18: botones de conexión, clima detallado, ocultar velocidad/aceite/reproductor, botón del navegador, foto tal cual
+Cargando…	Yükleniyor…
+Esperando la ubicación…	Konum bekleniyor…
+Máx {} · Mín {}	En yüksek {} · En düşük {}
+Sensación {}	Hissedilen {}
+Humedad {}	Nem {}
+Viento {}	Rüzgâr {}
+PRÓXIMAS HORAS	SONRAKİ SAATLER
+PRÓXIMOS DÍAS	SONRAKİ GÜNLER
+Ahora	Şimdi
+Hoy	Bugün
+El clima está apagado en Ajustes → Mapa y clima	Hava durumu Ayarlar → Harita ve hava durumu bölümünde kapalı
+Esperando la ubicación para el clima…	Hava durumu için konum bekleniyor…
+Cargando el clima…	Hava durumu yükleniyor…
+Velocidad y servicio	Hız ve servis
+En la tarjeta del vehículo (o arriba si la ocultas). Apágalo si tu carro o pantalla no tiene GPS: la foto ocupa ese espacio	Araç kartında (gizlerseniz üstte). Arabanızda veya ekranda GPS yoksa kapatın: fotoğraf o alanı kaplar
+Aceite en el inicio	Ana ekranda yağ durumu
+Junto a la velocidad. Aunque lo ocultes, el aviso del cambio de aceite sigue saliendo	Hızın yanında. Gizleseniz bile yağ değişimi uyarısı çıkmaya devam eder
+Tarjeta del reproductor	Oynatıcı kartı
+Si la ocultas, el mapa gana espacio	Gizlerseniz harita daha fazla yer kaplar
+Botones de conexión	Bağlantı düğmeleri
+Con uno o ninguno, el clima ocupa el espacio libre del mapa	Bir veya hiç yoksa hava durumu haritanın boş alanını kaplar
+Android Auto y CarPlay	Android Auto ve CarPlay
+Solo Android Auto	Yalnızca Android Auto
+Solo CarPlay	Yalnızca CarPlay
+Botón del navegador	Navigasyon düğmesi
+El botón redondo del mapa que abre tu app de navegación	Navigasyon uygulamanızı açan yuvarlak harita düğmesi
+Grande	Büyük
+Muy grande	Çok büyük
+Oculto	Gizli
+Lado del botón del navegador	Navigasyon düğmesi tarafı
+Automático: del lado del reproductor (el del conductor)	Otomatik: oynatıcının tarafında (sürücü tarafı)
+Usar la foto original, sin recortar ni quitar el fondo	Orijinal fotoğrafı kullanın, kırpmadan ve arka planı kaldırmadan
+Se le quita el fondo automáticamente, o la puedes usar tal cual	Arka planı otomatik kaldırılır veya olduğu gibi kullanabilirsiniz
+Lluvia {}	Yağmur {}
+Abriendo la foto…	Fotoğraf açılıyor…
+Vista previa	Önizleme
+Sin fondo · nivel {} de 4	Arka plansız · seviye {}/4
+Sin fondo · nivel {} de 4 (también quita el reflejo del piso)	Arka plansız · seviye {}/4 (zemin yansımasını da kaldırır)
+Usar la foto original, con fondo	Orijinal fotoğrafı arka planıyla kullan
+Quitar el fondo	Arka planı kaldır
+No se detectó un fondo liso: se usa la foto tal cual	Düz bir arka plan bulunamadı: fotoğraf olduğu gibi kullanılır
+Se usa tal cual; si quieres, le puedes quitar el fondo	Olduğu gibi kullanılır; isterseniz arka planını kaldırabilirsiniz
+# 2.19: cantidad y tamaño de los botones, íconos de apps, packs de íconos, barra oculta, tamaño de la letra
+Cantidad de botones	Düğme sayısı
+«Apps» siempre queda al final	«Apps» her zaman sonda kalır
+Tamaño de los íconos	Simge boyutu
+Pequeño	Küçük
+Pequeña	Küçük
+Íconos de la barra	Çubuk simgeleri
+Apps: el ícono de la app que abre cada botón (radio, cámara…)	Apps: her düğmenin açtığı uygulamanın simgesi (radyo, kamera…)
+Pack de íconos	Simge paketi
+Instala uno (los de Nova o ADW sirven) y elígelo aquí	Bir tane kurun (Nova veya ADW paketleri olur) ve burada seçin
+Cambia los íconos de la barra y del cajón de apps	Çubuğun ve uygulama çekmecesinin simgelerini değiştirir
+Ninguno (íconos de siempre)	Hiçbiri (varsayılan simgeler)
+No hay packs de íconos instalados	Kurulu simge paketi yok
+Ese pack no trae la lista de íconos (appfilter)	Bu pakette simge listesi (appfilter) yok
+Pack listo: {} íconos	Paket hazır: {} simge
+Lateral: los botones van al costado y todo se ve más grande en pantallas bajas como 1280×480. Oculta: el botón Apps va arriba	Yan: düğmeler yana gider ve 1280×480 gibi alçak ekranlarda her şey daha büyük görünür. Gizli: Apps düğmesi üste gider
+Oculta	Gizli
+Tamaño de la letra	Yazı boyutu
+Para leer mejor de lejos o que quepa más	Uzaktan daha iyi okumak veya daha fazlasını sığdırmak için
+# 2.20: velocímetro analógico, velocímetro sobre el mapa, mantenimientos a medida
+Velocímetro	Hız göstergesi
+En la tarjeta del vehículo. Toma el color de acento	Araç kartında. Vurgu rengini alır
+Digital	Dijital
+Analógico	Analog
+Mixto	Karma
+Velocímetro sobre el mapa	Harita üzerinde hız göstergesi
+Redondo, en una esquina del mapa (en vez de la velocidad de arriba)	Yuvarlak, haritanın bir köşesinde (üstteki hız yerine)
+Mantenimiento	Bakım
+Otros mantenimientos	Diğer bakımlar
+Agregar mantenimiento	Bakım ekle
+Filtros, bujías, frenos, correa, SOAT… Avisa por kilómetros, por tiempo o lo que llegue primero	Filtreler, bujiler, frenler, kayış, zorunlu sigorta… Kilometreye, zamana veya önce hangisi gelirse ona göre uyarır
+Filtro de aire	Hava filtresi
+Bujías	Bujiler
+Pastillas de freno	Fren balataları
+Líquido de frenos	Fren hidroliği
+Refrigerante	Antifriz
+Correa de distribución	Triger kayışı
+Rotación de llantas	Lastik rotasyonu
+Alineación y balanceo	Rot ayarı ve balans
+Revisión de la batería	Akü kontrolü
+Seguro obligatorio (SOAT)	Zorunlu trafik sigortası
+Revisión técnico-mecánica	Araç muayenesi
+Otro (escribe el nombre)	Diğer (adı yazın)
+Nombre del mantenimiento	Bakım adı
+Por kilómetros	Kilometreye göre
+Por tiempo	Zamana göre
+Lo que llegue primero	Önce hangisi gelirse
+¿Cada cuántos meses?	Kaç ayda bir?
+¿Cada cuántos {}?	Kaç {}de bir?
+¿A cuántos {} fue la última vez?	Son sefer kaç {}de yapıldı?
+¿Cuándo fue la última vez?	Son sefer ne zaman yapıldı?
+Kilometraje del tablero	Gösterge paneli kilometresi
+StradaOS no puede leer el kilometraje del carro. Escríbelo una vez y StradaOS le suma lo que recorras con el GPS.	StradaOS arabanın kilometresini okuyamaz. Bir kez yazın, StradaOS GPS ile gittiğiniz mesafeyi ekler.
+Escribirlo	Yaz
+Última vez	Son sefer
+Cambiar cada cuánto	Sıklığı değiştir
+Corregir la última vez	Son seferi düzelt
+¿Borrar «{}»?	«{}» silinsin mi?
+Kilometraje del tablero al hacerlo	Yapıldığındaki gösterge kilometresi
+Es hora de: {}	Zamanı geldi: {}
+¡Toca: {}!	Sıra: {}!
+Cada {}	Her {}
+cada {} mes	her {} ay
+cada {} meses	her {} ay
+(lo primero)	(önce hangisi gelirse)
+{} meses	{} ay
+{} día	{} gün
+{} días	{} gün
