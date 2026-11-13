@@ -120,10 +120,11 @@ public class Gauge extends View {
         c.drawArc(rect, START, SWEEP, false, pFill);
         if (sweepNow > 0.6f) {
             float f = sweepNow / 360f;
-            int a0 = (accent & 0x00FFFFFF) | 0x08000000, a1 = (accent & 0x00FFFFFF) | 0x60000000, a2 = (accent & 0x00FFFFFF) | 0xE6000000;
+            int a0 = (accent & 0x00FFFFFF) | 0x10000000, a1 = (accent & 0x00FFFFFF) | 0x80000000, a2 = (accent & 0x00FFFFFF) | 0xF2000000;
             SweepGradient sg = new SweepGradient(cx, cy, new int[]{a0, a1, a2, a2}, new float[]{0f, f * 0.55f, f, 1f});
             rot.setRotate(START, cx, cy);
             sg.setLocalMatrix(rot);
+            pFill.setColor(0xFF000000);   // opaco: el color de la pista (casi transparente) atenuaba el degradado
             pFill.setShader(sg);
             c.drawArc(rect, START, sweepNow, false, pFill);
             pFill.setShader(null);

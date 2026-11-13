@@ -1173,6 +1173,7 @@ public class Main extends Activity {
             t.setGravity(Gravity.CENTER);
             t.setPadding((int) (12 * s), (int) (6 * s), (int) (12 * s), 0);
             ph.addView(t, new LinearLayout.LayoutParams(-1, -2));
+            if (152 + dy < 110) t.setVisibility(View.GONE);   // con el velocímetro analógico el recuadro es bajo
             place(card, ph, 18, 82, 264, 152 + dy);
             ph.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) { pickPhoto(); }
