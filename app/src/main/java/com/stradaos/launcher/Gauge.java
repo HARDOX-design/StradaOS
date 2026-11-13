@@ -78,6 +78,10 @@ public class Gauge extends View {
     /** Versión chica (sobre el mapa): menos números y trazos más finos. */
     public void setSmall(boolean v) { small = v; invalidate(); }
 
+    private boolean compact;
+    /** Pegado arriba, sin la prolongación del aro (tarjeta del vehículo, 2.20.1). */
+    public void setCompact(boolean v) { compact = v; invalidate(); }
+
     /** Velocidad ya en la unidad elegida. Sin GPS la aguja vuelve a cero y el número muestra «--». */
     public void setSpeed(float v, boolean hasFix) {
         ok = hasFix;
@@ -100,7 +104,15 @@ public class Gauge extends View {
         }
 
         float w = getWidth(), h = getHeight();
-        float r = Math.min(w, h) / 2f * 0.96f, cx = w / 2f, cy = h / 2f + r * 0.04f;
+        float r, cx = w / 2f, cy;
+        if (compact) {
+            // tarjeta del vehículo: pegado arriba y sin la prolongación del aro, para que quepa lo más grande posible
+            r = Math.min(w / 2f * 0.97f, (h - 2) / 1.56f);
+            cy = r * 1.03f + 1;
+        } else {
+            r = Math.min(w, h) / 2f * 0.96f;
+            cy = h / 2f + r * 0.04f;
+        }
         float frac = Math.max(0, Math.min(1, val / max));
         float sweepNow = SWEEP * frac;
 
@@ -108,7 +120,8 @@ public class Gauge extends View {
         pRing.setColor(ring);
         pRing.setStrokeWidth(Math.max(1.5f, r * 0.03f));
         rect.set(cx - r, cy - r, cx + r, cy + r);
-        c.drawArc(rect, START - 22, SWEEP + 44, false, pRing);
+        if (compact) c.drawArc(rect, START, SWEEP, false, pRing);
+        else c.drawArc(rect, START - 22, SWEEP + 44, false, pRing);
 
         // relleno: más transparente al inicio y más intenso junto a la aguja
         float rb = r * 0.77f, bw = r * 0.30f;

@@ -1139,11 +1139,9 @@ public class Main extends Activity {
         // 2.20: velocímetro analógico o mixto: el recuadro de la velocidad crece 70 y la foto se achica lo mismo
         final int speedo = carSpeed ? prefs.getInt("speedo", 0) : 0;
         // 2.20.1: el velocímetro analógico ocupa todo el ancho y el mantenimiento va debajo, dentro del arco
-        // crece con el alto de la tarjeta, sin dejar la foto en menos de ~70; sin etiqueta (chip) la foto sube 24
-        final float photoTop = speedo > 0 && prefs.getString("car_tag", "").trim().length() == 0 ? 54 : 78;
-        final float gx = speedo > 0 ? Math.max(70, Math.min(141, 90 + (78 - photoTop) + cardH - 380)) : 0;
+        // el recuadro y la foto quedan del tamaño de la 2.20; adentro, velocímetro centrado y barrita de mantenimiento abajo
+        final float gx = speedo > 0 ? 70 : 0;
         final float dy = cardH - 380 + (carSpeed ? 0 : 130) - gx;
-        final float up = 78 - photoTop;
         carTv = tv(prefs.getString("car_name", "Mi vehículo"), 20, TEXT, true);
         place(card, carTv, 20, 16, 260, 26);
         TextView chip = tv(prefs.getString("car_tag", ""), 11, Color.WHITE, true);
@@ -1160,9 +1158,9 @@ public class Main extends Activity {
             boolean cutout = false;
             try { cutout = CarPhoto.hasTransparency(photo); } catch (Throwable ignored) { }
             if (cutout) car.setImageBitmap(photo);
-            else car.setImageBitmap(CarPhoto.cardCrop(photo, (int) (264 * s), (int) ((160 + dy + up) * s), 16 * s));
+            else car.setImageBitmap(CarPhoto.cardCrop(photo, (int) (264 * s), (int) ((160 + dy) * s), 16 * s));
             car.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            place(card, car, 18, photoTop, 264, 160 + dy + up);
+            place(card, car, 18, 78, 264, 160 + dy);
             car.setOnLongClickListener(new View.OnLongClickListener() {
                 public boolean onLongClick(View v) { photoMenu(); return true; }
             });
@@ -1180,8 +1178,8 @@ public class Main extends Activity {
             t.setGravity(Gravity.CENTER);
             t.setPadding((int) (12 * s), (int) (6 * s), (int) (12 * s), 0);
             ph.addView(t, new LinearLayout.LayoutParams(-1, -2));
-            if (152 + dy + up < 110) t.setVisibility(View.GONE);   // con el velocímetro analógico el recuadro es bajo
-            place(card, ph, 18, photoTop + 4, 264, 152 + dy + up);
+            if (152 + dy < 110) t.setVisibility(View.GONE);   // con el velocímetro analógico el recuadro es bajo
+            place(card, ph, 18, 82, 264, 152 + dy);
             ph.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) { pickPhoto(); }
             });
@@ -1229,24 +1227,15 @@ public class Main extends Activity {
             carGauge.setColors(RED, TEXT, SOFT);
             carGauge.setUnit(useMph());
             carGauge.setNumber(speedo == 2);
-            // Gauge en un cuadrado de lado D: radio r = D/2·0.96 y centro a D/2 + 0.04r del borde de arriba.
-            // El aro está abierto abajo; el mantenimiento va centrado en ese hueco, desde cy + 0.56r: por debajo de la
-            // aguja en cero (llega a 0.49r) y de los números; ahí el aro deja ±0.7r de ancho para el nombre.
-            float bh = 118 + gx, top = 4;
-            float r = oilHome ? (bh - 4 - 40 - top) / 1.6417f : (bh - 8) / 1.88f;
-            r = Math.min(r, 268 / 2f * 0.96f);
-            float d = r * 2 / 0.96f, cy = top + d / 2 + r * 0.04f;
-            place(box, carGauge, 4 + (268 - d) / 2, top, d, d);
+            // Velocímetro centrado, lo más grande que quepa; debajo (afuera del velocímetro) la barrita del mantenimiento
+            float bh = 118 + gx, barH = 32, gaugeH = oilHome ? bh - barH - 8 : bh - 6;
+            carGauge.setCompact(true);
+            place(box, carGauge, 4, 3, 268, gaugeH);
             g.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
             gpsTv.setTextSize(TypedValue.COMPLEX_UNIT_PX, gpsTv.getTextSize() * 10f / 11f);
             box.removeView(g);   // ya estaba puesto: se vuelve a poner en la esquina de arriba a la derecha, fuera del aro
-            place(box, g, 174, 3, 94, 16);
-            if (oilHome) {
-                float bw = Math.min(260, r * 1.4f);
-                buildOilBadgeCentered(box, 4 + 134 - bw / 2, cy + r * 0.56f, bw);
-            }
-            carGauge.bringToFront();   // la aguja por encima; el recuadro del mantenimiento sigue tocable
-            if (oilValTv != null) ((View) oilValTv.getParent()).bringToFront();
+            place(box, g, 178, 4, 90, 16);
+            if (oilHome) buildOilStrip(box, 10, bh - barH - 6, 256, barH);
         }
         if (oilHome && speedo == 0) buildOilBadge(box, 0, 0);
         if (!oilHome) { oilValTv = null; oilBar = null; oilBarBg = null; oilLblTv = null; oilIc = null; }
@@ -1351,38 +1340,37 @@ public class Main extends Activity {
         updateOilBadge();
     }
 
-    /** Recuadro del mantenimiento centrado, debajo del velocímetro analógico (2.20.1). */
-    private void buildOilBadgeCentered(FrameLayout box, float x, float y, float w) {
+    /** Barrita del mantenimiento debajo del velocímetro analógico o mixto (2.20.1): ícono, nombre, lo que falta y la barra. */
+    private void buildOilStrip(FrameLayout box, float x, float y, float w, float h) {
         LinearLayout col = new LinearLayout(this);
         col.setOrientation(LinearLayout.VERTICAL);
-        col.setGravity(Gravity.CENTER_HORIZONTAL);
-        LinearLayout top = new LinearLayout(this);
-        top.setGravity(Gravity.CENTER);
-        ImageView ic = icon("water_drop", 13);
-        ic.setAlpha(0.6f);
-        top.addView(ic, new LinearLayout.LayoutParams((int) (13 * s), (int) (13 * s)));
-        TextView t = tv("Aceite", 11, MUTED, false);
-        t.setPadding((int) (4 * s), 0, 0, 0);
+        col.setBackground(round(BTN, 9));
+        col.setPadding((int) (10 * s), (int) (4 * s), (int) (10 * s), (int) (5 * s));
+        LinearLayout row = new LinearLayout(this);
+        row.setGravity(Gravity.CENTER_VERTICAL);
+        ImageView ic = icon("water_drop", 14);
+        ic.setAlpha(0.7f);
+        row.addView(ic, new LinearLayout.LayoutParams((int) (14 * s), (int) (14 * s)));
+        TextView t = tv("Aceite", 12, MUTED, false);
+        t.setPadding((int) (6 * s), 0, (int) (6 * s), 0);
         t.setSingleLine(true);
         t.setEllipsize(android.text.TextUtils.TruncateAt.END);
-        top.addView(t, new LinearLayout.LayoutParams(-2, -2));
+        row.addView(t, new LinearLayout.LayoutParams(0, -2, 1));
         oilLblTv = t;
         oilIc = ic;
-        col.addView(top, new LinearLayout.LayoutParams(-1, -2));
-        oilValTv = tv("", 14, TEXT, true);
-        oilValTv.setGravity(Gravity.CENTER);
+        oilValTv = tv("", 13, TEXT, true);
         oilValTv.setSingleLine(true);
-        oilValTv.setEllipsize(android.text.TextUtils.TruncateAt.END);
-        oilValTv.setPadding(0, (int) (1 * s), 0, (int) (3 * s));
-        col.addView(oilValTv, new LinearLayout.LayoutParams(-1, -2));
+        row.addView(oilValTv, new LinearLayout.LayoutParams(-2, -2));
+        col.addView(row, new LinearLayout.LayoutParams(-1, 0, 1));
         FrameLayout bar = new FrameLayout(this);
         oilBarBg = bar;
-        bar.setBackground(round(BTN, 2));
+        bar.setBackground(round(CARD, 2));
         oilBar = new View(this);
         bar.addView(oilBar, new FrameLayout.LayoutParams(0, -1));
-        LinearLayout.LayoutParams blp = new LinearLayout.LayoutParams((int) (w * 0.6f * s), (int) (4 * s));
+        LinearLayout.LayoutParams blp = new LinearLayout.LayoutParams(-1, (int) (3 * s));
+        blp.topMargin = (int) (2 * s);
         col.addView(bar, blp);
-        place(box, col, x, y, w, 40);
+        place(box, col, x, y, w, h);
         col.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { badgeMenu(); } });
         updateOilBadge();
     }
