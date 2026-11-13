@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="acc_desc">StradaOS'un Android Auto albüm kapağını ve parçayı Open Headunit bildirimini okuyarak göstermesini sağlar. Başka hiçbir şeyi okumaz.</string>
+    <string name="acc_desc">StradaOS\'un Android Auto albüm kapağını ve parçayı Open Headunit bildirimini okuyarak göstermesini sağlar. Başka hiçbir şeyi okumaz.</string>
     <string name="acc_label">Android Auto albüm kapağı</string>
 </resources>
