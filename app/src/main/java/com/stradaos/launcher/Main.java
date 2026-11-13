@@ -1139,9 +1139,11 @@ public class Main extends Activity {
         // 2.20: velocímetro analógico o mixto: el recuadro de la velocidad crece 70 y la foto se achica lo mismo
         final int speedo = carSpeed ? prefs.getInt("speedo", 0) : 0;
         // 2.20.1: el velocímetro analógico ocupa todo el ancho y el mantenimiento va debajo, dentro del arco
-        // crece con el alto de la tarjeta, sin dejar la foto en menos de ~70
-        final float gx = speedo > 0 ? Math.max(70, Math.min(124, 90 + cardH - 380)) : 0;
+        // crece con el alto de la tarjeta, sin dejar la foto en menos de ~70; sin etiqueta (chip) la foto sube 24
+        final float photoTop = speedo > 0 && prefs.getString("car_tag", "").trim().length() == 0 ? 54 : 78;
+        final float gx = speedo > 0 ? Math.max(70, Math.min(141, 90 + (78 - photoTop) + cardH - 380)) : 0;
         final float dy = cardH - 380 + (carSpeed ? 0 : 130) - gx;
+        final float up = 78 - photoTop;
         carTv = tv(prefs.getString("car_name", "Mi vehículo"), 20, TEXT, true);
         place(card, carTv, 20, 16, 260, 26);
         TextView chip = tv(prefs.getString("car_tag", ""), 11, Color.WHITE, true);
@@ -1158,9 +1160,9 @@ public class Main extends Activity {
             boolean cutout = false;
             try { cutout = CarPhoto.hasTransparency(photo); } catch (Throwable ignored) { }
             if (cutout) car.setImageBitmap(photo);
-            else car.setImageBitmap(CarPhoto.cardCrop(photo, (int) (264 * s), (int) ((160 + dy) * s), 16 * s));
+            else car.setImageBitmap(CarPhoto.cardCrop(photo, (int) (264 * s), (int) ((160 + dy + up) * s), 16 * s));
             car.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            place(card, car, 18, 78, 264, 160 + dy);
+            place(card, car, 18, photoTop, 264, 160 + dy + up);
             car.setOnLongClickListener(new View.OnLongClickListener() {
                 public boolean onLongClick(View v) { photoMenu(); return true; }
             });
@@ -1178,8 +1180,8 @@ public class Main extends Activity {
             t.setGravity(Gravity.CENTER);
             t.setPadding((int) (12 * s), (int) (6 * s), (int) (12 * s), 0);
             ph.addView(t, new LinearLayout.LayoutParams(-1, -2));
-            if (152 + dy < 110) t.setVisibility(View.GONE);   // con el velocímetro analógico el recuadro es bajo
-            place(card, ph, 18, 82, 264, 152 + dy);
+            if (152 + dy + up < 110) t.setVisibility(View.GONE);   // con el velocímetro analógico el recuadro es bajo
+            place(card, ph, 18, photoTop + 4, 264, 152 + dy + up);
             ph.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) { pickPhoto(); }
             });
@@ -1228,9 +1230,10 @@ public class Main extends Activity {
             carGauge.setUnit(useMph());
             carGauge.setNumber(speedo == 2);
             // Gauge en un cuadrado de lado D: radio r = D/2·0.96 y centro a D/2 + 0.04r del borde de arriba.
-            // El aro está abierto abajo; el mantenimiento va centrado en ese hueco (desde cy + 0.42r).
+            // El aro está abierto abajo; el mantenimiento va centrado en ese hueco, desde cy + 0.56r: por debajo de la
+            // aguja en cero (llega a 0.49r) y de los números; ahí el aro deja ±0.7r de ancho para el nombre.
             float bh = 118 + gx, top = 4;
-            float r = oilHome ? (bh - 5 - 40 - top) / 1.5017f : (bh - 8) / 1.88f;
+            float r = oilHome ? (bh - 4 - 40 - top) / 1.6417f : (bh - 8) / 1.88f;
             r = Math.min(r, 268 / 2f * 0.96f);
             float d = r * 2 / 0.96f, cy = top + d / 2 + r * 0.04f;
             place(box, carGauge, 4 + (268 - d) / 2, top, d, d);
@@ -1239,8 +1242,8 @@ public class Main extends Activity {
             box.removeView(g);   // ya estaba puesto: se vuelve a poner en la esquina de arriba a la derecha, fuera del aro
             place(box, g, 174, 3, 94, 16);
             if (oilHome) {
-                float bw = Math.min(250, r * 1.3f);
-                buildOilBadgeCentered(box, 4 + 134 - bw / 2, cy + r * 0.42f, bw);
+                float bw = Math.min(260, r * 1.4f);
+                buildOilBadgeCentered(box, 4 + 134 - bw / 2, cy + r * 0.56f, bw);
             }
             carGauge.bringToFront();   // la aguja por encima; el recuadro del mantenimiento sigue tocable
             if (oilValTv != null) ((View) oilValTv.getParent()).bringToFront();
