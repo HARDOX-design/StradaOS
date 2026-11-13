@@ -688,3 +688,22 @@ Usar la foto original, con fondo	Originalfoto mit Hintergrund verwenden
 Quitar el fondo	Hintergrund entfernen
 No se detectó un fondo liso: se usa la foto tal cual	Kein einfarbiger Hintergrund gefunden: das Foto wird so verwendet
 Se usa tal cual; si quieres, le puedes quitar el fondo	Wird so verwendet; auf Wunsch kannst du den Hintergrund entfernen
+# 2.19: cantidad y tamaño de los botones, íconos de apps, packs de íconos, barra oculta, tamaño de la letra
+Cantidad de botones	Anzahl der Tasten
+«Apps» siempre queda al final	„Apps“ bleibt immer am Ende
+Tamaño de los íconos	Symbolgröße
+Pequeño	Klein
+Pequeña	Klein
+Íconos de la barra	Leistensymbole
+Apps: el ícono de la app que abre cada botón (radio, cámara…)	Apps: das Symbol der App, die jede Taste öffnet (Radio, Kamera…)
+Pack de íconos	Symbolpaket
+Instala uno (los de Nova o ADW sirven) y elígelo aquí	Installiere eines (Nova- oder ADW-Pakete gehen) und wähle es hier
+Cambia los íconos de la barra y del cajón de apps	Ändert die Symbole der Leiste und der App-Übersicht
+Ninguno (íconos de siempre)	Keines (Standardsymbole)
+No hay packs de íconos instalados	Keine Symbolpakete installiert
+Ese pack no trae la lista de íconos (appfilter)	Dieses Paket hat keine Symbolliste (appfilter)
+Pack listo: {} íconos	Paket bereit: {} Symbole
+Lateral: los botones van al costado y todo se ve más grande en pantallas bajas como 1280×480. Oculta: el botón Apps va arriba	Seitlich: die Tasten kommen an die Seite und alles wirkt auf flachen Bildschirmen wie 1280×480 größer. Ausgeblendet: die Apps-Taste kommt nach oben
+Oculta	Ausgeblendet
+Tamaño de la letra	Schriftgröße
+Para leer mejor de lejos o que quepa más	Besser aus der Entfernung lesbar oder mehr Platz

@@ -688,3 +688,22 @@ Usar la foto original, con fondo	Usar a foto original, com fundo
 Quitar el fondo	Remover o fundo
 No se detectó un fondo liso: se usa la foto tal cual	Não foi detectado um fundo liso: a foto é usada como está
 Se usa tal cual; si quieres, le puedes quitar el fondo	Usada como está; se quiser, pode remover o fundo
+# 2.19: cantidad y tamaño de los botones, íconos de apps, packs de íconos, barra oculta, tamaño de la letra
+Cantidad de botones	Quantidade de botões
+«Apps» siempre queda al final	«Apps» sempre fica no final
+Tamaño de los íconos	Tamanho dos ícones
+Pequeño	Pequeno
+Pequeña	Pequena
+Íconos de la barra	Ícones da barra
+Apps: el ícono de la app que abre cada botón (radio, cámara…)	Apps: o ícone do app que cada botão abre (rádio, câmera…)
+Pack de íconos	Pacote de ícones
+Instala uno (los de Nova o ADW sirven) y elígelo aquí	Instale um (os do Nova ou ADW servem) e escolha aqui
+Cambia los íconos de la barra y del cajón de apps	Muda os ícones da barra e da gaveta de apps
+Ninguno (íconos de siempre)	Nenhum (ícones de sempre)
+No hay packs de íconos instalados	Não há pacotes de ícones instalados
+Ese pack no trae la lista de íconos (appfilter)	Esse pacote não traz a lista de ícones (appfilter)
+Pack listo: {} íconos	Pacote pronto: {} ícones
+Lateral: los botones van al costado y todo se ve más grande en pantallas bajas como 1280×480. Oculta: el botón Apps va arriba	Lateral: os botões vão para o lado e tudo fica maior em telas baixas como 1280×480. Oculta: o botão Apps vai para o topo
+Oculta	Oculta
+Tamaño de la letra	Tamanho da letra
+Para leer mejor de lejos o que quepa más	Para ler melhor de longe ou caber mais

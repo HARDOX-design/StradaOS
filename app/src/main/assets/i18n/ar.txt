@@ -688,3 +688,22 @@ Usar la foto original, con fondo	استخدم الصورة الأصلية مع �
 Quitar el fondo	إزالة الخلفية
 No se detectó un fondo liso: se usa la foto tal cual	لم يتم العثور على خلفية سادة: ستُستخدم الصورة كما هي
 Se usa tal cual; si quieres, le puedes quitar el fondo	تُستخدم كما هي؛ ويمكنك إزالة الخلفية إن أردت
+# 2.19: cantidad y tamaño de los botones, íconos de apps, packs de íconos, barra oculta, tamaño de la letra
+Cantidad de botones	عدد الأزرار
+«Apps» siempre queda al final	يبقى «التطبيقات» دائمًا في النهاية
+Tamaño de los íconos	حجم الأيقونات
+Pequeño	صغير
+Pequeña	صغير
+Íconos de la barra	أيقونات الشريط
+Apps: el ícono de la app que abre cada botón (radio, cámara…)	التطبيقات: أيقونة التطبيق الذي يفتحه كل زر (الراديو، الكاميرا…)
+Pack de íconos	حزمة الأيقونات
+Instala uno (los de Nova o ADW sirven) y elígelo aquí	ثبّت حزمة (حزم Nova أو ADW تعمل) واخترها هنا
+Cambia los íconos de la barra y del cajón de apps	يغيّر أيقونات الشريط ودرج التطبيقات
+Ninguno (íconos de siempre)	لا شيء (الأيقونات المعتادة)
+No hay packs de íconos instalados	لا توجد حزم أيقونات مثبتة
+Ese pack no trae la lista de íconos (appfilter)	هذه الحزمة لا تحتوي على قائمة الأيقونات (appfilter)
+Pack listo: {} íconos	الحزمة جاهزة: {} أيقونة
+Lateral: los botones van al costado y todo se ve más grande en pantallas bajas como 1280×480. Oculta: el botón Apps va arriba	جانبي: تنتقل الأزرار إلى الجانب ويبدو كل شيء أكبر في الشاشات المنخفضة مثل 1280×480. مخفي: ينتقل زر التطبيقات إلى الأعلى
+Oculta	مخفي
+Tamaño de la letra	حجم الخط
+Para leer mejor de lejos o que quepa más	للقراءة بشكل أفضل من بعيد أو لاحتواء المزيد

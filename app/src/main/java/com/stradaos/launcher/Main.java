@@ -106,7 +106,10 @@ public class Main extends Activity {
     // ── diseño del inicio (Bloque 2) ──
     /** Ancho de la barra lateral de botones (modo «Lateral»). */
     static final float RAIL = 96;
-    private boolean sideDock, compactDock, playerLeft, showCar, railLeft, dockLabels, showPlayer, carSpeed, oilHome;
+    private boolean sideDock, compactDock, playerLeft, showCar, railLeft, dockLabels, showPlayer, carSpeed, oilHome, noDock;
+    private int dockCount = 7;
+    /** Tamaño de la letra (2.19, Tinoyevski #18): multiplica todos los textos. 1 = el de siempre. */
+    static float FONT = 1f;
     /** x donde empieza el área de tarjetas (con la barra lateral a la izquierda), alto de las tarjetas y arriba del dock. */
     private float ox, cardH = 380, dockTop = 456, boardH = 600;
     /** Columnas: x de la tarjeta del vehículo, del mapa y del reproductor, y anchos del mapa y del reproductor. */
@@ -548,9 +551,15 @@ public class Main extends Activity {
                     else if (d.startsWith("conexion-")) e.putString("conn_buttons", d.substring(9));
                     else if (d.startsWith("nav-")) e.putInt("nav_btn_size", Integer.parseInt(d.substring(4)));
                     else if ("navizq".equals(d)) e.putString("nav_btn_side", "left");
+                    else if ("sinbarra".equals(d)) e.putString("dock_mode", "none");
+                    else if (d.startsWith("botones-")) e.putInt("dock_count", Integer.parseInt(d.substring(8)));
+                    else if (d.startsWith("iconos-")) e.putInt("dock_icon_size", Integer.parseInt(d.substring(7)));
+                    else if ("estiloapps".equals(d)) e.putString("dock_style", "apps");
+                    else if (d.startsWith("letra-")) e.putInt("font_size", Integer.parseInt(d.substring(6)));
                     else if ("base".equals(d)) e.remove("player_side").remove("show_car").remove("dock_mode").remove("aa_panel_open")
                             .remove("dock_labels").remove("rail_side").remove("status_icons").remove("car_speed").remove("oil_home")
-                            .remove("show_player").remove("conn_buttons").remove("nav_btn_size").remove("nav_btn_side");
+                            .remove("show_player").remove("conn_buttons").remove("nav_btn_size").remove("nav_btn_side")
+                            .remove("dock_count").remove("dock_icon_size").remove("dock_style").remove("font_size");
                     e.apply();
                     rebuild();
                 }
@@ -562,6 +571,7 @@ public class Main extends Activity {
                 else if (v.startsWith("sim:")) { prefs.edit().putInt("sim_screen", Integer.parseInt(v.substring(4))).apply(); rebuild(); }
                 else if ("diag-mapa".equals(v)) showMapDiag();
                 else if ("clima".equals(v)) showWeatherDetail();
+                else if (v.startsWith("pack:")) { prefs.edit().putString("icon_pack", v.substring(5)).putString("dock_style", "apps").apply(); rebuild(); }
                 else if ("demo-aceite".equals(v)) {
                     prefs.edit().putBoolean("oil_on", true).putFloat("odo_base_km", 44200).putFloat("odo_gps_m", 0)
                         .putFloat("oil_last_km", 40000).putFloat("oil_interval_km", 5000).putFloat("oil_snooze_km", 0).apply();
@@ -804,6 +814,10 @@ public class Main extends Activity {
         String dm = prefs.getString("dock_mode", "normal");
         sideDock = "side".equals(dm);
         compactDock = "compact".equals(dm);
+        noDock = "none".equals(dm);   // 2.19 (MIGSGx #12): sin barra; el botón Apps va arriba junto al engranaje
+        dockCount = Math.max(4, Math.min(10, prefs.getInt("dock_count", 7)));
+        int fs = prefs.getInt("font_size", 1);
+        FONT = fs == 0 ? 0.9f : fs == 2 ? 1.12f : fs == 3 ? 1.25f : 1f;
         playerLeft = "left".equals(prefs.getString("player_side", "right"));
         showCar = prefs.getBoolean("show_car", true);
         // 2.18: ocultar el reproductor (el mapa gana espacio), la velocidad y el servicio (carros sin GPS) y el aceite
@@ -828,7 +842,7 @@ public class Main extends Activity {
         boardH = dh;
         ox = sideDock && railLeft ? RAIL + 8 : 0;   // la barra lateral, por defecto del lado del reproductor (el del conductor)
         // compacta (2.17, Druids07): más baja que antes (500), con menos espacio arriba y abajo
-        dockTop = sideDock ? dh : compactDock ? 512 : 456;
+        dockTop = sideDock ? dh : noDock ? 600 : compactDock ? 512 : 456;
         cardH = sideDock ? dh - 80 : dockTop - 76;
         layoutColumns();
         getWindow().setBackgroundDrawable(new ColorDrawable(sim > 0 ? Color.BLACK : BG));
@@ -837,7 +851,7 @@ public class Main extends Activity {
         blp.gravity = Gravity.CENTER;
         root.addView(board, blp);
 
-        if (!sideDock) {
+        if (!sideDock && !noDock) {
             // franja del dock a todo el ancho (aunque la pantalla no sea 1024x600)
             View dockBg = new View(this);
             dockBg.setBackgroundColor(DOCK);
@@ -851,7 +865,7 @@ public class Main extends Activity {
         buildCarCard();
         buildAaCard();
         buildAudioCard();
-        buildDock();
+        if (!noDock) buildDock();
 
         drawer = null;
         settingsView = null;
@@ -954,7 +968,12 @@ public class Main extends Activity {
         right.addView(greetTv);
         // sin la tarjeta del vehículo, la velocidad y el aceite ocupan la barra de arriba: el saludo se oculta
         if (!showCar) greetTv.setVisibility(View.GONE);
-        place(board, right, ox + 400 + ex, 14, 552, 32);
+        place(board, right, ox + 400 + ex - (noDock ? 50 : 0), 14, 552, 32);
+        if (noDock) {
+            View appsBtn = circleIcon("apps", 40, 22, CIRCLE);
+            place(board, appsBtn, ox + 914 + ex, 12, 40, 40);
+            appsBtn.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { openDrawer(); } });
+        }
         View gear = circleIcon("settings", 40, 22, CIRCLE);
         place(board, gear, ox + 964 + ex, 12, 40, 40);
         gear.setOnClickListener(new View.OnClickListener() {
@@ -2103,6 +2122,14 @@ public class Main extends Activity {
         {"settings", "Ajustes", "settings"}, {"apps", "Apps", "apps"},
     };
 
+    /** Función de fábrica del botón i según la cantidad de botones: «Apps» siempre al final (2.19). Con 7, lo de siempre. */
+    private String dockDefault(int i) {
+        if (i == dockCount - 1) return "apps";
+        if (i < 6) return DOCK_DEFAULT[i];
+        String[] extra = {"music", "nav", "aa"};
+        return extra[Math.min(extra.length - 1, i - 6)];
+    }
+
     private String[] dockFn(String id) {
         for (String[] f : DOCK_FNS) if (f[0].equals(id)) return f;
         return DOCK_FNS[DOCK_FNS.length - 1];
@@ -2116,7 +2143,7 @@ public class Main extends Activity {
             if (cn != null && installed(cn.getPackageName())) return t;
             t = null;
         }
-        return t != null ? t : "fn:" + DOCK_DEFAULT[i];
+        return t != null ? t : "fn:" + dockDefault(i);
     }
 
     private String dockName(int i) {
@@ -2128,7 +2155,61 @@ public class Main extends Activity {
         return "web".equals(id) ? "Navegador" : dockFn(id)[1];
     }
 
+    /** Pack de íconos elegido (2.19); null = íconos de siempre. */
+    private IconPack iconPack() {
+        String p = prefs.getString("icon_pack", "");
+        if (p.length() == 0) return null;
+        IconPack ip = IconPack.get(this, p);
+        if (ip == null && !installed(p)) prefs.edit().remove("icon_pack").apply();
+        return ip;
+    }
+
+    /** Ícono de una app de la lista: el del pack si lo trae, si no el de siempre. */
+    private Drawable iconOf(ResolveInfo r) {
+        try {
+            IconPack ip = iconPack();
+            if (ip != null) {
+                Drawable d = ip.icon(new ComponentName(r.activityInfo.packageName, r.activityInfo.name));
+                if (d != null) return d;
+            }
+        } catch (Throwable ignored) { }
+        return r.loadIcon(getPackageManager());
+    }
+
+    /**
+     * Con «Íconos de las apps» (2.19, Reinaldo, Lucas Cacciola): la app que abre cada función (radio, Bluetooth,
+     * cámara, archivos, navegación, música) con su propio ícono. null = se queda el ícono redondo de StradaOS.
+     */
+    private Drawable fnAppIcon(String id) {
+        try {
+            String saved = null;
+            int slot = -1;
+            if ("radio".equals(id)) slot = 0;
+            else if ("bt".equals(id)) slot = 1;
+            else if ("cam".equals(id)) slot = 2;
+            else if ("files".equals(id)) slot = 3;
+            else if ("nav".equals(id)) saved = prefs.getString("nav_app", null);
+            else if ("music".equals(id)) saved = prefs.getString("music_app", null);
+            else return null;
+            if (slot >= 0) {
+                saved = prefs.getString(SLOTS[slot][0], null);
+                if (saved == null) {
+                    ResolveInfo r = find(SLOTS[slot][2], SLOTS[slot][3]);
+                    return r != null ? iconOf(r) : null;
+                }
+            }
+            return saved != null ? appIcon(saved) : null;
+        } catch (Throwable e) { return null; }
+    }
+
     private Drawable appIcon(String component) {
+        try {
+            IconPack ip = iconPack();
+            if (ip != null) {
+                Drawable d = ip.icon(ComponentName.unflattenFromString(component));
+                if (d != null) return d;
+            }
+        } catch (Throwable ignored) { }
         try {
             return getPackageManager().getActivityIcon(ComponentName.unflattenFromString(component));
         } catch (Throwable e) {
@@ -2139,21 +2220,31 @@ public class Main extends Activity {
 
     private void buildDock() {
         // tamaños según la barra: normal (como siempre), compacta (menos alta) o lateral (botones al costado)
-        final float cs = sideDock ? (dockLabels ? 40 : 48) : compactDock ? 50 : 64;          // círculo
+        // 2.19: cantidad de botones (4 a 10) y tamaño de los íconos (Tinoyevski #18, MIGSGx #12). 7 y normal = lo de siempre.
+        final int n = dockCount;
+        int isz = prefs.getInt("dock_icon_size", 1);
+        float ik = isz == 0 ? 0.82f : isz == 2 ? 1.2f : 1f;
+        final float railX = railLeft ? 16 : 1016 + ex, step = (boardH - 24) / (float) n;
+        float cs0 = (sideDock ? (dockLabels ? 40 : 48) : compactDock ? 50 : 64) * ik;
+        if (sideDock) cs0 = Math.min(cs0, step - (dockLabels ? 18 : 6));          // que quepan en la barra lateral
+        final float cs = cs0;          // círculo
         final float lblSize = sideDock ? 10 : compactDock ? 12 : 13, lblPad = sideDock ? 2 : compactDock ? 2 : 8;
-        final float railX = railLeft ? 16 : 1016 + ex, step = (boardH - 24) / 7f;
+        final boolean appStyle = "apps".equals(prefs.getString("dock_style", "circle"));
+        // botones a lo ancho: con 7 se usan las posiciones de siempre; con otra cantidad se reparten parejo
+        final float slotW = n == 7 ? 138 + ex / 6 : (948 + ex) / (float) n, itemW = Math.min(120, slotW - 4);
+        final float x0 = n == 7 ? 38 : 38 + (slotW - itemW) / 2;
         if (sideDock) {
             View rail = new View(this);
             rail.setBackground(round(DOCK, 20));
             place(board, rail, railX, 12, RAIL, boardH - 24);
         }
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < n; i++) {
             final int idx = i;
             String t = dockTarget(i);
             LinearLayout b = new LinearLayout(this);
             b.setOrientation(LinearLayout.VERTICAL);
             b.setGravity(Gravity.CENTER_HORIZONTAL);
-            Drawable appIc = t.startsWith("app:") ? appIcon(t.substring(4)) : null;
+            Drawable appIc = t.startsWith("app:") ? appIcon(t.substring(4)) : appStyle ? fnAppIcon(t.substring(3)) : null;
             if (appIc != null) {
                 FrameLayout f = new FrameLayout(this);
                 GradientDrawable g = new GradientDrawable();
@@ -2168,7 +2259,7 @@ public class Main extends Activity {
                 f.addView(iv, lp);
                 b.addView(f, new LinearLayout.LayoutParams((int) (cs * s), (int) (cs * s)));
             } else {
-                String id = t.startsWith("fn:") ? t.substring(3) : DOCK_DEFAULT[i];
+                String id = t.startsWith("fn:") ? t.substring(3) : dockDefault(i);
                 b.addView(circleIcon(dockFn(id)[2], cs, cs * 0.44f, CIRCLE), new LinearLayout.LayoutParams((int) (cs * s), (int) (cs * s)));
             }
             if (dockLabels) {
@@ -2182,8 +2273,8 @@ public class Main extends Activity {
                 b.setGravity(Gravity.CENTER);   // sin nombres: el círculo queda centrado en la franja
             }
             if (sideDock) { b.setGravity(Gravity.CENTER); place(board, b, railX, 12 + step * i, RAIL, step); }
-            else if (compactDock) { b.setGravity(Gravity.CENTER); place(board, b, 38 + (138 + ex / 6) * i, dockTop + 4, 120, 600 - dockTop - 8); }
-            else place(board, b, 38 + (138 + ex / 6) * i, dockLabels ? 474 : 462, 120, dockLabels ? 110 : 132);
+            else if (compactDock) { b.setGravity(Gravity.CENTER); place(board, b, x0 + slotW * i, dockTop + 4, itemW, 600 - dockTop - 8); }
+            else place(board, b, x0 + slotW * i, dockLabels ? 474 : 462, itemW, dockLabels ? 110 : 132);
             b.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) { runDock(idx); }
             });
@@ -2226,10 +2317,10 @@ public class Main extends Activity {
 
     /** Menú del botón N: cambiar app o función, cambiar nombre, volver a lo de siempre. */
     private void dockMenu(final int i, final Runnable after) {
-        final String def = dockFn(DOCK_DEFAULT[i])[1];
+        final String def = dockFn(dockDefault(i))[1];
         new TB(this, dlg())
             .setTitle("Botón " + (i + 1) + " · " + dockName(i))
-            .setItems(new String[]{"Cambiar app o función", "Cambiar el nombre", "Restablecer (" + ("web".equals(DOCK_DEFAULT[i]) ? "Navegador" : def) + ")"},
+            .setItems(new String[]{"Cambiar app o función", "Cambiar el nombre", "Restablecer (" + ("web".equals(dockDefault(i)) ? "Navegador" : def) + ")"},
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface d, int w) {
                         if (w == 0) pickDock(i, after);
@@ -2318,7 +2409,7 @@ public class Main extends Activity {
                 } else {
                     ResolveInfo r = list.get(pos - nx);
                     Drawable d = icons.get(pos);
-                    if (d == null) { try { d = r.loadIcon(pm); } catch (Throwable e) { d = null; } if (d != null) icons.put(pos, d); }
+                    if (d == null) { try { d = iconOf(r); } catch (Throwable e) { d = null; } if (d != null) icons.put(pos, d); }
                     ImageView iv = new ImageView(Main.this);
                     iv.setImageDrawable(d);
                     iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
@@ -2402,7 +2493,7 @@ public class Main extends Activity {
         TextView v = new TextView(this);
         v.setText(I18n.t(t));
         v.setTextColor(color);
-        v.setTextSize(TypedValue.COMPLEX_UNIT_PX, size * s);
+        v.setTextSize(TypedValue.COMPLEX_UNIT_PX, size * s * FONT);
         v.setIncludeFontPadding(false);
         v.setSingleLine(true);
         v.setEllipsize(TextUtils.TruncateAt.END);
@@ -3057,11 +3148,13 @@ public class Main extends Activity {
                     ask("car_name", "Nombre del vehículo (ej.: Mazda 2, Spark GT)", "Mi vehículo", new Runnable() { public void run() {
                     ask("car_tag", "Etiqueta corta (versión o placa). Déjalo vacío si no quieres", "", new Runnable() { public void run() {
                     chooseAccent(new Runnable() { public void run() {
+                    chooseFontSize(new Runnable() { public void run() {
                         prefs.edit().putBoolean("setup_done", true).apply();
                         rebuild();
                         reviewShortcuts(new Runnable() { public void run() {
                             if (!askDefaultHome(new Runnable() { public void run() { pickPhoto(); } })) pickPhoto();
                         } });
+                    }});
                     }});
                     }});
                     }});
@@ -3133,6 +3226,21 @@ public class Main extends Activity {
                     if (next != null) next.run();
                 }
             })
+            .show();
+    }
+
+    /** Asistente (2.19): tamaño de la letra. */
+    private void chooseFontSize(final Runnable next) {
+        String[] o = {I18n.t("Pequeña"), I18n.t("Normal"), I18n.t("Grande"), I18n.t("Muy grande")};
+        new android.app.AlertDialog.Builder(this, dlg())
+            .setTitle(I18n.t("Tamaño de la letra"))
+            .setSingleChoiceItems(o, prefs.getInt("font_size", 1), new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) {
+                d.dismiss();
+                prefs.edit().putInt("font_size", w).apply();
+                rebuild();
+                next.run();
+            }})
+            .setCancelable(false)
             .show();
     }
 
@@ -3816,6 +3924,9 @@ public class Main extends Activity {
                 .show();
         }});
         LinearLayout c = section(body, "Tema");
+        segmented(c, "Tamaño de la letra", "Para leer mejor de lejos o que quepa más", new String[]{"S", "M", "L", "XL"}, prefs.getInt("font_size", 1), new IntCb() { public void on(int i) {
+            prefs.edit().putInt("font_size", i).apply(); rebuild(); showSettings(2);
+        }});
         String t = prefs.getString("theme", "dark");
         final String[] themes = {"dark", "light", "auto", "system"};
         segmented(c, "Modo", "Auto: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)",
@@ -3877,9 +3988,9 @@ public class Main extends Activity {
                     prefs.edit().putString("nav_btn_side", sideKeys[i]).apply(); rebuild();
                 }});
         }
-        segmented(lay, "Barra de botones", "Lateral: los botones van al costado y todo se ve más grande en pantallas bajas como 1280×480", new String[]{"Normal", "Compacta", "Lateral"},
-            sideDock ? 2 : compactDock ? 1 : 0, new IntCb() { public void on(int i) {
-                prefs.edit().putString("dock_mode", i == 2 ? "side" : i == 1 ? "compact" : "normal").apply(); rebuild();
+        segmented(lay, "Barra de botones", "Lateral: los botones van al costado y todo se ve más grande en pantallas bajas como 1280×480. Oculta: el botón Apps va arriba", new String[]{"Normal", "Compacta", "Lateral", "Oculta"},
+            noDock ? 3 : sideDock ? 2 : compactDock ? 1 : 0, new IntCb() { public void on(int i) {
+                prefs.edit().putString("dock_mode", i == 3 ? "none" : i == 2 ? "side" : i == 1 ? "compact" : "normal").apply(); rebuild();
             }});
         if (sideDock) {
             String rs = prefs.getString("rail_side", "auto");
@@ -3941,7 +4052,48 @@ public class Main extends Activity {
 
     private void catApps(LinearLayout body) {
         LinearLayout c = section(body, "Barra inferior (déjalos presionados en el inicio para cambiarlos)");
-        for (int i = 0; i < 7; i++) {
+        // 2.19: cuántos botones, de qué tamaño y con qué íconos (Tinoyevski #18, MIGSGx #12, Reinaldo)
+        final String[] counts = {"4", "5", "6", "7", "8", "9", "10"};
+        choice(c, "Cantidad de botones", "«Apps» siempre queda al final", counts, dockCount - 4, new IntCb() { public void on(int i) {
+            prefs.edit().putInt("dock_count", i + 4).apply(); rebuild(); showSettings(4);
+        }});
+        segmented(c, "Tamaño de los íconos", null, new String[]{"Pequeño", "Normal", "Grande"}, prefs.getInt("dock_icon_size", 1), new IntCb() { public void on(int i) {
+            prefs.edit().putInt("dock_icon_size", i).apply(); rebuild(); showSettings(4);
+        }});
+        boolean appStyle = "apps".equals(prefs.getString("dock_style", "circle"));
+        segmented(c, "Íconos de la barra", "Apps: el ícono de la app que abre cada botón (radio, cámara…)", new String[]{"StradaOS", "Apps"}, appStyle ? 1 : 0, new IntCb() { public void on(int i) {
+            prefs.edit().putString("dock_style", i == 1 ? "apps" : "circle").apply(); rebuild(); showSettings(4);
+        }});
+        final List<String[]> packs = IconPack.installed(this);
+        String curPack = prefs.getString("icon_pack", "");
+        String curLabel = I18n.t("Ninguno");
+        for (String[] pk : packs) if (pk[0].equals(curPack)) curLabel = pk[1];
+        row(c, "Pack de íconos", packs.isEmpty() ? "Instala uno (los de Nova o ADW sirven) y elígelo aquí" : "Cambia los íconos de la barra y del cajón de apps",
+            curLabel, new Runnable() { public void run() {
+                if (packs.isEmpty()) { toast("No hay packs de íconos instalados"); return; }
+                String[] names = new String[packs.size() + 1];
+                names[0] = I18n.t("Ninguno (íconos de siempre)");
+                int sel = 0;
+                String cp = prefs.getString("icon_pack", "");
+                for (int i = 0; i < packs.size(); i++) { names[i + 1] = packs.get(i)[1]; if (packs.get(i)[0].equals(cp)) sel = i + 1; }
+                new android.app.AlertDialog.Builder(Main.this, dlg())
+                    .setTitle(I18n.t("Pack de íconos"))
+                    .setSingleChoiceItems(names, sel, new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) {
+                        d.dismiss();
+                        if (w == 0) prefs.edit().remove("icon_pack").apply();
+                        else {
+                            String pk = packs.get(w - 1)[0];
+                            IconPack ip = IconPack.get(Main.this, pk);
+                            if (ip == null) { toast("Ese pack no trae la lista de íconos (appfilter)"); return; }
+                            prefs.edit().putString("icon_pack", pk).apply();
+                            if (!"apps".equals(prefs.getString("dock_style", "circle"))) prefs.edit().putString("dock_style", "apps").apply();
+                            toast(I18n.t("Pack listo: {} íconos").replace("{}", String.valueOf(ip.size())));
+                        }
+                        rebuild(); showSettings(4);
+                    }})
+                    .show();
+            }});
+        for (int i = 0; i < dockCount; i++) {
             final int idx = i;
             String t = dockTarget(i);
             String what = t.startsWith("app:") ? "App: " + labelOf(t.substring(4)) : "Función: " + ("web".equals(t.substring(3)) ? "Navegador web" : dockFn(t.substring(3))[1]);
@@ -3969,7 +4121,7 @@ public class Main extends Activity {
         row(r, "Restablecer accesos", "La barra vuelve a lo de siempre y se buscan las apps de fábrica", null, new Runnable() { public void run() {
             SharedPreferences.Editor e = prefs.edit();
             for (String k : new String[]{"radio", "bt", "cam", "files", "settings", "aa", "web", "carplay", "music_app", "nav_app"}) e.remove(k);
-            for (int i = 0; i < 7; i++) e.remove("dock_" + i).remove("dock_" + i + "_name");
+            for (int i = 0; i < 10; i++) e.remove("dock_" + i).remove("dock_" + i + "_name");
             e.apply();
             toast("Accesos restablecidos");
             refreshStates();
@@ -5338,7 +5490,7 @@ public class Main extends Activity {
                     lb = (TextView) cell.getChildAt(1);
                 }
                 ResolveInfo r = shown.get(p);
-                Drawable d = r.loadIcon(pm);
+                Drawable d = iconOf(r);
                 im.setImageDrawable(d);
                 lb.setText(r.loadLabel(pm));
                 return cell;
@@ -5447,7 +5599,7 @@ public class Main extends Activity {
                 row.setGravity(Gravity.CENTER_VERTICAL);
                 row.setPadding((int) (8 * s), (int) (8 * s), (int) (8 * s), (int) (8 * s));
                 Drawable d = icons.get(k);
-                if (d == null) { try { d = r.loadIcon(pm); } catch (Throwable e) { d = null; } if (d != null) icons.put(k, d); }
+                if (d == null) { try { d = iconOf(r); } catch (Throwable e) { d = null; } if (d != null) icons.put(k, d); }
                 ImageView iv = new ImageView(Main.this);
                 iv.setImageDrawable(d);
                 iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
