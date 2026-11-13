@@ -756,3 +756,35 @@ cada {} meses	alle {} Monate
 {} meses	{} Monate
 {} día	{} Tag
 {} días	{} Tage
+# 2.20: Ajustes reordenados, sección Mantenimientos, íconos, velocímetro del mapa
+Mantenimientos	Wartung
+Barra de apps	App-Leiste
+Tarjetas	Karten
+Barra de arriba	Obere Leiste
+Diseño de la barra	Leistenlayout
+Botones (déjalos presionados en el inicio para cambiarlos)	Tasten (auf dem Startbildschirm gedrückt halten, um sie zu ändern)
+Texto	Text
+Kilometraje	Kilometerstand
+Escríbelo una vez y StradaOS le suma lo que recorras con el GPS	Einmal eingeben, StradaOS addiert die Strecke per GPS
+Avisa cuando toca el cambio	Erinnert, wenn der Wechsel fällig ist
+En el inicio	Auf dem Startbildschirm
+Mantenimiento en el inicio	Wartung auf dem Startbildschirm
+Junto a la velocidad se ve el más próximo (el aceite u otro). Los avisos siguen saliendo aunque lo ocultes	Neben der Geschwindigkeit steht die nächste Wartung (Öl oder andere). Hinweise kommen trotzdem
+Se muestra junto a la velocidad: activa «Velocidad y servicio» en Pantalla de inicio	Erscheint neben der Geschwindigkeit: „Geschwindigkeit und Service“ unter Startbildschirm einschalten
+Aceite, filtros, SOAT y más	Öl, Filter, Versicherung und mehr
+Ahora están en su propia sección	Jetzt in einem eigenen Bereich
+Al encender	Beim Einschalten
+Launcher predeterminado	Standard-Launcher
+Esquina del velocímetro	Ecke des Tachometers
+Automático: arriba, en el lado contrario al botón del navegador	Automatisch: oben, gegenüber der Navigationstaste
+Arriba a la izquierda	Oben links
+Arriba a la derecha	Oben rechts
+Abajo a la izquierda	Unten links
+Abajo a la derecha	Unten rechts
+Tamaño del velocímetro	Größe des Tachometers
+En pantallas bajas se limita para no tapar el mapa	Auf flachen Bildschirmen begrenzt, damit die Karte frei bleibt
+Elige un ícono	Symbol wählen
+Cambiar el ícono	Symbol ändern
+Filtro de combustible	Kraftstofffilter
+Aire acondicionado	Klimaanlage
+Lavado	Autowäsche

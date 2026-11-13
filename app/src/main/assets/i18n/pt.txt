@@ -756,3 +756,35 @@ cada {} meses	a cada {} meses
 {} meses	{} meses
 {} día	{} dia
 {} días	{} dias
+# 2.20: Ajustes reordenados, sección Mantenimientos, íconos, velocímetro del mapa
+Mantenimientos	Manutenção
+Barra de apps	Barra de apps
+Tarjetas	Cartões
+Barra de arriba	Barra superior
+Diseño de la barra	Layout da barra
+Botones (déjalos presionados en el inicio para cambiarlos)	Botões (mantenha pressionado na tela inicial para mudar)
+Texto	Texto
+Kilometraje	Quilometragem
+Escríbelo una vez y StradaOS le suma lo que recorras con el GPS	Digite uma vez e o StradaOS soma o que você rodar pelo GPS
+Avisa cuando toca el cambio	Avisa quando for hora da troca
+En el inicio	Na tela inicial
+Mantenimiento en el inicio	Manutenção na tela inicial
+Junto a la velocidad se ve el más próximo (el aceite u otro). Los avisos siguen saliendo aunque lo ocultes	Ao lado da velocidade aparece o mais próximo (óleo ou outro). Os avisos continuam mesmo se ocultar
+Se muestra junto a la velocidad: activa «Velocidad y servicio» en Pantalla de inicio	Aparece ao lado da velocidade: ative «Velocidade e manutenção» em Tela inicial
+Aceite, filtros, SOAT y más	Óleo, filtros, seguro e mais
+Ahora están en su propia sección	Agora têm sua própria seção
+Al encender	Ao ligar
+Launcher predeterminado	Launcher padrão
+Esquina del velocímetro	Canto do velocímetro
+Automático: arriba, en el lado contrario al botón del navegador	Automático: no topo, do lado oposto ao botão do navegador
+Arriba a la izquierda	Superior esquerdo
+Arriba a la derecha	Superior direito
+Abajo a la izquierda	Inferior esquerdo
+Abajo a la derecha	Inferior direito
+Tamaño del velocímetro	Tamanho do velocímetro
+En pantallas bajas se limita para no tapar el mapa	Em telas baixas é limitado para não cobrir o mapa
+Elige un ícono	Escolha um ícone
+Cambiar el ícono	Mudar o ícone
+Filtro de combustible	Filtro de combustível
+Aire acondicionado	Ar-condicionado
+Lavado	Lavagem

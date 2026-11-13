@@ -45,9 +45,9 @@ go boton:3;        shot 03-menu-boton
 back
 go elegir:3;       shot 04-elegir-app
 back
-go ajustes:4;      shot 05-ajustes-accesos
-go ajustes:6;      shot 06-ajustes-musica
-go ajustes:5;      shot 07-ajustes-mapa
+go ajustes:4;      shot 05-ajustes-barra
+go ajustes:8;      shot 06-ajustes-musica
+go ajustes:7;      shot 07-ajustes-mapa
 go ajustes:8;      shot 08-ajustes-acerca
 go musica;         shot 09-elegir-musica
 back

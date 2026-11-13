@@ -756,3 +756,35 @@ cada {} meses	كل {} أشهر
 {} meses	{} أشهر
 {} día	{} يوم
 {} días	{} أيام
+# 2.20: Ajustes reordenados, sección Mantenimientos, íconos, velocímetro del mapa
+Mantenimientos	الصيانة
+Barra de apps	شريط التطبيقات
+Tarjetas	البطاقات
+Barra de arriba	الشريط العلوي
+Diseño de la barra	تصميم الشريط
+Botones (déjalos presionados en el inicio para cambiarlos)	الأزرار (اضغط عليها مطولًا في الشاشة الرئيسية لتغييرها)
+Texto	النص
+Kilometraje	عداد المسافة
+Escríbelo una vez y StradaOS le suma lo que recorras con el GPS	اكتبه مرة واحدة وسيضيف StradaOS ما تقطعه عبر GPS
+Avisa cuando toca el cambio	ينبهك عندما يحين وقت التغيير
+En el inicio	في الشاشة الرئيسية
+Mantenimiento en el inicio	الصيانة في الشاشة الرئيسية
+Junto a la velocidad se ve el más próximo (el aceite u otro). Los avisos siguen saliendo aunque lo ocultes	بجانب السرعة يظهر الأقرب (الزيت أو غيره). تستمر التنبيهات حتى لو أخفيته
+Se muestra junto a la velocidad: activa «Velocidad y servicio» en Pantalla de inicio	يظهر بجانب السرعة: فعّل «السرعة والصيانة» في الشاشة الرئيسية
+Aceite, filtros, SOAT y más	الزيت والفلاتر والتأمين والمزيد
+Ahora están en su propia sección	أصبح لها قسم خاص الآن
+Al encender	عند التشغيل
+Launcher predeterminado	المشغّل الافتراضي
+Esquina del velocímetro	زاوية عداد السرعة
+Automático: arriba, en el lado contrario al botón del navegador	تلقائي: في الأعلى، عكس جهة زر الملاحة
+Arriba a la izquierda	أعلى اليسار
+Arriba a la derecha	أعلى اليمين
+Abajo a la izquierda	أسفل اليسار
+Abajo a la derecha	أسفل اليمين
+Tamaño del velocímetro	حجم عداد السرعة
+En pantallas bajas se limita para no tapar el mapa	في الشاشات المنخفضة يُحدّ حتى لا يغطي الخريطة
+Elige un ícono	اختر أيقونة
+Cambiar el ícono	تغيير الأيقونة
+Filtro de combustible	فلتر الوقود
+Aire acondicionado	التكييف
+Lavado	غسيل السيارة

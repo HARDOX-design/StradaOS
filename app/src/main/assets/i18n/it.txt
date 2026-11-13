@@ -756,3 +756,35 @@ cada {} meses	ogni {} mesi
 {} meses	{} mesi
 {} día	{} giorno
 {} días	{} giorni
+# 2.20: Ajustes reordenados, sección Mantenimientos, íconos, velocímetro del mapa
+Mantenimientos	Manutenzione
+Barra de apps	Barra delle app
+Tarjetas	Schede
+Barra de arriba	Barra in alto
+Diseño de la barra	Aspetto della barra
+Botones (déjalos presionados en el inicio para cambiarlos)	Pulsanti (tienili premuti nella schermata iniziale per cambiarli)
+Texto	Testo
+Kilometraje	Chilometraggio
+Escríbelo una vez y StradaOS le suma lo que recorras con el GPS	Scrivilo una volta e StradaOS aggiunge ciò che percorri col GPS
+Avisa cuando toca el cambio	Avvisa quando è ora del cambio
+En el inicio	Nella schermata iniziale
+Mantenimiento en el inicio	Manutenzione nella schermata iniziale
+Junto a la velocidad se ve el más próximo (el aceite u otro). Los avisos siguen saliendo aunque lo ocultes	Accanto alla velocità si vede il più vicino (olio o altro). Gli avvisi continuano anche se lo nascondi
+Se muestra junto a la velocidad: activa «Velocidad y servicio» en Pantalla de inicio	Appare accanto alla velocità: attiva «Velocità e manutenzione» in Schermata iniziale
+Aceite, filtros, SOAT y más	Olio, filtri, assicurazione e altro
+Ahora están en su propia sección	Ora hanno una sezione tutta loro
+Al encender	All'accensione
+Launcher predeterminado	Launcher predefinito
+Esquina del velocímetro	Angolo del tachimetro
+Automático: arriba, en el lado contrario al botón del navegador	Automatico: in alto, dal lato opposto al pulsante del navigatore
+Arriba a la izquierda	In alto a sinistra
+Arriba a la derecha	In alto a destra
+Abajo a la izquierda	In basso a sinistra
+Abajo a la derecha	In basso a destra
+Tamaño del velocímetro	Dimensione del tachimetro
+En pantallas bajas se limita para no tapar el mapa	Sugli schermi bassi viene limitato per non coprire la mappa
+Elige un ícono	Scegli un'icona
+Cambiar el ícono	Cambia l'icona
+Filtro de combustible	Filtro del carburante
+Aire acondicionado	Aria condizionata
+Lavado	Lavaggio

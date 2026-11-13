@@ -756,3 +756,35 @@ cada {} meses	every {} months
 {} meses	{} months
 {} día	{} day
 {} días	{} days
+# 2.20: Ajustes reordenados, sección Mantenimientos, íconos, velocímetro del mapa
+Mantenimientos	Maintenance
+Barra de apps	App bar
+Tarjetas	Cards
+Barra de arriba	Top bar
+Diseño de la barra	Bar layout
+Botones (déjalos presionados en el inicio para cambiarlos)	Buttons (press and hold them on the home screen to change them)
+Texto	Text
+Kilometraje	Odometer
+Escríbelo una vez y StradaOS le suma lo que recorras con el GPS	Type it once and StradaOS adds what you drive using GPS
+Avisa cuando toca el cambio	Reminds you when the change is due
+En el inicio	On the home screen
+Mantenimiento en el inicio	Maintenance on the home screen
+Junto a la velocidad se ve el más próximo (el aceite u otro). Los avisos siguen saliendo aunque lo ocultes	Next to the speed you see the closest one (oil or another). Alerts still show up even if you hide it
+Se muestra junto a la velocidad: activa «Velocidad y servicio» en Pantalla de inicio	Shown next to the speed: turn on "Speed and service" in Home screen
+Aceite, filtros, SOAT y más	Oil, filters, insurance and more
+Ahora están en su propia sección	They now have their own section
+Al encender	At startup
+Launcher predeterminado	Default launcher
+Esquina del velocímetro	Speedometer corner
+Automático: arriba, en el lado contrario al botón del navegador	Automatic: top, opposite the navigation button
+Arriba a la izquierda	Top left
+Arriba a la derecha	Top right
+Abajo a la izquierda	Bottom left
+Abajo a la derecha	Bottom right
+Tamaño del velocímetro	Speedometer size
+En pantallas bajas se limita para no tapar el mapa	On short screens it's limited so it doesn't cover the map
+Elige un ícono	Choose an icon
+Cambiar el ícono	Change the icon
+Filtro de combustible	Fuel filter
+Aire acondicionado	Air conditioning
+Lavado	Car wash

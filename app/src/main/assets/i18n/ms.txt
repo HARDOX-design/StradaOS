@@ -756,3 +756,35 @@ cada {} meses	setiap {} bulan
 {} meses	{} bulan
 {} día	{} hari
 {} días	{} hari
+# 2.20: Ajustes reordenados, sección Mantenimientos, íconos, velocímetro del mapa
+Mantenimientos	Penyelenggaraan
+Barra de apps	Bar aplikasi
+Tarjetas	Kad
+Barra de arriba	Bar atas
+Diseño de la barra	Reka letak bar
+Botones (déjalos presionados en el inicio para cambiarlos)	Butang (tekan lama di skrin utama untuk menukarnya)
+Texto	Teks
+Kilometraje	Odometer
+Escríbelo una vez y StradaOS le suma lo que recorras con el GPS	Taip sekali dan StradaOS menambah jarak dengan GPS
+Avisa cuando toca el cambio	Mengingatkan bila tiba masa tukar
+En el inicio	Di skrin utama
+Mantenimiento en el inicio	Penyelenggaraan di skrin utama
+Junto a la velocidad se ve el más próximo (el aceite u otro). Los avisos siguen saliendo aunque lo ocultes	Di sebelah kelajuan dipaparkan yang paling hampir (minyak atau lain). Amaran tetap muncul walaupun disembunyikan
+Se muestra junto a la velocidad: activa «Velocidad y servicio» en Pantalla de inicio	Dipaparkan di sebelah kelajuan: hidupkan «Kelajuan dan servis» dalam Skrin utama
+Aceite, filtros, SOAT y más	Minyak, penapis, insurans dan lain-lain
+Ahora están en su propia sección	Kini ada bahagian tersendiri
+Al encender	Semasa dihidupkan
+Launcher predeterminado	Pelancar lalai
+Esquina del velocímetro	Sudut meter kelajuan
+Automático: arriba, en el lado contrario al botón del navegador	Automatik: di atas, bertentangan dengan butang navigasi
+Arriba a la izquierda	Atas kiri
+Arriba a la derecha	Atas kanan
+Abajo a la izquierda	Bawah kiri
+Abajo a la derecha	Bawah kanan
+Tamaño del velocímetro	Saiz meter kelajuan
+En pantallas bajas se limita para no tapar el mapa	Pada skrin rendah ia dihadkan supaya tidak menutup peta
+Elige un ícono	Pilih ikon
+Cambiar el ícono	Tukar ikon
+Filtro de combustible	Penapis bahan api
+Aire acondicionado	Penyaman udara
+Lavado	Cucian kereta
