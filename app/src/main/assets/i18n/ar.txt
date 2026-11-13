@@ -582,8 +582,8 @@ Sin señal GPS · última posición	لا توجد إشارة GPS · آخر مو�
 Auto: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)	تلقائي: حسب الجدول. النظام: يتبع الوضع الداكن للشاشة (بعض الشاشات تغيّره عند تشغيل الأضواء)
 Oscuro desde	داكن من
 Claro desde	فاتح من
-Íconos de Wi-Fi y Bluetooth	أيقونات Wi-Fi وبلوتوث
-Arriba, junto al clima. Toca para encender o apagar; déjalo presionado para abrir sus ajustes	في الأعلى بجانب الطقس. المس للتشغيل أو الإيقاف؛ اضغط مطولًا لفتح الإعدادات
+Íconos de Wi-Fi y Bluetooth	أيقونات Wi-Fi والبلوتوث
+Arriba, junto al clima. Toca para encender o apagar; déjalo presionado para abrir sus ajustes	في الأعلى بجانب الطقس. اضغط للتشغيل أو الإيقاف؛ اضغط مطولاً لفتح الإعدادات
 ¿Apagar el Wi-Fi?	إيقاف Wi-Fi؟
 La pantalla se queda sin internet (mapa en vivo, clima y actualizaciones).	ستفقد الشاشة الاتصال بالإنترنت (الخريطة المباشرة والطقس والتحديثات).
 Apagar	إيقاف
@@ -600,31 +600,31 @@ Automático: del lado del reproductor	تلقائي: في جهة المشغّل
 Nombres de los botones	أسماء الأزرار
 Debajo de cada ícono de la barra	أسفل كل أيقونة في الشريط
 Permiso de ubicación: {}	إذن الموقع: {}
-NO (toca el letrero del mapa)	لا (المس لافتة الخريطة)
+NO (toca el letrero del mapa)	لا (اضغط على شارة الخريطة)
 sí	نعم
 GPS del equipo: {} · ubicación por red: {}	GPS الجهاز: {} · الموقع عبر الشبكة: {}
 no encontrado	غير موجود
-encendido	مُشغّل
-apagado	متوقف
-encendida	مُشغّلة
-apagada	متوقفة
+encendido	مفعّل
+apagado	معطّل
+encendida	مفعّلة
+apagada	معطّلة
 Última señal: {}	آخر إشارة: {}
 ninguna desde que abrió StradaOS	لا شيء منذ فتح StradaOS
 hace {} s	منذ {} ث
 hace {} min	منذ {} د
-Buscando desde hace {} min	البحث منذ {} د
+Buscando desde hace {} min	جارٍ البحث منذ {} د
 Posición: {}	الموقع: {}
 sin GPS	بدون GPS
 Zoom: {}	التكبير: {}
-Mapa sin conexión: {}	الخريطة دون اتصال: {}
+Mapa sin conexión: {}	الخريطة بلا اتصال: {}
 ninguno	لا يوجد
 error: {}	خطأ: {}
 {} · en uso	{} · قيد الاستخدام
 {} · fuera del área del archivo	{} · خارج منطقة الملف
-Teselas dibujadas desde el archivo: {} · {} ms cada una	مربعات مرسومة من الملف: {} · {} مللي ث لكل منها
+Teselas dibujadas desde el archivo: {} · {} ms cada una	بلاطات مرسومة من الملف: {} · {} ms لكل منها
 Proveedor: {}	المزوّد: {}
 {} · ninguna fuente respondió ({} vueltas)	{} · لم يستجب أي مصدر ({} جولات)
-Teselas descargadas: {} · en caché: {}	مربعات تم تنزيلها: {} · في الذاكرة المؤقتة: {}
+Teselas descargadas: {} · en caché: {}	بلاطات تم تنزيلها: {} · في الذاكرة المؤقتة: {}
 Errores seguidos: {}	أخطاء متتالية: {}
 Último error: {}	آخر خطأ: {}
 Fuentes probadas:	المصادر المجرّبة:
@@ -637,10 +637,10 @@ OSM Humanitario	OSM الإنساني
 Esri gris oscuro	Esri رمادي داكن
 sin iniciar	لم يبدأ
 TLS listo ({}), {} raíces	TLS جاهز ({})، {} جذور
-TLS listo ({}), {} raíces, {} omitidas	TLS جاهز ({})، {} جذور، {} مُتجاهلة
+TLS listo ({}), {} raíces, {} omitidas	TLS جاهز ({})، {} جذور، {} متخطّاة
 TLS no disponible: {}	TLS غير متاح: {}
 Íconos de Wi-Fi y Bluetooth arriba	أيقونات Wi-Fi والبلوتوث في الأعلى
-Bluetooth: estado del celular desde la app de fábrica; toca para abrirla	البلوتوث: حالة الهاتف من تطبيق المصنع؛ المس لفتحه
+Bluetooth: estado del celular desde la app de fábrica; toca para abrirla	البلوتوث: حالة الهاتف من تطبيق المصنع؛ اضغط لفتحه
 Tema según el modo oscuro del sistema	سمة تتبع الوضع الداكن للنظام
 Pantallas que lo cambian (p. ej. con las luces)	الشاشات التي تغيّره (مثلًا مع الأضواء)
 el sistema está en modo oscuro	النظام في الوضع الداكن
