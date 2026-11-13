@@ -756,3 +756,35 @@ cada {} meses	her {} ay
 {} meses	{} ay
 {} día	{} gün
 {} días	{} gün
+# 2.20: Ajustes reordenados, sección Mantenimientos, íconos, velocímetro del mapa
+Mantenimientos	Bakımlar
+Barra de apps	Uygulama çubuğu
+Tarjetas	Kartlar
+Barra de arriba	Üst çubuk
+Diseño de la barra	Çubuk düzeni
+Botones (déjalos presionados en el inicio para cambiarlos)	Düğmeler (değiştirmek için ana ekranda basılı tutun)
+Texto	Metin
+Kilometraje	Kilometre
+Escríbelo una vez y StradaOS le suma lo que recorras con el GPS	Bir kez yazın, StradaOS GPS ile gittiğiniz mesafeyi ekler
+Avisa cuando toca el cambio	Değişim zamanı gelince uyarır
+En el inicio	Ana ekranda
+Mantenimiento en el inicio	Ana ekranda bakım
+Junto a la velocidad se ve el más próximo (el aceite u otro). Los avisos siguen saliendo aunque lo ocultes	Hızın yanında en yakın olan görünür (yağ veya başka). Gizleseniz bile uyarılar çıkmaya devam eder
+Se muestra junto a la velocidad: activa «Velocidad y servicio» en Pantalla de inicio	Hızın yanında gösterilir: Ana ekran bölümünde «Hız ve servis»i açın
+Aceite, filtros, SOAT y más	Yağ, filtreler, zorunlu sigorta ve daha fazlası
+Ahora están en su propia sección	Artık kendi bölümlerinde
+Al encender	Açılışta
+Launcher predeterminado	Varsayılan başlatıcı
+Esquina del velocímetro	Hız göstergesi köşesi
+Automático: arriba, en el lado contrario al botón del navegador	Otomatik: üstte, navigasyon düğmesinin karşı tarafında
+Arriba a la izquierda	Sol üst
+Arriba a la derecha	Sağ üst
+Abajo a la izquierda	Sol alt
+Abajo a la derecha	Sağ alt
+Tamaño del velocímetro	Hız göstergesi boyutu
+En pantallas bajas se limita para no tapar el mapa	Alçak ekranlarda haritayı kapatmamak için sınırlanır
+Elige un ícono	Bir simge seçin
+Cambiar el ícono	Simgeyi değiştir
+Filtro de combustible	Yakıt filtresi
+Aire acondicionado	Klima
+Lavado	Yıkama
