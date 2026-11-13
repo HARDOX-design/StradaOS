@@ -707,3 +707,52 @@ Lateral: los botones van al costado y todo se ve más grande en pantallas bajas 
 Oculta	مخفي
 Tamaño de la letra	حجم الخط
 Para leer mejor de lejos o que quepa más	للقراءة بشكل أفضل من بعيد أو لاحتواء المزيد
+# 2.20: velocímetro analógico, velocímetro sobre el mapa, mantenimientos a medida
+Velocímetro	عداد السرعة
+En la tarjeta del vehículo. Toma el color de acento	في بطاقة المركبة. يستخدم لون التمييز
+Digital	رقمي
+Analógico	تناظري
+Mixto	مختلط
+Velocímetro sobre el mapa	عداد السرعة على الخريطة
+Redondo, en una esquina del mapa (en vez de la velocidad de arriba)	دائري، في زاوية الخريطة (بدلًا من السرعة في الأعلى)
+Mantenimiento	صيانة
+Otros mantenimientos	صيانة أخرى
+Agregar mantenimiento	إضافة صيانة
+Filtros, bujías, frenos, correa, SOAT… Avisa por kilómetros, por tiempo o lo que llegue primero	فلاتر، شمعات، فرامل، سير، تأمين… يذكّرك حسب المسافة أو الوقت أو أيهما أقرب
+Filtro de aire	فلتر الهواء
+Bujías	شمعات الإشعال
+Pastillas de freno	فحمات الفرامل
+Líquido de frenos	سائل الفرامل
+Refrigerante	سائل التبريد
+Correa de distribución	سير التوقيت
+Rotación de llantas	تدوير الإطارات
+Alineación y balanceo	الترصيص والموازنة
+Revisión de la batería	فحص البطارية
+Seguro obligatorio (SOAT)	التأمين الإلزامي
+Revisión técnico-mecánica	الفحص الفني للمركبة
+Otro (escribe el nombre)	أخرى (اكتب الاسم)
+Nombre del mantenimiento	اسم الصيانة
+Por kilómetros	حسب المسافة
+Por tiempo	حسب الوقت
+Lo que llegue primero	أيهما أقرب
+¿Cada cuántos meses?	كل كم شهرًا؟
+¿Cada cuántos {}?	كل كم {}؟
+¿A cuántos {} fue la última vez?	عند كم {} كانت آخر مرة؟
+¿Cuándo fue la última vez?	متى كانت آخر مرة؟
+Kilometraje del tablero	عداد المسافة في لوحة القيادة
+StradaOS no puede leer el kilometraje del carro. Escríbelo una vez y StradaOS le suma lo que recorras con el GPS.	لا يستطيع StradaOS قراءة عداد السيارة. اكتبه مرة واحدة وسيضيف StradaOS ما تقطعه عبر GPS.
+Escribirlo	اكتبه
+Última vez	آخر مرة
+Cambiar cada cuánto	تغيير المدة
+Corregir la última vez	تصحيح آخر مرة
+¿Borrar «{}»?	حذف «{}»؟
+Kilometraje del tablero al hacerlo	عداد المسافة عند التنفيذ
+Es hora de: {}	حان وقت: {}
+¡Toca: {}!	مستحق: {}!
+Cada {}	كل {}
+cada {} mes	كل {} شهر
+cada {} meses	كل {} أشهر
+(lo primero)	(أيهما أقرب)
+{} meses	{} أشهر
+{} día	{} يوم
+{} días	{} أيام

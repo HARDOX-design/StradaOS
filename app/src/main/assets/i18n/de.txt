@@ -707,3 +707,52 @@ Lateral: los botones van al costado y todo se ve más grande en pantallas bajas 
 Oculta	Ausgeblendet
 Tamaño de la letra	Schriftgröße
 Para leer mejor de lejos o que quepa más	Besser aus der Entfernung lesbar oder mehr Platz
+# 2.20: velocímetro analógico, velocímetro sobre el mapa, mantenimientos a medida
+Velocímetro	Tachometer
+En la tarjeta del vehículo. Toma el color de acento	Auf der Fahrzeugkarte. Nutzt die Akzentfarbe
+Digital	Digital
+Analógico	Analog
+Mixto	Gemischt
+Velocímetro sobre el mapa	Tachometer auf der Karte
+Redondo, en una esquina del mapa (en vez de la velocidad de arriba)	Rund, in einer Ecke der Karte (statt der Geschwindigkeit oben)
+Mantenimiento	Wartung
+Otros mantenimientos	Weitere Wartung
+Agregar mantenimiento	Wartung hinzufügen
+Filtros, bujías, frenos, correa, SOAT… Avisa por kilómetros, por tiempo o lo que llegue primero	Filter, Zündkerzen, Bremsen, Riemen, Versicherung… Erinnert nach Kilometern, nach Zeit oder was zuerst eintritt
+Filtro de aire	Luftfilter
+Bujías	Zündkerzen
+Pastillas de freno	Bremsbeläge
+Líquido de frenos	Bremsflüssigkeit
+Refrigerante	Kühlmittel
+Correa de distribución	Zahnriemen
+Rotación de llantas	Reifenwechsel (Rotation)
+Alineación y balanceo	Achsvermessung und Auswuchten
+Revisión de la batería	Batterieprüfung
+Seguro obligatorio (SOAT)	Pflichtversicherung
+Revisión técnico-mecánica	Hauptuntersuchung (TÜV)
+Otro (escribe el nombre)	Andere (Namen eingeben)
+Nombre del mantenimiento	Name der Wartung
+Por kilómetros	Nach Kilometern
+Por tiempo	Nach Zeit
+Lo que llegue primero	Was zuerst eintritt
+¿Cada cuántos meses?	Alle wie viele Monate?
+¿Cada cuántos {}?	Alle wie viele {}?
+¿A cuántos {} fue la última vez?	Bei wie vielen {} war es zuletzt?
+¿Cuándo fue la última vez?	Wann war es zuletzt?
+Kilometraje del tablero	Kilometerstand am Tacho
+StradaOS no puede leer el kilometraje del carro. Escríbelo una vez y StradaOS le suma lo que recorras con el GPS.	StradaOS kann den Kilometerstand nicht auslesen. Gib ihn einmal ein und StradaOS addiert die gefahrene Strecke per GPS.
+Escribirlo	Eingeben
+Última vez	Zuletzt
+Cambiar cada cuánto	Intervall ändern
+Corregir la última vez	Letztes Mal korrigieren
+¿Borrar «{}»?	„{}“ löschen?
+Kilometraje del tablero al hacerlo	Kilometerstand bei Erledigung
+Es hora de: {}	Zeit für: {}
+¡Toca: {}!	Fällig: {}!
+Cada {}	Alle {}
+cada {} mes	alle {} Monat
+cada {} meses	alle {} Monate
+(lo primero)	(was zuerst eintritt)
+{} meses	{} Monate
+{} día	{} Tag
+{} días	{} Tage

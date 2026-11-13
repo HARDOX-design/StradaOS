@@ -707,3 +707,52 @@ Lateral: los botones van al costado y todo se ve más grande en pantallas bajas 
 Oculta	Oculta
 Tamaño de la letra	Tamanho da letra
 Para leer mejor de lejos o que quepa más	Para ler melhor de longe ou caber mais
+# 2.20: velocímetro analógico, velocímetro sobre el mapa, mantenimientos a medida
+Velocímetro	Velocímetro
+En la tarjeta del vehículo. Toma el color de acento	No cartão do veículo. Usa a cor de destaque
+Digital	Digital
+Analógico	Analógico
+Mixto	Misto
+Velocímetro sobre el mapa	Velocímetro sobre o mapa
+Redondo, en una esquina del mapa (en vez de la velocidad de arriba)	Redondo, num canto do mapa (em vez da velocidade no topo)
+Mantenimiento	Manutenção
+Otros mantenimientos	Outras manutenções
+Agregar mantenimiento	Adicionar manutenção
+Filtros, bujías, frenos, correa, SOAT… Avisa por kilómetros, por tiempo o lo que llegue primero	Filtros, velas, freios, correia, seguro… Avisa por quilômetros, por tempo ou o que vier primeiro
+Filtro de aire	Filtro de ar
+Bujías	Velas de ignição
+Pastillas de freno	Pastilhas de freio
+Líquido de frenos	Fluido de freio
+Refrigerante	Líquido de arrefecimento
+Correa de distribución	Correia dentada
+Rotación de llantas	Rodízio de pneus
+Alineación y balanceo	Alinhamento e balanceamento
+Revisión de la batería	Revisão da bateria
+Seguro obligatorio (SOAT)	Seguro obrigatório
+Revisión técnico-mecánica	Inspeção veicular
+Otro (escribe el nombre)	Outro (digite o nome)
+Nombre del mantenimiento	Nome da manutenção
+Por kilómetros	Por quilômetros
+Por tiempo	Por tempo
+Lo que llegue primero	O que vier primeiro
+¿Cada cuántos meses?	A cada quantos meses?
+¿Cada cuántos {}?	A cada quantos {}?
+¿A cuántos {} fue la última vez?	Com quantos {} foi a última vez?
+¿Cuándo fue la última vez?	Quando foi a última vez?
+Kilometraje del tablero	Quilometragem do painel
+StradaOS no puede leer el kilometraje del carro. Escríbelo una vez y StradaOS le suma lo que recorras con el GPS.	O StradaOS não consegue ler a quilometragem do carro. Digite uma vez e o StradaOS soma o que você rodar pelo GPS.
+Escribirlo	Digitar
+Última vez	Última vez
+Cambiar cada cuánto	Mudar a frequência
+Corregir la última vez	Corrigir a última vez
+¿Borrar «{}»?	Apagar «{}»?
+Kilometraje del tablero al hacerlo	Quilometragem do painel ao fazer
+Es hora de: {}	Hora de: {}
+¡Toca: {}!	Hora de: {}!
+Cada {}	A cada {}
+cada {} mes	a cada {} mês
+cada {} meses	a cada {} meses
+(lo primero)	(o que vier primeiro)
+{} meses	{} meses
+{} día	{} dia
+{} días	{} dias

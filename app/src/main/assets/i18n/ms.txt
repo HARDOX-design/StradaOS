@@ -707,3 +707,52 @@ Lateral: los botones van al costado y todo se ve más grande en pantallas bajas 
 Oculta	Tersembunyi
 Tamaño de la letra	Saiz teks
 Para leer mejor de lejos o que quepa más	Untuk baca lebih jelas dari jauh atau muat lebih banyak
+# 2.20: velocímetro analógico, velocímetro sobre el mapa, mantenimientos a medida
+Velocímetro	Meter kelajuan
+En la tarjeta del vehículo. Toma el color de acento	Pada kad kenderaan. Guna warna aksen
+Digital	Digital
+Analógico	Analog
+Mixto	Campuran
+Velocímetro sobre el mapa	Meter kelajuan di atas peta
+Redondo, en una esquina del mapa (en vez de la velocidad de arriba)	Bulat, di sudut peta (menggantikan kelajuan di atas)
+Mantenimiento	Penyelenggaraan
+Otros mantenimientos	Penyelenggaraan lain
+Agregar mantenimiento	Tambah penyelenggaraan
+Filtros, bujías, frenos, correa, SOAT… Avisa por kilómetros, por tiempo o lo que llegue primero	Penapis, palam pencucuh, brek, tali sawat, insurans… Peringatan ikut jarak, masa atau yang mana dahulu
+Filtro de aire	Penapis udara
+Bujías	Palam pencucuh
+Pastillas de freno	Pad brek
+Líquido de frenos	Minyak brek
+Refrigerante	Penyejuk
+Correa de distribución	Tali sawat masa
+Rotación de llantas	Putaran tayar
+Alineación y balanceo	Penjajaran dan imbangan
+Revisión de la batería	Pemeriksaan bateri
+Seguro obligatorio (SOAT)	Insurans wajib
+Revisión técnico-mecánica	Pemeriksaan kenderaan
+Otro (escribe el nombre)	Lain (taip nama)
+Nombre del mantenimiento	Nama penyelenggaraan
+Por kilómetros	Ikut jarak
+Por tiempo	Ikut masa
+Lo que llegue primero	Yang mana dahulu
+¿Cada cuántos meses?	Setiap berapa bulan?
+¿Cada cuántos {}?	Setiap berapa {}?
+¿A cuántos {} fue la última vez?	Pada berapa {} kali terakhir?
+¿Cuándo fue la última vez?	Bilakah kali terakhir?
+Kilometraje del tablero	Odometer papan pemuka
+StradaOS no puede leer el kilometraje del carro. Escríbelo una vez y StradaOS le suma lo que recorras con el GPS.	StradaOS tidak boleh membaca odometer kereta. Taip sekali dan StradaOS menambah jarak perjalanan dengan GPS.
+Escribirlo	Taip
+Última vez	Kali terakhir
+Cambiar cada cuánto	Tukar kekerapan
+Corregir la última vez	Betulkan kali terakhir
+¿Borrar «{}»?	Padam «{}»?
+Kilometraje del tablero al hacerlo	Odometer semasa dibuat
+Es hora de: {}	Masa untuk: {}
+¡Toca: {}!	Perlu: {}!
+Cada {}	Setiap {}
+cada {} mes	setiap {} bulan
+cada {} meses	setiap {} bulan
+(lo primero)	(yang mana dahulu)
+{} meses	{} bulan
+{} día	{} hari
+{} días	{} hari

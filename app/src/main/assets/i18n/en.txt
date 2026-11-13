@@ -707,3 +707,52 @@ Lateral: los botones van al costado y todo se ve más grande en pantallas bajas 
 Oculta	Hidden
 Tamaño de la letra	Text size
 Para leer mejor de lejos o que quepa más	To read better from afar or fit more
+# 2.20: velocímetro analógico, velocímetro sobre el mapa, mantenimientos a medida
+Velocímetro	Speedometer
+En la tarjeta del vehículo. Toma el color de acento	On the vehicle card. Uses the accent color
+Digital	Digital
+Analógico	Analog
+Mixto	Mixed
+Velocímetro sobre el mapa	Speedometer on the map
+Redondo, en una esquina del mapa (en vez de la velocidad de arriba)	Round, in a corner of the map (instead of the speed at the top)
+Mantenimiento	Maintenance
+Otros mantenimientos	Other maintenance
+Agregar mantenimiento	Add maintenance
+Filtros, bujías, frenos, correa, SOAT… Avisa por kilómetros, por tiempo o lo que llegue primero	Filters, spark plugs, brakes, belt, insurance… Reminds you by distance, by time or whichever comes first
+Filtro de aire	Air filter
+Bujías	Spark plugs
+Pastillas de freno	Brake pads
+Líquido de frenos	Brake fluid
+Refrigerante	Coolant
+Correa de distribución	Timing belt
+Rotación de llantas	Tire rotation
+Alineación y balanceo	Alignment and balancing
+Revisión de la batería	Battery check
+Seguro obligatorio (SOAT)	Mandatory insurance
+Revisión técnico-mecánica	Vehicle inspection
+Otro (escribe el nombre)	Other (type the name)
+Nombre del mantenimiento	Maintenance name
+Por kilómetros	By distance
+Por tiempo	By time
+Lo que llegue primero	Whichever comes first
+¿Cada cuántos meses?	Every how many months?
+¿Cada cuántos {}?	Every how many {}?
+¿A cuántos {} fue la última vez?	At how many {} was the last time?
+¿Cuándo fue la última vez?	When was the last time?
+Kilometraje del tablero	Dashboard odometer
+StradaOS no puede leer el kilometraje del carro. Escríbelo una vez y StradaOS le suma lo que recorras con el GPS.	StradaOS can't read the car's odometer. Type it once and StradaOS adds what you drive using GPS.
+Escribirlo	Type it
+Última vez	Last time
+Cambiar cada cuánto	Change how often
+Corregir la última vez	Fix the last time
+¿Borrar «{}»?	Delete "{}"?
+Kilometraje del tablero al hacerlo	Dashboard odometer when done
+Es hora de: {}	Time for: {}
+¡Toca: {}!	Due: {}!
+Cada {}	Every {}
+cada {} mes	every {} month
+cada {} meses	every {} months
+(lo primero)	(whichever first)
+{} meses	{} months
+{} día	{} day
+{} días	{} days

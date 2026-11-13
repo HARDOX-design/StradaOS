@@ -707,3 +707,52 @@ Lateral: los botones van al costado y todo se ve más grande en pantallas bajas 
 Oculta	Nascosta
 Tamaño de la letra	Dimensione del testo
 Para leer mejor de lejos o que quepa más	Per leggere meglio da lontano o farci stare di più
+# 2.20: velocímetro analógico, velocímetro sobre el mapa, mantenimientos a medida
+Velocímetro	Tachimetro
+En la tarjeta del vehículo. Toma el color de acento	Nella scheda del veicolo. Usa il colore d'accento
+Digital	Digitale
+Analógico	Analogico
+Mixto	Misto
+Velocímetro sobre el mapa	Tachimetro sulla mappa
+Redondo, en una esquina del mapa (en vez de la velocidad de arriba)	Rotondo, in un angolo della mappa (invece della velocità in alto)
+Mantenimiento	Manutenzione
+Otros mantenimientos	Altre manutenzioni
+Agregar mantenimiento	Aggiungi manutenzione
+Filtros, bujías, frenos, correa, SOAT… Avisa por kilómetros, por tiempo o lo que llegue primero	Filtri, candele, freni, cinghia, assicurazione… Avvisa per chilometri, per tempo o ciò che arriva prima
+Filtro de aire	Filtro dell'aria
+Bujías	Candele
+Pastillas de freno	Pastiglie dei freni
+Líquido de frenos	Liquido dei freni
+Refrigerante	Liquido di raffreddamento
+Correa de distribución	Cinghia di distribuzione
+Rotación de llantas	Rotazione degli pneumatici
+Alineación y balanceo	Convergenza ed equilibratura
+Revisión de la batería	Controllo della batteria
+Seguro obligatorio (SOAT)	Assicurazione obbligatoria
+Revisión técnico-mecánica	Revisione del veicolo
+Otro (escribe el nombre)	Altro (scrivi il nome)
+Nombre del mantenimiento	Nome della manutenzione
+Por kilómetros	Per chilometri
+Por tiempo	Per tempo
+Lo que llegue primero	Ciò che arriva prima
+¿Cada cuántos meses?	Ogni quanti mesi?
+¿Cada cuántos {}?	Ogni quanti {}?
+¿A cuántos {} fue la última vez?	A quanti {} è stata l'ultima volta?
+¿Cuándo fue la última vez?	Quando è stata l'ultima volta?
+Kilometraje del tablero	Chilometraggio del cruscotto
+StradaOS no puede leer el kilometraje del carro. Escríbelo una vez y StradaOS le suma lo que recorras con el GPS.	StradaOS non può leggere il chilometraggio dell'auto. Scrivilo una volta e StradaOS aggiunge ciò che percorri col GPS.
+Escribirlo	Scrivilo
+Última vez	Ultima volta
+Cambiar cada cuánto	Cambia ogni quanto
+Corregir la última vez	Correggi l'ultima volta
+¿Borrar «{}»?	Eliminare «{}»?
+Kilometraje del tablero al hacerlo	Chilometraggio del cruscotto quando fatto
+Es hora de: {}	È ora di: {}
+¡Toca: {}!	Da fare: {}!
+Cada {}	Ogni {}
+cada {} mes	ogni {} mese
+cada {} meses	ogni {} mesi
+(lo primero)	(ciò che arriva prima)
+{} meses	{} mesi
+{} día	{} giorno
+{} días	{} giorni

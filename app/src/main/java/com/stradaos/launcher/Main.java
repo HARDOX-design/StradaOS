@@ -115,6 +115,7 @@ public class Main extends Activity {
     /** Columnas: x de la tarjeta del vehículo, del mapa y del reproductor, y anchos del mapa y del reproductor. */
     private float carX = 16, mapX = 328, mapW = 420, audX = 760, audW = 248;
     private TextView topSpeedTv, topOilTv;
+    private Gauge carGauge, mapGauge;
     private ImageView wifiIc, btIc;
     /** Reproductor vertical (tarjeta alta, p. ej. con la barra lateral): carátula y botones más grandes. */
     private boolean tallPlayer;
@@ -552,6 +553,8 @@ public class Main extends Activity {
                     else if (d.startsWith("nav-")) e.putInt("nav_btn_size", Integer.parseInt(d.substring(4)));
                     else if ("navizq".equals(d)) e.putString("nav_btn_side", "left");
                     else if ("sinbarra".equals(d)) e.putString("dock_mode", "none");
+                    else if (d.startsWith("velo-")) e.putInt("speedo", Integer.parseInt(d.substring(5)));
+                    else if ("velomapa".equals(d)) e.putBoolean("map_gauge", true);
                     else if (d.startsWith("botones-")) e.putInt("dock_count", Integer.parseInt(d.substring(8)));
                     else if (d.startsWith("iconos-")) e.putInt("dock_icon_size", Integer.parseInt(d.substring(7)));
                     else if ("estiloapps".equals(d)) e.putString("dock_style", "apps");
@@ -559,7 +562,8 @@ public class Main extends Activity {
                     else if ("base".equals(d)) e.remove("player_side").remove("show_car").remove("dock_mode").remove("aa_panel_open")
                             .remove("dock_labels").remove("rail_side").remove("status_icons").remove("car_speed").remove("oil_home")
                             .remove("show_player").remove("conn_buttons").remove("nav_btn_size").remove("nav_btn_side")
-                            .remove("dock_count").remove("dock_icon_size").remove("dock_style").remove("font_size");
+                            .remove("dock_count").remove("dock_icon_size").remove("dock_style").remove("font_size")
+                            .remove("speedo").remove("map_gauge");
                     e.apply();
                     rebuild();
                 }
@@ -571,6 +575,7 @@ public class Main extends Activity {
                 else if (v.startsWith("sim:")) { prefs.edit().putInt("sim_screen", Integer.parseInt(v.substring(4))).apply(); rebuild(); }
                 else if ("diag-mapa".equals(v)) showMapDiag();
                 else if ("clima".equals(v)) showWeatherDetail();
+                else if (v.startsWith("vel:")) { float kv = Float.parseFloat(v.substring(4)); setGps(true, kv); }
                 else if (v.startsWith("pack:")) { prefs.edit().putString("icon_pack", v.substring(5)).putString("dock_style", "apps").apply(); rebuild(); }
                 else if ("demo-aceite".equals(v)) {
                     prefs.edit().putBoolean("oil_on", true).putFloat("odo_base_km", 44200).putFloat("odo_gps_m", 0)
@@ -582,6 +587,14 @@ public class Main extends Activity {
                     oilLater = false; rebuild(); oilAlert();
                 }
                 else if ("menu-aceite".equals(v)) oilMenu();
+                else if ("demo-mant".equals(v)) {
+                    long day = 86400000L, now2 = System.currentTimeMillis();
+                    prefs.edit().putString("maint", "[{\"t\":\"air\",\"km\":15000,\"mo\":12,\"lkm\":31000,\"ld\":" + (now2 - 200 * day)
+                        + "},{\"t\":\"insurance\",\"km\":0,\"mo\":12,\"ld\":" + (now2 - 350 * day) + "},{\"n\":\"Llantas nuevas\",\"km\":40000,\"mo\":0,\"lkm\":20000}]").apply();
+                    maintLater = false; rebuild();
+                }
+                else if ("aviso-mant".equals(v)) { maintLater = false; oilLater = false; maintAlert(); }
+                else if ("menu-mant".equals(v)) taskMenu(0);
                 else if ("ultimo-aceite".equals(v)) askLast(null);
                 else if ("ultimo-alto".equals(v)) saveLast(odoKm() / 0.621371f, null);   // el caso del issue #7: el número en millas
                 else if ("unidad-aceite".equals(v)) { prefs.edit().putString("speed_unit", "auto").apply(); askOilUnit(new Runnable() { public void run() { } }); }
@@ -904,7 +917,7 @@ public class Main extends Activity {
         row.addView(timeTv);
         row.addView(dateTv);
         topSpeedTv = null;
-        if (!showCar && carSpeed) {
+        if (!showCar && carSpeed && !prefs.getBoolean("map_gauge", false)) {
             // sin tarjeta del vehículo, la velocidad se muestra aquí
             topSpeedTv = tv("", 15, TEXT, true);
             topSpeedTv.setPadding((int) (16 * s), 0, 0, 0);
@@ -1120,7 +1133,10 @@ public class Main extends Activity {
     private void buildCarCard() {
         final FrameLayout card = card(carX, 64, 300, cardH, CARD);
         // barra de abajo compacta: la foto crece y la velocidad baja; sin velocidad (carros sin GPS) la foto llena el resto
-        final float dy = cardH - 380 + (carSpeed ? 0 : 130);
+        // 2.20: velocímetro analógico o mixto: el recuadro de la velocidad crece 70 y la foto se achica lo mismo
+        final int speedo = carSpeed ? prefs.getInt("speedo", 0) : 0;
+        final float gx = speedo > 0 ? 70 : 0;
+        final float dy = cardH - 380 + (carSpeed ? 0 : 130) - gx;
         carTv = tv(prefs.getString("car_name", "Mi vehículo"), 20, TEXT, true);
         place(card, carTv, 20, 16, 260, 26);
         TextView chip = tv(prefs.getString("car_tag", ""), 11, Color.WHITE, true);
@@ -1165,7 +1181,7 @@ public class Main extends Activity {
 
         FrameLayout box = new FrameLayout(this);
         box.setBackground(round(INNER, 16));
-        place(card, box, 12, 250 + dy, 276, 118);
+        place(card, box, 12, 250 + dy, 276, 118 + gx);
         if (!carSpeed) box.setVisibility(View.GONE);   // se arma igual: setGps y el kilometraje siguen funcionando
 
         LinearLayout lbl = new LinearLayout(this);
@@ -1197,8 +1213,19 @@ public class Main extends Activity {
         sv.addView(speedTv);
         sv.addView(kmh);
         placeWrap(box, sv, 16, 34);
-        if (oilHome) buildOilBadge(box);
-        else { oilValTv = null; oilBar = null; oilBarBg = null; }
+        carGauge = null;
+        if (speedo > 0) {
+            lbl.setVisibility(View.GONE);
+            sv.setVisibility(View.GONE);
+            carGauge = new Gauge(this, s);
+            carGauge.setColors(RED, TEXT, SOFT);
+            carGauge.setUnit(useMph());
+            carGauge.setNumber(speedo == 2);
+            place(box, carGauge, 4, 8, 172, 172);
+            g.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+        }
+        if (oilHome) buildOilBadge(box, speedo > 0 ? 36 : 0, speedo > 0 ? 8 : 0);
+        else { oilValTv = null; oilBar = null; oilBarBg = null; oilLblTv = null; oilIc = null; }
         // Oculta: se arma igual (la velocidad y el aceite siguen actualizándose sin fallar) pero no se muestra.
         if (!showCar) board.removeView(card);
         setGps(false, 0);
@@ -1208,7 +1235,8 @@ public class Main extends Activity {
     // StradaOS no puede leer el odómetro del tablero, así que lo estima: el usuario escribe el kilometraje una vez
     // y StradaOS le suma la distancia recorrida que mide el GPS. Todo se guarda en km; se muestra en km o millas.
 
-    private TextView oilValTv;
+    private TextView oilValTv, oilLblTv;
+    private ImageView oilIc;
     private View oilBar, oilBarBg;
     private Location odoLast;
     private float odoPending;
@@ -1235,7 +1263,7 @@ public class Main extends Activity {
     };
 
     private void odoStep(Location l) {
-        if (!oilOn() || l == null) return;
+        if (!odoNeeded() || l == null) return;
         if (l.hasAccuracy() && l.getAccuracy() > 40) return;
         if (odoLast == null) { odoLast = l; return; }
         float d = odoLast.distanceTo(l);
@@ -1257,7 +1285,7 @@ public class Main extends Activity {
 
     /** Solo escucha el GPS en segundo plano si el recordatorio está activo. */
     private void startOdo() {
-        boolean want = oilOn();
+        boolean want = odoNeeded();
         if (want == odoRunning) return;
         try {
             if (want) lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, odoListener);
@@ -1267,10 +1295,10 @@ public class Main extends Activity {
         odoLast = null;
     }
 
-    private void buildOilBadge(FrameLayout box) {
+    private void buildOilBadge(FrameLayout box, float oy, float ox) {
         View sep = new View(this);
         sep.setBackgroundColor(BTN);
-        place(box, sep, 166, 40, 1, 62);
+        place(box, sep, 166 + ox, 40 + oy, 1, 62);
         LinearLayout col = new LinearLayout(this);
         col.setOrientation(LinearLayout.VERTICAL);
         LinearLayout top = new LinearLayout(this);
@@ -1280,7 +1308,10 @@ public class Main extends Activity {
         top.addView(ic, new LinearLayout.LayoutParams((int) (13 * s), (int) (13 * s)));
         TextView t = tv("Aceite", 11, MUTED, false);
         t.setPadding((int) (4 * s), 0, 0, 0);
-        top.addView(t);
+        t.setEllipsize(android.text.TextUtils.TruncateAt.END);
+        top.addView(t, new LinearLayout.LayoutParams(0, -2, 1));
+        oilLblTv = t;
+        oilIc = ic;
         col.addView(top);
         oilValTv = tv("", 14, TEXT, true);
         oilValTv.setPadding(0, (int) (5 * s), 0, (int) (6 * s));
@@ -1291,13 +1322,18 @@ public class Main extends Activity {
         oilBar = new View(this);
         bar.addView(oilBar, new FrameLayout.LayoutParams(0, -1));
         col.addView(bar, new LinearLayout.LayoutParams(-1, (int) (4 * s)));
-        place(box, col, 176, 44, 88, 58);
-        col.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { oilMenu(); } });
+        place(box, col, 176 + ox, 44 + oy, 88 - ox, 58);
+        col.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { badgeMenu(); } });
         updateOilBadge();
     }
 
     private void updateOilBadge() {
         startOdo();
+        // 2.20: con mantenimientos propios, el recuadro y la barra de arriba muestran el más próximo
+        int ni = nearestMaint();
+        badgeTask = ni;
+        if (ni >= 0) { showTaskBadge(ni); return; }
+        if (oilLblTv != null) { oilLblTv.setText(I18n.t("Aceite")); oilIc.setImageBitmap(asset("ic/water_drop.png")); }
         if (topOilTv != null) {
             float l = oilNextKm() - odoKm();
             float iv = Math.max(1, prefs.getFloat("oil_interval_km", 5000));
@@ -1485,6 +1521,351 @@ public class Main extends Activity {
         return true;
     }
 
+    // ───────────────────────── mantenimientos a medida (2.20) ─────────────────────────
+    // Tareas propias además del aceite: cada X km, cada N meses o lo que llegue primero. Se guardan como JSON en
+    // «maint»: t (plantilla) o n (nombre propio), km (intervalo, 0 = no), mo (meses, 0 = no), lkm (km de la última
+    // vez), ld (fecha de la última vez, ms), sz / sd (aviso pospuesto hasta ese km / esa fecha).
+
+    static final String[][] MAINT_TEMPLATES = {
+        {"air", "Filtro de aire", "15000", "12"},
+        {"plugs", "Bujías", "30000", "0"},
+        {"brakes", "Pastillas de freno", "25000", "0"},
+        {"brakefluid", "Líquido de frenos", "0", "24"},
+        {"coolant", "Refrigerante", "40000", "24"},
+        {"belt", "Correa de distribución", "60000", "60"},
+        {"rotation", "Rotación de llantas", "10000", "0"},
+        {"align", "Alineación y balanceo", "10000", "6"},
+        {"battery", "Revisión de la batería", "0", "12"},
+        {"insurance", "Seguro obligatorio (SOAT)", "0", "12"},
+        {"inspection", "Revisión técnico-mecánica", "0", "12"},
+    };
+    private static final double MONTH_MS = 30.44 * 86400000d;
+    private int badgeTask = -1;
+    private static boolean maintLater;
+
+    private List<org.json.JSONObject> maint() {
+        List<org.json.JSONObject> out = new ArrayList<org.json.JSONObject>();
+        try {
+            org.json.JSONArray a = new org.json.JSONArray(prefs.getString("maint", "[]"));
+            for (int i = 0; i < a.length(); i++) out.add(a.getJSONObject(i));
+        } catch (Throwable ignored) { }
+        return out;
+    }
+
+    private void saveMaint(List<org.json.JSONObject> l) {
+        org.json.JSONArray a = new org.json.JSONArray();
+        for (org.json.JSONObject o : l) a.put(o);
+        prefs.edit().putString("maint", a.toString()).apply();
+        updateOilBadge();
+    }
+
+    private String taskName(org.json.JSONObject o) {
+        String n = o.optString("n", "");
+        if (n.length() > 0) return n;
+        String t = o.optString("t", "");
+        for (String[] tp : MAINT_TEMPLATES) if (tp[0].equals(t)) return I18n.t(tp[1]);
+        return I18n.t("Mantenimiento");
+    }
+
+    /** El odómetro estimado se necesita para el aceite o para alguna tarea por kilómetros. */
+    private boolean odoNeeded() {
+        if (oilOn()) return true;
+        for (org.json.JSONObject o : maint()) if (o.optDouble("km", 0) > 0) return true;
+        return false;
+    }
+
+    private double taskKmLeft(org.json.JSONObject o) { return o.optDouble("lkm", 0) + o.optDouble("km", 0) - odoKm(); }
+    private double taskDaysLeft(org.json.JSONObject o) {
+        return (o.optLong("ld", 0) + o.optDouble("mo", 0) * MONTH_MS - System.currentTimeMillis()) / 86400000d;
+    }
+
+    /** Qué tan cerca está (1 = recién hecho, 0 o menos = ya toca), por km o por fecha, lo que llegue primero. */
+    private double taskFrac(org.json.JSONObject o) {
+        double f = 9;
+        double km = o.optDouble("km", 0), mo = o.optDouble("mo", 0);
+        if (km > 0 && prefs.contains("odo_base_km")) f = Math.min(f, taskKmLeft(o) / km);
+        if (mo > 0) f = Math.min(f, taskDaysLeft(o) / (mo * 30.44));
+        return f;
+    }
+
+    private String taskLeftText(org.json.JSONObject o) {
+        double km = o.optDouble("km", 0), mo = o.optDouble("mo", 0);
+        boolean byKm = km > 0 && prefs.contains("odo_base_km");
+        boolean useKm = byKm && (mo <= 0 || taskKmLeft(o) / km <= taskDaysLeft(o) / (mo * 30.44));
+        if (taskFrac(o) <= 0) return I18n.t("¡Ya toca!");
+        if (useKm) return fmtDist((float) taskKmLeft(o));
+        long d = Math.round(Math.ceil(taskDaysLeft(o)));
+        if (d >= 60) return I18n.t(I18n.integer(Math.round(d / 30.44)) + " meses");
+        return I18n.t(I18n.integer(d) + (d == 1 ? " día" : " días"));
+    }
+
+    private String taskEvery(org.json.JSONObject o) {
+        double km = o.optDouble("km", 0), mo = o.optDouble("mo", 0);
+        String a = km > 0 ? I18n.t("Cada " + fmtDist((float) km)) : "";
+        String b = mo > 0 ? I18n.t("cada " + I18n.integer(Math.round(mo)) + (mo == 1 ? " mes" : " meses")) : "";
+        if (a.length() > 0 && b.length() > 0) return a + " · " + b + " " + I18n.t("(lo primero)");
+        return a.length() > 0 ? a : b.length() > 0 ? Character.toUpperCase(b.charAt(0)) + b.substring(1) : "";
+    }
+
+    /**
+     * El mantenimiento que más se acerca (índice), o -1 si es el aceite o no hay tareas. El aceite compite con la
+     * misma medida (fracción que falta), así que sin tareas propias todo se ve exactamente como antes.
+     */
+    private int nearestMaint() {
+        List<org.json.JSONObject> l = maint();
+        if (l.isEmpty()) return -1;
+        double best = oilOn() ? (oilNextKm() - odoKm()) / Math.max(1, prefs.getFloat("oil_interval_km", 5000)) : 99;
+        int bi = -1;
+        for (int i = 0; i < l.size(); i++) {
+            double f = taskFrac(l.get(i));
+            if (f < best) { best = f; bi = i; }
+        }
+        return bi;
+    }
+
+    private void showTaskBadge(int i) {
+        org.json.JSONObject o = maint().get(i);
+        double f = taskFrac(o);
+        String left = taskLeftText(o);
+        boolean due = f <= 0, warn = f < 0.1;
+        if (topOilTv != null) {
+            topOilTv.setText(due ? I18n.t("¡Toca: " + taskName(o) + "!") : taskName(o) + ": " + left);
+            topOilTv.setTextColor(warn ? RED : TEXT);
+        }
+        if (oilValTv == null) return;
+        oilLblTv.setText(taskName(o));
+        oilIc.setImageBitmap(asset("ic/build.png"));
+        oilValTv.setText(left);
+        oilValTv.setTextColor(warn ? RED : TEXT);
+        oilBarBg.setVisibility(View.VISIBLE);
+        final float used = (float) Math.max(0, Math.min(1, 1 - f));
+        oilBarBg.post(new Runnable() { public void run() {
+            ViewGroup.LayoutParams lp = oilBar.getLayoutParams();
+            lp.width = Math.max((int) (2 * s), (int) (oilBarBg.getWidth() * used));
+            oilBar.setLayoutParams(lp);
+            oilBar.setBackground(round(used >= 0.9f ? RED : 0xFF2DBE6C, 2));
+        }});
+    }
+
+    /** Toque en el recuadro del inicio: el aceite o el mantenimiento que se esté mostrando. */
+    private void badgeMenu() {
+        if (badgeTask >= 0 && badgeTask < maint().size()) taskMenu(badgeTask);
+        else oilMenu();
+    }
+
+    /** Aviso en el inicio cuando toca una tarea. «Aún no»: otra vez en 100 km o en 7 días. */
+    private boolean maintAlert() {
+        if (maintLater || oilLater || (oilDlg != null && oilDlg.isShowing())) return false;
+        final List<org.json.JSONObject> l = maint();
+        long now = System.currentTimeMillis();
+        for (int i = 0; i < l.size(); i++) {
+            final org.json.JSONObject o = l.get(i);
+            if (taskFrac(o) > 0) continue;
+            if (o.optDouble("sz", 0) > odoKm() || o.optLong("sd", 0) > now) continue;
+            final int idx = i;
+            oilDlg = new TB(this, dlg())
+                .setTitle(I18n.t("Es hora de: " + taskName(o)))
+                .setMessage(I18n.t(taskEvery(o)) + "\n\n" + I18n.t("¿Ya lo hiciste?"))
+                .setPositiveButton("Ya lo hice", new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) { taskDone(idx, null); } })
+                .setNegativeButton("Aún no", new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) {
+                    try {
+                        List<org.json.JSONObject> l2 = maint();
+                        org.json.JSONObject t = l2.get(idx);
+                        t.put("sz", odoKm() + (useMph() ? 60 / 0.621371f : 100));
+                        t.put("sd", System.currentTimeMillis() + 7 * 86400000L);
+                        saveMaint(l2);
+                    } catch (Throwable ignored) { }
+                }})
+                .setOnCancelListener(new DialogInterface.OnCancelListener() { public void onCancel(DialogInterface d) { maintLater = true; } })
+                .show();
+            return true;
+        }
+        return false;
+    }
+
+    /** Ajustes → Tu vehículo → Otros mantenimientos. */
+    private void maintSection(LinearLayout body) {
+        LinearLayout m = section(body, "Otros mantenimientos");
+        List<org.json.JSONObject> l = maint();
+        for (int i = 0; i < l.size(); i++) {
+            final int idx = i;
+            org.json.JSONObject o = l.get(i);
+            row(m, taskName(o), taskEvery(o), taskLeftText(o), new Runnable() { public void run() { taskMenu(idx); } });
+        }
+        row(m, "Agregar mantenimiento", "Filtros, bujías, frenos, correa, SOAT… Avisa por kilómetros, por tiempo o lo que llegue primero", null,
+            new Runnable() { public void run() { addTask(); } });
+    }
+
+    private void addTask() {
+        final String[] names = new String[MAINT_TEMPLATES.length + 1];
+        for (int i = 0; i < MAINT_TEMPLATES.length; i++) names[i] = I18n.t(MAINT_TEMPLATES[i][1]);
+        names[MAINT_TEMPLATES.length] = I18n.t("Otro (escribe el nombre)");
+        new android.app.AlertDialog.Builder(this, dlg())
+            .setTitle(I18n.t("Agregar mantenimiento"))
+            .setItems(names, new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) {
+                final org.json.JSONObject o = new org.json.JSONObject();
+                try {
+                    if (w < MAINT_TEMPLATES.length) {
+                        String[] tp = MAINT_TEMPLATES[w];
+                        o.put("t", tp[0]).put("km", Double.parseDouble(tp[2])).put("mo", Double.parseDouble(tp[3]));
+                        taskSchedule(o, -1);
+                    } else {
+                        askText(I18n.t("Nombre del mantenimiento"), "", new TextCb() { public void on(String v) {
+                            if (v.trim().length() == 0) return;
+                            try { o.put("n", v.trim()).put("km", 10000).put("mo", 12); } catch (Throwable ignored) { }
+                            taskSchedule(o, -1);
+                        }});
+                    }
+                } catch (Throwable ignored) { }
+            }})
+            .setNegativeButton(I18n.t("Cancelar"), null)
+            .show();
+    }
+
+    /** Cada cuánto: por km, por tiempo o lo que llegue primero; después, la última vez. idx = -1 si es nueva. */
+    private void taskSchedule(final org.json.JSONObject o, final int idx) {
+        final double km0 = o.optDouble("km", 0), mo0 = o.optDouble("mo", 0);
+        int sel = km0 > 0 && mo0 > 0 ? 2 : mo0 > 0 ? 1 : 0;
+        String[] opts = {I18n.t("Por kilómetros"), I18n.t("Por tiempo"), I18n.t("Lo que llegue primero")};
+        new android.app.AlertDialog.Builder(this, dlg())
+            .setTitle(taskName(o))
+            .setSingleChoiceItems(opts, sel, new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, final int w) {
+                d.dismiss();
+                final Runnable askMonths = new Runnable() { public void run() {
+                    if (w == 0) { try { o.put("mo", 0); } catch (Throwable ignored) { } taskLast(o, idx); return; }
+                    askNumber(I18n.t("¿Cada cuántos meses?"), mo0 > 0 ? (float) mo0 : 12, new NumCb() { public void on(float v) {
+                        if (v < 1) { toast("Escribe un número válido"); return; }
+                        try { o.put("mo", v); } catch (Throwable ignored) { }
+                        taskLast(o, idx);
+                    }});
+                }};
+                if (w == 1) { try { o.put("km", 0); } catch (Throwable ignored) { } askMonths.run(); return; }
+                final Runnable askKm = new Runnable() { public void run() {
+                    askNumber(I18n.t("¿Cada cuántos " + unit() + "?"), km0 > 0 ? toUnit((float) km0) : (useMph() ? 6000 : 10000), new NumCb() { public void on(float v) {
+                        if (v < 100) { toast("Escribe un número válido"); return; }
+                        try { o.put("km", fromUnit(v)); } catch (Throwable ignored) { }
+                        askMonths.run();
+                    }});
+                }};
+                // las tareas por km necesitan el kilometraje del tablero (el mismo del aceite)
+                if (!prefs.contains("odo_base_km")) {
+                    new TB(Main.this, dlg())
+                        .setTitle("Kilometraje del tablero")
+                        .setMessage("StradaOS no puede leer el kilometraje del carro. Escríbelo una vez y StradaOS le suma lo que recorras con el GPS.")
+                        .setPositiveButton("Escribirlo", new DialogInterface.OnClickListener() { public void onClick(DialogInterface dd, int ww) {
+                            askOilUnit(new Runnable() { public void run() { askOdo(askKm); } });
+                        }})
+                        .setNegativeButton("Cancelar", null)
+                        .show();
+                } else askKm.run();
+            }})
+            .show();
+    }
+
+    /** Última vez: kilometraje (si va por km) y fecha (si va por tiempo). */
+    private void taskLast(final org.json.JSONObject o, final int idx) {
+        final Runnable finish = new Runnable() { public void run() {
+            try { o.remove("sz"); o.remove("sd"); } catch (Throwable ignored) { }
+            List<org.json.JSONObject> l = maint();
+            if (idx >= 0 && idx < l.size()) l.set(idx, o); else l.add(o);
+            saveMaint(l);
+            toast(taskName(o) + ": " + taskLeftText(o));
+            if (settingsView != null) showSettings(1);
+        }};
+        final Runnable askDate = new Runnable() { public void run() {
+            if (o.optDouble("mo", 0) <= 0) { finish.run(); return; }
+            Calendar c = Calendar.getInstance();
+            long ld = o.optLong("ld", 0);
+            if (ld > 0) c.setTimeInMillis(ld);
+            android.app.DatePickerDialog dp = new android.app.DatePickerDialog(Main.this, dlg(), new android.app.DatePickerDialog.OnDateSetListener() {
+                public void onDateSet(android.widget.DatePicker v, int y, int mth, int day) {
+                    Calendar k = Calendar.getInstance();
+                    k.set(y, mth, day, 12, 0, 0);
+                    try { o.put("ld", Math.min(System.currentTimeMillis(), k.getTimeInMillis())); } catch (Throwable ignored) { }
+                    finish.run();
+                }
+            }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+            dp.setTitle(I18n.t("¿Cuándo fue la última vez?"));
+            dp.show();
+        }};
+        if (o.optDouble("km", 0) > 0) {
+            float def = o.has("lkm") ? toUnit((float) o.optDouble("lkm", 0)) : toUnit(odoKm());
+            askNumber(I18n.t("¿A cuántos " + unit() + " fue la última vez?"), def, new NumCb() { public void on(float v) {
+                try { o.put("lkm", fromUnit(v)); } catch (Throwable ignored) { }
+                askDate.run();
+            }});
+        } else askDate.run();
+    }
+
+    private void taskMenu(final int idx) {
+        final List<org.json.JSONObject> l = maint();
+        if (idx < 0 || idx >= l.size()) return;
+        final org.json.JSONObject o = l.get(idx);
+        StringBuilder head = new StringBuilder(taskEvery(o));
+        if (o.optDouble("km", 0) > 0) head.append("\n").append(I18n.t("Última vez")).append(": ").append(fmtDist((float) o.optDouble("lkm", 0)));
+        if (o.optDouble("mo", 0) > 0 && o.optLong("ld", 0) > 0)
+            head.append(o.optDouble("km", 0) > 0 ? " · " : "\n" + I18n.t("Última vez") + ": ").append(I18n.sdf("d MMM yyyy").format(new Date(o.optLong("ld", 0))));
+        head.append("\n").append(taskFrac(o) <= 0 ? I18n.t("¡Ya toca!") : I18n.t("Faltan " + taskLeftText(o)));
+        LinearLayout ht = new LinearLayout(this);
+        ht.setOrientation(LinearLayout.VERTICAL);
+        int hp = (int) (22 * s);
+        ht.setPadding(hp, hp, hp, (int) (6 * s));
+        ht.addView(tv(taskName(o), 19, TEXT, true));
+        TextView hs = tv(head.toString(), 14, MUTED, false);
+        hs.setSingleLine(false);
+        hs.setMaxLines(5);
+        hs.setLineSpacing(3 * s, 1f);
+        hs.setPadding(0, (int) (6 * s), 0, 0);
+        ht.addView(hs);
+        new TB(this, dlg())
+            .setCustomTitle(ht)
+            .setItems(new String[]{"Ya lo hice", "Cambiar cada cuánto", "Corregir la última vez", "Cambiar el nombre", "Borrar"},
+                new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) {
+                    if (w == 0) taskDone(idx, null);
+                    else if (w == 1) taskSchedule(o, idx);
+                    else if (w == 2) taskLast(o, idx);
+                    else if (w == 3) askText(I18n.t("Nombre del mantenimiento"), taskName(o), new TextCb() { public void on(String v) {
+                        if (v.trim().length() == 0) return;
+                        try { o.put("n", v.trim()); } catch (Throwable ignored) { }
+                        l.set(idx, o); saveMaint(l); if (settingsView != null) showSettings(1);
+                    }});
+                    else new TB(Main.this, dlg())
+                        .setTitle(I18n.t("¿Borrar «" + taskName(o) + "»?"))
+                        .setPositiveButton("Borrar", new DialogInterface.OnClickListener() { public void onClick(DialogInterface dd, int ww) {
+                            l.remove(idx); saveMaint(l); if (settingsView != null) showSettings(1);
+                        }})
+                        .setNegativeButton("Cancelar", null)
+                        .show();
+                }})
+            .setNegativeButton("Cerrar", null)
+            .show();
+    }
+
+    /** «Ya lo hice»: si va por km confirma el kilometraje; la fecha es hoy. */
+    private void taskDone(final int idx, final Runnable next) {
+        final List<org.json.JSONObject> l = maint();
+        if (idx < 0 || idx >= l.size()) return;
+        final org.json.JSONObject o = l.get(idx);
+        final Runnable save = new Runnable() { public void run() {
+            try { o.put("ld", System.currentTimeMillis()); o.remove("sz"); o.remove("sd"); } catch (Throwable ignored) { }
+            l.set(idx, o);
+            saveMaint(l);
+            toast(taskName(o) + ": " + taskLeftText(o));
+            if (settingsView != null) showSettings(1);
+            if (next != null) next.run();
+        }};
+        if (o.optDouble("km", 0) > 0) {
+            askNumber(I18n.t("Kilometraje del tablero al hacerlo") + " (" + unit() + ")", toUnit(odoKm()), new NumCb() { public void on(float v) {
+                float km = fromUnit(v);
+                try { o.put("lkm", km); } catch (Throwable ignored) { }
+                // de paso corrige el kilometraje estimado con el real del tablero
+                prefs.edit().putFloat("odo_base_km", km).putFloat("odo_gps_m", 0).apply();
+                odoPending = 0;
+                save.run();
+            }});
+        } else save.run();
+    }
+
     interface NumCb { void on(float v); }
 
     /**
@@ -1578,6 +1959,18 @@ public class Main extends Activity {
         final View navBtn = circleIcon("map", nb, nb / 2, (CARD & 0x00FFFFFF) | 0xEB000000);
         place(card, navBtn, nbLeft ? 12 : mapW - 12 - nb, panelY - 12 - nb, nb, nb);
         if (nbSize == 3) navBtn.setVisibility(View.GONE);
+        // 2.20 (Daniel): mini velocímetro sobre el mapa cuando la tarjeta del vehículo está oculta
+        mapGauge = null;
+        if (!showCar && carSpeed && prefs.getBoolean("map_gauge", false)) {
+            FrameLayout gb = new FrameLayout(this);
+            gb.setBackground(round((CARD & 0x00FFFFFF) | 0xE0000000, 66));
+            mapGauge = new Gauge(this, s);
+            mapGauge.setColors(RED, TEXT, SOFT);
+            mapGauge.setUnit(useMph());
+            mapGauge.setSmall(true);
+            gb.addView(mapGauge, new FrameLayout.LayoutParams(-1, -1));
+            place(card, gb, nbLeft ? mapW - 12 - 132 : 12, 52, 132, 132);
+        }
         navBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { openNavApp(); }
         });
@@ -2627,6 +3020,8 @@ public class Main extends Activity {
         if (!ok) lastFix = 0;
         float v = useMph() ? kmh * 0.621371f : kmh;
         speedTv.setText(ok ? String.valueOf(Math.round(kmh < 2 ? 0 : v)) : "--");
+        if (carGauge != null) carGauge.setSpeed(kmh < 2 ? 0 : v, ok);
+        if (mapGauge != null) mapGauge.setSpeed(kmh < 2 ? 0 : v, ok);
         if (topSpeedTv != null) topSpeedTv.setText((ok ? String.valueOf(Math.round(kmh < 2 ? 0 : v)) : "--") + " " + (useMph() ? "mph" : "km/h"));
         int gs = ok ? 0 : gpsState();
         gpsTv.setText(ok ? "GPS" : I18n.t(gs == 1 ? "Sin permiso" : gs == 2 ? "GPS apagado" : "Buscando GPS"));
@@ -3050,6 +3445,28 @@ public class Main extends Activity {
                     updateClock();
                 }
             }).show();
+    }
+
+    interface TextCb { void on(String v); }
+
+    /** Texto libre en una ventana (nombre de un mantenimiento, etc.). */
+    private void askText(String title, String def, final TextCb cb) {
+        final android.widget.EditText et = field();
+        et.setSingleLine(true);
+        et.setText(def);
+        et.setSelection(et.getText().length());
+        FrameLayout wrap = new FrameLayout(this);
+        int pad = (int) (20 * s);
+        wrap.setPadding(pad, pad / 2, pad, 0);
+        wrap.addView(et);
+        new TB(this, dlg())
+            .setTitle(title)
+            .setView(wrap)
+            .setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface d, int w) { cb.on(et.getText().toString()); }
+            })
+            .setNegativeButton("Cancelar", null)
+            .show();
     }
 
     private void editText(final String key, String title, String def) {
@@ -3905,6 +4322,7 @@ public class Main extends Activity {
             row(o, "Próximo cambio", null, fmtDist(oilNextKm()), new Runnable() { public void run() { oilMenu(); } });
             row(o, "Ya hice el cambio de aceite", null, null, new Runnable() { public void run() { oilDone(); } });
         }
+        maintSection(body);
     }
 
     private void catLook(LinearLayout body) {
@@ -3958,6 +4376,17 @@ public class Main extends Activity {
         toggle(lay, "Tarjeta del vehículo", "Si la ocultas, la velocidad pasa arriba y el mapa y el reproductor ganan espacio", showCar, new IntCb() { public void on(int i) {
             prefs.edit().putBoolean("show_car", i == 1).apply(); rebuild();
         }});
+        if (carSpeed) {
+            segmented(lay, "Velocímetro", "En la tarjeta del vehículo. Toma el color de acento", new String[]{"Digital", "Analógico", "Mixto"},
+                prefs.getInt("speedo", 0), new IntCb() { public void on(int i) {
+                    prefs.edit().putInt("speedo", i).apply(); rebuild();
+                }});
+            if (!showCar) {
+                toggle(lay, "Velocímetro sobre el mapa", "Redondo, en una esquina del mapa (en vez de la velocidad de arriba)", prefs.getBoolean("map_gauge", false), new IntCb() { public void on(int i) {
+                    prefs.edit().putBoolean("map_gauge", i == 1).apply(); rebuild();
+                }});
+            }
+        }
         toggle(lay, "Velocidad y servicio", "En la tarjeta del vehículo (o arriba si la ocultas). Apágalo si tu carro o pantalla no tiene GPS: la foto ocupa ese espacio",
             carSpeed, new IntCb() { public void on(int i) {
                 prefs.edit().putBoolean("car_speed", i == 1).apply(); rebuild();
@@ -4642,6 +5071,7 @@ public class Main extends Activity {
         if (!hasWindowFocus() || settingsView != null || drawer != null) return;
         if (!homeAsked && prefs.getBoolean("setup_done", false) && !prefs.getBoolean("home_never", false) && askDefaultHome(null)) return;
         if (oilAlert()) return;
+        if (maintAlert()) return;
         long now = System.currentTimeMillis();
         boolean auto = prefs.getBoolean("auto_update", !Updates.fromFdroid(this));
         if (getPackageName().endsWith(".debug")) auto = false;   // la versión de prueba no ofrece actualizar a la normal
