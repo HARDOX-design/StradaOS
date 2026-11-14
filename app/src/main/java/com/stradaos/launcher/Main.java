@@ -5093,9 +5093,6 @@ public class Main extends Activity {
             new IntCb() { public void on(int i) {
                 prefs.edit().putString("clock", i == 1 ? "12" : i == 2 ? "24" : "auto").apply(); updateClock(); showSettings(settingsCat);
             }});
-    }
-
-    private void catConnection(LinearLayout body) {
         if (SDK >= 19) {
             LinearLayout scr = section(body, "Pantalla completa");
             toggle(scr, "Ocultar la barra del sistema", "Esconde también la barra de navegación de tu pantalla (abajo o al costado). Desliza desde el borde para verla un momento",
@@ -5105,6 +5102,9 @@ public class Main extends Activity {
                     immersive(); rebuild(); showSettings(settingsCat);
                 }});
         }
+    }
+
+    private void catConnection(LinearLayout body) {
         LinearLayout c = section(body, "Celular");
         String chosen = prefs.getString("conn_app", null);
         row(c, "Cómo conectar el celular", "La app que se abre al conectar por USB", chosen != null ? labelOf(chosen) : "Preguntar",
