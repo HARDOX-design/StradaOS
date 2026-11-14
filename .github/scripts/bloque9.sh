@@ -91,6 +91,13 @@ go inicio 3
 # ── vuelta a horizontal: todo como antes ──
 if [ "$API" -ge 18 ]; then size 1024x600; else go sim:0 6; fi
 go inicio 6; go pista-demo 3; shot h30-inicio-de-vuelta
+# ── 2.21.1: ocultar la barra del sistema y corrección del velocímetro ──
+go diseno:base 5; go velofix:+5% 3; go vel:60 3; shot x01-velocidad-mas-5
+go velofix:0 3
+go barra:1 6; shot x02-barra-sistema-oculta
+go ajustes:1 5; shot x03-ajustes-vehiculo
+go ajustes:3 5; adb shell input swipe 600 500 600 100 400; sleep 1; adb shell input swipe 600 500 600 100 400; sleep 2; shot x04-ajustes-pantalla
+go barra:0 5; go inicio 4; shot x05-barra-de-vuelta
 adb shell "run-as $PKG cat files/fallos.txt" > "$OUT/fallos.txt" 2>/dev/null || true
 adb logcat -d | grep -E "FATAL EXCEPTION|AndroidRuntime: (java|Caused|\tat com.stradaos)" | tail -60 > $OUT/logcat.txt
 if grep -q "com.stradaos" $OUT/logcat.txt; then echo "CIERRE" > $OUT/CIERRES.txt; fi
