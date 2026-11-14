@@ -767,6 +767,8 @@ public class Main extends Activity {
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_FULLSCREEN | nav | 0x00001000 /* IMMERSIVE_STICKY, API 19 */);
         } catch (Exception ignored) { }
+        // Android 11+: la barra de navegación y la barra de tareas se esconden (o vuelven) con el método nuevo
+        if (SDK >= 30) try { Bars.navigation(getWindow(), nav != 0); } catch (Throwable ignored) { }
     }
 
     /**
