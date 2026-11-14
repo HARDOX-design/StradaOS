@@ -1,0 +1,31 @@
+E/ActivityManager( 1483): ANR in com.stradaos.launcher.debug
+E/ActivityManager( 1483): PID: 2567
+E/ActivityManager( 1483): Reason: Broadcast of Intent { act=android.intent.action.TIME_TICK flg=0x50000014 (has extras) }
+E/ActivityManager( 1483): Load: 0.04 / 0.1 / 0.05
+E/ActivityManager( 1483): CPU usage from 8295ms to 2290ms ago:
+E/ActivityManager( 1483):   0.3% 1483/system_server: 0.1% user + 0.1% kernel
+E/ActivityManager( 1483):   0% 1146/adbd: 0% user + 0% kernel / faults: 141 minor
+E/ActivityManager( 1483): 0.7% TOTAL: 0.5% user + 0.1% kernel
+E/ActivityManager( 1483): CPU usage from 902ms to 1406ms later:
+E/ActivityManager( 1483):   1.9% 1142/surfaceflinger: 0% user + 1.9% kernel
+E/ActivityManager( 1483): 5.8% TOTAL: 2.9% user + 2.9% kernel
+D/OpenGLRenderer( 1483): Render dirty regions requested: true
+D/Atlas   ( 1483): Validating map...
+D/        ( 1483): HostConnection::get() New Host Connection established 0x9cd4f4c0, tid 3443
+I/OpenGLRenderer( 1483): Initialized EGL, version 1.4
+D/EGL_emulation( 1483): eglCreateContext: 0xb315b880: maj 3 min 0 rcv 3
+D/EGL_emulation( 1483): eglMakeCurrent: 0xb315b880: ver 3 0
+E/eglCodecCommon( 1483): glUtilsParamSize: unknow param 0x00008cdf
+E/eglCodecCommon( 1483): glUtilsParamSize: unknow param 0x00008824
+D/OpenGLRenderer( 1483): Enabling debug mode 0
+D/EGL_emulation( 1483): eglMakeCurrent: 0xb315b880: ver 3 0
+D/AndroidRuntime( 3445): 
+D/AndroidRuntime( 3445): >>>>>> AndroidRuntime START com.android.internal.os.RuntimeInit <<<<<<
+D/AndroidRuntime( 3445): CheckJNI is ON
+E/memtrack( 3445): Couldn't load memtrack module (No such file or directory)
+E/android.os.Debug( 3445): failed to load memtrack module: -2
+D/AndroidRuntime( 3445): Calling main entry com.android.commands.input.Input
+I/Input   ( 3445): injectKeyEvent: KeyEvent { action=ACTION_DOWN, keyCode=KEYCODE_BACK, scanCode=0, metaState=0, flags=0x0, repeatCount=0, eventTime=308154, downTime=308154, deviceId=-1, source=0x101 }
+W/InputManager( 1483): Input event injection from pid 3445 timed out.
+I/Input   ( 3445): injectKeyEvent: KeyEvent { action=ACTION_UP, keyCode=KEYCODE_BACK, scanCode=0, metaState=0, flags=0x0, repeatCount=0, eventTime=308154, downTime=308154, deviceId=-1, source=0x101 }
+W/BroadcastQueue( 1483): Timeout of broadcast BroadcastRecord{32953de u-1 android.intent.action.TIME_TICK} - receiver=android.os.BinderProxy@33793215, started 10000ms ago
