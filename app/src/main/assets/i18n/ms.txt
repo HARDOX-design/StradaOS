@@ -895,3 +895,42 @@ Ocultar la barra del sistema	Sembunyikan bar sistem
 Esconde también la barra de navegación de tu pantalla (abajo o al costado). Desliza desde el borde para verla un momento	Turut menyembunyikan bar navigasi skrin anda (bawah atau sisi). Leret dari tepi untuk melihatnya seketika
 Corrección del velocímetro	Pembetulan meter laju
 Suma o resta a la velocidad del GPS para que coincida con el tablero de tu carro	Menambah atau menolak kelajuan GPS supaya sepadan dengan papan pemuka kereta anda
+# 2.22: diseño forzado, tema por amanecer, orden de apps y pantalla en reposo
+Diseño	Susun atur
+Diseño de la pantalla	Susun atur skrin
+Automático: según la forma de la pantalla. Elige Vertical si tu pantalla es vertical y se ve chica en el medio	Automatik: ikut bentuk skrin. Pilih Menegak jika skrin anda menegak dan kelihatan kecil di tengah
+Horizontal	Mendatar
+Vertical	Menegak
+se puede elegir en Ajustes → Pantalla de inicio → Diseño	boleh dipilih di Tetapan → Skrin utama → Susun atur
+Área útil de la pantalla:	Kawasan skrin yang boleh digunakan:
+Horario	Jadual
+Amanecer y atardecer: se calcula con el GPS, sin internet	Matahari terbit dan terbenam: dikira dengan GPS, tanpa internet
+Horas fijas	Waktu tetap
+Amanecer y atardecer	Matahari terbit dan terbenam
+Amanecer	Matahari terbit
+Atardecer	Matahari terbenam
+oscuro desde el atardecer hasta el amanecer	gelap dari matahari terbenam hingga terbit
+Esperando la ubicación del GPS	Menunggu lokasi GPS
+Mientras tanto usa las horas fijas	Sementara itu guna waktu tetap
+Orden	Susunan
+Usadas recientemente	Digunakan baru-baru ini
+Instaladas recientemente	Dipasang baru-baru ini
+A mano	Manual
+Orden de las apps	Susunan aplikasi
+Deja presionada una app y elige «Mover» para cambiarla de lugar	Tekan lama aplikasi dan pilih «Alih» untuk menukar tempatnya
+Mover	Alih
+Toca el lugar donde quieres poner «{}»	Ketik tempat untuk meletakkan «{}»
+Pantalla en reposo	Skrin rehat
+Si no tocas la pantalla un rato, se pone negra con la hora, la fecha y la velocidad. Un toque la quita	Jika skrin tidak disentuh seketika, ia menjadi hitam dengan masa, tarikh dan kelajuan. Satu ketikan menutupnya
+1 minuto	1 minit
+{} minutos	{} minit
+Después de	Selepas
+Tiempo sin tocar la pantalla	Masa tanpa menyentuh skrin
+Con el diseño de velocímetro que prefieras	Dengan gaya meter kelajuan pilihan anda
+Sin velocidad	Tanpa kelajuan
+Color de la letra	Warna teks
+Blanco	Putih
+Gris suave	Kelabu lembut
+Ámbar	Ambar
+Ver ahora	Lihat sekarang
+Toca la pantalla para volver	Ketik skrin untuk kembali

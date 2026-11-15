@@ -895,3 +895,42 @@ Ocultar la barra del sistema	Nascondi la barra di sistema
 Esconde también la barra de navegación de tu pantalla (abajo o al costado). Desliza desde el borde para verla un momento	Nasconde anche la barra di navigazione dello schermo (in basso o di lato). Scorri dal bordo per vederla per un momento
 Corrección del velocímetro	Correzione del tachimetro
 Suma o resta a la velocidad del GPS para que coincida con el tablero de tu carro	Aggiunge o toglie alla velocità GPS perché coincida con il cruscotto della tua auto
+# 2.22: diseño forzado, tema por amanecer, orden de apps y pantalla en reposo
+Diseño	Layout
+Diseño de la pantalla	Layout dello schermo
+Automático: según la forma de la pantalla. Elige Vertical si tu pantalla es vertical y se ve chica en el medio	Automatico: in base alla forma dello schermo. Scegli Verticale se il tuo schermo è verticale e si vede piccolo al centro
+Horizontal	Orizzontale
+Vertical	Verticale
+se puede elegir en Ajustes → Pantalla de inicio → Diseño	puoi sceglierlo in Impostazioni → Schermata iniziale → Layout
+Área útil de la pantalla:	Area utile dello schermo:
+Horario	Orario
+Amanecer y atardecer: se calcula con el GPS, sin internet	Alba e tramonto: calcolati con il GPS, senza internet
+Horas fijas	Orari fissi
+Amanecer y atardecer	Alba e tramonto
+Amanecer	Alba
+Atardecer	Tramonto
+oscuro desde el atardecer hasta el amanecer	scuro dal tramonto all'alba
+Esperando la ubicación del GPS	In attesa della posizione GPS
+Mientras tanto usa las horas fijas	Nel frattempo usa gli orari fissi
+Orden	Ordine
+Usadas recientemente	Usate di recente
+Instaladas recientemente	Installate di recente
+A mano	Manuale
+Orden de las apps	Ordine delle app
+Deja presionada una app y elige «Mover» para cambiarla de lugar	Tieni premuta un'app e scegli «Sposta» per cambiarle posto
+Mover	Sposta
+Toca el lugar donde quieres poner «{}»	Tocca il punto dove vuoi mettere «{}»
+Pantalla en reposo	Schermo a riposo
+Si no tocas la pantalla un rato, se pone negra con la hora, la fecha y la velocidad. Un toque la quita	Se non tocchi lo schermo per un po', diventa nero con ora, data e velocità. Un tocco lo toglie
+1 minuto	1 minuto
+{} minutos	{} minuti
+Después de	Dopo
+Tiempo sin tocar la pantalla	Tempo senza toccare lo schermo
+Con el diseño de velocímetro que prefieras	Con lo stile di tachimetro che preferisci
+Sin velocidad	Senza velocità
+Color de la letra	Colore del testo
+Blanco	Bianco
+Gris suave	Grigio tenue
+Ámbar	Ambra
+Ver ahora	Vedi ora
+Toca la pantalla para volver	Tocca lo schermo per tornare

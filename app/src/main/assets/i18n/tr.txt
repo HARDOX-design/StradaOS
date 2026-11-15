@@ -895,3 +895,42 @@ Ocultar la barra del sistema	Sistem çubuğunu gizle
 Esconde también la barra de navegación de tu pantalla (abajo o al costado). Desliza desde el borde para verla un momento	Ekranınızın gezinme çubuğunu da gizler (altta veya yanda). Kısa süre görmek için kenardan kaydırın
 Corrección del velocímetro	Hız göstergesi düzeltmesi
 Suma o resta a la velocidad del GPS para que coincida con el tablero de tu carro	GPS hızına ekleme veya çıkarma yaparak aracınızın göstergesiyle eşleşmesini sağlar
+# 2.22: diseño forzado, tema por amanecer, orden de apps y pantalla en reposo
+Diseño	Düzen
+Diseño de la pantalla	Ekran düzeni
+Automático: según la forma de la pantalla. Elige Vertical si tu pantalla es vertical y se ve chica en el medio	Otomatik: ekranın şekline göre. Ekranınız dikeyse ve ortada küçük görünüyorsa Dikey'i seçin
+Horizontal	Yatay
+Vertical	Dikey
+se puede elegir en Ajustes → Pantalla de inicio → Diseño	Ayarlar → Ana ekran → Düzen'den seçilebilir
+Área útil de la pantalla:	Kullanılabilir ekran alanı:
+Horario	Zamanlama
+Amanecer y atardecer: se calcula con el GPS, sin internet	Gün doğumu ve batımı: GPS ile, internetsiz hesaplanır
+Horas fijas	Sabit saatler
+Amanecer y atardecer	Gün doğumu ve batımı
+Amanecer	Gün doğumu
+Atardecer	Gün batımı
+oscuro desde el atardecer hasta el amanecer	gün batımından gün doğumuna kadar koyu
+Esperando la ubicación del GPS	GPS konumu bekleniyor
+Mientras tanto usa las horas fijas	Bu arada sabit saatler kullanılır
+Orden	Sıralama
+Usadas recientemente	Son kullanılanlar
+Instaladas recientemente	Son yüklenenler
+A mano	Elle
+Orden de las apps	Uygulama sırası
+Deja presionada una app y elige «Mover» para cambiarla de lugar	Yerini değiştirmek için bir uygulamaya basılı tutun ve «Taşı»yı seçin
+Mover	Taşı
+Toca el lugar donde quieres poner «{}»	«{}» uygulamasını koymak istediğiniz yere dokunun
+Pantalla en reposo	Bekleme ekranı
+Si no tocas la pantalla un rato, se pone negra con la hora, la fecha y la velocidad. Un toque la quita	Ekrana bir süre dokunmazsanız saat, tarih ve hızla siyah olur. Bir dokunuş kapatır
+1 minuto	1 dakika
+{} minutos	{} dakika
+Después de	Şu süreden sonra
+Tiempo sin tocar la pantalla	Ekrana dokunulmayan süre
+Con el diseño de velocímetro que prefieras	Tercih ettiğiniz hız göstergesi stiliyle
+Sin velocidad	Hız yok
+Color de la letra	Yazı rengi
+Blanco	Beyaz
+Gris suave	Yumuşak gri
+Ámbar	Kehribar
+Ver ahora	Şimdi göster
+Toca la pantalla para volver	Geri dönmek için ekrana dokunun

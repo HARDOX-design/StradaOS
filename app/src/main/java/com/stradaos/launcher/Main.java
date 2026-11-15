@@ -505,6 +505,7 @@ public class Main extends Activity {
         float f = new float[]{1f, 1.25f, 1.5f}[Math.max(0, Math.min(2, prefs.getInt("idle_size", 0)))];
         int sp = prefs.getInt("idle_speed", prefs.getInt("speedo", 0));   // 0 digital, 1 analógico, 2 mixto, 3 sin velocidad
         boolean speedOn = sp != 3 && prefs.getBoolean("car_speed", true);
+        if (!vertical && speedOn) f = Math.min(f, 1.25f);   // en horizontal, hora + velocímetro lado a lado deben caber en 1024
         FrameLayout ov = new FrameLayout(this);
         ov.setBackgroundColor(Color.BLACK);
         LinearLayout box = new LinearLayout(this);

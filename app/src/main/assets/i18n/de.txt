@@ -895,3 +895,42 @@ Ocultar la barra del sistema	Systemleiste ausblenden
 Esconde también la barra de navegación de tu pantalla (abajo o al costado). Desliza desde el borde para verla un momento	Blendet auch die Navigationsleiste des Bildschirms aus (unten oder seitlich). Vom Rand wischen, um sie kurz zu sehen
 Corrección del velocímetro	Tachokorrektur
 Suma o resta a la velocidad del GPS para que coincida con el tablero de tu carro	Addiert oder subtrahiert etwas zur GPS-Geschwindigkeit, damit sie zum Tacho deines Autos passt
+# 2.22: diseño forzado, tema por amanecer, orden de apps y pantalla en reposo
+Diseño	Layout
+Diseño de la pantalla	Bildschirm-Layout
+Automático: según la forma de la pantalla. Elige Vertical si tu pantalla es vertical y se ve chica en el medio	Automatisch: je nach Form des Bildschirms. Wähle Hochformat, wenn dein Bildschirm hochkant ist und klein in der Mitte erscheint
+Horizontal	Querformat
+Vertical	Hochformat
+se puede elegir en Ajustes → Pantalla de inicio → Diseño	wählbar unter Einstellungen → Startbildschirm → Layout
+Área útil de la pantalla:	Nutzbare Bildschirmfläche:
+Horario	Zeitplan
+Amanecer y atardecer: se calcula con el GPS, sin internet	Sonnenauf- und -untergang: per GPS berechnet, ohne Internet
+Horas fijas	Feste Zeiten
+Amanecer y atardecer	Sonnenauf- und -untergang
+Amanecer	Sonnenaufgang
+Atardecer	Sonnenuntergang
+oscuro desde el atardecer hasta el amanecer	dunkel von Sonnenuntergang bis Sonnenaufgang
+Esperando la ubicación del GPS	Warte auf GPS-Standort
+Mientras tanto usa las horas fijas	Bis dahin gelten die festen Zeiten
+Orden	Sortierung
+Usadas recientemente	Zuletzt verwendet
+Instaladas recientemente	Zuletzt installiert
+A mano	Manuell
+Orden de las apps	App-Reihenfolge
+Deja presionada una app y elige «Mover» para cambiarla de lugar	Halte eine App gedrückt und wähle „Verschieben“, um ihren Platz zu ändern
+Mover	Verschieben
+Toca el lugar donde quieres poner «{}»	Tippe auf die Stelle, an die „{}“ soll
+Pantalla en reposo	Ruhebildschirm
+Si no tocas la pantalla un rato, se pone negra con la hora, la fecha y la velocidad. Un toque la quita	Wenn du den Bildschirm eine Weile nicht berührst, wird er schwarz mit Uhrzeit, Datum und Geschwindigkeit. Ein Tippen beendet ihn
+1 minuto	1 Minute
+{} minutos	{} Minuten
+Después de	Nach
+Tiempo sin tocar la pantalla	Zeit ohne Berührung
+Con el diseño de velocímetro que prefieras	Im Tacho-Stil deiner Wahl
+Sin velocidad	Ohne Geschwindigkeit
+Color de la letra	Schriftfarbe
+Blanco	Weiß
+Gris suave	Sanftes Grau
+Ámbar	Bernstein
+Ver ahora	Jetzt ansehen
+Toca la pantalla para volver	Tippe auf den Bildschirm, um zurückzukehren

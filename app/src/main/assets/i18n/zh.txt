@@ -895,3 +895,42 @@ Ocultar la barra del sistema	隐藏系统栏
 Esconde también la barra de navegación de tu pantalla (abajo o al costado). Desliza desde el borde para verla un momento	同时隐藏车机导航栏（底部或侧边）。从边缘滑动可短暂显示
 Corrección del velocímetro	车速表校准
 Suma o resta a la velocidad del GPS para que coincida con el tablero de tu carro	对 GPS 车速进行加减，使其与汽车仪表盘一致
+# 2.22: diseño forzado, tema por amanecer, orden de apps y pantalla en reposo
+Diseño	布局
+Diseño de la pantalla	屏幕布局
+Automático: según la forma de la pantalla. Elige Vertical si tu pantalla es vertical y se ve chica en el medio	自动：根据屏幕形状。如果你的屏幕是竖屏且显示得很小、居中，请选择竖屏
+Horizontal	横屏
+Vertical	竖屏
+se puede elegir en Ajustes → Pantalla de inicio → Diseño	可在 设置 → 主屏幕 → 布局 中选择
+Área útil de la pantalla:	屏幕可用区域：
+Horario	时间安排
+Amanecer y atardecer: se calcula con el GPS, sin internet	日出和日落：通过 GPS 计算，无需联网
+Horas fijas	固定时间
+Amanecer y atardecer	日出和日落
+Amanecer	日出
+Atardecer	日落
+oscuro desde el atardecer hasta el amanecer	从日落到日出为深色
+Esperando la ubicación del GPS	正在等待 GPS 位置
+Mientras tanto usa las horas fijas	在此期间使用固定时间
+Orden	排序
+Usadas recientemente	最近使用
+Instaladas recientemente	最近安装
+A mano	手动
+Orden de las apps	应用顺序
+Deja presionada una app y elige «Mover» para cambiarla de lugar	长按应用并选择“移动”来改变它的位置
+Mover	移动
+Toca el lugar donde quieres poner «{}»	点按要放置“{}”的位置
+Pantalla en reposo	待机屏幕
+Si no tocas la pantalla un rato, se pone negra con la hora, la fecha y la velocidad. Un toque la quita	一段时间不触摸屏幕后，屏幕会变黑并显示时间、日期和车速。轻点一下即可退出
+1 minuto	1 分钟
+{} minutos	{} 分钟
+Después de	之后
+Tiempo sin tocar la pantalla	未触摸屏幕的时间
+Con el diseño de velocímetro que prefieras	使用你喜欢的车速表样式
+Sin velocidad	不显示车速
+Color de la letra	文字颜色
+Blanco	白色
+Gris suave	柔和灰
+Ámbar	琥珀色
+Ver ahora	立即预览
+Toca la pantalla para volver	点按屏幕返回

@@ -895,3 +895,42 @@ Ocultar la barra del sistema	Hide the system bar
 Esconde también la barra de navegación de tu pantalla (abajo o al costado). Desliza desde el borde para verla un momento	Also hides your screen's navigation bar (bottom or side). Swipe from the edge to see it for a moment
 Corrección del velocímetro	Speedometer correction
 Suma o resta a la velocidad del GPS para que coincida con el tablero de tu carro	Adds or subtracts from the GPS speed so it matches your car's dashboard
+# 2.22: diseño forzado, tema por amanecer, orden de apps y pantalla en reposo
+Diseño	Layout
+Diseño de la pantalla	Screen layout
+Automático: según la forma de la pantalla. Elige Vertical si tu pantalla es vertical y se ve chica en el medio	Automatic: based on the screen's shape. Choose Vertical if your screen is vertical and looks small in the middle
+Horizontal	Horizontal
+Vertical	Vertical
+se puede elegir en Ajustes → Pantalla de inicio → Diseño	you can choose it in Settings → Home screen → Layout
+Área útil de la pantalla:	Usable screen area:
+Horario	Schedule
+Amanecer y atardecer: se calcula con el GPS, sin internet	Sunrise and sunset: calculated with GPS, no internet
+Horas fijas	Fixed hours
+Amanecer y atardecer	Sunrise and sunset
+Amanecer	Sunrise
+Atardecer	Sunset
+oscuro desde el atardecer hasta el amanecer	dark from sunset to sunrise
+Esperando la ubicación del GPS	Waiting for GPS location
+Mientras tanto usa las horas fijas	Uses the fixed hours in the meantime
+Orden	Order
+Usadas recientemente	Recently used
+Instaladas recientemente	Recently installed
+A mano	Manual
+Orden de las apps	App order
+Deja presionada una app y elige «Mover» para cambiarla de lugar	Long-press an app and choose “Move” to change its place
+Mover	Move
+Toca el lugar donde quieres poner «{}»	Tap the spot where you want to put “{}”
+Pantalla en reposo	Idle screen
+Si no tocas la pantalla un rato, se pone negra con la hora, la fecha y la velocidad. Un toque la quita	If you don't touch the screen for a while, it turns black with the time, date and speed. One tap brings it back
+1 minuto	1 minute
+{} minutos	{} minutes
+Después de	After
+Tiempo sin tocar la pantalla	Time without touching the screen
+Con el diseño de velocímetro que prefieras	With the speedometer style you prefer
+Sin velocidad	No speed
+Color de la letra	Text color
+Blanco	White
+Gris suave	Soft gray
+Ámbar	Amber
+Ver ahora	Preview now
+Toca la pantalla para volver	Tap the screen to go back

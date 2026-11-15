@@ -895,3 +895,42 @@ Ocultar la barra del sistema	إخفاء شريط النظام
 Esconde también la barra de navegación de tu pantalla (abajo o al costado). Desliza desde el borde para verla un momento	يخفي أيضًا شريط التنقل في شاشتك (في الأسفل أو على الجانب). اسحب من الحافة لرؤيته للحظة
 Corrección del velocímetro	تصحيح عداد السرعة
 Suma o resta a la velocidad del GPS para que coincida con el tablero de tu carro	يضيف إلى سرعة GPS أو يطرح منها لتطابق لوحة عدادات سيارتك
+# 2.22: diseño forzado, tema por amanecer, orden de apps y pantalla en reposo
+Diseño	التخطيط
+Diseño de la pantalla	تخطيط الشاشة
+Automático: según la forma de la pantalla. Elige Vertical si tu pantalla es vertical y se ve chica en el medio	تلقائي: حسب شكل الشاشة. اختر عمودي إذا كانت شاشتك عمودية وتظهر صغيرة في الوسط
+Horizontal	أفقي
+Vertical	عمودي
+se puede elegir en Ajustes → Pantalla de inicio → Diseño	يمكن اختياره من الإعدادات ← الشاشة الرئيسية ← التخطيط
+Área útil de la pantalla:	المساحة الصالحة للشاشة:
+Horario	الجدول
+Amanecer y atardecer: se calcula con el GPS, sin internet	الشروق والغروب: يُحسب بالـ GPS دون إنترنت
+Horas fijas	ساعات ثابتة
+Amanecer y atardecer	الشروق والغروب
+Amanecer	الشروق
+Atardecer	الغروب
+oscuro desde el atardecer hasta el amanecer	داكن من الغروب حتى الشروق
+Esperando la ubicación del GPS	في انتظار موقع GPS
+Mientras tanto usa las horas fijas	يستخدم الساعات الثابتة في هذه الأثناء
+Orden	الترتيب
+Usadas recientemente	المستخدمة مؤخرًا
+Instaladas recientemente	المثبتة مؤخرًا
+A mano	يدوي
+Orden de las apps	ترتيب التطبيقات
+Deja presionada una app y elige «Mover» para cambiarla de lugar	اضغط مطولًا على تطبيق واختر «نقل» لتغيير مكانه
+Mover	نقل
+Toca el lugar donde quieres poner «{}»	المس المكان الذي تريد وضع «{}» فيه
+Pantalla en reposo	شاشة السكون
+Si no tocas la pantalla un rato, se pone negra con la hora, la fecha y la velocidad. Un toque la quita	إذا لم تلمس الشاشة لفترة، تصبح سوداء مع الوقت والتاريخ والسرعة. لمسة واحدة تزيلها
+1 minuto	دقيقة واحدة
+{} minutos	{} دقائق
+Después de	بعد
+Tiempo sin tocar la pantalla	مدة عدم لمس الشاشة
+Con el diseño de velocímetro que prefieras	بنمط عداد السرعة الذي تفضله
+Sin velocidad	بدون سرعة
+Color de la letra	لون الخط
+Blanco	أبيض
+Gris suave	رمادي هادئ
+Ámbar	كهرماني
+Ver ahora	عرض الآن
+Toca la pantalla para volver	المس الشاشة للعودة

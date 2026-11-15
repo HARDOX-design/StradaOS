@@ -895,3 +895,42 @@ Ocultar la barra del sistema	Masquer la barre système
 Esconde también la barra de navegación de tu pantalla (abajo o al costado). Desliza desde el borde para verla un momento	Masque aussi la barre de navigation de votre écran (en bas ou sur le côté). Balayez depuis le bord pour la voir un instant
 Corrección del velocímetro	Correction du compteur
 Suma o resta a la velocidad del GPS para que coincida con el tablero de tu carro	Ajoute ou retire à la vitesse GPS pour qu'elle corresponde au tableau de bord de votre voiture
+# 2.22: diseño forzado, tema por amanecer, orden de apps y pantalla en reposo
+Diseño	Disposition
+Diseño de la pantalla	Disposition de l'écran
+Automático: según la forma de la pantalla. Elige Vertical si tu pantalla es vertical y se ve chica en el medio	Automatique : selon la forme de l'écran. Choisissez Vertical si votre écran est vertical et s'affiche en petit au milieu
+Horizontal	Horizontal
+Vertical	Vertical
+se puede elegir en Ajustes → Pantalla de inicio → Diseño	à choisir dans Réglages → Écran d'accueil → Disposition
+Área útil de la pantalla:	Surface utile de l'écran :
+Horario	Horaire
+Amanecer y atardecer: se calcula con el GPS, sin internet	Lever et coucher du soleil : calculés avec le GPS, sans internet
+Horas fijas	Heures fixes
+Amanecer y atardecer	Lever et coucher du soleil
+Amanecer	Lever du soleil
+Atardecer	Coucher du soleil
+oscuro desde el atardecer hasta el amanecer	sombre du coucher au lever du soleil
+Esperando la ubicación del GPS	En attente de la position GPS
+Mientras tanto usa las horas fijas	En attendant, utilise les heures fixes
+Orden	Ordre
+Usadas recientemente	Utilisées récemment
+Instaladas recientemente	Installées récemment
+A mano	Manuel
+Orden de las apps	Ordre des applis
+Deja presionada una app y elige «Mover» para cambiarla de lugar	Appuyez longuement sur une appli et choisissez « Déplacer » pour changer sa place
+Mover	Déplacer
+Toca el lugar donde quieres poner «{}»	Touchez l'endroit où mettre « {} »
+Pantalla en reposo	Écran de veille
+Si no tocas la pantalla un rato, se pone negra con la hora, la fecha y la velocidad. Un toque la quita	Si vous ne touchez pas l'écran pendant un moment, il devient noir avec l'heure, la date et la vitesse. Un appui le retire
+1 minuto	1 minute
+{} minutos	{} minutes
+Después de	Après
+Tiempo sin tocar la pantalla	Durée sans toucher l'écran
+Con el diseño de velocímetro que prefieras	Avec le style de compteur que vous préférez
+Sin velocidad	Sans vitesse
+Color de la letra	Couleur du texte
+Blanco	Blanc
+Gris suave	Gris doux
+Ámbar	Ambre
+Ver ahora	Voir maintenant
+Toca la pantalla para volver	Touchez l'écran pour revenir
