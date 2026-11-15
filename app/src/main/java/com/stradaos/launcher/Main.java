@@ -1056,6 +1056,11 @@ public class Main extends Activity {
         String lmode = prefs.getString("layout_mode", "auto");
         vertical = "vertical".equals(lmode) ? canVertical(W, H) : !"horizontal".equals(lmode) && H >= W * 1.2f;
         if (vertical) sideDock = false;   // en vertical la barra va abajo (la lateral le quitaría ancho al mapa)
+        // Vertical bajo (2.22, Jorge Morales: Tesla con barra de clima, ~768×880): menos de 900 de alto en el lienzo de
+        // 720 de ancho. La barra de botones normal se vuelve compacta para que el mapa tenga espacio. Las verticales de
+        // siempre (768×1024 = 960, 1080×1920 = 1280) no cambian.
+        shortVertical = vertical && H / (W / 720f) < 900;
+        if (shortVertical && !noDock) compactDock = true;
         float dw = 1024 + (sideDock ? RAIL + 8 : 0), dh = sideDock ? 460 : 600;
         s = Math.min(W / dw, H / dh);
         if (vertical) buildVerticalMetrics(W, H);
@@ -1123,6 +1128,7 @@ public class Main extends Activity {
     /** El diseño vertical cabe si la pantalla es casi cuadrada o más alta que ancha. */
     private static boolean canVertical(int W, int H) { return H >= W * 0.95f; }
     private int boxW, boxH;
+    private boolean shortVertical;
 
     private void buildVerticalMetrics(int W, int H) {
         s = W / 720f;
@@ -1136,7 +1142,12 @@ public class Main extends Activity {
         float avail = dockTop - 12 - 64;   // del borde de arriba del mapa al borde de abajo de las tarjetas
         mapY = 64;
         insL = insR = 0;
-        if (showCar && showPlayer) {
+        if (showCar && showPlayer && shortVertical) {
+            // vertical bajo: tarjetas más bajas para que el mapa quede de un tamaño parecido al de ellas
+            cardH = Math.max(300, Math.min(340, avail * 0.48f));
+            mapH = avail - cardH - 12;
+            rowY = mapY + mapH + 12;
+        } else if (showCar && showPlayer) {
             // mapa arriba, y debajo el vehículo y el reproductor lado a lado
             cardH = Math.max(380, Math.min(470, avail * 0.38f));
             if (avail - cardH - 12 < 170) cardH = Math.max(300, avail - 12 - 170);
