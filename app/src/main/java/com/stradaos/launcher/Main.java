@@ -140,6 +140,8 @@ public class Main extends Activity {
     private ImageView weatherIc;
     private LinearLayout weatherBox;
     private double wLat = Double.NaN, wLon = Double.NaN;
+    /** Última ubicación conocida para calcular el amanecer y el atardecer del tema automático (#33). */
+    private double sunLat = Double.NaN, sunLon = Double.NaN;
     private long weatherAt;
     private Weather.Now weatherNow;
     private LinearLayout panelWx, panelWxHours;
@@ -211,6 +213,8 @@ public class Main extends Activity {
             if (ll == null) ll = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             if (ll != null) { wLat = ll.getLatitude(); wLon = ll.getLongitude(); }
         } catch (Throwable ignored) { }
+        if (prefs.contains("sun_lat")) { sunLat = prefs.getFloat("sun_lat", 0); sunLon = prefs.getFloat("sun_lon", 0); }
+        if (!Double.isNaN(wLat)) sunSpot(wLat, wLon);
         loadApps();
         startOdo();
         // mapa sin conexión: aviso al terminar la descarga y, si quedó a medias (se apagó el carro), continuarla
@@ -3403,6 +3407,7 @@ public class Main extends Activity {
             lastFixAny = lastFix;
             setGps(true, l.hasSpeed() ? l.getSpeed() * 3.6f : 0);
             feedMap(l);
+            sunSpot(l.getLatitude(), l.getLongitude());
         }
         public void onStatusChanged(String p, int st, Bundle e) { }
         public void onProviderEnabled(String p) { }
@@ -4453,11 +4458,44 @@ public class Main extends Activity {
         }
     }
 
+    /** Guarda la ubicación para el amanecer/atardecer solo si cambió bastante (~25 km): no escribe a cada lectura. */
+    private void sunSpot(double la, double lo) {
+        if (!Double.isNaN(sunLat) && Math.abs(la - sunLat) < 0.25 && Math.abs(lo - sunLon) < 0.25) return;
+        sunLat = la; sunLon = lo;
+        prefs.edit().putFloat("sun_lat", (float) la).putFloat("sun_lon", (float) lo).apply();
+    }
+
+    /**
+     * Minutos del día (hora local) de la salida [0] y la puesta [1] del sol, sin internet (fórmulas de NOAA,
+     * error de 1–2 min). null si ese día no sale o no se pone (zonas polares).
+     */
+    static int[] sunTimes(double lat, double lon, Calendar c) {
+        double g = 2 * Math.PI / 365.0 * (c.get(Calendar.DAY_OF_YEAR) - 1);
+        double eqt = 229.18 * (0.000075 + 0.001868 * Math.cos(g) - 0.032077 * Math.sin(g) - 0.014615 * Math.cos(2 * g) - 0.040849 * Math.sin(2 * g));
+        double decl = 0.006918 - 0.399912 * Math.cos(g) + 0.070257 * Math.sin(g) - 0.006758 * Math.cos(2 * g)
+                + 0.000907 * Math.sin(2 * g) - 0.002697 * Math.cos(3 * g) + 0.00148 * Math.sin(3 * g);
+        double la = Math.toRadians(lat);
+        double cosH = Math.cos(Math.toRadians(90.833)) / (Math.cos(la) * Math.cos(decl)) - Math.tan(la) * Math.tan(decl);
+        if (cosH > 1 || cosH < -1) return null;
+        double ha = Math.toDegrees(Math.acos(cosH));
+        double tz = (c.get(Calendar.ZONE_OFFSET) + c.get(Calendar.DST_OFFSET)) / 60000.0;
+        int rise = (int) Math.round(720 - 4 * (lon + ha) - eqt + tz), set = (int) Math.round(720 - 4 * (lon - ha) - eqt + tz);
+        return new int[]{((rise % 1440) + 1440) % 1440, ((set % 1440) + 1440) % 1440};
+    }
+
+    /** Amanecer y atardecer de hoy si el modo automático los usa y ya hay ubicación; si no, null (horas fijas). */
+    private int[] sunToday() {
+        if (!prefs.getBoolean("auto_sun", false) || Double.isNaN(sunLat)) return null;
+        return sunTimes(sunLat, sunLon, Calendar.getInstance());
+    }
+
     /** Modo automático: ¿estamos en el horario oscuro? (por defecto de 6 p. m. a 6 a. m., como siempre). */
     private boolean darkHours() {
         Calendar c = Calendar.getInstance();
         int m = c.get(Calendar.HOUR_OF_DAY) * 60 + c.get(Calendar.MINUTE);
         int a = prefs.getInt("dark_start", 18 * 60), b = prefs.getInt("dark_end", 6 * 60);
+        int[] sun = sunToday();
+        if (sun != null) { a = sun[1]; b = sun[0]; }
         if (a == b) return false;
         return a < b ? (m >= a && m < b) : (m >= a || m < b);
     }
@@ -5029,12 +5067,25 @@ public class Main extends Activity {
                 applyTheme(); applyAccent(); rebuild(); showSettings(settingsCat);
             }});
         if ("auto".equals(t)) {
-            row(c, "Oscuro desde", null, fmtMinutes(prefs.getInt("dark_start", 18 * 60)), new Runnable() { public void run() {
-                askDarkTime("dark_start", 18 * 60, "Oscuro desde");
-            }});
-            row(c, "Claro desde", null, fmtMinutes(prefs.getInt("dark_end", 6 * 60)), new Runnable() { public void run() {
-                askDarkTime("dark_end", 6 * 60, "Claro desde");
-            }});
+            final boolean sunOn = prefs.getBoolean("auto_sun", false);
+            segmented(c, "Horario", "Amanecer y atardecer: se calcula con el GPS, sin internet", new String[]{"Horas fijas", "Amanecer y atardecer"},
+                sunOn ? 1 : 0, new IntCb() { public void on(int i) {
+                    prefs.edit().putBoolean("auto_sun", i == 1).apply();
+                    applyTheme(); applyAccent(); rebuild(); showSettings(settingsCat);
+                }});
+            int[] sun = sunToday();
+            if (sunOn && sun != null) {
+                row(c, "Hoy", I18n.t("Amanecer") + " " + fmtMinutes(sun[0]) + " · " + I18n.t("Atardecer") + " " + fmtMinutes(sun[1])
+                    + " · " + I18n.t("oscuro desde el atardecer hasta el amanecer"), null, null);
+            } else {
+                if (sunOn) row(c, "Esperando la ubicación del GPS", "Mientras tanto usa las horas fijas", "", null);
+                row(c, "Oscuro desde", null, fmtMinutes(prefs.getInt("dark_start", 18 * 60)), new Runnable() { public void run() {
+                    askDarkTime("dark_start", 18 * 60, "Oscuro desde");
+                }});
+                row(c, "Claro desde", null, fmtMinutes(prefs.getInt("dark_end", 6 * 60)), new Runnable() { public void run() {
+                    askDarkTime("dark_end", 6 * 60, "Claro desde");
+                }});
+            }
         }
         LinearLayout a = section(body, "Color de acento");
         LinearLayout r = rowBase(a, "Color", "Botones, anillo del reproductor, ruta y etiquetas");
