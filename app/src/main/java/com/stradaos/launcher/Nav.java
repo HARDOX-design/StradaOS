@@ -6,12 +6,17 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.RectF;
 import android.location.Location;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
+import android.text.format.DateFormat;
 import android.view.View;
 
 import org.json.JSONArray;
@@ -31,10 +36,13 @@ import java.security.KeyStore;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -54,10 +62,31 @@ import javax.net.ssl.X509TrustManager;
  */
 public class Nav {
 
+    public static final int LANE_STRAIGHT     = 1;
+    public static final int LANE_SLIGHT_LEFT  = 2;
+    public static final int LANE_LEFT         = 4;
+    public static final int LANE_SHARP_LEFT   = 8;
+    public static final int LANE_SLIGHT_RIGHT = 16;
+    public static final int LANE_RIGHT        = 32;
+    public static final int LANE_SHARP_RIGHT  = 64;
+    public static final int LANE_UTURN        = 128;
+    public static final int LANE_VALID        = 256;
+
     public static class Place {
         public String name, sub;
         public double lat, lon;
         public boolean offline;
+    }
+
+    public static class Incident {
+        public double lat, lon;
+        public int category, delayS;
+        public String desc;
+    }
+
+    public static class Camera {
+        public double lat, lon, alongM;
+        public int maxSpeedKmh;
     }
 
     public static class Step {
@@ -65,13 +94,18 @@ public class Nav {
         /** 0 recto, 1 derecha suave, 2 derecha, 3 derecha cerrada, 4 retorno, 5 izquierda cerrada, 6 izquierda, 7 izquierda suave, 8 rotonda, 9 llegada. */
         public int icon;
         public String street, instruction;
+        public int[] lanes;
     }
 
     public static class Route {
         public double[] pts;        // lat0, lon0, lat1, lon1, ...
         public int[] stepPtIdx;     // índice de vértice (0..pts.length/2 - 1) para cada paso
         public double[] cumDistM;   // distancia acumulada en metros desde el inicio hasta cada vértice
+        public short[] segMaxSpeedKmh; // límite km/h por segmento (pts.length/2 - 1), 0 = desconocido
         public final List<Step> steps = new ArrayList<Step>();
+        public final List<Place> waypoints = new ArrayList<Place>();
+        public final List<Incident> incidents = new ArrayList<Incident>();
+        public final List<Camera> cameras = new ArrayList<Camera>();
         public double totalDistM, totalDurS;
         public int trafficDelayS;   // retraso por tráfico (segundos, 0 si no hay o no aplica)
         public String destName;
@@ -82,14 +116,20 @@ public class Nav {
 
     public interface SearchCb { void onResult(List<Place> places, String error); }
     public interface RouteCb { void onRoute(Route r, String error); }
+    public interface RoutesCb { void onRoutes(List<Route> routes, String error); }
 
     public static volatile Route active;
+    public static volatile List<Route> altRoutes;
     public static volatile int curPtIdx, curStepIdx;
     public static volatile double distToStepM, remDistM, remDurS;
     public static volatile int trafficDelayS;
     public static volatile boolean rerouting;
     public static volatile boolean offlineOffRoute;
     public static volatile double offRouteM;
+    public static volatile int curSpeedLimitKmh;
+    public static volatile boolean speedingAlert;
+    public static volatile Camera nearbyCamera;
+    public static volatile double nearbyCameraDistM;
     public static boolean savedHeadingUp;
 
     private static volatile int routeGen;
@@ -99,11 +139,30 @@ public class Nav {
     private static double smoothSpeedMs;
     private static int smoothSpeedSamples;
     private static long lastSpeedAt;
+    private static long lastSpeedChimeAt;
+    private static long lastCamChimeAt;
+    private static int lastCamIdx = -1;
+    private static volatile boolean osrmNoMaxspeed;
+    private static volatile boolean osrmNoExclude;
     private static final Handler UI = new Handler(Looper.getMainLooper());
 
     private static TextToSpeech tts;
     private static boolean ttsReady;
     private static String ttsLang;
+    private static AudioManager duckAm;
+    private static boolean hasAudioFocus;
+    private static int speakSeq;
+    private static volatile String curUttId;
+    private static final AudioManager.OnAudioFocusChangeListener FOCUS_LS = new AudioManager.OnAudioFocusChangeListener() {
+        public void onAudioFocusChange(int focusChange) {
+            if (focusChange == AudioManager.AUDIOFOCUS_LOSS || focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
+                hasAudioFocus = false;
+            }
+        }
+    };
+    private static final Runnable ABANDON_FOCUS = new Runnable() {
+        public void run() { abandonNavFocus(); }
+    };
 
     // ───────────────────────── conectividad y búsqueda de destinos ─────────────────────────
 
@@ -455,13 +514,64 @@ public class Nav {
         return a.name.equalsIgnoreCase(b.name) || (Math.abs(a.lat - b.lat) < 0.0005 && Math.abs(a.lon - b.lon) < 0.0005);
     }
 
+    // ───────────────────────── carro estacionado ─────────────────────────
+
+    public static void saveParkedCar(Context c, double lat, double lon) {
+        if (c == null || Double.isNaN(lat) || Double.isNaN(lon)) return;
+        try {
+            c.getApplicationContext().getSharedPreferences("launcher", 0).edit()
+                    .putString("parked_lat", Double.toString(lat))
+                    .putString("parked_lon", Double.toString(lon))
+                    .putLong("parked_at", System.currentTimeMillis())
+                    .apply();
+        } catch (Throwable ignored) { }
+    }
+
+    public static Place getParkedCar(Context c) {
+        if (c == null) return null;
+        try {
+            SharedPreferences sp = c.getApplicationContext().getSharedPreferences("launcher", 0);
+            String sLa = sp.getString("parked_lat", null), sLo = sp.getString("parked_lon", null);
+            if (sLa == null || sLo == null) return null;
+            double la = Double.parseDouble(sLa), lo = Double.parseDouble(sLo);
+            if (Double.isNaN(la) || Double.isNaN(lo)) return null;
+            Place p = new Place();
+            p.name = I18n.t("Carro estacionado");
+            long at = sp.getLong("parked_at", 0L);
+            if (at > 0L) {
+                java.text.DateFormat df = DateFormat.getTimeFormat(c);
+                p.sub = I18n.t("Guardado a las") + " " + df.format(new Date(at));
+            }
+            p.lat = la;
+            p.lon = lo;
+            return p;
+        } catch (Throwable e) {
+            return null;
+        }
+    }
+
+    public static void clearParkedCar(Context c) {
+        if (c == null) return;
+        try {
+            c.getApplicationContext().getSharedPreferences("launcher", 0).edit()
+                    .remove("parked_lat").remove("parked_lon").remove("parked_at").apply();
+        } catch (Throwable ignored) { }
+    }
+
     // ───────────────────────── cálculo y activación de ruta ─────────────────────────
 
     public static void startRoute(final Context c, double fromLat, double fromLon, final Place dest, final RouteCb cb) {
+        List<Place> stops = new ArrayList<Place>(1);
+        stops.add(dest);
+        startRoute(c, fromLat, fromLon, stops, cb);
+    }
+
+    public static void startRoute(final Context c, double fromLat, double fromLon, final List<Place> stops, final RouteCb cb) {
         final int gen = ++routeGen;
-        fetchRoute(c, fromLat, fromLon, dest.lat, dest.lon, dest.name, new RouteCb() {
-            public void onRoute(Route r, String error) {
+        fetchRoutes(c, fromLat, fromLon, stops, false, new RoutesCb() {
+            public void onRoutes(List<Route> routes, String error) {
                 if (gen != routeGen) return;
+                Route r = routes != null && !routes.isEmpty() ? routes.get(0) : null;
                 if (r != null) {
                     activate(c, r);
                     if (!r.steps.isEmpty()) speakStep(c, r.steps.get(0), -1, false);
@@ -477,6 +587,7 @@ public class Nav {
 
     public static void activate(final Context c, final Route r) {
         active = r;
+        altRoutes = null;
         curPtIdx = 0;
         curStepIdx = r != null && r.steps.size() > 1 ? 1 : 0;
         remDistM = r != null ? r.totalDistM : 0;
@@ -493,6 +604,11 @@ public class Nav {
         smoothSpeedMs = 0;
         smoothSpeedSamples = 0;
         lastSpeedAt = 0;
+        curSpeedLimitKmh = r != null && r.segMaxSpeedKmh != null && r.segMaxSpeedKmh.length > 0 ? r.segMaxSpeedKmh[0] : 0;
+        speedingAlert = false;
+        nearbyCamera = null;
+        nearbyCameraDistM = 0;
+        lastCamIdx = -1;
         spokenMask = r != null ? new int[r.steps.size()] : null;
         if (c != null && r != null) {
             final Context app = c.getApplicationContext();
@@ -505,6 +621,10 @@ public class Nav {
         }
     }
 
+    public static void announceStart(Context c, Route r) {
+        if (c != null && r != null && !r.steps.isEmpty()) speakStep(c, r.steps.get(0), -1, false);
+    }
+
     public static void stop() {
         stop(null);
     }
@@ -512,6 +632,7 @@ public class Nav {
     public static void stop(Context c) {
         routeGen++;
         active = null;
+        altRoutes = null;
         curPtIdx = 0;
         curStepIdx = 0;
         distToStepM = 0;
@@ -525,7 +646,13 @@ public class Nav {
         smoothSpeedMs = 0;
         smoothSpeedSamples = 0;
         lastSpeedAt = 0;
+        curSpeedLimitKmh = 0;
+        speedingAlert = false;
+        nearbyCamera = null;
+        nearbyCameraDistM = 0;
+        lastCamIdx = -1;
         spokenMask = null;
+        abandonNavFocus();
         if (c != null) {
             try { new File(c.getFilesDir(), "nav_active.json").delete(); } catch (Throwable ignored) { }
         }
@@ -555,6 +682,7 @@ public class Nav {
             trafficDelayS = totalM > 1 && r.trafficDelayS > 0 ? (int) Math.round(r.trafficDelayS * (remDistM / totalM)) : 0;
             int spi = curStepIdx < r.stepPtIdx.length ? r.stepPtIdx[curStepIdx] : nPts - 1;
             distToStepM = Math.max(0, r.cumDistM[spi] - along);
+            curSpeedLimitKmh = r.segMaxSpeedKmh != null && curPtIdx < r.segMaxSpeedKmh.length ? r.segMaxSpeedKmh[curPtIdx] : 0;
             spokenMask = new int[r.steps.size()];
             offRouteCount = 0;
             offlineOffRoute = false;
@@ -563,6 +691,10 @@ public class Nav {
             smoothSpeedMs = 0;
             smoothSpeedSamples = 0;
             lastSpeedAt = 0;
+            speedingAlert = false;
+            nearbyCamera = null;
+            nearbyCameraDistM = 0;
+            lastCamIdx = -1;
             return true;
         } catch (Throwable e) {
             return false;
@@ -576,60 +708,89 @@ public class Nav {
 
     public static void fetchRoute(final Context c, final double lat1, final double lon1, final double lat2, final double lon2,
                                   final String destName, final RouteCb cb) {
+        Place d = new Place();
+        d.lat = lat2;
+        d.lon = lon2;
+        d.name = destName;
+        List<Place> stops = new ArrayList<Place>(1);
+        stops.add(d);
+        fetchRoutes(c, lat1, lon1, stops, false, new RoutesCb() {
+            public void onRoutes(List<Route> routes, String error) {
+                Route first = routes != null && !routes.isEmpty() ? routes.get(0) : null;
+                cb.onRoute(first, error);
+            }
+        });
+    }
+
+    public static void fetchRoutes(final Context c, final double lat1, final double lon1,
+                                   final List<Place> stops, final boolean wantAlternatives, final RoutesCb cb) {
         final Context app = c != null ? c.getApplicationContext() : null;
+        if (stops == null || stops.isEmpty()) {
+            UI.post(new Runnable() { public void run() { cb.onRoutes(null, I18n.t("No se encontró ruta")); } });
+            return;
+        }
+        final List<Place> stopsCopy = new ArrayList<Place>(stops);
+        final Place dest = stopsCopy.get(stopsCopy.size() - 1);
         new Thread(new Runnable() {
             public void run() {
                 if (app != null) Net.init(app);
-                Route r = null;
+                SharedPreferences sp = app != null ? app.getSharedPreferences("launcher", 0) : null;
+                boolean avoidTolls = sp != null && sp.getBoolean("nav_avoid_tolls", false);
+                boolean avoidHighways = sp != null && sp.getBoolean("nav_avoid_motorways", false);
+                boolean useTraffic = sp != null && sp.getBoolean("map_traffic", false);
+                boolean checkIncidents = sp == null || sp.getBoolean("nav_incidents", true);
+                boolean checkCameras = sp == null || sp.getBoolean("nav_speed_cams", true);
+                String ttKey = sp != null ? sp.getString("tomtom_key", "").trim() : "";
+                String customOsrm = sp != null ? normalizeOsrmBase(sp.getString("nav_route_url", "")) : null;
+
+                List<Route> routes = null;
                 String err = null;
                 boolean offlineMode = !hasNetwork(app) || LiveMapView.isOffline();
 
                 if (offlineMode) {
-                    r = routeFromOfflineMap(lat1, lon1, lat2, lon2, destName);
-                    if (r == null && app != null) r = loadCachedRoute(app, lat1, lon1, lat2, lon2);
+                    routes = routeFromOfflineList(lat1, lon1, stopsCopy, avoidTolls, avoidHighways);
+                    if ((routes == null || routes.isEmpty()) && app != null && stopsCopy.size() == 1) {
+                        Route cached = loadCachedRoute(app, lat1, lon1, dest.lat, dest.lon);
+                        if (cached != null) { routes = new ArrayList<Route>(1); routes.add(cached); }
+                    }
                 }
-                if (r == null && hasNetwork(app)) {
+                if ((routes == null || routes.isEmpty()) && hasNetwork(app)) {
                     String[] errOut = new String[1];
-                    SharedPreferences sp = app != null ? app.getSharedPreferences("launcher", 0) : null;
-                    boolean useTraffic = sp != null && sp.getBoolean("map_traffic", false);
-                    String ttKey = sp != null ? sp.getString("tomtom_key", "").trim() : "";
-                    String customOsrm = sp != null ? normalizeOsrmBase(sp.getString("nav_route_url", "")) : null;
                     if (useTraffic && ttKey.length() > 0 && customOsrm == null) {
-                        r = fetchTomTom(app, ttKey, lat1, lon1, lat2, lon2, destName, errOut);
+                        routes = fetchTomTomList(app, ttKey, lat1, lon1, stopsCopy, wantAlternatives, avoidTolls, avoidHighways, errOut);
                     }
-                    if (r == null) {
-                        String tail = String.format(Locale.US, "%.6f,%.6f;%.6f,%.6f?overview=full&geometries=polyline&steps=true",
-                                lon1, lat1, lon2, lat2);
-                        boolean[] sslOut = new boolean[1];
-                        if (customOsrm != null) {
-                            r = fetchOsrm(app, new String[]{customOsrm}, tail, lat2, lon2, destName, errOut, sslOut);
-                        } else {
-                            r = fetchOsrm(app, new String[]{
-                                "https://router.project-osrm.org/route/v1/driving/",
-                                "https://routing.openstreetmap.de/routed-car/route/v1/driving/"
-                            }, tail, lat2, lon2, destName, errOut, sslOut);
-                            if (r == null && sslOut[0]) {
-                                r = fetchOsrm(app, new String[]{
-                                    "http://router.project-osrm.org/route/v1/driving/",
-                                    "http://routing.openstreetmap.de/routed-car/route/v1/driving/"
-                                }, tail, lat2, lon2, destName, errOut, null);
-                            }
-                        }
+                    if (routes == null || routes.isEmpty()) {
+                        routes = fetchOsrmList(app, customOsrm, lat1, lon1, stopsCopy, wantAlternatives, avoidTolls, avoidHighways, errOut);
                     }
-                    if (r == null) err = errOut[0];
+                    if (routes == null || routes.isEmpty()) err = errOut[0];
                 }
-                if (r == null && !offlineMode) {
-                    r = routeFromOfflineMap(lat1, lon1, lat2, lon2, destName);
-                    if (r == null && app != null) r = loadCachedRoute(app, lat1, lon1, lat2, lon2);
+                if ((routes == null || routes.isEmpty()) && !offlineMode) {
+                    routes = routeFromOfflineList(lat1, lon1, stopsCopy, avoidTolls, avoidHighways);
+                    if ((routes == null || routes.isEmpty()) && app != null && stopsCopy.size() == 1) {
+                        Route cached = loadCachedRoute(app, lat1, lon1, dest.lat, dest.lon);
+                        if (cached != null) { routes = new ArrayList<Route>(1); routes.add(cached); }
+                    }
                 }
-                final Route fr = r;
+                if (routes != null && !routes.isEmpty()) {
+                    for (Route rt : routes) {
+                        rt.waypoints.clear();
+                        for (int i = 0; i < stopsCopy.size() - 1; i++) rt.waypoints.add(stopsCopy.get(i));
+                    }
+                    if (ttKey.length() > 0 && checkIncidents && hasNetwork(app)) {
+                        checkRouteIncidents(app, ttKey, routes);
+                    }
+                    if (checkCameras) {
+                        scanRouteCameras(routes);
+                    }
+                }
+                final List<Route> fr = routes != null && !routes.isEmpty() ? routes : null;
                 String fallbackErr = err != null ? err : I18n.t("No se encontró ruta");
                 if (fr == null && offlineMode && LiveMapView.fileMap == null) {
                     fallbackErr = I18n.t("Para rutas largas o sin mapa local hace falta internet");
                 }
                 final String fe = fr == null ? fallbackErr : null;
                 UI.post(new Runnable() {
-                    public void run() { cb.onRoute(fr, fe); }
+                    public void run() { cb.onRoutes(fr, fe); }
                 });
             }
         }).start();
@@ -646,16 +807,32 @@ public class Nav {
         return u + "/route/v1/driving/";
     }
 
-    private static Route fetchTomTom(Context c, String key, double lat1, double lon1, double lat2, double lon2,
-                                     String destName, String[] errOut) {
+    private static List<Route> fetchTomTomList(Context c, String key, double lat1, double lon1, List<Place> stops,
+                                               boolean wantAlternatives, boolean avoidTolls, boolean avoidHighways, String[] errOut) {
         try {
-            String url = String.format(Locale.US,
-                    "https://api.tomtom.com/routing/1/calculateRoute/%.6f,%.6f:%.6f,%.6f/json?key=%s&traffic=true&instructionsType=text&language=%s&routeType=fastest",
-                    lat1, lon1, lat2, lon2,
-                    URLEncoder.encode(key, "UTF-8"),
-                    URLEncoder.encode(tomtomLang(), "UTF-8"));
-            String raw = new String(navGet(c, url, 12000), "UTF-8");
-            return parseTomTom(raw, lat2, lon2, destName);
+            StringBuilder coords = new StringBuilder();
+            coords.append(String.format(Locale.US, "%.6f,%.6f", lat1, lon1));
+            for (Place st : stops) coords.append(String.format(Locale.US, ":%.6f,%.6f", st.lat, st.lon));
+            StringBuilder base = new StringBuilder();
+            base.append("https://api.tomtom.com/routing/1/calculateRoute/").append(coords)
+                .append("/json?key=").append(URLEncoder.encode(key, "UTF-8"))
+                .append("&traffic=true&instructionsType=text&language=").append(URLEncoder.encode(tomtomLang(), "UTF-8"))
+                .append("&routeType=fastest&sectionType=speedLimit");
+            if (avoidTolls) base.append("&avoid=tollRoads");
+            if (avoidHighways) base.append("&avoid=motorways");
+            String url = base.toString();
+            if (wantAlternatives && stops.size() == 1) url += "&maxAlternatives=2";
+            String raw;
+            try {
+                raw = new String(navGet(c, url, 12000), "UTF-8");
+            } catch (Throwable firstErr) {
+                if (wantAlternatives && stops.size() == 1) {
+                    raw = new String(navGet(c, base.toString(), 12000), "UTF-8");
+                } else {
+                    throw firstErr;
+                }
+            }
+            return parseTomTomList(raw, stops);
         } catch (Throwable e) {
             if (errOut != null) errOut[0] = shortErr(e);
             return null;
@@ -674,15 +851,63 @@ public class Nav {
         return "en-US";
     }
 
-    private static Route fetchOsrm(Context c, String[] hosts, String tail, double destLat, double destLon,
-                                   String destName, String[] errOut, boolean[] sslOut) {
+    private static List<Route> fetchOsrmList(Context c, String customOsrm, double lat1, double lon1, List<Place> stops,
+                                             boolean wantAlternatives, boolean avoidTolls, boolean avoidHighways, String[] errOut) {
+        StringBuilder coords = new StringBuilder();
+        coords.append(String.format(Locale.US, "%.6f,%.6f", lon1, lat1));
+        for (Place st : stops) coords.append(String.format(Locale.US, ";%.6f,%.6f", st.lon, st.lat));
+        boolean tryMaxspeed = !osrmNoMaxspeed;
+        boolean tryExclude = (avoidTolls || avoidHighways) && !osrmNoExclude;
+
+        for (int attempt = 0; attempt < 3; attempt++) {
+            StringBuilder tail = new StringBuilder(coords);
+            tail.append("?overview=full&geometries=polyline&steps=true");
+            if (wantAlternatives && stops.size() == 1) tail.append("&alternatives=true");
+            if (tryMaxspeed) tail.append("&annotations=maxspeed");
+            if (tryExclude) {
+                tail.append("&exclude=");
+                if (avoidTolls && avoidHighways) tail.append("toll,motorway");
+                else if (avoidTolls) tail.append("toll");
+                else tail.append("motorway");
+            }
+            String tailStr = tail.toString();
+            boolean[] sslOut = new boolean[1];
+            boolean[] http400Out = new boolean[1];
+            List<Route> res;
+            if (customOsrm != null) {
+                res = fetchOsrm(c, new String[]{customOsrm}, tailStr, stops, errOut, sslOut, http400Out);
+            } else {
+                res = fetchOsrm(c, new String[]{
+                    "https://router.project-osrm.org/route/v1/driving/",
+                    "https://routing.openstreetmap.de/routed-car/route/v1/driving/"
+                }, tailStr, stops, errOut, sslOut, http400Out);
+                if ((res == null || res.isEmpty()) && sslOut[0]) {
+                    res = fetchOsrm(c, new String[]{
+                        "http://router.project-osrm.org/route/v1/driving/",
+                        "http://routing.openstreetmap.de/routed-car/route/v1/driving/"
+                    }, tailStr, stops, errOut, null, http400Out);
+                }
+            }
+            if (res != null && !res.isEmpty()) return res;
+            if (!http400Out[0]) break;
+            if (tryMaxspeed) { osrmNoMaxspeed = true; tryMaxspeed = false; }
+            else if (tryExclude) { osrmNoExclude = true; tryExclude = false; }
+            else break;
+        }
+        return null;
+    }
+
+    private static List<Route> fetchOsrm(Context c, String[] hosts, String tail, List<Place> stops,
+                                         String[] errOut, boolean[] sslOut, boolean[] http400Out) {
         for (String host : hosts) {
             try {
                 String raw = new String(navGet(c, host + tail, 12000), "UTF-8");
-                Route r = parseOsrm(raw, destLat, destLon, destName);
-                if (r != null) return r;
+                List<Route> rs = parseOsrmList(raw, stops);
+                if (rs != null && !rs.isEmpty()) return rs;
             } catch (Throwable e) {
                 if (sslOut != null && isSsl(e)) sslOut[0] = true;
+                String em = String.valueOf(e.getMessage());
+                if (http400Out != null && (em.indexOf("400") >= 0 || em.indexOf("InvalidValue") >= 0)) http400Out[0] = true;
                 if (errOut != null) errOut[0] = shortErr(e);
             }
         }
@@ -837,11 +1062,33 @@ public class Nav {
         public Socket createSocket(InetAddress h, int p, InetAddress l, int lp) throws java.io.IOException { return on(d.createSocket(h, p, l, lp)); }
     }
 
-    private static Route routeFromOfflineMap(double lat1, double lon1, double lat2, double lon2, String destName) {
+    private static List<Route> routeFromOfflineList(double lat1, double lon1, List<Place> stops,
+                                                    boolean avoidTolls, boolean avoidHighways) {
         OfflineMap fm = LiveMapView.fileMap;
-        if (fm == null || !fm.contains(lat1, lon1) || !fm.contains(lat2, lon2)) return null;
-        OfflineMap.RawRoute rr = fm.routeOffline(lat1, lon1, lat2, lon2);
-        return rr != null ? fromOffline(rr, lat2, lon2, destName) : null;
+        if (fm == null || !fm.contains(lat1, lon1)) return null;
+        for (Place p : stops) if (!fm.contains(p.lat, p.lon)) return null;
+        OfflineMap.RawRoute combined = new OfflineMap.RawRoute();
+        double curLa = lat1, curLo = lon1;
+        for (int i = 0; i < stops.size(); i++) {
+            Place st = stops.get(i);
+            OfflineMap.RawRoute leg = fm.routeOffline(curLa, curLo, st.lat, st.lon, avoidTolls, avoidHighways);
+            if (leg == null || leg.hops.isEmpty()) return null;
+            if (i == 0) {
+                combined.startLat = leg.startLat;
+                combined.startLon = leg.startLon;
+            }
+            combined.hops.addAll(leg.hops);
+            combined.totalDistM += leg.totalDistM;
+            combined.totalDurS += leg.totalDurS;
+            curLa = st.lat;
+            curLo = st.lon;
+        }
+        Place last = stops.get(stops.size() - 1);
+        Route r = fromOffline(combined, last.lat, last.lon, last.name);
+        if (r == null) return null;
+        List<Route> out = new ArrayList<Route>(1);
+        out.add(r);
+        return out;
     }
 
     /** Convierte una ruta A* sin conexión en pasos de navegación compatibles con HUD y voz TTS. */
@@ -852,6 +1099,8 @@ public class Nav {
         Route r = new Route();
         r.pts = new double[nPts * 2];
         r.cumDistM = new double[nPts];
+        short[] segSp = new short[nHops];
+        boolean hasAnySp = false;
         r.pts[0] = rr.startLat;
         r.pts[1] = rr.startLon;
         r.cumDistM[0] = 0;
@@ -860,7 +1109,10 @@ public class Nav {
             r.pts[(i + 1) * 2] = h.lat;
             r.pts[(i + 1) * 2 + 1] = h.lon;
             r.cumDistM[i + 1] = r.cumDistM[i] + approxDist(r.pts[i * 2], r.pts[i * 2 + 1], h.lat, h.lon);
+            segSp[i] = h.maxSpeedKmh;
+            if (h.maxSpeedKmh > 0) hasAnySp = true;
         }
+        if (hasAnySp) r.segMaxSpeedKmh = segSp;
         r.totalDistM = r.cumDistM[nPts - 1];
         r.totalDurS = Math.max(10.0, rr.totalDurS);
         r.destLat = destLat;
@@ -1077,6 +1329,39 @@ public class Nav {
         obj.put("dlo", r.destLon);
         obj.put("off", r.offline);
         obj.put("src", r.source != null ? r.source : "osrm");
+        if (r.segMaxSpeedKmh != null && r.segMaxSpeedKmh.length > 0) {
+            JSONArray rle = new JSONArray();
+            short cur = r.segMaxSpeedKmh[0];
+            int run = 1;
+            for (int i = 1; i < r.segMaxSpeedKmh.length; i++) {
+                if (r.segMaxSpeedKmh[i] == cur) run++;
+                else { rle.put(run).put(cur); cur = r.segMaxSpeedKmh[i]; run = 1; }
+            }
+            rle.put(run).put(cur);
+            obj.put("sprle", rle);
+        }
+        if (!r.waypoints.isEmpty()) {
+            JSONArray wa = new JSONArray();
+            for (Place p : r.waypoints) wa.put(placeToJson(p));
+            obj.put("wps", wa);
+        }
+        if (!r.cameras.isEmpty()) {
+            JSONArray ca = new JSONArray();
+            for (Camera cam : r.cameras) {
+                ca.put(new JSONObject().put("la", cam.lat).put("lo", cam.lon)
+                        .put("al", cam.alongM).put("sp", cam.maxSpeedKmh));
+            }
+            obj.put("cams", ca);
+        }
+        if (!r.incidents.isEmpty()) {
+            JSONArray ia = new JSONArray();
+            for (Incident inc : r.incidents) {
+                ia.put(new JSONObject().put("la", inc.lat).put("lo", inc.lon)
+                        .put("c", inc.category).put("d", inc.delayS)
+                        .put("ds", inc.desc != null ? inc.desc : ""));
+            }
+            obj.put("inc", ia);
+        }
         JSONArray stArr = new JSONArray();
         for (int i = 0; i < r.steps.size(); i++) {
             Step st = r.steps.get(i);
@@ -1085,6 +1370,11 @@ public class Nav {
               .put("ic", st.icon).put("st", st.street != null ? st.street : "")
               .put("in", st.instruction != null ? st.instruction : "")
               .put("pi", r.stepPtIdx != null && i < r.stepPtIdx.length ? r.stepPtIdx[i] : 0);
+            if (st.lanes != null && st.lanes.length > 0) {
+                JSONArray la = new JSONArray();
+                for (int lm : st.lanes) la.put(lm);
+                so.put("ln", la);
+            }
             stArr.put(so);
         }
         obj.put("steps", stArr);
@@ -1112,6 +1402,51 @@ public class Nav {
         for (int i = 1; i < nPts; i++) {
             r.cumDistM[i] = r.cumDistM[i - 1] + approxDist(pts[(i - 1) * 2], pts[(i - 1) * 2 + 1], pts[i * 2], pts[i * 2 + 1]);
         }
+        JSONArray rle = obj.optJSONArray("sprle");
+        if (rle != null && rle.length() >= 2) {
+            short[] sp = new short[Math.max(0, nPts - 1)];
+            int idx = 0;
+            for (int i = 0; i + 1 < rle.length() && idx < sp.length; i += 2) {
+                int run = Math.max(0, rle.optInt(i, 0));
+                short val = (short) rle.optInt(i + 1, 0);
+                for (int k = 0; k < run && idx < sp.length; k++) sp[idx++] = val;
+            }
+            r.segMaxSpeedKmh = sp;
+        }
+        JSONArray wa = obj.optJSONArray("wps");
+        if (wa != null) {
+            for (int i = 0; i < wa.length(); i++) {
+                Place wp = placeFromJson(wa.optJSONObject(i));
+                if (wp != null) r.waypoints.add(wp);
+            }
+        }
+        JSONArray ca = obj.optJSONArray("cams");
+        if (ca != null) {
+            for (int i = 0; i < ca.length(); i++) {
+                JSONObject co = ca.optJSONObject(i);
+                if (co == null) continue;
+                Camera cam = new Camera();
+                cam.lat = co.optDouble("la", Double.NaN);
+                cam.lon = co.optDouble("lo", Double.NaN);
+                cam.alongM = co.optDouble("al", 0);
+                cam.maxSpeedKmh = co.optInt("sp", 0);
+                if (!Double.isNaN(cam.lat) && !Double.isNaN(cam.lon)) r.cameras.add(cam);
+            }
+        }
+        JSONArray ia = obj.optJSONArray("inc");
+        if (ia != null) {
+            for (int i = 0; i < ia.length(); i++) {
+                JSONObject io = ia.optJSONObject(i);
+                if (io == null) continue;
+                Incident inc = new Incident();
+                inc.lat = io.optDouble("la", Double.NaN);
+                inc.lon = io.optDouble("lo", Double.NaN);
+                inc.category = io.optInt("c", 0);
+                inc.delayS = io.optInt("d", 0);
+                inc.desc = io.optString("ds", "");
+                if (!Double.isNaN(inc.lat) && !Double.isNaN(inc.lon)) r.incidents.add(inc);
+            }
+        }
         JSONArray stArr = obj.optJSONArray("steps");
         if (stArr != null) {
             r.stepPtIdx = new int[stArr.length()];
@@ -1126,6 +1461,11 @@ public class Nav {
                 st.icon = so.optInt("ic", 0);
                 st.street = so.optString("st", "");
                 st.instruction = so.optString("in", "");
+                JSONArray la = so.optJSONArray("ln");
+                if (la != null && la.length() > 0) {
+                    st.lanes = new int[la.length()];
+                    for (int k = 0; k < la.length(); k++) st.lanes[k] = la.optInt(k, 0);
+                }
                 r.steps.add(st);
                 r.stepPtIdx[r.steps.size() - 1] = Math.max(0, Math.min(nPts - 1, so.optInt("pi", 0)));
             }
@@ -1168,94 +1508,189 @@ public class Nav {
     }
 
     private static Route parseOsrm(String json, double destLat, double destLon, String destName) throws Exception {
+        Place p = new Place(); p.lat = destLat; p.lon = destLon; p.name = destName;
+        List<Place> stops = new ArrayList<Place>(1); stops.add(p);
+        List<Route> rs = parseOsrmList(json, stops);
+        return rs != null && !rs.isEmpty() ? rs.get(0) : null;
+    }
+
+    public static List<Route> parseOsrmList(String json, List<Place> stops) throws Exception {
         JSONObject root = new JSONObject(json);
         if (!"Ok".equalsIgnoreCase(root.optString("code", ""))) {
             throw new Exception(root.optString("message", "No route"));
         }
         JSONArray routes = root.optJSONArray("routes");
         if (routes == null || routes.length() == 0) return null;
-        JSONObject r0 = routes.getJSONObject(0);
-        String poly = r0.optString("geometry", "");
-        double[] pts = decodePolyline(poly);
-        if (pts.length < 4) return null;
+        Place last = stops.get(stops.size() - 1);
+        int lim = Math.min(3, routes.length());
+        List<Route> out = new ArrayList<Route>(lim);
+        for (int ri = 0; ri < lim; ri++) {
+            JSONObject r0 = routes.getJSONObject(ri);
+            String poly = r0.optString("geometry", "");
+            double[] pts = decodePolyline(poly);
+            if (pts.length < 4) continue;
 
-        Route r = new Route();
-        r.pts = pts;
-        r.totalDistM = r0.optDouble("distance", 0);
-        r.totalDurS = r0.optDouble("duration", 0);
-        r.destLat = destLat;
-        r.destLon = destLon;
-        r.destName = destName;
-        r.source = "osrm";
-        r.offline = false;
+            Route r = new Route();
+            r.pts = pts;
+            r.totalDistM = r0.optDouble("distance", 0);
+            r.totalDurS = r0.optDouble("duration", 0);
+            r.destLat = last.lat;
+            r.destLon = last.lon;
+            r.destName = last.name;
+            for (int wi = 0; wi + 1 < stops.size(); wi++) r.waypoints.add(stops.get(wi));
+            r.source = "osrm";
+            r.offline = false;
 
-        int nPts = pts.length / 2;
-        r.cumDistM = new double[nPts];
-        r.cumDistM[0] = 0;
-        for (int i = 1; i < nPts; i++) {
-            r.cumDistM[i] = r.cumDistM[i - 1] + approxDist(pts[(i - 1) * 2], pts[(i - 1) * 2 + 1], pts[i * 2], pts[i * 2 + 1]);
-        }
+            int nPts = pts.length / 2;
+            r.cumDistM = new double[nPts];
+            r.cumDistM[0] = 0;
+            for (int i = 1; i < nPts; i++) {
+                r.cumDistM[i] = r.cumDistM[i - 1] + approxDist(pts[(i - 1) * 2], pts[(i - 1) * 2 + 1], pts[i * 2], pts[i * 2 + 1]);
+            }
 
-        JSONArray legs = r0.optJSONArray("legs");
-        if (legs != null && legs.length() > 0) {
-            JSONArray stArr = legs.getJSONObject(0).optJSONArray("steps");
-            if (stArr != null) {
-                for (int i = 0; i < stArr.length(); i++) {
-                    JSONObject sObj = stArr.getJSONObject(i);
-                    Step st = new Step();
-                    st.distM = sObj.optDouble("distance", 0);
-                    st.durS = sObj.optDouble("duration", 0);
-                    String name = sObj.optString("name", "").trim();
-                    String ref = sObj.optString("ref", "").trim();
-                    st.street = name.length() > 0 ? name : ref;
-                    JSONObject man = sObj.optJSONObject("maneuver");
-                    String type = man != null ? man.optString("type", "") : "";
-                    String mod = man != null ? man.optString("modifier", "") : "";
-                    int exit = man != null ? man.optInt("exit", 0) : 0;
-                    JSONArray loc = man != null ? man.optJSONArray("location") : null;
-                    if (loc != null && loc.length() >= 2) {
-                        st.lon = loc.optDouble(0, destLon);
-                        st.lat = loc.optDouble(1, destLat);
-                    } else {
-                        st.lat = destLat;
-                        st.lon = destLon;
+            List<Short> rawMaxSpeeds = new ArrayList<Short>();
+            boolean hasAnySpeed = false;
+            JSONArray legs = r0.optJSONArray("legs");
+            if (legs != null) {
+                for (int li = 0; li < legs.length(); li++) {
+                    JSONObject leg = legs.getJSONObject(li);
+                    JSONObject ann = leg.optJSONObject("annotation");
+                    if (ann != null) {
+                        JSONArray msArr = ann.optJSONArray("maxspeed");
+                        if (msArr != null) {
+                            for (int mi = 0; mi < msArr.length(); mi++) {
+                                short kmh = parseOsrmMaxSpeedItem(msArr.opt(mi));
+                                if (kmh > 0) hasAnySpeed = true;
+                                rawMaxSpeeds.add(kmh);
+                            }
+                        }
                     }
-                    st.icon = maneuverIcon(type, mod);
-                    st.instruction = maneuverText(type, mod, exit, st.street);
-                    r.steps.add(st);
+                    JSONArray stArr = leg.optJSONArray("steps");
+                    if (stArr != null) {
+                        boolean midLeg = li < legs.length() - 1;
+                        for (int i = 0; i < stArr.length(); i++) {
+                            JSONObject sObj = stArr.getJSONObject(i);
+                            Step st = new Step();
+                            st.distM = sObj.optDouble("distance", 0);
+                            st.durS = sObj.optDouble("duration", 0);
+                            String name = sObj.optString("name", "").trim();
+                            String ref = sObj.optString("ref", "").trim();
+                            st.street = name.length() > 0 ? name : ref;
+                            JSONObject man = sObj.optJSONObject("maneuver");
+                            String type = man != null ? man.optString("type", "") : "";
+                            String mod = man != null ? man.optString("modifier", "") : "";
+                            int exit = man != null ? man.optInt("exit", 0) : 0;
+                            JSONArray loc = man != null ? man.optJSONArray("location") : null;
+                            if (loc != null && loc.length() >= 2) {
+                                st.lon = loc.optDouble(0, last.lon);
+                                st.lat = loc.optDouble(1, last.lat);
+                            } else {
+                                st.lat = last.lat;
+                                st.lon = last.lon;
+                            }
+                            if ("arrive".equals(type) && midLeg) {
+                                Place wp = li < stops.size() ? stops.get(li) : null;
+                                st.icon = 9;
+                                st.street = wp != null && wp.name != null ? wp.name : "";
+                                st.instruction = st.street.length() > 0 ? "Parada: " + st.street : "Parada intermedia";
+                            } else {
+                                st.icon = maneuverIcon(type, mod);
+                                st.instruction = maneuverText(type, mod, exit, st.street);
+                            }
+                            JSONArray ints = sObj.optJSONArray("intersections");
+                            if (ints != null && ints.length() > 0) {
+                                JSONObject i0 = ints.optJSONObject(0);
+                                if (i0 != null) st.lanes = parseOsrmLanes(i0.optJSONArray("lanes"));
+                            }
+                            r.steps.add(st);
+                        }
+                    }
                 }
             }
-        }
-        if (r.steps.isEmpty()) {
-            Step arr = new Step();
-            arr.lat = destLat; arr.lon = destLon;
-            arr.distM = r.totalDistM; arr.durS = r.totalDurS;
-            arr.icon = 9;
-            arr.street = destName != null ? destName : "";
-            arr.instruction = "Llegaste a tu destino";
-            r.steps.add(arr);
-        }
+            if (hasAnySpeed && nPts >= 2) {
+                int nSeg = nPts - 1;
+                short[] sp = new short[nSeg];
+                int limS = Math.min(nSeg, rawMaxSpeeds.size());
+                for (int i = 0; i < limS; i++) sp[i] = rawMaxSpeeds.get(i);
+                r.segMaxSpeedKmh = sp;
+            }
+            if (r.steps.isEmpty()) {
+                Step arr = new Step();
+                arr.lat = last.lat; arr.lon = last.lon;
+                arr.distM = r.totalDistM; arr.durS = r.totalDurS;
+                arr.icon = 9;
+                arr.street = last.name != null ? last.name : "";
+                arr.instruction = "Llegaste a tu destino";
+                r.steps.add(arr);
+            }
 
-        // asociar cada paso al vértice más cercano avanzando en orden
-        r.stepPtIdx = new int[r.steps.size()];
-        int searchFrom = 0;
-        for (int i = 0; i < r.steps.size(); i++) {
-            Step st = r.steps.get(i);
-            if (st.icon == 9) {
-                r.stepPtIdx[i] = nPts - 1;
-                continue;
+            // asociar cada paso al vértice más cercano avanzando en orden
+            r.stepPtIdx = new int[r.steps.size()];
+            int searchFrom = 0;
+            for (int i = 0; i < r.steps.size(); i++) {
+                Step st = r.steps.get(i);
+                if (st.icon == 9 && i == r.steps.size() - 1) {
+                    r.stepPtIdx[i] = nPts - 1;
+                    continue;
+                }
+                int best = searchFrom;
+                double bestD = Double.MAX_VALUE;
+                for (int k = searchFrom; k < nPts; k++) {
+                    double d = approxDist(st.lat, st.lon, pts[k * 2], pts[k * 2 + 1]);
+                    if (d < bestD) { bestD = d; best = k; }
+                    if (bestD < 15 && d > 120) break;
+                }
+                r.stepPtIdx[i] = best;
+                searchFrom = best;
             }
-            int best = searchFrom;
-            double bestD = Double.MAX_VALUE;
-            for (int k = searchFrom; k < nPts; k++) {
-                double d = approxDist(st.lat, st.lon, pts[k * 2], pts[k * 2 + 1]);
-                if (d < bestD) { bestD = d; best = k; }
-                if (bestD < 15 && d > 120) break;
-            }
-            r.stepPtIdx[i] = best;
-            searchFrom = best;
+            out.add(r);
         }
-        return r;
+        return out.isEmpty() ? null : out;
+    }
+
+    private static short parseOsrmMaxSpeedItem(Object obj) {
+        if (obj == null) return 0;
+        if (obj instanceof Number) {
+            int v = ((Number) obj).intValue();
+            return (v >= 5 && v <= 220) ? (short) v : 0;
+        }
+        if (obj instanceof JSONObject) {
+            JSONObject o = (JSONObject) obj;
+            if (o.optBoolean("unknown", false) || o.optBoolean("none", false)) return 0;
+            int sp = o.optInt("speed", 0);
+            if (sp <= 0) return 0;
+            if ("mph".equalsIgnoreCase(o.optString("unit", ""))) sp = (int) Math.round(sp * 1.60934);
+            return (sp >= 5 && sp <= 220) ? (short) sp : 0;
+        }
+        return 0;
+    }
+
+    static int[] parseOsrmLanes(JSONArray la) {
+        if (la == null || la.length() == 0) return null;
+        int n = Math.min(8, la.length());
+        int[] out = new int[n];
+        for (int i = 0; i < n; i++) {
+            JSONObject lo = la.optJSONObject(i);
+            if (lo == null) continue;
+            int mask = lo.optBoolean("valid", false) ? LANE_VALID : 0;
+            JSONArray ind = lo.optJSONArray("indications");
+            if (ind != null) {
+                for (int j = 0; j < ind.length(); j++) {
+                    String s = ind.optString(j, "");
+                    if ("straight".equals(s)) mask |= LANE_STRAIGHT;
+                    else if ("slight left".equals(s)) mask |= LANE_SLIGHT_LEFT;
+                    else if ("left".equals(s)) mask |= LANE_LEFT;
+                    else if ("sharp left".equals(s)) mask |= LANE_SHARP_LEFT;
+                    else if ("slight right".equals(s)) mask |= LANE_SLIGHT_RIGHT;
+                    else if ("right".equals(s)) mask |= LANE_RIGHT;
+                    else if ("sharp right".equals(s)) mask |= LANE_SHARP_RIGHT;
+                    else if ("uturn".equals(s)) mask |= LANE_UTURN;
+                }
+            }
+            if ((mask & 255) == 0) mask |= LANE_STRAIGHT;
+            out[i] = mask;
+        }
+        return out;
     }
 
     private static int maneuverIcon(String type, String mod) {
@@ -1273,6 +1708,13 @@ public class Nav {
 
     /** Convierte una respuesta de TomTom Routing v1 (con traffic=true) a Nav.Route. */
     public static Route parseTomTom(String json, double destLat, double destLon, String destName) throws Exception {
+        Place p = new Place(); p.lat = destLat; p.lon = destLon; p.name = destName;
+        List<Place> stops = new ArrayList<Place>(1); stops.add(p);
+        List<Route> rs = parseTomTomList(json, stops);
+        return rs != null && !rs.isEmpty() ? rs.get(0) : null;
+    }
+
+    public static List<Route> parseTomTomList(String json, List<Place> stops) throws Exception {
         JSONObject root = new JSONObject(json);
         JSONObject de = root.optJSONObject("detailedError");
         String errTxt = root.optString("errorText", "");
@@ -1283,7 +1725,20 @@ public class Nav {
         }
         JSONArray routes = root.optJSONArray("routes");
         if (routes == null || routes.length() == 0) return null;
-        JSONObject r0 = routes.getJSONObject(0);
+        Place last = stops.get(stops.size() - 1);
+        int lim = Math.min(3, routes.length());
+        List<Route> out = new ArrayList<Route>(lim);
+        for (int ri = 0; ri < lim; ri++) {
+            Route r = parseTomTomSingle(routes.getJSONObject(ri), last.lat, last.lon, last.name);
+            if (r != null) {
+                for (int wi = 0; wi + 1 < stops.size(); wi++) r.waypoints.add(stops.get(wi));
+                out.add(r);
+            }
+        }
+        return out.isEmpty() ? null : out;
+    }
+
+    private static Route parseTomTomSingle(JSONObject r0, double destLat, double destLon, String destName) throws Exception {
         JSONObject sum = r0.optJSONObject("summary");
         JSONArray legs = r0.optJSONArray("legs");
         if (legs == null || legs.length() == 0) return null;
@@ -1326,6 +1781,23 @@ public class Nav {
         r.destName = destName;
         r.source = "tomtom";
         r.offline = false;
+
+        JSONArray secs = r0.optJSONArray("sections");
+        if (secs != null && nPts >= 2) {
+            short[] sp = new short[nPts - 1];
+            boolean hasSp = false;
+            for (int si = 0; si < secs.length(); si++) {
+                JSONObject sc = secs.optJSONObject(si);
+                if (sc == null || !"SPEED_LIMIT".equals(sc.optString("sectionType", ""))) continue;
+                int kmh = sc.optInt("maxSpeedLimitInKmh", 0);
+                if (kmh <= 0 || kmh > 220) continue;
+                int a = Math.max(0, sc.optInt("startPointIndex", 0));
+                int b = Math.min(nPts - 2, sc.optInt("endPointIndex", a));
+                for (int k = a; k <= b; k++) sp[k] = (short) kmh;
+                hasSp = true;
+            }
+            if (hasSp) r.segMaxSpeedKmh = sp;
+        }
 
         List<Integer> stepPts = new ArrayList<Integer>();
         JSONObject guid = r0.optJSONObject("guidance");
@@ -1395,6 +1867,149 @@ public class Nav {
         r.stepPtIdx = new int[r.steps.size()];
         for (int i = 0; i < r.steps.size(); i++) r.stepPtIdx[i] = stepPts.get(i);
         return r;
+    }
+
+    /** Consulta única de incidentes (cierres/accidentes) de TomTom v5 dentro de la caja de la ruta. */
+    private static void checkRouteIncidents(Context c, String ttKey, List<Route> routes) {
+        if (routes == null || routes.isEmpty()) return;
+        Route r0 = routes.get(0);
+        if (r0.pts == null || r0.pts.length < 4) return;
+        double minLa = 90, maxLa = -90, minLo = 180, maxLo = -180;
+        int nPts = r0.pts.length / 2;
+        for (int i = 0; i < nPts; i++) {
+            double la = r0.pts[i * 2], lo = r0.pts[i * 2 + 1];
+            if (la < minLa) minLa = la; if (la > maxLa) maxLa = la;
+            if (lo < minLo) minLo = lo; if (lo > maxLo) maxLo = lo;
+        }
+        minLa -= 0.008; maxLa += 0.008; minLo -= 0.008; maxLo += 0.008;
+        if (maxLa - minLa > 0.85) { double cLat = r0.pts[0]; minLa = cLat - 0.42; maxLa = cLat + 0.42; }
+        if (maxLo - minLo > 0.85) { double cLon = r0.pts[1]; minLo = cLon - 0.42; maxLo = cLon + 0.42; }
+        try {
+            String fields = "{incidents{type,geometry{type,coordinates},properties{iconCategory,magnitudeOfDelay,events{description},delay,roadNumbers}}}";
+            String url = String.format(Locale.US,
+                    "https://api.tomtom.com/traffic/services/5/incidentDetails?key=%s&bbox=%.5f,%.5f,%.5f,%.5f&fields=%s&language=%s&timeValidityFilter=present",
+                    URLEncoder.encode(ttKey, "UTF-8"),
+                    minLo, minLa, maxLo, maxLa,
+                    URLEncoder.encode(fields, "UTF-8"),
+                    URLEncoder.encode(tomtomLang(), "UTF-8"));
+            String raw = new String(navGet(c, url, 5500), "UTF-8");
+            List<Incident> all = parseTomTomIncidents(raw);
+            if (all.isEmpty()) return;
+            for (Route r : routes) {
+                int np = r.pts.length / 2;
+                if (np < 2) continue;
+                for (Incident inc : all) {
+                    if (r.incidents.size() >= 8) break;
+                    double[] cl = closestOnRange(r.pts, inc.lat, inc.lon, 0, np - 2);
+                    if (cl[0] <= 150.0) r.incidents.add(inc);
+                }
+            }
+        } catch (Throwable ignored) { }
+    }
+
+    public static List<Incident> parseTomTomIncidents(String json) {
+        List<Incident> out = new ArrayList<Incident>();
+        try {
+            JSONObject root = new JSONObject(json);
+            JSONArray arr = root.optJSONArray("incidents");
+            if (arr == null) return out;
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject it = arr.optJSONObject(i);
+                if (it == null) continue;
+                JSONObject prop = it.optJSONObject("properties");
+                if (prop == null) continue;
+                int cat = prop.optInt("iconCategory", 0);
+                int del = prop.optInt("delay", 0);
+                // priorizar cierres (7,8), accidentes (1), obras (9) y atascos fuertes (6)
+                if (cat != 1 && cat != 6 && cat != 7 && cat != 8 && cat != 9 && del < 180) continue;
+                JSONObject geom = it.optJSONObject("geometry");
+                JSONArray coords = geom != null ? geom.optJSONArray("coordinates") : null;
+                if (coords == null || coords.length() == 0) continue;
+                double lo = Double.NaN, la = Double.NaN;
+                Object first = coords.opt(0);
+                if (first instanceof Number) {
+                    lo = coords.optDouble(0, Double.NaN);
+                    la = coords.optDouble(1, Double.NaN);
+                } else if (first instanceof JSONArray) {
+                    JSONArray p0 = (JSONArray) first;
+                    lo = p0.optDouble(0, Double.NaN);
+                    la = p0.optDouble(1, Double.NaN);
+                }
+                if (Double.isNaN(la) || Double.isNaN(lo)) continue;
+                Incident inc = new Incident();
+                inc.lat = la;
+                inc.lon = lo;
+                inc.category = cat;
+                inc.delayS = Math.max(0, del);
+                String desc = "";
+                JSONArray evs = prop.optJSONArray("events");
+                if (evs != null && evs.length() > 0) {
+                    JSONObject e0 = evs.optJSONObject(0);
+                    if (e0 != null) desc = e0.optString("description", "").trim();
+                }
+                if (desc.length() == 0) desc = incidentLabel(cat);
+                JSONArray roads = prop.optJSONArray("roadNumbers");
+                String rd = roads != null && roads.length() > 0 ? roads.optString(0, "").trim() : "";
+                if (rd.length() > 0 && !desc.contains(rd)) desc = rd + " · " + desc;
+                inc.desc = desc;
+                out.add(inc);
+            }
+        } catch (Throwable ignored) { }
+        return out;
+    }
+
+    public static String incidentLabel(int category) {
+        if (category == 8) return I18n.t("Vía cerrada");
+        if (category == 7) return I18n.t("Carril cerrado");
+        if (category == 1) return I18n.t("Accidente");
+        if (category == 9) return I18n.t("Obras en la vía");
+        if (category == 6) return I18n.t("Tráfico detenido");
+        return I18n.t("Incidente en la vía");
+    }
+
+    /** Escanea radares fijos de velocidad en el mapa .map cerca de las rutas calculadas. */
+    private static void scanRouteCameras(List<Route> routes) {
+        OfflineMap fm = LiveMapView.fileMap;
+        if (fm == null || routes == null || routes.isEmpty()) return;
+        double minLa = 90, maxLa = -90, minLo = 180, maxLo = -180;
+        for (Route r : routes) {
+            if (r.pts == null) continue;
+            for (int i = 0; i < r.pts.length; i += 2) {
+                double la = r.pts[i], lo = r.pts[i + 1];
+                if (la < minLa) minLa = la; if (la > maxLa) maxLa = la;
+                if (lo < minLo) minLo = lo; if (lo > maxLo) maxLo = lo;
+            }
+        }
+        ArrayList<double[]> rawCams = fm.findSpeedCameras(minLa - 0.004, minLo - 0.004, maxLa + 0.004, maxLo + 0.004);
+        if (rawCams == null || rawCams.isEmpty()) return;
+        attachCameras(routes, rawCams);
+    }
+
+    static void attachCameras(List<Route> routes, List<double[]> rawCams) {
+        for (Route r : routes) {
+            int nPts = r.pts != null ? r.pts.length / 2 : 0;
+            if (nPts < 2) continue;
+            for (double[] rc : rawCams) {
+                double la = rc[0], lo = rc[1];
+                int sp = rc.length >= 3 ? (int) Math.round(rc[2]) : 0;
+                double[] cl = closestOnRange(r.pts, la, lo, 0, nPts - 2);
+                if (cl[0] <= 45.0) {
+                    int seg = (int) cl[1];
+                    double segLen = r.cumDistM[seg + 1] - r.cumDistM[seg];
+                    Camera cam = new Camera();
+                    cam.lat = la;
+                    cam.lon = lo;
+                    cam.alongM = r.cumDistM[seg] + segLen * cl[2];
+                    cam.maxSpeedKmh = sp;
+                    r.cameras.add(cam);
+                }
+            }
+            Collections.sort(r.cameras, new Comparator<Camera>() {
+                public int compare(Camera a, Camera b) {
+                    return a.alongM < b.alongM ? -1 : a.alongM > b.alongM ? 1 : 0;
+                }
+            });
+        }
     }
 
     private static int tomtomIcon(String man) {
@@ -1570,7 +2185,50 @@ public class Nav {
             }
         }
 
-        // desvío de ruta -> recalcular (con respaldo sin conexión)
+        // límite de velocidad y radar de velocidad cercano
+        SharedPreferences sp = c != null ? c.getSharedPreferences("launcher", 0) : null;
+        curSpeedLimitKmh = r.segMaxSpeedKmh != null && segIdx < r.segMaxSpeedKmh.length ? r.segMaxSpeedKmh[segIdx] : 0;
+        boolean spAlertOn = sp == null || sp.getBoolean("nav_speed_alert", true);
+        if (spAlertOn && curSpeedLimitKmh > 0 && l.hasSpeed()) {
+            int tolKmh = sp != null ? sp.getInt("nav_speed_tol", 8) : 8;
+            double curKmh = l.getSpeed() * 3.6;
+            boolean over = curKmh >= curSpeedLimitKmh + tolKmh;
+            if (over && (!speedingAlert || nowSp - lastSpeedChimeAt > 18000L)) {
+                lastSpeedChimeAt = nowSp;
+                if (sp == null || sp.getBoolean("nav_speed_sound", true)) {
+                    playAlertTone(ToneGenerator.TONE_PROP_BEEP2, 240);
+                }
+            }
+            speedingAlert = over;
+        } else {
+            speedingAlert = false;
+        }
+
+        Camera foundCam = null;
+        int foundCamIdx = -1;
+        double foundCamDist = 0;
+        boolean camOn = sp == null || sp.getBoolean("nav_speed_cams", true);
+        if (camOn && !r.cameras.isEmpty()) {
+            for (int ci = 0; ci < r.cameras.size(); ci++) {
+                Camera cam = r.cameras.get(ci);
+                if (cam.alongM >= alongM - 25 && cam.alongM - alongM <= 350) {
+                    foundCam = cam;
+                    foundCamIdx = ci;
+                    foundCamDist = Math.max(0, cam.alongM - alongM);
+                    break;
+                }
+            }
+        }
+        nearbyCamera = foundCam;
+        nearbyCameraDistM = foundCamDist;
+        if (foundCam != null && (foundCamIdx != lastCamIdx || nowSp - lastCamChimeAt > 35000L)) {
+            lastCamIdx = foundCamIdx;
+            lastCamChimeAt = nowSp;
+            playAlertTone(ToneGenerator.TONE_PROP_ACK, 260);
+            if (c != null) speakRaw(c, I18n.t("Radar de velocidad adelante"));
+        }
+
+        // desvío de ruta -> recalcular (conservando paradas aún pendientes)
         boolean goodFix = !l.hasAccuracy() || l.getAccuracy() <= 55;
         if (crossM <= 45) {
             offRouteCount = 0;
@@ -1585,15 +2243,24 @@ public class Nav {
                 rerouting = true;
                 lastRerouteAt = now;
                 final int gen = routeGen;
+                List<Place> remStops = new ArrayList<Place>();
+                for (Place wp : r.waypoints) {
+                    double[] cl = closestOnRange(r.pts, wp.lat, wp.lon, 0, nPts - 2);
+                    if ((int) cl[1] > segIdx + 2 && approxDist(lat, lon, wp.lat, wp.lon) > 65) {
+                        remStops.add(wp);
+                    }
+                }
                 final Place dest = new Place();
                 dest.name = r.destName;
                 dest.lat = r.destLat;
                 dest.lon = r.destLon;
+                remStops.add(dest);
                 final double curCross = crossM;
-                fetchRoute(c, lat, lon, dest.lat, dest.lon, dest.name, new RouteCb() {
-                    public void onRoute(Route nr, String error) {
+                fetchRoutes(c, lat, lon, remStops, false, new RoutesCb() {
+                    public void onRoutes(List<Route> routes, String error) {
                         if (gen != routeGen || active == null) return;
                         rerouting = false;
+                        Route nr = routes != null && !routes.isEmpty() ? routes.get(0) : null;
                         if (nr != null) {
                             activate(c, nr);
                             speakRaw(c, I18n.t("Ruta recalculada"));
@@ -1608,6 +2275,18 @@ public class Nav {
         } else if (offlineOffRoute) {
             offRouteM = crossM;
         }
+    }
+
+    private static void playAlertTone(final int tone, final int ms) {
+        try {
+            final ToneGenerator tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, 75);
+            tg.startTone(tone, ms);
+            UI.postDelayed(new Runnable() {
+                public void run() {
+                    try { tg.release(); } catch (Throwable ignored) { }
+                }
+            }, ms + 120);
+        } catch (Throwable ignored) { }
     }
 
     private static double[] closestOnRange(double[] pts, double lat, double lon, int lo, int hi) {
@@ -1656,6 +2335,19 @@ public class Nav {
         return tStr + " · " + fmtStepDist(distM, mph);
     }
 
+    public static String fmtEta(Context c, double durSec, double distM, boolean mph) {
+        if (c != null && c.getSharedPreferences("launcher", 0).getBoolean("nav_eta_clock", false)) {
+            return fmtClockEta(c, durSec) + " · " + fmtStepDist(distM, mph);
+        }
+        return fmtEta(durSec, distM, mph);
+    }
+
+    public static String fmtClockEta(Context c, double durSec) {
+        long arrivalMs = System.currentTimeMillis() + Math.max(60L, Math.round(durSec)) * 1000L;
+        java.text.DateFormat df = c != null ? DateFormat.getTimeFormat(c) : new SimpleDateFormat("HH:mm", Locale.getDefault());
+        return df.format(new Date(arrivalMs));
+    }
+
     public static Step currentStep() {
         Route r = active;
         if (r == null || r.steps.isEmpty()) return null;
@@ -1663,7 +2355,7 @@ public class Nav {
         return r.steps.get(idx);
     }
 
-    // ───────────────────────── guía por voz (TTS) ─────────────────────────
+    // ───────────────────────── guía por voz (TTS) con atenuación de música ─────────────────────────
 
     private static void speakStep(Context c, Step st, int idx, boolean prefix) {
         speakStep(c, st, idx, prefix, null);
@@ -1676,44 +2368,92 @@ public class Nav {
         speakRaw(c, msg);
     }
 
+    @SuppressWarnings("deprecation")
+    private static void requestNavFocus(Context c, int approxMs) {
+        if (c == null) return;
+        try {
+            if (duckAm == null) duckAm = (AudioManager) c.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+            if (duckAm == null) return;
+            UI.removeCallbacks(ABANDON_FOCUS);
+            int res = duckAm.requestAudioFocus(FOCUS_LS, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
+            if (res == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) hasAudioFocus = true;
+            UI.postDelayed(ABANDON_FOCUS, Math.max(2500, Math.min(14000, approxMs)));
+        } catch (Throwable ignored) { }
+    }
+
+    @SuppressWarnings("deprecation")
+    static void abandonNavFocus() {
+        UI.removeCallbacks(ABANDON_FOCUS);
+        if (hasAudioFocus && duckAm != null) {
+            try { duckAm.abandonAudioFocus(FOCUS_LS); } catch (Throwable ignored) { }
+        }
+        hasAudioFocus = false;
+    }
+
     public static void speakRaw(final Context c, final String text) {
         if (c == null || text == null || text.length() == 0) return;
         if (!c.getSharedPreferences("launcher", 0).getBoolean("nav_voice", true)) return;
+        final Context app = c.getApplicationContext();
         try {
             if (tts == null || !I18n.lang.equals(ttsLang)) {
                 shutdownTts();
                 ttsLang = I18n.lang;
-                tts = new TextToSpeech(c.getApplicationContext(), new TextToSpeech.OnInitListener() {
-                    public void onInit(int status) {
-                        if (status == TextToSpeech.SUCCESS && tts != null) {
-                            try {
-                                int res = tts.setLanguage(I18n.loc);
-                                if (res == TextToSpeech.LANG_MISSING_DATA || res == TextToSpeech.LANG_NOT_SUPPORTED) {
-                                    tts.setLanguage(new Locale(I18n.lang));
+                tts = new TextToSpeech(app, new TextToSpeech.OnInitListener() {
+                    public void onInit(final int status) {
+                        Runnable initTask = new Runnable() {
+                            public void run() {
+                                if (status == TextToSpeech.SUCCESS && tts != null) {
+                                    try {
+                                        int res = tts.setLanguage(I18n.loc);
+                                        if (res == TextToSpeech.LANG_MISSING_DATA || res == TextToSpeech.LANG_NOT_SUPPORTED) {
+                                            tts.setLanguage(new Locale(I18n.lang));
+                                        }
+                                        tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                                            public void onStart(String utteranceId) { }
+                                            public void onDone(String utteranceId) {
+                                                if (utteranceId != null && utteranceId.equals(curUttId)) UI.post(ABANDON_FOCUS);
+                                            }
+                                            public void onError(String utteranceId) {
+                                                if (utteranceId != null && utteranceId.equals(curUttId)) UI.post(ABANDON_FOCUS);
+                                            }
+                                        });
+                                    } catch (Throwable ignored) { }
+                                    ttsReady = true;
+                                    doSpeak(app, text);
                                 }
-                            } catch (Throwable ignored) { }
-                            ttsReady = true;
-                            doSpeak(text);
-                        }
+                            }
+                        };
+                        if (tts != null) initTask.run();
+                        else UI.post(initTask);
                     }
                 });
             } else if (ttsReady) {
-                doSpeak(text);
+                doSpeak(app, text);
             }
         } catch (Throwable ignored) { }
     }
 
     @SuppressWarnings("deprecation")
-    private static void doSpeak(String text) {
+    private static void doSpeak(Context c, String text) {
         if (tts == null || !ttsReady) return;
         try {
-            if (Build.VERSION.SDK_INT >= 21) tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "stradaos_nav");
-            else tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+            int timeoutMs = Math.max(3000, Math.min(14000, text.length() * 95 + 1800));
+            requestNavFocus(c, timeoutMs);
+            String uttId = "stradaos_nav_" + (++speakSeq);
+            curUttId = uttId;
+            if (Build.VERSION.SDK_INT >= 21) {
+                tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, uttId);
+            } else {
+                HashMap<String, String> params = new HashMap<String, String>(1);
+                params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, uttId);
+                tts.speak(text, TextToSpeech.QUEUE_FLUSH, params);
+            }
         } catch (Throwable ignored) { }
     }
 
     public static void shutdownTts() {
         ttsReady = false;
+        abandonNavFocus();
         if (tts != null) {
             try { tts.stop(); tts.shutdown(); } catch (Throwable ignored) { }
             tts = null;
@@ -1728,7 +2468,7 @@ public class Nav {
         return e.getClass().getSimpleName();
     }
 
-    // ───────────────────────── ícono vectorial de maniobra ─────────────────────────
+    // ───────────────────────── ícono vectorial de maniobra y carriles ─────────────────────────
 
     public static class ManeuverView extends View {
         private int icon = 0;
@@ -1834,6 +2574,102 @@ public class Nav {
                 path.lineTo(tx, 10f * u);
             }
             c.drawPath(path, p);
+        }
+    }
+
+    /** Tira compacta de carriles recomendados según OSRM intersections[].lanes. */
+    public static class LaneStripView extends View {
+        private int[] lanes;
+        private int activeCol = 0xFFFFFFFF;
+        private int dimCol = 0x55FFFFFF;
+        private int pillBg = 0x28FFFFFF;
+        private final Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+        private final Paint bgP = new Paint(Paint.ANTI_ALIAS_FLAG);
+        private final Path path = new Path();
+        private final RectF box = new RectF();
+
+        public LaneStripView(Context c) {
+            super(c);
+            p.setStyle(Paint.Style.STROKE);
+            p.setStrokeCap(Paint.Cap.ROUND);
+            p.setStrokeJoin(Paint.Join.ROUND);
+            bgP.setStyle(Paint.Style.FILL);
+        }
+
+        public void setLanes(int[] l) {
+            if (Arrays.equals(lanes, l)) return;
+            lanes = l;
+            invalidate();
+        }
+
+        public void setColors(int active, int dim, int pill) {
+            activeCol = active;
+            dimCol = dim;
+            pillBg = pill;
+            invalidate();
+        }
+
+        @Override
+        protected void onDraw(Canvas c) {
+            if (lanes == null || lanes.length == 0) return;
+            float w = getWidth(), h = getHeight();
+            if (w <= 0 || h <= 0) return;
+            int n = lanes.length;
+            float cw = Math.min(h * 1.15f, w / n);
+            float totalW = cw * n;
+            float startX = (w - totalW) * 0.5f;
+            float u = Math.min(cw, h) / 20f;
+            p.setStrokeWidth(Math.max(1.5f, 1.9f * u));
+
+            for (int i = 0; i < n; i++) {
+                int mask = lanes[i];
+                boolean valid = (mask & LANE_VALID) != 0;
+                float cx = startX + i * cw + cw * 0.5f;
+                float cy = h * 0.5f;
+                if (valid) {
+                    box.set(startX + i * cw + 1.5f * u, 1.5f * u, startX + (i + 1) * cw - 1.5f * u, h - 1.5f * u);
+                    bgP.setColor(pillBg);
+                    c.drawRoundRect(box, 4f * u, 4f * u, bgP);
+                }
+                p.setColor(valid ? activeCol : dimCol);
+                drawLaneGlyph(c, cx, cy, u, mask);
+            }
+        }
+
+        private void drawLaneGlyph(Canvas c, float cx, float cy, float u, int mask) {
+            float bot = cy + 6.5f * u;
+            float top = cy - 6.5f * u;
+            if ((mask & LANE_STRAIGHT) != 0) {
+                path.reset();
+                path.moveTo(cx, bot); path.lineTo(cx, top);
+                path.moveTo(cx - 2.6f * u, top + 2.8f * u); path.lineTo(cx, top); path.lineTo(cx + 2.6f * u, top + 2.8f * u);
+                c.drawPath(path, p);
+            }
+            if ((mask & (LANE_LEFT | LANE_SLIGHT_LEFT | LANE_SHARP_LEFT)) != 0) {
+                float dx = (mask & LANE_SLIGHT_LEFT) != 0 ? -3.8f : -5.2f;
+                float ty = (mask & LANE_SHARP_LEFT) != 0 ? cy + 0.5f * u : (mask & LANE_SLIGHT_LEFT) != 0 ? top + 1f * u : cy - 1f * u;
+                path.reset();
+                path.moveTo(cx, bot); path.lineTo(cx, cy); path.lineTo(cx + dx * u, ty);
+                path.moveTo(cx + (dx + 2.2f) * u, ty - 1.5f * u); path.lineTo(cx + dx * u, ty); path.lineTo(cx + (dx + 1.8f) * u, ty + 2.4f * u);
+                c.drawPath(path, p);
+            }
+            if ((mask & (LANE_RIGHT | LANE_SLIGHT_RIGHT | LANE_SHARP_RIGHT)) != 0) {
+                float dx = (mask & LANE_SLIGHT_RIGHT) != 0 ? 3.8f : 5.2f;
+                float ty = (mask & LANE_SHARP_RIGHT) != 0 ? cy + 0.5f * u : (mask & LANE_SLIGHT_RIGHT) != 0 ? top + 1f * u : cy - 1f * u;
+                path.reset();
+                path.moveTo(cx, bot); path.lineTo(cx, cy); path.lineTo(cx + dx * u, ty);
+                path.moveTo(cx + (dx - 2.2f) * u, ty - 1.5f * u); path.lineTo(cx + dx * u, ty); path.lineTo(cx + (dx - 1.8f) * u, ty + 2.4f * u);
+                c.drawPath(path, p);
+            }
+            if ((mask & LANE_UTURN) != 0) {
+                path.reset();
+                path.moveTo(cx + 2.2f * u, bot);
+                path.lineTo(cx + 2.2f * u, cy - 2.5f * u);
+                path.lineTo(cx - 2.8f * u, cy - 2.5f * u);
+                path.lineTo(cx - 2.8f * u, bot - 1.5f * u);
+                path.moveTo(cx - 4.5f * u, bot - 3.5f * u); path.lineTo(cx - 2.8f * u, bot - 1.5f * u); path.lineTo(cx - 1.1f * u, bot - 3.5f * u);
+                c.drawPath(path, p);
+            }
         }
     }
 }

@@ -501,16 +501,63 @@ public class OfflineMap {
         }
     }
 
-    /** Mapas v5: algunas etiquetas guardan su valor dentro del elemento («%b», «%i»…); hay que saltarlo. */
+    static final int FLAG_TOLL = 1;
+    static final int FLAG_MOTORWAY = 2;
+
+    /** Mapas v5: algunas etiquetas guardan su valor dentro del elemento («%b», «%i»…); hay que saltarlo o leerlo. */
     private static void skipVarValue(Buf b, String v, String k) {
-        if (v.length() != 2 || v.charAt(0) != '%') return;
+        readTagVar(b, v, k, false);
+    }
+
+    private static String readTagVar(Buf b, String v, String k, boolean wantValue) {
+        if (v.length() != 2 || v.charAt(0) != '%') return v;
         switch (v.charAt(1)) {
-            case 'b': b.p += 1; break;
-            case 'h': b.p += 2; break;
-            case 'i': case 'f': b.p += 4; break;
-            case 's': b.str(); break;
-            default: break;
+            case 'b': {
+                int raw = b.byte8() & 0xff;
+                return wantValue ? String.valueOf(raw) : v;
+            }
+            case 'h': {
+                int raw = b.short16();
+                return wantValue ? String.valueOf(raw) : v;
+            }
+            case 'i': {
+                int raw = b.int32();
+                return wantValue ? String.valueOf(raw) : v;
+            }
+            case 'f': {
+                float raw = Float.intBitsToFloat(b.int32());
+                return wantValue ? String.valueOf(Math.round(raw)) : v;
+            }
+            case 's': {
+                String raw = b.str();
+                return wantValue ? raw : v;
+            }
+            default:
+                return v;
         }
+    }
+
+    static short parseMaxSpeedKmh(String raw) {
+        if (raw == null) return 0;
+        String s = raw.trim().toLowerCase(Locale.US);
+        if (s.length() == 0) return 0;
+        boolean mph = s.indexOf("mph") >= 0;
+        int i = 0;
+        while (i < s.length() && !Character.isDigit(s.charAt(i))) {
+            // solo aceptar números al inicio o después de prefijo de país como «ES:urban»
+            if (i > 4) return 0;
+            i++;
+        }
+        int val = 0, digits = 0;
+        while (i < s.length() && Character.isDigit(s.charAt(i))) {
+            val = val * 10 + (s.charAt(i) - '0');
+            digits++;
+            i++;
+            if (digits > 3) return 0;
+        }
+        if (digits == 0) return 0;
+        if (mph) val = (int) Math.round(val * 1.60934);
+        return (val >= 5 && val <= 220) ? (short) val : 0;
     }
 
     /** Nombres en varios idiomas («Base\ren\bEnglish…»): se usa el principal (el local). */
@@ -1031,6 +1078,8 @@ public class OfflineMap {
         String name;
         int rank, deg;
         boolean roundabout;
+        short maxSpeedKmh;
+        byte flags;
     }
 
     static final class RawRoute {
@@ -1084,9 +1133,9 @@ public class OfflineMap {
     }
 
     private static final class REdge {
-        int to; float d, cost; String name; byte rank; boolean roundabout;
-        REdge(int t, float d, float c, String n, int r, boolean rb) {
-            to = t; this.d = d; cost = c; name = n; rank = (byte) r; roundabout = rb;
+        int to; float d, cost; String name; byte rank, flags; boolean roundabout; short maxSpeedKmh;
+        REdge(int t, float d, float c, String n, int r, boolean rb, byte fl, short ms) {
+            to = t; this.d = d; cost = c; name = n; rank = (byte) r; roundabout = rb; flags = fl; maxSpeedKmh = ms;
         }
     }
 
@@ -1095,7 +1144,7 @@ public class OfflineMap {
     }
 
     private static final class BSeg {
-        int u, v, blkId, rank; String name; boolean oneway, roundabout;
+        int u, v, blkId, rank; String name; boolean oneway, roundabout; byte flags; short maxSpeedKmh;
     }
 
     private final class CorridorGraph {
@@ -1139,17 +1188,20 @@ public class OfflineMap {
             return id;
         }
 
-        void addEdge(int u, int v, float d, float cost, String nm, int rank, boolean rb) {
+        void addEdge(int u, int v, float d, float cost, String nm, int rank, boolean rb, byte flags, short maxSp) {
             ArrayList<REdge> l = adj[u];
             if (l == null) adj[u] = l = new ArrayList<REdge>(4);
             for (int i = 0; i < l.size(); i++) {
                 REdge ex = l.get(i);
                 if (ex.to == v) {
-                    if (cost < ex.cost) { ex.cost = cost; ex.d = d; ex.name = nm; ex.rank = (byte) rank; ex.roundabout = rb; }
+                    if (cost < ex.cost) {
+                        ex.cost = cost; ex.d = d; ex.name = nm; ex.rank = (byte) rank;
+                        ex.roundabout = rb; ex.flags = flags; ex.maxSpeedKmh = maxSp;
+                    }
                     return;
                 }
             }
-            l.add(new REdge(v, d, cost, nm, rank, rb));
+            l.add(new REdge(v, d, cost, nm, rank, rb, flags, maxSp));
         }
 
         void ensureAround(double la, double lo, int padBlocks) throws IOException {
@@ -1199,18 +1251,30 @@ public class OfflineMap {
                     if (id < 0 || id >= wayK.length) return;
                     tagIds[t] = id;
                 }
-                String hw = null; int ow = 0; boolean blocked = false, rb = false;
+                String hw = null; int ow = 0; boolean blocked = false, rb = false, toll = false;
+                short maxSp = 0;
                 for (int t = 0; t < nt; t++) {
                     int tid = tagIds[t];
                     String k = wayK[tid], v = wayV[tid];
-                    skipVarValue(blk, v, k);
+                    boolean want = "maxspeed".equals(k) || "maxspeed:forward".equals(k) || "toll".equals(k);
+                    String val = readTagVar(blk, v, k, want);
                     if ("highway".equals(k)) hw = v;
-                    if ("oneway".equals(k)) ow = "-1".equals(v) ? -1 : "yes".equals(v) ? 1 : 0;
-                    if ("junction".equals(k) && ("roundabout".equals(v) || "circular".equals(v))) rb = true;
-                    if (("motor_vehicle".equals(k) || "access".equals(k)) && ("no".equals(v) || "private".equals(v))) blocked = true;
+                    else if ("oneway".equals(k)) ow = "-1".equals(v) ? -1 : "yes".equals(v) ? 1 : 0;
+                    else if ("junction".equals(k) && ("roundabout".equals(v) || "circular".equals(v))) rb = true;
+                    else if (("motor_vehicle".equals(k) || "access".equals(k)) && ("no".equals(v) || "private".equals(v))) blocked = true;
+                    else if ("toll".equals(k)) {
+                        if (val != null && !"no".equals(val) && !"false".equals(val)) toll = true;
+                    } else if ("maxspeed".equals(k)) {
+                        short ms = parseMaxSpeedKmh(val);
+                        if (ms > 0) maxSp = ms;
+                    } else if ("maxspeed:forward".equals(k) && maxSp == 0) {
+                        short ms = parseMaxSpeedKmh(val);
+                        if (ms > 0) maxSp = ms;
+                    }
                 }
                 int rank = roadRank(hw);
                 if (rank < 0 || blocked) { blk.p = end; continue; }
+                final byte edgeFlags = (byte) ((toll ? FLAG_TOLL : 0) | (rank >= 9 ? FLAG_MOTORWAY : 0));
                 int fb = blk.byte8();
                 String nm = (fb & 0x80) != 0 ? local(blk.str()) : "";
                 if ((fb & 0x40) != 0) blk.str();
@@ -1245,13 +1309,15 @@ public class OfflineMap {
                             }
                             if (q > 0 && id != prevId) {
                                 double d = distM(prevLa, prevLo, la, lo);
-                                double cost = d / speedMps(rank);
-                                if (ow >= 0) addEdge(prevId, id, (float) d, (float) cost, nm, rank, rb);
-                                if (ow <= 0) addEdge(id, prevId, (float) d, (float) cost, nm, rank, rb);
+                                double spd = maxSp > 0 ? Math.min(speedMps(rank), maxSp / 3.6) : speedMps(rank);
+                                double cost = d / spd;
+                                if (ow >= 0) addEdge(prevId, id, (float) d, (float) cost, nm, rank, rb, edgeFlags, maxSp);
+                                if (ow <= 0) addEdge(id, prevId, (float) d, (float) cost, nm, rank, rb, edgeFlags, maxSp);
                                 if (nearBorder(la, lo, tLat, bLat, tLon, rLon) || nearBorder(prevLa, prevLo, tLat, bLat, tLon, rLon)) {
                                     BSeg sr = new BSeg();
                                     sr.u = ow == -1 ? id : prevId; sr.v = ow == -1 ? prevId : id;
                                     sr.blkId = blkId; sr.rank = rank; sr.name = nm; sr.oneway = ow != 0; sr.roundabout = rb;
+                                    sr.flags = edgeFlags; sr.maxSpeedKmh = maxSp;
                                     long bk = bucketKey((prevLa + la) * 0.5, (prevLo + lo) * 0.5);
                                     ArrayList<BSeg> sb = segBuckets.get(bk);
                                     if (sb == null) { sb = new ArrayList<BSeg>(4); segBuckets.put(bk, sb); }
@@ -1306,20 +1372,24 @@ public class OfflineMap {
             double dV = distM(ela, elo, latArr[sr.v], lonArr[sr.v]);
             int tgt = dU < dV ? sr.u : sr.v;
             if (tgt == ep.node) return;
-            double spd = speedMps(sr.rank);
+            double spd = sr.maxSpeedKmh > 0 ? Math.min(speedMps(sr.rank), sr.maxSpeedKmh / 3.6) : speedMps(sr.rank);
             if (ep.dir == 0 && !sr.oneway) {
                 double d = Math.min(dU, dV);
-                addEdge(ep.node, tgt, (float) d, (float) (d / spd), sr.name, sr.rank, sr.roundabout);
-                addEdge(tgt, ep.node, (float) d, (float) (d / spd), sr.name, sr.rank, sr.roundabout);
+                addEdge(ep.node, tgt, (float) d, (float) (d / spd), sr.name, sr.rank, sr.roundabout, sr.flags, sr.maxSpeedKmh);
+                addEdge(tgt, ep.node, (float) d, (float) (d / spd), sr.name, sr.rank, sr.roundabout, sr.flags, sr.maxSpeedKmh);
             } else {
-                if (ep.dir == 2 || ep.dir == 0) addEdge(ep.node, sr.v, (float) dV, (float) (dV / spd), sr.name, sr.rank, sr.roundabout);
-                if (ep.dir == 1 || ep.dir == 0) addEdge(sr.u, ep.node, (float) dU, (float) (dU / spd), sr.name, sr.rank, sr.roundabout);
+                if (ep.dir == 2 || ep.dir == 0) addEdge(ep.node, sr.v, (float) dV, (float) (dV / spd), sr.name, sr.rank, sr.roundabout, sr.flags, sr.maxSpeedKmh);
+                if (ep.dir == 1 || ep.dir == 0) addEdge(sr.u, ep.node, (float) dU, (float) (dU / spd), sr.name, sr.rank, sr.roundabout, sr.flags, sr.maxSpeedKmh);
             }
         }
     }
 
     /** Calcula una ruta en auto sin conexión dentro del archivo .map (A* sobre las vías del subarchivo de detalle). */
     RawRoute routeOffline(double la1, double lo1, double la2, double lo2) {
+        return routeOffline(la1, lo1, la2, lo2, false, false);
+    }
+
+    RawRoute routeOffline(double la1, double lo1, double la2, double lo2, boolean avoidTolls, boolean avoidHighways) {
         if (subs == null || subs.length == 0 || !contains(la1, lo1) || !contains(la2, lo2)) return null;
         if (distM(la1, lo1, la2, lo2) > 65000) return null;
         Sub detail = subs[zMax];
@@ -1375,7 +1445,10 @@ public class OfflineMap {
                 if (es == null) continue;
                 for (int i = 0; i < es.size(); i++) {
                     REdge ed = es.get(i);
-                    float ng = ug + ed.cost;
+                    float mult = 1f;
+                    if (avoidTolls && (ed.flags & FLAG_TOLL) != 0) mult *= 30f;
+                    if (avoidHighways && ((ed.flags & FLAG_MOTORWAY) != 0 || ed.rank >= 9)) mult *= 25f;
+                    float ng = ug + ed.cost * mult;
                     if (ng < gCost[ed.to]) {
                         gCost[ed.to] = ng;
                         prevN[ed.to] = u;
@@ -1406,6 +1479,8 @@ public class OfflineMap {
                 hop.name = ed.name;
                 hop.rank = ed.rank;
                 hop.roundabout = ed.roundabout;
+                hop.maxSpeedKmh = ed.maxSpeedKmh;
+                hop.flags = ed.flags;
                 hop.deg = g.adj[ed.to] != null ? g.adj[ed.to].size() : 1;
                 rr.hops.add(hop);
                 rr.totalDistM += ed.d;
@@ -1415,6 +1490,80 @@ public class OfflineMap {
         } catch (Throwable e) {
             return null;
         }
+    }
+
+    /** Escanea POIs de radares («highway=speed_camera» / «enforcement=maxspeed») dentro de una caja geográfica. */
+    ArrayList<double[]> findSpeedCameras(double minLa, double minLo, double maxLa, double maxLo) {
+        ArrayList<double[]> out = new ArrayList<double[]>();
+        if (subs == null || zMax < 0 || zMax >= subs.length) return out;
+        Sub detail = subs[zMax];
+        if (detail == null) return out;
+        double qMinLa = Math.max(minLat, minLa), qMaxLa = Math.min(maxLat, maxLa);
+        double qMinLo = Math.max(minLon, minLo), qMaxLo = Math.min(maxLon, maxLo);
+        if (qMinLa > qMaxLa || qMinLo > qMaxLo) return out;
+
+        int c0 = Math.max(0, (int) (tileX(qMinLo, detail.base) - detail.left));
+        int c1 = Math.min((int) detail.w - 1, (int) (tileX(qMaxLo, detail.base) - detail.left));
+        int r0 = Math.max(0, (int) (tileY(qMaxLa, detail.base) - detail.top));
+        int r1 = Math.min((int) detail.h - 1, (int) (tileY(qMinLa, detail.base) - detail.top));
+        long deadline = System.currentTimeMillis() + 900L;
+        HashSet<Long> seen = new HashSet<Long>();
+        int blocks = 0;
+        int[] tagIds = new int[16];
+        for (int row = r0; row <= r1; row++) {
+            for (int col = c0; col <= c1; col++) {
+                if (System.currentTimeMillis() > deadline || blocks++ > 160) return out;
+                long bn = (long) row * detail.w + col;
+                byte[] data;
+                try { data = blockRaw(detail, bn); } catch (Throwable e) { continue; }
+                if (data == null) continue;
+                double tLat = tileLat(detail.top + row, detail.base);
+                double tLon = (double) (detail.left + col) / (1L << detail.base) * 360 - 180;
+                Buf b = new Buf(data);
+                try {
+                    if (debug) b.str(32);
+                    int rows = detail.zMax - detail.zMin + 1;
+                    int totalPois = 0;
+                    for (int z = 0; z < rows; z++) { totalPois += b.uvar(); b.uvar(); }
+                    int firstWay = b.uvar() + b.p;
+                    if (firstWay > b.d.length) continue;
+                    for (int i = 0; i < totalPois; i++) {
+                        if (debug) b.str(32);
+                        double la = tLat + b.svar() / 1e6, lo = tLon + b.svar() / 1e6;
+                        int sp = b.byte8();
+                        int nt = sp & 0x0f;
+                        for (int t = 0; t < nt; t++) {
+                            int id = b.uvar();
+                            if (id < 0 || id >= poiK.length) { nt = -1; break; }
+                            tagIds[t] = id;
+                        }
+                        if (nt < 0) break;
+                        boolean isCam = false;
+                        short camSp = 0;
+                        for (int t = 0; t < nt; t++) {
+                            int id = tagIds[t];
+                            String k = poiK[id], v = poiV[id];
+                            String val = readTagVar(b, v, k, "maxspeed".equals(k));
+                            if (("highway".equals(k) && "speed_camera".equals(v))
+                                    || ("enforcement".equals(k) && "maxspeed".equals(v))) {
+                                isCam = true;
+                            } else if ("maxspeed".equals(k)) {
+                                camSp = parseMaxSpeedKmh(val);
+                            }
+                        }
+                        int fb = b.byte8();
+                        if ((fb & 0x80) != 0) b.str();
+                        if ((fb & 0x40) != 0) b.str();
+                        if ((fb & 0x20) != 0) b.svar();
+                        if (isCam && la >= qMinLa && la <= qMaxLa && lo >= qMinLo && lo <= qMaxLo) {
+                            long key = (Math.round(la * 1e5) << 32) | (Math.round(lo * 1e5) & 0xFFFFFFFFL);
+                            if (seen.add(key)) out.add(new double[]{la, lo, camSp});
+                        }
+                    }
+                } catch (RuntimeException ignored) { }
+            }
+        }
+        return out;
     }
 
     private HashMap<Integer, Double> topCandidates(CorridorGraph g, double la, double lo, int k) {
