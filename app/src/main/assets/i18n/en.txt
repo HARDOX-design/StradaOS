@@ -1014,4 +1014,82 @@ Clave API gratis de TomTom	Free TomTom API key
 Capa de tráfico propia (avanzado)	Custom traffic layer (advanced)
 URL transparente de tráfico con {z}/{x}/{y}	Transparent traffic tile URL with {z}/{x}/{y}
 URL capa de tráfico {z}/{x}/{y} (vacío = automático)	Traffic layer URL {z}/{x}/{y} (empty = automatic)
+Mostrando hora de llegada	Showing arrival time
+Mostrando tiempo restante	Showing remaining time
+Radar	Speed camera
+Vol	Vol
+Ir a Casa	Navigate Home
+Ir a Trabajo	Navigate Work
+Volumen	Volume
+Configura «{}» primero en Navegación	Set up “{}” first in Navigation
+Audio no disponible	Audio unavailable
+Volumen multimedia	Media volume
+Silencio	Muted
+Restaurar sonido	Unmute
+Silenciar	Mute
+Listo	Done
+Distancia del viaje	Trip distance
+Tiempo conduciendo	Driving time
+Velocidad promedio	Average speed
+Velocidad máxima	Top speed
+Distancia total	Total distance
+Computadora de viaje	Trip computer
+Distancia, tiempo conduciendo y velocidades del GPS	GPS trip distance, driving time, and speeds
+Viaje	Trip
+Reiniciar viaje	Reset trip
+Viaje reiniciado	Trip reset
+PARADAS	STOPS
+Limpiar	Clear
++ Añadir parada intermedia	+ Add stop along route
+Modo parada activo: elige una parada	Stop mode active: pick a stop
+Buscar parada intermedia	Search stop along route
+Añadir parada en ruta	Add stop along route
+Elegir destino final	Choose final destination
+Carro estacionado	Parked car
+Guardado a las	Saved at
+Añadir como parada	Add as stop
+Parada añadida	Stop added
+Elegir parada	Pick a stop
+Elegir ruta	Choose route
+Ruta	Route
+Más rápida	Fastest
+incidente	incident
+incidentes	incidents
+incidente en la ruta	incident on route
+incidentes en la ruta	incidents on route
+Incidentes en la ruta	Route incidents
+Mostrar tiempo restante	Show remaining time
+Mostrar hora de llegada	Show arrival time
+Sol	Sun
+Auto: horario fijo. Sol: amanecer/atardecer según GPS. Sistema: sigue luces o tema de la pantalla	Auto: fixed schedule. Sun: sunrise/sunset from GPS. System: follows headlights or display theme
+Amanecer	Sunrise
+Atardecer	Sunset
+Sin GPS aún (usa horario fijo hasta recibir señal)	No GPS fix yet (using fixed hours until signal)
+Horario solar de hoy	Today's solar schedule
+Tarjeta del mapa	Map card
+Si la ocultas, ves el próximo giro en la barra superior y el resto gana espacio	When hidden, next turn appears in top bar and other cards expand
+Navegación y alertas	Navigation & alerts
+Evitar peajes	Avoid tolls
+Intenta evitar vías de peaje al calcular la ruta	Try to avoid toll roads when routing
+Evitar autopistas	Avoid highways
+Intenta evitar autopistas o vías rápidas	Try to avoid motorways or freeways
+Rutas alternativas	Alternative routes
+Muestra 2 o 3 opciones de ruta antes de iniciar	Show 2 or 3 route options before starting
+Muestra la hora estimada en lugar del tiempo restante	Show estimated arrival clock time instead of remaining duration
+Consulta cierres o accidentes una sola vez al calcular ruta (TomTom)	Check closures or accidents once when routing (TomTom)
+Límite y alerta de velocidad	Speed limit & alert
+Muestra la señal de límite en el mapa y avisa al excederlo	Show speed limit sign on the map and alert when exceeding it
+Tolerancia de exceso	Overspeed threshold
+Margen sobre el límite antes de activar alerta	Margin above speed limit before triggering alert
+Sonido al exceder límite	Speeding alert sound
+Pitido de alerta cuando superas la tolerancia	Play a beep when exceeding the threshold
+Alertas de radares sin conexión	Offline speed camera alerts
+Avisa al acercarse a radares del mapa local .map	Alert when approaching speed cameras in the local .map file
+Vía cerrada	Road closed
+Carril cerrado	Lane closed
+Accidente	Accident
+Obras en la vía	Roadworks
+Tráfico detenido	Stopped traffic
+Incidente en la vía	Road incident
+Radar de velocidad adelante	Speed camera ahead
 

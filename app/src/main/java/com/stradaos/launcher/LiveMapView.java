@@ -433,6 +433,28 @@ public class LiveMapView extends View {
     }
 
     private void drawRoute(Canvas c, double fx, double fy, float cx, float cy, float ts, int n) {
+        java.util.List<Nav.Route> alts = Nav.altRoutes;
+        if (alts != null && alts.size() > 1) {
+            routeBack.setColor(Main.LIGHT ? 0x554A5568 : 0x779AA2B1);
+            for (int ai = 0; ai < alts.size(); ai++) {
+                Nav.Route ar = alts.get(ai);
+                if (ar == null || ar == Nav.active || ar.pts == null || ar.pts.length < 4) continue;
+                int an = ar.pts.length / 2;
+                routePath.reset();
+                float lx = mapX(ar.pts[1], fx, cx, ts, n), ly = mapY(ar.pts[0], fy, cy, ts, n);
+                routePath.moveTo(lx, ly);
+                for (int i = 1; i < an; i++) {
+                    float sx = mapX(ar.pts[i * 2 + 1], fx, cx, ts, n);
+                    float sy = mapY(ar.pts[i * 2], fy, cy, ts, n);
+                    if (i == an - 1 || Math.abs(sx - lx) >= 2f || Math.abs(sy - ly) >= 2f) {
+                        routePath.lineTo(sx, sy);
+                        lx = sx;
+                        ly = sy;
+                    }
+                }
+                c.drawPath(routePath, routeBack);
+            }
+        }
         Nav.Route r = Nav.active;
         if (r == null || r.pts == null || r.pts.length < 4) return;
         int nPts = r.pts.length / 2;
@@ -463,6 +485,48 @@ public class LiveMapView extends View {
         routeIn.setColor(Main.RED);
         c.drawPath(routePath, routeOut);
         c.drawPath(routePath, routeIn);
+
+        // paradas intermedias
+        if (!r.waypoints.isEmpty()) {
+            destPin.setStyle(Paint.Style.FILL);
+            for (int wi = 0; wi < r.waypoints.size(); wi++) {
+                Nav.Place wp = r.waypoints.get(wi);
+                float wx = mapX(wp.lon, fx, cx, ts, n);
+                float wy = mapY(wp.lat, fy, cy, ts, n);
+                destPin.setColor(0xFFFFFFFF);
+                c.drawCircle(wx, wy, 7.5f * s, destPin);
+                destPin.setColor(0xFFF5A623);
+                c.drawCircle(wx, wy, 4.8f * s, destPin);
+            }
+        }
+
+        // radares fijos en la ruta
+        if (!r.cameras.isEmpty()) {
+            destPin.setStyle(Paint.Style.FILL);
+            for (int ci = 0; ci < r.cameras.size(); ci++) {
+                Nav.Camera cam = r.cameras.get(ci);
+                float kx = mapX(cam.lon, fx, cx, ts, n);
+                float ky = mapY(cam.lat, fy, cy, ts, n);
+                destPin.setColor(0xFFFFFFFF);
+                c.drawCircle(kx, ky, 6f * s, destPin);
+                destPin.setColor(0xFFE63946);
+                c.drawCircle(kx, ky, 3.8f * s, destPin);
+            }
+        }
+
+        // incidentes de tráfico reportados
+        if (!r.incidents.isEmpty()) {
+            destPin.setStyle(Paint.Style.FILL);
+            for (int ii = 0; ii < r.incidents.size(); ii++) {
+                Nav.Incident inc = r.incidents.get(ii);
+                float ix = mapX(inc.lon, fx, cx, ts, n);
+                float iy = mapY(inc.lat, fy, cy, ts, n);
+                destPin.setColor(0xFF1A1D24);
+                c.drawCircle(ix, iy, 7f * s, destPin);
+                destPin.setColor(inc.category == 8 || inc.category == 1 ? 0xFFE63946 : 0xFFF5A623);
+                c.drawCircle(ix, iy, 4.5f * s, destPin);
+            }
+        }
 
         // destino
         float dxS = mapX(r.destLon, fx, cx, ts, n);
