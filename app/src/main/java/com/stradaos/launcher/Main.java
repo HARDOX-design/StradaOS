@@ -6163,7 +6163,8 @@ public class Main extends Activity {
         StringBuilder b = new StringBuilder();
         b.append(I18n.t("Esta pantalla:")).append(" Android ").append(android.os.Build.VERSION.RELEASE).append(" (API ").append(SDK).append(")")
          .append(" · ").append(android.os.Build.MANUFACTURER).append(" ").append(android.os.Build.MODEL).append("\n");
-        if (!android.os.Build.VERSION.RELEASE.startsWith(androidName(SDK).split(" ")[0]))
+        // «Android 8.1» → «8.1» (antes se comparaba con la palabra «Android» y el aviso salía en todas las pantallas)
+        if (!android.os.Build.VERSION.RELEASE.startsWith(androidName(SDK).replace("Android ", "").replace("W", "").replace("L", "")))
             b.append(I18n.t("Ojo: la pantalla dice Android " + android.os.Build.VERSION.RELEASE + ", pero por dentro es " + androidName(SDK) + ".")).append("\n");
         b.append("\n");
         compatLine(b, "Inicio, mapa, clima, velocímetro", "Android 4.1+", true, null);
