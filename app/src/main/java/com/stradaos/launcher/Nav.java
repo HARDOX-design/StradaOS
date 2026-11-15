@@ -55,10 +55,11 @@ public class Nav {
         public double[] cumDistM;   // distancia acumulada en metros desde el inicio hasta cada vértice
         public final List<Step> steps = new ArrayList<Step>();
         public double totalDistM, totalDurS;
+        public int trafficDelayS;   // retraso por tráfico (segundos, 0 si no hay o no aplica)
         public String destName;
         public double destLat, destLon;
         public boolean offline;
-        public String source;       // "osrm", "map", "cache"
+        public String source;       // "tomtom", "osrm", "map", "cache"
     }
 
     public interface SearchCb { void onResult(List<Place> places, String error); }
@@ -67,6 +68,7 @@ public class Nav {
     public static volatile Route active;
     public static volatile int curPtIdx, curStepIdx;
     public static volatile double distToStepM, remDistM, remDurS;
+    public static volatile int trafficDelayS;
     public static volatile boolean rerouting;
     public static volatile boolean offlineOffRoute;
     public static volatile double offRouteM;
@@ -76,6 +78,9 @@ public class Nav {
     private static int offRouteCount;
     private static long lastRerouteAt;
     private static int[] spokenMask;
+    private static double smoothSpeedMs;
+    private static int smoothSpeedSamples;
+    private static long lastSpeedAt;
     private static final Handler UI = new Handler(Looper.getMainLooper());
 
     private static TextToSpeech tts;
@@ -458,6 +463,7 @@ public class Nav {
         curStepIdx = r != null && r.steps.size() > 1 ? 1 : 0;
         remDistM = r != null ? r.totalDistM : 0;
         remDurS = r != null ? r.totalDurS : 0;
+        trafficDelayS = r != null ? r.trafficDelayS : 0;
         distToStepM = r != null && !r.steps.isEmpty() ? r.steps.get(0).distM : 0;
         if (r != null && r.steps.size() > 1 && r.stepPtIdx != null && r.cumDistM != null && r.stepPtIdx[1] < r.cumDistM.length) {
             distToStepM = r.cumDistM[r.stepPtIdx[1]];
@@ -466,6 +472,9 @@ public class Nav {
         offRouteM = 0;
         offlineOffRoute = false;
         rerouting = false;
+        smoothSpeedMs = 0;
+        smoothSpeedSamples = 0;
+        lastSpeedAt = 0;
         spokenMask = r != null ? new int[r.steps.size()] : null;
         if (c != null && r != null) {
             final Context app = c.getApplicationContext();
@@ -490,10 +499,14 @@ public class Nav {
         distToStepM = 0;
         remDistM = 0;
         remDurS = 0;
+        trafficDelayS = 0;
         rerouting = false;
         offlineOffRoute = false;
         offRouteM = 0;
         offRouteCount = 0;
+        smoothSpeedMs = 0;
+        smoothSpeedSamples = 0;
+        lastSpeedAt = 0;
         spokenMask = null;
         if (c != null) {
             try { new File(c.getFilesDir(), "nav_active.json").delete(); } catch (Throwable ignored) { }
@@ -521,6 +534,7 @@ public class Nav {
             double totalM = r.cumDistM[nPts - 1];
             remDistM = Math.max(0, totalM - along);
             remDurS = totalM > 1 ? r.totalDurS * (remDistM / totalM) : 0;
+            trafficDelayS = totalM > 1 && r.trafficDelayS > 0 ? (int) Math.round(r.trafficDelayS * (remDistM / totalM)) : 0;
             int spi = curStepIdx < r.stepPtIdx.length ? r.stepPtIdx[curStepIdx] : nPts - 1;
             distToStepM = Math.max(0, r.cumDistM[spi] - along);
             spokenMask = new int[r.steps.size()];
@@ -528,6 +542,9 @@ public class Nav {
             offlineOffRoute = false;
             offRouteM = 0;
             rerouting = false;
+            smoothSpeedMs = 0;
+            smoothSpeedSamples = 0;
+            lastSpeedAt = 0;
             return true;
         } catch (Throwable e) {
             return false;
@@ -554,19 +571,25 @@ public class Nav {
                     if (r == null && app != null) r = loadCachedRoute(app, lat1, lon1, lat2, lon2);
                 }
                 if (r == null && hasNetwork(app)) {
-                    String tail = String.format(Locale.US, "%.6f,%.6f;%.6f,%.6f?overview=full&geometries=polyline&steps=true",
-                            lon1, lat1, lon2, lat2);
                     String[] errOut = new String[1];
-                    boolean[] sslOut = new boolean[1];
-                    r = fetchOsrm(new String[]{
-                        "https://router.project-osrm.org/route/v1/driving/",
-                        "https://routing.openstreetmap.de/routed-car/route/v1/driving/"
-                    }, tail, lat2, lon2, destName, errOut, sslOut);
-                    if (r == null && sslOut[0]) {
+                    String ttKey = app != null ? app.getSharedPreferences("launcher", 0).getString("tomtom_key", "").trim() : "";
+                    if (ttKey.length() > 0) {
+                        r = fetchTomTom(ttKey, lat1, lon1, lat2, lon2, destName, errOut);
+                    }
+                    if (r == null) {
+                        String tail = String.format(Locale.US, "%.6f,%.6f;%.6f,%.6f?overview=full&geometries=polyline&steps=true",
+                                lon1, lat1, lon2, lat2);
+                        boolean[] sslOut = new boolean[1];
                         r = fetchOsrm(new String[]{
-                            "http://router.project-osrm.org/route/v1/driving/",
-                            "http://routing.openstreetmap.de/routed-car/route/v1/driving/"
-                        }, tail, lat2, lon2, destName, errOut, null);
+                            "https://router.project-osrm.org/route/v1/driving/",
+                            "https://routing.openstreetmap.de/routed-car/route/v1/driving/"
+                        }, tail, lat2, lon2, destName, errOut, sslOut);
+                        if (r == null && sslOut[0]) {
+                            r = fetchOsrm(new String[]{
+                                "http://router.project-osrm.org/route/v1/driving/",
+                                "http://routing.openstreetmap.de/routed-car/route/v1/driving/"
+                            }, tail, lat2, lon2, destName, errOut, null);
+                        }
                     }
                     if (r == null) err = errOut[0];
                 }
@@ -585,6 +608,34 @@ public class Nav {
                 });
             }
         }).start();
+    }
+
+    private static Route fetchTomTom(String key, double lat1, double lon1, double lat2, double lon2,
+                                     String destName, String[] errOut) {
+        try {
+            String url = String.format(Locale.US,
+                    "https://api.tomtom.com/routing/1/calculateRoute/%.6f,%.6f:%.6f,%.6f/json?key=%s&traffic=true&instructionsType=text&language=%s&routeType=fastest",
+                    lat1, lon1, lat2, lon2,
+                    URLEncoder.encode(key, "UTF-8"),
+                    URLEncoder.encode(tomtomLang(), "UTF-8"));
+            String raw = new String(Net.get(url, 12000), "UTF-8");
+            return parseTomTom(raw, lat2, lon2, destName);
+        } catch (Throwable e) {
+            if (errOut != null) errOut[0] = shortErr(e);
+            return null;
+        }
+    }
+
+    private static String tomtomLang() {
+        String lang = I18n.lang != null ? I18n.lang : "es";
+        String country = I18n.loc != null ? I18n.loc.getCountry() : "";
+        if ("es".equals(lang)) return "ES".equalsIgnoreCase(country) ? "es-ES" : "es-419";
+        if ("en".equals(lang)) return "GB".equalsIgnoreCase(country) ? "en-GB" : "en-US";
+        if ("pt".equals(lang)) return "PT".equalsIgnoreCase(country) ? "pt-PT" : "pt-BR";
+        if ("fr".equals(lang)) return "fr-FR";
+        if ("de".equals(lang)) return "de-DE";
+        if ("it".equals(lang)) return "it-IT";
+        return "en-US";
     }
 
     private static Route fetchOsrm(String[] hosts, String tail, double destLat, double destLon,
@@ -767,6 +818,8 @@ public class Nav {
 
     private static String offlineTurnText(int icon, String street) {
         boolean hasSt = street != null && street.length() > 0;
+        if (icon == 9) return "Llegaste a tu destino";
+        if (icon == 8) return hasSt ? "En la rotonda, sigue hacia " + street : "En la rotonda, toma la salida";
         if (icon == 4) return hasSt ? "Haz un giro en U en " + street : "Haz un giro en U";
         if (icon == 1) return hasSt ? "Gira levemente a la derecha en " + street : "Gira levemente a la derecha";
         if (icon == 2) return hasSt ? "Gira a la derecha en " + street : "Gira a la derecha";
@@ -829,6 +882,7 @@ public class Nav {
             if (near[0] > 3000) return null; // solo útil si estás a <= 3 km del trazo guardado
             r.offline = true;
             r.source = "cache";
+            r.trafficDelayS = 0;
             return r;
         } catch (Throwable e) {
             return null;
@@ -840,6 +894,7 @@ public class Nav {
         obj.put("poly", encodePolyline(r.pts));
         obj.put("dist", r.totalDistM);
         obj.put("dur", r.totalDurS);
+        obj.put("tdel", r.trafficDelayS);
         obj.put("dn", r.destName != null ? r.destName : "");
         obj.put("dla", r.destLat);
         obj.put("dlo", r.destLon);
@@ -867,6 +922,7 @@ public class Nav {
         r.pts = pts;
         r.totalDistM = obj.optDouble("dist", 0);
         r.totalDurS = obj.optDouble("dur", 0);
+        r.trafficDelayS = Math.max(0, obj.optInt("tdel", 0));
         r.destName = obj.optString("dn", "");
         r.destLat = obj.optDouble("dla", Double.NaN);
         r.destLon = obj.optDouble("dlo", Double.NaN);
@@ -1038,6 +1094,150 @@ public class Nav {
         return 0;
     }
 
+    /** Convierte una respuesta de TomTom Routing v1 (con traffic=true) a Nav.Route. */
+    public static Route parseTomTom(String json, double destLat, double destLon, String destName) throws Exception {
+        JSONObject root = new JSONObject(json);
+        JSONObject de = root.optJSONObject("detailedError");
+        String errTxt = root.optString("errorText", "");
+        if (de != null || errTxt.length() > 0) {
+            String msg = de != null ? de.optString("message", "") : "";
+            if (msg.length() == 0) msg = errTxt.length() > 0 ? errTxt : "TomTom error";
+            throw new Exception(msg);
+        }
+        JSONArray routes = root.optJSONArray("routes");
+        if (routes == null || routes.length() == 0) return null;
+        JSONObject r0 = routes.getJSONObject(0);
+        JSONObject sum = r0.optJSONObject("summary");
+        JSONArray legs = r0.optJSONArray("legs");
+        if (legs == null || legs.length() == 0) return null;
+
+        int nPts = 0;
+        for (int li = 0; li < legs.length(); li++) {
+            JSONArray pa = legs.getJSONObject(li).optJSONArray("points");
+            if (pa != null) nPts += pa.length();
+        }
+        if (nPts < 2) return null;
+
+        double[] pts = new double[nPts * 2];
+        int pIdx = 0;
+        for (int li = 0; li < legs.length(); li++) {
+            JSONArray pa = legs.getJSONObject(li).optJSONArray("points");
+            if (pa == null) continue;
+            for (int pi = 0; pi < pa.length(); pi++) {
+                JSONObject pt = pa.getJSONObject(pi);
+                double la = pt.optDouble("latitude", Double.NaN);
+                double lo = pt.optDouble("longitude", Double.NaN);
+                if (Double.isNaN(la) || Double.isNaN(lo)) return null;
+                pts[pIdx * 2] = la;
+                pts[pIdx * 2 + 1] = lo;
+                pIdx++;
+            }
+        }
+
+        Route r = new Route();
+        r.pts = pts;
+        r.cumDistM = new double[nPts];
+        for (int i = 1; i < nPts; i++) {
+            r.cumDistM[i] = r.cumDistM[i - 1] + approxDist(pts[(i - 1) * 2], pts[(i - 1) * 2 + 1], pts[i * 2], pts[i * 2 + 1]);
+        }
+        r.totalDistM = sum != null ? sum.optDouble("lengthInMeters", 0) : 0;
+        if (r.totalDistM <= 0) r.totalDistM = r.cumDistM[nPts - 1];
+        r.totalDurS = sum != null ? sum.optDouble("travelTimeInSeconds", 0) : 0;
+        r.trafficDelayS = sum != null ? Math.max(0, sum.optInt("trafficDelayInSeconds", 0)) : 0;
+        r.destLat = destLat;
+        r.destLon = destLon;
+        r.destName = destName;
+        r.source = "tomtom";
+        r.offline = false;
+
+        List<Integer> stepPts = new ArrayList<Integer>();
+        JSONObject guid = r0.optJSONObject("guidance");
+        JSONArray insts = guid != null ? guid.optJSONArray("instructions") : null;
+        if (insts != null) {
+            int lastPt = 0;
+            for (int i = 0; i < insts.length(); i++) {
+                JSONObject ins = insts.getJSONObject(i);
+                String man = ins.optString("maneuver", "");
+                if ("WAYPOINT_REACHED".equals(man) && i < insts.length() - 1) continue;
+                double offM = ins.optDouble("routeOffsetInMeters", 0);
+                double tS = ins.optDouble("travelTimeInSeconds", 0);
+                double nextOffM = r.totalDistM, nextTS = r.totalDurS;
+                for (int j = i + 1; j < insts.length(); j++) {
+                    JSONObject nxt = insts.getJSONObject(j);
+                    if ("WAYPOINT_REACHED".equals(nxt.optString("maneuver", "")) && j < insts.length() - 1) continue;
+                    nextOffM = nxt.optDouble("routeOffsetInMeters", r.totalDistM);
+                    nextTS = nxt.optDouble("travelTimeInSeconds", r.totalDurS);
+                    break;
+                }
+                Step st = new Step();
+                st.distM = Math.max(0, nextOffM - offM);
+                st.durS = Math.max(0, nextTS - tS);
+                st.street = ins.optString("street", "").trim();
+                JSONObject pt = ins.optJSONObject("point");
+                if (pt != null) {
+                    st.lat = pt.optDouble("latitude", destLat);
+                    st.lon = pt.optDouble("longitude", destLon);
+                } else {
+                    st.lat = destLat;
+                    st.lon = destLon;
+                }
+                st.icon = tomtomIcon(man);
+                String msg = ins.optString("message", "").trim();
+                st.instruction = msg.length() > 0 ? msg : offlineTurnText(st.icon, st.street);
+                r.steps.add(st);
+
+                int idx = ins.optInt("pointIndex", -1);
+                if (idx >= 0 && idx < nPts) {
+                    if (idx < lastPt) idx = lastPt;
+                } else if (st.icon == 9) {
+                    idx = nPts - 1;
+                } else {
+                    int best = lastPt;
+                    double bestD = Double.MAX_VALUE;
+                    for (int k = lastPt; k < nPts; k++) {
+                        double d = approxDist(st.lat, st.lon, pts[k * 2], pts[k * 2 + 1]);
+                        if (d < bestD) { bestD = d; best = k; }
+                        if (bestD < 15 && d > 120) break;
+                    }
+                    idx = best;
+                }
+                stepPts.add(idx);
+                lastPt = idx;
+            }
+        }
+        if (r.steps.isEmpty()) {
+            Step arr = new Step();
+            arr.lat = destLat; arr.lon = destLon;
+            arr.distM = r.totalDistM; arr.durS = r.totalDurS;
+            arr.icon = 9;
+            arr.street = destName != null ? destName : "";
+            arr.instruction = "Llegaste a tu destino";
+            r.steps.add(arr);
+            stepPts.add(nPts - 1);
+        }
+        r.stepPtIdx = new int[r.steps.size()];
+        for (int i = 0; i < r.steps.size(); i++) r.stepPtIdx[i] = stepPts.get(i);
+        return r;
+    }
+
+    private static int tomtomIcon(String man) {
+        if (man == null) return 0;
+        if (man.startsWith("ARRIVE") || "WAYPOINT_REACHED".equals(man)) return 9;
+        if (man.indexOf("ROUNDABOUT") >= 0 || man.indexOf("ROTARY") >= 0) return 8;
+        if (man.indexOf("UTURN") >= 0) return 4;
+        if ("SHARP_RIGHT".equals(man)) return 3;
+        if ("SHARP_LEFT".equals(man)) return 5;
+        if (man.indexOf("SLIGHT_RIGHT") >= 0 || man.indexOf("BEAR_RIGHT") >= 0
+                || man.indexOf("KEEP_RIGHT") >= 0 || man.indexOf("FORK_RIGHT") >= 0
+                || man.indexOf("EXIT_RIGHT") >= 0) return 1;
+        if (man.indexOf("SLIGHT_LEFT") >= 0 || man.indexOf("BEAR_LEFT") >= 0
+                || man.indexOf("KEEP_LEFT") >= 0 || man.indexOf("FORK_LEFT") >= 0
+                || man.indexOf("EXIT_LEFT") >= 0) return 7;
+        if (man.indexOf("RIGHT") >= 0) return 2;
+        if (man.indexOf("LEFT") >= 0) return 6;
+        return 0;
+    }
+
     private static String maneuverText(String type, String mod, int exit, String street) {
         boolean hasSt = street != null && street.length() > 0;
         if ("arrive".equals(type)) return "Llegaste a tu destino";
@@ -1117,7 +1317,35 @@ public class Nav {
         double alongM = r.cumDistM[segIdx] + segLen * segT;
         double totalM = r.cumDistM[nPts - 1];
         remDistM = Math.max(0, totalM - alongM);
-        remDurS = totalM > 1 ? r.totalDurS * (remDistM / totalM) : 0;
+        trafficDelayS = totalM > 1 && r.trafficDelayS > 0 ? (int) Math.round(r.trafficDelayS * (remDistM / totalM)) : 0;
+        double baseRemS = totalM > 1 ? r.totalDurS * (remDistM / totalM) : 0;
+        long nowSp = SystemClock.elapsedRealtime();
+        if (l.hasSpeed()) {
+            float sp = l.getSpeed();
+            if (sp >= 0.8f && sp <= 55.0f) {
+                if (lastSpeedAt == 0 || nowSp - lastSpeedAt > 30000L) {
+                    smoothSpeedMs = sp;
+                    smoothSpeedSamples = 1;
+                } else {
+                    smoothSpeedMs = smoothSpeedMs * 0.82 + sp * 0.18;
+                    smoothSpeedSamples++;
+                }
+                lastSpeedAt = nowSp;
+            } else if (lastSpeedAt > 0 && nowSp - lastSpeedAt > 30000L) {
+                smoothSpeedSamples = 0;
+            }
+        }
+        if (smoothSpeedSamples >= 8 && baseRemS > 1 && remDistM > 50) {
+            double planSpeed = r.totalDistM > 1 && r.totalDurS > 1 ? r.totalDistM / r.totalDurS : 0;
+            if (planSpeed > 1.0 && smoothSpeedMs > 0.8 && smoothSpeedMs < planSpeed * 0.78) {
+                double nearM = Math.min(remDistM, 3000.0);
+                double nearPlanS = baseRemS * (nearM / remDistM);
+                double nearLiveS = nearM / smoothSpeedMs;
+                double maxAdded = Math.min(2400.0, nearPlanS * 1.5);
+                baseRemS += Math.min(maxAdded, Math.max(0.0, nearLiveS - nearPlanS));
+            }
+        }
+        remDurS = baseRemS;
 
         // llegada al destino
         double distDestM = approxDist(lat, lon, r.destLat, r.destLon);

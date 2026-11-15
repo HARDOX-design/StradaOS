@@ -1004,4 +1004,14 @@ Hotel	Hotel
 Aeropuerto	Airport
 Estación	Station
 Lugar	Place
+con tráfico	with traffic
+Tráfico en vivo activado	Live traffic enabled
+Tráfico en vivo	Live traffic
+Muestra congestión en el mapa y evita trancones (usa clave gratis de TomTom)	Shows road congestion on the map and avoids jams (uses free TomTom key)
+Clave gratis de TomTom	Free TomTom key
+Para capas de tráfico y rutas con tráfico (regístrate gratis en developer.tomtom.com)	For live traffic layers and traffic-aware routes (free sign-up at developer.tomtom.com)
+Clave API gratis de TomTom	Free TomTom API key
+Capa de tráfico propia (avanzado)	Custom traffic layer (advanced)
+URL transparente de tráfico con {z}/{x}/{y}	Transparent traffic tile URL with {z}/{x}/{y}
+URL capa de tráfico {z}/{x}/{y} (vacío = automático)	Traffic layer URL {z}/{x}/{y} (empty = automatic)
 

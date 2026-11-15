@@ -2866,7 +2866,17 @@ public class Main extends Activity {
         Nav.Step st = Nav.currentStep();
         boolean mph = useMph();
         if (navTurnIc != null) navTurnIc.setIcon(st != null ? st.icon : 0);
-        if (navEtaTv != null) navEtaTv.setText(Nav.fmtEta(Nav.remDurS, Nav.remDistM, mph));
+        if (navEtaTv != null) {
+            String eta = Nav.fmtEta(Nav.remDurS, Nav.remDistM, mph);
+            int dMin = (int) Math.round(Nav.trafficDelayS / 60.0);
+            if (dMin >= 1) {
+                eta = eta + " (+" + dMin + " min)";
+                navEtaTv.setTextColor(dMin >= 8 ? RED : 0xFFF5A623);
+            } else {
+                navEtaTv.setTextColor(MUTED);
+            }
+            navEtaTv.setText(eta);
+        }
         String stepTxt = st != null && st.instruction != null ? I18n.t(st.instruction) : (r.destName != null ? r.destName : "");
         if (Nav.rerouting) {
             if (navDistTv != null) navDistTv.setText(I18n.t("Recalculando…"));
@@ -3781,6 +3791,7 @@ public class Main extends Activity {
         String title = r.destName != null && r.destName.length() > 0 ? r.destName : I18n.t("Navegación en el mapa");
         if ("cache".equals(r.source)) title = title + " (" + I18n.t("ruta guardada") + ")";
         else if (r.offline) title = title + " (" + I18n.t("sin conexión") + ")";
+        else if ("tomtom".equals(r.source)) title = title + " (" + I18n.t("con tráfico") + ")";
         new TB(this, dlg()).raw()
             .setTitle(title)
             .setItems(labels.toArray(new String[0]), new DialogInterface.OnClickListener() {
@@ -4419,6 +4430,13 @@ public class Main extends Activity {
                     prefs.edit().putString(key, et.getText().toString().trim()).apply();
                     if ("city_manual".equals(key)) refreshWeatherNow();
                     if ("map_url".equals(key)) toast("Se aplicará al reiniciar StradaOS");
+                    if ("tomtom_key".equals(key) || "traffic_url".equals(key)) {
+                        LiveMapView.clearTrafficCache();
+                        if (liveMap != null) liveMap.invalidate();
+                        if ("tomtom_key".equals(key) && et.getText().toString().trim().length() > 0) {
+                            toast("Tráfico en vivo activado");
+                        }
+                    }
                     if ("extra_actions".equals(key)) {
                         try { nowPlaying.stop(); nowPlaying.start(); } catch (Throwable ignored) { }
                     }
@@ -5740,6 +5758,16 @@ public class Main extends Activity {
         toggle(nv, "Voz de navegación", "Indicaciones paso a paso habladas durante el recorrido", prefs.getBoolean("nav_voice", true), new IntCb() { public void on(int i) {
             prefs.edit().putBoolean("nav_voice", i == 1).apply(); showSettings(settingsCat);
         }});
+        toggle(nv, "Tráfico en vivo", "Muestra congestión en el mapa y evita trancones (usa clave gratis de TomTom)", prefs.getBoolean("map_traffic", true), new IntCb() { public void on(int i) {
+            prefs.edit().putBoolean("map_traffic", i == 1).apply();
+            LiveMapView.clearTrafficCache();
+            if (liveMap != null) liveMap.invalidate();
+            showSettings(settingsCat);
+        }});
+        String ttKey = prefs.getString("tomtom_key", "").trim();
+        row(nv, "Clave gratis de TomTom", "Para capas de tráfico y rutas con tráfico (regístrate gratis en developer.tomtom.com)",
+            ttKey.length() > 0 ? "Configurada" : "Ninguna",
+            edit("tomtom_key", "Clave API gratis de TomTom", ""));
         LinearLayout m = mo;
         segmented(m, "Brillo del mapa", "Solo en modo oscuro", new String[]{"Bajo", "Medio", "Alto"}, prefs.getInt("map_bright", 1), new IntCb() { public void on(int i) {
             prefs.edit().putInt("map_bright", i).apply(); rebuild();
@@ -5770,6 +5798,8 @@ public class Main extends Activity {
         }});
         row(m, "Fuente del mapa (avanzado)", "URL propia con {z}/{x}/{y}", prefs.getString("map_url", "").length() > 0 ? "Personalizada" : "Automática",
             edit("map_url", "URL de teselas {z}/{x}/{y} (vacío = automático)", ""));
+        row(m, "Capa de tráfico propia (avanzado)", "URL transparente de tráfico con {z}/{x}/{y}", prefs.getString("traffic_url", "").trim().length() > 0 ? "Personalizada" : "Automática",
+            edit("traffic_url", "URL capa de tráfico {z}/{x}/{y} (vacío = automático)", ""));
     }
 
     private TextView dlStatusTv;

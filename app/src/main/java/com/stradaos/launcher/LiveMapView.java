@@ -53,9 +53,12 @@ public class LiveMapView extends View {
     static String lastError = "—";
     static int okCount;
 
-    // capas de una tesela: 0 mapa, 1 nombres (Esri), 2 mapa sin conexión (archivo)
-    private static final int L_BASE = 0, L_LABELS = 1, L_FILE = 2;
+    // capas de una tesela: 0 mapa, 1 nombres (Esri), 2 mapa sin conexión (archivo), 3 tráfico en vivo
+    private static final int L_BASE = 0, L_LABELS = 1, L_FILE = 2, L_TRAFFIC = 3;
     private static final int FRAME_MS = 33;   // ~30 cuadros por segundo mientras se mueve
+    private static final long TRAFFIC_TTL_MS = 240000L; // refresco cada 4 minutos
+    static volatile int trafficGen;
+    public static void clearTrafficCache() { trafficGen++; mem.evictAll(); }
 
     // ── mapa sin conexión (archivo .map), compartido entre vistas ──
     static OfflineMap fileMap;
@@ -246,6 +249,7 @@ public class LiveMapView extends View {
                 + "\nZoom: " + zoom + "\nMapa sin conexión: " + file
                 + "\nProveedor: " + NAMES[provider]
                 + (okCount == 0 && rounds > 0 ? " · ninguna fuente respondió (" + rounds + " vueltas)" : "")
+                + "\nTráfico en vivo: " + (trafficTpl() != null ? "activo" : "inactivo")
                 + "\nTeselas descargadas: " + okCount + " · en caché: " + cached
                 + "\nErrores seguidos: " + netErrors + "\nÚltimo error: " + lastError
                 + "\n\nFuentes probadas:" + sources()
@@ -353,6 +357,8 @@ public class LiveMapView extends View {
                 c.rotate(-dBr, cx, cy);
             }
             boolean anyFile = false;
+            String trTpl = trafficTpl();
+            int trPv = trTpl != null ? trafficEpochPv() : 0;
             for (int tx = tx0; tx <= tx1; tx++) {
                 for (int ty = ty0; ty <= ty1; ty++) {
                     if (ty < 0 || ty >= n) continue;
@@ -364,6 +370,10 @@ public class LiveMapView extends View {
                     if (b != null) {
                         tile.setFilterBitmap(rot || b.getWidth() != dst.width());
                         c.drawBitmap(b, null, dst, tile);
+                        if (trTpl != null && zoom >= 11) {
+                            Bitmap tr = getTraffic(zoom, wx, ty, trPv);
+                            if (tr != null) c.drawBitmap(tr, null, dst, tile);
+                        }
                         if (fromFile) anyFile = true;
                         else if (LABELS[provider] != null) {
                             Bitmap l = get(zoom, wx, ty, L_LABELS);
@@ -467,7 +477,14 @@ public class LiveMapView extends View {
     // ── teselas ──
 
     private Bitmap get(int z, int x, int y, int layer) {
-        long k = key(layer, layer == L_FILE ? 0 : provider, z, x, y);
+        return getKeyed(key(layer, layer == L_FILE ? 0 : provider, z, x, y));
+    }
+
+    private Bitmap getTraffic(int z, int x, int y, int tpv) {
+        return getKeyed(key(L_TRAFFIC, tpv, z, x, y));
+    }
+
+    private Bitmap getKeyed(long k) {
         Bitmap b = mem.get(k);
         if (b != null) return b;
         synchronized (queue) {
@@ -477,6 +494,51 @@ public class LiveMapView extends View {
                 if (workers < 2) { workers++; new Thread(worker).start(); }
             }
         }
+        return null;
+    }
+
+    private int trafficEpochPv() {
+        return (int) ((trafficGen + (System.currentTimeMillis() / TRAFFIC_TTL_MS)) & 7L);
+    }
+
+    public String trafficTpl() {
+        if (sp == null || !sp.getBoolean("map_traffic", true)) return null;
+        String custom = sp.getString("traffic_url", "").trim();
+        if (custom.length() > 0) return custom;
+        String key = sp.getString("tomtom_key", "").trim();
+        if (key.length() == 0) return null;
+        try {
+            String ek = java.net.URLEncoder.encode(key, "UTF-8");
+            return "https://api.tomtom.com/traffic/map/4/tile/flow/"
+                    + (Main.LIGHT ? "relative0" : "relative0-dark")
+                    + "/{z}/{x}/{y}.png?tileSize=256&key=" + ek;
+        } catch (Throwable e) {
+            return null;
+        }
+    }
+
+    private Bitmap fetchTrafficTile(int z, int x, int y) {
+        String tpl = trafficTpl();
+        if (tpl == null) return null;
+        int tag = tpl.hashCode() & 0xFFFF;
+        File f = new File(dir, "tr_" + (Main.LIGHT ? "l" : "d") + "_" + tag + "_" + z + "_" + x + "_" + y + ".png");
+        long now = System.currentTimeMillis();
+        if (f.exists() && Math.abs(now - f.lastModified()) < TRAFFIC_TTL_MS) {
+            Bitmap b = BitmapFactory.decodeFile(f.getAbsolutePath());
+            if (b != null) return b;
+        }
+        if (offline()) return null;
+        try {
+            String url = tpl.replace("{z}", String.valueOf(z)).replace("{x}", String.valueOf(x)).replace("{y}", String.valueOf(y));
+            byte[] data = Net.get(url, 6000);
+            Bitmap b = BitmapFactory.decodeByteArray(data, 0, data.length);
+            if (b != null) {
+                FileOutputStream os = new FileOutputStream(f);
+                os.write(data);
+                os.close();
+                return b;
+            }
+        } catch (Throwable ignored) { }
         return null;
     }
 
@@ -496,6 +558,8 @@ public class LiveMapView extends View {
                     if (layer == L_FILE) {
                         OfflineMap fm = fileMap;
                         if (fm != null) b = fm.render(z, x, y, fileTile, Main.LIGHT, bright);
+                    } else if (layer == L_TRAFFIC) {
+                        b = fetchTrafficTile(z, x, y);
                     } else {
                         File f = tileFile(pv, layer, z, x, y);
                         if (f.exists()) b = BitmapFactory.decodeFile(f.getAbsolutePath());
@@ -553,8 +617,8 @@ public class LiveMapView extends View {
                         if (b != null && DARKEN[pv] && layer == 0 && !Main.LIGHT) b = darken(b, bright);
                     }
                 } catch (Throwable e) {
-                    if (layer != L_FILE) { netErrors++; netOffline = netErrors >= 3; }
-                    else lastError = "[archivo] " + e;
+                    if (layer != L_FILE && layer != L_TRAFFIC) { netErrors++; netOffline = netErrors >= 3; }
+                    else if (layer == L_FILE) lastError = "[archivo] " + e;
                 }
                 final long fk = k;
                 final Bitmap fb = b;
