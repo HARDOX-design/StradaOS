@@ -63,6 +63,10 @@
 
 ## ❓ Preguntas frecuentes
 
+<details><summary><b>¿Por qué se llama StradaOS si no es un sistema operativo?</b></summary>
+Porque el «OS» es de <b>Open Source</b>: código abierto. StradaOS es un launcher: no reemplaza Android ni toca el sistema, solo cambia lo que ves en la pantalla del carro. Y «Strada» significa «camino» en italiano. Un launcher libre para el camino.
+</details>
+
 <details><summary><b>Al encender sale el menú de fábrica, no StradaOS</b></summary>
 Fija StradaOS como inicio: <b>Ajustes → Sistema → Pantalla de inicio</b>. Si tu pantalla siempre vuelve a su menú al encender, activa ahí <b>«Abrir StradaOS al encender»</b>.
 </details>
@@ -103,8 +107,8 @@ StradaOS es un proyecto independiente, no afiliado a Google, Apple ni a ningún 
 
 ### English
 
-**StradaOS** is a free, ad-free, open-source launcher for Android car head units (Android 4.1+, under 1 MB). It installs like any app, without flashing. Live and **offline maps** (download your country from the app), Android Auto and CarPlay buttons, a media card for Bluetooth and Android Auto, speedometer, weather, oil change reminder, a customizable layout (player left or right, compact or side bar), light/dark themes and 8 languages. [Website](https://lordnordic-debug.github.io/StradaOS/?lang=en) · [Download](https://github.com/lordnordic-debug/StradaOS/releases/latest)
+**StradaOS** is a free, ad-free, open-source launcher for Android car head units (Android 4.1+, under 1 MB). It installs like any app, without flashing. Live and **offline maps** (download your country from the app), Android Auto and CarPlay buttons, a media card for Bluetooth and Android Auto, speedometer, weather, oil change reminder, a customizable layout (player left or right, compact or side bar), light/dark themes, portrait layout, settings backup to USB and 9 languages. *Why “OS”? It stands for **Open Source**: StradaOS is a launcher, not an operating system, and “Strada” means “road” in Italian.* [Website](https://lordnordic-debug.github.io/StradaOS/?lang=en) · [Download](https://github.com/lordnordic-debug/StradaOS/releases/latest)
 
 ### Português
 
-O **StradaOS** é um launcher grátis, sem anúncios e de código aberto para centrais Android de carro (Android 4.1+). Mapa ao vivo e **offline**, Android Auto e CarPlay, música, velocímetro, clima e um início que você personaliza. [Site](https://lordnordic-debug.github.io/StradaOS/?lang=pt) · [Baixar](https://github.com/lordnordic-debug/StradaOS/releases/latest)
+O **StradaOS** é um launcher grátis, sem anúncios e de código aberto para centrais Android de carro (Android 4.1+). Mapa ao vivo e **offline**, Android Auto e CarPlay, música, velocímetro, clima e um início que você personaliza. *Por que «OS»? Vem de **Open Source**: o StradaOS é um launcher, não um sistema operacional.* [Site](https://lordnordic-debug.github.io/StradaOS/?lang=pt) · [Baixar](https://github.com/lordnordic-debug/StradaOS/releases/latest)
