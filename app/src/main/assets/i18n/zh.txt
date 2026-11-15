@@ -1,0 +1,897 @@
+# StradaOS · 翻译 zh. Formato: español<TAB>traducción. Ver I18n.java.
+Radio	收音机
+Cámara	相机
+Archivos	文件
+Ajustes	设置
+Música	音乐
+Navegación	导航
+Navegador	浏览器
+Navegador web	网页浏览器
+Equipo	车机
+Elige primero la app de música Bluetooth	先选择 Bluetooth 音乐应用
+Música Bluetooth	Bluetooth 音乐
+No se pudo abrir la app	无法打开应用
+Mi app	我的应用
+Mi vehículo	我的车辆
+Toca para poner la foto de tu vehículo	点击添加你的车辆照片
+Velocidad	车速
+Diagnóstico del mapa	地图诊断
+Buscando GPS…	正在搜索 GPS…
+Buscando GPS	正在搜索 GPS
+En vivo · sin internet	实时 · 无网络
+Última posición · sin internet	上次位置 · 无网络
+Mapa en vivo	实时地图
+Última posición conocida	上次已知位置
+Nada sonando	当前没有播放
+Radio, Bluetooth o USB	收音机、Bluetooth 或 USB
+Internet desde la pantalla	通过屏幕上网
+No se pudo abrir «{}». Déjalo presionado para elegir otra app.	无法打开“{}”。长按可选择其他应用。
+Botón {} · {}	按钮 {} · {}
+Cambiar app o función	更改应用或功能
+Cambiar el nombre	重命名
+Restablecer ({})	重置 ({})
+Botón restablecido	按钮已重置
+Cerrar	关闭
+Cerrar  ✕	关闭  ✕
+★  Funciones de StradaOS (Música, Navegación, Android Auto…)	★  StradaOS 功能（音乐、导航、Android Auto…）
+¿Qué abre el botón {}?	按钮 {} 打开什么？
+Función del botón {}	按钮 {} 的功能
+Nombre del botón {} (vacío = el de la app)	按钮 {} 名称（留空 = 应用名称）
+Guardar	保存
+Cancelar	取消
+Guardado: {}	已保存：{}
+Elige tu app de música	选择你的音乐应用
+Elige tu app de navegación	选择你的导航应用
+Automático · {}	自动 · {}
+{}\n    → {}	{}\n    → {}
+Buenos días	早上好
+Buenas tardes	下午好
+Buenas noches	晚上好
+Diagnóstico del reproductor	播放器诊断
+Accesibilidad	无障碍
+Activa «Carátula de Android Auto» (StradaOS)	开启“Android Auto 封面”（StradaOS）
+No se pudo abrir Accesibilidad	无法打开无障碍
+Activa «Pista actual de AA» en Open Headunit	在 Open Headunit 中开启“AA 当前曲目”
+«Ninguna aplic. funciona con este accesorio USB»	“没有已安装的应用适用于此 USB 配件”
+Ese aviso lo causa una app de espejo de fábrica (EasyConnection/CarbitLink) que toma el USB antes que la app que elegiste.\n\n1. Desconecta el celular.\n2. Ajustes → Aplicaciones → EasyConnection → «Borrar datos».\n3. Apaga y enciende el carro.\n4. En Open Headunit → USB, si tu celular aparece como «Ignorado», tócalo para permitirlo.	该提示由原厂镜像应用（EasyConnection/CarbitLink）导致，它会先于你选择的应用占用 USB。\n\n1. 拔下手机。\n2. 设置 → 应用 → EasyConnection → “清除数据”。\n3. 关闭再启动车辆。\n4. 在 Open Headunit → USB 中，如果你的手机显示为“已忽略”，点击它以允许。
+Abrir EasyConnection	打开 EasyConnection
+No hay apps de espejo instaladas	未安装镜像应用
+Exportando… puede tardar un minuto	正在导出…可能需要一分钟
+Diagnóstico listo	诊断完成
+Se guardó en:\n{}\n\nCopia la carpeta StradaDiag a una memoria USB y adjúntala en un «issue» del repositorio de StradaOS en GitHub.	已保存到：\n{}\n\n将 StradaDiag 文件夹复制到 USB 存储设备，并在 GitHub 上的 StradaOS 仓库中将它附加到一个“issue”。
+12 horas	12 小时制
+24 horas	24 小时制
+Automático	自动
+Automática	自动
+Auto	自动
+12 horas (a.m./p.m.)	12 小时制（上午/下午）
+Formato de hora	时间格式
+Se aplicará al reiniciar StradaOS	重启 StradaOS 后生效
+Rojo	红色
+Naranja	橙色
+Amarillo	黄色
+Verde	绿色
+Turquesa	青色
+Azul	蓝色
+Morado	紫色
+Rosa	粉色
+Plata	银色
+Bienvenido a StradaOS	欢迎使用 StradaOS
+Vamos a dejar el launcher a tu gusto: tu nombre, tu vehículo, el color y la foto. Toma menos de un minuto y lo puedes cambiar después en el engranaje ⚙.	我们来按你的喜好设置启动器：你的名字、你的车辆、颜色和照片。不到一分钟即可完成，之后可以在设置齿轮 ⚙ 中更改。
+Empezar	开始
+¿Cómo te llamas?	你叫什么名字？
+Nombre del vehículo (ej.: Mazda 2, Spark GT)	车辆名称（例如：Mazda 2、Spark GT）
+Etiqueta corta (versión o placa). Déjalo vacío si no quieres	简短标签（版本或车牌）。如果不需要，请留空
+Después	稍后
+No encontrada	未找到
+¿Qué app abre cada botón?	每个按钮打开哪个应用？
+Están bien	没问题
+Siguiente	下一步
+Color de acento	强调色
+Elegir otra foto	选择其他照片
+Quitar la foto	移除照片
+Elegir foto	选择照片
+Foto del vehículo	车辆照片
+¿De dónde sacamos la foto?	照片从哪里获取？
+Consejo: usa una foto del carro de lado o de frente con fondo liso (blanco, gris o cielo). El fondo se quita solo.	提示：请使用车辆侧面或正面的照片，背景要简洁（白色、灰色或天空）。背景会自动去除。
+Memoria / USB	存储 / USB
+Galería	相册
+Elige la foto	选择照片
+Buscando fotos…	正在查找照片…
+No encontré fotos (.jpg/.png). Cópialas a la memoria USB o a Download.	未找到照片（.jpg/.png）。请将它们复制到 USB 存储设备或 Download 文件夹。
+Quitando el fondo…	正在去除背景…
+No se pudo abrir la imagen	无法打开图片
+No se pudo abrir la imagen: {}	无法打开图片：{}
+La foto ya trae fondo transparente	该照片已有透明背景
+No se detectó un fondo liso (se usará tal cual)	未检测到简洁背景（将按原样使用）
+Vista previa · nivel {} de 4	预览 · 第 {} 级，共 4 级
+Vista previa · nivel {} de 4 (también quita el reflejo del piso)	预览 · 第 {} 级，共 4 级（同时去除地面反光）
+Usar esta	使用这张
+Foto guardada	照片已保存
+No se pudo guardar la foto	无法保存照片
+Quitar más fondo	去除更多背景
+Quitando más fondo…	正在去除更多背景…
+No es una imagen válida	不是有效的图片
+App elegida	已选应用
+CarPlay necesita un chip de autenticación de Apple dentro del equipo, así que no se puede activar solo con una app.\n\n• Si tu pantalla trae CarPlay integrado, deja presionado este botón y elige su app (ZLink, CarLink, TLink…).\n• Si no, puedes usar un adaptador CarPlay USB para pantallas Android (tipo Carlinkit/AutoKit): instala su app y este botón la abrirá.	CarPlay 需要车机内置 Apple 认证芯片，因此仅靠一个应用无法启用。\n\n• 如果你的屏幕内置 CarPlay，请长按此按钮并选择其应用（ZLink、CarLink、TLink…）。\n• 如果没有，你可以使用适用于 Android 屏幕的 USB CarPlay 适配器（Carlinkit/AutoKit 类型）：安装其应用后，此按钮即可打开它。
+Entendido	明白了
+Elegir app	选择应用
+Volver al inicio	返回主页
+Tu vehículo	你的车辆
+Apariencia	外观
+Conexión	连接
+Accesos y apps	快捷方式和应用
+Mapa y clima	地图和天气
+Sistema	系统
+Acerca de	关于
+Datos	详情
+Tu nombre	你的名字
+Aparece en el saludo de la pantalla de inicio	显示在主屏幕问候语中
+Nombre del vehículo	车辆名称
+Etiqueta	标签
+Versión o placa. Déjala vacía para ocultarla	版本或车牌。留空可隐藏
+Etiqueta (vacío para ocultarla)	标签（留空可隐藏）
+Foto	照片
+Se recorta y se le quita el fondo automáticamente	会自动裁剪并去除背景
+Configurada	已设置
+Sin foto	无照片
+Idioma	语言
+Automático: el del sistema	自动：跟随系统语言
+Tema	主题
+Modo	模式
+Automático: claro de 6 a.m. a 6 p.m.	自动：上午 6 点至下午 6 点为浅色
+Oscuro	深色
+Claro	浅色
+Color	颜色
+Botones, anillo del reproductor, ruta y etiquetas	按钮、播放器圆环、路线和标签
+Reloj	时钟
+Celular	手机
+Cómo conectar el celular	如何连接手机
+La app que se abre al conectar por USB	通过 USB 连接时打开的应用
+Preguntar	询问
+App de Android Auto	Android Auto 应用
+Botón naranja de la tarjeta central	中央卡片上的橙色按钮
+App de CarPlay	CarPlay 应用
+Requiere pantalla con CarPlay o un adaptador	需要带 CarPlay 的屏幕或适配器
+Ninguna	无
+Ninguno	无
+Ayuda	帮助
+El celular dice «Ninguna aplic. funciona…»	手机提示“没有已安装的应用可用…”
+Cómo evitar que EasyConnection tome el USB	如何阻止 EasyConnection 占用 USB
+Barra inferior (déjalos presionados en el inicio para cambiarlos)	底部栏（在主页长按可更换）
+App: {}	应用：{}
+Función: {}	功能：{}
+Apps preferidas	首选应用
+Se abre al tocar el reproductor	点击播放器时打开
+Toca para elegir	点击选择
+Se abre con el botón del mapa	通过地图按钮打开
+Apps de cada función	各功能的对应应用
+La app que hace sonar el Bluetooth (se usa para pasar el sonido)	播放 Bluetooth 音频的应用（用于切换声音）
+Revisar todos los botones	查看所有按钮
+Lista rápida de qué abre cada uno, como en el asistente	每个按钮打开什么的快速列表，与设置向导中相同
+Restablecer	重置
+Restablecer accesos	重置快捷方式
+La barra vuelve a lo de siempre y se buscan las apps de fábrica	底部栏恢复默认，并重新搜索原厂应用
+Accesos restablecidos	快捷方式已重置
+Clima	天气
+Mostrar el clima	显示天气
+Arriba, junto al saludo (necesita internet)	位于顶部，问候语旁边（需要联网）
+Unidad	单位
+Ciudad	城市
+Vacío = automática por GPS	留空 = 通过 GPS 自动获取
+{} (GPS)	{}（GPS）
+Ciudad (vacío = automática por GPS)	城市（留空 = 通过 GPS 自动获取）
+App de navegación preferida	首选导航应用
+Se abre con el botón del mapa (Waze, Maps, OsmAnd…)	通过地图按钮打开（Waze、Maps、OsmAnd…）
+Mapa	地图
+Brillo del mapa	地图亮度
+Solo en modo oscuro	仅深色模式
+Bajo	低
+Medio	中
+Alto	高
+Fuentes probadas y errores	已尝试的来源与错误
+Mapa no disponible	地图不可用
+Fuente del mapa (avanzado)	地图来源（高级）
+URL propia con {z}/{x}/{y}	自定义 URL，包含 {z}/{x}/{y}
+Personalizada	自定义
+URL de teselas {z}/{x}/{y} (vacío = automático)	瓦片 URL {z}/{x}/{y}（留空 = 自动）
+© colaboradores de OpenStreetMap	© OpenStreetMap 贡献者
+App de música	音乐应用
+App de música preferida	首选音乐应用
+Se abre al tocar el reproductor del inicio	点击主页上的播放器时打开
+Pista en reproducción	正在播放
+Carátula de Android Auto	Android Auto 专辑封面
+Lee la notificación de Open Headunit (accesibilidad)	读取 Open Headunit 通知（无障碍）
+Activada	已开启
+Desactivada	已关闭
+Activado	已开启
+Desactivado	已关闭
+Música de cualquier app	任意应用的音乐
+Android 5+: acceso a notificaciones	Android 5+：通知访问权限
+No se pudo abrir el ajuste	无法打开该设置
+Fuente activa, lector de notificaciones y Bluetooth	当前来源、通知读取器和 Bluetooth
+Audio Bluetooth	Bluetooth 音频
+Volver al Bluetooth al desconectar Android Auto	断开 Android Auto 时返回 Bluetooth
+Al quitar el cable, abre un instante la app de música Bluetooth para que el sonido siga por Bluetooth	拔掉数据线时，会短暂打开 Bluetooth 音乐应用，让声音继续通过 Bluetooth 播放
+Escuchar el Bluetooth	收听 Bluetooth
+En esta pantalla, toca ▶ en el inicio: StradaOS pasa el sonido a Bluetooth (por ejemplo, si venías de la radio)	在此屏幕上，点击主页上的 ▶：StradaOS 会将声音切换到 Bluetooth（例如从收音机切换过来时）
+Pasar a Bluetooth al dar play en el celular (en prueba)	在手机上点播放时切换到 Bluetooth（测试版）
+Abre un instante «Audio Bluetooth» y vuelve. En algunas pantallas no detecta el play del celular	短暂打开“Bluetooth 音频”后返回。部分屏幕检测不到手机上的播放操作
+Probar ahora	立即试用
+Abre «Audio Bluetooth» un instante y vuelve al inicio	短暂打开“Bluetooth 音频”后返回主页
+Abrir la app de música Bluetooth al conectar el celular	连接手机时打开 Bluetooth 音乐应用
+Para pantallas que solo dejan sonar el Bluetooth con su app abierta: la abre un momento y vuelve al inicio	适用于只有打开应用才能播放 Bluetooth 的屏幕：短暂打开应用后返回主页
+App de música Bluetooth	Bluetooth 音乐应用
+La que hace sonar el Bluetooth en esta pantalla	在此屏幕上播放 Bluetooth 的应用
+Tiempo antes de volver al inicio	返回主页前的等待时间
+Súbelo si el audio se corta al volver	如果返回时音频中断，请调高
+Abre la app de música Bluetooth y vuelve al inicio	打开 Bluetooth 音乐应用并返回主页
+Avanzado	高级
+Avisos extra de música	额外音乐广播
+Nombres de avisos (broadcast) de otros equipos	其他车机的广播名称
+Configurados	已设置
+Acciones de aviso extra (separadas por coma)	额外广播操作（以逗号分隔）
+Ajustes del equipo	车机设置
+Los ajustes de la pantalla (los de la marca si los tiene)	屏幕设置（品牌自带的设置，如有）
+Asistente de configuración inicial	初始设置向导
+Nombre, vehículo, color y foto	名称、车辆、颜色和照片
+Compatibilidad	兼容性
+Qué funciona en esta pantalla	在此屏幕上可用的功能
+Cada función, desde qué Android sirve y su estado aquí	每个功能所需的 Android 版本及其在此屏幕上的状态
+Soporte	支持
+Exportar diagnóstico	导出诊断信息
+Guarda información de las apps de audio en la memoria interna	将音频应用的信息保存到内部存储
+Esta pantalla:	此屏幕：
+Ojo: la pantalla dice Android {}, pero por dentro es {}.	注意：屏幕显示 Android {}，但实际是 {}。
+Requiere:	需要：
+Aquí:	此处：
+Inicio, mapa, clima, velocímetro	主页、地图、天气、车速表
+Pista y carátula por Bluetooth	通过 Bluetooth 显示曲目和专辑封面
+app Bluetooth de fábrica detectada	已检测到原厂 Bluetooth 应用
+depende de la marca	取决于品牌
+Botón ▶ del inicio pasa el sonido a Bluetooth	主页上的 ▶ 按钮可将声音切换到 Bluetooth
+Pantallas Clinkway / Autochips	Clinkway / Autochips 屏幕
+funciona aunque vengas de la radio	即使从收音机切换过来也能用
+en otras marcas: «Abrir la app de música Bluetooth al conectar»	其他品牌：“连接手机时打开 Bluetooth 音乐应用”
+activado	已开启
+activada	已开启
+desactivado; en algunas pantallas no detecta el play del celular	已关闭；部分屏幕检测不到手机上的播放操作
+Carátula de Android Auto (Open Headunit)	Android Auto 专辑封面（Open Headunit）
+Android 4.1+ · accesibilidad	Android 4.1+ · 无障碍
+falta activar la accesibilidad	尚未开启无障碍功能
+Música de cualquier app (Spotify, YouTube…)	任意应用的音乐（Spotify、YouTube…）
+falta dar acceso a notificaciones	尚未授予通知访问权限
+no disponible en {}	在 {} 上不可用
+Android Auto con Open Headunit	Android Auto（通过 Open Headunit）
+Android 4.1+ · cable USB	Android 4.1+ · USB 数据线
+Open Headunit instalado	已安装 Open Headunit
+falta instalar Open Headunit	尚未安装 Open Headunit
+Android Auto / CarPlay de la pantalla	屏幕自带的 Android Auto / CarPlay
+Si la pantalla lo trae	如果屏幕自带该功能
+no detectado	未检测到
+Pantalla con CarPlay o adaptador USB	带 CarPlay 的屏幕或 USB 适配器
+Mapa con internet seguro (TLS 1.2)	支持安全联网的地图（TLS 1.2）
+Android 4.1+ (StradaOS lo activa)	Android 4.1+（StradaOS 会启用）
+en Android 4.x solo algunos servidores de mapas responden	在 Android 4.x 上，只有部分地图服务器会响应
+Instalar actualizaciones desde la app	从应用内安装更新
+pide permiso «Instalar apps desconocidas»	需要“安装未知应用”权限
+No hay fallos registrados	未记录到故障
+Registro de fallos	故障记录
+Borrar	清除
+Registro borrado	记录已清除
+Gratis y de código abierto. Una nueva vida para las pantallas Android del carro.	免费开源。让安卓车机屏幕焕发新生。
+Versión	版本
+Android de la pantalla	屏幕的 Android 版本
+Real: {} · ver qué funciona aquí	实际：{} · 查看此处可用的功能
+Cierres inesperados o bloqueos de StradaOS en esta pantalla	StradaOS 在此屏幕上的意外关闭或卡死
+Sin fallos	无故障
+Ver	查看
+Actualizaciones	更新
+Instalado desde {}	安装来源：{}
+Las actualizaciones llegan por esa app	更新通过该应用推送
+Avisar también de versiones en GitHub	同时通知 GitHub 上的版本
+Comprobar actualizaciones automáticamente	自动检查更新
+Opcional: las descargas de GitHub no pasan por la revisión de la tienda	可选：GitHub 下载不经过应用商店审核
+Al abrir StradaOS con internet, una vez al día	打开 StradaOS 并联网时，每天一次
+Actualizaciones desde GitHub	来自 GitHub 的更新
+Instalaste StradaOS desde {}. Si activas esto, StradaOS revisará una vez al día las versiones publicadas en github.com/{} y te ofrecerá descargarlas desde ahí.\n\nEsas descargas no pasan por la revisión de la tienda. Puede que GitHub tenga una versión un poco antes que la tienda.	你从 {} 安装了 StradaOS。开启后，StradaOS 将每天检查一次 github.com/{} 上发布的版本，并提供从那里下载。\n\n这些下载不经过应用商店审核。GitHub 上的版本可能比应用商店稍早。
+Activar	开启
+Canal de actualizaciones	更新渠道
+Buscar actualizaciones	检查更新
+Aún no se ha comprobado	尚未检查
+Última comprobación: {}	上次检查：{}
+Comunidad	社区
+Dar una estrella en GitHub	在 GitHub 上点星
+Ayuda a que más personas encuentren StradaOS	帮助更多人发现 StradaOS
+Dar una estrella ⭐	点个星 ⭐
+Abre el repositorio y toca «Star». ¡Gracias!	打开仓库，点击“Star”。谢谢！
+Donar	捐赠
+Si StradaOS revivió tu pantalla, invítame un café	如果 StradaOS 让你的车机重获新生，请我喝杯咖啡
+Apoya el proyecto ☕	支持本项目 ☕
+StradaOS es gratis. Las donaciones ayudan a mantenerlo y a probarlo en más pantallas.	StradaOS 免费。捐赠有助于维护它，并在更多车机上测试。
+Reportar un problema o sugerir algo	反馈问题或提出建议
+Crea un «issue» en GitHub (adjunta el diagnóstico)	在 GitHub 上创建 issue（附上诊断信息）
+Reportar un problema	反馈问题
+Cuenta tu modelo de pantalla y su versión de Android. Puedes adjuntar la carpeta StradaDiag (Sistema → Exportar diagnóstico).	请说明你的车机型号和 Android 版本。你可以附上 StradaDiag 文件夹（系统 → 导出诊断信息）。
+Código fuente	源代码
+Licencia GPL-3.0	GPL-3.0 许可证
+Créditos y licencias	致谢与许可证
+Licencia	许可证
+Mapas	地图
+© colaboradores de OpenStreetMap, OpenTopoMap, Esri	© OpenStreetMap 贡献者、OpenTopoMap、Esri
+Open Headunit (GPL-3.0) · Android Auto es marca de Google	Open Headunit (GPL-3.0) · Android Auto 是 Google 的商标
+Códigos QR	二维码
+Íconos	图标
+Certificados raíz	根证书
+Buscando actualizaciones…	正在检查更新…
+No se pudo comprobar	无法检查
+Esta pantalla no logró conectarse con GitHub ({}). Puedes revisar las versiones desde tu celular:	本车机无法连接到 GitHub（{}）。你可以在手机上查看版本：
+Tienes la última versión ({})	已是最新版本（{}）
+Fuentes consultadas:\n{}	已查询的来源：\n{}
+cifrado no compatible	加密方式不兼容
+sin internet	无网络
+sin internet / DNS	无网络 / DNS
+tiempo agotado	超时
+error de red	网络错误
+tu tienda de apps	你的应用商店
+Tienes la {} · nueva: {}	当前版本 {} · 新版本：{}
+Mejoras y correcciones.	改进与修复。
+Nueva versión de StradaOS	StradaOS 新版本
+Tienes la {} · en GitHub: {}\nActualiza desde {} cuando llegue. Descargar de GitHub omite la revisión de la tienda.	当前版本 {} · GitHub 上：{}\n请从 {} 更新（上架后）。从 GitHub 下载会跳过商店审核。
+Ver en GitHub	在 GitHub 上查看
+Descarga desde GitHub:	从 GitHub 下载：
+Descargar e instalar	下载并安装
+Descarga la nueva versión desde:	从以下位置下载新版本：
+Omitir esta versión	跳过此版本
+Más tarde	稍后
+Descargando StradaOS {}…	正在下载 StradaOS {}…
+Descárgala desde tu celular	请从手机上下载
+Esta pantalla no pudo descargar el archivo. Escanea el código, descarga el APK y pásalo por USB.	本车机无法下载该文件。请扫描二维码，下载 APK 并通过 USB 传入。
+¿Disfrutando StradaOS?	喜欢 StradaOS 吗？
+Si te gusta usar StradaOS, dale una estrella en GitHub. Y si revivió tu pantalla, considera invitarme un café ☕	如果你喜欢使用 StradaOS，请在 GitHub 上点个星。如果它让你的车机重获新生，也可以考虑请我喝杯咖啡 ☕
+Dar una estrella	点个星
+StradaOS es gratis. Las donaciones ayudan a mantenerlo.	StradaOS 免费。捐赠有助于维护它。
+Escanéalo con la cámara de tu celular o entra a:	用手机相机扫描，或访问：
+Abrir aquí	在此打开
+No hay navegador disponible	没有可用的浏览器
+Open Headunit · USB	Open Headunit · USB
+Toca para instalar	点击安装
+Pantalla o adaptador	车机或适配器
+Elige la app de ajustes de tu pantalla	选择你车机的设置应用
+No se pudieron abrir los ajustes	无法打开设置
+No encontré la app de {}. Elígela de la lista.	找不到 {} 应用。请从列表中选择。
+↺  Automático (por defecto)	↺  自动（默认）
+¿Qué app abre «{}»?	哪个应用打开“{}”？
+Restablecido	已重置
+Esta pantalla no trae Android Auto integrado.\n\nInstala la app gratuita «Open Headunit» (github.com/andreknieriem/headunit-revived): copia su APK en la memoria USB o en Download y vuelve a tocar el botón. Luego conecta el celular por cable USB.	本车机没有内置 Android Auto。\n\n请安装免费应用“Open Headunit”（github.com/andreknieriem/headunit-revived）：将 APK 复制到 U 盘或 Download 文件夹，然后再次点击按钮。之后用 USB 数据线连接手机。
+Android Auto por cable USB (necesita la app Android Auto en el celular)	通过 USB 数据线使用 Android Auto（手机上需要安装 Android Auto 应用）
+Espejo de pantalla (necesita la app CarbitLink en el celular)	手机投屏（手机上需要安装 CarbitLink 应用）
+Android Auto / CarPlay integrados en la pantalla	车机内置 Android Auto / CarPlay
+Otra app…	其他应用…
+¿Cómo quieres conectar tu celular?	你想如何连接手机？
+Conexión: {}. Cámbiala dejando presionado el botón.	连接方式：{}。长按按钮可更改。
+el navegador	浏览器
+«{}» necesita un Android más nuevo que el de esta pantalla. Abro el navegador de fábrica.	“{}”需要的 Android 版本高于本车机。正在打开原厂浏览器。
+No encontré un navegador. Déjalo presionado para elegir uno.	找不到浏览器。长按可选择一个。
+Permite «Instalar apps desconocidas» para StradaOS y vuelve a tocar.	请为 StradaOS 允许“安装未知应用”，然后再次点击。
+Activa «Orígenes desconocidos» y vuelve a tocar.	请开启“未知来源”，然后再次点击。
+No se pudo preparar {}	无法准备 {}
+No se pudo abrir el instalador para {}	无法打开 {} 的安装程序
+Aplicaciones  ·  Android {} (API {})	应用  ·  Android {} (API {})
+Despejado	晴
+Parcialmente nublado	多云
+Nublado	阴
+Niebla	雾
+Llovizna	毛毛雨
+Lluvia	雨
+Nieve	雪
+Tormenta	暴风雨
+Mapa en vivo apagado	实时地图已关闭
+Rendimiento	性能
+Apágalo si la pantalla va lenta: queda un mapa de adorno y el velocímetro sigue funcionando	如果车机运行缓慢，请关闭它：会保留一张装饰地图，车速表仍可正常工作
+StradaOS aún no es tu pantalla de inicio	StradaOS 还不是你的主屏幕
+Por eso al encender el carro o al tocar Inicio aparece el menú de fábrica.\n\nToca «Fijar ahora», elige StradaOS y luego «Siempre».	因此启动车辆或点击主页时会出现原厂菜单。\n\n点击“立即设置”，选择 StradaOS，然后点击“始终”。
+Fijar ahora	立即设置
+Ahora no	暂不
+No volver a preguntar	不再询问
+Elige StradaOS y toca «Siempre»	选择 StradaOS 并点击“始终”
+Listo: StradaOS es tu pantalla de inicio	完成：StradaOS 已是你的主屏幕
+Fijar StradaOS a mano	手动设置 StradaOS
+Algunas pantallas no muestran la lista para elegir. Prueba así:\n\n1. Toca el botón Inicio (la casita) de la pantalla. Si pregunta qué app usar, elige StradaOS → Siempre.\n2. Si no pregunta: en los ajustes de la pantalla busca Aplicaciones → Aplicaciones predeterminadas → Pantalla de inicio (o «App de inicio») y elige StradaOS.\n3. Con Android 10 o más nuevo, no lo elijas desde el modo fábrica de la pantalla («Launcher», «Interfaz» o «UI»): en algunas marcas eso deja las demás apps sin poder abrirse. En Android 4 a 9 sí puedes usar esa opción.\n\nSi tu pantalla siempre vuelve a su menú de fábrica al encender, activa «Abrir StradaOS al encender» en Ajustes → Sistema.	某些车机不会显示选择列表。请按以下方法操作：\n\n1. 点击车机的主页按钮（小房子图标）。如果询问使用哪个应用，选择 StradaOS → 始终。\n2. 如果没有询问：在车机设置中查找“应用 → 默认应用 → 主屏幕应用”（或“启动应用”），然后选择 StradaOS。\n3. 在 Android 10 及更高版本上，不要从车机的出厂模式（“Launcher”、“Interface”或“UI”）中选择：在某些品牌上，这会导致其他应用无法打开。在 Android 4 至 9 上可以使用该选项。\n\n如果你的车机启动时总是回到原厂菜单，请在“设置 → 系统”中开启“开机启动 StradaOS”。
+Pantalla de inicio	主屏幕
+La que aparece al encender y al tocar Inicio	启动时和点击主页时显示的界面
+StradaOS ✓	StradaOS ✓
+Otra · toca para cambiar	其他 · 点击更改
+Abrir StradaOS al encender	开机启动 StradaOS
+Para pantallas que siempre arrancan en su menú de fábrica (Android 4 a 9)	适用于启动时总是进入原厂菜单的车机（Android 4 至 9）
+¿La música Bluetooth se corta o no aparece?	Bluetooth 音乐中断或不显示？
+Qué hacer en cada caso	各种情况的处理方法
+• Se corta al salir de la app Bluetooth: sal con el botón Inicio (la casita), no con Atrás. Atrás cierra la app de fábrica y con ella la música.\n\n• No suena hasta abrir la app Bluetooth: activa «Abrir la app de música Bluetooth al conectar el celular» (aquí mismo). Abre la app un instante y vuelve al inicio.\n\n• La canción no aparece en el inicio (Android 5 o más nuevo): activa «Música de cualquier app» arriba y dale acceso a notificaciones a StradaOS.\n\n• Revisa en Ajustes → Accesos y apps que «Música Bluetooth» sea la app Bluetooth de tu pantalla.	• 离开 Bluetooth 应用时音乐中断：请用主页按钮（小房子图标）退出，不要用返回键。返回键会关闭原厂应用，音乐也会随之停止。\n\n• 打开 Bluetooth 应用后才有声音：请开启“手机连接时打开 Bluetooth 音乐应用”（就在此处）。它会短暂打开该应用，然后返回主页。\n\n• 歌曲不在主屏幕上显示（Android 5 及更高版本）：请开启上方的“任意应用的音乐”，并授予 StradaOS 通知权限。\n\n• 请在“设置 → 快捷方式与应用”中确认“Bluetooth 音乐”是你车机的 Bluetooth 应用。
+Sin permiso	无权限
+GPS apagado	GPS 已关闭
+Unidades	单位
+Automático: mph en EE. UU. y Reino Unido	自动：美国和英国使用 mph
+Permisos → Ubicación → Permitir	权限 → 位置 → 允许
+Activa la ubicación para StradaOS en los ajustes de la pantalla	请在车机设置中为 StradaOS 开启定位
+Activa la ubicación (GPS)	开启定位 (GPS)
+Activa la ubicación (GPS) en los ajustes de la pantalla	请在车机设置中开启定位 (GPS)
+Sin permiso de ubicación · toca aquí	无定位权限 · 点击此处
+Ubicación apagada · toca aquí	定位已关闭 · 点击此处
+Sin señal GPS · toca aquí	无 GPS 信号 · 点击此处
+Versión de prueba	测试版本
+Simular pantalla	模拟车机
+Para probar otros tamaños en una tablet o celular	用于在平板或手机上测试其他尺寸
+Real	实际
+Aceite	机油
+Configurar	设置
+¡Cambiar!	该换了！
+Kilometraje estimado	预估里程
+Próximo cambio	下次更换
+Faltan {}	还差 {}
+¡Ya toca!	到时间了！
+Cambio de aceite	更换机油
+Ya hice el cambio de aceite	我已更换机油
+Corregir el kilometraje actual	更正当前里程
+Cambiar cada cuánto se hace	更改更换周期
+Desactivar el recordatorio	关闭提醒
+Recordatorio de cambio de aceite	机油更换提醒
+StradaOS no puede leer el kilometraje del tablero del carro. Escríbelo una vez y StradaOS le irá sumando lo que recorras con el GPS, para avisarte cuando toque el cambio.\n\nDe vez en cuando puedes corregirlo con el valor real del tablero.	StradaOS 无法读取车辆仪表盘的里程。只需输入一次，StradaOS 就会根据 GPS 累计你的行驶里程，并在需要更换时提醒你。\n\n你可以不时用仪表盘的实际数值进行更正。
+¿A cuántos {} fue el último cambio de aceite?	上次更换机油时的里程（{}）
+Kilometraje actual del tablero	当前仪表盘里程
+¿Cada cuántos {} cambias el aceite?	每隔多少 {} 更换一次机油？
+Escribe un número válido	请输入有效数字
+Kilometraje del tablero al hacer el cambio	更换时的仪表盘里程
+Es hora del cambio de aceite	该更换机油了
+El kilometraje estimado es ≈ {} y ya toca el cambio de aceite (cada {}).	预估里程约为 {}，已到更换机油的时间（每 {} 更换一次）。
+¿Ya lo hiciste?	已经换过了吗？
+Ya lo hice	已完成
+Aún no	还没有
+Se muestra al lado de la velocidad y avisa cuando toca	显示在车速旁边，并在到期时提醒
+Kilometraje actual	当前里程
+Estimado con el GPS. Corrígelo con el del tablero cuando quieras	用 GPS 估算。可随时用仪表盘读数校正
+Cada cuánto	多久一次
+Orientación del mapa	地图方向
+El mapa apunta	地图指向
+Según tu dirección: gira con el carro mientras te mueves	行驶方向：随车辆行驶而转动
+Norte arriba	北向上
+Según tu dirección	行驶方向
+# 2.13: aceite (último cambio, unidad) y apps ocultas del cajón
+Último cambio	上次更换
+Corregir el último cambio	更正上次更换
+¿Tu tablero marca kilómetros o millas?	你的仪表盘显示公里还是英里？
+Kilómetros (km)	公里（km）
+Millas (mi)	英里（mi）
+Revisa el último cambio	检查上次更换
+El último cambio ({}) queda por encima del kilometraje actual ({}). ¿Lo escribiste en otra unidad?	上次更换（{}）高于当前里程（{}）。是不是用了不同的单位输入？
+Corregir	更正
+Guardar igual	仍保存
+Kilometraje del tablero cuando se hizo	更换时的仪表盘里程
+Ocultas: {}	已隐藏：{}
+Ocultar del cajón	从抽屉中隐藏
+Información de la app	应用信息
+Oculta. Para volver a verla: Ajustes → Accesos y apps → Apps ocultas	已隐藏。如需重新显示：设置 → 快捷方式和应用 → 已隐藏应用
+Cajón de apps	应用抽屉
+Apps ocultas	已隐藏应用
+No se ven en el cajón, pero siguen instaladas y se pueden poner en los botones	不在抽屉中显示，但仍已安装，可放到按钮上
+Buscar app	搜索应用
+Apps ocultas en el cajón	抽屉中已隐藏的应用
+Se muestran todas las apps	显示全部应用
+Apps ocultas: {}	已隐藏应用：{}
+# 2.14: desinstalar desde el cajón
+Desinstalar	卸载
+# 2.14: salir de StradaOS (issue #9)
+Salir de StradaOS	退出 StradaOS
+Abrir el launcher de fábrica	打开原厂启动器
+Sale de StradaOS sin desinstalarlo	退出 StradaOS 但不卸载
+Desactivar StradaOS	停用 StradaOS
+Si la pantalla quedó atrapada en StradaOS: se apaga solo, sin ventanas de Android	如果屏幕卡在 StradaOS：它会自动关闭，不会弹出 Android 窗口
+Desinstalar StradaOS	卸载 StradaOS
+Android pide confirmar	Android 会要求确认
+No encontré otra pantalla de inicio en este equipo	在此设备上找不到其他主屏幕
+¿Cuál es el launcher de fábrica?	哪个是原厂启动器？
+No se pudo abrir	无法打开
+No encontré otra pantalla de inicio: StradaOS no se puede desactivar en este equipo	找不到其他主屏幕：在此设备上无法停用 StradaOS
+¿Desactivar StradaOS?	停用 StradaOS？
+StradaOS deja de ser la pantalla de inicio, ya no se abre al encender y vuelve el launcher de fábrica. No pide confirmaciones de Android, así que sirve aunque la pantalla haya quedado atrapada.\n\nPara volver a usarlo después: desinstálalo desde los ajustes de la pantalla e instálalo de nuevo.	StradaOS 将不再是主屏幕，开机时不再打开，并恢复原厂启动器。无需 Android 确认，因此即使屏幕卡住也能使用。\n\n如需日后再次使用：从屏幕设置中卸载后重新安装。
+Desactivar	停用
+# 2.15: diseño del inicio
+Diseño del inicio	主页布局
+Reproductor de música	音乐播放器
+Ponlo del lado del conductor para tenerlo a la mano	放在驾驶员一侧，方便操作
+Derecha	右侧
+Izquierda	左侧
+Tarjeta del vehículo	车辆卡片
+Si la ocultas, la velocidad pasa arriba y el mapa y el reproductor ganan espacio	如果隐藏它，车速会移到顶部，地图和播放器会获得更多空间
+Barra de botones	按钮栏
+Lateral: los botones van al costado y todo se ve más grande en pantallas bajas como 1280×480	侧边：按钮移到侧面，在 1280×480 等矮屏上所有内容显示更大
+Normal	标准
+Compacta	紧凑
+Lateral	侧边
+Aceite: configurar	机油：设置
+¡Cambiar aceite!	该换机油了！
+Aceite: {}	机油：{}
+Mapa sin conexión	离线地图
+Archivo del mapa	地图文件
+Un archivo .map (p. ej. colombia.map) en la memoria de la pantalla o en una USB: el mapa se ve sin internet	屏幕存储或 USB 上的 .map 文件（如 colombia.map）：无需联网即可查看地图
+Error	错误
+No se pudo abrir: {}	无法打开：{}
+Toca para dejar de usarlo	点击停止使用
+Mapa sin conexión quitado	已移除离线地图
+¿Dónde consigo el mapa?	在哪里获取地图？
+Mapas gratis de OpenStreetMap por país	按国家提供的免费 OpenStreetMap 地图
+Buscando mapas…	正在查找地图…
+No se encontró ningún mapa	未找到地图
+No hay archivos .map en la memoria de la pantalla ni en las USB conectadas. Toca «Cómo conseguirlo» para ver de dónde bajarlo.	屏幕存储或已连接的 USB 上没有 .map 文件。点击“如何获取”查看下载来源。
+Cómo conseguirlo	如何获取
+Elige el mapa	选择地图
+No se pudo usar este archivo	无法使用此文件
+Debe ser un mapa de mapsforge (.map) copiado completo.	必须是完整复制的 mapsforge 地图（.map）。
+Mapa sin conexión listo: {}	离线地图已就绪：{}
+Sin permiso de almacenamiento no se pueden buscar mapas	没有存储权限，无法查找地图
+Última posición · mapa sin conexión	上次位置 · 离线地图
+no se encuentra el archivo	找不到文件
+sin permiso para leer el archivo	无读取文件权限
+no es un mapa de mapsforge (.map)	不是 mapsforge 地图（.map）
+el archivo está incompleto (¿se copió entero?)	文件不完整（是否已完整复制？）
+1. En un computador o celular, descarga el mapa de tu país (formato mapsforge, gratis):\ndownload.mapsforge.org/maps/v5\n\nColombia:\ndownload.mapsforge.org/maps/v5/south-america/colombia.map\n\n2. Cópialo a una memoria USB o a la carpeta Download de la pantalla.\n\n3. En Ajustes → Mapa y clima → Mapa sin conexión, toca «Archivo del mapa» y elígelo.\n\nEl mapa se usa en el inicio incluso con internet. Para actualizarlo, descarga uno nuevo y reemplaza el archivo.	1. 在电脑或手机上下载你所在国家的地图（mapsforge 格式，免费）：\ndownload.mapsforge.org/maps/v5\n\n哥伦比亚：\ndownload.mapsforge.org/maps/v5/south-america/colombia.map\n\n2. 将其复制到 USB 或屏幕的 Download 文件夹。\n\n3. 在设置 → 地图和天气 → 离线地图中，点击“地图文件”并选择它。\n\n即使联网，主页也会使用此地图。如需更新，请下载新地图并替换文件。
+Toca para dejar de usarlo o borrarlo	点击停止使用或删除
+Descargar un mapa	下载地图
+Elige tu país: se descarga gratis de OpenStreetMap (mapsforge) y se usa sin internet	选择你的国家：从 OpenStreetMap（mapsforge）免费下载，离线可用
+Cargando la lista de mapas…	正在加载地图列表…
+No se pudo cargar la lista de mapas	无法加载地图列表
+Revisa la conexión a internet e inténtalo de nuevo.	请检查网络连接，然后重试。
+por regiones	按地区
+Elige el continente	选择大洲
+Tamaño	大小
+Se guarda en	保存到
+Espacio libre	可用空间
+memoria	存储
+Usa datos: mejor con WiFi o un plan amplio. Puedes seguir usando la pantalla; si se corta la señal o la apagas, la descarga continúa después.	会消耗流量：最好使用 Wi-Fi 或流量充足的套餐。你可以继续使用屏幕；如果信号中断或关机，下载会在之后继续。
+No hay espacio suficiente en la memoria.	存储空间不足。
+Descargar	下载
+Descargando el mapa… puedes seguir usando la pantalla	正在下载地图…你可以继续使用屏幕
+Descarga en curso	下载进行中
+Descarga en pausa	下载已暂停
+Pausar	暂停
+Continuar	继续
+Cancelar descarga	取消下载
+Descarga cancelada	下载已取消
+Este mapa lo descargó StradaOS. Puedes dejar de usarlo o borrarlo para liberar espacio.	此地图由 StradaOS 下载。你可以停止使用或删除它以释放空间。
+Puedes dejar de usar este mapa (el archivo no se borra).	你可以停止使用此地图（文件不会被删除）。
+Dejar de usarlo	停止使用
+Borrar el archivo	删除文件
+Mapa borrado	地图已删除
+Mapa descargado y listo: {}	地图已下载并就绪：{}
+Descargando	下载中
+África	非洲
+Australia y Oceanía	澳大利亚和大洋洲
+Centroamérica y el Caribe	中美洲和加勒比地区
+Europa	欧洲
+Norteamérica	北美洲
+Rusia	俄罗斯
+Sudamérica	南美洲
+sin conexión, reintentando…	无连接，正在重试…
+el archivo quedó incompleto	文件不完整
+no se pudo guardar el archivo	无法保存文件
+no hay espacio suficiente	空间不足
+se cortó la descarga	下载已中断
+Sin señal GPS · mapa sin conexión	无 GPS 信号 · 离线地图
+Sin señal GPS ni internet	无 GPS 信号且无网络
+Sin señal GPS · última posición	无 GPS 信号 · 上次位置
+# 2.17: tema por horario o del sistema, íconos de Wi-Fi y Bluetooth, barra, diagnóstico del mapa
+Auto: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)	自动：按时间表。系统：跟随屏幕的深色模式（部分屏幕在打开车灯时切换）
+Oscuro desde	深色开始于
+Claro desde	浅色开始于
+Íconos de Wi-Fi y Bluetooth	Wi-Fi 和 Bluetooth 图标
+Arriba, junto al clima. Toca para encender o apagar; déjalo presionado para abrir sus ajustes	位于顶部，天气旁边。点击可开启或关闭；长按可打开其设置
+¿Apagar el Wi-Fi?	关闭 Wi-Fi？
+La pantalla se queda sin internet (mapa en vivo, clima y actualizaciones).	屏幕将断开网络（实时地图、天气和更新）。
+Apagar	关闭
+Esta pantalla no deja cambiar el Wi-Fi desde otra app: abre sus ajustes	此屏幕不允许其他应用更改 Wi-Fi：正在打开其设置
+Encendiendo el Wi-Fi…	正在开启 Wi-Fi…
+Wi-Fi apagado	Wi-Fi 已关闭
+¿Apagar el Bluetooth?	关闭 Bluetooth？
+Se desconecta el celular (música y llamadas).	手机将断开连接（音乐和通话）。
+Esta pantalla no deja cambiar el Bluetooth desde otra app: abre sus ajustes	此屏幕不允许其他应用更改 Bluetooth：正在打开其设置
+Encendiendo el Bluetooth…	正在开启 Bluetooth…
+Bluetooth apagado	Bluetooth 已关闭
+Lado de la barra lateral	侧边栏位置
+Automático: del lado del reproductor	自动：位于播放器一侧
+Nombres de los botones	按钮名称
+Debajo de cada ícono de la barra	在栏中每个图标下方
+Permiso de ubicación: {}	位置权限：{}
+NO (toca el letrero del mapa)	否（点击地图标注）
+sí	是
+GPS del equipo: {} · ubicación por red: {}	车机 GPS：{} · 网络定位：{}
+no encontrado	未找到
+encendido	开
+apagado	关
+encendida	开
+apagada	关
+Última señal: {}	上次信号：{}
+ninguna desde que abrió StradaOS	自 StradaOS 启动以来无信号
+hace {} s	{} 秒前
+hace {} min	{} 分钟前
+Buscando desde hace {} min	已搜索 {} 分钟
+Posición: {}	位置：{}
+sin GPS	无 GPS
+Zoom: {}	缩放：{}
+Mapa sin conexión: {}	离线地图：{}
+ninguno	无
+error: {}	错误：{}
+{} · en uso	{} · 使用中
+{} · fuera del área del archivo	{} · 超出文件范围
+Teselas dibujadas desde el archivo: {} · {} ms cada una	从文件绘制的图块：{} · 每块 {} 毫秒
+Proveedor: {}	提供方：{}
+{} · ninguna fuente respondió ({} vueltas)	{} · 无来源响应（{} 轮）
+Teselas descargadas: {} · en caché: {}	已下载图块：{} · 已缓存：{}
+Errores seguidos: {}	连续错误：{}
+Último error: {}	上次错误：{}
+Fuentes probadas:	已尝试的来源：
+• {}: {}	• {}：{}
+sin probar	未尝试
+certificado	证书
+OSM Alemania	OSM 德国
+OSM Francia	OSM 法国
+OSM Humanitario	OSM 人道主义
+Esri gris oscuro	Esri 深灰
+sin iniciar	未开始
+TLS listo ({}), {} raíces	TLS 就绪（{}），{} 个根证书
+TLS listo ({}), {} raíces, {} omitidas	TLS 就绪（{}），{} 个根证书，{} 个已跳过
+TLS no disponible: {}	TLS 不可用：{}
+Íconos de Wi-Fi y Bluetooth arriba	顶部显示 Wi-Fi 和 Bluetooth 图标
+Bluetooth: estado del celular desde la app de fábrica; toca para abrirla	Bluetooth：手机状态来自原厂应用；点击打开
+Tema según el modo oscuro del sistema	跟随系统深色模式的主题
+Pantallas que lo cambian (p. ej. con las luces)	会切换它的界面（例如随车灯切换）
+el sistema está en modo oscuro	系统处于深色模式
+el sistema está en modo claro	系统处于浅色模式
+# 2.18: botones de conexión, clima detallado, ocultar velocidad/aceite/reproductor, botón del navegador, foto tal cual
+Cargando…	加载中…
+Esperando la ubicación…	正在等待定位…
+Máx {} · Mín {}	最高 {} · 最低 {}
+Sensación {}	体感 {}
+Humedad {}	湿度 {}
+Viento {}	风速 {}
+PRÓXIMAS HORAS	未来几小时
+PRÓXIMOS DÍAS	未来几天
+Ahora	现在
+Hoy	今天
+El clima está apagado en Ajustes → Mapa y clima	天气已在设置 → 地图和天气中关闭
+Esperando la ubicación para el clima…	正在等待定位以获取天气…
+Cargando el clima…	正在加载天气…
+Velocidad y servicio	车速与保养
+En la tarjeta del vehículo (o arriba si la ocultas). Apágalo si tu carro o pantalla no tiene GPS: la foto ocupa ese espacio	在车辆卡片上（隐藏后则在顶部）。如果你的车或屏幕没有 GPS，请关闭它：照片会占用该位置
+Aceite en el inicio	主页显示机油
+Junto a la velocidad. Aunque lo ocultes, el aviso del cambio de aceite sigue saliendo	在车速旁边。即使隐藏，换机油提醒仍会显示
+Tarjeta del reproductor	播放器卡片
+Si la ocultas, el mapa gana espacio	隐藏后，地图会有更多空间
+Botones de conexión	连接按钮
+Con uno o ninguno, el clima ocupa el espacio libre del mapa	只有一个或没有时，天气会填满地图上的空闲位置
+Android Auto y CarPlay	Android Auto 和 CarPlay
+Solo Android Auto	仅 Android Auto
+Solo CarPlay	仅 CarPlay
+Botón del navegador	导航按钮
+El botón redondo del mapa que abre tu app de navegación	地图上打开导航应用的圆形按钮
+Grande	大
+Muy grande	特大
+Oculto	隐藏
+Lado del botón del navegador	导航按钮位置
+Automático: del lado del reproductor (el del conductor)	自动：位于播放器一侧（驾驶员一侧）
+Usar la foto original, sin recortar ni quitar el fondo	使用原图，不裁剪、不去除背景
+Se le quita el fondo automáticamente, o la puedes usar tal cual	背景会自动去除，也可以直接原样使用
+Lluvia {}	降雨 {}
+Abriendo la foto…	正在打开照片…
+Vista previa	预览
+Sin fondo · nivel {} de 4	已去除背景 · 第 {} 级（共 4 级）
+Sin fondo · nivel {} de 4 (también quita el reflejo del piso)	已去除背景 · 第 {} 级（共 4 级）（同时去除地面反光）
+Usar la foto original, con fondo	使用原图（含背景）
+Quitar el fondo	去除背景
+No se detectó un fondo liso: se usa la foto tal cual	未检测到纯色背景：照片将原样使用
+Se usa tal cual; si quieres, le puedes quitar el fondo	原样使用；如需去除背景也可以
+# 2.19: cantidad y tamaño de los botones, íconos de apps, packs de íconos, barra oculta, tamaño de la letra
+Cantidad de botones	按钮数量
+«Apps» siempre queda al final	“Apps”始终排在最后
+Tamaño de los íconos	图标大小
+Pequeño	小
+Pequeña	小
+Íconos de la barra	栏图标
+Apps: el ícono de la app que abre cada botón (radio, cámara…)	应用：每个按钮所打开应用的图标（收音机、相机…）
+Pack de íconos	图标包
+Instala uno (los de Nova o ADW sirven) y elígelo aquí	安装一个（Nova 或 ADW 的图标包均可），然后在此选择
+Cambia los íconos de la barra y del cajón de apps	更改栏和应用抽屉的图标
+Ninguno (íconos de siempre)	无（默认图标）
+No hay packs de íconos instalados	未安装图标包
+Ese pack no trae la lista de íconos (appfilter)	该图标包没有图标列表（appfilter）
+Pack listo: {} íconos	图标包就绪：{} 个图标
+Lateral: los botones van al costado y todo se ve más grande en pantallas bajas como 1280×480. Oculta: el botón Apps va arriba	侧边：按钮移至侧边，在 1280×480 等矮屏上一切显示更大。隐藏：Apps 按钮移至顶部
+Oculta	隐藏
+Tamaño de la letra	文字大小
+Para leer mejor de lejos o que quepa más	便于远距离阅读或显示更多内容
+# 2.20: velocímetro analógico, velocímetro sobre el mapa, mantenimientos a medida
+Velocímetro	车速表
+En la tarjeta del vehículo. Toma el color de acento	在车辆卡片上。使用强调色
+Digital	数字
+Analógico	指针
+Mixto	混合
+Velocímetro sobre el mapa	地图上的车速表
+Redondo, en una esquina del mapa (en vez de la velocidad de arriba)	圆形，位于地图一角（代替顶部的车速）
+Mantenimiento	保养
+Otros mantenimientos	其他保养
+Agregar mantenimiento	添加保养
+Filtros, bujías, frenos, correa, SOAT… Avisa por kilómetros, por tiempo o lo que llegue primero	滤清器、火花塞、刹车、皮带、保险…按里程、按时间或以先到者为准提醒
+Filtro de aire	空气滤清器
+Bujías	火花塞
+Pastillas de freno	刹车片
+Líquido de frenos	刹车油
+Refrigerante	冷却液
+Correa de distribución	正时皮带
+Rotación de llantas	轮胎换位
+Alineación y balanceo	四轮定位与动平衡
+Revisión de la batería	电瓶检查
+Seguro obligatorio (SOAT)	强制保险
+Revisión técnico-mecánica	车辆检测
+Otro (escribe el nombre)	其他（输入名称）
+Nombre del mantenimiento	保养项目名称
+Por kilómetros	按里程
+Por tiempo	按时间
+Lo que llegue primero	以先到者为准
+¿Cada cuántos meses?	每隔几个月？
+¿Cada cuántos {}?	每隔多少 {}？
+¿A cuántos {} fue la última vez?	上次是多少 {}？
+¿Cuándo fue la última vez?	上次是什么时候？
+Kilometraje del tablero	仪表盘里程
+StradaOS no puede leer el kilometraje del carro. Escríbelo una vez y StradaOS le suma lo que recorras con el GPS.	StradaOS 无法读取车辆里程表。输入一次后，StradaOS 会根据 GPS 累加行驶里程。
+Escribirlo	输入
+Última vez	上次
+Cambiar cada cuánto	更改提醒周期
+Corregir la última vez	更正上次记录
+¿Borrar «{}»?	删除“{}”吗？
+Kilometraje del tablero al hacerlo	完成时的仪表盘里程
+Es hora de: {}	该做：{}
+¡Toca: {}!	到期：{}！
+Cada {}	每 {}
+cada {} mes	每 {} 个月
+cada {} meses	每 {} 个月
+¿Cada cuánto tiempo?	多久一次？
+Días	天
+Semanas	周
+Meses	月
+cada día	每天
+cada semana	每周
+cada mes	每月
+cada {} días	每 {} 天
+cada {} semanas	每 {} 周
+(lo primero)	（以先到者为准）
+{} meses	{} 个月
+{} día	{} 天
+{} días	{} 天
+# 2.20: Ajustes reordenados, sección Mantenimientos, íconos, velocímetro del mapa
+Mantenimientos	保养
+Barra de apps	应用栏
+Tarjetas	卡片
+Barra de arriba	顶部栏
+Diseño de la barra	栏布局
+Botones (déjalos presionados en el inicio para cambiarlos)	按钮（在主页上长按可更换）
+Texto	文本
+Kilometraje	里程
+Escríbelo una vez y StradaOS le suma lo que recorras con el GPS	输入一次，StradaOS 会用 GPS 累加你的行驶里程
+Avisa cuando toca el cambio	到期更换时提醒
+En el inicio	在主页上
+Mantenimiento en el inicio	主页上的保养
+Junto a la velocidad se ve el más próximo (el aceite u otro). Los avisos siguen saliendo aunque lo ocultes	在车速旁边显示最近的一项（机油或其他）。即使隐藏，提醒仍会弹出
+Se muestra junto a la velocidad: activa «Velocidad y servicio» en Pantalla de inicio	显示在车速旁边：请在主页开启“Speed and service”
+Aceite, filtros, SOAT y más	机油、滤清器、保险等
+Ahora están en su propia sección	现在它们有了自己的专区
+Al encender	开机时
+Launcher predeterminado	默认启动器
+Esquina del velocímetro	车速表位置
+Automático: arriba, en el lado contrario al botón del navegador	自动：顶部，位于导航按钮的对侧
+Arriba a la izquierda	左上角
+Arriba a la derecha	右上角
+Abajo a la izquierda	左下角
+Abajo a la derecha	右下角
+Tamaño del velocímetro	车速表大小
+En pantallas bajas se limita para no tapar el mapa	在较矮的屏幕上会受限，以免遮挡地图
+Elige un ícono	选择图标
+Cambiar el ícono	更换图标
+Filtro de combustible	燃油滤清器
+Aire acondicionado	空调
+Lavado	洗车
+# 2.21: ventanas propias, diagnósticos traducidos, copia de seguridad, app al encender, diseño vertical
+Fuente: {}	来源：{}
+Pista: {}	曲目：{}
+Carátula: {}	封面：{}
+Lector de notificaciones (accesibilidad): {}	通知朗读（无障碍）：{}
+ACTIVO	已启用
+Última notificación de Open Headunit: {}	Open Headunit 的最新通知：{}
+ninguna	无
+{} s, carátula {}, textos {}	{} 秒，封面 {}，文本 {}
+Open Headunit corriendo: {} · celular por USB en modo Android Auto: {}	Open Headunit 运行中：{} · 手机通过 USB 处于 Android Auto 模式：{}
+no se sabe	未知
+Android Auto conectado (para StradaOS): {}	Android Auto 已连接（StradaOS）：{}
+App Bluetooth conectada: {}	Bluetooth 应用已连接：{}
+Audio Bluetooth automático: {}	Bluetooth 音频自动切换：{}
+desactivado	已关闭
+no aplica (otra marca)	不适用（其他品牌）
+App de música Bluetooth: {} · abrir al conectar: {}	Bluetooth 音乐应用：{} · 连接时打开：{}
+no encontrada	未找到
+Sonido en Bluetooth (estimado): {} · app al frente: {}	声音走 Bluetooth（估计）：{} · 前台应用：{}
+Activaciones: {}	触发次数：{}
+Eventos Bluetooth:	Bluetooth 事件：
+(sin eventos)	（无事件）
+no	否
+conectado a la app Bluetooth	已连接 Bluetooth 应用
+la app Bluetooth se cerró	Bluetooth 应用已关闭
+se reinicia muy seguido: pausa de 15 min	重启过于频繁：暂停 15 分钟
+activar audio: el celular no está conectado por Bluetooth	开启音频：手机未通过 Bluetooth 连接
+activar audio: el celular está en pausa	开启音频：手机已暂停
+modo de audio Bluetooth solicitado	已请求 Bluetooth 音频模式
+activar audio falló: {}	开启音频失败：{}
+el celular empezó a sonar	手机开始播放
+revisión falló: {}	检查失败：{}
+otra fuente al frente: {}	其他音源在前台：{}
+no se cambió: StradaOS acaba de arrancar	未切换：StradaOS 刚启动
+no se cambió: llamada en curso	未切换：通话进行中
+no se cambió: Android Auto tiene el sonido	未切换：声音在 Android Auto
+el sonido ya es Bluetooth	声音已走 Bluetooth
+celular conectado por Bluetooth	手机已通过 Bluetooth 连接
+no se abrió la app BT: cámara de reversa al frente	未打开 BT 应用：倒车摄像头在前台
+no se abrió la app BT: no sé qué app está al frente	未打开 BT 应用：无法判断前台应用
+no se abrió la app BT: ajustes abiertos	未打开 BT 应用：设置已打开
+abierta {} para tomar el sonido (luego vuelve a {})	已打开 {} 以接管声音（之后返回 {}）
+abierta {} para tomar el sonido	已打开 {} 以接管声音
+no se volvió: el usuario abrió {}	未返回：用户打开了 {}
+Android Auto se desconectó	Android Auto 已断开
+Registro técnico para enviar al desarrollador (se guarda en español).	发送给开发者的技术日志（以西班牙语保存）。
+Preparando {}…	正在准备 {}…
+Copia de seguridad	备份
+Guardar una copia	保存备份
+Ajustes, mantenimientos, kilometraje y la foto del vehículo en un archivo, en la pantalla o en una USB. Nada se sube a internet	设置、保养、里程和车辆照片保存在一个文件里，存放在车机或 USB 设备中，不会上传到互联网
+Restaurar una copia	恢复备份
+Recupera todo después de restablecer la pantalla, o pásalo a otra pantalla	重置车机后恢复全部内容，或将其转移到另一台车机
+Copia automática	自动备份
+Cada vez que cambias algo se actualiza una copia en la pantalla y en la USB que esté conectada	每次更改设置时，都会在车机和已连接的 USB 设备上更新备份
+Memoria de la pantalla	车机存储
+Memoria USB	USB 设备
+Elegir otra carpeta…	选择其他文件夹…
+¿Dónde guardar la copia?	备份保存到哪里？
+No se pudo abrir el selector de archivos	无法打开文件选择器
+No se pudo guardar la copia	无法保存备份
+Esa memoria no dejó escribir el archivo. Prueba con otra memoria o con «Elegir otra carpeta…».	该存储设备不允许写入文件。请尝试其他存储设备，或选择“选择其他文件夹…”。
+Copia guardada	备份已保存
+Se guardó en:	已保存到：
+Al restablecer la pantalla de fábrica también se puede borrar su memoria: guarda otra copia en una USB para tenerla a salvo.	恢复出厂设置也可能清除车机存储：请在 USB 设备上再保存一份备份，以防万一。
+No se pudo leer el archivo	无法读取文件
+Buscando copias…	正在查找备份…
+No se encontró ninguna copia	未找到备份
+No hay copias de StradaOS en la memoria de la pantalla ni en las USB conectadas. El archivo se llama «StradaOS-backup» y termina en .json.	车机存储和已连接的 USB 设备中没有 StradaOS 备份。文件名为“StradaOS-backup”，以 .json 结尾。
+automática	自动
+Buscar el archivo…	浏览文件…
+Elige la copia	选择备份
+No se pudo restaurar	无法恢复
+Este archivo no es una copia de seguridad de StradaOS	此文件不是 StradaOS 备份
+Copia del	备份来自
+Pantalla:	车机：
+Ajustes guardados:	已保存设置：
+con la foto del vehículo	含车辆照片
+Se reemplaza toda la configuración actual de StradaOS por la de la copia.	将用备份中的设置替换 StradaOS 的全部当前设置。
+¿Restaurar esta copia?	恢复此备份？
+Restaurar	恢复
+Copia restaurada	备份已恢复
+Esta copia se hizo con una versión más nueva de StradaOS. Actualiza StradaOS y vuelve a intentarlo	此备份由更新版本的 StradaOS 创建。请更新 StradaOS 后重试
+No se pudo guardar la configuración	无法保存设置
+La copia está dañada o incompleta	备份已损坏或不完整
+Abrir una app al encender	开机时打开应用
+StradaOS la abre un momento al arrancar (por ejemplo la radio, para que empiece a sonar) y vuelve al inicio	StradaOS 启动时会短暂打开该应用（例如收音机，让它开始播放），然后返回主页
+Copia de seguridad en un archivo (pantalla o USB)	备份到文件（车机或 USB）
+en Android 10+ la carpeta se elige con el selector de archivos	在 Android 10+ 上通过文件选择器选择文件夹
+Diseño vertical	竖屏布局
+Pantallas en vertical (tipo Tesla)	竖屏车机（特斯拉风格）
+en uso	使用中
+esta pantalla es horizontal	此车机为横屏
+# 2.21.1: PR #26 (wsx79)
+Pantalla completa	全屏
+Ocultar la barra del sistema	隐藏系统栏
+Esconde también la barra de navegación de tu pantalla (abajo o al costado). Desliza desde el borde para verla un momento	同时隐藏车机导航栏（底部或侧边）。从边缘滑动可短暂显示
+Corrección del velocímetro	车速表校准
+Suma o resta a la velocidad del GPS para que coincida con el tablero de tu carro	对 GPS 车速进行加减，使其与汽车仪表盘一致
