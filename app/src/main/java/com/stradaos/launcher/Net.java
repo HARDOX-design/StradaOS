@@ -68,7 +68,11 @@ public class Net {
                 public X509Certificate[] getAcceptedIssuers() { return system.getAcceptedIssuers(); }
             };
             SSLContext ctx;
-            try { ctx = SSLContext.getInstance("TLSv1.2"); } catch (Throwable e) { ctx = SSLContext.getInstance("TLS"); }
+            if (android.os.Build.VERSION.SDK_INT >= 21) {
+                ctx = SSLContext.getInstance("TLS");
+            } else {
+                try { ctx = SSLContext.getInstance("TLSv1.2"); } catch (Throwable e) { ctx = SSLContext.getInstance("TLS"); }
+            }
             ctx.init(null, new TrustManager[]{both}, null);
             // Android 5+ ya trae TLS 1.2 y buenos cifrados: solo se agregan las raíces. Tocar los cifrados ahí rompía
             // el mapa en Android 9 (se colaba TLS_FALLBACK_SCSV y los servidores con TLS 1.3 cortaban el saludo).
@@ -160,6 +164,7 @@ public class Net {
         }
         public String[] getDefaultCipherSuites() { return d.getDefaultCipherSuites(); }
         public String[] getSupportedCipherSuites() { return d.getSupportedCipherSuites(); }
+        public Socket createSocket() throws java.io.IOException { return on(d.createSocket()); }
         public Socket createSocket(Socket s, String h, int p, boolean a) throws java.io.IOException { return on(d.createSocket(s, h, p, a), h); }
         public Socket createSocket(String h, int p) throws java.io.IOException { return on(d.createSocket(h, p), h); }
         public Socket createSocket(String h, int p, InetAddress l, int lp) throws java.io.IOException { return on(d.createSocket(h, p, l, lp), h); }

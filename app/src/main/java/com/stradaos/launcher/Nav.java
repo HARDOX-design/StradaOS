@@ -112,11 +112,13 @@ public class Nav {
             cb.onResult(one, null);
             return;
         }
+        final Context app = c != null ? c.getApplicationContext() : null;
         new Thread(new Runnable() {
             public void run() {
+                if (app != null) Net.init(app);
                 List<Place> out = null;
                 String err = null;
-                boolean tryOfflineFirst = !hasNetwork(c) || LiveMapView.isOffline();
+                boolean tryOfflineFirst = !hasNetwork(app) || LiveMapView.isOffline();
                 if (tryOfflineFirst) {
                     out = searchOfflineMap(q, null, biasLat, biasLon, mph, 10);
                 }
@@ -542,6 +544,7 @@ public class Nav {
         final Context app = c != null ? c.getApplicationContext() : null;
         new Thread(new Runnable() {
             public void run() {
+                if (app != null) Net.init(app);
                 Route r = null;
                 String err = null;
                 boolean offlineMode = !hasNetwork(app) || LiveMapView.isOffline();
@@ -550,22 +553,22 @@ public class Nav {
                     r = routeFromOfflineMap(lat1, lon1, lat2, lon2, destName);
                     if (r == null && app != null) r = loadCachedRoute(app, lat1, lon1, lat2, lon2);
                 }
-                if (r == null) {
-                    String[] hosts = {
-                        "https://router.project-osrm.org/route/v1/driving/",
-                        "https://routing.openstreetmap.de/routed-car/route/v1/driving/"
-                    };
+                if (r == null && hasNetwork(app)) {
                     String tail = String.format(Locale.US, "%.6f,%.6f;%.6f,%.6f?overview=full&geometries=polyline&steps=true",
                             lon1, lat1, lon2, lat2);
-                    for (String host : hosts) {
-                        try {
-                            String raw = new String(Net.get(host + tail, 12000), "UTF-8");
-                            r = parseOsrm(raw, lat2, lon2, destName);
-                            if (r != null) { err = null; break; }
-                        } catch (Throwable e) {
-                            err = shortErr(e);
-                        }
+                    String[] errOut = new String[1];
+                    boolean[] sslOut = new boolean[1];
+                    r = fetchOsrm(new String[]{
+                        "https://router.project-osrm.org/route/v1/driving/",
+                        "https://routing.openstreetmap.de/routed-car/route/v1/driving/"
+                    }, tail, lat2, lon2, destName, errOut, sslOut);
+                    if (r == null && sslOut[0]) {
+                        r = fetchOsrm(new String[]{
+                            "http://router.project-osrm.org/route/v1/driving/",
+                            "http://routing.openstreetmap.de/routed-car/route/v1/driving/"
+                        }, tail, lat2, lon2, destName, errOut, null);
                     }
+                    if (r == null) err = errOut[0];
                 }
                 if (r == null && !offlineMode) {
                     r = routeFromOfflineMap(lat1, lon1, lat2, lon2, destName);
@@ -582,6 +585,28 @@ public class Nav {
                 });
             }
         }).start();
+    }
+
+    private static Route fetchOsrm(String[] hosts, String tail, double destLat, double destLon,
+                                   String destName, String[] errOut, boolean[] sslOut) {
+        for (String host : hosts) {
+            try {
+                String raw = new String(Net.get(host + tail, 12000), "UTF-8");
+                Route r = parseOsrm(raw, destLat, destLon, destName);
+                if (r != null) return r;
+            } catch (Throwable e) {
+                if (sslOut != null && isSsl(e)) sslOut[0] = true;
+                if (errOut != null) errOut[0] = shortErr(e);
+            }
+        }
+        return null;
+    }
+
+    private static boolean isSsl(Throwable e) {
+        for (int i = 0; i < 5 && e != null; i++, e = e.getCause()) {
+            if (e instanceof javax.net.ssl.SSLException) return true;
+        }
+        return false;
     }
 
     private static Route routeFromOfflineMap(double lat1, double lon1, double lat2, double lon2, String destName) {
