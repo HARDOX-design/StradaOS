@@ -57,7 +57,7 @@ go idioma:es 6; go inicio 3
 
 # ── tipo Tesla con barra de clima: casi cuadrada (768x880) ──
 if [ "$API" -ge 18 ]; then size 768x880; else go sim:8 6; fi
-go inicio 6; go pista-demo 4; go vel:62 3; shot t01-auto-horizontal-chico
+go inicio 6; go pista-demo 4; go vel:62 3; shot t01-automatico
 go ajustes:3 5; shot t02-ajustes-diseno
 go pref:layout_mode=vertical 5; go inicio 4; go pista-demo 3; go vel:62 3; shot t03-forzado-vertical
 go pref:idle_speed=1 3; go vel:62 2; go reposo 6; shot t04-reposo-vertical

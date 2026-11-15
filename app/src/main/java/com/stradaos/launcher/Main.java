@@ -1053,8 +1053,17 @@ public class Main extends Activity {
         // Diseño (2.22, Jorge Morales): Automático = vertical si la pantalla es al menos 20 % más alta que ancha (como
         // siempre). Las pantallas tipo Tesla con barra de clima de fábrica quedan casi cuadradas: ahí se puede forzar.
         boxW = W; boxH = H;
+        // 2.22: Automático pasa a vertical desde 1,05·H (antes 1,2): en pantallas un poco más altas que anchas el diseño
+        // horizontal queda chico en el medio (Jorge Morales). Quien ya tenía StradaOS con una pantalla así se queda en
+        // horizontal (se guarda una sola vez); las instalaciones nuevas arrancan en vertical sin tocar Ajustes.
+        if (!prefs.getBoolean("layout_mig_222", false)) {
+            SharedPreferences.Editor me = prefs.edit().putBoolean("layout_mig_222", true);
+            if (prefs.getBoolean("setup_done", false) && !prefs.contains("layout_mode") && H >= W * 1.05f && H < W * 1.2f)
+                me.putString("layout_mode", "horizontal");
+            me.apply();
+        }
         String lmode = prefs.getString("layout_mode", "auto");
-        vertical = "vertical".equals(lmode) ? canVertical(W, H) : !"horizontal".equals(lmode) && H >= W * 1.2f;
+        vertical = "vertical".equals(lmode) ? canVertical(W, H) : !"horizontal".equals(lmode) && H >= W * 1.05f;
         if (vertical) sideDock = false;   // en vertical la barra va abajo (la lateral le quitaría ancho al mapa)
         // Vertical bajo (2.22, Jorge Morales: Tesla con barra de clima, ~768×880): menos de 900 de alto en el lienzo de
         // 720 de ancho. La barra de botones normal se vuelve compacta para que el mapa tenga espacio. Las verticales de
