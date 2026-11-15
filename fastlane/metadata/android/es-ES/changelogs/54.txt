@@ -1,0 +1,1 @@
+Android Auto solo por cable (sin Bluetooth): ahora salen la canción, el artista y la carátula. Ya no reintenta el servicio Bluetooth de Clinkway en otras pantallas.

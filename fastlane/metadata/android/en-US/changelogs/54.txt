@@ -1,0 +1,1 @@
+Android Auto by cable only (no Bluetooth): song, artist and album art now show. No more retries of the Clinkway Bluetooth service on other head units.
