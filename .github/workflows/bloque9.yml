@@ -4,9 +4,6 @@ name: Bloque 9 (capturas)
 # seguridad, francés y diseño vertical (768x1024 y 1080x1920). Quedan en la rama «bloque9-capturas».
 on:
   workflow_dispatch:
-  push:
-    branches: [ 'wip-**' ]
-    paths: [ 'app/**', '.github/workflows/bloque9.yml', '.github/scripts/bloque9.sh' ]
 
 permissions:
   contents: write

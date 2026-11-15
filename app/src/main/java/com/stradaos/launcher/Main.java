@@ -553,7 +553,7 @@ public class Main extends Activity {
         idleView = ov;
         root.addView(ov, new FrameLayout.LayoutParams(-1, -1));
         updateIdleClock();
-        setGps(lastFix > 0, lastKmh);
+        setGps(lastOk, lastKmh);
     }
 
     private void hideIdle() {
@@ -3559,9 +3559,11 @@ public class Main extends Activity {
     }
 
     private float lastKmh;
+    private boolean lastOk;
 
     private void setGps(boolean ok, float kmh) {
         lastKmh = kmh;
+        lastOk = ok;
         if (idleView != null) {
             float iv = speedFix(useMph() ? kmh * 0.621371f : kmh);
             if (idleSpeedTv != null) idleSpeedTv.setText(ok ? String.valueOf(Math.round(kmh < 2 ? 0 : iv)) : "--");
