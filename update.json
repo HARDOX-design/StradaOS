@@ -1,6 +1,6 @@
 {
-  "version": "2.21.1",
-  "notes": "## StradaOS 2.21.1 — Pantalla completa de verdad y corrección del velocímetro\n\n### Nuevo\n- **Ocultar la barra del sistema** (Ajustes → Pantalla de inicio → Pantalla completa, Android 4.4 o más nuevo): esconde también la barra de navegación de la pantalla, abajo o al costado (como la de los Ottocast), igual que Waze a pantalla completa. Deslizando desde el borde aparece un momento. Viene apagado. Gracias a wsx79 (#26) y a quien lo pidió en #14.\n- **Corrección del velocímetro** (Ajustes → Tu vehículo → Unidades): suma o resta km/h, mph o un porcentaje a la velocidad del GPS para que coincida con el tablero. Solo cambia el número que se ve; el kilometraje y los mantenimientos siguen con la distancia real. Gracias a wsx79 (#26).\n",
-  "url": "https://github.com/lordnordic-debug/StradaOS/releases/tag/v2.21.1",
-  "apk": "https://github.com/lordnordic-debug/StradaOS/releases/download/v2.21.1/StradaOS-2.21.1.apk"
+  "version": "2.21.2",
+  "notes": "## StradaOS 2.21.2 — Android Auto solo por cable y menos trabajo en radios de otras marcas\n\n### Corregido\n- **Canción y carátula con Android Auto sin Bluetooth:** si el celular va conectado a Open Headunit solo por cable (sin emparejarlo por Bluetooth), StradaOS ahora toma la canción, el artista, la carátula, el tiempo y si está sonando o en pausa de la notificación de Open Headunit. Antes se quedaba con la última canción que recordaba la app Bluetooth de la pantalla (a veces de otro celular). Con el celular por Bluetooth + Android Auto todo sigue igual.\n- **Radios sin la app Bluetooth de Clinkway:** StradaOS ya no intenta abrir ese servicio cada 2 segundos cuando no existe en la pantalla (ahorra CPU y deja limpio el registro). Gracias a diegort55 (#30).\n- El diagnóstico del reproductor muestra lo que se leyó de la notificación de Android Auto.\n",
+  "url": "https://github.com/lordnordic-debug/StradaOS/releases/tag/v2.21.2",
+  "apk": "https://github.com/lordnordic-debug/StradaOS/releases/download/v2.21.2/StradaOS-2.21.2.apk"
 }
