@@ -453,6 +453,122 @@ public class Main extends Activity {
         h.removeCallbacks(progressTick);
         h.post(progressTick);
         applyAaNotif(NotifArt.lastArt, NotifArt.lastTexts);
+        hideIdle();
+        idleReset();
+    }
+
+    // ───────────────────────── pantalla en reposo (2.22, #27 / #28) ─────────────────────────
+    // Tras X minutos sin tocar StradaOS, la pantalla se pone negra con la hora, la fecha y la velocidad.
+    // Viene apagada (idle_on). Un toque la quita (ese toque no llega a lo de abajo).
+
+    static final int[] IDLE_MIN = {1, 2, 5, 10, 15, 30};
+    static final int[] IDLE_COLORS = {0xFFFFFFFF, 0, 0xFF9AA0A8, 0xFFFFB13B};   // 0 = color de acento
+    private FrameLayout idleView;
+    private TextView idleClock, idleDate, idleSpeedTv;
+    private Gauge idleGauge;
+    private boolean idleSwallow;
+
+    private final Runnable idleRun = new Runnable() { public void run() { showIdle(); } };
+
+    private void idleReset() {
+        h.removeCallbacks(idleRun);
+        if (prefs != null && prefs.getBoolean("idle_on", false))
+            h.postDelayed(idleRun, prefs.getInt("idle_min", 2) * 60000L);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent e) {
+        if (idleView != null || idleSwallow) {
+            // el toque que despierta la pantalla no hace nada más
+            if (e.getAction() == MotionEvent.ACTION_DOWN) { hideIdle(); idleSwallow = true; }
+            if (e.getAction() == MotionEvent.ACTION_UP || e.getAction() == MotionEvent.ACTION_CANCEL) { idleSwallow = false; idleReset(); }
+            return true;
+        }
+        if (e.getAction() == MotionEvent.ACTION_DOWN) idleReset();
+        return super.dispatchTouchEvent(e);
+    }
+
+    private int idleColor() {
+        int c = IDLE_COLORS[Math.max(0, Math.min(IDLE_COLORS.length - 1, prefs.getInt("idle_color", 0)))];
+        return c == 0 ? RED : c;
+    }
+
+    private void showIdle() {
+        if (root == null || idleView != null) return;
+        float keep = s;
+        s = uiS > 0 ? uiS : s;
+        try { showIdle0(); } catch (Throwable ignored) { } finally { s = keep; }
+    }
+
+    private void showIdle0() {
+        int col = idleColor();
+        float f = new float[]{1f, 1.25f, 1.5f}[Math.max(0, Math.min(2, prefs.getInt("idle_size", 0)))];
+        int sp = prefs.getInt("idle_speed", prefs.getInt("speedo", 0));   // 0 digital, 1 analógico, 2 mixto, 3 sin velocidad
+        boolean speedOn = sp != 3 && prefs.getBoolean("car_speed", true);
+        FrameLayout ov = new FrameLayout(this);
+        ov.setBackgroundColor(Color.BLACK);
+        LinearLayout box = new LinearLayout(this);
+        box.setOrientation(vertical ? LinearLayout.VERTICAL : LinearLayout.HORIZONTAL);
+        box.setGravity(Gravity.CENTER);
+        LinearLayout tc = new LinearLayout(this);
+        tc.setOrientation(LinearLayout.VERTICAL);
+        tc.setGravity(Gravity.CENTER);
+        idleClock = tv("", 150 * f, col, false);
+        idleClock.setGravity(Gravity.CENTER);
+        idleDate = tv("", 30 * f, col, false);
+        idleDate.setGravity(Gravity.CENTER);
+        idleDate.setAlpha(0.7f);
+        idleDate.setPadding(0, (int) (10 * s), 0, 0);
+        tc.addView(idleClock, new LinearLayout.LayoutParams(-2, -2));
+        tc.addView(idleDate, new LinearLayout.LayoutParams(-2, -2));
+        box.addView(tc, new LinearLayout.LayoutParams(-2, -2));
+        if (speedOn) {
+            View speed;
+            float gap = 56 * s;
+            if (sp == 0) {
+                LinearLayout sv = new LinearLayout(this);
+                sv.setOrientation(LinearLayout.HORIZONTAL);
+                sv.setGravity(Gravity.BOTTOM);
+                idleSpeedTv = tv("--", 110 * f, col, true);
+                TextView u = tv(useMph() ? "mph" : "km/h", 30 * f, col, false);
+                u.setAlpha(0.7f);
+                u.setPadding((int) (10 * s), 0, 0, (int) (14 * s * f));
+                sv.addView(idleSpeedTv);
+                sv.addView(u);
+                speed = sv;
+            } else {
+                idleGauge = new Gauge(this, s * f);
+                idleGauge.setColors(RED, col, (col & 0x00FFFFFF) | 0xB0000000);
+                idleGauge.setUnit(useMph());
+                idleGauge.setNumber(sp == 2);
+                speed = idleGauge;
+            }
+            int gs = (int) (260 * s * f);
+            LinearLayout.LayoutParams lp = sp == 0 ? new LinearLayout.LayoutParams(-2, -2) : new LinearLayout.LayoutParams(gs, gs);
+            if (vertical) lp.topMargin = (int) gap; else lp.leftMargin = (int) (gap * 1.5f);
+            box.addView(speed, lp);
+        }
+        ov.addView(box, new FrameLayout.LayoutParams(-1, -1));
+        idleView = ov;
+        root.addView(ov, new FrameLayout.LayoutParams(-1, -1));
+        updateIdleClock();
+        setGps(lastFix > 0, lastKmh);
+    }
+
+    private void hideIdle() {
+        if (idleView == null) return;
+        try { root.removeView(idleView); } catch (Throwable ignored) { }
+        idleView = null; idleClock = idleDate = idleSpeedTv = null; idleGauge = null;
+    }
+
+    private void updateIdleClock() {
+        if (idleClock == null) return;
+        Date now = new Date();
+        String fmt = prefs.getString("clock", "auto");
+        boolean h24 = "24".equals(fmt) || ("auto".equals(fmt) && android.text.format.DateFormat.is24HourFormat(this));
+        idleClock.setText(I18n.sdf(h24 ? "HH:mm" : "h:mm").format(now));
+        String d = I18n.sdf(I18n.datePattern()).format(now);
+        idleDate.setText(d.substring(0, 1).toUpperCase(I18n.loc) + d.substring(1));
     }
 
     /** Android 6+: respuesta a la solicitud de permisos. */
@@ -481,6 +597,7 @@ public class Main extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
+        h.removeCallbacks(idleRun);
         stopGps();
         h.removeCallbacks(ticker);
         h.removeCallbacks(progressTick);
@@ -558,6 +675,7 @@ public class Main extends Activity {
                     prefs.edit().putString("theme", "tema:claro".equals(v) ? "light" : "tema:sistema".equals(v) ? "system" : "dark").apply();
                     applyTheme(); applyAccent(); rebuild();
                 }
+                else if ("reposo".equals(v)) h.postDelayed(new Runnable() { public void run() { showIdle(); } }, 1500);
                 else if (v.startsWith("pref:") && v.indexOf('=') > 5) {
                     // pref:clave=valor (true/false, número o texto); «pref:clave=» la borra
                     String k = v.substring(5, v.indexOf('=')), val = v.substring(v.indexOf('=') + 1);
@@ -894,6 +1012,7 @@ public class Main extends Activity {
 
     private void build(int W, int H) {
         root.removeAllViews();
+        idleView = null; idleClock = idleDate = idleSpeedTv = null; idleGauge = null;
         // versión de prueba: simular otra pantalla (p. ej. una ancha de 1920x720 en una tablet)
         int sim = getPackageName().endsWith(".debug") ? prefs.getInt("sim_screen", 0) : 0;
         if (sim > 0) {
@@ -3388,6 +3507,7 @@ public class Main extends Activity {
     // ───────────────────────── reloj, GPS, audio ─────────────────────────
 
     private void updateClock() {
+        updateIdleClock();
         if (timeTv == null) return;
         Date now = new Date();
         String fmt = prefs.getString("clock", "auto");
@@ -3437,7 +3557,15 @@ public class Main extends Activity {
         try { lm.removeUpdates(netListener); } catch (Exception ignored) { }
     }
 
+    private float lastKmh;
+
     private void setGps(boolean ok, float kmh) {
+        lastKmh = kmh;
+        if (idleView != null) {
+            float iv = speedFix(useMph() ? kmh * 0.621371f : kmh);
+            if (idleSpeedTv != null) idleSpeedTv.setText(ok ? String.valueOf(Math.round(kmh < 2 ? 0 : iv)) : "--");
+            if (idleGauge != null) idleGauge.setSpeed(kmh < 2 ? 0 : iv, ok);
+        }
         if (speedTv == null) return;
         if (!ok) lastFix = 0;
         float v = speedFix(useMph() ? kmh * 0.621371f : kmh);
@@ -5228,6 +5356,36 @@ public class Main extends Activity {
             new IntCb() { public void on(int i) {
                 prefs.edit().putString("clock", i == 1 ? "12" : i == 2 ? "24" : "auto").apply(); updateClock(); showSettings(settingsCat);
             }});
+        // 2.22: pantalla en reposo (#27, #28), apagada por defecto
+        LinearLayout idl = section(body, "Pantalla en reposo");
+        final boolean idleOn = prefs.getBoolean("idle_on", false);
+        toggle(idl, "Pantalla en reposo", "Si no tocas la pantalla un rato, se pone negra con la hora, la fecha y la velocidad. Un toque la quita",
+            idleOn, new IntCb() { public void on(int i) {
+                prefs.edit().putBoolean("idle_on", i == 1).apply(); idleReset(); showSettings(settingsCat);
+            }});
+        if (idleOn) {
+            String[] mins = new String[IDLE_MIN.length];
+            int mSel = 1;
+            for (int i = 0; i < IDLE_MIN.length; i++) {
+                mins[i] = I18n.t(IDLE_MIN[i] == 1 ? "1 minuto" : IDLE_MIN[i] + " minutos");
+                if (IDLE_MIN[i] == prefs.getInt("idle_min", 2)) mSel = i;
+            }
+            choice(idl, "Después de", "Tiempo sin tocar la pantalla", mins, mSel, new IntCb() { public void on(int i) {
+                prefs.edit().putInt("idle_min", IDLE_MIN[i]).apply(); idleReset(); showSettings(settingsCat);
+            }});
+            choice(idl, "Velocidad", "Con el diseño de velocímetro que prefieras", new String[]{"Digital", "Analógico", "Mixto", "Sin velocidad"},
+                prefs.getInt("idle_speed", prefs.getInt("speedo", 0)), new IntCb() { public void on(int i) {
+                    prefs.edit().putInt("idle_speed", i).apply(); showSettings(settingsCat);
+                }});
+            segmented(idl, "Tamaño", null, new String[]{"Normal", "Grande", "Muy grande"}, prefs.getInt("idle_size", 0), new IntCb() { public void on(int i) {
+                prefs.edit().putInt("idle_size", i).apply(); showSettings(settingsCat);
+            }});
+            choice(idl, "Color de la letra", null, new String[]{"Blanco", "Color de acento", "Gris suave", "Ámbar"},
+                prefs.getInt("idle_color", 0), new IntCb() { public void on(int i) {
+                    prefs.edit().putInt("idle_color", i).apply(); showSettings(settingsCat);
+                }});
+            row(idl, "Ver ahora", "Toca la pantalla para volver", null, new Runnable() { public void run() { showIdle(); } });
+        }
         if (SDK >= 19) {
             LinearLayout scr = section(body, "Pantalla completa");
             toggle(scr, "Ocultar la barra del sistema", "Esconde también la barra de navegación de tu pantalla (abajo o al costado). Desliza desde el borde para verla un momento",
