@@ -110,8 +110,12 @@ public class LiveMapView extends View {
     private final Paint halo = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint text = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint corner = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint routeOut = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint routeIn = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint destPin = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Path corners = new Path();
     private final Path tri = new Path();
+    private final Path routePath = new Path();
     private final Rect dst = new Rect();
 
     public LiveMapView(Context c, float scale, float radiusPx) {
@@ -129,6 +133,14 @@ public class LiveMapView extends View {
         text.setColor(Main.LIGHT ? 0x99000000 : 0x99FFFFFF);
         text.setTextSize(10 * s);
         corner.setColor(Main.BG);
+        routeOut.setStyle(Paint.Style.STROKE);
+        routeOut.setStrokeCap(Paint.Cap.ROUND);
+        routeOut.setStrokeJoin(Paint.Join.ROUND);
+        routeOut.setStrokeWidth(11 * s);
+        routeIn.setStyle(Paint.Style.STROKE);
+        routeIn.setStrokeCap(Paint.Cap.ROUND);
+        routeIn.setStrokeJoin(Paint.Join.ROUND);
+        routeIn.setStrokeWidth(6 * s);
         // Sin capa por software: el mapa se dibuja con la GPU (mucho más fluido). Las esquinas redondeadas no se
         // recortan (clipPath no funciona con GPU antes de Android 4.3): se tapan con el color del fondo.
         Net.init(c);
@@ -321,10 +333,10 @@ public class LiveMapView extends View {
             double latR = Math.toRadians(dLat);
             double fy = (1.0 - Math.log(Math.tan(latR) + 1.0 / Math.cos(latR)) / Math.PI) / 2.0 * n;
             float ts = 256 * s;                                    // tamaño de tesela en pantalla
-            float cx = w / 2f, cy = h * 0.42f;                     // la posición queda arriba del panel inferior
+            boolean rot = headingUp && !Float.isNaN(dBr);
+            float cx = w / 2f, cy = Nav.active != null ? (rot ? h * 0.54f : h * 0.50f) : h * 0.42f;
             int tx0 = (int) Math.floor(fx - cx / ts) - 1, tx1 = (int) Math.floor(fx + (w - cx) / ts) + 1;
             int ty0 = (int) Math.floor(fy - cy / ts) - 1, ty1 = (int) Math.floor(fy + (h - cy) / ts) + 1;
-            boolean rot = headingUp && !Float.isNaN(dBr);
             if (rot) {
                 // al girar hacen falta teselas en un círculo alrededor de la posición (hasta la esquina más lejana)
                 float rr = (float) Math.sqrt(Math.max(cx, w - cx) * Math.max(cx, w - cx) + Math.max(cy, h - cy) * Math.max(cy, h - cy)) / ts;
@@ -356,11 +368,12 @@ public class LiveMapView extends View {
                     }
                 }
             }
+            drawRoute(c, fx, fy, cx, cy, ts, n);
             if (rot) c.restore();
             drawMarker(c, cx, cy, rot);
             String attr = anyFile ? I18n.t("© colaboradores de OpenStreetMap") + " · mapsforge"
                     : provider == 5 ? "© Esri, HERE, Garmin, © OpenStreetMap" : provider == 4 ? "© OpenStreetMap, SRTM · © OpenTopoMap" : I18n.t("© colaboradores de OpenStreetMap");
-            c.drawText(attr, w - text.measureText(attr) - 10 * s, 14 * s, text);
+            c.drawText(attr, w - text.measureText(attr) - 10 * s, (Nav.active != null ? 96 : 14) * s, text);
         }
         corner.setColor(Main.BG);
         c.drawPath(corners, corner);
@@ -386,6 +399,53 @@ public class LiveMapView extends View {
         arrow.setColor(0xFFFFFFFF);
         c.drawPath(tri, arrow);
         c.restore();
+    }
+
+    private void drawRoute(Canvas c, double fx, double fy, float cx, float cy, float ts, int n) {
+        Nav.Route r = Nav.active;
+        if (r == null || r.pts == null || r.pts.length < 4) return;
+        int nPts = r.pts.length / 2;
+        int start = Math.max(0, Math.min(nPts - 1, Nav.curPtIdx));
+        routePath.reset();
+        routePath.moveTo(cx, cy);
+        float lastX = cx, lastY = cy;
+        for (int i = start + 1; i < nPts; i++) {
+            double lat = Math.max(-85.0511, Math.min(85.0511, r.pts[i * 2]));
+            double lon = r.pts[i * 2 + 1];
+            double px = (lon + 180.0) / 360.0 * n;
+            double dx = px - fx;
+            if (dx > n * 0.5) dx -= n;
+            else if (dx < -n * 0.5) dx += n;
+            double lr = Math.toRadians(lat);
+            double py = (1.0 - Math.log(Math.tan(lr) + 1.0 / Math.cos(lr)) / Math.PI) / 2.0 * n;
+            float sx = cx + (float) (dx * ts);
+            float sy = cy + (float) ((py - fy) * ts);
+            if (i == nPts - 1 || Math.abs(sx - lastX) >= 1.5f || Math.abs(sy - lastY) >= 1.5f) {
+                routePath.lineTo(sx, sy);
+                lastX = sx;
+                lastY = sy;
+            }
+        }
+        routeOut.setColor(Main.LIGHT ? 0x66000000 : 0xCC0D0E11);
+        routeIn.setColor(Main.RED);
+        c.drawPath(routePath, routeOut);
+        c.drawPath(routePath, routeIn);
+
+        // destino
+        double dlat = Math.max(-85.0511, Math.min(85.0511, r.destLat));
+        double dpx = (r.destLon + 180.0) / 360.0 * n;
+        double ddx = dpx - fx;
+        if (ddx > n * 0.5) ddx -= n;
+        else if (ddx < -n * 0.5) ddx += n;
+        double dlr = Math.toRadians(dlat);
+        double dpy = (1.0 - Math.log(Math.tan(dlr) + 1.0 / Math.cos(dlr)) / Math.PI) / 2.0 * n;
+        float dxS = cx + (float) (ddx * ts);
+        float dyS = cy + (float) ((dpy - fy) * ts);
+        destPin.setStyle(Paint.Style.FILL);
+        destPin.setColor(0xFFFFFFFF);
+        c.drawCircle(dxS, dyS, 10 * s, destPin);
+        destPin.setColor(Main.RED);
+        c.drawCircle(dxS, dyS, 6.5f * s, destPin);
     }
 
     // ── teselas ──

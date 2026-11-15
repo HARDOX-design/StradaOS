@@ -895,3 +895,70 @@ Ocultar la barra del sistema	Hide the system bar
 Esconde también la barra de navegación de tu pantalla (abajo o al costado). Desliza desde el borde para verla un momento	Also hides your screen's navigation bar (bottom or side). Swipe from the edge to see it for a moment
 Corrección del velocímetro	Speedometer correction
 Suma o resta a la velocidad del GPS para que coincida con el tablero de tu carro	Adds or subtracts from the GPS speed so it matches your car's dashboard
+# Navegación paso a paso en vivo
+Ir a…	Go to…
+Recalculando…	Rerouting…
+Llegaste a tu destino	You have arrived at your destination
+Activa el mapa en vivo en Ajustes → Mapa y clima	Turn on Live map in Settings → Map & weather
+Escribe una dirección o lugar	Type an address or place
+RECIENTES	RECENTS
+¿A dónde vamos?	Where to?
+Buscar	Search
+Detener	Stop
+Buscando…	Searching…
+No se pudo buscar	Couldn't search
+No se encontraron resultados	No results found
+Resultados	Results
+Esperando señal GPS para calcular la ruta	Waiting for GPS signal to calculate the route
+Calculando ruta…	Calculating route…
+No se pudo calcular la ruta	Couldn't calculate route
+Cambiar destino	Change destination
+Silenciar voz de guía	Mute voice guidance
+Activar voz de guía	Turn on voice guidance
+Vista Norte arriba	North up view
+Vista en dirección de marcha	Direction of travel view
+Abrir en otra app	Open in another app
+Detener navegación	Stop navigation
+Navegación en el mapa	Map navigation
+Voz activada	Voice on
+Voz silenciada	Voice muted
+Automático · En el mapa de StradaOS	Automatic · On StradaOS map
+En el mapa de StradaOS	On StradaOS map
+Por defecto usa la navegación en el mapa de StradaOS (o elige Waze, Maps, OsmAnd…)	Uses StradaOS map navigation by default (or choose Waze, Maps, OsmAnd…)
+Voz de navegación	Navigation voice
+Indicaciones paso a paso habladas durante el recorrido	Spoken turn-by-turn directions during the trip
+★  En el mapa de StradaOS (integrada)	★  On StradaOS map (built-in)
+Guardado: Navegación en el mapa	Saved: Map navigation
+Coordenadas	Coordinates
+No se encontró ruta	No route found
+Ruta recalculada	Route recalculated
+Sal por {}	Start on {}
+Inicia el recorrido	Start driving
+En la rotonda, salida {} hacia {}	At the roundabout, take exit {} onto {}
+En la rotonda, toma la salida {}	At the roundabout, take exit {}
+En la rotonda, sigue hacia {}	At the roundabout, continue onto {}
+En la rotonda, toma la salida	At the roundabout, take the exit
+Haz un giro en U en {}	Make a U-turn onto {}
+Haz un giro en U	Make a U-turn
+Gira levemente a la derecha en {}	Turn slight right onto {}
+Gira levemente a la derecha	Turn slight right
+Gira a la derecha en {}	Turn right onto {}
+Gira a la derecha	Turn right
+Gira fuerte a la derecha en {}	Turn sharp right onto {}
+Gira fuerte a la derecha	Turn sharp right
+Gira levemente a la izquierda en {}	Turn slight left onto {}
+Gira levemente a la izquierda	Turn slight left
+Gira a la izquierda en {}	Turn left onto {}
+Gira a la izquierda	Turn left
+Gira fuerte a la izquierda en {}	Turn sharp left onto {}
+Gira fuerte a la izquierda	Turn sharp left
+Incorpórate a {}	Merge onto {}
+Toma el desvío	Take the ramp
+Continúa por {}	Continue on {}
+Sigue recto	Go straight
+En 500 metros	In 500 meters
+En 150 metros	In 150 meters
+En 500 pies	In 500 feet
+En un cuarto de milla	In a quarter mile
+En {}	In {}
+

@@ -151,6 +151,9 @@ public class Main extends Activity {
     private NowPlaying nowPlaying;
     private Boolean playingState;
     private TextView sourceTv, timePosTv, mapTagTv, cpSubTv;
+    private View mapTagBox, navSearchBtn, navHud;
+    private Nav.ManeuverView navTurnIc;
+    private TextView navDistTv, navStepTv, navEtaTv;
     private LiveMapView liveMap;
     private MediaWatcher mediaWatcher;
     private boolean askedPerms;
@@ -425,6 +428,7 @@ public class Main extends Activity {
         try { lm.removeUpdates(odoListener); } catch (Throwable ignored) { }
         odoRunning = false;
         if (odoPending > 0) prefs.edit().putFloat("odo_gps_m", prefs.getFloat("odo_gps_m", 0) + odoPending).apply();
+        Nav.shutdownTts();
         Guard.stopWatchdog();
         super.onDestroy();
     }
@@ -723,6 +727,24 @@ public class Main extends Activity {
                         .putString("dock_3", "app:" + new ComponentName(r.activityInfo.packageName, r.activityInfo.name).flattenToString())
                         .putString("dock_3_name", "Mi app").apply();
                     rebuild();
+                }
+                else if ("nav-demo".equals(v)) {
+                    Nav.Route nr = new Nav.Route();
+                    nr.pts = new double[]{4.6533, -74.0836, 4.6562, -74.0807, 4.6590, -74.0780, 4.6615, -74.0810};
+                    nr.cumDistM = new double[]{0, 455, 895, 1330};
+                    nr.totalDistM = 1330; nr.totalDurS = 180;
+                    nr.destName = "Parque Simón Bolívar"; nr.destLat = 4.6615; nr.destLon = -74.0810;
+                    Nav.Step s0 = new Nav.Step(); s0.lat = 4.6533; s0.lon = -74.0836; s0.icon = 0; s0.distM = 455; s0.street = "Av. Carrera 50"; s0.instruction = "Continúa por Av. Carrera 50";
+                    Nav.Step s1 = new Nav.Step(); s1.lat = 4.6562; s1.lon = -74.0807; s1.icon = 6; s1.distM = 440; s1.street = "Calle 53"; s1.instruction = "Gira a la izquierda en Calle 53";
+                    Nav.Step s2 = new Nav.Step(); s2.lat = 4.6615; s2.lon = -74.0810; s2.icon = 9; s2.distM = 0; s2.street = ""; s2.instruction = "Llegaste a tu destino";
+                    nr.steps.add(s0); nr.steps.add(s1); nr.steps.add(s2);
+                    nr.stepPtIdx = new int[]{0, 2, 3};
+                    Nav.activate(nr);
+                    LiveMapView.headingUp = true;
+                    Location l = new Location(LocationManager.GPS_PROVIDER);
+                    l.setLatitude(4.6540); l.setLongitude(-74.0829); l.setBearing(45); l.setSpeed(11); l.setTime(System.currentTimeMillis());
+                    feedMap(l);
+                    updateNavHud();
                 }
             } catch (Throwable e) {
                 Guard.log("Prueba «" + v + "» falló: " + e);
@@ -2282,6 +2304,8 @@ public class Main extends Activity {
     }
 
     private void buildAaCardRest(FrameLayout card) {
+        LinearLayout topRow = new LinearLayout(this);
+        topRow.setGravity(Gravity.CENTER_VERTICAL);
         LinearLayout tag = new LinearLayout(this);
         tag.setGravity(Gravity.CENTER_VERTICAL);
         tag.setBackground(round((CARD & 0x00FFFFFF) | 0xE0000000, 12));
@@ -2290,10 +2314,72 @@ public class Main extends Activity {
         mapTagTv = tv("Buscando GPS…", 13, TEXT, true);
         mapTagTv.setPadding((int) (8 * s), 0, 0, 0);
         tag.addView(mapTagTv);
-        placeWrap(card, tag, 16, 16);
+        topRow.addView(tag);
         tag.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { fixGps(); }
         });
+
+        LinearLayout goBtn = new LinearLayout(this);
+        goBtn.setGravity(Gravity.CENTER_VERTICAL);
+        goBtn.setBackground(round((CARD & 0x00FFFFFF) | 0xE0000000, 12));
+        goBtn.setPadding((int) (10 * s), (int) (7 * s), (int) (12 * s), (int) (7 * s));
+        ImageView goIc = icon("navigation", 16);
+        goIc.setColorFilter(RED);
+        goBtn.addView(goIc, new LinearLayout.LayoutParams((int) (16 * s), (int) (16 * s)));
+        TextView goTv = tv("Ir a…", 13, TEXT, true);
+        goTv.setPadding((int) (6 * s), 0, 0, 0);
+        goBtn.addView(goTv);
+        LinearLayout.LayoutParams glp = new LinearLayout.LayoutParams(-2, -2);
+        glp.leftMargin = (int) (8 * s);
+        topRow.addView(goBtn, glp);
+        goBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) { openNavSearch(); }
+        });
+        if (!prefs.getBoolean("map_live", true)) goBtn.setVisibility(View.GONE);
+        navSearchBtn = goBtn;
+        mapTagBox = topRow;
+        placeWrap(card, topRow, 16, 16);
+
+        LinearLayout hud = new LinearLayout(this);
+        hud.setOrientation(LinearLayout.HORIZONTAL);
+        hud.setGravity(Gravity.CENTER_VERTICAL);
+        hud.setBackground(round((CARD & 0x00FFFFFF) | 0xEB000000, 16));
+        hud.setPadding((int) (10 * s), (int) (8 * s), (int) (10 * s), (int) (8 * s));
+        FrameLayout turnBox = new FrameLayout(this);
+        turnBox.setBackground(round(RED, 12));
+        navTurnIc = new Nav.ManeuverView(this);
+        turnBox.addView(navTurnIc, new FrameLayout.LayoutParams(-1, -1));
+        hud.addView(turnBox, new LinearLayout.LayoutParams((int) (48 * s), (int) (48 * s)));
+        LinearLayout hudMid = new LinearLayout(this);
+        hudMid.setOrientation(LinearLayout.VERTICAL);
+        hudMid.setPadding((int) (12 * s), 0, (int) (8 * s), 0);
+        LinearLayout hudTop = new LinearLayout(this);
+        hudTop.setGravity(Gravity.CENTER_VERTICAL);
+        navDistTv = tv("", 19, TEXT, true);
+        hudTop.addView(navDistTv, new LinearLayout.LayoutParams(0, -2, 1));
+        navEtaTv = tv("", 12, MUTED, false);
+        navEtaTv.setGravity(Gravity.RIGHT);
+        hudTop.addView(navEtaTv);
+        hudMid.addView(hudTop);
+        navStepTv = tv("", 13, SOFT, false);
+        navStepTv.setSingleLine(false);
+        navStepTv.setMaxLines(2);
+        navStepTv.setPadding(0, (int) (2 * s), 0, 0);
+        hudMid.addView(navStepTv);
+        hud.addView(hudMid, new LinearLayout.LayoutParams(0, -2, 1));
+        TextView stopBtn = tv("✕", 14, TEXT, true);
+        stopBtn.setGravity(Gravity.CENTER);
+        stopBtn.setBackground(round(BTN, 17));
+        hud.addView(stopBtn, new LinearLayout.LayoutParams((int) (34 * s), (int) (34 * s)));
+        stopBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) { stopInternalNav(); }
+        });
+        hud.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) { openNavMenu(); }
+        });
+        navHud = hud;
+        place(card, hud, 12, 12, mapW - 24, 72);
+        updateNavHud();
 
         // 2.18: qué botones de conexión se ven (Reinaldo, MIGSGx #12). Con uno o ninguno, el clima usa el espacio libre.
         String cm = prefs.getString("conn_buttons", "both");
@@ -2663,6 +2749,19 @@ public class Main extends Activity {
     private void feedMap(Location l) {
         if (l != null) { wLat = l.getLatitude(); wLon = l.getLongitude(); }
         if (liveMap == null || l == null) return;
+        if (Nav.active != null) {
+            Nav.onLocation(this, l, useMph(), new Runnable() {
+                public void run() {
+                    if (Nav.active == null) {
+                        LiveMapView.headingUp = prefs.getBoolean("map_heading", false);
+                        toast("Llegaste a tu destino");
+                    }
+                    updateNavHud();
+                    if (liveMap != null) liveMap.invalidate();
+                }
+            });
+            updateNavHud();
+        }
         float kmh = l.hasSpeed() ? l.getSpeed() * 3.6f : 0;
         liveMap.setPosition(l.getLatitude(), l.getLongitude(), l.hasBearing() && kmh > 4 ? l.getBearing() : Float.NaN, kmh);
         liveMap.setVisibility(View.VISIBLE);
@@ -2751,6 +2850,24 @@ public class Main extends Activity {
         else if (liveMap.usingFile()) mapTagTv.setText(I18n.t(live ? "Mapa sin conexión" : "Sin señal GPS · mapa sin conexión"));
         else if (liveMap.offline()) mapTagTv.setText(I18n.t(live ? "En vivo · sin internet" : "Sin señal GPS ni internet"));
         else mapTagTv.setText(I18n.t(live ? "Mapa en vivo" : "Sin señal GPS · última posición"));
+    }
+
+    private void updateNavHud() {
+        if (navHud == null || mapTagBox == null) return;
+        Nav.Route r = Nav.active;
+        if (r == null) {
+            navHud.setVisibility(View.GONE);
+            mapTagBox.setVisibility(View.VISIBLE);
+            return;
+        }
+        mapTagBox.setVisibility(View.GONE);
+        navHud.setVisibility(View.VISIBLE);
+        Nav.Step st = Nav.currentStep();
+        boolean mph = useMph();
+        if (navTurnIc != null) navTurnIc.setIcon(st != null ? st.icon : 0);
+        if (navDistTv != null) navDistTv.setText(Nav.rerouting ? I18n.t("Recalculando…") : Nav.fmtStepDist(Nav.distToStepM, mph));
+        if (navEtaTv != null) navEtaTv.setText(Nav.fmtEta(Nav.remDurS, Nav.remDistM, mph));
+        if (navStepTv != null) navStepTv.setText(st != null && st.instruction != null ? I18n.t(st.instruction) : (r.destName != null ? r.destName : ""));
     }
 
     private void buildAudioCard() {
@@ -2978,7 +3095,7 @@ public class Main extends Activity {
             else if ("bt".equals(id)) slot = 1;
             else if ("cam".equals(id)) slot = 2;
             else if ("files".equals(id)) slot = 3;
-            else if ("nav".equals(id)) saved = prefs.getString("nav_app", null);
+            else if ("nav".equals(id)) { saved = prefs.getString("nav_app", null); if ("internal".equals(saved)) saved = null; }
             else if ("music".equals(id)) saved = prefs.getString("music_app", null);
             else return null;
             if (slot >= 0) {
@@ -3251,13 +3368,201 @@ public class Main extends Activity {
         pickFor("music_app", "Música", null);
     }
 
-    /** App de navegación elegida; si no hay, la primera conocida que esté instalada (Waze, Maps, OsmAnd…). */
+    /** Navegación en el mapa de StradaOS (por defecto) o app externa elegida. */
     private void openNavApp() {
-        if (launchSaved("nav_app")) return;
+        String navPref = prefs.getString("nav_app", null);
+        if (prefs.getBoolean("map_live", true) && (navPref == null || "internal".equals(navPref))) {
+            if (Nav.active != null) openNavMenu();
+            else openNavSearch();
+            return;
+        }
+        openExternalNavApp();
+    }
+
+    private void openExternalNavApp() {
+        String navPref = prefs.getString("nav_app", null);
+        if (navPref != null && !"internal".equals(navPref) && launchSaved("nav_app")) return;
         String p = firstInstalled(NAV_PKGS);
         if (p != null && launchPkg(p)) return;
         toast("Elige tu app de navegación");
         pickFor("nav_app", "Navegación", null);
+    }
+
+    private void openNavSearch() {
+        if (!prefs.getBoolean("map_live", true)) { toast("Activa el mapa en vivo en Ajustes → Mapa y clima"); return; }
+        final android.app.AlertDialog[] dref = new android.app.AlertDialog[1];
+        LinearLayout wrap = new LinearLayout(this);
+        wrap.setOrientation(LinearLayout.VERTICAL);
+        int pad = (int) (20 * s);
+        wrap.setPadding(pad, pad / 2, pad, 0);
+
+        final android.widget.EditText et = field();
+        et.setSingleLine(true);
+        et.setHint(I18n.t("Escribe una dirección o lugar"));
+        et.setImeOptions(android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH);
+        et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH
+                        || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN)) {
+                    if (dref[0] != null) try { dref[0].dismiss(); } catch (Throwable ignored) { }
+                    searchNav(et.getText().toString());
+                    return true;
+                }
+                return false;
+            }
+        });
+        wrap.addView(et, new LinearLayout.LayoutParams(-1, -2));
+
+        final List<Nav.Place> recents = Nav.recents(this);
+        if (!recents.isEmpty()) {
+            TextView rl = tv("RECIENTES", 11, MUTED, true);
+            rl.setPadding(0, (int) (14 * s), 0, (int) (6 * s));
+            wrap.addView(rl);
+            for (int i = 0; i < recents.size(); i++) {
+                final Nav.Place p = recents.get(i);
+                LinearLayout row = new LinearLayout(this);
+                row.setOrientation(LinearLayout.VERTICAL);
+                row.setBackground(round(INNER, 12));
+                row.setPadding((int) (14 * s), (int) (10 * s), (int) (14 * s), (int) (10 * s));
+                TextView nt = tv("", 15, TEXT, true);
+                nt.setText(p.name);
+                row.addView(nt);
+                if (p.sub != null && p.sub.length() > 0) {
+                    TextView st = tv("", 12, MUTED, false);
+                    st.setText(p.sub);
+                    st.setPadding(0, (int) (2 * s), 0, 0);
+                    row.addView(st);
+                }
+                LinearLayout.LayoutParams rlp = new LinearLayout.LayoutParams(-1, -2);
+                rlp.bottomMargin = (int) (6 * s);
+                wrap.addView(row, rlp);
+                row.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        if (dref[0] != null) try { dref[0].dismiss(); } catch (Throwable ignored) { }
+                        startInternalNav(p);
+                    }
+                });
+            }
+        }
+
+        TB b = new TB(this, dlg()).wide()
+            .setTitle("¿A dónde vamos?")
+            .setView(wrap)
+            .setPositiveButton("Buscar", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface d, int w) { searchNav(et.getText().toString()); }
+            })
+            .setNegativeButton("Cancelar", null);
+        if (Nav.active != null) {
+            b.setNeutralButton("Detener", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface d, int w) { stopInternalNav(); }
+            });
+        }
+        dref[0] = b.show();
+    }
+
+    private void searchNav(String query) {
+        final String q = query == null ? "" : query.trim();
+        if (q.length() == 0) { toast("Escribe una dirección o lugar"); return; }
+        toast("Buscando…");
+        Nav.search(q, wLat, wLon, new Nav.SearchCb() {
+            public void onResult(final List<Nav.Place> places, String error) {
+                if (isFinishing()) return;
+                if (places == null) { toast(error != null ? error : "No se pudo buscar"); return; }
+                if (places.isEmpty()) { toast("No se encontraron resultados"); return; }
+                BaseAdapter ad = new BaseAdapter() {
+                    public int getCount() { return places.size(); }
+                    public Object getItem(int pos) { return places.get(pos); }
+                    public long getItemId(int pos) { return pos; }
+                    public View getView(int pos, View cv, ViewGroup parent) {
+                        Nav.Place p = places.get(pos);
+                        LinearLayout row = new LinearLayout(Main.this);
+                        row.setOrientation(LinearLayout.VERTICAL);
+                        row.setPadding((int) (22 * s), (int) (12 * s), (int) (22 * s), (int) (12 * s));
+                        TextView t = tv("", 16, TEXT, true);
+                        t.setText(p.name);
+                        row.addView(t);
+                        if (p.sub != null && p.sub.length() > 0) {
+                            TextView sub = tv("", 13, MUTED, false);
+                            sub.setText(p.sub);
+                            sub.setPadding(0, (int) (2 * s), 0, 0);
+                            row.addView(sub);
+                        }
+                        return row;
+                    }
+                };
+                new TB(Main.this, dlg()).raw()
+                    .setTitle(I18n.t("Resultados") + ": " + q)
+                    .setAdapter(ad, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface d, int w) { startInternalNav(places.get(w)); }
+                    })
+                    .setNegativeButton("Cancelar", null)
+                    .show();
+            }
+        });
+    }
+
+    private void startInternalNav(final Nav.Place dest) {
+        if (Double.isNaN(wLat) || Double.isNaN(wLon)) seedLastLocation();
+        if (Double.isNaN(wLat) || Double.isNaN(wLon)) {
+            toast("Esperando señal GPS para calcular la ruta");
+            return;
+        }
+        Nav.saveRecent(this, dest);
+        if (Nav.active == null) Nav.savedHeadingUp = prefs.getBoolean("map_heading", false);
+        toast("Calculando ruta…");
+        Nav.startRoute(this, wLat, wLon, dest, new Nav.RouteCb() {
+            public void onRoute(Nav.Route r, String error) {
+                if (isFinishing()) return;
+                if (r == null) {
+                    toast(error != null ? error : "No se pudo calcular la ruta");
+                    return;
+                }
+                LiveMapView.headingUp = true;
+                updateNavHud();
+                if (liveMap != null) liveMap.invalidate();
+            }
+        });
+    }
+
+    private void stopInternalNav() {
+        Nav.stop();
+        LiveMapView.headingUp = prefs.getBoolean("map_heading", false);
+        updateNavHud();
+        if (liveMap != null) liveMap.invalidate();
+    }
+
+    private void openNavMenu() {
+        Nav.Route r = Nav.active;
+        if (r == null) { openNavSearch(); return; }
+        final boolean voice = prefs.getBoolean("nav_voice", true);
+        final boolean heading = LiveMapView.headingUp;
+        String[] opts = {
+            I18n.t("Cambiar destino"),
+            I18n.t(voice ? "Silenciar voz de guía" : "Activar voz de guía"),
+            I18n.t(heading ? "Vista Norte arriba" : "Vista en dirección de marcha"),
+            I18n.t("Abrir en otra app"),
+            I18n.t("Detener navegación")
+        };
+        new TB(this, dlg()).raw()
+            .setTitle(r.destName != null && r.destName.length() > 0 ? r.destName : I18n.t("Navegación en el mapa"))
+            .setItems(opts, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface d, int w) {
+                    if (w == 0) openNavSearch();
+                    else if (w == 1) {
+                        prefs.edit().putBoolean("nav_voice", !voice).apply();
+                        toast(!voice ? "Voz activada" : "Voz silenciada");
+                    } else if (w == 2) {
+                        LiveMapView.headingUp = !heading;
+                        if (liveMap != null) liveMap.invalidate();
+                    } else if (w == 3) {
+                        openExternalNavApp();
+                    } else {
+                        stopInternalNav();
+                    }
+                }
+            })
+            .setNegativeButton("Cerrar", null)
+            .show();
     }
 
     private boolean launchComponent(ComponentName cn) {
@@ -3273,6 +3578,9 @@ public class Main extends Activity {
 
     private String autoLabel(String key, String[] pkgs, String none) {
         String c = prefs.getString(key, null);
+        if ("nav_app".equals(key) && ("internal".equals(c) || (c == null && prefs.getBoolean("map_live", true)))) {
+            return I18n.t(c == null ? "Automático · En el mapa de StradaOS" : "En el mapa de StradaOS");
+        }
         if (c != null) return labelOf(c);
         String p = firstInstalled(pkgs);
         return p != null ? "Automático · " + labelOf(p) : none;
@@ -5200,8 +5508,11 @@ public class Main extends Activity {
         toggle(ml, "Mapa en vivo", "Apágalo si la pantalla va lenta: queda un mapa de adorno y el velocímetro sigue funcionando", prefs.getBoolean("map_live", true), new IntCb() { public void on(int i) {
             prefs.edit().putBoolean("map_live", i == 1).apply(); rebuild(); showSettings(settingsCat);
         }});
-        row(nv, "App de navegación preferida", "Se abre con el botón del mapa (Waze, Maps, OsmAnd…)", autoLabel("nav_app", NAV_PKGS, "Toca para elegir"),
+        row(nv, "App de navegación preferida", "Por defecto usa la navegación en el mapa de StradaOS (o elige Waze, Maps, OsmAnd…)", autoLabel("nav_app", NAV_PKGS, "Toca para elegir"),
             new Runnable() { public void run() { pickFor("nav_app", "Navegación"); } });
+        toggle(nv, "Voz de navegación", "Indicaciones paso a paso habladas durante el recorrido", prefs.getBoolean("nav_voice", true), new IntCb() { public void on(int i) {
+            prefs.edit().putBoolean("nav_voice", i == 1).apply(); showSettings(settingsCat);
+        }});
         LinearLayout m = mo;
         segmented(m, "Brillo del mapa", "Solo en modo oscuro", new String[]{"Bajo", "Medio", "Alto"}, prefs.getInt("map_bright", 1), new IntCb() { public void on(int i) {
             prefs.edit().putInt("map_bright", i).apply(); rebuild();
@@ -6509,11 +6820,15 @@ public class Main extends Activity {
     private void pickFor(final String key, String name, final Runnable after) {
         List<String[]> extra = new ArrayList<String[]>();
         extra.add(new String[]{"auto", "↺  Automático (por defecto)", "restart_alt"});
+        if ("nav_app".equals(key)) extra.add(new String[]{"internal", "★  En el mapa de StradaOS (integrada)", "navigation"});
         String[] pin = "nav_app".equals(key) ? NAV_PKGS : "music_app".equals(key) ? MUSIC_PKGS : null;
         pickApp("¿Qué app abre «" + name + "»?", extra, pin, true, new TargetCb() { public void on(String target) {
             if ("auto".equals(target)) {
                 prefs.edit().remove(key).apply();
                 toast("Restablecido");
+            } else if ("internal".equals(target)) {
+                prefs.edit().putString(key, "internal").apply();
+                toast("Guardado: Navegación en el mapa");
             } else {
                 String c = target.substring(4);
                 prefs.edit().putString(key, c).apply();
