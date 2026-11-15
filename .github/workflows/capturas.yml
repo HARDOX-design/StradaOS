@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       modo:
-        description: "redes (diseños del inicio) o proyecto (una captura por función, con mapa sin conexión)"
+        description: "redes (diseños del inicio), proyecto (una captura por función, con mapa sin conexión) o promo (imágenes promocionales de la 2.21)"
         default: redes
 
 permissions:
@@ -20,14 +20,14 @@ jobs:
       - name: Descargar StradaOS Prueba
         run: curl -fsSL --retry 5 -o prueba.apk "https://github.com/${GITHUB_REPOSITORY}/releases/download/prueba/StradaOS-prueba.apk"
       - name: Mapa de Colombia (con caché)
-        if: inputs.modo == 'proyecto'
+        if: inputs.modo == 'proyecto' || inputs.modo == 'promo'
         uses: actions/cache@v4
         with:
           path: colombia.map
           key: mapsforge-colombia-${{ github.run_id }}
           restore-keys: mapsforge-colombia-
       - name: Descargar colombia.map
-        if: inputs.modo == 'proyecto'
+        if: inputs.modo == 'proyecto' || inputs.modo == 'promo'
         run: '[ -s colombia.map ] || curl -fL --retry 5 -o colombia.map https://download.mapsforge.org/maps/v5/south-america/colombia.map'
       - name: Activar KVM
         run: |
