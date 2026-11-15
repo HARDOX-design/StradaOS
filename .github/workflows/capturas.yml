@@ -39,7 +39,8 @@ jobs:
         env:
           MODO: ${{ inputs.modo }}
         with:
-          api-level: 30
+          # promo-v (pantallas verticales) en Android 14: el emulador de Android 11 no pasa de 1200 px de alto
+          api-level: ${{ inputs.modo == 'promo-v' && 34 || 30 }}
           arch: x86_64
           target: default
           disable-animations: false
