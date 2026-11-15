@@ -112,6 +112,7 @@ public class LiveMapView extends View {
     private final Paint corner = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint routeOut = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint routeIn = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint routeBack = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint destPin = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Path corners = new Path();
     private final Path tri = new Path();
@@ -141,6 +142,10 @@ public class LiveMapView extends View {
         routeIn.setStrokeCap(Paint.Cap.ROUND);
         routeIn.setStrokeJoin(Paint.Join.ROUND);
         routeIn.setStrokeWidth(6 * s);
+        routeBack.setStyle(Paint.Style.STROKE);
+        routeBack.setStrokeCap(Paint.Cap.ROUND);
+        routeBack.setStrokeWidth(3.5f * s);
+        routeBack.setPathEffect(new android.graphics.DashPathEffect(new float[]{10 * s, 8 * s}, 0));
         // Sin capa por software: el mapa se dibuja con la GPU (mucho más fluido). Las esquinas redondeadas no se
         // recortan (clipPath no funciona con GPU antes de Android 4.3): se tapan con el color del fondo.
         Net.init(c);
@@ -246,7 +251,9 @@ public class LiveMapView extends View {
                 + "\n\nFuentes probadas:" + sources()
                 + "\n" + Net.initInfo + "\nAndroid " + android.os.Build.VERSION.RELEASE + " (API " + android.os.Build.VERSION.SDK_INT + ")";
     }
+    static volatile boolean netOffline;
     public boolean offline() { return netErrors >= 3; }
+    static boolean isOffline() { return netOffline; }
 
     private static String sources() {
         StringBuilder b = new StringBuilder();
@@ -401,25 +408,41 @@ public class LiveMapView extends View {
         c.restore();
     }
 
+    private float mapX(double lon, double fx, float cx, float ts, int n) {
+        double dx = (lon + 180.0) / 360.0 * n - fx;
+        if (dx > n * 0.5) dx -= n;
+        else if (dx < -n * 0.5) dx += n;
+        return cx + (float) (dx * ts);
+    }
+
+    private float mapY(double lat, double fy, float cy, float ts, int n) {
+        double cLat = Math.max(-85.0511, Math.min(85.0511, lat));
+        double lr = Math.toRadians(cLat);
+        double py = (1.0 - Math.log(Math.tan(lr) + 1.0 / Math.cos(lr)) / Math.PI) / 2.0 * n;
+        return cy + (float) ((py - fy) * ts);
+    }
+
     private void drawRoute(Canvas c, double fx, double fy, float cx, float cy, float ts, int n) {
         Nav.Route r = Nav.active;
         if (r == null || r.pts == null || r.pts.length < 4) return;
         int nPts = r.pts.length / 2;
         int start = Math.max(0, Math.min(nPts - 1, Nav.curPtIdx));
+        boolean offRoute = Nav.offlineOffRoute;
+        float startX = offRoute ? mapX(r.pts[start * 2 + 1], fx, cx, ts, n) : cx;
+        float startY = offRoute ? mapY(r.pts[start * 2], fy, cy, ts, n) : cy;
+        if (offRoute) {
+            routePath.reset();
+            routePath.moveTo(cx, cy);
+            routePath.lineTo(startX, startY);
+            routeBack.setColor(Main.LIGHT ? 0xAA000000 : 0xCCFFFFFF);
+            c.drawPath(routePath, routeBack);
+        }
         routePath.reset();
-        routePath.moveTo(cx, cy);
-        float lastX = cx, lastY = cy;
+        routePath.moveTo(startX, startY);
+        float lastX = startX, lastY = startY;
         for (int i = start + 1; i < nPts; i++) {
-            double lat = Math.max(-85.0511, Math.min(85.0511, r.pts[i * 2]));
-            double lon = r.pts[i * 2 + 1];
-            double px = (lon + 180.0) / 360.0 * n;
-            double dx = px - fx;
-            if (dx > n * 0.5) dx -= n;
-            else if (dx < -n * 0.5) dx += n;
-            double lr = Math.toRadians(lat);
-            double py = (1.0 - Math.log(Math.tan(lr) + 1.0 / Math.cos(lr)) / Math.PI) / 2.0 * n;
-            float sx = cx + (float) (dx * ts);
-            float sy = cy + (float) ((py - fy) * ts);
+            float sx = mapX(r.pts[i * 2 + 1], fx, cx, ts, n);
+            float sy = mapY(r.pts[i * 2], fy, cy, ts, n);
             if (i == nPts - 1 || Math.abs(sx - lastX) >= 1.5f || Math.abs(sy - lastY) >= 1.5f) {
                 routePath.lineTo(sx, sy);
                 lastX = sx;
@@ -432,15 +455,8 @@ public class LiveMapView extends View {
         c.drawPath(routePath, routeIn);
 
         // destino
-        double dlat = Math.max(-85.0511, Math.min(85.0511, r.destLat));
-        double dpx = (r.destLon + 180.0) / 360.0 * n;
-        double ddx = dpx - fx;
-        if (ddx > n * 0.5) ddx -= n;
-        else if (ddx < -n * 0.5) ddx += n;
-        double dlr = Math.toRadians(dlat);
-        double dpy = (1.0 - Math.log(Math.tan(dlr) + 1.0 / Math.cos(dlr)) / Math.PI) / 2.0 * n;
-        float dxS = cx + (float) (ddx * ts);
-        float dyS = cy + (float) ((dpy - fy) * ts);
+        float dxS = mapX(r.destLon, fx, cx, ts, n);
+        float dyS = mapY(r.destLat, fy, cy, ts, n);
         destPin.setStyle(Paint.Style.FILL);
         destPin.setColor(0xFFFFFFFF);
         c.drawCircle(dxS, dyS, 10 * s, destPin);
@@ -505,6 +521,7 @@ public class LiveMapView extends View {
                                     Object[] any = cachedAny(z, x, y);
                                     if (any != null) {
                                         netErrors++;
+                                        netOffline = netErrors >= 3;
                                         final Bitmap ab = DARKEN[(Integer) any[1]] && !Main.LIGHT ? darken((Bitmap) any[0], bright) : (Bitmap) any[0];
                                         final long fk0 = k;
                                         ui.post(new Runnable() { public void run() {
@@ -530,12 +547,13 @@ public class LiveMapView extends View {
                                 os.write(data);
                                 os.close();
                                 netErrors = 0;
+                                netOffline = false;
                             }
                         }
                         if (b != null && DARKEN[pv] && layer == 0 && !Main.LIGHT) b = darken(b, bright);
                     }
                 } catch (Throwable e) {
-                    if (layer != L_FILE) netErrors++;
+                    if (layer != L_FILE) { netErrors++; netOffline = netErrors >= 3; }
                     else lastError = "[archivo] " + e;
                 }
                 final long fk = k;

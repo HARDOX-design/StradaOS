@@ -17,20 +17,29 @@ import android.view.View;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
 /**
  * Navegación paso a paso en vivo sobre el mapa de StradaOS (sin Play Services ni SDKs pesados).
- * Búsqueda con Photon/Nominatim, rutas con OSRM y guía por voz con TextToSpeech del sistema.
+ * Búsqueda con Photon/Nominatim + mapa .map local, rutas con OSRM + A* sin conexión + caché de rutas,
+ * y guía por voz con TextToSpeech del sistema.
  */
 public class Nav {
 
     public static class Place {
         public String name, sub;
         public double lat, lon;
+        public boolean offline;
     }
 
     public static class Step {
@@ -48,6 +57,8 @@ public class Nav {
         public double totalDistM, totalDurS;
         public String destName;
         public double destLat, destLon;
+        public boolean offline;
+        public String source;       // "osrm", "map", "cache"
     }
 
     public interface SearchCb { void onResult(List<Place> places, String error); }
@@ -57,6 +68,8 @@ public class Nav {
     public static volatile int curPtIdx, curStepIdx;
     public static volatile double distToStepM, remDistM, remDurS;
     public static volatile boolean rerouting;
+    public static volatile boolean offlineOffRoute;
+    public static volatile double offRouteM;
     public static boolean savedHeadingUp;
 
     private static volatile int routeGen;
@@ -69,9 +82,27 @@ public class Nav {
     private static boolean ttsReady;
     private static String ttsLang;
 
-    // ───────────────────────── búsqueda de destinos ─────────────────────────
+    // ───────────────────────── conectividad y búsqueda de destinos ─────────────────────────
+
+    @SuppressWarnings("deprecation")
+    public static boolean hasNetwork(Context c) {
+        if (c == null) return true;
+        try {
+            android.net.ConnectivityManager cm = (android.net.ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (cm == null) return true;
+            android.net.NetworkInfo ni = cm.getActiveNetworkInfo();
+            return ni != null && ni.isConnected();
+        } catch (Throwable e) {
+            return true;
+        }
+    }
 
     public static void search(final String query, final double biasLat, final double biasLon, final SearchCb cb) {
+        search(null, query, biasLat, biasLon, false, cb);
+    }
+
+    public static void search(final Context c, final String query, final double biasLat, final double biasLon,
+                              final boolean mph, final SearchCb cb) {
         final String q = query == null ? "" : query.trim();
         if (q.length() == 0) { cb.onResult(new ArrayList<Place>(), null); return; }
         Place direct = parseCoords(q);
@@ -85,19 +116,29 @@ public class Nav {
             public void run() {
                 List<Place> out = null;
                 String err = null;
-                try {
-                    out = searchPhoton(q, biasLat, biasLon);
-                } catch (Throwable e) {
-                    err = shortErr(e);
+                boolean tryOfflineFirst = !hasNetwork(c) || LiveMapView.isOffline();
+                if (tryOfflineFirst) {
+                    out = searchOfflineMap(q, null, biasLat, biasLon, mph, 10);
                 }
                 if (out == null || out.isEmpty()) {
                     try {
-                        List<Place> nom = searchNominatim(q);
-                        if (nom != null && !nom.isEmpty()) { out = nom; err = null; }
-                        else if (out == null) out = nom;
+                        out = searchPhoton(q, biasLat, biasLon);
                     } catch (Throwable e) {
-                        if (err == null) err = shortErr(e);
+                        err = shortErr(e);
                     }
+                    if (out == null || out.isEmpty()) {
+                        try {
+                            List<Place> nom = searchNominatim(q);
+                            if (nom != null && !nom.isEmpty()) { out = nom; err = null; }
+                            else if (out == null) out = nom;
+                        } catch (Throwable e) {
+                            if (err == null) err = shortErr(e);
+                        }
+                    }
+                }
+                if ((out == null || out.isEmpty()) && !tryOfflineFirst) {
+                    List<Place> off = searchOfflineMap(q, null, biasLat, biasLon, mph, 10);
+                    if (off != null && !off.isEmpty()) { out = off; err = null; }
                 }
                 final List<Place> fout = out;
                 final String ferr = fout == null ? err : null;
@@ -106,6 +147,57 @@ public class Nav {
                 });
             }
         }).start();
+    }
+
+    public static void searchCategory(final String cat, final double biasLat, final double biasLon,
+                                      final boolean mph, final SearchCb cb) {
+        new Thread(new Runnable() {
+            public void run() {
+                final List<Place> out = searchOfflineMap(null, cat, biasLat, biasLon, mph, 12);
+                UI.post(new Runnable() {
+                    public void run() { cb.onResult(out, null); }
+                });
+            }
+        }).start();
+    }
+
+    private static List<Place> searchOfflineMap(String q, String cat, double lat, double lon, boolean mph, int limit) {
+        OfflineMap fm = LiveMapView.fileMap;
+        if (fm == null) return null;
+        ArrayList<OfflineMap.SearchHit> hits = fm.searchOffline(q, cat, lat, lon, limit);
+        if (hits == null || hits.isEmpty()) return new ArrayList<Place>();
+        List<Place> out = new ArrayList<Place>(hits.size());
+        for (OfflineMap.SearchHit h : hits) {
+            Place p = new Place();
+            p.name = h.name;
+            p.lat = h.lat;
+            p.lon = h.lon;
+            p.offline = true;
+            String kind = translateTag(h.tag);
+            String d = Double.isNaN(lat) || Double.isNaN(lon) ? "" : fmtStepDist(h.distM, mph);
+            p.sub = kind + (d.length() > 0 ? " · " + d : "") + " · " + I18n.t("Mapa local");
+            out.add(p);
+        }
+        return out;
+    }
+
+    private static String translateTag(String tag) {
+        if ("city".equals(tag)) return I18n.t("Ciudad");
+        if ("town".equals(tag) || "village".equals(tag) || "hamlet".equals(tag)) return I18n.t("Pueblo");
+        if ("suburb".equals(tag) || "neighbourhood".equals(tag) || "quarter".equals(tag)) return I18n.t("Barrio");
+        if ("street".equals(tag)) return I18n.t("Calle");
+        if ("fuel".equals(tag)) return I18n.t("Estación de servicio");
+        if ("hospital".equals(tag)) return I18n.t("Hospital");
+        if ("clinic".equals(tag) || "doctors".equals(tag)) return I18n.t("Clínica");
+        if ("pharmacy".equals(tag)) return I18n.t("Farmacia");
+        if ("parking".equals(tag)) return I18n.t("Parqueadero");
+        if ("restaurant".equals(tag) || "fast_food".equals(tag)) return I18n.t("Restaurante");
+        if ("cafe".equals(tag)) return I18n.t("Cafetería");
+        if ("supermarket".equals(tag) || "convenience".equals(tag)) return I18n.t("Supermercado");
+        if ("hotel".equals(tag)) return I18n.t("Hotel");
+        if ("aerodrome".equals(tag) || "airport".equals(tag)) return I18n.t("Aeropuerto");
+        if ("station".equals(tag)) return I18n.t("Estación");
+        return I18n.t("Lugar");
     }
 
     private static Place parseCoords(String q) {
@@ -226,58 +318,127 @@ public class Nav {
         return false;
     }
 
-    // ───────────────────────── destinos recientes ─────────────────────────
+    // ───────────────────────── destinos recientes, casa/trabajo y favoritos ─────────────────────────
 
     public static List<Place> recents(Context c) {
+        return readPlaces(c, "nav_recents");
+    }
+
+    public static void saveRecent(Context c, Place p) {
+        addPlaceToList(c, "nav_recents", p, 8);
+    }
+
+    public static Place savedPlace(Context c, String key) {
+        if (c == null || key == null) return null;
+        try {
+            String raw = c.getSharedPreferences("launcher", 0).getString(key, "");
+            if (raw.length() == 0) return null;
+            return placeFromJson(new JSONObject(raw));
+        } catch (Throwable e) {
+            return null;
+        }
+    }
+
+    public static void setSavedPlace(Context c, String key, Place p) {
+        if (c == null || key == null) return;
+        SharedPreferences.Editor ed = c.getSharedPreferences("launcher", 0).edit();
+        if (p == null || p.name == null || p.name.length() == 0) {
+            ed.remove(key).apply();
+            return;
+        }
+        try {
+            ed.putString(key, placeToJson(p).toString()).apply();
+        } catch (Throwable ignored) { }
+    }
+
+    public static List<Place> favorites(Context c) {
+        return readPlaces(c, "nav_favs");
+    }
+
+    public static boolean isFavorite(Context c, Place p) {
+        if (c == null || p == null) return false;
+        for (Place e : favorites(c)) {
+            if (samePlace(e, p)) return true;
+        }
+        return false;
+    }
+
+    public static boolean toggleFavorite(Context c, Place p) {
+        if (c == null || p == null || p.name == null || p.name.length() == 0) return false;
+        List<Place> list = favorites(c);
+        for (int i = list.size() - 1; i >= 0; i--) {
+            if (samePlace(list.get(i), p)) {
+                list.remove(i);
+                writePlaces(c, "nav_favs", list);
+                return false;
+            }
+        }
+        list.add(0, p);
+        while (list.size() > 16) list.remove(list.size() - 1);
+        writePlaces(c, "nav_favs", list);
+        return true;
+    }
+
+    private static List<Place> readPlaces(Context c, String key) {
         List<Place> out = new ArrayList<Place>();
+        if (c == null) return out;
         try {
             SharedPreferences sp = c.getSharedPreferences("launcher", 0);
-            JSONArray a = new JSONArray(sp.getString("nav_recents", "[]"));
+            JSONArray a = new JSONArray(sp.getString(key, "[]"));
             for (int i = 0; i < a.length(); i++) {
-                JSONObject o = a.optJSONObject(i);
-                if (o == null) continue;
-                Place p = new Place();
-                p.name = o.optString("n", "");
-                p.sub = o.optString("s", "");
-                p.lat = o.optDouble("la", Double.NaN);
-                p.lon = o.optDouble("lo", Double.NaN);
-                if (p.name.length() > 0 && !Double.isNaN(p.lat) && !Double.isNaN(p.lon)) out.add(p);
+                Place p = placeFromJson(a.optJSONObject(i));
+                if (p != null) out.add(p);
             }
         } catch (Throwable ignored) { }
         return out;
     }
 
-    public static void saveRecent(Context c, Place p) {
-        if (p == null || p.name == null || p.name.length() == 0) return;
-        List<Place> list = recents(c);
+    private static void addPlaceToList(Context c, String key, Place p, int max) {
+        if (c == null || p == null || p.name == null || p.name.length() == 0) return;
+        List<Place> list = readPlaces(c, key);
         for (int i = list.size() - 1; i >= 0; i--) {
-            Place e = list.get(i);
-            if (e.name.equalsIgnoreCase(p.name) || (Math.abs(e.lat - p.lat) < 0.0005 && Math.abs(e.lon - p.lon) < 0.0005)) {
-                list.remove(i);
-            }
+            if (samePlace(list.get(i), p)) list.remove(i);
         }
         list.add(0, p);
-        while (list.size() > 8) list.remove(list.size() - 1);
+        while (list.size() > max) list.remove(list.size() - 1);
+        writePlaces(c, key, list);
+    }
+
+    private static void writePlaces(Context c, String key, List<Place> list) {
         JSONArray a = new JSONArray();
         try {
-            for (Place e : list) {
-                JSONObject o = new JSONObject();
-                o.put("n", e.name).put("s", e.sub != null ? e.sub : "").put("la", e.lat).put("lo", e.lon);
-                a.put(o);
-            }
-            c.getSharedPreferences("launcher", 0).edit().putString("nav_recents", a.toString()).apply();
+            for (Place e : list) a.put(placeToJson(e));
+            c.getSharedPreferences("launcher", 0).edit().putString(key, a.toString()).apply();
         } catch (Throwable ignored) { }
+    }
+
+    private static Place placeFromJson(JSONObject o) {
+        if (o == null) return null;
+        Place p = new Place();
+        p.name = o.optString("n", "");
+        p.sub = o.optString("s", "");
+        p.lat = o.optDouble("la", Double.NaN);
+        p.lon = o.optDouble("lo", Double.NaN);
+        return p.name.length() > 0 && !Double.isNaN(p.lat) && !Double.isNaN(p.lon) ? p : null;
+    }
+
+    private static JSONObject placeToJson(Place e) throws Exception {
+        return new JSONObject().put("n", e.name).put("s", e.sub != null ? e.sub : "").put("la", e.lat).put("lo", e.lon);
+    }
+
+    private static boolean samePlace(Place a, Place b) {
+        return a.name.equalsIgnoreCase(b.name) || (Math.abs(a.lat - b.lat) < 0.0005 && Math.abs(a.lon - b.lon) < 0.0005);
     }
 
     // ───────────────────────── cálculo y activación de ruta ─────────────────────────
 
     public static void startRoute(final Context c, double fromLat, double fromLon, final Place dest, final RouteCb cb) {
         final int gen = ++routeGen;
-        fetchRoute(fromLat, fromLon, dest.lat, dest.lon, dest.name, new RouteCb() {
+        fetchRoute(c, fromLat, fromLon, dest.lat, dest.lon, dest.name, new RouteCb() {
             public void onRoute(Route r, String error) {
                 if (gen != routeGen) return;
                 if (r != null) {
-                    activate(r);
+                    activate(c, r);
                     if (!r.steps.isEmpty()) speakStep(c, r.steps.get(0), -1, false);
                 }
                 if (cb != null) cb.onRoute(r, error);
@@ -286,6 +447,10 @@ public class Nav {
     }
 
     public static void activate(Route r) {
+        activate(null, r);
+    }
+
+    public static void activate(final Context c, final Route r) {
         active = r;
         curPtIdx = 0;
         curStepIdx = r != null && r.steps.size() > 1 ? 1 : 0;
@@ -296,11 +461,26 @@ public class Nav {
             distToStepM = r.cumDistM[r.stepPtIdx[1]];
         }
         offRouteCount = 0;
+        offRouteM = 0;
+        offlineOffRoute = false;
         rerouting = false;
         spokenMask = r != null ? new int[r.steps.size()] : null;
+        if (c != null && r != null) {
+            final Context app = c.getApplicationContext();
+            new Thread(new Runnable() {
+                public void run() {
+                    saveActiveFile(app, r);
+                    if (!"cache".equals(r.source)) cacheDestRoute(app, r);
+                }
+            }).start();
+        }
     }
 
     public static void stop() {
+        stop(null);
+    }
+
+    public static void stop(Context c) {
         routeGen++;
         active = null;
         curPtIdx = 0;
@@ -309,38 +489,424 @@ public class Nav {
         remDistM = 0;
         remDurS = 0;
         rerouting = false;
+        offlineOffRoute = false;
+        offRouteM = 0;
         offRouteCount = 0;
         spokenMask = null;
+        if (c != null) {
+            try { new File(c.getFilesDir(), "nav_active.json").delete(); } catch (Throwable ignored) { }
+        }
+    }
+
+    public static boolean restore(Context c) {
+        if (c == null || active != null) return active != null;
+        try {
+            File f = new File(c.getFilesDir(), "nav_active.json");
+            if (!f.isFile() || f.length() == 0) return false;
+            JSONObject root = new JSONObject(readUtf8(f));
+            long savedAt = root.optLong("savedAt", 0);
+            if (savedAt <= 0 || Math.abs(System.currentTimeMillis() - savedAt) > 6L * 3600 * 1000) {
+                f.delete();
+                return false;
+            }
+            Route r = routeFromJson(root);
+            if (r == null) { f.delete(); return false; }
+            active = r;
+            int nPts = r.pts.length / 2;
+            curPtIdx = Math.max(0, Math.min(nPts - 1, root.optInt("ptIdx", 0)));
+            curStepIdx = Math.max(0, Math.min(r.steps.size() - 1, root.optInt("stepIdx", r.steps.size() > 1 ? 1 : 0)));
+            double along = curPtIdx < r.cumDistM.length ? r.cumDistM[curPtIdx] : 0;
+            double totalM = r.cumDistM[nPts - 1];
+            remDistM = Math.max(0, totalM - along);
+            remDurS = totalM > 1 ? r.totalDurS * (remDistM / totalM) : 0;
+            int spi = curStepIdx < r.stepPtIdx.length ? r.stepPtIdx[curStepIdx] : nPts - 1;
+            distToStepM = Math.max(0, r.cumDistM[spi] - along);
+            spokenMask = new int[r.steps.size()];
+            offRouteCount = 0;
+            offlineOffRoute = false;
+            offRouteM = 0;
+            rerouting = false;
+            return true;
+        } catch (Throwable e) {
+            return false;
+        }
     }
 
     public static void fetchRoute(final double lat1, final double lon1, final double lat2, final double lon2,
                                   final String destName, final RouteCb cb) {
+        fetchRoute(null, lat1, lon1, lat2, lon2, destName, cb);
+    }
+
+    public static void fetchRoute(final Context c, final double lat1, final double lon1, final double lat2, final double lon2,
+                                  final String destName, final RouteCb cb) {
+        final Context app = c != null ? c.getApplicationContext() : null;
         new Thread(new Runnable() {
             public void run() {
                 Route r = null;
                 String err = null;
-                String[] hosts = {
-                    "https://router.project-osrm.org/route/v1/driving/",
-                    "https://routing.openstreetmap.de/routed-car/route/v1/driving/"
-                };
-                String tail = String.format(Locale.US, "%.6f,%.6f;%.6f,%.6f?overview=full&geometries=polyline&steps=true",
-                        lon1, lat1, lon2, lat2);
-                for (String host : hosts) {
-                    try {
-                        String raw = new String(Net.get(host + tail, 12000), "UTF-8");
-                        r = parseOsrm(raw, lat2, lon2, destName);
-                        if (r != null) { err = null; break; }
-                    } catch (Throwable e) {
-                        err = shortErr(e);
+                boolean offlineMode = !hasNetwork(app) || LiveMapView.isOffline();
+
+                if (offlineMode) {
+                    r = routeFromOfflineMap(lat1, lon1, lat2, lon2, destName);
+                    if (r == null && app != null) r = loadCachedRoute(app, lat1, lon1, lat2, lon2);
+                }
+                if (r == null) {
+                    String[] hosts = {
+                        "https://router.project-osrm.org/route/v1/driving/",
+                        "https://routing.openstreetmap.de/routed-car/route/v1/driving/"
+                    };
+                    String tail = String.format(Locale.US, "%.6f,%.6f;%.6f,%.6f?overview=full&geometries=polyline&steps=true",
+                            lon1, lat1, lon2, lat2);
+                    for (String host : hosts) {
+                        try {
+                            String raw = new String(Net.get(host + tail, 12000), "UTF-8");
+                            r = parseOsrm(raw, lat2, lon2, destName);
+                            if (r != null) { err = null; break; }
+                        } catch (Throwable e) {
+                            err = shortErr(e);
+                        }
                     }
                 }
+                if (r == null && !offlineMode) {
+                    r = routeFromOfflineMap(lat1, lon1, lat2, lon2, destName);
+                    if (r == null && app != null) r = loadCachedRoute(app, lat1, lon1, lat2, lon2);
+                }
                 final Route fr = r;
-                final String fe = r == null ? (err != null ? err : I18n.t("No se encontró ruta")) : null;
+                String fallbackErr = err != null ? err : I18n.t("No se encontró ruta");
+                if (fr == null && offlineMode && LiveMapView.fileMap == null) {
+                    fallbackErr = I18n.t("Para rutas largas o sin mapa local hace falta internet");
+                }
+                final String fe = fr == null ? fallbackErr : null;
                 UI.post(new Runnable() {
                     public void run() { cb.onRoute(fr, fe); }
                 });
             }
         }).start();
+    }
+
+    private static Route routeFromOfflineMap(double lat1, double lon1, double lat2, double lon2, String destName) {
+        OfflineMap fm = LiveMapView.fileMap;
+        if (fm == null || !fm.contains(lat1, lon1) || !fm.contains(lat2, lon2)) return null;
+        OfflineMap.RawRoute rr = fm.routeOffline(lat1, lon1, lat2, lon2);
+        return rr != null ? fromOffline(rr, lat2, lon2, destName) : null;
+    }
+
+    /** Convierte una ruta A* sin conexión en pasos de navegación compatibles con HUD y voz TTS. */
+    public static Route fromOffline(OfflineMap.RawRoute rr, double destLat, double destLon, String destName) {
+        if (rr == null || rr.hops.isEmpty()) return null;
+        int nHops = rr.hops.size();
+        int nPts = nHops + 1;
+        Route r = new Route();
+        r.pts = new double[nPts * 2];
+        r.cumDistM = new double[nPts];
+        r.pts[0] = rr.startLat;
+        r.pts[1] = rr.startLon;
+        r.cumDistM[0] = 0;
+        for (int i = 0; i < nHops; i++) {
+            OfflineMap.RawHop h = rr.hops.get(i);
+            r.pts[(i + 1) * 2] = h.lat;
+            r.pts[(i + 1) * 2 + 1] = h.lon;
+            r.cumDistM[i + 1] = r.cumDistM[i] + approxDist(r.pts[i * 2], r.pts[i * 2 + 1], h.lat, h.lon);
+        }
+        r.totalDistM = r.cumDistM[nPts - 1];
+        r.totalDurS = Math.max(10.0, rr.totalDurS);
+        r.destLat = destLat;
+        r.destLon = destLon;
+        r.destName = destName;
+        r.offline = true;
+        r.source = "map";
+
+        List<Integer> ptIndices = new ArrayList<Integer>();
+        String firstSt = rr.hops.get(0).name != null ? rr.hops.get(0).name.trim() : "";
+        Step depart = new Step();
+        depart.lat = rr.startLat;
+        depart.lon = rr.startLon;
+        depart.street = firstSt;
+        depart.icon = 0;
+        depart.instruction = firstSt.length() > 0 ? "Sal por " + firstSt : "Inicia el recorrido";
+        r.steps.add(depart);
+        ptIndices.add(0);
+
+        String curStreet = firstSt;
+        int lastStepPt = 0;
+        int i = 0;
+        while (i < nHops) {
+            OfflineMap.RawHop h = rr.hops.get(i);
+            int vIdx = i + 1; // vértice destino de hop i
+            if (h.roundabout && i > 0) {
+                int j = i;
+                while (j < nHops && rr.hops.get(j).roundabout) j++;
+                String exitSt = j < nHops && rr.hops.get(j).name != null ? rr.hops.get(j).name.trim() : "";
+                Step st = new Step();
+                st.lat = r.pts[vIdx * 2];
+                st.lon = r.pts[vIdx * 2 + 1];
+                st.icon = 8;
+                st.street = exitSt;
+                st.instruction = exitSt.length() > 0 ? "En la rotonda, sigue hacia " + exitSt : "En la rotonda, toma la salida";
+                r.steps.add(st);
+                ptIndices.add(vIdx);
+                curStreet = exitSt;
+                lastStepPt = Math.min(nPts - 1, j + 1);
+                i = j + 1;
+                continue;
+            }
+            if (vIdx < nPts - 1) {
+                double legSince = r.cumDistM[vIdx] - r.cumDistM[lastStepPt];
+                OfflineMap.RawHop nextHop = rr.hops.get(i + 1);
+                String nextSt = nextHop.name != null ? nextHop.name.trim() : "";
+                boolean nameChanged = nextSt.length() > 0 && !sameRoadName(curStreet, nextSt);
+                double br1 = windowBearing(r.pts, r.cumDistM, vIdx, -1);
+                double br2 = windowBearing(r.pts, r.cumDistM, vIdx, 1);
+                double turn = ((br2 - br1 + 540.0) % 360.0) - 180.0;
+                double absT = Math.abs(turn);
+                boolean realJunction = h.deg >= 3 || nameChanged;
+                boolean emit = (absT >= 36 && realJunction && legSince >= 25)
+                        || (nameChanged && legSince >= 180 && (absT >= 18 || h.deg >= 3));
+                if (emit) {
+                    Step st = new Step();
+                    st.lat = r.pts[vIdx * 2];
+                    st.lon = r.pts[vIdx * 2 + 1];
+                    st.street = nextSt.length() > 0 ? nextSt : curStreet;
+                    st.icon = turnToIcon(turn);
+                    st.instruction = offlineTurnText(st.icon, st.street);
+                    r.steps.add(st);
+                    ptIndices.add(vIdx);
+                    if (nextSt.length() > 0) curStreet = nextSt;
+                    lastStepPt = vIdx;
+                } else if (nextSt.length() > 0) {
+                    curStreet = nextSt;
+                }
+            }
+            i++;
+        }
+
+        Step arr = new Step();
+        arr.lat = r.pts[(nPts - 1) * 2];
+        arr.lon = r.pts[(nPts - 1) * 2 + 1];
+        arr.icon = 9;
+        arr.street = destName != null ? destName : "";
+        arr.instruction = "Llegaste a tu destino";
+        r.steps.add(arr);
+        ptIndices.add(nPts - 1);
+
+        r.stepPtIdx = new int[r.steps.size()];
+        for (int s = 0; s < r.steps.size(); s++) {
+            int p0 = ptIndices.get(s);
+            r.stepPtIdx[s] = p0;
+            Step st = r.steps.get(s);
+            if (s + 1 < r.steps.size()) {
+                int p1 = ptIndices.get(s + 1);
+                st.distM = Math.max(0, r.cumDistM[p1] - r.cumDistM[p0]);
+                st.durS = r.totalDistM > 1 ? r.totalDurS * (st.distM / r.totalDistM) : 0;
+            } else {
+                st.distM = 0;
+                st.durS = 0;
+            }
+        }
+        return r;
+    }
+
+    private static boolean sameRoadName(String a, String b) {
+        if (a == null || b == null) return false;
+        return a.equalsIgnoreCase(b);
+    }
+
+    private static double windowBearing(double[] pts, double[] cum, int idx, int dir) {
+        int nPts = pts.length / 2;
+        int other = idx;
+        while ((dir < 0 ? other > 0 : other < nPts - 1)) {
+            other += dir;
+            if (Math.abs(cum[other] - cum[idx]) >= 18.0) break;
+        }
+        if (other == idx) return 0;
+        double la1 = dir < 0 ? pts[other * 2] : pts[idx * 2];
+        double lo1 = dir < 0 ? pts[other * 2 + 1] : pts[idx * 2 + 1];
+        double la2 = dir < 0 ? pts[idx * 2] : pts[other * 2];
+        double lo2 = dir < 0 ? pts[idx * 2 + 1] : pts[other * 2 + 1];
+        double kx = Math.cos(Math.toRadians((la1 + la2) * 0.5));
+        double dx = (lo2 - lo1) * kx, dy = la2 - la1;
+        return (Math.toDegrees(Math.atan2(dx, dy)) + 360.0) % 360.0;
+    }
+
+    private static int turnToIcon(double turnDeg) {
+        double abs = Math.abs(turnDeg);
+        if (abs >= 155) return 4;
+        if (turnDeg >= 120) return 3;
+        if (turnDeg >= 45) return 2;
+        if (turnDeg >= 20) return 1;
+        if (turnDeg <= -120) return 5;
+        if (turnDeg <= -45) return 6;
+        if (turnDeg <= -20) return 7;
+        return 0;
+    }
+
+    private static String offlineTurnText(int icon, String street) {
+        boolean hasSt = street != null && street.length() > 0;
+        if (icon == 4) return hasSt ? "Haz un giro en U en " + street : "Haz un giro en U";
+        if (icon == 1) return hasSt ? "Gira levemente a la derecha en " + street : "Gira levemente a la derecha";
+        if (icon == 2) return hasSt ? "Gira a la derecha en " + street : "Gira a la derecha";
+        if (icon == 3) return hasSt ? "Gira fuerte a la derecha en " + street : "Gira fuerte a la derecha";
+        if (icon == 7) return hasSt ? "Gira levemente a la izquierda en " + street : "Gira levemente a la izquierda";
+        if (icon == 6) return hasSt ? "Gira a la izquierda en " + street : "Gira a la izquierda";
+        if (icon == 5) return hasSt ? "Gira fuerte a la izquierda en " + street : "Gira fuerte a la izquierda";
+        return hasSt ? "Continúa por " + street : "Sigue recto";
+    }
+
+    private static void saveActiveFile(Context c, Route r) {
+        try {
+            File dst = new File(c.getFilesDir(), "nav_active.json");
+            File tmp = new File(c.getFilesDir(), "nav_active.tmp");
+            JSONObject obj = routeToJson(r);
+            obj.put("savedAt", System.currentTimeMillis());
+            obj.put("ptIdx", curPtIdx);
+            obj.put("stepIdx", curStepIdx);
+            FileOutputStream os = new FileOutputStream(tmp);
+            os.write(obj.toString().getBytes("UTF-8"));
+            os.close();
+            if (!tmp.renameTo(dst)) {
+                dst.delete();
+                tmp.renameTo(dst);
+            }
+        } catch (Throwable ignored) { }
+    }
+
+    private static void cacheDestRoute(Context c, Route r) {
+        try {
+            File dir = new File(c.getCacheDir(), "nav_routes");
+            dir.mkdirs();
+            String name = Math.round(r.destLat * 10000.0) + "_" + Math.round(r.destLon * 10000.0) + ".json";
+            File dst = new File(dir, name);
+            FileOutputStream os = new FileOutputStream(dst);
+            os.write(routeToJson(r).toString().getBytes("UTF-8"));
+            os.close();
+            File[] fs = dir.listFiles();
+            if (fs != null && fs.length > 12) {
+                Arrays.sort(fs, new Comparator<File>() {
+                    public int compare(File a, File b) {
+                        long d = a.lastModified() - b.lastModified();
+                        return d > 0 ? 1 : d < 0 ? -1 : 0;
+                    }
+                });
+                for (int i = 0; i < fs.length - 12; i++) fs[i].delete();
+            }
+        } catch (Throwable ignored) { }
+    }
+
+    private static Route loadCachedRoute(Context c, double lat1, double lon1, double lat2, double lon2) {
+        try {
+            File f = new File(new File(c.getCacheDir(), "nav_routes"),
+                    Math.round(lat2 * 10000.0) + "_" + Math.round(lon2 * 10000.0) + ".json");
+            if (!f.isFile() || f.length() == 0) return null;
+            Route r = routeFromJson(new JSONObject(readUtf8(f)));
+            if (r == null) return null;
+            int nPts = r.pts.length / 2;
+            double[] near = closestOnRange(r.pts, lat1, lon1, 0, nPts - 2);
+            if (near[0] > 3000) return null; // solo útil si estás a <= 3 km del trazo guardado
+            r.offline = true;
+            r.source = "cache";
+            return r;
+        } catch (Throwable e) {
+            return null;
+        }
+    }
+
+    private static JSONObject routeToJson(Route r) throws Exception {
+        JSONObject obj = new JSONObject();
+        obj.put("poly", encodePolyline(r.pts));
+        obj.put("dist", r.totalDistM);
+        obj.put("dur", r.totalDurS);
+        obj.put("dn", r.destName != null ? r.destName : "");
+        obj.put("dla", r.destLat);
+        obj.put("dlo", r.destLon);
+        obj.put("off", r.offline);
+        obj.put("src", r.source != null ? r.source : "osrm");
+        JSONArray stArr = new JSONArray();
+        for (int i = 0; i < r.steps.size(); i++) {
+            Step st = r.steps.get(i);
+            JSONObject so = new JSONObject();
+            so.put("la", st.lat).put("lo", st.lon).put("d", st.distM).put("t", st.durS)
+              .put("ic", st.icon).put("st", st.street != null ? st.street : "")
+              .put("in", st.instruction != null ? st.instruction : "")
+              .put("pi", r.stepPtIdx != null && i < r.stepPtIdx.length ? r.stepPtIdx[i] : 0);
+            stArr.put(so);
+        }
+        obj.put("steps", stArr);
+        return obj;
+    }
+
+    private static Route routeFromJson(JSONObject obj) {
+        String poly = obj.optString("poly", "");
+        double[] pts = decodePolyline(poly);
+        if (pts.length < 4) return null;
+        Route r = new Route();
+        r.pts = pts;
+        r.totalDistM = obj.optDouble("dist", 0);
+        r.totalDurS = obj.optDouble("dur", 0);
+        r.destName = obj.optString("dn", "");
+        r.destLat = obj.optDouble("dla", Double.NaN);
+        r.destLon = obj.optDouble("dlo", Double.NaN);
+        r.offline = obj.optBoolean("off", false);
+        r.source = obj.optString("src", "osrm");
+        if (Double.isNaN(r.destLat) || Double.isNaN(r.destLon)) return null;
+
+        int nPts = pts.length / 2;
+        r.cumDistM = new double[nPts];
+        for (int i = 1; i < nPts; i++) {
+            r.cumDistM[i] = r.cumDistM[i - 1] + approxDist(pts[(i - 1) * 2], pts[(i - 1) * 2 + 1], pts[i * 2], pts[i * 2 + 1]);
+        }
+        JSONArray stArr = obj.optJSONArray("steps");
+        if (stArr != null) {
+            r.stepPtIdx = new int[stArr.length()];
+            for (int i = 0; i < stArr.length(); i++) {
+                JSONObject so = stArr.optJSONObject(i);
+                if (so == null) continue;
+                Step st = new Step();
+                st.lat = so.optDouble("la", r.destLat);
+                st.lon = so.optDouble("lo", r.destLon);
+                st.distM = so.optDouble("d", 0);
+                st.durS = so.optDouble("t", 0);
+                st.icon = so.optInt("ic", 0);
+                st.street = so.optString("st", "");
+                st.instruction = so.optString("in", "");
+                r.steps.add(st);
+                r.stepPtIdx[r.steps.size() - 1] = Math.max(0, Math.min(nPts - 1, so.optInt("pi", 0)));
+            }
+        }
+        if (r.steps.isEmpty()) return null;
+        return r;
+    }
+
+    private static String encodePolyline(double[] pts) {
+        StringBuilder sb = new StringBuilder(pts.length * 2);
+        int pLat = 0, pLng = 0;
+        for (int i = 0; i < pts.length; i += 2) {
+            int lat = (int) Math.round(pts[i] * 1e5);
+            int lng = (int) Math.round(pts[i + 1] * 1e5);
+            encodeSigned(lat - pLat, sb);
+            encodeSigned(lng - pLng, sb);
+            pLat = lat;
+            pLng = lng;
+        }
+        return sb.toString();
+    }
+
+    private static void encodeSigned(int v, StringBuilder sb) {
+        int s = v < 0 ? ~(v << 1) : (v << 1);
+        while (s >= 0x20) {
+            sb.append((char) ((0x20 | (s & 0x1f)) + 63));
+            s >>>= 5;
+        }
+        sb.append((char) (s + 63));
+    }
+
+    private static String readUtf8(File f) throws Exception {
+        FileInputStream is = new FileInputStream(f);
+        ByteArrayOutputStream bo = new ByteArrayOutputStream();
+        byte[] buf = new byte[4096];
+        int n;
+        while ((n = is.read(buf)) >= 0) bo.write(buf, 0, n);
+        is.close();
+        return new String(bo.toByteArray(), "UTF-8");
     }
 
     private static Route parseOsrm(String json, double destLat, double destLon, String destName) throws Exception {
@@ -362,6 +928,8 @@ public class Nav {
         r.destLat = destLat;
         r.destLon = destLon;
         r.destName = destName;
+        r.source = "osrm";
+        r.offline = false;
 
         int nPts = pts.length / 2;
         r.cumDistM = new double[nPts];
@@ -530,12 +1098,13 @@ public class Nav {
         double distDestM = approxDist(lat, lon, r.destLat, r.destLon);
         if (distDestM < 35 && (remDistM < 60 || segIdx >= nPts - 4)) {
             if (!r.steps.isEmpty()) speakStep(c, r.steps.get(r.steps.size() - 1), r.steps.size() - 1, false);
-            stop();
+            stop(c);
             if (onUpdate != null) onUpdate.run();
             return;
         }
 
         // próximo paso por delante de alongM
+        int prevStep = curStepIdx;
         int nextStep = r.steps.size() - 1;
         for (int i = 1; i < r.steps.size(); i++) {
             int spi = r.stepPtIdx[i];
@@ -547,6 +1116,12 @@ public class Nav {
         curStepIdx = nextStep;
         int targetVert = r.stepPtIdx[nextStep];
         distToStepM = Math.max(0, r.cumDistM[targetVert] - alongM);
+        if (nextStep != prevStep && c != null) {
+            final Context app = c.getApplicationContext();
+            new Thread(new Runnable() {
+                public void run() { saveActiveFile(app, r); }
+            }).start();
+        }
 
         // voz guía según distancia restante al giro
         if (nextStep >= 0 && nextStep < r.steps.size() && spokenMask != null && nextStep < spokenMask.length) {
@@ -565,12 +1140,18 @@ public class Nav {
             }
         }
 
-        // desvío de ruta -> recalcular
+        // desvío de ruta -> recalcular (con respaldo sin conexión)
         boolean goodFix = !l.hasAccuracy() || l.getAccuracy() <= 55;
-        if (crossM > 65 && goodFix) {
+        if (crossM <= 45) {
+            offRouteCount = 0;
+            offlineOffRoute = false;
+            offRouteM = 0;
+        } else if (crossM > 65 && goodFix) {
             offRouteCount++;
+            if (offlineOffRoute) offRouteM = crossM;
             long now = SystemClock.elapsedRealtime();
-            if (offRouteCount >= 3 && !rerouting && now - lastRerouteAt > 12000) {
+            long waitMs = offlineOffRoute ? 25000 : 12000;
+            if (offRouteCount >= 3 && !rerouting && now - lastRerouteAt > waitMs) {
                 rerouting = true;
                 lastRerouteAt = now;
                 final int gen = routeGen;
@@ -578,20 +1159,24 @@ public class Nav {
                 dest.name = r.destName;
                 dest.lat = r.destLat;
                 dest.lon = r.destLon;
-                fetchRoute(lat, lon, dest.lat, dest.lon, dest.name, new RouteCb() {
+                final double curCross = crossM;
+                fetchRoute(c, lat, lon, dest.lat, dest.lon, dest.name, new RouteCb() {
                     public void onRoute(Route nr, String error) {
                         if (gen != routeGen || active == null) return;
                         rerouting = false;
                         if (nr != null) {
-                            activate(nr);
+                            activate(c, nr);
                             speakRaw(c, I18n.t("Ruta recalculada"));
+                        } else {
+                            offlineOffRoute = true;
+                            offRouteM = curCross;
                         }
                         if (onUpdate != null) onUpdate.run();
                     }
                 });
             }
-        } else {
-            offRouteCount = 0;
+        } else if (offlineOffRoute) {
+            offRouteM = crossM;
         }
     }
 

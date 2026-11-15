@@ -961,4 +961,47 @@ En 150 metros	In 150 meters
 En 500 pies	In 500 feet
 En un cuarto de milla	In a quarter mile
 En {}	In {}
+Sin conexión · vuelve a la ruta	Offline · return to route
+Casa	Home
+Trabajo	Work
+Toca para guardar GPS	Tap to save current GPS
+Ir ahora	Go now
+Actualizar con GPS actual	Update with current GPS
+Eliminado	Removed
+Esperando señal GPS para guardar ubicación	Waiting for GPS signal to save location
+Guardado en Casa	Saved as Home
+Guardado en Trabajo	Saved as Work
+Gasolina	Fuel
+Salud	Health
+Parqueo	Parking
+Comida	Food
+FAVORITOS	FAVORITES
+Quitar de favoritos	Remove from favorites
+Añadir a favoritos	Add to favorites
+Guardar como Casa	Save as Home
+Guardar como Trabajo	Save as Work
+Añadido a favoritos	Added to favorites
+Quitado de favoritos	Removed from favorites
+Ruta sin conexión (mapa local)	Offline route (local map)
+Ruta guardada (sin conexión)	Saved route (offline)
+Recalcular ruta	Recalculate route
+ruta guardada	saved route
+sin conexión	offline
+Para rutas largas o sin mapa local hace falta internet	Internet is required for long routes or without a local map
+Mapa local	Local map
+Pueblo	Town
+Barrio	Neighborhood
+Calle	Street
+Estación de servicio	Gas station
+Hospital	Hospital
+Clínica	Clinic
+Farmacia	Pharmacy
+Parqueadero	Parking
+Restaurante	Restaurant
+Cafetería	Cafe
+Supermercado	Supermarket
+Hotel	Hotel
+Aeropuerto	Airport
+Estación	Station
+Lugar	Place
 
