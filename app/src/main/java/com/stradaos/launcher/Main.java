@@ -1144,7 +1144,7 @@ public class Main extends Activity {
         insL = insR = 0;
         if (showCar && showPlayer && shortVertical) {
             // vertical bajo: tarjetas más bajas para que el mapa quede de un tamaño parecido al de ellas
-            cardH = Math.max(300, Math.min(340, avail * 0.48f));
+            cardH = Math.max(330, Math.min(360, avail * 0.5f));
             mapH = avail - cardH - 12;
             rowY = mapY + mapH + 12;
         } else if (showCar && showPlayer) {
@@ -2920,7 +2920,7 @@ public class Main extends Activity {
         place(card, sourceTv, 70, 14, audW - 88, 18);   // ancho de sobra: en Android 11 «BLUETOOTH» salía cortado
         playerArt = new PlayerArt(this, s, asset("ic/music_note.png"));
         // Tarjeta alta (barra lateral): diseño vertical que llena el alto en vez de dejar espacio vacío (Andrés, Picanto)
-        tallPlayer = cardH - 380 >= 60;
+        tallPlayer = cardH - 380 >= 60 || shortVertical;   // vertical bajo: el mismo diseño, calculado con el alto real
         final View prev, play, next;
         if (vertical && cardH < 240) {
             // Franja ancha (vertical sin la tarjeta del vehículo): carátula a la izquierda, canción al centro y
@@ -2946,9 +2946,9 @@ public class Main extends Activity {
             place(card, play, bx + bs + gap, (cardH - ps) / 2, ps, ps);
             place(card, next, bx + bs + gap + ps + gap, (cardH - bs) / 2, bs, bs);
         } else if (tallPlayer) {
-            boolean big = audW >= 290;
-            float bs = big ? 66 : 60, ps = big ? 86 : 76, gap = big ? 12 : 10;
-            float yb = cardH - 22 - ps;                 // botones abajo
+            boolean big = audW >= 290, low = cardH < 380;
+            float bs = low ? 52 : big ? 66 : 60, ps = low ? 66 : big ? 86 : 76, gap = big ? 12 : 10;
+            float yb = cardH - (low ? 16 : 22) - ps;    // botones abajo
             float yt = yb - 18 - 18;                    // tiempo (el avance lo muestra el anillo de la carátula)
             float ya = yt - 6 - 20;                     // artista
             float yti = ya - 28;                        // canción
