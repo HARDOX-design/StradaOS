@@ -133,8 +133,8 @@ public class Main extends Activity {
     /** Escala de 1024x600 para Ajustes, el cajón y sus ventanas: con la barra lateral el inicio se agranda, pero
      *  esas pantallas deben conservar su tamaño (en un S23 con barra lateral Ajustes quedaba cortado arriba). */
     private float uiS = 1f;
-    static final int[] SIM_W = {0, 1024, 1280, 1920, 2000, 1280, 768, 1080};
-    static final int[] SIM_H = {0, 600, 720, 720, 1200, 480, 1024, 1920};
+    static final int[] SIM_W = {0, 1024, 1280, 1920, 2000, 1280, 768, 1080, 768};
+    static final int[] SIM_H = {0, 600, 720, 720, 1200, 480, 1024, 1920, 880};   // 8: tipo Tesla con barra de clima (casi cuadrada)
 
     private TextView weatherTv, weatherCityTv;
     private ImageView weatherIc;
@@ -554,6 +554,17 @@ public class Main extends Activity {
                     prefs.edit().putString("theme", "tema:claro".equals(v) ? "light" : "tema:sistema".equals(v) ? "system" : "dark").apply();
                     applyTheme(); applyAccent(); rebuild();
                 }
+                else if (v.startsWith("pref:") && v.indexOf('=') > 5) {
+                    // pref:clave=valor (true/false, número o texto); «pref:clave=» la borra
+                    String k = v.substring(5, v.indexOf('=')), val = v.substring(v.indexOf('=') + 1);
+                    SharedPreferences.Editor e = prefs.edit();
+                    if (val.length() == 0) e.remove(k);
+                    else if ("true".equals(val) || "false".equals(val)) e.putBoolean(k, Boolean.parseBoolean(val));
+                    else if (val.matches("-?\\d{1,9}")) e.putInt(k, Integer.parseInt(val));
+                    else e.putString(k, val);
+                    e.apply();
+                    applyTheme(); applyAccent(); rebuild();
+                }
                 else if (v.startsWith("diseno:")) {
                     // diseno:izq|der|sinauto|conauto|normal|compacta|lateral|base  (base = como viene)
                     String d = v.substring(7);
@@ -915,7 +926,11 @@ public class Main extends Activity {
         dockLabels = prefs.getBoolean("dock_labels", true);
         // Lienzo virtual: 1024x600. Con la barra lateral los botones salen de abajo y el lienzo queda más bajo
         // (1128x460): en pantallas bajas y anchas como 1280x480 todo se ve ~30 % más grande.
-        vertical = H >= W * 1.2f;
+        // Diseño (2.22, Jorge Morales): Automático = vertical si la pantalla es al menos 20 % más alta que ancha (como
+        // siempre). Las pantallas tipo Tesla con barra de clima de fábrica quedan casi cuadradas: ahí se puede forzar.
+        boxW = W; boxH = H;
+        String lmode = prefs.getString("layout_mode", "auto");
+        vertical = "vertical".equals(lmode) ? canVertical(W, H) : !"horizontal".equals(lmode) && H >= W * 1.2f;
         if (vertical) sideDock = false;   // en vertical la barra va abajo (la lateral le quitaría ancho al mapa)
         float dw = 1024 + (sideDock ? RAIL + 8 : 0), dh = sideDock ? 460 : 600;
         s = Math.min(W / dw, H / dh);
@@ -981,6 +996,10 @@ public class Main extends Activity {
      * pantalla horizontal de 9") y tan alto como la pantalla. Se reparten así, de arriba abajo: barra de arriba (64),
      * mapa (lo que sobra), fila de tarjetas y barra de botones.
      */
+    /** El diseño vertical cabe si la pantalla es casi cuadrada o más alta que ancha. */
+    private static boolean canVertical(int W, int H) { return H >= W * 0.95f; }
+    private int boxW, boxH;
+
     private void buildVerticalMetrics(int W, int H) {
         s = W / 720f;
         float dh = H / s;
@@ -3731,6 +3750,8 @@ public class Main extends Activity {
         }
         boolean own = "aa".equals(curOrigin);
         if (art == null && !own) return;
+        // Al quitar el cable Open Headunit manda una última notificación: sin Android Auto no se pone su carátula.
+        if (!aaRunning()) return;
         if (aaWaitTitle != null && sameTitle(aaWaitTitle, curTitle)) { aaWaitTitle = null; h.removeCallbacks(aaWait); }
         if (art != null) curArt = art;
         curSource = "Android Auto";
@@ -5077,6 +5098,16 @@ public class Main extends Activity {
 
     /** Pantalla de inicio: qué tarjetas se ven, el mapa y la barra de arriba. */
     private void catHome(LinearLayout body) {
+        if (boxW > 0 && canVertical(boxW, boxH)) {
+            // Solo en pantallas casi cuadradas o verticales (en las horizontales no tiene sentido).
+            final String[] lk = {"auto", "horizontal", "vertical"};
+            LinearLayout ds = section(body, "Diseño");
+            segmented(ds, "Diseño de la pantalla", "Automático: según la forma de la pantalla. Elige Vertical si tu pantalla es vertical y se ve chica en el medio",
+                new String[]{"Automático", "Horizontal", "Vertical"},
+                Math.max(0, java.util.Arrays.asList(lk).indexOf(prefs.getString("layout_mode", "auto"))), new IntCb() { public void on(int i) {
+                    prefs.edit().putString("layout_mode", lk[i]).apply(); rebuild();
+                }});
+        }
         LinearLayout lay = section(body, "Tarjetas");
         segmented(lay, "Reproductor de música", "Ponlo del lado del conductor para tenerlo a la mano", new String[]{"Derecha", "Izquierda"},
             playerLeft ? 1 : 0, new IntCb() { public void on(int i) {
@@ -5938,7 +5969,9 @@ public class Main extends Activity {
         compatLine(b, "Tema según el modo oscuro del sistema", "Pantallas que lo cambian (p. ej. con las luces)", true,
             systemNight() ? "el sistema está en modo oscuro" : "el sistema está en modo claro");
         compatLine(b, "Copia de seguridad en un archivo (pantalla o USB)", "Android 4.1+", true, SDK >= 29 ? "en Android 10+ la carpeta se elige con el selector de archivos" : null);
-        compatLine(b, "Diseño vertical", "Pantallas en vertical (tipo Tesla)", true, vertical ? "en uso" : "esta pantalla es horizontal");
+        compatLine(b, "Diseño vertical", "Pantallas en vertical (tipo Tesla)", true, vertical ? "en uso"
+            : canVertical(boxW, boxH) ? "se puede elegir en Ajustes → Pantalla de inicio → Diseño" : "esta pantalla es horizontal");
+        b.append(I18n.t("Área útil de la pantalla:")).append(" ").append(boxW).append(" × ").append(boxH).append(" px\n");
         new TB(this, dlg()).diag().setTitle("Compatibilidad").setMessage(b.toString().trim()).setPositiveButton("OK", null).show();
     }
 
