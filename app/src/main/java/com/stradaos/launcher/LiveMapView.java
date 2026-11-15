@@ -502,7 +502,7 @@ public class LiveMapView extends View {
     }
 
     public String trafficTpl() {
-        if (sp == null || !sp.getBoolean("map_traffic", true)) return null;
+        if (sp == null || !sp.getBoolean("map_traffic", false)) return null;
         String custom = sp.getString("traffic_url", "").trim();
         if (custom.length() > 0) return custom;
         String key = sp.getString("tomtom_key", "").trim();

@@ -216,7 +216,7 @@ public class Main extends Activity {
         } catch (Throwable ignored) { }
         loadApps();
         startOdo();
-        if (Nav.restore(this)) LiveMapView.headingUp = true;
+        if ("internal".equals(prefs.getString("nav_app", null)) && Nav.restore(this)) LiveMapView.headingUp = true;
         // mapa sin conexión: aviso al terminar la descarga y, si quedó a medias (se apagó el carro), continuarla
         MapDownload.onFinish = new Runnable() { public void run() { onMapDownloadFinished(); } };
         if (MapDownload.paused(this) && !prefs.getBoolean("map_dl_user_paused", false)) {
@@ -2336,7 +2336,7 @@ public class Main extends Activity {
         goBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { openNavSearch(); }
         });
-        if (!prefs.getBoolean("map_live", true)) goBtn.setVisibility(View.GONE);
+        if (!prefs.getBoolean("map_live", true) || !"internal".equals(prefs.getString("nav_app", null))) goBtn.setVisibility(View.GONE);
         navSearchBtn = goBtn;
         mapTagBox = topRow;
         placeWrap(card, topRow, 16, 16);
@@ -2868,6 +2868,7 @@ public class Main extends Activity {
         if (navTurnIc != null) navTurnIc.setIcon(st != null ? st.icon : 0);
         if (navEtaTv != null) {
             String eta = Nav.fmtEta(Nav.remDurS, Nav.remDistM, mph);
+            if ("map".equals(r.source) && r.offline) eta = eta + " · " + I18n.t("aproximada");
             int dMin = (int) Math.round(Nav.trafficDelayS / 60.0);
             if (dMin >= 1) {
                 eta = eta + " (+" + dMin + " min)";
@@ -3388,10 +3389,10 @@ public class Main extends Activity {
         pickFor("music_app", "Música", null);
     }
 
-    /** Navegación en el mapa de StradaOS (por defecto) o app externa elegida. */
+    /** App de navegación elegida; si se elige integrada en el mapa, abre búsqueda/menú interno. */
     private void openNavApp() {
         String navPref = prefs.getString("nav_app", null);
-        if (prefs.getBoolean("map_live", true) && (navPref == null || "internal".equals(navPref))) {
+        if (prefs.getBoolean("map_live", true) && "internal".equals(navPref)) {
             if (Nav.active != null) openNavMenu();
             else openNavSearch();
             return;
@@ -3718,7 +3719,7 @@ public class Main extends Activity {
                 updateNavHud();
                 if (liveMap != null) liveMap.invalidate();
                 if ("cache".equals(r.source)) toast("Ruta guardada (sin conexión)");
-                else if (r.offline) toast("Ruta sin conexión (mapa local)");
+                else if (r.offline) toast("Ruta aproximada (mapa local sin conexión)");
             }
         });
     }
@@ -3790,7 +3791,7 @@ public class Main extends Activity {
 
         String title = r.destName != null && r.destName.length() > 0 ? r.destName : I18n.t("Navegación en el mapa");
         if ("cache".equals(r.source)) title = title + " (" + I18n.t("ruta guardada") + ")";
-        else if (r.offline) title = title + " (" + I18n.t("sin conexión") + ")";
+        else if (r.offline) title = title + " (" + I18n.t("sin conexión · aproximada") + ")";
         else if ("tomtom".equals(r.source)) title = title + " (" + I18n.t("con tráfico") + ")";
         new TB(this, dlg()).raw()
             .setTitle(title)
@@ -3816,8 +3817,8 @@ public class Main extends Activity {
 
     private String autoLabel(String key, String[] pkgs, String none) {
         String c = prefs.getString(key, null);
-        if ("nav_app".equals(key) && ("internal".equals(c) || (c == null && prefs.getBoolean("map_live", true)))) {
-            return I18n.t(c == null ? "Automático · En el mapa de StradaOS" : "En el mapa de StradaOS");
+        if ("nav_app".equals(key) && "internal".equals(c)) {
+            return I18n.t("En el mapa de StradaOS");
         }
         if (c != null) return labelOf(c);
         String p = firstInstalled(pkgs);
@@ -4431,11 +4432,12 @@ public class Main extends Activity {
                     if ("city_manual".equals(key)) refreshWeatherNow();
                     if ("map_url".equals(key)) toast("Se aplicará al reiniciar StradaOS");
                     if ("tomtom_key".equals(key) || "traffic_url".equals(key)) {
-                        LiveMapView.clearTrafficCache();
-                        if (liveMap != null) liveMap.invalidate();
                         if ("tomtom_key".equals(key) && et.getText().toString().trim().length() > 0) {
+                            prefs.edit().putBoolean("map_traffic", true).apply();
                             toast("Tráfico en vivo activado");
                         }
+                        LiveMapView.clearTrafficCache();
+                        if (liveMap != null) liveMap.invalidate();
                     }
                     if ("extra_actions".equals(key)) {
                         try { nowPlaying.stop(); nowPlaying.start(); } catch (Throwable ignored) { }
@@ -5753,12 +5755,12 @@ public class Main extends Activity {
         toggle(ml, "Mapa en vivo", "Apágalo si la pantalla va lenta: queda un mapa de adorno y el velocímetro sigue funcionando", prefs.getBoolean("map_live", true), new IntCb() { public void on(int i) {
             prefs.edit().putBoolean("map_live", i == 1).apply(); rebuild(); showSettings(settingsCat);
         }});
-        row(nv, "App de navegación preferida", "Por defecto usa la navegación en el mapa de StradaOS (o elige Waze, Maps, OsmAnd…)", autoLabel("nav_app", NAV_PKGS, "Toca para elegir"),
+        row(nv, "App de navegación preferida", "Se abre con el botón del mapa (Waze, Maps, OsmAnd… o integrada en el mapa)", autoLabel("nav_app", NAV_PKGS, "Toca para elegir"),
             new Runnable() { public void run() { pickFor("nav_app", "Navegación"); } });
         toggle(nv, "Voz de navegación", "Indicaciones paso a paso habladas durante el recorrido", prefs.getBoolean("nav_voice", true), new IntCb() { public void on(int i) {
             prefs.edit().putBoolean("nav_voice", i == 1).apply(); showSettings(settingsCat);
         }});
-        toggle(nv, "Tráfico en vivo", "Muestra congestión en el mapa y evita trancones (usa clave gratis de TomTom)", prefs.getBoolean("map_traffic", true), new IntCb() { public void on(int i) {
+        toggle(nv, "Tráfico en vivo", "Muestra congestión en el mapa y evita trancones (usa clave gratis de TomTom)", prefs.getBoolean("map_traffic", false), new IntCb() { public void on(int i) {
             prefs.edit().putBoolean("map_traffic", i == 1).apply();
             LiveMapView.clearTrafficCache();
             if (liveMap != null) liveMap.invalidate();
@@ -5800,6 +5802,13 @@ public class Main extends Activity {
             edit("map_url", "URL de teselas {z}/{x}/{y} (vacío = automático)", ""));
         row(m, "Capa de tráfico propia (avanzado)", "URL transparente de tráfico con {z}/{x}/{y}", prefs.getString("traffic_url", "").trim().length() > 0 ? "Personalizada" : "Automática",
             edit("traffic_url", "URL capa de tráfico {z}/{x}/{y} (vacío = automático)", ""));
+        row(m, "Servidor de rutas OSRM (avanzado)", "URL propia compatible con OSRM (vacío = automático)",
+            prefs.getString("nav_route_url", "").trim().length() > 0 ? "Personalizada" : "Automática",
+            edit("nav_route_url", "URL servidor OSRM (vacío = automático)", ""));
+        toggle(m, "Compatibilidad TLS en rutas", "Para radios antiguas donde falle el HTTPS de rutas o búsqueda",
+            prefs.getBoolean("nav_tls_compat", false), new IntCb() { public void on(int i) {
+                prefs.edit().putBoolean("nav_tls_compat", i == 1).apply(); showSettings(settingsCat);
+            }});
     }
 
     private TextView dlStatusTv;
@@ -6797,6 +6806,10 @@ public class Main extends Activity {
     }
 
     private void refreshStates() {
+        if (navSearchBtn != null) {
+            boolean showGo = prefs.getBoolean("map_live", true) && "internal".equals(prefs.getString("nav_app", null));
+            navSearchBtn.setVisibility(showGo ? View.VISIBLE : View.GONE);
+        }
         if (aaBtnTv == null && cpSubTv == null) return;
         if (aaBtnTv != null) {   // 2.18: con «Solo CarPlay» no hay botón de Android Auto
             String nat = nativeProjectionApp();

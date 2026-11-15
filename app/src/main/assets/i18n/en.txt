@@ -922,9 +922,8 @@ Detener navegación	Stop navigation
 Navegación en el mapa	Map navigation
 Voz activada	Voice on
 Voz silenciada	Voice muted
-Automático · En el mapa de StradaOS	Automatic · On StradaOS map
 En el mapa de StradaOS	On StradaOS map
-Por defecto usa la navegación en el mapa de StradaOS (o elige Waze, Maps, OsmAnd…)	Uses StradaOS map navigation by default (or choose Waze, Maps, OsmAnd…)
+Se abre con el botón del mapa (Waze, Maps, OsmAnd… o integrada en el mapa)	Opens with the map button (Waze, Maps, OsmAnd… or built-in on map)
 Voz de navegación	Navigation voice
 Indicaciones paso a paso habladas durante el recorrido	Spoken turn-by-turn directions during the trip
 ★  En el mapa de StradaOS (integrada)	★  On StradaOS map (built-in)
@@ -982,11 +981,12 @@ Guardar como Casa	Save as Home
 Guardar como Trabajo	Save as Work
 Añadido a favoritos	Added to favorites
 Quitado de favoritos	Removed from favorites
-Ruta sin conexión (mapa local)	Offline route (local map)
+Ruta aproximada (mapa local sin conexión)	Approximate route (local offline map)
 Ruta guardada (sin conexión)	Saved route (offline)
 Recalcular ruta	Recalculate route
 ruta guardada	saved route
-sin conexión	offline
+sin conexión · aproximada	offline · approximate
+aproximada	approximate
 Para rutas largas o sin mapa local hace falta internet	Internet is required for long routes or without a local map
 Mapa local	Local map
 Pueblo	Town
@@ -1014,4 +1014,9 @@ Clave API gratis de TomTom	Free TomTom API key
 Capa de tráfico propia (avanzado)	Custom traffic layer (advanced)
 URL transparente de tráfico con {z}/{x}/{y}	Transparent traffic tile URL with {z}/{x}/{y}
 URL capa de tráfico {z}/{x}/{y} (vacío = automático)	Traffic layer URL {z}/{x}/{y} (empty = automatic)
+Servidor de rutas OSRM (avanzado)	OSRM routing server (advanced)
+URL propia compatible con OSRM (vacío = automático)	Custom OSRM-compatible URL (empty = automatic)
+URL servidor OSRM (vacío = automático)	OSRM server URL (empty = automatic)
+Compatibilidad TLS en rutas	TLS compatibility for routing
+Para radios antiguas donde falle el HTTPS de rutas o búsqueda	For older head units where HTTPS routing or search fails
 

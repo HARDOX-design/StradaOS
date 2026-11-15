@@ -21,13 +21,31 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.URL;
 import java.net.URLEncoder;
+import java.security.KeyStore;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509TrustManager;
 
 /**
  * Navegación paso a paso en vivo sobre el mapa de StradaOS (sin Play Services ni SDKs pesados).
@@ -129,13 +147,13 @@ public class Nav {
                 }
                 if (out == null || out.isEmpty()) {
                     try {
-                        out = searchPhoton(q, biasLat, biasLon);
+                        out = searchPhoton(app, q, biasLat, biasLon);
                     } catch (Throwable e) {
                         err = shortErr(e);
                     }
                     if (out == null || out.isEmpty()) {
                         try {
-                            List<Place> nom = searchNominatim(q);
+                            List<Place> nom = searchNominatim(app, q);
                             if (nom != null && !nom.isEmpty()) { out = nom; err = null; }
                             else if (out == null) out = nom;
                         } catch (Throwable e) {
@@ -226,7 +244,7 @@ public class Nav {
         }
     }
 
-    private static List<Place> searchPhoton(String q, double biasLat, double biasLon) throws Exception {
+    private static List<Place> searchPhoton(Context c, String q, double biasLat, double biasLon) throws Exception {
         StringBuilder url = new StringBuilder("https://photon.komoot.io/api/?limit=6&q=");
         url.append(URLEncoder.encode(q, "UTF-8"));
         if ("en".equals(I18n.lang) || "de".equals(I18n.lang) || "fr".equals(I18n.lang) || "it".equals(I18n.lang)) {
@@ -235,7 +253,7 @@ public class Nav {
         if (!Double.isNaN(biasLat) && !Double.isNaN(biasLon)) {
             url.append(String.format(Locale.US, "&lat=%.4f&lon=%.4f", biasLat, biasLon));
         }
-        String raw = new String(Net.get(url.toString(), 10000), "UTF-8");
+        String raw = new String(navGet(c, url.toString(), 10000), "UTF-8");
         JSONObject root = new JSONObject(raw);
         JSONArray feats = root.optJSONArray("features");
         List<Place> out = new ArrayList<Place>();
@@ -273,10 +291,10 @@ public class Nav {
         return out;
     }
 
-    private static List<Place> searchNominatim(String q) throws Exception {
+    private static List<Place> searchNominatim(Context c, String q) throws Exception {
         String url = "https://nominatim.openstreetmap.org/search?format=json&limit=6&addressdetails=1&q="
                 + URLEncoder.encode(q, "UTF-8") + "&accept-language=" + URLEncoder.encode(I18n.lang, "UTF-8");
-        String raw = new String(Net.get(url, 10000), "UTF-8");
+        String raw = new String(navGet(c, url, 10000), "UTF-8");
         JSONArray arr = new JSONArray(raw);
         List<Place> out = new ArrayList<Place>();
         for (int i = 0; i < arr.length(); i++) {
@@ -572,23 +590,30 @@ public class Nav {
                 }
                 if (r == null && hasNetwork(app)) {
                     String[] errOut = new String[1];
-                    String ttKey = app != null ? app.getSharedPreferences("launcher", 0).getString("tomtom_key", "").trim() : "";
-                    if (ttKey.length() > 0) {
-                        r = fetchTomTom(ttKey, lat1, lon1, lat2, lon2, destName, errOut);
+                    SharedPreferences sp = app != null ? app.getSharedPreferences("launcher", 0) : null;
+                    boolean useTraffic = sp != null && sp.getBoolean("map_traffic", false);
+                    String ttKey = sp != null ? sp.getString("tomtom_key", "").trim() : "";
+                    String customOsrm = sp != null ? normalizeOsrmBase(sp.getString("nav_route_url", "")) : null;
+                    if (useTraffic && ttKey.length() > 0 && customOsrm == null) {
+                        r = fetchTomTom(app, ttKey, lat1, lon1, lat2, lon2, destName, errOut);
                     }
                     if (r == null) {
                         String tail = String.format(Locale.US, "%.6f,%.6f;%.6f,%.6f?overview=full&geometries=polyline&steps=true",
                                 lon1, lat1, lon2, lat2);
                         boolean[] sslOut = new boolean[1];
-                        r = fetchOsrm(new String[]{
-                            "https://router.project-osrm.org/route/v1/driving/",
-                            "https://routing.openstreetmap.de/routed-car/route/v1/driving/"
-                        }, tail, lat2, lon2, destName, errOut, sslOut);
-                        if (r == null && sslOut[0]) {
-                            r = fetchOsrm(new String[]{
-                                "http://router.project-osrm.org/route/v1/driving/",
-                                "http://routing.openstreetmap.de/routed-car/route/v1/driving/"
-                            }, tail, lat2, lon2, destName, errOut, null);
+                        if (customOsrm != null) {
+                            r = fetchOsrm(app, new String[]{customOsrm}, tail, lat2, lon2, destName, errOut, sslOut);
+                        } else {
+                            r = fetchOsrm(app, new String[]{
+                                "https://router.project-osrm.org/route/v1/driving/",
+                                "https://routing.openstreetmap.de/routed-car/route/v1/driving/"
+                            }, tail, lat2, lon2, destName, errOut, sslOut);
+                            if (r == null && sslOut[0]) {
+                                r = fetchOsrm(app, new String[]{
+                                    "http://router.project-osrm.org/route/v1/driving/",
+                                    "http://routing.openstreetmap.de/routed-car/route/v1/driving/"
+                                }, tail, lat2, lon2, destName, errOut, null);
+                            }
                         }
                     }
                     if (r == null) err = errOut[0];
@@ -610,7 +635,18 @@ public class Nav {
         }).start();
     }
 
-    private static Route fetchTomTom(String key, double lat1, double lon1, double lat2, double lon2,
+    /** Normaliza una URL base de servidor de rutas OSRM (vacía = servidores públicos por defecto). */
+    public static String normalizeOsrmBase(String raw) {
+        if (raw == null) return null;
+        String u = raw.trim();
+        if (u.length() == 0) return null;
+        if (!u.startsWith("http://") && !u.startsWith("https://")) u = "https://" + u;
+        if (u.indexOf("/route/v1/") >= 0) return u.endsWith("/") ? u : u + "/";
+        while (u.endsWith("/")) u = u.substring(0, u.length() - 1);
+        return u + "/route/v1/driving/";
+    }
+
+    private static Route fetchTomTom(Context c, String key, double lat1, double lon1, double lat2, double lon2,
                                      String destName, String[] errOut) {
         try {
             String url = String.format(Locale.US,
@@ -618,7 +654,7 @@ public class Nav {
                     lat1, lon1, lat2, lon2,
                     URLEncoder.encode(key, "UTF-8"),
                     URLEncoder.encode(tomtomLang(), "UTF-8"));
-            String raw = new String(Net.get(url, 12000), "UTF-8");
+            String raw = new String(navGet(c, url, 12000), "UTF-8");
             return parseTomTom(raw, lat2, lon2, destName);
         } catch (Throwable e) {
             if (errOut != null) errOut[0] = shortErr(e);
@@ -638,11 +674,11 @@ public class Nav {
         return "en-US";
     }
 
-    private static Route fetchOsrm(String[] hosts, String tail, double destLat, double destLon,
+    private static Route fetchOsrm(Context c, String[] hosts, String tail, double destLat, double destLon,
                                    String destName, String[] errOut, boolean[] sslOut) {
         for (String host : hosts) {
             try {
-                String raw = new String(Net.get(host + tail, 12000), "UTF-8");
+                String raw = new String(navGet(c, host + tail, 12000), "UTF-8");
                 Route r = parseOsrm(raw, destLat, destLon, destName);
                 if (r != null) return r;
             } catch (Throwable e) {
@@ -655,9 +691,150 @@ public class Nav {
 
     private static boolean isSsl(Throwable e) {
         for (int i = 0; i < 5 && e != null; i++, e = e.getCause()) {
-            if (e instanceof javax.net.ssl.SSLException) return true;
+            if (e instanceof SSLException) return true;
         }
         return false;
+    }
+
+    private static volatile SSLSocketFactory navTlsFactory;
+    private static volatile boolean navTlsInitDone;
+
+    /** Descarga HTTPS/HTTP solo para rutas y búsqueda de navegación; TLS ampliado es opcional (apagado por defecto). */
+    static byte[] navGet(Context c, String url, int timeoutMs) throws Exception {
+        if (c != null && url != null && url.startsWith("https://")
+                && c.getSharedPreferences("launcher", 0).getBoolean("nav_tls_compat", false)) {
+            SSLSocketFactory sf = navSocketFactory(c);
+            if (sf != null) {
+                try {
+                    return httpGetWithFactory(url, timeoutMs, sf);
+                } catch (SSLException ignored) {
+                    // continúa con el comportamiento estándar de Net.get()
+                }
+            }
+        }
+        return Net.get(url, timeoutMs);
+    }
+
+    private static synchronized SSLSocketFactory navSocketFactory(Context c) {
+        if (navTlsInitDone) return navTlsFactory;
+        navTlsInitDone = true;
+        try {
+            TrustManagerFactory sysTmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+            sysTmf.init((KeyStore) null);
+            X509TrustManager sysTmp = null;
+            for (TrustManager t : sysTmf.getTrustManagers()) {
+                if (t instanceof X509TrustManager) { sysTmp = (X509TrustManager) t; break; }
+            }
+            if (sysTmp == null) return null;
+            final X509TrustManager system = sysTmp;
+
+            KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
+            ks.load(null, null);
+            InputStream in = c.getAssets().open("roots.pem");
+            ByteArrayOutputStream raw = new ByteArrayOutputStream();
+            byte[] rb = new byte[16384];
+            int rn;
+            while ((rn = in.read(rb)) > 0) raw.write(rb, 0, rn);
+            in.close();
+            String pem = new String(raw.toByteArray(), "US-ASCII");
+            CertificateFactory cf = CertificateFactory.getInstance("X.509");
+            int i = 0, at = 0;
+            while (true) {
+                int s0 = pem.indexOf("-----BEGIN CERTIFICATE-----", at);
+                if (s0 < 0) break;
+                int e0 = pem.indexOf("-----END CERTIFICATE-----", s0);
+                if (e0 < 0) break;
+                at = e0 + 25;
+                try {
+                    Certificate cert = cf.generateCertificate(new java.io.ByteArrayInputStream(pem.substring(s0, at).getBytes("US-ASCII")));
+                    ks.setCertificateEntry("root" + (i++), cert);
+                } catch (Throwable ignored) { }
+            }
+            TrustManagerFactory bunTmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+            bunTmf.init(ks);
+            X509TrustManager bunTmp = null;
+            for (TrustManager t : bunTmf.getTrustManagers()) {
+                if (t instanceof X509TrustManager) { bunTmp = (X509TrustManager) t; break; }
+            }
+            if (bunTmp == null) return null;
+            final X509TrustManager bundled = bunTmp;
+            X509TrustManager both = new X509TrustManager() {
+                public void checkClientTrusted(X509Certificate[] chain, String auth) throws java.security.cert.CertificateException {
+                    system.checkClientTrusted(chain, auth);
+                }
+                public void checkServerTrusted(X509Certificate[] chain, String auth) throws java.security.cert.CertificateException {
+                    try { system.checkServerTrusted(chain, auth); }
+                    catch (java.security.cert.CertificateException e) { bundled.checkServerTrusted(chain, auth); }
+                }
+                public X509Certificate[] getAcceptedIssuers() { return system.getAcceptedIssuers(); }
+            };
+            SSLContext ctx = SSLContext.getInstance("TLS");
+            ctx.init(null, new TrustManager[]{both}, null);
+            navTlsFactory = Build.VERSION.SDK_INT >= 21 ? ctx.getSocketFactory() : new NavTlsFactory(ctx.getSocketFactory());
+        } catch (Throwable ignored) {
+            navTlsFactory = null;
+        }
+        return navTlsFactory;
+    }
+
+    private static byte[] httpGetWithFactory(String url, int timeoutMs, SSLSocketFactory f) throws Exception {
+        HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+        if (conn instanceof HttpsURLConnection && f != null) ((HttpsURLConnection) conn).setSSLSocketFactory(f);
+        conn.setConnectTimeout(timeoutMs);
+        conn.setReadTimeout(timeoutMs);
+        conn.setRequestProperty("User-Agent", "StradaOS/2.1 (Android head unit launcher)");
+        try {
+            int code = conn.getResponseCode();
+            if (code != 200) throw new Exception("HTTP " + code);
+            InputStream in = conn.getInputStream();
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            byte[] buf = new byte[16384];
+            int n;
+            while ((n = in.read(buf)) > 0) out.write(buf, 0, n);
+            in.close();
+            return out.toByteArray();
+        } finally {
+            conn.disconnect();
+        }
+    }
+
+    /** Fábrica TLS opcional para navegación (solo si el usuario activa Compatibilidad TLS en rutas). */
+    private static class NavTlsFactory extends SSLSocketFactory {
+        private final SSLSocketFactory d;
+        NavTlsFactory(SSLSocketFactory d) { this.d = d; }
+        private Socket on(Socket s) { return on(s, null); }
+        private Socket on(Socket s, String host) {
+            if (s instanceof SSLSocket) {
+                try {
+                    ArrayList<String> ok = new ArrayList<String>();
+                    for (String c : ((SSLSocket) s).getSupportedCipherSuites()) {
+                        if (c.contains("SCSV") || c.contains("_anon_") || c.contains("NULL") || c.contains("EXPORT")
+                                || c.contains("_RC4_") || c.contains("_DES_") || c.contains("_MD5")) continue;
+                        ok.add(c);
+                    }
+                    if (!ok.isEmpty()) ((SSLSocket) s).setEnabledCipherSuites(ok.toArray(new String[0]));
+                } catch (Throwable ignored) { }
+                if (host != null) {
+                    try { s.getClass().getMethod("setHostname", String.class).invoke(s, host); } catch (Throwable ignored) { }
+                    try { s.getClass().getMethod("setUseSessionTickets", boolean.class).invoke(s, true); } catch (Throwable ignored) { }
+                }
+                try {
+                    String[] sup = ((SSLSocket) s).getSupportedProtocols();
+                    ArrayList<String> want = new ArrayList<String>();
+                    for (String p : sup) if (p.equals("TLSv1.2") || p.equals("TLSv1.3") || p.equals("TLSv1.1")) want.add(p);
+                    if (!want.isEmpty()) ((SSLSocket) s).setEnabledProtocols(want.toArray(new String[0]));
+                } catch (Throwable ignored) { }
+            }
+            return s;
+        }
+        public String[] getDefaultCipherSuites() { return d.getDefaultCipherSuites(); }
+        public String[] getSupportedCipherSuites() { return d.getSupportedCipherSuites(); }
+        public Socket createSocket() throws java.io.IOException { return on(d.createSocket()); }
+        public Socket createSocket(Socket s, String h, int p, boolean a) throws java.io.IOException { return on(d.createSocket(s, h, p, a), h); }
+        public Socket createSocket(String h, int p) throws java.io.IOException { return on(d.createSocket(h, p), h); }
+        public Socket createSocket(String h, int p, InetAddress l, int lp) throws java.io.IOException { return on(d.createSocket(h, p, l, lp), h); }
+        public Socket createSocket(InetAddress h, int p) throws java.io.IOException { return on(d.createSocket(h, p)); }
+        public Socket createSocket(InetAddress h, int p, InetAddress l, int lp) throws java.io.IOException { return on(d.createSocket(h, p, l, lp)); }
     }
 
     private static Route routeFromOfflineMap(double lat1, double lon1, double lat2, double lon2, String destName) {
