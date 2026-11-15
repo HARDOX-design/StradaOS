@@ -19,7 +19,7 @@ go() { adb shell am start -n $ACT --es prueba "$1" >/dev/null; sleep "${2:-5}"; 
 prep() { go pista-demo 3; }   # la canción de ejemplo se vuelve a poner tras cada cambio de diseño
 adb shell am start -n $ACT --es prueba saltar >/dev/null; sleep 15
 go demo-aceite 6
-if [ "$MODO" = promo ]; then
+if [ "$MODO" = promo ] || [ "$MODO" = promo-v ]; then
   # Imágenes promocionales (nov. 2026): todo lo de la 2.21 con el vehículo de ejemplo, mapa sin conexión de Medellín
   # y velocímetro mixto. La foto del vehículo se pone después, al armar las imágenes (no se sube al repo).
   kill $GEO 2>/dev/null
@@ -50,6 +50,7 @@ PY
   setprefs
   down() { adb shell input swipe 1300 1000 1300 250 500; sleep 2; }
   # ── horizontal (2048x1200 = 1024x600 x2) ──
+  if [ "$MODO" = promo ]; then
   prep; sleep 30; shot p01-inicio-oscuro
   go tema:claro 6; prep; sleep 20; shot p02-inicio-claro
   go tema:oscuro 6; go ajustes:2 6; shot p03-mantenimientos
@@ -61,8 +62,9 @@ PY
   go diag-reproductor 5; shot p08-diagnostico; adb shell input keyevent 4; sleep 2
   go ajustes:1 6; shot p09-ajustes-vehiculo; adb shell input keyevent 4; sleep 2
   go inicio 4; go diseno:velomapa 6; prep; sleep 15; shot p10-velocimetro-en-mapa; go diseno:base 4; go diseno:velo-2 4
-  # ── vertical (1200x1920, densidad 300: lienzo de 720 de ancho) ──
-  adb shell wm size 1200x1920; adb shell wm density 300; sleep 8
+  fi
+  # ── vertical (1080x1920, como en las pruebas del bloque 9: lienzo de 720 de ancho) ──
+  adb shell wm size 1080x1920; adb shell wm density 160; sleep 10
   go inicio 6; prep; sleep 30; shot v01-vertical-oscuro
   go tema:claro 6; prep; sleep 20; shot v02-vertical-claro
   go tema:oscuro 6; go diseno:sinreproductor 6; sleep 15; shot v03-vertical-vehiculo-flotante
