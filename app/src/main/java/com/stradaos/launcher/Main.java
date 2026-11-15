@@ -6407,6 +6407,8 @@ public class Main extends Activity {
         String c = prefs.getString(key, null);
         if (c == null) return false;
         try {
+            ComponentName cn0 = ComponentName.unflattenFromString(c);
+            if (cn0 != null) markUsed(cn0.getPackageName());
             Intent i = new Intent(Intent.ACTION_MAIN);
             i.addCategory(Intent.CATEGORY_LAUNCHER);
             i.setComponent(ComponentName.unflattenFromString(c));
@@ -6426,9 +6428,82 @@ public class Main extends Activity {
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
         try {
             startActivity(i);
+            markUsed(r.activityInfo.packageName);
         } catch (Exception e) {
             toast("No se pudo abrir la app");
         }
+    }
+
+    // ── orden del cajón (2.22, #27): A-Z (como siempre), Z-A, usadas o instaladas recientemente, o a mano ──
+
+    static final String[] APP_ORDERS = {"az", "za", "used", "installed", "manual"};
+    static final String[] APP_ORDER_NAMES = {"A-Z", "Z-A", "Usadas recientemente", "Instaladas recientemente", "A mano"};
+
+    /** Anota cuándo se abrió una app desde StradaOS (para «Usadas recientemente»; se guardan las últimas 60). */
+    private void markUsed(String pkg) {
+        if (pkg == null) return;
+        java.util.LinkedHashMap<String, Long> m = usedApps();
+        m.remove(pkg);
+        m.put(pkg, System.currentTimeMillis());
+        StringBuilder b = new StringBuilder();
+        int skip = Math.max(0, m.size() - 60), n = 0;
+        for (java.util.Map.Entry<String, Long> e : m.entrySet()) {
+            if (n++ < skip) continue;
+            if (b.length() > 0) b.append('\n');
+            b.append(e.getKey()).append('\t').append(e.getValue());
+        }
+        prefs.edit().putString("app_used", b.toString()).apply();
+    }
+
+    private java.util.LinkedHashMap<String, Long> usedApps() {
+        java.util.LinkedHashMap<String, Long> m = new java.util.LinkedHashMap<String, Long>();
+        for (String l : prefs.getString("app_used", "").split("\n")) {
+            int t = l.indexOf('\t');
+            if (t <= 0) continue;
+            try { m.put(l.substring(0, t), Long.parseLong(l.substring(t + 1))); } catch (Throwable ignored) { }
+        }
+        return m;
+    }
+
+    private java.util.List<String> manualOrder() {
+        java.util.List<String> out = new ArrayList<String>();
+        for (String k : prefs.getString("apps_manual", "").split("\n")) if (k.length() > 0) out.add(k);
+        return out;
+    }
+
+    private void saveManual(java.util.List<ResolveInfo> list) {
+        StringBuilder b = new StringBuilder();
+        for (ResolveInfo r : list) { if (b.length() > 0) b.append('\n'); b.append(compKey(r)); }
+        prefs.edit().putString("apps_manual", b.toString()).putString("apps_order", "manual").apply();
+    }
+
+    /** Ordena la lista del cajón (llega en A-Z). Lo que no tenga dato (nunca abierta, fuera del orden a mano) va al final en A-Z. */
+    private void sortApps(java.util.List<ResolveInfo> list) {
+        String o = prefs.getString("apps_order", "az");
+        if ("za".equals(o)) { Collections.reverse(list); return; }
+        final HashMap<ResolveInfo, Long> key = new HashMap<ResolveInfo, Long>();
+        if ("used".equals(o)) {
+            java.util.LinkedHashMap<String, Long> u = usedApps();
+            for (ResolveInfo r : list) { Long t = u.get(r.activityInfo.packageName); key.put(r, t != null ? -t : 0L); }
+        } else if ("installed".equals(o)) {
+            PackageManager pm = getPackageManager();
+            for (ResolveInfo r : list) {
+                long t = 0;
+                try { t = pm.getPackageInfo(r.activityInfo.packageName, 0).firstInstallTime; } catch (Throwable ignored) { }
+                key.put(r, -t);
+            }
+        } else if ("manual".equals(o)) {
+            java.util.List<String> m = manualOrder();
+            for (ResolveInfo r : list) { int ix = m.indexOf(compKey(r)); key.put(r, ix >= 0 ? (long) ix - 100000 : 0L); }
+        } else return;
+        final HashMap<ResolveInfo, Integer> az = new HashMap<ResolveInfo, Integer>();
+        for (int i = 0; i < list.size(); i++) az.put(list.get(i), i);
+        Collections.sort(list, new Comparator<ResolveInfo>() {
+            public int compare(ResolveInfo a, ResolveInfo b) {
+                int c = key.get(a).compareTo(key.get(b));
+                return c != 0 ? c : az.get(a).compareTo(az.get(b));
+            }
+        });
     }
 
     private boolean launchPkg(String pkg) {
@@ -6918,10 +6993,37 @@ public class Main extends Activity {
         final List<ResolveInfo> shown = new ArrayList<ResolveInfo>();
         for (ResolveInfo r : apps) if (!hidden.contains(compKey(r))) shown.add(r);
         int nHidden = apps.size() - shown.size();
+        sortApps(shown);
 
         LinearLayout bar = new LinearLayout(this);
         bar.setOrientation(LinearLayout.HORIZONTAL);
         bar.setGravity(Gravity.CENTER_VERTICAL);
+        final int oi = Math.max(0, java.util.Arrays.asList(APP_ORDERS).indexOf(prefs.getString("apps_order", "az")));
+        TextView ord = tv(I18n.t("Orden") + ": " + I18n.t(APP_ORDER_NAMES[oi]), 15, SOFT, false);
+        ord.setGravity(Gravity.CENTER);
+        ord.setBackground(round(BTN, 18));
+        ord.setPadding((int) (16 * s), (int) (8 * s), (int) (16 * s), (int) (8 * s));
+        LinearLayout.LayoutParams olp = new LinearLayout.LayoutParams(-2, -2);
+        olp.rightMargin = (int) (10 * s);
+        bar.addView(ord, olp);
+        ord.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String[] tr = new String[APP_ORDER_NAMES.length];
+                for (int i = 0; i < tr.length; i++) tr[i] = I18n.t(APP_ORDER_NAMES[i]);
+                new TB(Main.this, dlg()).raw()
+                    .setTitle(I18n.t("Orden de las apps"))
+                    .setSingleChoiceItems(tr, oi, new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) {
+                        d.dismiss();
+                        if (w == 4 && manualOrder().isEmpty()) {
+                            saveManual(shown);   // arranca del orden que se ve
+                            toast("Deja presionada una app y elige «Mover» para cambiarla de lugar");
+                        }
+                        prefs.edit().putString("apps_order", APP_ORDERS[w]).apply();
+                        closeDrawer(); openDrawer();
+                    }})
+                    .show();
+            }
+        });
         if (nHidden > 0) {
             TextView hid = tv(I18n.t("Ocultas: " + nHidden), 15, SOFT, false);
             hid.setGravity(Gravity.CENTER);
@@ -6987,8 +7089,20 @@ public class Main extends Activity {
                 return cell;
             }
         });
+        final ResolveInfo[] moving = new ResolveInfo[1];
+        final TextView titleTv = title;
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int p, long id) {
+                if (moving[0] != null) {
+                    // modo «Mover»: la app elegida pasa al lugar tocado
+                    ResolveInfo m = moving[0];
+                    moving[0] = null;
+                    shown.remove(m);
+                    shown.add(Math.min(p, shown.size()), m);
+                    saveManual(shown);
+                    closeDrawer(); openDrawer();
+                    return;
+                }
                 launch(shown.get(p));
             }
         });
@@ -6998,8 +7112,14 @@ public class Main extends Activity {
                 final ResolveInfo r = shown.get(p);
                 new TB(Main.this, dlg())
                     .setTitle(String.valueOf(r.loadLabel(pm)))
-                    .setItems(new String[]{"Ocultar del cajón", "Desinstalar", "Información de la app"}, new DialogInterface.OnClickListener() {
+                    .setItems(new String[]{"Ocultar del cajón", "Desinstalar", "Información de la app", "Mover"}, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface d, int w) {
+                            if (w == 3) {
+                                moving[0] = r;
+                                titleTv.setText(I18n.t("Toca el lugar donde quieres poner «" + r.loadLabel(pm) + "»"));
+                                titleTv.setTextColor(RED);
+                                return;
+                            }
                             if (w == 0) {
                                 java.util.HashSet<String> h = hiddenApps();
                                 h.add(compKey(r));
