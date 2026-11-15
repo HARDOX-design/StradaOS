@@ -96,6 +96,20 @@ public class BtBridge {
         try { c.getPackageManager().getPackageInfo(PKG, 0); return true; } catch (Throwable e) { return false; }
     }
 
+    // Issue #30: en radios sin la app de Clinkway, connect() intentaba arrancar su servicio cada 2 s
+    // («Unable to start service … not found» en el logcat). Se revisa si existe, como mucho una vez por minuto.
+    private long pkgCheckedAt;
+    private boolean pkgThere;
+
+    private boolean installed() {
+        long now = SystemClock.elapsedRealtime();
+        if (pkgCheckedAt == 0 || now - pkgCheckedAt > 60000) {
+            pkgCheckedAt = now;
+            pkgThere = available(ctx);
+        }
+        return pkgThere;
+    }
+
     /**
      * true: mantiene vivo el servicio Bluetooth de fábrica (lo arranca si hace falta).
      * false: solo se conecta si ya está corriendo, sin cambiar nada.
@@ -110,6 +124,7 @@ public class BtBridge {
 
     /** Intenta conectarse. */
     public void connect() {
+        if (!bound && !installed()) return;
         boolean auto = wantAuto();
         if (bound && auto == boundAuto) return;
         if (bound) disconnect();

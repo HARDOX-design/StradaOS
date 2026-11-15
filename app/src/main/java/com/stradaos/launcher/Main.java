@@ -3478,6 +3478,7 @@ public class Main extends Activity {
             h.postDelayed(new Runnable() { public void run() { if (bt != null) bt.refresh(); } }, 700);
             return true;
         }
+        if (!clwBt) return false; // sin la app de Clinkway (issue #30)
         String a = code == KeyEvent.KEYCODE_MEDIA_NEXT ? "com.clw.btmusic.next"
                 : code == KeyEvent.KEYCODE_MEDIA_PREVIOUS ? "com.clw.btmusic.previous" : "com.clw.btmusic.togglepause";
         try {
