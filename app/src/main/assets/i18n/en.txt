@@ -934,3 +934,204 @@ Gris suave	Soft gray
 Ámbar	Amber
 Ver ahora	Preview now
 Toca la pantalla para volver	Tap the screen to go back
+# Navegación paso a paso en vivo
+Ir a…	Go to…
+Recalculando…	Rerouting…
+Llegaste a tu destino	You have arrived at your destination
+Activa el mapa en vivo en Ajustes → Mapa y clima	Turn on Live map in Settings → Map & weather
+Escribe una dirección o lugar	Type an address or place
+RECIENTES	RECENTS
+¿A dónde vamos?	Where to?
+Buscar	Search
+Detener	Stop
+Buscando…	Searching…
+No se pudo buscar	Couldn't search
+No se encontraron resultados	No results found
+Resultados	Results
+Esperando señal GPS para calcular la ruta	Waiting for GPS signal to calculate the route
+Calculando ruta…	Calculating route…
+No se pudo calcular la ruta	Couldn't calculate route
+Cambiar destino	Change destination
+Silenciar voz de guía	Mute voice guidance
+Activar voz de guía	Turn on voice guidance
+Vista Norte arriba	North up view
+Vista en dirección de marcha	Direction of travel view
+Abrir en otra app	Open in another app
+Detener navegación	Stop navigation
+Navegación en el mapa	Map navigation
+Voz activada	Voice on
+Voz silenciada	Voice muted
+En el mapa de StradaOS	On StradaOS map
+Se abre con el botón del mapa (Waze, Maps, OsmAnd… o integrada en el mapa)	Opens with the map button (Waze, Maps, OsmAnd… or built-in on map)
+Voz de navegación	Navigation voice
+Indicaciones paso a paso habladas durante el recorrido	Spoken turn-by-turn directions during the trip
+★  En el mapa de StradaOS (integrada)	★  On StradaOS map (built-in)
+Guardado: Navegación en el mapa	Saved: Map navigation
+Coordenadas	Coordinates
+No se encontró ruta	No route found
+Ruta recalculada	Route recalculated
+Sal por {}	Start on {}
+Inicia el recorrido	Start driving
+En la rotonda, salida {} hacia {}	At the roundabout, take exit {} onto {}
+En la rotonda, toma la salida {}	At the roundabout, take exit {}
+En la rotonda, sigue hacia {}	At the roundabout, continue onto {}
+En la rotonda, toma la salida	At the roundabout, take the exit
+Haz un giro en U en {}	Make a U-turn onto {}
+Haz un giro en U	Make a U-turn
+Gira levemente a la derecha en {}	Turn slight right onto {}
+Gira levemente a la derecha	Turn slight right
+Gira a la derecha en {}	Turn right onto {}
+Gira a la derecha	Turn right
+Gira fuerte a la derecha en {}	Turn sharp right onto {}
+Gira fuerte a la derecha	Turn sharp right
+Gira levemente a la izquierda en {}	Turn slight left onto {}
+Gira levemente a la izquierda	Turn slight left
+Gira a la izquierda en {}	Turn left onto {}
+Gira a la izquierda	Turn left
+Gira fuerte a la izquierda en {}	Turn sharp left onto {}
+Gira fuerte a la izquierda	Turn sharp left
+Incorpórate a {}	Merge onto {}
+Toma el desvío	Take the ramp
+Continúa por {}	Continue on {}
+Sigue recto	Go straight
+En 500 metros	In 500 meters
+En 150 metros	In 150 meters
+En 500 pies	In 500 feet
+En un cuarto de milla	In a quarter mile
+En {}	In {}
+Sin conexión · vuelve a la ruta	Offline · return to route
+Casa	Home
+Trabajo	Work
+Toca para guardar GPS	Tap to save current GPS
+Ir ahora	Go now
+Actualizar con GPS actual	Update with current GPS
+Eliminado	Removed
+Esperando señal GPS para guardar ubicación	Waiting for GPS signal to save location
+Guardado en Casa	Saved as Home
+Guardado en Trabajo	Saved as Work
+Gasolina	Fuel
+Salud	Health
+Parqueo	Parking
+Comida	Food
+FAVORITOS	FAVORITES
+Quitar de favoritos	Remove from favorites
+Añadir a favoritos	Add to favorites
+Guardar como Casa	Save as Home
+Guardar como Trabajo	Save as Work
+Añadido a favoritos	Added to favorites
+Quitado de favoritos	Removed from favorites
+Ruta aproximada (mapa local sin conexión)	Approximate route (local offline map)
+Ruta guardada (sin conexión)	Saved route (offline)
+Recalcular ruta	Recalculate route
+ruta guardada	saved route
+sin conexión · aproximada	offline · approximate
+aproximada	approximate
+Para rutas largas o sin mapa local hace falta internet	Internet is required for long routes or without a local map
+Mapa local	Local map
+Pueblo	Town
+Barrio	Neighborhood
+Calle	Street
+Estación de servicio	Gas station
+Hospital	Hospital
+Clínica	Clinic
+Farmacia	Pharmacy
+Parqueadero	Parking
+Restaurante	Restaurant
+Cafetería	Cafe
+Supermercado	Supermarket
+Hotel	Hotel
+Aeropuerto	Airport
+Estación	Station
+Lugar	Place
+con tráfico	with traffic
+Tráfico en vivo activado	Live traffic enabled
+Tráfico en vivo	Live traffic
+Muestra congestión en el mapa y evita trancones (usa clave gratis de TomTom)	Shows road congestion on the map and avoids jams (uses free TomTom key)
+Clave gratis de TomTom	Free TomTom key
+Para capas de tráfico y rutas con tráfico (regístrate gratis en developer.tomtom.com)	For live traffic layers and traffic-aware routes (free sign-up at developer.tomtom.com)
+Clave API gratis de TomTom	Free TomTom API key
+Capa de tráfico propia (avanzado)	Custom traffic layer (advanced)
+URL transparente de tráfico con {z}/{x}/{y}	Transparent traffic tile URL with {z}/{x}/{y}
+URL capa de tráfico {z}/{x}/{y} (vacío = automático)	Traffic layer URL {z}/{x}/{y} (empty = automatic)
+Servidor de rutas OSRM (avanzado)	OSRM routing server (advanced)
+URL propia compatible con OSRM (vacío = automático)	Custom OSRM-compatible URL (empty = automatic)
+URL servidor OSRM (vacío = automático)	OSRM server URL (empty = automatic)
+Compatibilidad TLS en rutas	TLS compatibility for routing
+Para radios antiguas donde falle el HTTPS de rutas o búsqueda	For older head units where HTTPS routing or search fails
+Mostrando hora de llegada	Showing arrival time
+Mostrando tiempo restante	Showing remaining time
+Radar	Speed camera
+Vol	Vol
+Ir a Casa	Navigate Home
+Ir a Trabajo	Navigate Work
+Volumen	Volume
+Configura «{}» primero en Navegación	Set up “{}” first in Navigation
+Audio no disponible	Audio unavailable
+Volumen multimedia	Media volume
+Silencio	Muted
+Restaurar sonido	Unmute
+Silenciar	Mute
+Listo	Done
+Distancia del viaje	Trip distance
+Tiempo conduciendo	Driving time
+Velocidad promedio	Average speed
+Velocidad máxima	Top speed
+Distancia total	Total distance
+Computadora de viaje	Trip computer
+Distancia, tiempo conduciendo y velocidades del GPS	GPS trip distance, driving time, and speeds
+Viaje	Trip
+Reiniciar viaje	Reset trip
+Viaje reiniciado	Trip reset
+PARADAS	STOPS
+Limpiar	Clear
++ Añadir parada intermedia	+ Add stop along route
+Modo parada activo: elige una parada	Stop mode active: pick a stop
+Buscar parada intermedia	Search stop along route
+Añadir parada en ruta	Add stop along route
+Elegir destino final	Choose final destination
+Carro estacionado	Parked car
+Guardado a las	Saved at
+Añadir como parada	Add as stop
+Parada añadida	Stop added
+Elegir parada	Pick a stop
+Elegir ruta	Choose route
+Ruta	Route
+Más rápida	Fastest
+incidente	incident
+incidentes	incidents
+incidente en la ruta	incident on route
+incidentes en la ruta	incidents on route
+Incidentes en la ruta	Route incidents
+Mostrar tiempo restante	Show remaining time
+Mostrar hora de llegada	Show arrival time
+Sol	Sun
+Auto: horario fijo. Sol: amanecer/atardecer según GPS. Sistema: sigue luces o tema de la pantalla	Auto: fixed schedule. Sun: sunrise/sunset from GPS. System: follows headlights or display theme
+Sin GPS aún (usa horario fijo hasta recibir señal)	No GPS fix yet (using fixed hours until signal)
+Horario solar de hoy	Today's solar schedule
+Tarjeta del mapa	Map card
+Si la ocultas, ves el próximo giro en la barra superior y el resto gana espacio	When hidden, next turn appears in top bar and other cards expand
+Navegación y alertas	Navigation & alerts
+Evitar peajes	Avoid tolls
+Intenta evitar vías de peaje al calcular la ruta	Try to avoid toll roads when routing
+Evitar autopistas	Avoid highways
+Intenta evitar autopistas o vías rápidas	Try to avoid motorways or freeways
+Rutas alternativas	Alternative routes
+Muestra 2 o 3 opciones de ruta antes de iniciar	Show 2 or 3 route options before starting
+Muestra la hora estimada en lugar del tiempo restante	Show estimated arrival clock time instead of remaining duration
+Consulta cierres o accidentes una sola vez al calcular ruta (TomTom)	Check closures or accidents once when routing (TomTom)
+Límite y alerta de velocidad	Speed limit & alert
+Muestra la señal de límite en el mapa y avisa al excederlo	Show speed limit sign on the map and alert when exceeding it
+Tolerancia de exceso	Overspeed threshold
+Margen sobre el límite antes de activar alerta	Margin above speed limit before triggering alert
+Sonido al exceder límite	Speeding alert sound
+Pitido de alerta cuando superas la tolerancia	Play a beep when exceeding the threshold
+Alertas de radares sin conexión	Offline speed camera alerts
+Avisa al acercarse a radares del mapa local .map	Alert when approaching speed cameras in the local .map file
+Vía cerrada	Road closed
+Carril cerrado	Lane closed
+Accidente	Accident
+Obras en la vía	Roadworks
+Tráfico detenido	Stopped traffic
+Incidente en la vía	Road incident
+Radar de velocidad adelante	Speed camera ahead
+

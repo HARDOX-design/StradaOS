@@ -53,9 +53,12 @@ public class LiveMapView extends View {
     static String lastError = "—";
     static int okCount;
 
-    // capas de una tesela: 0 mapa, 1 nombres (Esri), 2 mapa sin conexión (archivo)
-    private static final int L_BASE = 0, L_LABELS = 1, L_FILE = 2;
+    // capas de una tesela: 0 mapa, 1 nombres (Esri), 2 mapa sin conexión (archivo), 3 tráfico en vivo
+    private static final int L_BASE = 0, L_LABELS = 1, L_FILE = 2, L_TRAFFIC = 3;
     private static final int FRAME_MS = 33;   // ~30 cuadros por segundo mientras se mueve
+    private static final long TRAFFIC_TTL_MS = 240000L; // refresco cada 4 minutos
+    static volatile int trafficGen;
+    public static void clearTrafficCache() { trafficGen++; mem.evictAll(); }
 
     // ── mapa sin conexión (archivo .map), compartido entre vistas ──
     static OfflineMap fileMap;
@@ -110,8 +113,13 @@ public class LiveMapView extends View {
     private final Paint halo = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint text = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint corner = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint routeOut = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint routeIn = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint routeBack = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint destPin = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Path corners = new Path();
     private final Path tri = new Path();
+    private final Path routePath = new Path();
     private final Rect dst = new Rect();
 
     public LiveMapView(Context c, float scale, float radiusPx) {
@@ -129,6 +137,18 @@ public class LiveMapView extends View {
         text.setColor(Main.LIGHT ? 0x99000000 : 0x99FFFFFF);
         text.setTextSize(10 * s);
         corner.setColor(Main.BG);
+        routeOut.setStyle(Paint.Style.STROKE);
+        routeOut.setStrokeCap(Paint.Cap.ROUND);
+        routeOut.setStrokeJoin(Paint.Join.ROUND);
+        routeOut.setStrokeWidth(11 * s);
+        routeIn.setStyle(Paint.Style.STROKE);
+        routeIn.setStrokeCap(Paint.Cap.ROUND);
+        routeIn.setStrokeJoin(Paint.Join.ROUND);
+        routeIn.setStrokeWidth(6 * s);
+        routeBack.setStyle(Paint.Style.STROKE);
+        routeBack.setStrokeCap(Paint.Cap.ROUND);
+        routeBack.setStrokeWidth(3.5f * s);
+        routeBack.setPathEffect(new android.graphics.DashPathEffect(new float[]{10 * s, 8 * s}, 0));
         // Sin capa por software: el mapa se dibuja con la GPU (mucho más fluido). Las esquinas redondeadas no se
         // recortan (clipPath no funciona con GPU antes de Android 4.3): se tapan con el color del fondo.
         Net.init(c);
@@ -229,12 +249,15 @@ public class LiveMapView extends View {
                 + "\nZoom: " + zoom + "\nMapa sin conexión: " + file
                 + "\nProveedor: " + NAMES[provider]
                 + (okCount == 0 && rounds > 0 ? " · ninguna fuente respondió (" + rounds + " vueltas)" : "")
+                + "\nTráfico en vivo: " + (trafficTpl() != null ? "activo" : "inactivo")
                 + "\nTeselas descargadas: " + okCount + " · en caché: " + cached
                 + "\nErrores seguidos: " + netErrors + "\nÚltimo error: " + lastError
                 + "\n\nFuentes probadas:" + sources()
                 + "\n" + Net.initInfo + "\nAndroid " + android.os.Build.VERSION.RELEASE + " (API " + android.os.Build.VERSION.SDK_INT + ")";
     }
+    static volatile boolean netOffline;
     public boolean offline() { return netErrors >= 3; }
+    static boolean isOffline() { return netOffline; }
 
     private static String sources() {
         StringBuilder b = new StringBuilder();
@@ -321,10 +344,10 @@ public class LiveMapView extends View {
             double latR = Math.toRadians(dLat);
             double fy = (1.0 - Math.log(Math.tan(latR) + 1.0 / Math.cos(latR)) / Math.PI) / 2.0 * n;
             float ts = 256 * s;                                    // tamaño de tesela en pantalla
-            float cx = w / 2f, cy = h * 0.42f;                     // la posición queda arriba del panel inferior
+            boolean rot = headingUp && !Float.isNaN(dBr);
+            float cx = w / 2f, cy = Nav.active != null ? (rot ? h * 0.54f : h * 0.50f) : h * 0.42f;
             int tx0 = (int) Math.floor(fx - cx / ts) - 1, tx1 = (int) Math.floor(fx + (w - cx) / ts) + 1;
             int ty0 = (int) Math.floor(fy - cy / ts) - 1, ty1 = (int) Math.floor(fy + (h - cy) / ts) + 1;
-            boolean rot = headingUp && !Float.isNaN(dBr);
             if (rot) {
                 // al girar hacen falta teselas en un círculo alrededor de la posición (hasta la esquina más lejana)
                 float rr = (float) Math.sqrt(Math.max(cx, w - cx) * Math.max(cx, w - cx) + Math.max(cy, h - cy) * Math.max(cy, h - cy)) / ts;
@@ -334,6 +357,8 @@ public class LiveMapView extends View {
                 c.rotate(-dBr, cx, cy);
             }
             boolean anyFile = false;
+            String trTpl = trafficTpl();
+            int trPv = trTpl != null ? trafficEpochPv() : 0;
             for (int tx = tx0; tx <= tx1; tx++) {
                 for (int ty = ty0; ty <= ty1; ty++) {
                     if (ty < 0 || ty >= n) continue;
@@ -345,6 +370,10 @@ public class LiveMapView extends View {
                     if (b != null) {
                         tile.setFilterBitmap(rot || b.getWidth() != dst.width());
                         c.drawBitmap(b, null, dst, tile);
+                        if (trTpl != null && zoom >= 11) {
+                            Bitmap tr = getTraffic(zoom, wx, ty, trPv);
+                            if (tr != null) c.drawBitmap(tr, null, dst, tile);
+                        }
                         if (fromFile) anyFile = true;
                         else if (LABELS[provider] != null) {
                             Bitmap l = get(zoom, wx, ty, L_LABELS);
@@ -356,11 +385,12 @@ public class LiveMapView extends View {
                     }
                 }
             }
+            drawRoute(c, fx, fy, cx, cy, ts, n);
             if (rot) c.restore();
             drawMarker(c, cx, cy, rot);
             String attr = anyFile ? I18n.t("© colaboradores de OpenStreetMap") + " · mapsforge"
                     : provider == 5 ? "© Esri, HERE, Garmin, © OpenStreetMap" : provider == 4 ? "© OpenStreetMap, SRTM · © OpenTopoMap" : I18n.t("© colaboradores de OpenStreetMap");
-            c.drawText(attr, w - text.measureText(attr) - 10 * s, 14 * s, text);
+            c.drawText(attr, w - text.measureText(attr) - 10 * s, (Nav.active != null ? 96 : 14) * s, text);
         }
         corner.setColor(Main.BG);
         c.drawPath(corners, corner);
@@ -388,10 +418,137 @@ public class LiveMapView extends View {
         c.restore();
     }
 
+    private float mapX(double lon, double fx, float cx, float ts, int n) {
+        double dx = (lon + 180.0) / 360.0 * n - fx;
+        if (dx > n * 0.5) dx -= n;
+        else if (dx < -n * 0.5) dx += n;
+        return cx + (float) (dx * ts);
+    }
+
+    private float mapY(double lat, double fy, float cy, float ts, int n) {
+        double cLat = Math.max(-85.0511, Math.min(85.0511, lat));
+        double lr = Math.toRadians(cLat);
+        double py = (1.0 - Math.log(Math.tan(lr) + 1.0 / Math.cos(lr)) / Math.PI) / 2.0 * n;
+        return cy + (float) ((py - fy) * ts);
+    }
+
+    private void drawRoute(Canvas c, double fx, double fy, float cx, float cy, float ts, int n) {
+        java.util.List<Nav.Route> alts = Nav.altRoutes;
+        if (alts != null && alts.size() > 1) {
+            routeBack.setColor(Main.LIGHT ? 0x554A5568 : 0x779AA2B1);
+            for (int ai = 0; ai < alts.size(); ai++) {
+                Nav.Route ar = alts.get(ai);
+                if (ar == null || ar == Nav.active || ar.pts == null || ar.pts.length < 4) continue;
+                int an = ar.pts.length / 2;
+                routePath.reset();
+                float lx = mapX(ar.pts[1], fx, cx, ts, n), ly = mapY(ar.pts[0], fy, cy, ts, n);
+                routePath.moveTo(lx, ly);
+                for (int i = 1; i < an; i++) {
+                    float sx = mapX(ar.pts[i * 2 + 1], fx, cx, ts, n);
+                    float sy = mapY(ar.pts[i * 2], fy, cy, ts, n);
+                    if (i == an - 1 || Math.abs(sx - lx) >= 2f || Math.abs(sy - ly) >= 2f) {
+                        routePath.lineTo(sx, sy);
+                        lx = sx;
+                        ly = sy;
+                    }
+                }
+                c.drawPath(routePath, routeBack);
+            }
+        }
+        Nav.Route r = Nav.active;
+        if (r == null || r.pts == null || r.pts.length < 4) return;
+        int nPts = r.pts.length / 2;
+        int start = Math.max(0, Math.min(nPts - 1, Nav.curPtIdx));
+        boolean offRoute = Nav.offlineOffRoute;
+        float startX = offRoute ? mapX(r.pts[start * 2 + 1], fx, cx, ts, n) : cx;
+        float startY = offRoute ? mapY(r.pts[start * 2], fy, cy, ts, n) : cy;
+        if (offRoute) {
+            routePath.reset();
+            routePath.moveTo(cx, cy);
+            routePath.lineTo(startX, startY);
+            routeBack.setColor(Main.LIGHT ? 0xAA000000 : 0xCCFFFFFF);
+            c.drawPath(routePath, routeBack);
+        }
+        routePath.reset();
+        routePath.moveTo(startX, startY);
+        float lastX = startX, lastY = startY;
+        for (int i = start + 1; i < nPts; i++) {
+            float sx = mapX(r.pts[i * 2 + 1], fx, cx, ts, n);
+            float sy = mapY(r.pts[i * 2], fy, cy, ts, n);
+            if (i == nPts - 1 || Math.abs(sx - lastX) >= 1.5f || Math.abs(sy - lastY) >= 1.5f) {
+                routePath.lineTo(sx, sy);
+                lastX = sx;
+                lastY = sy;
+            }
+        }
+        routeOut.setColor(Main.LIGHT ? 0x66000000 : 0xCC0D0E11);
+        routeIn.setColor(Main.RED);
+        c.drawPath(routePath, routeOut);
+        c.drawPath(routePath, routeIn);
+
+        // paradas intermedias
+        if (!r.waypoints.isEmpty()) {
+            destPin.setStyle(Paint.Style.FILL);
+            for (int wi = 0; wi < r.waypoints.size(); wi++) {
+                Nav.Place wp = r.waypoints.get(wi);
+                float wx = mapX(wp.lon, fx, cx, ts, n);
+                float wy = mapY(wp.lat, fy, cy, ts, n);
+                destPin.setColor(0xFFFFFFFF);
+                c.drawCircle(wx, wy, 7.5f * s, destPin);
+                destPin.setColor(0xFFF5A623);
+                c.drawCircle(wx, wy, 4.8f * s, destPin);
+            }
+        }
+
+        // radares fijos en la ruta
+        if (!r.cameras.isEmpty()) {
+            destPin.setStyle(Paint.Style.FILL);
+            for (int ci = 0; ci < r.cameras.size(); ci++) {
+                Nav.Camera cam = r.cameras.get(ci);
+                float kx = mapX(cam.lon, fx, cx, ts, n);
+                float ky = mapY(cam.lat, fy, cy, ts, n);
+                destPin.setColor(0xFFFFFFFF);
+                c.drawCircle(kx, ky, 6f * s, destPin);
+                destPin.setColor(0xFFE63946);
+                c.drawCircle(kx, ky, 3.8f * s, destPin);
+            }
+        }
+
+        // incidentes de tráfico reportados
+        if (!r.incidents.isEmpty()) {
+            destPin.setStyle(Paint.Style.FILL);
+            for (int ii = 0; ii < r.incidents.size(); ii++) {
+                Nav.Incident inc = r.incidents.get(ii);
+                float ix = mapX(inc.lon, fx, cx, ts, n);
+                float iy = mapY(inc.lat, fy, cy, ts, n);
+                destPin.setColor(0xFF1A1D24);
+                c.drawCircle(ix, iy, 7f * s, destPin);
+                destPin.setColor(inc.category == 8 || inc.category == 1 ? 0xFFE63946 : 0xFFF5A623);
+                c.drawCircle(ix, iy, 4.5f * s, destPin);
+            }
+        }
+
+        // destino
+        float dxS = mapX(r.destLon, fx, cx, ts, n);
+        float dyS = mapY(r.destLat, fy, cy, ts, n);
+        destPin.setStyle(Paint.Style.FILL);
+        destPin.setColor(0xFFFFFFFF);
+        c.drawCircle(dxS, dyS, 10 * s, destPin);
+        destPin.setColor(Main.RED);
+        c.drawCircle(dxS, dyS, 6.5f * s, destPin);
+    }
+
     // ── teselas ──
 
     private Bitmap get(int z, int x, int y, int layer) {
-        long k = key(layer, layer == L_FILE ? 0 : provider, z, x, y);
+        return getKeyed(key(layer, layer == L_FILE ? 0 : provider, z, x, y));
+    }
+
+    private Bitmap getTraffic(int z, int x, int y, int tpv) {
+        return getKeyed(key(L_TRAFFIC, tpv, z, x, y));
+    }
+
+    private Bitmap getKeyed(long k) {
         Bitmap b = mem.get(k);
         if (b != null) return b;
         synchronized (queue) {
@@ -401,6 +558,51 @@ public class LiveMapView extends View {
                 if (workers < 2) { workers++; new Thread(worker).start(); }
             }
         }
+        return null;
+    }
+
+    private int trafficEpochPv() {
+        return (int) ((trafficGen + (System.currentTimeMillis() / TRAFFIC_TTL_MS)) & 7L);
+    }
+
+    public String trafficTpl() {
+        if (sp == null || !sp.getBoolean("map_traffic", false)) return null;
+        String custom = sp.getString("traffic_url", "").trim();
+        if (custom.length() > 0) return custom;
+        String key = sp.getString("tomtom_key", "").trim();
+        if (key.length() == 0) return null;
+        try {
+            String ek = java.net.URLEncoder.encode(key, "UTF-8");
+            return "https://api.tomtom.com/traffic/map/4/tile/flow/"
+                    + (Main.LIGHT ? "relative0" : "relative0-dark")
+                    + "/{z}/{x}/{y}.png?tileSize=256&key=" + ek;
+        } catch (Throwable e) {
+            return null;
+        }
+    }
+
+    private Bitmap fetchTrafficTile(int z, int x, int y) {
+        String tpl = trafficTpl();
+        if (tpl == null) return null;
+        int tag = tpl.hashCode() & 0xFFFF;
+        File f = new File(dir, "tr_" + (Main.LIGHT ? "l" : "d") + "_" + tag + "_" + z + "_" + x + "_" + y + ".png");
+        long now = System.currentTimeMillis();
+        if (f.exists() && Math.abs(now - f.lastModified()) < TRAFFIC_TTL_MS) {
+            Bitmap b = BitmapFactory.decodeFile(f.getAbsolutePath());
+            if (b != null) return b;
+        }
+        if (offline()) return null;
+        try {
+            String url = tpl.replace("{z}", String.valueOf(z)).replace("{x}", String.valueOf(x)).replace("{y}", String.valueOf(y));
+            byte[] data = Net.get(url, 6000);
+            Bitmap b = BitmapFactory.decodeByteArray(data, 0, data.length);
+            if (b != null) {
+                FileOutputStream os = new FileOutputStream(f);
+                os.write(data);
+                os.close();
+                return b;
+            }
+        } catch (Throwable ignored) { }
         return null;
     }
 
@@ -420,6 +622,8 @@ public class LiveMapView extends View {
                     if (layer == L_FILE) {
                         OfflineMap fm = fileMap;
                         if (fm != null) b = fm.render(z, x, y, fileTile, Main.LIGHT, bright);
+                    } else if (layer == L_TRAFFIC) {
+                        b = fetchTrafficTile(z, x, y);
                     } else {
                         File f = tileFile(pv, layer, z, x, y);
                         if (f.exists()) b = BitmapFactory.decodeFile(f.getAbsolutePath());
@@ -445,6 +649,7 @@ public class LiveMapView extends View {
                                     Object[] any = cachedAny(z, x, y);
                                     if (any != null) {
                                         netErrors++;
+                                        netOffline = netErrors >= 3;
                                         final Bitmap ab = DARKEN[(Integer) any[1]] && !Main.LIGHT ? darken((Bitmap) any[0], bright) : (Bitmap) any[0];
                                         final long fk0 = k;
                                         ui.post(new Runnable() { public void run() {
@@ -470,13 +675,14 @@ public class LiveMapView extends View {
                                 os.write(data);
                                 os.close();
                                 netErrors = 0;
+                                netOffline = false;
                             }
                         }
                         if (b != null && DARKEN[pv] && layer == 0 && !Main.LIGHT) b = darken(b, bright);
                     }
                 } catch (Throwable e) {
-                    if (layer != L_FILE) netErrors++;
-                    else lastError = "[archivo] " + e;
+                    if (layer != L_FILE && layer != L_TRAFFIC) { netErrors++; netOffline = netErrors >= 3; }
+                    else if (layer == L_FILE) lastError = "[archivo] " + e;
                 }
                 final long fk = k;
                 final Bitmap fb = b;
