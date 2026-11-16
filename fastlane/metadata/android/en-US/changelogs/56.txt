@@ -1,0 +1,1 @@
+Optional built-in navigation on the StradaOS map: search, turn-by-turn with voice, rerouting, offline routes with the .map file. Off by default.

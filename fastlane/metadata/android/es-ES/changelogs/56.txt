@@ -1,0 +1,1 @@
+Navegación opcional en el mapa de StradaOS: búsqueda, giro a giro con voz, recálculo y rutas sin internet con el .map. Viene apagada.
