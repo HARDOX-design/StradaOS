@@ -689,6 +689,15 @@ public class Main extends Activity {
                     prefs.edit().putString("theme", "tema:claro".equals(v) ? "light" : "tema:sistema".equals(v) ? "system" : "dark").apply();
                     applyTheme(); applyAccent(); rebuild();
                 }
+                else if ("nav-buscar".equals(v)) openNavSearch();
+                else if (v.startsWith("nav-ir:")) {
+                    // nav-ir:lat,lon,nombre — solo para capturas de la revisión
+                    String[] a = v.substring(7).split(",");
+                    Nav.Place pl = new Nav.Place();
+                    pl.lat = Double.parseDouble(a[0]); pl.lon = Double.parseDouble(a[1]);
+                    pl.name = a.length > 2 ? a[2] : "Destino";
+                    startInternalNav(pl);
+                }
                 else if ("reposo".equals(v)) h.postDelayed(new Runnable() { public void run() { showIdle(); } }, 1500);
                 else if (v.startsWith("pref:") && v.indexOf('=') > 5) {
                     // pref:clave=valor (true/false, número o texto); «pref:clave=» la borra
