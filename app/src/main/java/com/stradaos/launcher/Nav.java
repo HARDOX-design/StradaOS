@@ -863,6 +863,7 @@ public class Nav {
                 List<Route> rs = parseOsrmList(raw, stops);
                 if (rs != null && !rs.isEmpty()) return rs;
             } catch (Throwable e) {
+                android.util.Log.w("StradaNav", "ruta " + host + " → " + e + (e.getCause() != null ? " ← " + e.getCause() : ""));
                 if (sslOut != null && isSsl(e)) sslOut[0] = true;
                 String em = String.valueOf(e.getMessage());
                 if (http400Out != null && (em.indexOf("400") >= 0 || em.indexOf("InvalidValue") >= 0)) http400Out[0] = true;
