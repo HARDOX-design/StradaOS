@@ -1,0 +1,1 @@
+Pantalla en reposo con hora y velocidad, orden de apps, tema por amanecer y atardecer, chino, diseño vertical automático en pantallas casi cuadradas y arreglo de la carátula de Android Auto.

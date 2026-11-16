@@ -1,0 +1,1 @@
+Idle screen with clock and speed, app sorting, sunrise/sunset theme, Chinese, automatic vertical layout for squarish screens, and Android Auto album art fix.
