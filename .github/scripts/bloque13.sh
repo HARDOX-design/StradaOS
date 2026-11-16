@@ -33,6 +33,15 @@ fix() { adb emu geo fix $2 $1 >/dev/null 2>&1; sleep ${3:-2}; }   # fix LAT LON
 ruta() {  # sin espacios: en Android 7+ «adb shell» parte los argumentos con espacios
   go "nav-ir:10.4350,-73.2495,Aeropuerto" ${1:-25}
 }
+# El emulador anuncia IPv6 pero la máquina de GitHub no tiene salida IPv6 (ENETUNREACH a los servidores de rutas).
+# En una pantalla real sin IPv6, Android solo usa IPv4: aquí se apaga IPv6 para probar igual que en el carro.
+if [ "$API" -ge 21 ]; then
+  adb root >/dev/null 2>&1; sleep 4; adb wait-for-device
+  adb shell sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
+  adb shell sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1
+  adb shell "cat /proc/sys/net/ipv6/conf/all/disable_ipv6" > $OUT/ipv6-apagado.txt 2>&1
+  sleep 3
+fi
 go idioma:es 6; go tema:oscuro 5
 fix 10.4769 -73.2433 4; fix 10.4768 -73.2434 4
 go inicio 6

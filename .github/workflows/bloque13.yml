@@ -84,10 +84,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           cd out
-          echo "# Bloque 11 · ${GITHUB_SHA::7}" > README.md
+          echo "# Bloque 13 · ${GITHUB_SHA::7}" > README.md
           git init -q -b bloque13-capturas
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
           git add -A
-          git commit -q -m "Capturas bloque 11 (${GITHUB_SHA::7})"
+          git commit -q -m "Capturas bloque 13 (${GITHUB_SHA::7})"
           git push -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" bloque13-capturas
