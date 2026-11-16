@@ -4,6 +4,8 @@ name: Revisión PR 35 (navegación)
 # Quedan en la rama «nav35-capturas».
 on:
   workflow_dispatch:
+  push:
+    branches: [ 'revision-pr35' ]
 
 permissions:
   contents: write
