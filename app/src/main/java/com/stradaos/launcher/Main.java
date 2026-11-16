@@ -3703,6 +3703,11 @@ public class Main extends Activity {
         // y a veces sin título (solo tiempo o estado). Mientras Android Auto sea la fuente, Bluetooth solo aporta
         // tiempo y estado: nunca cambia la etiqueta ni borra la pista. Antes esos avisos sin título ponían
         // «Bluetooth» y la notificación de Open Headunit volvía a poner «Android Auto»: la etiqueta titilaba.
+        // Al quitar el cable, la canción de Bluetooth (cada 2 s) puede llegar antes que checkAaGone: antes cambiaba la
+        // etiqueta a «Bluetooth» y la carátula de Android Auto se quedaba (Andrés, 16 nov.). Primero se hace la
+        // desconexión completa (carátula fuera, registro, app Bluetooth) y después sigue lo de Bluetooth.
+        if ("bt".equals(t.origin) && "Android Auto".equals(curSource) && !"rcc".equals(curOrigin) && !aaRunning())
+            checkAaGone(false);
         boolean aaOwns = "rcc".equals(curOrigin) || ("Android Auto".equals(curSource) && aaRunning());
         // La canción vino de la notificación de Open Headunit (celular solo por cable, sin Bluetooth): lo que mande
         // Bluetooth con otro título es de otro celular o lo que la app Bluetooth recordaba. No lo reemplaza.
@@ -3749,7 +3754,7 @@ public class Main extends Activity {
             durMs = -1;
             if (!t.artSet) curArt = null;
             // ¿La notificación de Open Headunit ya trae la carátula de esta canción?
-            if (!t.artSet && NotifArt.lastArt != null && textsMatch(NotifArt.lastTexts, t.title)) {
+            if (!t.artSet && NotifArt.lastArt != null && textsMatch(NotifArt.lastTexts, t.title) && aaRunning()) {
                 curArt = NotifArt.lastArt;
                 t.source = "Android Auto";
                 aaWaitTitle = null;
