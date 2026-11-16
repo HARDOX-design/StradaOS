@@ -934,3 +934,154 @@ Gris suave	رمادي هادئ
 Ámbar	كهرماني
 Ver ahora	عرض الآن
 Toca la pantalla para volver	المس الشاشة للعودة
+# 2.23: navegación en el mapa de StradaOS (código base de nothanks91, PR #31/#35)
+Ir a…	اذهب إلى…
+Recalculando…	جارٍ إعادة الحساب…
+Llegaste a tu destino	لقد وصلت إلى وجهتك
+Activa el mapa en vivo en Ajustes → Mapa y clima	فعّل الخريطة المباشرة من الإعدادات ← الخريطة والطقس
+Escribe una dirección o lugar	اكتب عنوانًا أو مكانًا
+RECIENTES	الأخيرة
+¿A dónde vamos?	إلى أين نذهب؟
+Buscar	بحث
+Detener	إيقاف
+Buscando…	جارٍ البحث…
+No se pudo buscar	تعذّر البحث
+No se encontraron resultados	لم يتم العثور على نتائج
+Resultados	النتائج
+Esperando señal GPS para calcular la ruta	في انتظار إشارة GPS لحساب المسار
+Calculando ruta…	جارٍ حساب المسار…
+No se pudo calcular la ruta	تعذّر حساب المسار
+Cambiar destino	تغيير الوجهة
+Silenciar voz de guía	كتم التوجيه الصوتي
+Activar voz de guía	تشغيل التوجيه الصوتي
+Vista Norte arriba	الشمال للأعلى
+Vista en dirección de marcha	باتجاه السير
+Abrir en otra app	فتح في تطبيق آخر
+Detener navegación	إيقاف الملاحة
+Navegación en el mapa	الملاحة على الخريطة
+Voz activada	الصوت مفعّل
+Voz silenciada	الصوت مكتوم
+En el mapa de StradaOS	على خريطة StradaOS
+Se abre con el botón del mapa (Waze, Maps, OsmAnd… o integrada en el mapa)	تُفتح بزر الخريطة (Waze أو Maps أو OsmAnd… أو مدمجة في الخريطة)
+Voz de navegación	صوت الملاحة
+Indicaciones paso a paso habladas durante el recorrido	إرشادات صوتية خطوة بخطوة أثناء الرحلة
+★  En el mapa de StradaOS (integrada)	★  على خريطة StradaOS (مدمجة)
+Guardado: Navegación en el mapa	تم الحفظ: الملاحة على الخريطة
+Coordenadas	الإحداثيات
+No se encontró ruta	لم يتم العثور على مسار
+Ruta recalculada	تمت إعادة حساب المسار
+Sal por {}	انطلق عبر {}
+Inicia el recorrido	ابدأ الرحلة
+En la rotonda, salida {} hacia {}	عند الدوار، المخرج {} باتجاه {}
+En la rotonda, toma la salida {}	عند الدوار، اسلك المخرج {}
+En la rotonda, sigue hacia {}	عند الدوار، تابع باتجاه {}
+En la rotonda, toma la salida	عند الدوار، اسلك المخرج
+Haz un giro en U en {}	استدر للخلف في {}
+Haz un giro en U	استدر للخلف
+Gira levemente a la derecha en {}	انعطف قليلًا إلى اليمين إلى {}
+Gira levemente a la derecha	انعطف قليلًا إلى اليمين
+Gira a la derecha en {}	انعطف يمينًا إلى {}
+Gira a la derecha	انعطف يمينًا
+Gira fuerte a la derecha en {}	انعطف بحدة إلى اليمين إلى {}
+Gira fuerte a la derecha	انعطف بحدة إلى اليمين
+Gira levemente a la izquierda en {}	انعطف قليلًا إلى اليسار إلى {}
+Gira levemente a la izquierda	انعطف قليلًا إلى اليسار
+Gira a la izquierda en {}	انعطف يسارًا إلى {}
+Gira a la izquierda	انعطف يسارًا
+Gira fuerte a la izquierda en {}	انعطف بحدة إلى اليسار إلى {}
+Gira fuerte a la izquierda	انعطف بحدة إلى اليسار
+Incorpórate a {}	اندمج في {}
+Toma el desvío	اسلك المنحدر
+Continúa por {}	تابع على {}
+Sigue recto	تابع مباشرة
+En {}	بعد {}
+Sin conexión · vuelve a la ruta	بدون اتصال · عُد إلى المسار
+Casa	المنزل
+Trabajo	العمل
+Toca para guardar GPS	المس لحفظ موقع GPS
+Ir ahora	اذهب الآن
+Actualizar con GPS actual	تحديث بموقع GPS الحالي
+Eliminado	تم الحذف
+Esperando señal GPS para guardar ubicación	في انتظار إشارة GPS لحفظ الموقع
+Guardado en Casa	تم الحفظ كمنزل
+Guardado en Trabajo	تم الحفظ كعمل
+Gasolina	وقود
+Salud	صحة
+Parqueo	موقف
+Comida	طعام
+FAVORITOS	المفضلة
+Quitar de favoritos	إزالة من المفضلة
+Añadir a favoritos	إضافة إلى المفضلة
+Guardar como Casa	حفظ كمنزل
+Guardar como Trabajo	حفظ كعمل
+Añadido a favoritos	أُضيف إلى المفضلة
+Quitado de favoritos	أُزيل من المفضلة
+Ruta aproximada (mapa local sin conexión)	مسار تقريبي (خريطة محلية بدون اتصال)
+Ruta guardada (sin conexión)	مسار محفوظ (بدون اتصال)
+Recalcular ruta	إعادة حساب المسار
+ruta guardada	مسار محفوظ
+sin conexión · aproximada	بدون اتصال · تقريبي
+aproximada	تقريبي
+Para rutas largas o sin mapa local hace falta internet	المسارات الطويلة أو بدون خريطة محلية تحتاج إلى الإنترنت
+Mapa local	خريطة محلية
+Pueblo	بلدة
+Barrio	حي
+Calle	شارع
+Estación de servicio	محطة وقود
+Hospital	مستشفى
+Clínica	عيادة
+Farmacia	صيدلية
+Parqueadero	موقف سيارات
+Restaurante	مطعم
+Cafetería	مقهى
+Supermercado	سوبرماركت
+Hotel	فندق
+Aeropuerto	مطار
+Estación	محطة
+Lugar	مكان
+con tráfico	مع حركة المرور
+Tráfico en vivo activado	تم تفعيل حركة المرور المباشرة
+Tráfico en vivo	حركة المرور المباشرة
+Muestra congestión en el mapa y evita trancones (usa clave gratis de TomTom)	تعرض الازدحام على الخريطة وتتجنبه (تستخدم مفتاح TomTom مجانيًا)
+Clave gratis de TomTom	مفتاح TomTom المجاني
+Para capas de tráfico y rutas con tráfico (regístrate gratis en developer.tomtom.com)	لطبقات حركة المرور والمسارات معها (تسجيل مجاني في developer.tomtom.com)
+Clave API gratis de TomTom	مفتاح API مجاني من TomTom
+Capa de tráfico propia (avanzado)	طبقة حركة مرور مخصصة (متقدم)
+URL transparente de tráfico con {z}/{x}/{y}	رابط شفاف لحركة المرور مع {z}/{x}/{y}
+URL capa de tráfico {z}/{x}/{y} (vacío = automático)	رابط طبقة حركة المرور {z}/{x}/{y} (فارغ = تلقائي)
+Servidor de rutas OSRM (avanzado)	خادم مسارات OSRM (متقدم)
+URL propia compatible con OSRM (vacío = automático)	رابط مخصص متوافق مع OSRM (فارغ = تلقائي)
+URL servidor OSRM (vacío = automático)	رابط خادم OSRM (فارغ = تلقائي)
+Compatibilidad TLS en rutas	توافق TLS للمسارات
+Para radios antiguas donde falle el HTTPS de rutas o búsqueda	للأجهزة القديمة التي يفشل فيها HTTPS للمسارات أو البحث
+Mostrando hora de llegada	عرض وقت الوصول
+Mostrando tiempo restante	عرض الوقت المتبقي
+Ir a Casa	اذهب إلى المنزل
+Ir a Trabajo	اذهب إلى العمل
+Configura «{}» primero en Navegación	اضبط «{}» أولًا في الملاحة
+PARADAS	المحطات
+Limpiar	مسح
+Modo parada activo: elige una parada	وضع المحطة مفعّل: اختر محطة
+Buscar parada intermedia	ابحث عن محطة على الطريق
+Añadir parada en ruta	أضف محطة على المسار
+Elegir destino final	اختر الوجهة النهائية
+Añadir como parada	أضف كمحطة
+Parada añadida	تمت إضافة المحطة
+Elegir parada	اختر محطة
+Elegir ruta	اختر المسار
+Ruta	المسار
+Más rápida	الأسرع
+Mostrar tiempo restante	عرض الوقت المتبقي
+Mostrar hora de llegada	عرض وقت الوصول
+Evitar peajes	تجنب الطرق ذات الرسوم
+Intenta evitar vías de peaje al calcular la ruta	تحاول تجنب الطرق ذات الرسوم عند حساب المسار
+Evitar autopistas	تجنب الطرق السريعة
+Intenta evitar autopistas o vías rápidas	تحاول تجنب الطرق السريعة
+Rutas alternativas	مسارات بديلة
+Muestra 2 o 3 opciones de ruta antes de iniciar	تعرض خيارين أو ثلاثة للمسار قبل البدء
+Muestra la hora estimada en lugar del tiempo restante	تعرض وقت الوصول المتوقع بدل الوقت المتبقي
+En 500 metros	بعد 500 متر
+En 150 metros	بعد 150 مترًا
+En 500 pies	بعد 500 قدم
+En un cuarto de milla	بعد ربع ميل
+Parada intermedia	محطة على الطريق

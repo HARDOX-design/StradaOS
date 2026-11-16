@@ -934,3 +934,154 @@ Gris suave	Cinza suave
 Ámbar	Âmbar
 Ver ahora	Ver agora
 Toca la pantalla para volver	Toque na tela para voltar
+# 2.23: navegación en el mapa de StradaOS (código base de nothanks91, PR #31/#35)
+Ir a…	Ir para…
+Recalculando…	Recalculando…
+Llegaste a tu destino	Você chegou ao seu destino
+Activa el mapa en vivo en Ajustes → Mapa y clima	Ative o mapa ao vivo em Ajustes → Mapa e clima
+Escribe una dirección o lugar	Digite um endereço ou lugar
+RECIENTES	RECENTES
+¿A dónde vamos?	Para onde vamos?
+Buscar	Buscar
+Detener	Parar
+Buscando…	Buscando…
+No se pudo buscar	Não foi possível buscar
+No se encontraron resultados	Nenhum resultado encontrado
+Resultados	Resultados
+Esperando señal GPS para calcular la ruta	Aguardando sinal de GPS para calcular a rota
+Calculando ruta…	Calculando rota…
+No se pudo calcular la ruta	Não foi possível calcular a rota
+Cambiar destino	Mudar destino
+Silenciar voz de guía	Silenciar voz de navegação
+Activar voz de guía	Ativar voz de navegação
+Vista Norte arriba	Vista norte para cima
+Vista en dirección de marcha	Vista na direção de marcha
+Abrir en otra app	Abrir em outro app
+Detener navegación	Parar navegação
+Navegación en el mapa	Navegação no mapa
+Voz activada	Voz ativada
+Voz silenciada	Voz silenciada
+En el mapa de StradaOS	No mapa do StradaOS
+Se abre con el botón del mapa (Waze, Maps, OsmAnd… o integrada en el mapa)	Abre com o botão do mapa (Waze, Maps, OsmAnd… ou integrada no mapa)
+Voz de navegación	Voz de navegação
+Indicaciones paso a paso habladas durante el recorrido	Instruções faladas passo a passo durante o trajeto
+★  En el mapa de StradaOS (integrada)	★  No mapa do StradaOS (integrada)
+Guardado: Navegación en el mapa	Salvo: Navegação no mapa
+Coordenadas	Coordenadas
+No se encontró ruta	Nenhuma rota encontrada
+Ruta recalculada	Rota recalculada
+Sal por {}	Saia por {}
+Inicia el recorrido	Comece o trajeto
+En la rotonda, salida {} hacia {}	Na rotatória, saída {} para {}
+En la rotonda, toma la salida {}	Na rotatória, pegue a saída {}
+En la rotonda, sigue hacia {}	Na rotatória, siga para {}
+En la rotonda, toma la salida	Na rotatória, pegue a saída
+Haz un giro en U en {}	Faça um retorno em {}
+Haz un giro en U	Faça um retorno
+Gira levemente a la derecha en {}	Vire levemente à direita em {}
+Gira levemente a la derecha	Vire levemente à direita
+Gira a la derecha en {}	Vire à direita em {}
+Gira a la derecha	Vire à direita
+Gira fuerte a la derecha en {}	Vire acentuadamente à direita em {}
+Gira fuerte a la derecha	Vire acentuadamente à direita
+Gira levemente a la izquierda en {}	Vire levemente à esquerda em {}
+Gira levemente a la izquierda	Vire levemente à esquerda
+Gira a la izquierda en {}	Vire à esquerda em {}
+Gira a la izquierda	Vire à esquerda
+Gira fuerte a la izquierda en {}	Vire acentuadamente à esquerda em {}
+Gira fuerte a la izquierda	Vire acentuadamente à esquerda
+Incorpórate a {}	Entre em {}
+Toma el desvío	Pegue o acesso
+Continúa por {}	Continue pela {}
+Sigue recto	Siga em frente
+En {}	Em {}
+Sin conexión · vuelve a la ruta	Sem conexão · volte para a rota
+Casa	Casa
+Trabajo	Trabalho
+Toca para guardar GPS	Toque para salvar o GPS
+Ir ahora	Ir agora
+Actualizar con GPS actual	Atualizar com o GPS atual
+Eliminado	Removido
+Esperando señal GPS para guardar ubicación	Aguardando sinal de GPS para salvar o local
+Guardado en Casa	Salvo como Casa
+Guardado en Trabajo	Salvo como Trabalho
+Gasolina	Combustível
+Salud	Saúde
+Parqueo	Estacionamento
+Comida	Comida
+FAVORITOS	FAVORITOS
+Quitar de favoritos	Remover dos favoritos
+Añadir a favoritos	Adicionar aos favoritos
+Guardar como Casa	Salvar como Casa
+Guardar como Trabajo	Salvar como Trabalho
+Añadido a favoritos	Adicionado aos favoritos
+Quitado de favoritos	Removido dos favoritos
+Ruta aproximada (mapa local sin conexión)	Rota aproximada (mapa local offline)
+Ruta guardada (sin conexión)	Rota salva (offline)
+Recalcular ruta	Recalcular rota
+ruta guardada	rota salva
+sin conexión · aproximada	offline · aproximada
+aproximada	aproximada
+Para rutas largas o sin mapa local hace falta internet	Rotas longas ou sem mapa local precisam de internet
+Mapa local	Mapa local
+Pueblo	Cidade
+Barrio	Bairro
+Calle	Rua
+Estación de servicio	Posto de combustível
+Hospital	Hospital
+Clínica	Clínica
+Farmacia	Farmácia
+Parqueadero	Estacionamento
+Restaurante	Restaurante
+Cafetería	Cafeteria
+Supermercado	Supermercado
+Hotel	Hotel
+Aeropuerto	Aeroporto
+Estación	Estação
+Lugar	Lugar
+con tráfico	com trânsito
+Tráfico en vivo activado	Trânsito ao vivo ativado
+Tráfico en vivo	Trânsito ao vivo
+Muestra congestión en el mapa y evita trancones (usa clave gratis de TomTom)	Mostra o congestionamento no mapa e evita engarrafamentos (usa chave grátis da TomTom)
+Clave gratis de TomTom	Chave grátis da TomTom
+Para capas de tráfico y rutas con tráfico (regístrate gratis en developer.tomtom.com)	Para camadas de trânsito e rotas com trânsito (cadastro grátis em developer.tomtom.com)
+Clave API gratis de TomTom	Chave de API grátis da TomTom
+Capa de tráfico propia (avanzado)	Camada de trânsito própria (avançado)
+URL transparente de tráfico con {z}/{x}/{y}	URL transparente de trânsito com {z}/{x}/{y}
+URL capa de tráfico {z}/{x}/{y} (vacío = automático)	URL da camada de trânsito {z}/{x}/{y} (vazio = automático)
+Servidor de rutas OSRM (avanzado)	Servidor de rotas OSRM (avançado)
+URL propia compatible con OSRM (vacío = automático)	URL própria compatível com OSRM (vazio = automático)
+URL servidor OSRM (vacío = automático)	URL do servidor OSRM (vazio = automático)
+Compatibilidad TLS en rutas	Compatibilidade TLS nas rotas
+Para radios antiguas donde falle el HTTPS de rutas o búsqueda	Para centrais antigas onde o HTTPS de rotas ou busca falha
+Mostrando hora de llegada	Mostrando hora de chegada
+Mostrando tiempo restante	Mostrando tempo restante
+Ir a Casa	Ir para Casa
+Ir a Trabajo	Ir para o Trabalho
+Configura «{}» primero en Navegación	Configure «{}» primeiro em Navegação
+PARADAS	PARADAS
+Limpiar	Limpar
+Modo parada activo: elige una parada	Modo parada ativo: escolha uma parada
+Buscar parada intermedia	Buscar parada intermediária
+Añadir parada en ruta	Adicionar parada na rota
+Elegir destino final	Escolher destino final
+Añadir como parada	Adicionar como parada
+Parada añadida	Parada adicionada
+Elegir parada	Escolher parada
+Elegir ruta	Escolher rota
+Ruta	Rota
+Más rápida	Mais rápida
+Mostrar tiempo restante	Mostrar tempo restante
+Mostrar hora de llegada	Mostrar hora de chegada
+Evitar peajes	Evitar pedágios
+Intenta evitar vías de peaje al calcular la ruta	Tenta evitar vias com pedágio ao calcular a rota
+Evitar autopistas	Evitar rodovias
+Intenta evitar autopistas o vías rápidas	Tenta evitar rodovias ou vias expressas
+Rutas alternativas	Rotas alternativas
+Muestra 2 o 3 opciones de ruta antes de iniciar	Mostra 2 ou 3 opções de rota antes de começar
+Muestra la hora estimada en lugar del tiempo restante	Mostra a hora estimada em vez do tempo restante
+En 500 metros	Em 500 metros
+En 150 metros	Em 150 metros
+En 500 pies	Em 500 pés
+En un cuarto de milla	Em um quarto de milha
+Parada intermedia	Parada intermediária

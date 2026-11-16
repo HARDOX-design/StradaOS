@@ -934,3 +934,154 @@ Gris suave	Yumuşak gri
 Ámbar	Kehribar
 Ver ahora	Şimdi göster
 Toca la pantalla para volver	Geri dönmek için ekrana dokunun
+# 2.23: navegación en el mapa de StradaOS (código base de nothanks91, PR #31/#35)
+Ir a…	Git…
+Recalculando…	Yeniden hesaplanıyor…
+Llegaste a tu destino	Hedefinize ulaştınız
+Activa el mapa en vivo en Ajustes → Mapa y clima	Canlı haritayı Ayarlar → Harita ve hava durumu bölümünden açın
+Escribe una dirección o lugar	Bir adres veya yer yazın
+RECIENTES	SON KULLANILANLAR
+¿A dónde vamos?	Nereye gidiyoruz?
+Buscar	Ara
+Detener	Durdur
+Buscando…	Aranıyor…
+No se pudo buscar	Arama yapılamadı
+No se encontraron resultados	Sonuç bulunamadı
+Resultados	Sonuçlar
+Esperando señal GPS para calcular la ruta	Rotayı hesaplamak için GPS sinyali bekleniyor
+Calculando ruta…	Rota hesaplanıyor…
+No se pudo calcular la ruta	Rota hesaplanamadı
+Cambiar destino	Hedefi değiştir
+Silenciar voz de guía	Sesli yönlendirmeyi kapat
+Activar voz de guía	Sesli yönlendirmeyi aç
+Vista Norte arriba	Kuzey yukarıda
+Vista en dirección de marcha	Gidiş yönünde
+Abrir en otra app	Başka uygulamada aç
+Detener navegación	Navigasyonu durdur
+Navegación en el mapa	Haritada navigasyon
+Voz activada	Ses açık
+Voz silenciada	Ses kapalı
+En el mapa de StradaOS	StradaOS haritasında
+Se abre con el botón del mapa (Waze, Maps, OsmAnd… o integrada en el mapa)	Harita düğmesiyle açılır (Waze, Maps, OsmAnd… veya haritada yerleşik)
+Voz de navegación	Navigasyon sesi
+Indicaciones paso a paso habladas durante el recorrido	Yolculuk sırasında adım adım sesli yönlendirme
+★  En el mapa de StradaOS (integrada)	★  StradaOS haritasında (yerleşik)
+Guardado: Navegación en el mapa	Kaydedildi: Haritada navigasyon
+Coordenadas	Koordinatlar
+No se encontró ruta	Rota bulunamadı
+Ruta recalculada	Rota yeniden hesaplandı
+Sal por {}	{} üzerinden başlayın
+Inicia el recorrido	Yolculuğa başlayın
+En la rotonda, salida {} hacia {}	Döner kavşakta {}. çıkıştan {} yönüne
+En la rotonda, toma la salida {}	Döner kavşakta {}. çıkışı kullanın
+En la rotonda, sigue hacia {}	Döner kavşakta {} yönünde devam edin
+En la rotonda, toma la salida	Döner kavşakta çıkışı kullanın
+Haz un giro en U en {}	{} üzerinde U dönüşü yapın
+Haz un giro en U	U dönüşü yapın
+Gira levemente a la derecha en {}	{} yönüne hafif sağa dönün
+Gira levemente a la derecha	Hafif sağa dönün
+Gira a la derecha en {}	{} yönüne sağa dönün
+Gira a la derecha	Sağa dönün
+Gira fuerte a la derecha en {}	{} yönüne keskin sağa dönün
+Gira fuerte a la derecha	Keskin sağa dönün
+Gira levemente a la izquierda en {}	{} yönüne hafif sola dönün
+Gira levemente a la izquierda	Hafif sola dönün
+Gira a la izquierda en {}	{} yönüne sola dönün
+Gira a la izquierda	Sola dönün
+Gira fuerte a la izquierda en {}	{} yönüne keskin sola dönün
+Gira fuerte a la izquierda	Keskin sola dönün
+Incorpórate a {}	{} yoluna katılın
+Toma el desvío	Bağlantı yoluna girin
+Continúa por {}	{} üzerinde devam edin
+Sigue recto	Düz devam edin
+En {}	{} sonra
+Sin conexión · vuelve a la ruta	Çevrimdışı · rotaya geri dönün
+Casa	Ev
+Trabajo	İş
+Toca para guardar GPS	GPS'i kaydetmek için dokunun
+Ir ahora	Şimdi git
+Actualizar con GPS actual	Mevcut GPS ile güncelle
+Eliminado	Silindi
+Esperando señal GPS para guardar ubicación	Konumu kaydetmek için GPS sinyali bekleniyor
+Guardado en Casa	Ev olarak kaydedildi
+Guardado en Trabajo	İş olarak kaydedildi
+Gasolina	Yakıt
+Salud	Sağlık
+Parqueo	Otopark
+Comida	Yemek
+FAVORITOS	FAVORİLER
+Quitar de favoritos	Favorilerden çıkar
+Añadir a favoritos	Favorilere ekle
+Guardar como Casa	Ev olarak kaydet
+Guardar como Trabajo	İş olarak kaydet
+Añadido a favoritos	Favorilere eklendi
+Quitado de favoritos	Favorilerden çıkarıldı
+Ruta aproximada (mapa local sin conexión)	Yaklaşık rota (çevrimdışı yerel harita)
+Ruta guardada (sin conexión)	Kayıtlı rota (çevrimdışı)
+Recalcular ruta	Rotayı yeniden hesapla
+ruta guardada	kayıtlı rota
+sin conexión · aproximada	çevrimdışı · yaklaşık
+aproximada	yaklaşık
+Para rutas largas o sin mapa local hace falta internet	Uzun rotalar veya yerel harita olmadan internet gerekir
+Mapa local	Yerel harita
+Pueblo	Kasaba
+Barrio	Mahalle
+Calle	Sokak
+Estación de servicio	Benzin istasyonu
+Hospital	Hastane
+Clínica	Klinik
+Farmacia	Eczane
+Parqueadero	Otopark
+Restaurante	Restoran
+Cafetería	Kafe
+Supermercado	Süpermarket
+Hotel	Otel
+Aeropuerto	Havalimanı
+Estación	İstasyon
+Lugar	Yer
+con tráfico	trafikle
+Tráfico en vivo activado	Canlı trafik açıldı
+Tráfico en vivo	Canlı trafik
+Muestra congestión en el mapa y evita trancones (usa clave gratis de TomTom)	Haritada yoğunluğu gösterir ve trafikten kaçınır (ücretsiz TomTom anahtarı kullanır)
+Clave gratis de TomTom	Ücretsiz TomTom anahtarı
+Para capas de tráfico y rutas con tráfico (regístrate gratis en developer.tomtom.com)	Trafik katmanları ve trafikli rotalar için (developer.tomtom.com adresinde ücretsiz kayıt)
+Clave API gratis de TomTom	Ücretsiz TomTom API anahtarı
+Capa de tráfico propia (avanzado)	Özel trafik katmanı (gelişmiş)
+URL transparente de tráfico con {z}/{x}/{y}	{z}/{x}/{y} içeren saydam trafik URL'si
+URL capa de tráfico {z}/{x}/{y} (vacío = automático)	Trafik katmanı URL'si {z}/{x}/{y} (boş = otomatik)
+Servidor de rutas OSRM (avanzado)	OSRM rota sunucusu (gelişmiş)
+URL propia compatible con OSRM (vacío = automático)	OSRM uyumlu özel URL (boş = otomatik)
+URL servidor OSRM (vacío = automático)	OSRM sunucu URL'si (boş = otomatik)
+Compatibilidad TLS en rutas	Rotalar için TLS uyumluluğu
+Para radios antiguas donde falle el HTTPS de rutas o búsqueda	Rota veya arama HTTPS'inin çalışmadığı eski teypler için
+Mostrando hora de llegada	Varış saati gösteriliyor
+Mostrando tiempo restante	Kalan süre gösteriliyor
+Ir a Casa	Eve git
+Ir a Trabajo	İşe git
+Configura «{}» primero en Navegación	Önce Navigasyon bölümünde «{}» ayarlayın
+PARADAS	DURAKLAR
+Limpiar	Temizle
+Modo parada activo: elige una parada	Durak modu açık: bir durak seçin
+Buscar parada intermedia	Ara durak ara
+Añadir parada en ruta	Rotaya durak ekle
+Elegir destino final	Son hedefi seç
+Añadir como parada	Durak olarak ekle
+Parada añadida	Durak eklendi
+Elegir parada	Durak seç
+Elegir ruta	Rota seç
+Ruta	Rota
+Más rápida	En hızlı
+Mostrar tiempo restante	Kalan süreyi göster
+Mostrar hora de llegada	Varış saatini göster
+Evitar peajes	Ücretli yollardan kaçın
+Intenta evitar vías de peaje al calcular la ruta	Rota hesaplarken ücretli yollardan kaçınmaya çalışır
+Evitar autopistas	Otoyollardan kaçın
+Intenta evitar autopistas o vías rápidas	Otoyol ve ekspres yollardan kaçınmaya çalışır
+Rutas alternativas	Alternatif rotalar
+Muestra 2 o 3 opciones de ruta antes de iniciar	Başlamadan önce 2 veya 3 rota seçeneği gösterir
+Muestra la hora estimada en lugar del tiempo restante	Kalan süre yerine tahmini varış saatini gösterir
+En 500 metros	500 metre sonra
+En 150 metros	150 metre sonra
+En 500 pies	500 fit sonra
+En un cuarto de milla	Çeyrek mil sonra
+Parada intermedia	Ara durak

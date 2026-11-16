@@ -934,3 +934,154 @@ Gris suave	Sanftes Grau
 Ámbar	Bernstein
 Ver ahora	Jetzt ansehen
 Toca la pantalla para volver	Tippe auf den Bildschirm, um zurückzukehren
+# 2.23: navegación en el mapa de StradaOS (código base de nothanks91, PR #31/#35)
+Ir a…	Ziel…
+Recalculando…	Neuberechnung…
+Llegaste a tu destino	Sie haben Ihr Ziel erreicht
+Activa el mapa en vivo en Ajustes → Mapa y clima	Live-Karte einschalten unter Einstellungen → Karte & Wetter
+Escribe una dirección o lugar	Adresse oder Ort eingeben
+RECIENTES	ZULETZT
+¿A dónde vamos?	Wohin geht's?
+Buscar	Suchen
+Detener	Stopp
+Buscando…	Suche…
+No se pudo buscar	Suche fehlgeschlagen
+No se encontraron resultados	Keine Ergebnisse gefunden
+Resultados	Ergebnisse
+Esperando señal GPS para calcular la ruta	Warte auf GPS-Signal zur Routenberechnung
+Calculando ruta…	Route wird berechnet…
+No se pudo calcular la ruta	Route konnte nicht berechnet werden
+Cambiar destino	Ziel ändern
+Silenciar voz de guía	Sprachansage stumm
+Activar voz de guía	Sprachansage ein
+Vista Norte arriba	Norden oben
+Vista en dirección de marcha	In Fahrtrichtung
+Abrir en otra app	In anderer App öffnen
+Detener navegación	Navigation beenden
+Navegación en el mapa	Navigation auf der Karte
+Voz activada	Sprache an
+Voz silenciada	Sprache stumm
+En el mapa de StradaOS	Auf der StradaOS-Karte
+Se abre con el botón del mapa (Waze, Maps, OsmAnd… o integrada en el mapa)	Öffnet sich mit der Kartentaste (Waze, Maps, OsmAnd… oder integriert in der Karte)
+Voz de navegación	Sprachnavigation
+Indicaciones paso a paso habladas durante el recorrido	Gesprochene Abbiegehinweise während der Fahrt
+★  En el mapa de StradaOS (integrada)	★  Auf der StradaOS-Karte (integriert)
+Guardado: Navegación en el mapa	Gespeichert: Navigation auf der Karte
+Coordenadas	Koordinaten
+No se encontró ruta	Keine Route gefunden
+Ruta recalculada	Route neu berechnet
+Sal por {}	Starten Sie auf {}
+Inicia el recorrido	Fahrt beginnen
+En la rotonda, salida {} hacia {}	Im Kreisverkehr Ausfahrt {} auf {}
+En la rotonda, toma la salida {}	Im Kreisverkehr Ausfahrt {} nehmen
+En la rotonda, sigue hacia {}	Im Kreisverkehr weiter auf {}
+En la rotonda, toma la salida	Im Kreisverkehr die Ausfahrt nehmen
+Haz un giro en U en {}	Wenden auf {}
+Haz un giro en U	Wenden
+Gira levemente a la derecha en {}	Leicht rechts abbiegen auf {}
+Gira levemente a la derecha	Leicht rechts abbiegen
+Gira a la derecha en {}	Rechts abbiegen auf {}
+Gira a la derecha	Rechts abbiegen
+Gira fuerte a la derecha en {}	Scharf rechts abbiegen auf {}
+Gira fuerte a la derecha	Scharf rechts abbiegen
+Gira levemente a la izquierda en {}	Leicht links abbiegen auf {}
+Gira levemente a la izquierda	Leicht links abbiegen
+Gira a la izquierda en {}	Links abbiegen auf {}
+Gira a la izquierda	Links abbiegen
+Gira fuerte a la izquierda en {}	Scharf links abbiegen auf {}
+Gira fuerte a la izquierda	Scharf links abbiegen
+Incorpórate a {}	Auffahren auf {}
+Toma el desvío	Ausfahrt nehmen
+Continúa por {}	Weiter auf {}
+Sigue recto	Geradeaus weiter
+En {}	In {}
+Sin conexión · vuelve a la ruta	Offline · zurück zur Route
+Casa	Zuhause
+Trabajo	Arbeit
+Toca para guardar GPS	Tippen, um GPS zu speichern
+Ir ahora	Jetzt los
+Actualizar con GPS actual	Mit aktuellem GPS aktualisieren
+Eliminado	Gelöscht
+Esperando señal GPS para guardar ubicación	Warte auf GPS-Signal zum Speichern des Orts
+Guardado en Casa	Als Zuhause gespeichert
+Guardado en Trabajo	Als Arbeit gespeichert
+Gasolina	Tankstelle
+Salud	Gesundheit
+Parqueo	Parken
+Comida	Essen
+FAVORITOS	FAVORITEN
+Quitar de favoritos	Aus Favoriten entfernen
+Añadir a favoritos	Zu Favoriten hinzufügen
+Guardar como Casa	Als Zuhause speichern
+Guardar como Trabajo	Als Arbeit speichern
+Añadido a favoritos	Zu Favoriten hinzugefügt
+Quitado de favoritos	Aus Favoriten entfernt
+Ruta aproximada (mapa local sin conexión)	Ungefähre Route (lokale Offline-Karte)
+Ruta guardada (sin conexión)	Gespeicherte Route (offline)
+Recalcular ruta	Route neu berechnen
+ruta guardada	gespeicherte Route
+sin conexión · aproximada	offline · ungefähr
+aproximada	ungefähr
+Para rutas largas o sin mapa local hace falta internet	Für lange Routen oder ohne lokale Karte wird Internet benötigt
+Mapa local	Lokale Karte
+Pueblo	Ort
+Barrio	Stadtteil
+Calle	Straße
+Estación de servicio	Tankstelle
+Hospital	Krankenhaus
+Clínica	Klinik
+Farmacia	Apotheke
+Parqueadero	Parkplatz
+Restaurante	Restaurant
+Cafetería	Café
+Supermercado	Supermarkt
+Hotel	Hotel
+Aeropuerto	Flughafen
+Estación	Bahnhof
+Lugar	Ort
+con tráfico	mit Verkehr
+Tráfico en vivo activado	Live-Verkehr aktiviert
+Tráfico en vivo	Live-Verkehr
+Muestra congestión en el mapa y evita trancones (usa clave gratis de TomTom)	Zeigt Staus auf der Karte und umfährt sie (nutzt kostenlosen TomTom-Schlüssel)
+Clave gratis de TomTom	Kostenloser TomTom-Schlüssel
+Para capas de tráfico y rutas con tráfico (regístrate gratis en developer.tomtom.com)	Für Verkehrsebenen und Routen mit Verkehr (kostenlos registrieren auf developer.tomtom.com)
+Clave API gratis de TomTom	Kostenloser TomTom-API-Schlüssel
+Capa de tráfico propia (avanzado)	Eigene Verkehrsebene (erweitert)
+URL transparente de tráfico con {z}/{x}/{y}	Transparente Verkehrs-URL mit {z}/{x}/{y}
+URL capa de tráfico {z}/{x}/{y} (vacío = automático)	URL der Verkehrsebene {z}/{x}/{y} (leer = automatisch)
+Servidor de rutas OSRM (avanzado)	OSRM-Routenserver (erweitert)
+URL propia compatible con OSRM (vacío = automático)	Eigene OSRM-kompatible URL (leer = automatisch)
+URL servidor OSRM (vacío = automático)	OSRM-Server-URL (leer = automatisch)
+Compatibilidad TLS en rutas	TLS-Kompatibilität für Routen
+Para radios antiguas donde falle el HTTPS de rutas o búsqueda	Für ältere Autoradios, bei denen HTTPS für Routen oder Suche fehlschlägt
+Mostrando hora de llegada	Ankunftszeit wird angezeigt
+Mostrando tiempo restante	Restzeit wird angezeigt
+Ir a Casa	Nach Hause
+Ir a Trabajo	Zur Arbeit
+Configura «{}» primero en Navegación	Zuerst „{}“ in Navigation einrichten
+PARADAS	STOPPS
+Limpiar	Leeren
+Modo parada activo: elige una parada	Stopp-Modus aktiv: Stopp wählen
+Buscar parada intermedia	Zwischenstopp suchen
+Añadir parada en ruta	Stopp auf der Route hinzufügen
+Elegir destino final	Endziel wählen
+Añadir como parada	Als Stopp hinzufügen
+Parada añadida	Stopp hinzugefügt
+Elegir parada	Stopp wählen
+Elegir ruta	Route wählen
+Ruta	Route
+Más rápida	Schnellste
+Mostrar tiempo restante	Restzeit anzeigen
+Mostrar hora de llegada	Ankunftszeit anzeigen
+Evitar peajes	Mautstraßen meiden
+Intenta evitar vías de peaje al calcular la ruta	Versucht, Mautstraßen bei der Routenberechnung zu meiden
+Evitar autopistas	Autobahnen meiden
+Intenta evitar autopistas o vías rápidas	Versucht, Autobahnen und Schnellstraßen zu meiden
+Rutas alternativas	Alternative Routen
+Muestra 2 o 3 opciones de ruta antes de iniciar	Zeigt 2 oder 3 Routen vor dem Start
+Muestra la hora estimada en lugar del tiempo restante	Zeigt die voraussichtliche Ankunftszeit statt der Restzeit
+En 500 metros	In 500 Metern
+En 150 metros	In 150 Metern
+En 500 pies	In 500 Fuß
+En un cuarto de milla	In einer Viertelmeile
+Parada intermedia	Zwischenstopp

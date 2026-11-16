@@ -516,48 +516,6 @@ public class Nav {
 
     // ───────────────────────── carro estacionado ─────────────────────────
 
-    public static void saveParkedCar(Context c, double lat, double lon) {
-        if (c == null || Double.isNaN(lat) || Double.isNaN(lon)) return;
-        try {
-            c.getApplicationContext().getSharedPreferences("launcher", 0).edit()
-                    .putString("parked_lat", Double.toString(lat))
-                    .putString("parked_lon", Double.toString(lon))
-                    .putLong("parked_at", System.currentTimeMillis())
-                    .apply();
-        } catch (Throwable ignored) { }
-    }
-
-    public static Place getParkedCar(Context c) {
-        if (c == null) return null;
-        try {
-            SharedPreferences sp = c.getApplicationContext().getSharedPreferences("launcher", 0);
-            String sLa = sp.getString("parked_lat", null), sLo = sp.getString("parked_lon", null);
-            if (sLa == null || sLo == null) return null;
-            double la = Double.parseDouble(sLa), lo = Double.parseDouble(sLo);
-            if (Double.isNaN(la) || Double.isNaN(lo)) return null;
-            Place p = new Place();
-            p.name = I18n.t("Carro estacionado");
-            long at = sp.getLong("parked_at", 0L);
-            if (at > 0L) {
-                java.text.DateFormat df = DateFormat.getTimeFormat(c);
-                p.sub = I18n.t("Guardado a las") + " " + df.format(new Date(at));
-            }
-            p.lat = la;
-            p.lon = lo;
-            return p;
-        } catch (Throwable e) {
-            return null;
-        }
-    }
-
-    public static void clearParkedCar(Context c) {
-        if (c == null) return;
-        try {
-            c.getApplicationContext().getSharedPreferences("launcher", 0).edit()
-                    .remove("parked_lat").remove("parked_lon").remove("parked_at").apply();
-        } catch (Throwable ignored) { }
-    }
-
     // ───────────────────────── cálculo y activación de ruta ─────────────────────────
 
     public static void startRoute(final Context c, double fromLat, double fromLon, final Place dest, final RouteCb cb) {
@@ -738,8 +696,8 @@ public class Nav {
                 boolean avoidTolls = sp != null && sp.getBoolean("nav_avoid_tolls", false);
                 boolean avoidHighways = sp != null && sp.getBoolean("nav_avoid_motorways", false);
                 boolean useTraffic = sp != null && sp.getBoolean("map_traffic", false);
-                boolean checkIncidents = sp == null || sp.getBoolean("nav_incidents", true);
-                boolean checkCameras = sp == null || sp.getBoolean("nav_speed_cams", true);
+                boolean checkIncidents = sp != null && sp.getBoolean("nav_incidents", false);
+                boolean checkCameras = sp != null && sp.getBoolean("nav_speed_cams", false);
                 String ttKey = sp != null ? sp.getString("tomtom_key", "").trim() : "";
                 String customOsrm = sp != null ? normalizeOsrmBase(sp.getString("nav_route_url", "")) : null;
 
@@ -2188,14 +2146,14 @@ public class Nav {
         // límite de velocidad y radar de velocidad cercano
         SharedPreferences sp = c != null ? c.getSharedPreferences("launcher", 0) : null;
         curSpeedLimitKmh = r.segMaxSpeedKmh != null && segIdx < r.segMaxSpeedKmh.length ? r.segMaxSpeedKmh[segIdx] : 0;
-        boolean spAlertOn = sp == null || sp.getBoolean("nav_speed_alert", true);
+        boolean spAlertOn = sp != null && sp.getBoolean("nav_speed_alert", false);
         if (spAlertOn && curSpeedLimitKmh > 0 && l.hasSpeed()) {
             int tolKmh = sp != null ? sp.getInt("nav_speed_tol", 8) : 8;
             double curKmh = l.getSpeed() * 3.6;
             boolean over = curKmh >= curSpeedLimitKmh + tolKmh;
             if (over && (!speedingAlert || nowSp - lastSpeedChimeAt > 18000L)) {
                 lastSpeedChimeAt = nowSp;
-                if (sp == null || sp.getBoolean("nav_speed_sound", true)) {
+                if (sp != null && sp.getBoolean("nav_speed_sound", false)) {
                     playAlertTone(ToneGenerator.TONE_PROP_BEEP2, 240);
                 }
             }
@@ -2207,7 +2165,7 @@ public class Nav {
         Camera foundCam = null;
         int foundCamIdx = -1;
         double foundCamDist = 0;
-        boolean camOn = sp == null || sp.getBoolean("nav_speed_cams", true);
+        boolean camOn = sp != null && sp.getBoolean("nav_speed_cams", false);
         if (camOn && !r.cameras.isEmpty()) {
             for (int ci = 0; ci < r.cameras.size(); ci++) {
                 Camera cam = r.cameras.get(ci);

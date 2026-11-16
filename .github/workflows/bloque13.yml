@@ -1,17 +1,17 @@
-name: Revisión PR 35 (navegación)
+name: Bloque 13 (navegación)
 
-# Compila la rama y toma capturas de la 2.22: pantalla en reposo, orden de apps, diseño forzado, tema por amanecer y chino.
-# Quedan en la rama «nav35-capturas».
+# Compila la rama y toma capturas de la 2.23: navegación en el mapa de StradaOS en los 4 diseños, 3 idiomas y Android 4.1 a 14.
+# Quedan en la rama «bloque13-capturas».
 on:
   workflow_dispatch:
   push:
-    branches: [ 'revision-pr35' ]
+    branches: [ 'wip-2.23' ]
 
 permissions:
   contents: write
 
 concurrency:
-  group: nav35
+  group: bloque13
   cancel-in-progress: true
 
 jobs:
@@ -40,6 +40,7 @@ jobs:
       matrix:
         include:
           - { api: 16, arch: x86 }
+          - { api: 23, arch: x86 }
 
           - { api: 34, arch: x86_64 }
     steps:
@@ -61,11 +62,11 @@ jobs:
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -skin 1024x600
           emulator-boot-timeout: 900
-          script: bash .github/scripts/nav35.sh ${{ matrix.api }} app-prueba.apk capturas/api${{ matrix.api }}
+          script: bash .github/scripts/bloque13.sh ${{ matrix.api }} app-prueba.apk capturas/api${{ matrix.api }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: nav35-api${{ matrix.api }}
+          name: bloque13-api${{ matrix.api }}
           path: capturas/
 
   publicar:
@@ -75,7 +76,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          pattern: nav35-*
+          pattern: bloque13-*
           path: out
           merge-multiple: true
       - name: Subir capturas
@@ -84,9 +85,9 @@ jobs:
         run: |
           cd out
           echo "# Bloque 11 · ${GITHUB_SHA::7}" > README.md
-          git init -q -b nav35-capturas
+          git init -q -b bloque13-capturas
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
           git add -A
           git commit -q -m "Capturas bloque 11 (${GITHUB_SHA::7})"
-          git push -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" nav35-capturas
+          git push -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" bloque13-capturas

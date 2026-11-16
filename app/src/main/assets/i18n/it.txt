@@ -934,3 +934,154 @@ Gris suave	Grigio tenue
 Ámbar	Ambra
 Ver ahora	Vedi ora
 Toca la pantalla para volver	Tocca lo schermo per tornare
+# 2.23: navegación en el mapa de StradaOS (código base de nothanks91, PR #31/#35)
+Ir a…	Vai a…
+Recalculando…	Ricalcolo…
+Llegaste a tu destino	Sei arrivato a destinazione
+Activa el mapa en vivo en Ajustes → Mapa y clima	Attiva la mappa in diretta in Impostazioni → Mappa e meteo
+Escribe una dirección o lugar	Scrivi un indirizzo o un luogo
+RECIENTES	RECENTI
+¿A dónde vamos?	Dove andiamo?
+Buscar	Cerca
+Detener	Ferma
+Buscando…	Ricerca…
+No se pudo buscar	Ricerca non riuscita
+No se encontraron resultados	Nessun risultato trovato
+Resultados	Risultati
+Esperando señal GPS para calcular la ruta	In attesa del segnale GPS per calcolare il percorso
+Calculando ruta…	Calcolo del percorso…
+No se pudo calcular la ruta	Impossibile calcolare il percorso
+Cambiar destino	Cambia destinazione
+Silenciar voz de guía	Disattiva la voce guida
+Activar voz de guía	Attiva la voce guida
+Vista Norte arriba	Vista nord in alto
+Vista en dirección de marcha	Vista nella direzione di marcia
+Abrir en otra app	Apri in un'altra app
+Detener navegación	Ferma la navigazione
+Navegación en el mapa	Navigazione sulla mappa
+Voz activada	Voce attivata
+Voz silenciada	Voce disattivata
+En el mapa de StradaOS	Sulla mappa di StradaOS
+Se abre con el botón del mapa (Waze, Maps, OsmAnd… o integrada en el mapa)	Si apre con il pulsante della mappa (Waze, Maps, OsmAnd… o integrata nella mappa)
+Voz de navegación	Voce di navigazione
+Indicaciones paso a paso habladas durante el recorrido	Indicazioni vocali passo passo durante il viaggio
+★  En el mapa de StradaOS (integrada)	★  Sulla mappa di StradaOS (integrata)
+Guardado: Navegación en el mapa	Salvato: Navigazione sulla mappa
+Coordenadas	Coordinate
+No se encontró ruta	Nessun percorso trovato
+Ruta recalculada	Percorso ricalcolato
+Sal por {}	Parti da {}
+Inicia el recorrido	Inizia il percorso
+En la rotonda, salida {} hacia {}	Alla rotonda, uscita {} verso {}
+En la rotonda, toma la salida {}	Alla rotonda, prendi l'uscita {}
+En la rotonda, sigue hacia {}	Alla rotonda, prosegui verso {}
+En la rotonda, toma la salida	Alla rotonda, prendi l'uscita
+Haz un giro en U en {}	Fai inversione a U in {}
+Haz un giro en U	Fai inversione a U
+Gira levemente a la derecha en {}	Svolta leggermente a destra in {}
+Gira levemente a la derecha	Svolta leggermente a destra
+Gira a la derecha en {}	Svolta a destra in {}
+Gira a la derecha	Svolta a destra
+Gira fuerte a la derecha en {}	Svolta decisamente a destra in {}
+Gira fuerte a la derecha	Svolta decisamente a destra
+Gira levemente a la izquierda en {}	Svolta leggermente a sinistra in {}
+Gira levemente a la izquierda	Svolta leggermente a sinistra
+Gira a la izquierda en {}	Svolta a sinistra in {}
+Gira a la izquierda	Svolta a sinistra
+Gira fuerte a la izquierda en {}	Svolta decisamente a sinistra in {}
+Gira fuerte a la izquierda	Svolta decisamente a sinistra
+Incorpórate a {}	Immettiti in {}
+Toma el desvío	Prendi lo svincolo
+Continúa por {}	Continua su {}
+Sigue recto	Prosegui dritto
+En {}	Tra {}
+Sin conexión · vuelve a la ruta	Offline · torna sul percorso
+Casa	Casa
+Trabajo	Lavoro
+Toca para guardar GPS	Tocca per salvare il GPS
+Ir ahora	Vai ora
+Actualizar con GPS actual	Aggiorna con il GPS attuale
+Eliminado	Eliminato
+Esperando señal GPS para guardar ubicación	In attesa del segnale GPS per salvare la posizione
+Guardado en Casa	Salvato come Casa
+Guardado en Trabajo	Salvato come Lavoro
+Gasolina	Carburante
+Salud	Salute
+Parqueo	Parcheggio
+Comida	Cibo
+FAVORITOS	PREFERITI
+Quitar de favoritos	Rimuovi dai preferiti
+Añadir a favoritos	Aggiungi ai preferiti
+Guardar como Casa	Salva come Casa
+Guardar como Trabajo	Salva come Lavoro
+Añadido a favoritos	Aggiunto ai preferiti
+Quitado de favoritos	Rimosso dai preferiti
+Ruta aproximada (mapa local sin conexión)	Percorso approssimativo (mappa locale offline)
+Ruta guardada (sin conexión)	Percorso salvato (offline)
+Recalcular ruta	Ricalcola percorso
+ruta guardada	percorso salvato
+sin conexión · aproximada	offline · approssimativo
+aproximada	approssimativo
+Para rutas largas o sin mapa local hace falta internet	Per percorsi lunghi o senza mappa locale serve internet
+Mapa local	Mappa locale
+Pueblo	Paese
+Barrio	Quartiere
+Calle	Via
+Estación de servicio	Stazione di servizio
+Hospital	Ospedale
+Clínica	Clinica
+Farmacia	Farmacia
+Parqueadero	Parcheggio
+Restaurante	Ristorante
+Cafetería	Caffetteria
+Supermercado	Supermercato
+Hotel	Hotel
+Aeropuerto	Aeroporto
+Estación	Stazione
+Lugar	Luogo
+con tráfico	con traffico
+Tráfico en vivo activado	Traffico in diretta attivato
+Tráfico en vivo	Traffico in diretta
+Muestra congestión en el mapa y evita trancones (usa clave gratis de TomTom)	Mostra la congestione sulla mappa ed evita gli ingorghi (usa una chiave gratuita TomTom)
+Clave gratis de TomTom	Chiave gratuita TomTom
+Para capas de tráfico y rutas con tráfico (regístrate gratis en developer.tomtom.com)	Per livelli e percorsi con traffico (registrazione gratuita su developer.tomtom.com)
+Clave API gratis de TomTom	Chiave API gratuita TomTom
+Capa de tráfico propia (avanzado)	Livello traffico personalizzato (avanzato)
+URL transparente de tráfico con {z}/{x}/{y}	URL trasparente del traffico con {z}/{x}/{y}
+URL capa de tráfico {z}/{x}/{y} (vacío = automático)	URL livello traffico {z}/{x}/{y} (vuoto = automatico)
+Servidor de rutas OSRM (avanzado)	Server percorsi OSRM (avanzato)
+URL propia compatible con OSRM (vacío = automático)	URL personalizzato compatibile con OSRM (vuoto = automatico)
+URL servidor OSRM (vacío = automático)	URL server OSRM (vuoto = automatico)
+Compatibilidad TLS en rutas	Compatibilità TLS per i percorsi
+Para radios antiguas donde falle el HTTPS de rutas o búsqueda	Per autoradio vecchie dove l'HTTPS di percorsi o ricerca non funziona
+Mostrando hora de llegada	Mostro l'ora di arrivo
+Mostrando tiempo restante	Mostro il tempo rimanente
+Ir a Casa	Vai a Casa
+Ir a Trabajo	Vai al Lavoro
+Configura «{}» primero en Navegación	Configura «{}» prima in Navigazione
+PARADAS	TAPPE
+Limpiar	Pulisci
+Modo parada activo: elige una parada	Modalità tappa attiva: scegli una tappa
+Buscar parada intermedia	Cerca una tappa intermedia
+Añadir parada en ruta	Aggiungi tappa sul percorso
+Elegir destino final	Scegli la destinazione finale
+Añadir como parada	Aggiungi come tappa
+Parada añadida	Tappa aggiunta
+Elegir parada	Scegli tappa
+Elegir ruta	Scegli percorso
+Ruta	Percorso
+Más rápida	Più veloce
+Mostrar tiempo restante	Mostra il tempo rimanente
+Mostrar hora de llegada	Mostra l'ora di arrivo
+Evitar peajes	Evita pedaggi
+Intenta evitar vías de peaje al calcular la ruta	Cerca di evitare le strade a pedaggio nel calcolo del percorso
+Evitar autopistas	Evita autostrade
+Intenta evitar autopistas o vías rápidas	Cerca di evitare autostrade o superstrade
+Rutas alternativas	Percorsi alternativi
+Muestra 2 o 3 opciones de ruta antes de iniciar	Mostra 2 o 3 percorsi prima di partire
+Muestra la hora estimada en lugar del tiempo restante	Mostra l'ora stimata invece del tempo rimanente
+En 500 metros	Tra 500 metri
+En 150 metros	Tra 150 metri
+En 500 pies	Tra 500 piedi
+En un cuarto de milla	Tra un quarto di miglio
+Parada intermedia	Tappa intermedia

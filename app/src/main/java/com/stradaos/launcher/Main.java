@@ -42,7 +42,6 @@ import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -273,7 +272,6 @@ public class Main extends Activity {
         try {
             IntentFilter sf = new IntentFilter(Intent.ACTION_SCREEN_OFF);
             sf.addAction(Intent.ACTION_SCREEN_ON);
-            sf.addAction(Intent.ACTION_POWER_DISCONNECTED);
             registerReceiver(screenReceiver, sf);
         } catch (Throwable ignored) { }
         maybeBootApp();
@@ -437,8 +435,6 @@ public class Main extends Activity {
         try { lm.removeUpdates(odoListener); } catch (Throwable ignored) { }
         odoRunning = false;
         if (odoPending > 0) prefs.edit().putFloat("odo_gps_m", prefs.getFloat("odo_gps_m", 0) + odoPending).apply();
-        flushTripPrefs();
-        saveParkedLocationNow();
         Nav.shutdownTts();
         Guard.stopWatchdog();
         super.onDestroy();
@@ -613,8 +609,6 @@ public class Main extends Activity {
         stopGps();
         h.removeCallbacks(ticker);
         h.removeCallbacks(progressTick);
-        flushTripPrefs();
-        saveParkedLocationNow();
     }
 
     @Override
@@ -696,6 +690,7 @@ public class Main extends Activity {
                     Nav.Place pl = new Nav.Place();
                     pl.lat = Double.parseDouble(a[0]); pl.lon = Double.parseDouble(a[1]);
                     pl.name = a.length > 2 ? a[2] : "Destino";
+                    android.util.Log.w("StradaNav", "nav-ir desde " + wLat + "," + wLon + " a " + v);
                     startInternalNav(pl);
                 }
                 else if ("reposo".equals(v)) h.postDelayed(new Runnable() { public void run() { showIdle(); } }, 1500);
@@ -1080,7 +1075,7 @@ public class Main extends Activity {
         FONT = fs == 0 ? 0.9f : fs == 2 ? 1.12f : fs == 3 ? 1.25f : 1f;
         playerLeft = "left".equals(prefs.getString("player_side", "right"));
         showCar = prefs.getBoolean("show_car", true);
-        showMap = prefs.getBoolean("show_map", true);
+        showMap = true;   // «ocultar el mapa» del PR #35 queda para más adelante
         // 2.18: ocultar el reproductor (el mapa gana espacio), la velocidad y el servicio (carros sin GPS) y el aceite
         showPlayer = prefs.getBoolean("show_player", true);
         carSpeed = prefs.getBoolean("car_speed", true);
@@ -1305,7 +1300,6 @@ public class Main extends Activity {
             // sin tarjeta del vehículo, la velocidad se muestra aquí
             topSpeedTv = tv("", 15, TEXT, true);
             topSpeedTv.setPadding((int) (16 * s), 0, 0, 0);
-            topSpeedTv.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { showTripDialog(); } });
             row.addView(topSpeedTv);
         }
         topOilTv = null;
@@ -1594,9 +1588,6 @@ public class Main extends Activity {
         box.setBackground(round(INNER, 16));
         place(card, box, 12, 250 + dy, 276, 118 + gx);
         if (!carSpeed) box.setVisibility(View.GONE);   // se arma igual: setGps y el kilometraje siguen funcionando
-        box.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { showTripDialog(); }
-        });
 
         LinearLayout lbl = new LinearLayout(this);
         lbl.setGravity(Gravity.CENTER_VERTICAL);
@@ -1683,148 +1674,8 @@ public class Main extends Activity {
         public void onProviderDisabled(String p) { }
     };
 
-    private Location tripLastLoc;
-    private long tripLastFixMs, tripPrevTickMs, tripFlushedAt;
-    private float tripDistM, tripTotalM, tripMaxKmh;
-    private double tripTimeS;
-    private boolean tripLoaded, tripDirty;
-
-    private void ensureTripLoaded() {
-        if (tripLoaded || prefs == null) return;
-        tripLoaded = true;
-        tripDistM = prefs.getFloat("trip_dist_m", 0f);
-        tripTotalM = prefs.getFloat("trip_total_m", 0f);
-        tripMaxKmh = prefs.getFloat("trip_max_kmh", 0f);
-        tripTimeS = prefs.getFloat("trip_time_s", 0f);
-    }
-
-    private void flushTripPrefs() {
-        if (!tripDirty || prefs == null) return;
-        prefs.edit()
-            .putFloat("trip_dist_m", tripDistM)
-            .putFloat("trip_total_m", tripTotalM)
-            .putFloat("trip_max_kmh", tripMaxKmh)
-            .putFloat("trip_time_s", (float) tripTimeS)
-            .apply();
-        tripDirty = false;
-        tripFlushedAt = SystemClock.elapsedRealtime();
-    }
-
-    private void recordTripFix(Location l) {
-        if (l == null || (l.hasAccuracy() && l.getAccuracy() > 40)) return;
-        ensureTripLoaded();
-        long tMs = l.getTime() > 0 ? l.getTime() : System.currentTimeMillis();
-        if (tMs <= tripLastFixMs) return;
-        tripLastFixMs = tMs;
-
-        float instKmh = l.hasSpeed() ? l.getSpeed() * 3.6f : 0f;
-        if (instKmh >= 5f && instKmh <= 250f && instKmh > tripMaxKmh) {
-            tripMaxKmh = instKmh;
-            tripDirty = true;
-        }
-        if (tripPrevTickMs > 0) {
-            double dtTick = (tMs - tripPrevTickMs) / 1000.0;
-            if (dtTick > 0 && dtTick <= 15.0 && (l.hasSpeed() && l.getSpeed() >= 0.8f)) {
-                tripTimeS += dtTick;
-                tripDirty = true;
-            }
-        }
-        tripPrevTickMs = tMs;
-
-        if (tripLastLoc == null) {
-            tripLastLoc = l;
-        } else {
-            float d = tripLastLoc.distanceTo(l);
-            double dt = Math.max(1.0, (tMs - tripLastLoc.getTime()) / 1000.0);
-            if (dt > 120.0) {
-                tripLastLoc = l;
-            } else if (d / dt > 70.0) {
-                tripLastLoc = l;
-            } else if (d >= 15f) {
-                tripDistM += d;
-                tripTotalM += d;
-                tripLastLoc = l;
-                tripDirty = true;
-            }
-        }
-
-        long now = SystemClock.elapsedRealtime();
-        if (tripDirty && now - tripFlushedAt > 60000) flushTripPrefs();
-    }
-
-    private String fmtTripDist(float meters) {
-        double val = useMph() ? meters / 1609.344 : meters / 1000.0;
-        String u = useMph() ? "mi" : "km";
-        if (val < 100) return String.format(I18n.num, "%.1f %s", val, u);
-        return I18n.integer(Math.round(val)) + " " + u;
-    }
-
-    private String fmtTripDuration(double secs) {
-        long sTotal = Math.max(0L, Math.round(secs));
-        long h = sTotal / 3600L;
-        long m = (sTotal % 3600L) / 60L;
-        long sec = sTotal % 60L;
-        if (h > 0) return h + " h " + m + " min";
-        if (m > 0) return m + " min " + sec + " s";
-        return sec + " s";
-    }
-
-    private String fmtTripSpeed(double kmh) {
-        double v = useMph() ? kmh * 0.621371 : kmh;
-        return I18n.integer(Math.round(v)) + " " + (useMph() ? "mph" : "km/h");
-    }
-
-    private void resetTrip() {
-        ensureTripLoaded();
-        tripDistM = 0f;
-        tripTimeS = 0.0;
-        tripMaxKmh = 0f;
-        tripLastLoc = null;
-        tripDirty = true;
-        flushTripPrefs();
-    }
-
-    private void showTripDialog() {
-        ensureTripLoaded();
-        double avgKmh = tripTimeS >= 5.0 ? (tripDistM / 1000.0) / (tripTimeS / 3600.0) : 0.0;
-        LinearLayout lay = new LinearLayout(this);
-        lay.setOrientation(LinearLayout.VERTICAL);
-        lay.setPadding((int) (22 * s), (int) (10 * s), (int) (22 * s), (int) (6 * s));
-        String[][] rows = {
-            {"Distancia del viaje", fmtTripDist(tripDistM)},
-            {"Tiempo conduciendo", fmtTripDuration(tripTimeS)},
-            {"Velocidad promedio", fmtTripSpeed(avgKmh)},
-            {"Velocidad máxima", fmtTripSpeed(tripMaxKmh)},
-            {"Distancia total", fmtTripDist(tripTotalM)},
-        };
-        for (int i = 0; i < rows.length; i++) {
-            LinearLayout r = new LinearLayout(this);
-            r.setGravity(Gravity.CENTER_VERTICAL);
-            r.setPadding(0, (int) (8 * s), 0, (int) (8 * s));
-            TextView k = tv(rows[i][0], 14, MUTED, false);
-            k.setPadding(0, 0, (int) (12 * s), 0);
-            TextView v = tv("", 15, i == 0 ? RED : TEXT, true);
-            v.setText(rows[i][1]);
-            r.addView(k, new LinearLayout.LayoutParams(0, -2, 1));
-            r.addView(v);
-            lay.addView(r);
-        }
-        new TB(this, dlg()).wide()
-            .setTitle("Computadora de viaje")
-            .setView(lay)
-            .setPositiveButton("Cerrar", null)
-            .setNeutralButton("Reiniciar viaje", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface d, int w) {
-                    resetTrip();
-                    toast("Viaje reiniciado");
-                }
-            })
-            .show();
-    }
-
     private void odoStep(Location l) {
         if (l == null) return;
-        recordTripFix(l);
         if (!odoNeeded()) return;
         if (l.hasAccuracy() && l.getAccuracy() > 40) return;
         if (odoLast == null) { odoLast = l; return; }
@@ -3327,7 +3178,8 @@ public class Main extends Activity {
             navEtaTv.setText(eta);
         }
         if (navLaneBox != null && navLaneView != null) {
-            if (st != null && st.lanes != null && st.lanes.length > 0 && Nav.distToStepM <= 1200) {
+            // guía de carriles: para una próxima versión (opcional, sin ajuste todavía)
+            if (prefs.getBoolean("nav_lanes", false) && st != null && st.lanes != null && st.lanes.length > 0 && Nav.distToStepM <= 1200) {
                 navLaneView.setLanes(st.lanes);
                 navLaneBox.setVisibility(View.VISIBLE);
             } else {
@@ -3335,7 +3187,7 @@ public class Main extends Activity {
             }
         }
         if (speedSignTv != null) {
-            if (Nav.curSpeedLimitKmh > 0 && prefs.getBoolean("nav_speed_alert", true)) {
+            if (Nav.curSpeedLimitKmh > 0 && prefs.getBoolean("nav_speed_alert", false)) {
                 int val = mph ? Math.max(5, (int) (Math.round((Nav.curSpeedLimitKmh / 1.60934) / 5.0) * 5)) : Nav.curSpeedLimitKmh;
                 GradientDrawable sg = new GradientDrawable();
                 sg.setShape(GradientDrawable.OVAL);
@@ -3355,7 +3207,7 @@ public class Main extends Activity {
             }
         }
         if (camBadgeTv != null) {
-            if (Nav.nearbyCamera != null && Nav.nearbyCameraDistM >= 0 && prefs.getBoolean("nav_speed_cams", true)) {
+            if (Nav.nearbyCamera != null && Nav.nearbyCameraDistM >= 0 && prefs.getBoolean("nav_speed_cams", false)) {
                 camBadgeTv.setText(I18n.t("Radar") + " · " + Nav.fmtStepDist(Nav.nearbyCameraDistM, mph));
                 camBadgeTv.setVisibility(View.VISIBLE);
             } else {
@@ -3385,15 +3237,7 @@ public class Main extends Activity {
         sourceTv.setGravity(Gravity.RIGHT);
         sourceTv.setSingleLine(true);
         sourceTv.setPadding(0, 0, (int) (4 * s), 0);   // la última letra en negrita se recortaba en Android 11
-        place(card, sourceTv, 110, 14, audW - 128, 18);   // ancho de sobra: en Android 11 «BLUETOOTH» salía cortado
-        TextView volBtn = tv("Vol", 10, SOFT, true);
-        volBtn.setBackground(round(CIRCLE, 9));
-        volBtn.setPadding((int) (8 * s), (int) (3 * s), (int) (8 * s), (int) (3 * s));
-        volBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { showVolumeDialog(); }
-        });
-        if (vertical && cardH < 240) placeWrap(card, volBtn, audW - 56, 12);
-        else placeWrap(card, volBtn, 68, 11);
+        place(card, sourceTv, 70, 14, audW - 88, 18);   // ancho de sobra: en Android 11 «BLUETOOTH» salía cortado
         playerArt = new PlayerArt(this, s, asset("ic/music_note.png"));
         // Tarjeta alta (barra lateral): diseño vertical que llena el alto en vez de dejar espacio vacío (Andrés, Picanto)
         tallPlayer = cardH - 380 >= 60 || shortVertical;   // vertical bajo: el mismo diseño, calculado con el alto real
@@ -3540,7 +3384,7 @@ public class Main extends Activity {
         {"music", "Música", "music_note"}, {"nav", "Navegación", "map"}, {"aa", "Android Auto", "navigation"},
         {"carplay", "CarPlay", "phone_iphone"}, {"web", "Navegador web", "public"}, {"files", "Archivos", "folder"},
         {"nav_home", "Ir a Casa", "location_on"}, {"nav_work", "Ir a Trabajo", "directions_car"},
-        {"vol", "Volumen", "tune"}, {"settings", "Ajustes", "settings"}, {"apps", "Apps", "apps"},
+        {"settings", "Ajustes", "settings"}, {"apps", "Apps", "apps"},
     };
 
     /** Función de fábrica del botón i según la cantidad de botones: «Apps» siempre al final (2.19). Con 7, lo de siempre. */
@@ -3736,7 +3580,6 @@ public class Main extends Activity {
         else if ("carplay".equals(id)) openCarPlay();
         else if ("nav_home".equals(id)) navigateSavedSlot("nav_home", "Casa");
         else if ("nav_work".equals(id)) navigateSavedSlot("nav_work", "Trabajo");
-        else if ("vol".equals(id)) showVolumeDialog();
         else openDrawer();
     }
 
@@ -3750,101 +3593,6 @@ public class Main extends Activity {
         startInternalNav(p);
     }
 
-    private void showVolumeDialog() {
-        final AudioManager am = (AudioManager) getSystemService(AUDIO_SERVICE);
-        if (am == null) { toast("Audio no disponible"); return; }
-        final int max = Math.max(1, am.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
-        final int[] lastNonZero = {Math.max(1, am.getStreamVolume(AudioManager.STREAM_MUSIC))};
-
-        LinearLayout lay = new LinearLayout(this);
-        lay.setOrientation(LinearLayout.VERTICAL);
-        lay.setPadding((int) (24 * s), (int) (14 * s), (int) (24 * s), (int) (10 * s));
-
-        final TextView pctTv = tv("", 26, TEXT, true);
-        pctTv.setGravity(Gravity.CENTER);
-        lay.addView(pctTv, new LinearLayout.LayoutParams(-1, -2));
-
-        LinearLayout row = new LinearLayout(this);
-        row.setGravity(Gravity.CENTER_VERTICAL);
-        row.setPadding(0, (int) (14 * s), 0, (int) (14 * s));
-
-        TextView minusBtn = tv("−", 22, TEXT, true);
-        minusBtn.setGravity(Gravity.CENTER);
-        minusBtn.setBackground(round(BTN, 12));
-        row.addView(minusBtn, new LinearLayout.LayoutParams((int) (48 * s), (int) (44 * s)));
-
-        final SeekBar bar = new SeekBar(this);
-        bar.setMax(max);
-        bar.setProgress(am.getStreamVolume(AudioManager.STREAM_MUSIC));
-        LinearLayout.LayoutParams slp = new LinearLayout.LayoutParams(0, -2, 1);
-        slp.leftMargin = (int) (10 * s);
-        slp.rightMargin = (int) (10 * s);
-        row.addView(bar, slp);
-
-        TextView plusBtn = tv("+", 22, TEXT, true);
-        plusBtn.setGravity(Gravity.CENTER);
-        plusBtn.setBackground(round(BTN, 12));
-        row.addView(plusBtn, new LinearLayout.LayoutParams((int) (48 * s), (int) (44 * s)));
-        lay.addView(row, new LinearLayout.LayoutParams(-1, -2));
-
-        final TextView muteBtn = tv("", 13, SOFT, true);
-        muteBtn.setGravity(Gravity.CENTER);
-        muteBtn.setBackground(round(INNER, 12));
-        muteBtn.setPadding((int) (14 * s), (int) (10 * s), (int) (14 * s), (int) (10 * s));
-        lay.addView(muteBtn, new LinearLayout.LayoutParams(-1, -2));
-
-        final Runnable refresh = new Runnable() {
-            public void run() {
-                int v = am.getStreamVolume(AudioManager.STREAM_MUSIC);
-                if (v > 0) lastNonZero[0] = v;
-                bar.setProgress(v);
-                int pct = (int) Math.round(100.0 * v / max);
-                pctTv.setText(v == 0 ? I18n.t("Silencio") : pct + "% (" + v + "/" + max + ")");
-                muteBtn.setText(I18n.t(v == 0 ? "Restaurar sonido" : "Silenciar"));
-                muteBtn.setTextColor(v == 0 ? RED : SOFT);
-            }
-        };
-        refresh.run();
-
-        bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (fromUser) {
-                    am.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
-                    refresh.run();
-                }
-            }
-            public void onStartTrackingTouch(SeekBar seekBar) { }
-            public void onStopTrackingTouch(SeekBar seekBar) { }
-        });
-        minusBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                int cur = am.getStreamVolume(AudioManager.STREAM_MUSIC);
-                am.setStreamVolume(AudioManager.STREAM_MUSIC, Math.max(0, cur - 1), 0);
-                refresh.run();
-            }
-        });
-        plusBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                int cur = am.getStreamVolume(AudioManager.STREAM_MUSIC);
-                am.setStreamVolume(AudioManager.STREAM_MUSIC, Math.min(max, cur + 1), 0);
-                refresh.run();
-            }
-        });
-        muteBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                int cur = am.getStreamVolume(AudioManager.STREAM_MUSIC);
-                int target = cur == 0 ? lastNonZero[0] : 0;
-                am.setStreamVolume(AudioManager.STREAM_MUSIC, target, 0);
-                refresh.run();
-            }
-        });
-
-        new TB(this, dlg())
-            .setTitle("Volumen multimedia")
-            .setView(lay)
-            .setPositiveButton("Listo", null)
-            .show();
-    }
 
     /** Menú del botón N: cambiar app o función, cambiar nombre, volver a lo de siempre. */
     private void dockMenu(final int i, final Runnable after) {
@@ -4115,58 +3863,6 @@ public class Main extends Activity {
         qlp.bottomMargin = (int) (8 * s);
         body.addView(quickRow, qlp);
 
-        final Nav.Place parked = Nav.getParkedCar(this);
-        if (parked != null) {
-            LinearLayout pRow = new LinearLayout(this);
-            pRow.setGravity(Gravity.CENTER_VERTICAL);
-            pRow.setBackground(round(INNER, 12));
-            pRow.setPadding((int) (12 * s), (int) (9 * s), (int) (12 * s), (int) (9 * s));
-            ImageView pIc = icon("directions_car", 20);
-            pIc.setColorFilter(RED);
-            pRow.addView(pIc, new LinearLayout.LayoutParams((int) (20 * s), (int) (20 * s)));
-            LinearLayout pCol = new LinearLayout(this);
-            pCol.setOrientation(LinearLayout.VERTICAL);
-            pCol.setPadding((int) (10 * s), 0, 0, 0);
-            TextView pTit = tv("Carro estacionado", 14, TEXT, true);
-            pCol.addView(pTit);
-            if (parked.sub != null && parked.sub.length() > 0) {
-                TextView pSub = tv("", 11, MUTED, false);
-                pSub.setText(parked.sub);
-                pCol.addView(pSub);
-            }
-            pRow.addView(pCol, new LinearLayout.LayoutParams(0, -2, 1));
-            LinearLayout.LayoutParams plp = new LinearLayout.LayoutParams(-1, -2);
-            plp.bottomMargin = (int) (8 * s);
-            body.addView(pRow, plp);
-            pRow.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    if (dref[0] != null) try { dref[0].dismiss(); } catch (Throwable ignored) { }
-                    handlePickedPlace(parked, insertActive, addStopMode[0]);
-                }
-            });
-            pRow.setOnLongClickListener(new View.OnLongClickListener() {
-                public boolean onLongClick(View v) {
-                    if (dref[0] != null) try { dref[0].dismiss(); } catch (Throwable ignored) { }
-                    String[] opts = {I18n.t("Ir ahora"), I18n.t("Añadir como parada"), I18n.t("Borrar")};
-                    new TB(Main.this, dlg()).raw()
-                        .setTitle(parked.name)
-                        .setItems(opts, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface d, int w) {
-                                if (w == 0) startInternalNav(parked);
-                                else if (w == 1) handlePickedPlace(parked, insertActive, true);
-                                else {
-                                    Nav.clearParkedCar(Main.this);
-                                    toast("Eliminado");
-                                    openNavSearch(insertActive);
-                                }
-                            }
-                        })
-                        .setNegativeButton("Cancelar", null)
-                        .show();
-                    return true;
-                }
-            });
-        }
 
         if (LiveMapView.fileMap != null) {
             LinearLayout catRow = new LinearLayout(this);
@@ -4477,6 +4173,7 @@ public class Main extends Activity {
             public void onRoutes(List<Nav.Route> routes, String error) {
                 if (isFinishing()) return;
                 if (routes == null || routes.isEmpty()) {
+                    android.util.Log.w("StradaNav", "sin ruta: " + error);
                     toast(error != null ? error : "No se pudo calcular la ruta");
                     return;
                 }
@@ -4827,7 +4524,6 @@ public class Main extends Activity {
         public void onLocationChanged(Location l) {
             lastFix = SystemClock.elapsedRealtime();
             lastFixAny = lastFix;
-            recordTripFix(l);
             setGps(true, l.hasSpeed() ? l.getSpeed() * 3.6f : 0);
             feedMap(l);
             sunSpot(l.getLatitude(), l.getLongitude());
@@ -5896,7 +5592,6 @@ public class Main extends Activity {
         String mode = prefs.getString("theme", "dark");
         LIGHT = "light".equals(mode)
                 || ("auto".equals(mode) && !darkHours())
-                || ("sun".equals(mode) && !sunNight())
                 || ("system".equals(mode) && !systemNight());
         if (LIGHT) {
             BG = 0xFFE9ECF1; CARD = 0xFFFFFFFF; INNER = 0xFFF1F3F7; BTN = 0xFFE2E6EC; DOCK = 0xFFDDE1E8;
@@ -5955,80 +5650,6 @@ public class Main extends Activity {
             return (getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
                     == android.content.res.Configuration.UI_MODE_NIGHT_YES;
         } catch (Throwable e) { return false; }
-    }
-
-    private void saveSunCoord(double lat, double lon) {
-        if (prefs == null || Double.isNaN(lat) || Double.isNaN(lon)) return;
-        if (Math.abs(lat) > 90.0 || (Math.abs(lat) < 0.001 && Math.abs(lon) < 0.001)) return;
-        String sLa = prefs.getString("sun_lat", null), sLo = prefs.getString("sun_lon", null);
-        if (sLa != null && sLo != null) {
-            try {
-                if (Math.abs(Double.parseDouble(sLa) - lat) < 0.05 && Math.abs(Double.parseDouble(sLo) - lon) < 0.05) return;
-            } catch (Throwable ignored) { }
-        }
-        prefs.edit().putString("sun_lat", Double.toString(lat)).putString("sun_lon", Double.toString(lon)).apply();
-    }
-
-    private int[] sunTimes() {
-        double lat = wLat, lon = wLon;
-        if ((Double.isNaN(lat) || Double.isNaN(lon)) && prefs != null) {
-            try {
-                String sLa = prefs.getString("sun_lat", null), sLo = prefs.getString("sun_lon", null);
-                if (sLa != null && sLo != null) { lat = Double.parseDouble(sLa); lon = Double.parseDouble(sLo); }
-            } catch (Throwable ignored) { }
-        }
-        if (Double.isNaN(lat) || Double.isNaN(lon) || (Math.abs(lat) < 0.001 && Math.abs(lon) < 0.001)) return null;
-
-        Calendar cal = Calendar.getInstance();
-        int doy = cal.get(Calendar.DAY_OF_YEAR);
-        int yr = cal.get(Calendar.YEAR);
-        int tzMin = (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 60000;
-        String cacheKey = yr + ":" + doy + ":" + Math.round(lat * 10.0) + ":" + Math.round(lon * 10.0) + ":" + tzMin;
-        if (prefs != null && cacheKey.equals(prefs.getString("sun_key", null))) {
-            int r = prefs.getInt("sun_rise_m", -1), sM = prefs.getInt("sun_set_m", -1);
-            if (r >= 0 && sM >= 0) return new int[]{r, sM};
-        }
-        double tzH = tzMin / 60.0;
-        int riseM = calcSunMinutes(doy, lat, lon, tzH, true);
-        int setM = calcSunMinutes(doy, lat, lon, tzH, false);
-        if (prefs != null) {
-            prefs.edit().putString("sun_key", cacheKey).putInt("sun_rise_m", riseM).putInt("sun_set_m", setM).apply();
-        }
-        return new int[]{riseM, setM};
-    }
-
-    private static int calcSunMinutes(int doy, double lat, double lon, double tzHours, boolean sunrise) {
-        double lngHour = lon / 15.0;
-        double t = doy + ((sunrise ? 6.0 : 18.0) - lngHour) / 24.0;
-        double m = (0.9856 * t) - 3.289;
-        double l = m + 1.916 * Math.sin(Math.toRadians(m)) + 0.020 * Math.sin(Math.toRadians(2.0 * m)) + 282.634;
-        l = ((l % 360.0) + 360.0) % 360.0;
-        double ra = Math.toDegrees(Math.atan(0.91764 * Math.tan(Math.toRadians(l))));
-        ra = ((ra % 360.0) + 360.0) % 360.0;
-        double lQuad = Math.floor(l / 90.0) * 90.0;
-        double raQuad = Math.floor(ra / 90.0) * 90.0;
-        ra = (ra + (lQuad - raQuad)) / 15.0;
-        double sinDec = 0.39782 * Math.sin(Math.toRadians(l));
-        double cosDec = Math.cos(Math.asin(sinDec));
-        double cosH = (Math.cos(Math.toRadians(90.833)) - sinDec * Math.sin(Math.toRadians(lat)))
-                / (cosDec * Math.cos(Math.toRadians(lat)));
-        if (cosH > 1.0) return sunrise ? 1440 : 0;   // noche polar
-        if (cosH < -1.0) return sunrise ? 0 : 1440;  // sol de medianoche
-        double hDeg = sunrise ? 360.0 - Math.toDegrees(Math.acos(cosH)) : Math.toDegrees(Math.acos(cosH));
-        double H = hDeg / 15.0;
-        double T = H + ra - (0.06571 * t) - 6.622;
-        double ut = ((T - lngHour) % 24.0 + 24.0) % 24.0;
-        double localT = ((ut + tzHours) % 24.0 + 24.0) % 24.0;
-        return Math.max(0, Math.min(1440, (int) Math.round(localT * 60.0)));
-    }
-
-    private boolean sunNight() {
-        int[] rs = sunTimes();
-        if (rs == null) return darkHours();
-        int riseM = rs[0], setM = rs[1];
-        Calendar c = Calendar.getInstance();
-        int m = c.get(Calendar.HOUR_OF_DAY) * 60 + c.get(Calendar.MINUTE);
-        return riseM < setM ? (m < riseM || m >= setM) : (m >= setM && m < riseM);
     }
 
     /** Hora del día (minutos) con el formato elegido en Ajustes → Reloj. */
@@ -6517,10 +6138,6 @@ public class Main extends Activity {
             offLbl, Math.max(0, java.util.Arrays.asList(SPEED_OFFSETS).indexOf(prefs.getString("speed_offset", "0"))), new IntCb() { public void on(int i) {
                 prefs.edit().putString("speed_offset", SPEED_OFFSETS[i]).apply(); rebuild(); showSettings(settingsCat);
             }});
-        ensureTripLoaded();
-        LinearLayout tr = section(body, "Viaje");
-        rowIc(tr, "speed", "Computadora de viaje", "Distancia, tiempo conduciendo y velocidades del GPS", fmtTripDist(tripDistM),
-            new Runnable() { public void run() { showTripDialog(); } });
         LinearLayout mt = section(body, "Mantenimientos");
         row(mt, "Aceite, filtros, SOAT y más", "Ahora están en su propia sección", null, new Runnable() { public void run() { showSettings(C_MAINT); } });
     }
@@ -6696,9 +6313,6 @@ public class Main extends Activity {
         }});
         toggle(lay, "Tarjeta del vehículo", "Si la ocultas, la velocidad pasa arriba y el mapa y el reproductor ganan espacio", showCar, new IntCb() { public void on(int i) {
             prefs.edit().putBoolean("show_car", i == 1).apply(); rebuild();
-        }});
-        toggle(lay, "Tarjeta del mapa", "Si la ocultas, ves el próximo giro en la barra superior y el resto gana espacio", showMap, new IntCb() { public void on(int i) {
-            prefs.edit().putBoolean("show_map", i == 1).apply(); rebuild();
         }});
         toggle(lay, "Velocidad y servicio", "En la tarjeta del vehículo (o arriba si la ocultas). Apágalo si tu carro o pantalla no tiene GPS: la foto ocupa ese espacio",
             carSpeed, new IntCb() { public void on(int i) {
@@ -6897,58 +6511,41 @@ public class Main extends Activity {
         }});
         row(nv, "App de navegación preferida", "Se abre con el botón del mapa (Waze, Maps, OsmAnd… o integrada en el mapa)", autoLabel("nav_app", NAV_PKGS, "Toca para elegir"),
             new Runnable() { public void run() { pickFor("nav_app", "Navegación"); } });
-        toggle(nv, "Voz de navegación", "Indicaciones paso a paso habladas durante el recorrido", prefs.getBoolean("nav_voice", true), new IntCb() { public void on(int i) {
-            prefs.edit().putBoolean("nav_voice", i == 1).apply(); showSettings(settingsCat);
-        }});
-        toggle(nv, "Tráfico en vivo", "Muestra congestión en el mapa y evita trancones (usa clave gratis de TomTom)", prefs.getBoolean("map_traffic", false), new IntCb() { public void on(int i) {
-            prefs.edit().putBoolean("map_traffic", i == 1).apply();
-            LiveMapView.clearTrafficCache();
-            if (liveMap != null) liveMap.invalidate();
-            showSettings(settingsCat);
-        }});
-        String ttKey = prefs.getString("tomtom_key", "").trim();
-        row(nv, "Clave gratis de TomTom", "Para capas de tráfico y rutas con tráfico (regístrate gratis en developer.tomtom.com)",
-            ttKey.length() > 0 ? "Configurada" : "Ninguna",
-            edit("tomtom_key", "Clave API gratis de TomTom", ""));
+        final boolean navIn = "internal".equals(prefs.getString("nav_app", null));
+        if (navIn) {
+            toggle(nv, "Voz de navegación", "Indicaciones paso a paso habladas durante el recorrido", prefs.getBoolean("nav_voice", true), new IntCb() { public void on(int i) {
+                prefs.edit().putBoolean("nav_voice", i == 1).apply(); showSettings(settingsCat);
+            }});
+            toggle(nv, "Tráfico en vivo", "Muestra congestión en el mapa y evita trancones (usa clave gratis de TomTom)", prefs.getBoolean("map_traffic", false), new IntCb() { public void on(int i) {
+                prefs.edit().putBoolean("map_traffic", i == 1).apply();
+                LiveMapView.clearTrafficCache();
+                if (liveMap != null) liveMap.invalidate();
+                showSettings(settingsCat);
+            }});
+            String ttKey = prefs.getString("tomtom_key", "").trim();
+            row(nv, "Clave gratis de TomTom", "Para capas de tráfico y rutas con tráfico (regístrate gratis en developer.tomtom.com)",
+                ttKey.length() > 0 ? "Configurada" : "Ninguna",
+                edit("tomtom_key", "Clave API gratis de TomTom", ""));
+        }
         LinearLayout m = mo;
         segmented(m, "Brillo del mapa", "Solo en modo oscuro", new String[]{"Bajo", "Medio", "Alto"}, prefs.getInt("map_bright", 1), new IntCb() { public void on(int i) {
             prefs.edit().putInt("map_bright", i).apply(); rebuild();
         }});
-        LinearLayout nvp = section(body, "Navegación y alertas");
-        toggle(nvp, "Evitar peajes", "Intenta evitar vías de peaje al calcular la ruta", prefs.getBoolean("nav_avoid_tolls", false), new IntCb() { public void on(int i) {
-            prefs.edit().putBoolean("nav_avoid_tolls", i == 1).apply(); showSettings(settingsCat);
-        }});
-        toggle(nvp, "Evitar autopistas", "Intenta evitar autopistas o vías rápidas", prefs.getBoolean("nav_avoid_motorways", false), new IntCb() { public void on(int i) {
-            prefs.edit().putBoolean("nav_avoid_motorways", i == 1).apply(); showSettings(settingsCat);
-        }});
-        toggle(nvp, "Rutas alternativas", "Muestra 2 o 3 opciones de ruta antes de iniciar", prefs.getBoolean("nav_alternatives", true), new IntCb() { public void on(int i) {
-            prefs.edit().putBoolean("nav_alternatives", i == 1).apply(); showSettings(settingsCat);
-        }});
-        toggle(nvp, "Mostrar hora de llegada", "Muestra la hora estimada en lugar del tiempo restante", prefs.getBoolean("nav_eta_clock", false), new IntCb() { public void on(int i) {
-            prefs.edit().putBoolean("nav_eta_clock", i == 1).apply(); updateNavHud(); showSettings(settingsCat);
-        }});
-        toggle(nvp, "Incidentes en la ruta", "Consulta cierres o accidentes una sola vez al calcular ruta (TomTom)", prefs.getBoolean("nav_incidents", true), new IntCb() { public void on(int i) {
-            prefs.edit().putBoolean("nav_incidents", i == 1).apply(); showSettings(settingsCat);
-        }});
-        boolean spdOn = prefs.getBoolean("nav_speed_alert", true);
-        toggle(nvp, "Límite y alerta de velocidad", "Muestra la señal de límite en el mapa y avisa al excederlo", spdOn, new IntCb() { public void on(int i) {
-            prefs.edit().putBoolean("nav_speed_alert", i == 1).apply(); updateNavHud(); showSettings(settingsCat);
-        }});
-        if (spdOn) {
-            final int[] tols = {5, 8, 15};
-            int curTol = prefs.getInt("nav_speed_tol", 8);
-            int selTol = curTol <= 5 ? 0 : curTol >= 15 ? 2 : 1;
-            String[] tolLbl = useMph() ? new String[]{"+3 mph", "+5 mph", "+10 mph"} : new String[]{"+5 km/h", "+8 km/h", "+15 km/h"};
-            segmented(nvp, "Tolerancia de exceso", "Margen sobre el límite antes de activar alerta", tolLbl, selTol, new IntCb() { public void on(int i) {
-                prefs.edit().putInt("nav_speed_tol", tols[i]).apply(); showSettings(settingsCat);
+        if (navIn) {
+            LinearLayout nvp = section(body, "Navegación");
+            toggle(nvp, "Evitar peajes", "Intenta evitar vías de peaje al calcular la ruta", prefs.getBoolean("nav_avoid_tolls", false), new IntCb() { public void on(int i) {
+                prefs.edit().putBoolean("nav_avoid_tolls", i == 1).apply(); showSettings(settingsCat);
             }});
-            toggle(nvp, "Sonido al exceder límite", "Pitido de alerta cuando superas la tolerancia", prefs.getBoolean("nav_speed_sound", true), new IntCb() { public void on(int i) {
-                prefs.edit().putBoolean("nav_speed_sound", i == 1).apply(); showSettings(settingsCat);
+            toggle(nvp, "Evitar autopistas", "Intenta evitar autopistas o vías rápidas", prefs.getBoolean("nav_avoid_motorways", false), new IntCb() { public void on(int i) {
+                prefs.edit().putBoolean("nav_avoid_motorways", i == 1).apply(); showSettings(settingsCat);
+            }});
+            toggle(nvp, "Rutas alternativas", "Muestra 2 o 3 opciones de ruta antes de iniciar", prefs.getBoolean("nav_alternatives", true), new IntCb() { public void on(int i) {
+                prefs.edit().putBoolean("nav_alternatives", i == 1).apply(); showSettings(settingsCat);
+            }});
+            toggle(nvp, "Mostrar hora de llegada", "Muestra la hora estimada en lugar del tiempo restante", prefs.getBoolean("nav_eta_clock", false), new IntCb() { public void on(int i) {
+                prefs.edit().putBoolean("nav_eta_clock", i == 1).apply(); updateNavHud(); showSettings(settingsCat);
             }});
         }
-        toggle(nvp, "Alertas de radares sin conexión", "Avisa al acercarse a radares del mapa local .map", prefs.getBoolean("nav_speed_cams", true), new IntCb() { public void on(int i) {
-            prefs.edit().putBoolean("nav_speed_cams", i == 1).apply(); updateNavHud(); showSettings(settingsCat);
-        }});
         LinearLayout off = section(body, "Mapa sin conexión");
         LiveMapView.loadFile(this);
         String mf = prefs.getString("map_file", "");
@@ -6975,15 +6572,17 @@ public class Main extends Activity {
         }});
         row(m, "Fuente del mapa (avanzado)", "URL propia con {z}/{x}/{y}", prefs.getString("map_url", "").length() > 0 ? "Personalizada" : "Automática",
             edit("map_url", "URL de teselas {z}/{x}/{y} (vacío = automático)", ""));
-        row(m, "Capa de tráfico propia (avanzado)", "URL transparente de tráfico con {z}/{x}/{y}", prefs.getString("traffic_url", "").trim().length() > 0 ? "Personalizada" : "Automática",
-            edit("traffic_url", "URL capa de tráfico {z}/{x}/{y} (vacío = automático)", ""));
-        row(m, "Servidor de rutas OSRM (avanzado)", "URL propia compatible con OSRM (vacío = automático)",
-            prefs.getString("nav_route_url", "").trim().length() > 0 ? "Personalizada" : "Automática",
-            edit("nav_route_url", "URL servidor OSRM (vacío = automático)", ""));
-        toggle(m, "Compatibilidad TLS en rutas", "Para radios antiguas donde falle el HTTPS de rutas o búsqueda",
-            prefs.getBoolean("nav_tls_compat", false), new IntCb() { public void on(int i) {
-                prefs.edit().putBoolean("nav_tls_compat", i == 1).apply(); showSettings(settingsCat);
-            }});
+        if (navIn) {
+            row(m, "Capa de tráfico propia (avanzado)", "URL transparente de tráfico con {z}/{x}/{y}", prefs.getString("traffic_url", "").trim().length() > 0 ? "Personalizada" : "Automática",
+                edit("traffic_url", "URL capa de tráfico {z}/{x}/{y} (vacío = automático)", ""));
+            row(m, "Servidor de rutas OSRM (avanzado)", "URL propia compatible con OSRM (vacío = automático)",
+                prefs.getString("nav_route_url", "").trim().length() > 0 ? "Personalizada" : "Automática",
+                edit("nav_route_url", "URL servidor OSRM (vacío = automático)", ""));
+            toggle(m, "Compatibilidad TLS en rutas", "Para radios antiguas donde falle el HTTPS de rutas o búsqueda",
+                prefs.getBoolean("nav_tls_compat", false), new IntCb() { public void on(int i) {
+                    prefs.edit().putBoolean("nav_tls_compat", i == 1).apply(); showSettings(settingsCat);
+                }});
+        }
     }
 
     private TextView dlStatusTv;
@@ -7589,19 +7188,11 @@ public class Main extends Activity {
     private long screenOffAt;
     private final BroadcastReceiver screenReceiver = new BroadcastReceiver() {
         public void onReceive(Context c, Intent i) {
-            String act = i != null ? i.getAction() : null;
-            if (Intent.ACTION_POWER_DISCONNECTED.equals(act)) { flushTripPrefs(); saveParkedLocationNow(); return; }
-            if (Intent.ACTION_SCREEN_OFF.equals(act)) { screenOffAt = SystemClock.elapsedRealtime(); flushTripPrefs(); saveParkedLocationNow(); return; }
+            if (Intent.ACTION_SCREEN_OFF.equals(i.getAction())) { screenOffAt = SystemClock.elapsedRealtime(); return; }
             if (screenOffAt > 0 && SystemClock.elapsedRealtime() - screenOffAt > 5 * 60000L && hasWindowFocus()) runBootApp(1500);
             screenOffAt = 0;
         }
     };
-
-    private void saveParkedLocationNow() {
-        if (!Double.isNaN(wLat) && !Double.isNaN(wLon)) {
-            Nav.saveParkedCar(this, wLat, wLon);
-        }
-    }
 
     private void runBootApp(long delay) {
         final String comp = prefs.getString("boot_app", "");

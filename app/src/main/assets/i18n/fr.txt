@@ -934,3 +934,154 @@ Gris suave	Gris doux
 Ámbar	Ambre
 Ver ahora	Voir maintenant
 Toca la pantalla para volver	Touchez l'écran pour revenir
+# 2.23: navegación en el mapa de StradaOS (código base de nothanks91, PR #31/#35)
+Ir a…	Aller à…
+Recalculando…	Recalcul…
+Llegaste a tu destino	Vous êtes arrivé à destination
+Activa el mapa en vivo en Ajustes → Mapa y clima	Activez la carte en direct dans Réglages → Carte et météo
+Escribe una dirección o lugar	Saisissez une adresse ou un lieu
+RECIENTES	RÉCENTS
+¿A dónde vamos?	On va où ?
+Buscar	Rechercher
+Detener	Arrêter
+Buscando…	Recherche…
+No se pudo buscar	Recherche impossible
+No se encontraron resultados	Aucun résultat trouvé
+Resultados	Résultats
+Esperando señal GPS para calcular la ruta	En attente du signal GPS pour calculer l'itinéraire
+Calculando ruta…	Calcul de l'itinéraire…
+No se pudo calcular la ruta	Impossible de calculer l'itinéraire
+Cambiar destino	Changer de destination
+Silenciar voz de guía	Couper le guidage vocal
+Activar voz de guía	Activer le guidage vocal
+Vista Norte arriba	Vue nord en haut
+Vista en dirección de marcha	Vue dans le sens de la marche
+Abrir en otra app	Ouvrir dans une autre appli
+Detener navegación	Arrêter la navigation
+Navegación en el mapa	Navigation sur la carte
+Voz activada	Voix activée
+Voz silenciada	Voix coupée
+En el mapa de StradaOS	Sur la carte de StradaOS
+Se abre con el botón del mapa (Waze, Maps, OsmAnd… o integrada en el mapa)	S'ouvre avec le bouton de la carte (Waze, Maps, OsmAnd… ou intégrée à la carte)
+Voz de navegación	Guidage vocal
+Indicaciones paso a paso habladas durante el recorrido	Indications vocales étape par étape pendant le trajet
+★  En el mapa de StradaOS (integrada)	★  Sur la carte de StradaOS (intégrée)
+Guardado: Navegación en el mapa	Enregistré : Navigation sur la carte
+Coordenadas	Coordonnées
+No se encontró ruta	Aucun itinéraire trouvé
+Ruta recalculada	Itinéraire recalculé
+Sal por {}	Partez par {}
+Inicia el recorrido	Commencez le trajet
+En la rotonda, salida {} hacia {}	Au rond-point, sortie {} vers {}
+En la rotonda, toma la salida {}	Au rond-point, prenez la sortie {}
+En la rotonda, sigue hacia {}	Au rond-point, continuez vers {}
+En la rotonda, toma la salida	Au rond-point, prenez la sortie
+Haz un giro en U en {}	Faites demi-tour sur {}
+Haz un giro en U	Faites demi-tour
+Gira levemente a la derecha en {}	Tournez légèrement à droite sur {}
+Gira levemente a la derecha	Tournez légèrement à droite
+Gira a la derecha en {}	Tournez à droite sur {}
+Gira a la derecha	Tournez à droite
+Gira fuerte a la derecha en {}	Tournez franchement à droite sur {}
+Gira fuerte a la derecha	Tournez franchement à droite
+Gira levemente a la izquierda en {}	Tournez légèrement à gauche sur {}
+Gira levemente a la izquierda	Tournez légèrement à gauche
+Gira a la izquierda en {}	Tournez à gauche sur {}
+Gira a la izquierda	Tournez à gauche
+Gira fuerte a la izquierda en {}	Tournez franchement à gauche sur {}
+Gira fuerte a la izquierda	Tournez franchement à gauche
+Incorpórate a {}	Insérez-vous sur {}
+Toma el desvío	Prenez la bretelle
+Continúa por {}	Continuez sur {}
+Sigue recto	Continuez tout droit
+En {}	Dans {}
+Sin conexión · vuelve a la ruta	Hors ligne · revenez sur l'itinéraire
+Casa	Maison
+Trabajo	Travail
+Toca para guardar GPS	Touchez pour enregistrer le GPS
+Ir ahora	Y aller
+Actualizar con GPS actual	Mettre à jour avec le GPS actuel
+Eliminado	Supprimé
+Esperando señal GPS para guardar ubicación	En attente du signal GPS pour enregistrer le lieu
+Guardado en Casa	Enregistré comme Maison
+Guardado en Trabajo	Enregistré comme Travail
+Gasolina	Carburant
+Salud	Santé
+Parqueo	Stationnement
+Comida	Restauration
+FAVORITOS	FAVORIS
+Quitar de favoritos	Retirer des favoris
+Añadir a favoritos	Ajouter aux favoris
+Guardar como Casa	Enregistrer comme Maison
+Guardar como Trabajo	Enregistrer comme Travail
+Añadido a favoritos	Ajouté aux favoris
+Quitado de favoritos	Retiré des favoris
+Ruta aproximada (mapa local sin conexión)	Itinéraire approximatif (carte locale hors ligne)
+Ruta guardada (sin conexión)	Itinéraire enregistré (hors ligne)
+Recalcular ruta	Recalculer l'itinéraire
+ruta guardada	itinéraire enregistré
+sin conexión · aproximada	hors ligne · approximatif
+aproximada	approximatif
+Para rutas largas o sin mapa local hace falta internet	Internet est nécessaire pour les longs trajets ou sans carte locale
+Mapa local	Carte locale
+Pueblo	Village
+Barrio	Quartier
+Calle	Rue
+Estación de servicio	Station-service
+Hospital	Hôpital
+Clínica	Clinique
+Farmacia	Pharmacie
+Parqueadero	Parking
+Restaurante	Restaurant
+Cafetería	Café
+Supermercado	Supermarché
+Hotel	Hôtel
+Aeropuerto	Aéroport
+Estación	Gare
+Lugar	Lieu
+con tráfico	avec trafic
+Tráfico en vivo activado	Trafic en direct activé
+Tráfico en vivo	Trafic en direct
+Muestra congestión en el mapa y evita trancones (usa clave gratis de TomTom)	Affiche les bouchons sur la carte et les évite (clé TomTom gratuite)
+Clave gratis de TomTom	Clé TomTom gratuite
+Para capas de tráfico y rutas con tráfico (regístrate gratis en developer.tomtom.com)	Pour les couches et itinéraires avec trafic (inscription gratuite sur developer.tomtom.com)
+Clave API gratis de TomTom	Clé API TomTom gratuite
+Capa de tráfico propia (avanzado)	Couche de trafic personnalisée (avancé)
+URL transparente de tráfico con {z}/{x}/{y}	URL transparente de trafic avec {z}/{x}/{y}
+URL capa de tráfico {z}/{x}/{y} (vacío = automático)	URL de la couche de trafic {z}/{x}/{y} (vide = automatique)
+Servidor de rutas OSRM (avanzado)	Serveur d'itinéraires OSRM (avancé)
+URL propia compatible con OSRM (vacío = automático)	URL personnalisée compatible OSRM (vide = automatique)
+URL servidor OSRM (vacío = automático)	URL du serveur OSRM (vide = automatique)
+Compatibilidad TLS en rutas	Compatibilité TLS des itinéraires
+Para radios antiguas donde falle el HTTPS de rutas o búsqueda	Pour les autoradios anciens où le HTTPS des itinéraires ou de la recherche échoue
+Mostrando hora de llegada	Affichage de l'heure d'arrivée
+Mostrando tiempo restante	Affichage du temps restant
+Ir a Casa	Aller à la Maison
+Ir a Trabajo	Aller au Travail
+Configura «{}» primero en Navegación	Configurez d'abord « {} » dans Navigation
+PARADAS	ÉTAPES
+Limpiar	Effacer
+Modo parada activo: elige una parada	Mode étape actif : choisissez une étape
+Buscar parada intermedia	Rechercher une étape
+Añadir parada en ruta	Ajouter une étape sur l'itinéraire
+Elegir destino final	Choisir la destination finale
+Añadir como parada	Ajouter comme étape
+Parada añadida	Étape ajoutée
+Elegir parada	Choisir une étape
+Elegir ruta	Choisir l'itinéraire
+Ruta	Itinéraire
+Más rápida	Plus rapide
+Mostrar tiempo restante	Afficher le temps restant
+Mostrar hora de llegada	Afficher l'heure d'arrivée
+Evitar peajes	Éviter les péages
+Intenta evitar vías de peaje al calcular la ruta	Essaie d'éviter les routes à péage lors du calcul
+Evitar autopistas	Éviter les autoroutes
+Intenta evitar autopistas o vías rápidas	Essaie d'éviter les autoroutes et voies rapides
+Rutas alternativas	Itinéraires alternatifs
+Muestra 2 o 3 opciones de ruta antes de iniciar	Propose 2 ou 3 itinéraires avant de partir
+Muestra la hora estimada en lugar del tiempo restante	Affiche l'heure d'arrivée estimée au lieu du temps restant
+En 500 metros	Dans 500 mètres
+En 150 metros	Dans 150 mètres
+En 500 pies	Dans 500 pieds
+En un cuarto de milla	Dans un quart de mile
+Parada intermedia	Étape intermédiaire

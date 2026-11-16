@@ -934,3 +934,154 @@ Gris suave	柔和灰
 Ámbar	琥珀色
 Ver ahora	立即预览
 Toca la pantalla para volver	点按屏幕返回
+# 2.23: navegación en el mapa de StradaOS (código base de nothanks91, PR #31/#35)
+Ir a…	前往…
+Recalculando…	正在重新规划…
+Llegaste a tu destino	您已到达目的地
+Activa el mapa en vivo en Ajustes → Mapa y clima	请在 设置 → 地图和天气 中开启实时地图
+Escribe una dirección o lugar	输入地址或地点
+RECIENTES	最近
+¿A dónde vamos?	去哪里？
+Buscar	搜索
+Detener	停止
+Buscando…	正在搜索…
+No se pudo buscar	搜索失败
+No se encontraron resultados	未找到结果
+Resultados	结果
+Esperando señal GPS para calcular la ruta	正在等待 GPS 信号以计算路线
+Calculando ruta…	正在计算路线…
+No se pudo calcular la ruta	无法计算路线
+Cambiar destino	更改目的地
+Silenciar voz de guía	关闭语音导航
+Activar voz de guía	开启语音导航
+Vista Norte arriba	北向朝上
+Vista en dirección de marcha	车头朝上
+Abrir en otra app	在其他应用中打开
+Detener navegación	停止导航
+Navegación en el mapa	地图导航
+Voz activada	语音已开启
+Voz silenciada	语音已静音
+En el mapa de StradaOS	在 StradaOS 地图中
+Se abre con el botón del mapa (Waze, Maps, OsmAnd… o integrada en el mapa)	通过地图按钮打开（Waze、Maps、OsmAnd… 或地图内置导航）
+Voz de navegación	导航语音
+Indicaciones paso a paso habladas durante el recorrido	行程中逐步语音提示
+★  En el mapa de StradaOS (integrada)	★  在 StradaOS 地图中（内置）
+Guardado: Navegación en el mapa	已保存：地图导航
+Coordenadas	坐标
+No se encontró ruta	未找到路线
+Ruta recalculada	路线已重新规划
+Sal por {}	从 {} 出发
+Inicia el recorrido	开始行程
+En la rotonda, salida {} hacia {}	在环岛从第 {} 出口驶向 {}
+En la rotonda, toma la salida {}	在环岛从第 {} 出口驶出
+En la rotonda, sigue hacia {}	在环岛继续驶向 {}
+En la rotonda, toma la salida	在环岛驶出
+Haz un giro en U en {}	在 {} 掉头
+Haz un giro en U	掉头
+Gira levemente a la derecha en {}	稍向右转进入 {}
+Gira levemente a la derecha	稍向右转
+Gira a la derecha en {}	右转进入 {}
+Gira a la derecha	右转
+Gira fuerte a la derecha en {}	向右急转进入 {}
+Gira fuerte a la derecha	向右急转
+Gira levemente a la izquierda en {}	稍向左转进入 {}
+Gira levemente a la izquierda	稍向左转
+Gira a la izquierda en {}	左转进入 {}
+Gira a la izquierda	左转
+Gira fuerte a la izquierda en {}	向左急转进入 {}
+Gira fuerte a la izquierda	向左急转
+Incorpórate a {}	汇入 {}
+Toma el desvío	驶入匝道
+Continúa por {}	沿 {} 继续行驶
+Sigue recto	直行
+En {}	{}后
+Sin conexión · vuelve a la ruta	离线 · 请返回路线
+Casa	家
+Trabajo	公司
+Toca para guardar GPS	点按以保存当前 GPS
+Ir ahora	立即前往
+Actualizar con GPS actual	用当前 GPS 更新
+Eliminado	已删除
+Esperando señal GPS para guardar ubicación	正在等待 GPS 信号以保存位置
+Guardado en Casa	已保存为家
+Guardado en Trabajo	已保存为公司
+Gasolina	加油
+Salud	医疗
+Parqueo	停车
+Comida	餐饮
+FAVORITOS	收藏
+Quitar de favoritos	从收藏中移除
+Añadir a favoritos	添加到收藏
+Guardar como Casa	保存为家
+Guardar como Trabajo	保存为公司
+Añadido a favoritos	已添加到收藏
+Quitado de favoritos	已从收藏中移除
+Ruta aproximada (mapa local sin conexión)	大致路线（本地离线地图）
+Ruta guardada (sin conexión)	已保存的路线（离线）
+Recalcular ruta	重新计算路线
+ruta guardada	已保存的路线
+sin conexión · aproximada	离线 · 大致
+aproximada	大致
+Para rutas largas o sin mapa local hace falta internet	长途路线或没有本地地图时需要联网
+Mapa local	本地地图
+Pueblo	城镇
+Barrio	街区
+Calle	街道
+Estación de servicio	加油站
+Hospital	医院
+Clínica	诊所
+Farmacia	药店
+Parqueadero	停车场
+Restaurante	餐厅
+Cafetería	咖啡馆
+Supermercado	超市
+Hotel	酒店
+Aeropuerto	机场
+Estación	车站
+Lugar	地点
+con tráfico	含路况
+Tráfico en vivo activado	已开启实时路况
+Tráfico en vivo	实时路况
+Muestra congestión en el mapa y evita trancones (usa clave gratis de TomTom)	在地图上显示拥堵并避开堵车（使用免费的 TomTom 密钥）
+Clave gratis de TomTom	免费 TomTom 密钥
+Para capas de tráfico y rutas con tráfico (regístrate gratis en developer.tomtom.com)	用于路况图层和路况路线（在 developer.tomtom.com 免费注册）
+Clave API gratis de TomTom	免费 TomTom API 密钥
+Capa de tráfico propia (avanzado)	自定义路况图层（高级）
+URL transparente de tráfico con {z}/{x}/{y}	带 {z}/{x}/{y} 的透明路况网址
+URL capa de tráfico {z}/{x}/{y} (vacío = automático)	路况图层网址 {z}/{x}/{y}（留空 = 自动）
+Servidor de rutas OSRM (avanzado)	OSRM 路线服务器（高级）
+URL propia compatible con OSRM (vacío = automático)	兼容 OSRM 的自定义网址（留空 = 自动）
+URL servidor OSRM (vacío = automático)	OSRM 服务器网址（留空 = 自动）
+Compatibilidad TLS en rutas	路线 TLS 兼容
+Para radios antiguas donde falle el HTTPS de rutas o búsqueda	适用于路线或搜索 HTTPS 失败的旧车机
+Mostrando hora de llegada	显示到达时间
+Mostrando tiempo restante	显示剩余时间
+Ir a Casa	回家
+Ir a Trabajo	去公司
+Configura «{}» primero en Navegación	请先在导航中设置“{}”
+PARADAS	途经点
+Limpiar	清除
+Modo parada activo: elige una parada	途经点模式已开启：请选择途经点
+Buscar parada intermedia	搜索途经点
+Añadir parada en ruta	在路线上添加途经点
+Elegir destino final	选择最终目的地
+Añadir como parada	添加为途经点
+Parada añadida	已添加途经点
+Elegir parada	选择途经点
+Elegir ruta	选择路线
+Ruta	路线
+Más rápida	最快
+Mostrar tiempo restante	显示剩余时间
+Mostrar hora de llegada	显示到达时间
+Evitar peajes	避开收费路段
+Intenta evitar vías de peaje al calcular la ruta	计算路线时尽量避开收费道路
+Evitar autopistas	避开高速公路
+Intenta evitar autopistas o vías rápidas	尽量避开高速公路和快速路
+Rutas alternativas	备选路线
+Muestra 2 o 3 opciones de ruta antes de iniciar	出发前显示 2 到 3 条路线
+Muestra la hora estimada en lugar del tiempo restante	显示预计到达时间而非剩余时间
+En 500 metros	500 米后
+En 150 metros	150 米后
+En 500 pies	500 英尺后
+En un cuarto de milla	四分之一英里后
+Parada intermedia	途经点

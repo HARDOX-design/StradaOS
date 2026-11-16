@@ -934,3 +934,154 @@ Gris suave	Kelabu lembut
 Ámbar	Ambar
 Ver ahora	Lihat sekarang
 Toca la pantalla para volver	Ketik skrin untuk kembali
+# 2.23: navegación en el mapa de StradaOS (código base de nothanks91, PR #31/#35)
+Ir a…	Pergi ke…
+Recalculando…	Mengira semula…
+Llegaste a tu destino	Anda telah tiba di destinasi
+Activa el mapa en vivo en Ajustes → Mapa y clima	Hidupkan peta langsung di Tetapan → Peta & cuaca
+Escribe una dirección o lugar	Taip alamat atau tempat
+RECIENTES	TERKINI
+¿A dónde vamos?	Ke mana kita?
+Buscar	Cari
+Detener	Henti
+Buscando…	Mencari…
+No se pudo buscar	Gagal mencari
+No se encontraron resultados	Tiada hasil ditemui
+Resultados	Hasil
+Esperando señal GPS para calcular la ruta	Menunggu isyarat GPS untuk mengira laluan
+Calculando ruta…	Mengira laluan…
+No se pudo calcular la ruta	Laluan tidak dapat dikira
+Cambiar destino	Tukar destinasi
+Silenciar voz de guía	Senyapkan suara panduan
+Activar voz de guía	Hidupkan suara panduan
+Vista Norte arriba	Paparan utara di atas
+Vista en dirección de marcha	Paparan arah perjalanan
+Abrir en otra app	Buka dalam aplikasi lain
+Detener navegación	Henti navigasi
+Navegación en el mapa	Navigasi di peta
+Voz activada	Suara dihidupkan
+Voz silenciada	Suara disenyapkan
+En el mapa de StradaOS	Di peta StradaOS
+Se abre con el botón del mapa (Waze, Maps, OsmAnd… o integrada en el mapa)	Dibuka dengan butang peta (Waze, Maps, OsmAnd… atau terbina dalam peta)
+Voz de navegación	Suara navigasi
+Indicaciones paso a paso habladas durante el recorrido	Arahan langkah demi langkah yang dituturkan semasa perjalanan
+★  En el mapa de StradaOS (integrada)	★  Di peta StradaOS (terbina dalam)
+Guardado: Navegación en el mapa	Disimpan: Navigasi di peta
+Coordenadas	Koordinat
+No se encontró ruta	Tiada laluan ditemui
+Ruta recalculada	Laluan dikira semula
+Sal por {}	Mula di {}
+Inicia el recorrido	Mulakan perjalanan
+En la rotonda, salida {} hacia {}	Di bulatan, keluar {} ke {}
+En la rotonda, toma la salida {}	Di bulatan, ambil keluar {}
+En la rotonda, sigue hacia {}	Di bulatan, terus ke {}
+En la rotonda, toma la salida	Di bulatan, ambil jalan keluar
+Haz un giro en U en {}	Buat pusingan U di {}
+Haz un giro en U	Buat pusingan U
+Gira levemente a la derecha en {}	Belok sedikit ke kanan ke {}
+Gira levemente a la derecha	Belok sedikit ke kanan
+Gira a la derecha en {}	Belok kanan ke {}
+Gira a la derecha	Belok kanan
+Gira fuerte a la derecha en {}	Belok tajam ke kanan ke {}
+Gira fuerte a la derecha	Belok tajam ke kanan
+Gira levemente a la izquierda en {}	Belok sedikit ke kiri ke {}
+Gira levemente a la izquierda	Belok sedikit ke kiri
+Gira a la izquierda en {}	Belok kiri ke {}
+Gira a la izquierda	Belok kiri
+Gira fuerte a la izquierda en {}	Belok tajam ke kiri ke {}
+Gira fuerte a la izquierda	Belok tajam ke kiri
+Incorpórate a {}	Masuk ke {}
+Toma el desvío	Ambil susur keluar
+Continúa por {}	Terus di {}
+Sigue recto	Jalan terus
+En {}	Dalam {}
+Sin conexión · vuelve a la ruta	Luar talian · kembali ke laluan
+Casa	Rumah
+Trabajo	Kerja
+Toca para guardar GPS	Ketik untuk simpan GPS
+Ir ahora	Pergi sekarang
+Actualizar con GPS actual	Kemas kini dengan GPS semasa
+Eliminado	Dipadam
+Esperando señal GPS para guardar ubicación	Menunggu isyarat GPS untuk menyimpan lokasi
+Guardado en Casa	Disimpan sebagai Rumah
+Guardado en Trabajo	Disimpan sebagai Kerja
+Gasolina	Minyak
+Salud	Kesihatan
+Parqueo	Parkir
+Comida	Makanan
+FAVORITOS	KEGEMARAN
+Quitar de favoritos	Buang daripada kegemaran
+Añadir a favoritos	Tambah ke kegemaran
+Guardar como Casa	Simpan sebagai Rumah
+Guardar como Trabajo	Simpan sebagai Kerja
+Añadido a favoritos	Ditambah ke kegemaran
+Quitado de favoritos	Dibuang daripada kegemaran
+Ruta aproximada (mapa local sin conexión)	Laluan anggaran (peta tempatan luar talian)
+Ruta guardada (sin conexión)	Laluan disimpan (luar talian)
+Recalcular ruta	Kira semula laluan
+ruta guardada	laluan disimpan
+sin conexión · aproximada	luar talian · anggaran
+aproximada	anggaran
+Para rutas largas o sin mapa local hace falta internet	Laluan jauh atau tanpa peta tempatan memerlukan internet
+Mapa local	Peta tempatan
+Pueblo	Pekan
+Barrio	Kejiranan
+Calle	Jalan
+Estación de servicio	Stesen minyak
+Hospital	Hospital
+Clínica	Klinik
+Farmacia	Farmasi
+Parqueadero	Tempat letak kereta
+Restaurante	Restoran
+Cafetería	Kafe
+Supermercado	Pasar raya
+Hotel	Hotel
+Aeropuerto	Lapangan terbang
+Estación	Stesen
+Lugar	Tempat
+con tráfico	dengan trafik
+Tráfico en vivo activado	Trafik langsung dihidupkan
+Tráfico en vivo	Trafik langsung
+Muestra congestión en el mapa y evita trancones (usa clave gratis de TomTom)	Tunjuk kesesakan di peta dan elakkan jem (guna kunci TomTom percuma)
+Clave gratis de TomTom	Kunci TomTom percuma
+Para capas de tráfico y rutas con tráfico (regístrate gratis en developer.tomtom.com)	Untuk lapisan dan laluan trafik (daftar percuma di developer.tomtom.com)
+Clave API gratis de TomTom	Kunci API TomTom percuma
+Capa de tráfico propia (avanzado)	Lapisan trafik sendiri (lanjutan)
+URL transparente de tráfico con {z}/{x}/{y}	URL trafik lutsinar dengan {z}/{x}/{y}
+URL capa de tráfico {z}/{x}/{y} (vacío = automático)	URL lapisan trafik {z}/{x}/{y} (kosong = automatik)
+Servidor de rutas OSRM (avanzado)	Pelayan laluan OSRM (lanjutan)
+URL propia compatible con OSRM (vacío = automático)	URL sendiri serasi OSRM (kosong = automatik)
+URL servidor OSRM (vacío = automático)	URL pelayan OSRM (kosong = automatik)
+Compatibilidad TLS en rutas	Keserasian TLS untuk laluan
+Para radios antiguas donde falle el HTTPS de rutas o búsqueda	Untuk radio lama yang HTTPS laluan atau cariannya gagal
+Mostrando hora de llegada	Menunjukkan waktu tiba
+Mostrando tiempo restante	Menunjukkan baki masa
+Ir a Casa	Pergi ke Rumah
+Ir a Trabajo	Pergi ke Kerja
+Configura «{}» primero en Navegación	Tetapkan «{}» dahulu dalam Navigasi
+PARADAS	PERHENTIAN
+Limpiar	Kosongkan
+Modo parada activo: elige una parada	Mod perhentian aktif: pilih perhentian
+Buscar parada intermedia	Cari perhentian di laluan
+Añadir parada en ruta	Tambah perhentian di laluan
+Elegir destino final	Pilih destinasi akhir
+Añadir como parada	Tambah sebagai perhentian
+Parada añadida	Perhentian ditambah
+Elegir parada	Pilih perhentian
+Elegir ruta	Pilih laluan
+Ruta	Laluan
+Más rápida	Paling pantas
+Mostrar tiempo restante	Tunjuk baki masa
+Mostrar hora de llegada	Tunjuk waktu tiba
+Evitar peajes	Elak tol
+Intenta evitar vías de peaje al calcular la ruta	Cuba elak jalan bertol semasa mengira laluan
+Evitar autopistas	Elak lebuh raya
+Intenta evitar autopistas o vías rápidas	Cuba elak lebuh raya atau jalan ekspres
+Rutas alternativas	Laluan alternatif
+Muestra 2 o 3 opciones de ruta antes de iniciar	Tunjuk 2 atau 3 pilihan laluan sebelum bermula
+Muestra la hora estimada en lugar del tiempo restante	Tunjuk anggaran waktu tiba dan bukan baki masa
+En 500 metros	Dalam 500 meter
+En 150 metros	Dalam 150 meter
+En 500 pies	Dalam 500 kaki
+En un cuarto de milla	Dalam suku batu
+Parada intermedia	Perhentian di laluan
