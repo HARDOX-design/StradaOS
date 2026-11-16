@@ -1076,7 +1076,10 @@ public class Main extends Activity {
         playerLeft = "left".equals(prefs.getString("player_side", "right"));
         showCar = prefs.getBoolean("show_car", true);
         showMap = true;   // «ocultar el mapa» del PR #35 queda para más adelante
-        if (Nav.active != null && !"internal".equals(prefs.getString("nav_app", null))) Nav.stop(this);
+        if (Nav.active != null && !"internal".equals(prefs.getString("nav_app", null))) {
+            Nav.stop(this);
+            LiveMapView.headingUp = prefs.getBoolean("map_heading", false);
+        }
         // 2.18: ocultar el reproductor (el mapa gana espacio), la velocidad y el servicio (carros sin GPS) y el aceite
         showPlayer = prefs.getBoolean("show_player", true);
         carSpeed = prefs.getBoolean("car_speed", true);
@@ -7958,7 +7961,13 @@ public class Main extends Activity {
                 toast("Guardado: " + labelOf(c));
             }
             // si deja la navegación integrada, la ruta en curso se detiene (si no, el recuadro de guía quedaba en el mapa)
-            if ("nav_app".equals(key) && !"internal".equals(prefs.getString("nav_app", null)) && Nav.active != null) Nav.stop(Main.this);
+            if ("nav_app".equals(key) && !"internal".equals(prefs.getString("nav_app", null)) && Nav.active != null) {
+                Nav.stop(Main.this);
+                // sin esto el recuadro de guía seguía en el mapa hasta tocarlo (Andrés, Picanto 16 nov.)
+                LiveMapView.headingUp = prefs.getBoolean("map_heading", false);
+                updateNavHud();
+                if (liveMap != null) liveMap.invalidate();
+            }
             refreshStates();
             if (after != null) after.run();
             else if (settingsView != null) showSettings(settingsCat);

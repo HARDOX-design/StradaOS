@@ -472,10 +472,22 @@ public class LiveMapView extends View {
         routePath.reset();
         routePath.moveTo(startX, startY);
         float lastX = startX, lastY = startY;
+        // Pantallas lentas (Picanto, Android 4.2): solo se dibuja lo que cae cerca de la vista, y se saltan puntos a menos
+        // de 3 px. Antes se armaba la ruta entera en cada cuadro (~30 por segundo mientras el mapa se mueve).
+        float mg = getWidth() + getHeight();
+        float minX = -mg, minY = -mg, maxX = getWidth() + mg, maxY = getHeight() + mg;
+        boolean penUp = false;
         for (int i = start + 1; i < nPts; i++) {
             float sx = mapX(r.pts[i * 2 + 1], fx, cx, ts, n);
             float sy = mapY(r.pts[i * 2], fy, cy, ts, n);
-            if (i == nPts - 1 || Math.abs(sx - lastX) >= 1.5f || Math.abs(sy - lastY) >= 1.5f) {
+            boolean out = sx < minX || sx > maxX || sy < minY || sy > maxY;
+            if (out) {
+                // fuera de la vista: no se dibuja, pero se recuerda el punto para retomar la línea si la ruta vuelve
+                lastX = sx; lastY = sy; penUp = true;
+                continue;
+            }
+            if (penUp) { routePath.moveTo(lastX, lastY); penUp = false; }
+            if (i == nPts - 1 || Math.abs(sx - lastX) >= 3f || Math.abs(sy - lastY) >= 3f) {
                 routePath.lineTo(sx, sy);
                 lastX = sx;
                 lastY = sy;
