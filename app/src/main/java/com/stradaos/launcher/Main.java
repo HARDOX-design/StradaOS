@@ -1207,7 +1207,9 @@ public class Main extends Activity {
         // 2.24: tema premium «Aurora»: su propia distribución (la barra lateral y la compacta no aplican)
         premium = premiumActive();
         Prem.style = premium ? prefs.getString("premium_theme", Aurora.ID) : Aurora.ID;
-        mapOnly = premium && !Prem.cob() && prefs.getBoolean("prem_map_only", false);   // Cobalto es fijo: sin «Solo mapa»
+        mapOnly = premium && Prem.mapOnlyOk() && prefs.getBoolean("prem_map_only", false);   // Cobalto y Faro son fijos: sin «Solo mapa»
+        // Faro (2.25): el mapa en trazo fino (intensidad baja/media/alta); los demás temas, como siempre
+        LiveMapView.ink = premium && Prem.faro() ? Math.max(0, Math.min(2, prefs.getInt("faro_map", 0))) : -1;
         if (premium) { sideDock = false; compactDock = false; }
         // Lienzo virtual: 1024x600. Con la barra lateral los botones salen de abajo y el lienzo queda más bajo
         // (1128x460): en pantallas bajas y anchas como 1280x480 todo se ve ~30 % más grande.
@@ -1913,6 +1915,7 @@ public class Main extends Activity {
 
     private void updateOilBadge() {
         startOdo();
+        renderFaroMaint();
         // 2.20: con mantenimientos propios, el recuadro y la barra de arriba muestran el más próximo
         int ni = nearestMaint();
         badgeTask = ni;
@@ -2675,16 +2678,18 @@ public class Main extends Activity {
             mapClipView = clip;
         } else place(board, card, mapX, mapY, mapW, mapH);
         mapCardView = card;
-        // fondo decorativo mientras no hay GPS; encima, el mapa en vivo
-        card.addView(new MapView(this, s, 20 * s), new FrameLayout.LayoutParams(-1, -1));
+        // fondo decorativo mientras no hay GPS; encima, el mapa en vivo (Faro: sin dibujo de relleno, el área queda limpia)
+        if (!(premium && Prem.faro())) card.addView(new MapView(this, s, 20 * s), new FrameLayout.LayoutParams(-1, -1));
         if (!prefs.getBoolean("map_live", true)) { liveMap = null; seedLastLocation(); buildAaCardRest(card); return; }
         liveMap = new LiveMapView(this, s, 20 * s);
         card.addView(liveMap, new FrameLayout.LayoutParams(-1, -1));
         // Aurora: esquinas redondas de verdad sobre el fondo y el mapa un poco translúcido
         if (premium && premBg != null) liveMap.setBackdrop(premBg, premBgHolder, Prem.mapAlpha(LIGHT));
+        // Faro: un velo muy suave marca el área del mapa (debajo de las calles en trazo)
+        if (premium && Prem.faro() && premBg != null) liveMap.setTint(LIGHT ? 0x40FFFFFF : 0x0DFFFFFF);
         // Cobalto: el mapa se difumina hasta donde empieza el reproductor (abajo, hacia las tarjetas, en vertical)
         if (premium && Prem.cob() && !mapOnly && premBg != null) liveMap.setFade(vertical ? 2 : 1, (vertical ? 150 : Math.max(260, mapW * 0.5f)) * s);
-        liveMap.setVisibility(View.INVISIBLE);
+        liveMap.setVisibility(premium && Prem.faro() ? View.VISIBLE : View.INVISIBLE);
         liveMap.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { liveMap.cycleZoom(); }
         });
@@ -2700,6 +2705,9 @@ public class Main extends Activity {
     }
 
     private void buildAaCardRest(FrameLayout card) {
+        final boolean faroT = premium && Prem.faro();
+        if (faroT) buildFaroMapTop(card);
+        else {
         LinearLayout topRow = new LinearLayout(this);
         topRow.setGravity(Gravity.CENTER_VERTICAL);
         LinearLayout tag = new LinearLayout(this);
@@ -2735,6 +2743,7 @@ public class Main extends Activity {
         navSearchBtn = goBtn;
         mapTagBox = topRow;
         placeWrap(card, topRow, 16, 16);
+        }
 
         LinearLayout hud = new LinearLayout(this);
         hud.setOrientation(LinearLayout.HORIZONTAL);
@@ -2805,7 +2814,7 @@ public class Main extends Activity {
         boolean nbLeft = "left".equals(nbSide) || ("auto".equals(nbSide) && playerLeft);
         final View navBtn = circleIcon("map", nb, nb / 2, (CARD & 0x00FFFFFF) | 0xEB000000);
         place(card, navBtn, nbLeft ? 12 + insL : mapW - 12 - nb - insR, panelY - 12 - nb, nb, nb);
-        if (nbSize == 3) navBtn.setVisibility(View.GONE);
+        if (nbSize == 3 || faroT) navBtn.setVisibility(View.GONE);   // Faro: el buscador de arriba abre la navegación
         // 2.20 (Daniel): mini velocímetro sobre el mapa cuando la tarjeta del vehículo está oculta
         mapGauge = null;
         boolean gaugeTopLeft = false;
@@ -2858,6 +2867,7 @@ public class Main extends Activity {
         speedSignTv.setVisibility(View.GONE);
         float sdx = gaugeTopLeft ? mapW - 58 : 12;
         place(card, speedSignTv, sdx, 92, 46, 46);
+        if (faroT) speedSignTv = null;   // Faro: el límite va en el velocímetro
 
         camBadgeTv = tv("", 11, Color.WHITE, true);
         camBadgeTv.setBackground(round(0xFFD92B2B, 10));
@@ -3015,6 +3025,7 @@ public class Main extends Activity {
     }
 
     private void showPanelWeather() {
+        renderFaroWx();
         if (panelWx == null) return;
         Weather.Now n = weatherNow;
         if (n == null) {
@@ -3328,6 +3339,7 @@ public class Main extends Activity {
         else if (liveMap.usingFile()) mapTagTv.setText(I18n.t(live ? "Mapa sin conexión" : "Sin señal GPS · mapa sin conexión"));
         else if (liveMap.offline()) mapTagTv.setText(I18n.t(live ? "En vivo · sin internet" : "Sin señal GPS ni internet"));
         else mapTagTv.setText(I18n.t(live ? "Mapa en vivo" : "Sin señal GPS · última posición"));
+        updateFaroPill();
     }
 
     private void updateNavHud() {
@@ -3898,7 +3910,7 @@ public class Main extends Activity {
     }
 
     private void toggleMapOnly() {
-        if (Prem.cob()) return;   // Cobalto no tiene «Solo mapa»
+        if (!Prem.mapOnlyOk()) return;   // Cobalto y Faro no tienen «Solo mapa»
         if (!mapOnly) { enterMapOnly(); return; }
         Bitmap snap = null;
         FrameLayout.LayoutParams olp = null;
@@ -3985,6 +3997,7 @@ public class Main extends Activity {
         premPillH = noDock ? 0 : vertical ? 68 : 64;
         dockTop = noDock ? boardH : boardH - 16 - premPillH;
         premHeadY = 60;
+        if (Prem.faro()) { faroMetrics(); return; }
         if (Prem.cob()) { cobaltoMetrics(); return; }
         if (mapOnly) premHeadH = 0;
         else if (vertical) premHeadH = 92 + 8 + (shortVertical ? 150 : 172);
@@ -4006,6 +4019,8 @@ public class Main extends Activity {
 
     private void buildPremium() {
         carCard = null; mapGauge = null; mapGaugeBox = null; carGauge = null; chipTv = null;
+        faroGauge = null; faroBar = null; faroWxIc = null; faroMaintBox = null; faroPillTv = null;
+        if (Prem.faro()) { buildFaro(); setGps(false, 0); return; }
         buildPremiumTop();
         buildAaCard();
         if (mapOnly) premiumDetached();
@@ -4284,6 +4299,587 @@ public class Main extends Activity {
         card.setOnClickListener(new View.OnClickListener() { public void onClick(View v) {
             if (oilHome) badgeMenu(); else showSettings(C_VEHICLE);
         }});
+    }
+
+    // ───────────────────────── tema premium «Faro» (2.25, Bloque 16) ─────────────────────────
+    // Horizontal: columna izquierda con el velocímetro arriba y el carro visto desde arriba (sin tarjeta, sobre el
+    // fondo); la barra de estado arriba a la derecha; el mapa en trazo en el centro; clima y mantenimientos a la
+    // derecha; el reproductor horizontal debajo del mapa y los mantenimientos; la barra de apps compacta abajo.
+    // Vertical: el mapa arriba; debajo, la columna (velocímetro + carro) junto al clima y los mantenimientos; el
+    // reproductor y la barra. Sin «Solo mapa» (tema fijo, como Cobalto).
+
+    private float faroColX, faroColY, faroColW, faroColH, faroRX, faroRW, faroWxY, faroWxH, faroMtY, faroMtH,
+        faroPlX, faroPlY, faroPlW, faroPlH, faroTopX;
+    private FaroGauge faroGauge;
+    private Faro.Timeline faroBar;
+    private Faro.Icon faroWxIc;
+    private TextView faroCityTv, faroTempTv, faroHiLoTv, faroDescTv, faroRainTv, faroHumTv, faroPillTv;
+    private LinearLayout faroHours, faroRainBox, faroHumBox;
+    private FrameLayout faroMaintBox;
+    private float faroMaintW, faroMaintH, faroHoursW;
+    private Faro.Icon faroPillIc;
+    /** Modo del último inicio armado con Faro (null = ninguno todavía): para encender o apagar los faros. */
+    private static Boolean faroLastLight;
+
+    private void faroMetrics() {
+        float W0 = premW();
+        premHeadH = 0;
+        premWide = false;
+        premPillH = noDock ? 0 : vertical ? 60 : 56;
+        dockTop = noDock ? boardH : boardH - 10 - premPillH;
+        float bottom = dockTop - (noDock ? 12 : 10), top = 8, topH = 34;
+        faroPlH = showPlayer ? (vertical ? 80 : 74) : 0;
+        faroPlY = bottom - faroPlH;
+        float above = faroPlY - (showPlayer ? 10 : 0);   // donde terminan el mapa y las tarjetas
+        boolean wx = prefs.getBoolean("weather_on", true);
+        if (vertical) {
+            float rh = shortVertical ? 300 : Math.max(300, Math.min(470, boardH * 0.36f));
+            float ry = above - rh;
+            faroTopX = 12;
+            mapX = 12; mapY = top + topH + 4; mapW = W0 - 24;
+            mapH = Math.max(120, ry - 10 - mapY);
+            faroColX = 12; faroColY = ry; faroColW = 290; faroColH = rh;
+            faroRX = faroColX + faroColW + 12; faroRW = W0 - 12 - faroRX;
+            faroWxY = ry; faroWxH = wx ? Math.round(rh * 0.54f) : 0;
+            faroPlX = 12; faroPlW = W0 - 24;
+        } else {
+            faroColX = 12; faroColY = top; faroColW = 292 + Math.min(64, ex / 6f); faroColH = bottom - top;
+            float rx0 = faroColX + faroColW + 12;
+            faroRW = 324 + Math.min(48, ex / 8f);
+            faroRX = W0 - 12 - faroRW;
+            faroTopX = rx0;
+            mapX = rx0; mapY = top + topH + 4; mapW = faroRX - 12 - rx0;
+            mapH = Math.max(120, above - mapY);
+            faroWxY = mapY; faroWxH = wx ? Math.round(mapH * 0.54f) : 0;
+            faroPlX = rx0; faroPlW = W0 - 12 - rx0;
+        }
+        faroMtY = wx ? faroWxY + faroWxH + 10 : faroWxY;
+        faroMtH = (vertical ? faroColY + faroColH : mapY + mapH) - faroMtY;
+        cardH = mapH; rowY = mapY; insL = insR = 0;
+        carX = audX = 16; audW = 248;
+    }
+
+    private void buildFaro() {
+        premHeadViews.clear();
+        faroGauge = null; faroBar = null; faroWxIc = null; faroMaintBox = null; faroPillTv = null; faroPillIc = null;
+        buildFaroTop();
+        // en claro, el área del mapa con la misma sombra que las tarjetas (el mapa la tapa por dentro)
+        if (LIGHT) {
+            View sh = new View(this);
+            sh.setBackground(new Faro.Card(true, 20 * s, 8 * s, s));
+            place(board, sh, mapX - 8, mapY - 8, mapW + 16, mapH + 16);
+        }
+        buildAaCard();
+        buildFaroColumn();
+        if (faroWxH > 0) buildFaroWeather(faroRX, faroWxY, faroRW, faroWxH);
+        else { faroWxIc = null; panelWx = null; }
+        buildFaroMaint(faroRX, faroMtY, faroRW, faroMtH);
+        if (showPlayer) buildFaroPlayer(faroPlX, faroPlY, faroPlW, faroPlH);
+        else { trackTv = null; artistTv = null; sourceTv = null; timePosTv = null; playerArt = null; playIc = null; }
+        if (!noDock) buildFaroDock();
+        updateOilBadge();
+    }
+
+    /** Tarjeta translúcida de Faro. Devuelve el marco interior (w×hh) donde van las vistas. */
+    private FrameLayout faroCard(float x, float y, float w, float hh) {
+        float m = 8;
+        FrameLayout outer = new FrameLayout(this);
+        outer.setBackground(new Faro.Card(LIGHT, 18 * s, m * s, s));
+        place(board, outer, x - m, y - m, w + 2 * m, hh + 2 * m);
+        FrameLayout inner = new FrameLayout(this);
+        place(outer, inner, m, m, w, hh);
+        return inner;
+    }
+
+    /** Botón con un ícono de trazo centrado (área de toque más grande que el ícono). */
+    private FrameLayout faroIconBtn(int type, float box, float ic, int bg) {
+        FrameLayout f = new FrameLayout(this);
+        if (bg != 0) {
+            GradientDrawable d = round(bg, box * 0.3f);
+            if (LIGHT) d.setStroke(Math.max(1, (int) s), 0x14000000);
+            f.setBackground(d);
+        }
+        Faro.Icon i = new Faro.Icon(this, type, TEXT);
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams((int) (ic * s), (int) (ic * s));
+        lp.gravity = Gravity.CENTER;
+        f.addView(i, lp);
+        f.setTag(i);
+        return f;
+    }
+
+    /** Barra de estado: hora y fecha a la izquierda; Wi-Fi, Bluetooth (y Apps sin barra) y Ajustes a la derecha. */
+    private void buildFaroTop() {
+        float W0 = premW(), x = faroTopX, w = W0 - 12 - x;
+        LinearLayout row = new LinearLayout(this);
+        row.setGravity(Gravity.CENTER_VERTICAL);
+        greetTv = tv("", 13, MUTED, false);   // no se muestra (el reloj lo actualiza)
+        timeTv = tv("", 17, TEXT, true);
+        dateTv = tv("", 13, MUTED, false);
+        dateTv.setPadding((int) (10 * s), 0, 0, 0);
+        row.addView(timeTv);
+        row.addView(dateTv);
+        place(board, row, x + 4, 8, w * 0.6f, 34);
+        premTopRow = row;
+        topSpeedTv = null; topOilTv = null; topIconName = null; weatherBox = null;
+        topNavPill = null; topNavIc = null; topNavDistTv = null;
+
+        LinearLayout right = new LinearLayout(this);
+        right.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+        wifiIc = null;
+        btIc = null;
+        if (prefs.getBoolean("status_icons", true)) {
+            LinearLayout st = new LinearLayout(this);
+            st.setGravity(Gravity.CENTER_VERTICAL);
+            wifiIc = statusIcon(st, "wifi", new Runnable() { public void run() { toggleWifi(); } },
+                new Runnable() { public void run() { openSettingsPage(Settings.ACTION_WIFI_SETTINGS, new Runnable() { public void run() { openSystemSettings(); } }); } });
+            btIc = statusIcon(st, "bluetooth", new Runnable() { public void run() { toggleBt(); } },
+                new Runnable() { public void run() {
+                    if (clwBt) openSlot(1);
+                    else openSettingsPage(Settings.ACTION_BLUETOOTH_SETTINGS, new Runnable() { public void run() { openSlot(1); } });
+                } });
+            right.addView(st);
+        }
+        if (noDock) {
+            FrameLayout apps = faroIconBtn(Faro.I_APPS, 32, 16, Faro.tile(LIGHT));
+            LinearLayout.LayoutParams alp = new LinearLayout.LayoutParams((int) (32 * s), (int) (32 * s));
+            alp.leftMargin = (int) (8 * s);
+            right.addView(apps, alp);
+            apps.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { openDrawer(); } });
+        }
+        FrameLayout gear = circleIcon("settings", 32, 18, 0);
+        GradientDrawable gd = round(Faro.tile(LIGHT), 16);
+        if (LIGHT) gd.setStroke(Math.max(1, (int) s), 0x14000000);
+        gear.setBackground(gd);
+        LinearLayout.LayoutParams glp = new LinearLayout.LayoutParams((int) (32 * s), (int) (32 * s));
+        glp.leftMargin = (int) (8 * s);
+        right.addView(gear, glp);
+        gear.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { openSettings(); } });
+        place(board, right, x + w * 0.4f, 9, w * 0.6f, 32);
+    }
+
+    /** Columna izquierda: velocímetro arriba, nombre del vehículo con el GPS y el carro visto desde arriba. */
+    private void buildFaroColumn() {
+        float x = faroColX, y = faroColY, w = faroColW, hh = faroColH;
+        float D = carSpeed ? Math.min(w - 36, hh * (vertical ? 0.42f : 0.40f)) : 0;
+        float gx = x + (w - D) / 2, gy = y + 6;
+        float labelY = carSpeed ? gy + D + 2 : y + 4, labelH = 22;
+        float carY = labelY + labelH + 4, carH = Math.max(60, y + hh - carY);
+        String col = Faro.car(prefs.getString("faro_car", "silver"));
+        Faro.Car car = new Faro.Car(this, col, LIGHT);
+        place(board, car, x, carY, w, carH);
+        car.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { showSettings(C_VEHICLE); } });
+        car.setOnLongClickListener(new View.OnLongClickListener() { public boolean onLongClick(View v) { chooseFaroCar(); return true; } });
+        // faros: encendidos en oscuro; al pasar de claro a oscuro se encienden y de oscuro a claro se apagan
+        android.graphics.RectF cr = Faro.carRect(w * s, carH * s);
+        float lampY = carY + (cr.top + cr.height() * Faro.LAMP_Y) / s;
+        float lxL = (cr.left + cr.width() * Faro.LAMP_X) / s, lxR = (cr.left + cr.width() * (1 - Faro.LAMP_X)) / s;
+        float bTop = carSpeed ? gy + D * 0.28f : Math.max(y, lampY - 160), bH = lampY + 14 - bTop;
+        Boolean prev = faroLastLight;
+        faroLastLight = LIGHT;
+        boolean fadeOut = LIGHT && prev != null && !prev;
+        if ((!LIGHT || fadeOut) && bH > 40) {
+            float poolY = carSpeed ? gy + D * 0.84f - bTop : (lampY - bTop) * 0.25f;
+            final Faro.Beams beams = new Faro.Beams(this, s, new float[]{lxL * s, (lampY - bTop) * s, lxR * s, (lampY - bTop) * s},
+                (carSpeed ? gy + D * 0.5f - bTop : 0) * s, w / 2 * s, poolY * s, w * 0.42f * s);
+            place(board, beams, x, bTop, w, bH);
+            if (fadeOut) {
+                beams.setAlpha(1f);
+                afterFirstFrame(new Runnable() { public void run() {
+                    beams.animate().alpha(0f).setStartDelay(dur(150)).setDuration(dur(700)).withLayer().withEndAction(new Runnable() { public void run() {
+                        if (beams.getParent() instanceof ViewGroup) ((ViewGroup) beams.getParent()).removeView(beams);
+                    }});
+                }});
+            } else if (prev == null || prev) {
+                beams.setAlpha(0f);
+                afterFirstFrame(new Runnable() { public void run() {
+                    beams.animate().alpha(1f).setStartDelay(dur(150)).setDuration(dur(900))
+                        .setInterpolator(new android.view.animation.AccelerateDecelerateInterpolator()).withLayer();
+                }});
+            }
+        }
+        // velocímetro (mixto por defecto en Faro si nunca se eligió uno)
+        speedTv = tv("0", 12, TEXT, true);   // no se muestra: el número va en el velocímetro
+        carGauge = null; mapGauge = null;
+        if (carSpeed) {
+            faroGauge = new FaroGauge(this, s);
+            faroGauge.setTheme(LIGHT, TEXT, MUTED);
+            faroGauge.setUnit(useMph());
+            faroGauge.setMode(prefs.contains("speedo") ? prefs.getInt("speedo", 2) : 2);
+            place(board, faroGauge, gx, gy, D, D);
+        }
+        // nombre del vehículo y el GPS (donde la referencia dice «Comfort»)
+        LinearLayout lab = new LinearLayout(this);
+        lab.setGravity(Gravity.CENTER);
+        carTv = tv(prefs.getString("car_name", "Mi vehículo"), 13, MUTED, true);
+        carTv.setMaxWidth((int) ((w - 90) * s));
+        lab.addView(carTv);
+        gpsDot = new View(this);
+        gpsDot.setBackground(round(MUTED, 4));
+        LinearLayout.LayoutParams dlp = new LinearLayout.LayoutParams((int) (7 * s), (int) (7 * s));
+        dlp.leftMargin = (int) (10 * s);
+        lab.addView(gpsDot, dlp);
+        gpsTv = tv("GPS", 11, MUTED, false);
+        gpsTv.setPadding((int) (5 * s), 0, 0, 0);
+        lab.addView(gpsTv);
+        place(board, lab, x, labelY, w, labelH);
+        chipTv = null;
+        oilValTv = null; oilBar = null; oilBarBg = null; oilLblTv = null; oilIc = null;
+    }
+
+    /** Elegir el color del carro (presión larga sobre el carro o Ajustes → Pantalla de inicio). */
+    private void chooseFaroCar() {
+        final String[] cols = Faro.CAR_COLORS;
+        String[] names = new String[cols.length];
+        for (int i = 0; i < cols.length; i++) names[i] = I18n.t(Faro.CAR_NAMES[i]);
+        int sel = Math.max(0, java.util.Arrays.asList(cols).indexOf(Faro.car(prefs.getString("faro_car", "silver"))));
+        new TB(this, dlg()).raw()
+            .setTitle(I18n.t("Color del carro"))
+            .setSingleChoiceItems(names, sel, new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int which) {
+                d.dismiss();
+                prefs.edit().putString("faro_car", cols[which]).apply();
+                rebuild();
+                if (settingsView != null) showSettings(settingsCat);
+            }})
+            .show();
+    }
+
+    /** Clima: ciudad, temperatura grande, máxima/mínima, estado, lluvia y humedad, y las próximas horas abajo. */
+    private void buildFaroWeather(float x, float y, float w, float hh) {
+        FrameLayout card = faroCard(x, y, w, hh);
+        float m = 16;
+        faroCityTv = tv("Clima", 13, MUTED, true);
+        place(card, faroCityTv, m, 14, w * 0.56f - m, 18);
+        faroTempTv = tv("--°", 46, TEXT, false);
+        faroTempTv.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
+        place(card, faroTempTv, m - 2, 34, w * 0.52f, 54);
+        faroHiLoTv = tv("", 12, MUTED, false);
+        place(card, faroHiLoTv, m, 92, w * 0.5f, 16);
+        float is = 40;
+        faroWxIc = new Faro.Icon(this, Faro.I_CLOUD, TEXT);
+        faroWxIc.setStroke(1.35f);
+        place(card, faroWxIc, w - m - is, 12, is, is);
+        faroDescTv = tv("", 14, TEXT, false);
+        faroDescTv.setGravity(Gravity.RIGHT);
+        place(card, faroDescTv, w * 0.36f, 58, w * 0.64f - m, 19);
+        LinearLayout meta = new LinearLayout(this);
+        meta.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+        faroRainBox = new LinearLayout(this);
+        faroRainBox.setGravity(Gravity.CENTER_VERTICAL);
+        Faro.Icon ui = new Faro.Icon(this, Faro.I_UMBRELLA, MUTED);
+        faroRainBox.addView(ui, new LinearLayout.LayoutParams((int) (13 * s), (int) (13 * s)));
+        faroRainTv = tv("", 12, MUTED, false);
+        faroRainTv.setPadding((int) (4 * s), 0, 0, 0);
+        faroRainBox.addView(faroRainTv);
+        meta.addView(faroRainBox);
+        faroHumBox = new LinearLayout(this);
+        faroHumBox.setGravity(Gravity.CENTER_VERTICAL);
+        Faro.Icon di = new Faro.Icon(this, Faro.I_DROP, MUTED);
+        faroHumBox.addView(di, new LinearLayout.LayoutParams((int) (13 * s), (int) (13 * s)));
+        faroHumTv = tv("", 12, MUTED, false);
+        faroHumTv.setPadding((int) (4 * s), 0, 0, 0);
+        faroHumBox.addView(faroHumTv);
+        LinearLayout.LayoutParams hlp = new LinearLayout.LayoutParams(-2, -2);
+        hlp.leftMargin = (int) (12 * s);
+        meta.addView(faroHumBox, hlp);
+        place(card, meta, w * 0.3f, 82, w * 0.7f - m, 18);
+        // próximas horas
+        float hy = Math.max(116, hh * 0.52f);
+        faroHours = new LinearLayout(this);
+        faroHours.setOrientation(LinearLayout.HORIZONTAL);
+        faroHoursW = w - 2 * m + 8;
+        place(card, faroHours, m - 4, hy, faroHoursW, Math.max(40, hh - hy - 10));
+        card.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { showWeatherDetail(); } });
+        renderFaroWx();
+    }
+
+    private void renderFaroWx() {
+        if (faroWxIc == null) return;
+        Weather.Now n = weatherNow;
+        faroHours.removeAllViews();
+        if (n == null) {
+            faroCityTv.setText(I18n.t("Clima"));
+            faroTempTv.setText("--°");
+            faroHiLoTv.setText(I18n.t(Double.isNaN(wLat) ? "Esperando la ubicación…" : "Cargando…"));
+            faroDescTv.setText("");
+            faroRainBox.setVisibility(View.GONE);
+            faroHumBox.setVisibility(View.GONE);
+            faroWxIc.set(Faro.I_CLOUD);
+            return;
+        }
+        faroCityTv.setText(n.city != null && n.city.length() > 0 ? n.city : I18n.t("Clima"));
+        faroTempTv.setText(deg(n.temp));
+        Weather.Day d = n.today();
+        faroHiLoTv.setText(d != null ? deg(d.hi) + " / " + deg(d.lo) : "");
+        faroDescTv.setText(I18n.t(Weather.describe(n.code)));
+        faroWxIc.set(Faro.weatherIcon(n.code, n.day));
+        int rain = !n.hours.isEmpty() && n.hours.get(0).rain >= 0 ? n.hours.get(0).rain : d != null ? d.rain : -1;
+        faroRainBox.setVisibility(rain >= 0 ? View.VISIBLE : View.GONE);
+        if (rain >= 0) faroRainTv.setText(I18n.integer(rain) + "%");
+        faroHumBox.setVisibility(n.humidity >= 0 ? View.VISIBLE : View.GONE);
+        if (n.humidity >= 0) faroHumTv.setText(I18n.integer(n.humidity) + "%");
+        int cols = Math.max(3, Math.min(6, (int) (faroHoursW / 48)));
+        for (int i = 0; i < n.hours.size() && i < cols; i++) {
+            Weather.Hour hr = n.hours.get(i);
+            LinearLayout c = new LinearLayout(this);
+            c.setOrientation(LinearLayout.VERTICAL);
+            c.setGravity(Gravity.CENTER);
+            TextView ht = tv(hourLabel(hr.hour), 11, MUTED, false);
+            ht.setGravity(Gravity.CENTER);
+            c.addView(ht, new LinearLayout.LayoutParams(-1, -2));
+            Faro.Icon ic = new Faro.Icon(this, Faro.weatherIcon(hr.code, hr.day), TEXT);
+            LinearLayout.LayoutParams ilp = new LinearLayout.LayoutParams((int) (22 * s), (int) (22 * s));
+            ilp.topMargin = (int) (8 * s);
+            ilp.bottomMargin = (int) (8 * s);
+            c.addView(ic, ilp);
+            TextView tt = tv(deg(hr.temp), 13, TEXT, true);
+            tt.setGravity(Gravity.CENTER);
+            c.addView(tt, new LinearLayout.LayoutParams(-1, -2));
+            faroHours.addView(c, new LinearLayout.LayoutParams(0, -1, 1f));
+        }
+    }
+
+    /** Próximos mantenimientos (los de Ajustes → Mantenimientos), del más urgente al más lejano. */
+    private void buildFaroMaint(float x, float y, float w, float hh) {
+        FrameLayout card = faroCard(x, y, w, hh);
+        place(card, tv("Mantenimientos", 13, TEXT, true), 16, 12, w - 32, 18);
+        faroMaintBox = new FrameLayout(this);
+        faroMaintW = w - 24;
+        faroMaintH = Math.max(32, hh - 38 - 6);
+        place(card, faroMaintBox, 12, 38, faroMaintW, faroMaintH);
+        card.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { showSettings(C_MAINT); } });
+        renderFaroMaint();
+    }
+
+    private void renderFaroMaint() {
+        if (faroMaintBox == null) return;
+        faroMaintBox.removeAllViews();
+        final List<org.json.JSONObject> l = maint();
+        List<double[]> items = new ArrayList<double[]>();   // {lo que falta, índice} (índice -1 = aceite)
+        if (oilOn()) items.add(new double[]{(oilNextKm() - odoKm()) / Math.max(1, prefs.getFloat("oil_interval_km", 5000)), -1});
+        for (int i = 0; i < l.size(); i++) items.add(new double[]{taskFrac(l.get(i)), i});
+        java.util.Collections.sort(items, new java.util.Comparator<double[]>() {
+            public int compare(double[] a, double[] b) { return Double.compare(a[0], b[0]); }
+        });
+        if (items.isEmpty()) {
+            LinearLayout e = new LinearLayout(this);
+            e.setOrientation(LinearLayout.VERTICAL);
+            e.setGravity(Gravity.CENTER);
+            TextView t1 = tv("Sin mantenimientos programados", 13, MUTED, false);
+            t1.setGravity(Gravity.CENTER);
+            e.addView(t1, new LinearLayout.LayoutParams(-1, -2));
+            TextView t2 = tv("Toca para agregar uno", 12, RED, true);
+            t2.setGravity(Gravity.CENTER);
+            t2.setPadding(0, (int) (6 * s), 0, 0);
+            e.addView(t2, new LinearLayout.LayoutParams(-1, -2));
+            place(faroMaintBox, e, 0, 0, faroMaintW, faroMaintH);
+            return;
+        }
+        int fit = Math.max(1, (int) (faroMaintH / 31));
+        float rowH = faroMaintH / fit, lw = Math.min(124, faroMaintW * 0.36f);
+        for (int k = 0; k < items.size() && k < fit; k++) {
+            double f = items.get(k)[0];
+            final int idx = (int) items.get(k)[1];
+            String name, left, ic;
+            if (idx < 0) {
+                float lk = oilNextKm() - odoKm();
+                name = I18n.t("Cambio de aceite");
+                left = Math.round(toUnit(lk)) <= 0 ? I18n.t("¡Ya toca!") : fmtDist(lk);
+                ic = "water_drop";
+            } else {
+                org.json.JSONObject o = l.get(idx);
+                name = taskName(o);
+                left = f <= 0 ? I18n.t("¡Ya toca!") : taskLeftText(o);
+                ic = taskIcon(o);
+            }
+            int uc = Faro.urgency(f, LIGHT);
+            FrameLayout row = new FrameLayout(this);
+            View bar = new View(this);
+            bar.setBackground(round(uc, 2));
+            place(row, bar, 4, rowH * 0.16f, 4, rowH * 0.68f);
+            ImageView iv = icon(ic, 16);
+            iv.setAlpha(0.85f);
+            place(row, iv, 16, (rowH - 16) / 2, 16, 16);
+            TextView nt = tv(name, 14, TEXT, false);
+            nt.setTypeface(Typeface.DEFAULT);
+            place(row, nt, 40, (rowH - 18) / 2, faroMaintW - 40 - lw - 8, 18);
+            TextView lt = tv(left, 13, f < 0.15 ? uc : MUTED, f < 0.15);
+            lt.setGravity(Gravity.RIGHT);
+            place(row, lt, faroMaintW - lw - 4, (rowH - 17) / 2, lw, 17);
+            place(faroMaintBox, row, 0, k * rowH, faroMaintW, rowH);
+            row.setOnClickListener(new View.OnClickListener() { public void onClick(View v) {
+                if (idx < 0) oilMenu(); else taskMenu(idx);
+            }});
+        }
+    }
+
+    /** Reproductor horizontal: anterior, reproducir y siguiente; carátula; canción y artista; la línea de tiempo. */
+    private void buildFaroPlayer(float x, float y, float w, float hh) {
+        final FrameLayout card = faroCard(x, y, w, hh);
+        float cy = hh / 2, x0 = 14;
+        FrameLayout prev = faroIconBtn(Faro.I_PREV, 44, 22, 0), next = faroIconBtn(Faro.I_NEXT, 44, 22, 0);
+        FrameLayout play = new FrameLayout(this);
+        playIc = new ImageView(this);
+        playIc.setImageBitmap(asset("ic/play_arrow.png"));
+        playIc.setColorFilter(TEXT);
+        FrameLayout.LayoutParams plp = new FrameLayout.LayoutParams((int) (34 * s), (int) (34 * s));
+        plp.gravity = Gravity.CENTER;
+        play.addView(playIc, plp);
+        place(card, prev, x0, cy - 22, 44, 44);
+        place(card, play, x0 + 48, cy - 24, 48, 48);
+        place(card, next, x0 + 100, cy - 22, 44, 44);
+        float ax = x0 + 100 + 44 + 16, as = hh - 20;
+        playerArt = new PlayerArt(this, s, asset("ic/music_note.png"));
+        playerArt.setTile(LIGHT ? 0x14000000 : 0x1FFFFFFF);
+        place(card, playerArt, ax, (hh - as) / 2, as, as);
+        float tlW = Math.max(150, Math.min(460, w * 0.36f)), tlX = w - 18 - tlW;
+        float tx = ax + as + 14, tw = Math.max(60, tlX - 20 - tx);
+        trackTv = tv("Nada sonando", 16, TEXT, true);
+        place(card, trackTv, tx, cy - 20, tw, 20);
+        artistTv = tv("Radio, Bluetooth o USB", 13, MUTED, false);
+        place(card, artistTv, tx, cy + 3, tw, 17);
+        sourceTv = tv("", 10, MUTED, true);
+        place(card, sourceTv, tlX, cy - 18, tlW * 0.5f, 14);
+        timePosTv = tv("", 12, MUTED, false);
+        timePosTv.setGravity(Gravity.RIGHT);
+        place(card, timePosTv, tlX + tlW * 0.4f, cy - 19, tlW * 0.6f, 16);
+        faroBar = new Faro.Timeline(this, s, Faro.track(LIGHT), TEXT);
+        place(card, faroBar, tlX - 5, cy + 3, tlW + 10, 18);
+        final View.OnClickListener goPrev = mediaClick(KeyEvent.KEYCODE_MEDIA_PREVIOUS), goNext = mediaClick(KeyEvent.KEYCODE_MEDIA_NEXT);
+        prev.setOnClickListener(goPrev);
+        play.setOnClickListener(mediaClick(KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE));
+        next.setOnClickListener(goNext);
+        card.setOnTouchListener(new View.OnTouchListener() {
+            float x0t, y0t;
+            public boolean onTouch(View v, MotionEvent e) {
+                if (e.getActionMasked() == MotionEvent.ACTION_DOWN) { x0t = e.getX(); y0t = e.getY(); return false; }
+                if (e.getActionMasked() != MotionEvent.ACTION_UP) return false;
+                float dx = e.getX() - x0t, dy = e.getY() - y0t;
+                if (Math.abs(dx) < 50 * s || Math.abs(dx) < 2 * Math.abs(dy)) return false;
+                MotionEvent c = MotionEvent.obtain(e);
+                c.setAction(MotionEvent.ACTION_CANCEL);
+                v.onTouchEvent(c);
+                c.recycle();
+                (dx < 0 ? goNext : goPrev).onClick(v);
+                return true;
+            }
+        });
+        card.setOnLongClickListener(new View.OnLongClickListener() { public boolean onLongClick(View v) { showPlayerDiag(); return true; } });
+        card.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { openMusicApp(); } });
+        renderTrack();
+    }
+
+    /** Barra de apps compacta y centrada: cada función en un recuadro redondeado; las apps con su propio ícono. */
+    private void buildFaroDock() {
+        final int n = dockCount;
+        int isz = prefs.getInt("dock_icon_size", 1);
+        float ik = isz == 0 ? 0.86f : isz == 2 ? 1.12f : 1f;
+        float W0 = premW(), pillH = premPillH;
+        float itemW = Math.min(vertical ? 66 : 62, (W0 - 48) / n), pillW = itemW * n + 16;
+        float px = (W0 - pillW) / 2, py = dockTop;
+        View bg = new View(this);
+        bg.setBackground(new Faro.Card(LIGHT, Math.min(20, pillH * 0.36f) * s, 8 * s, s));
+        place(board, bg, px - 8, py - 8, pillW + 16, pillH + 16);
+        float tsz = Math.min(Math.min(itemW - 14, pillH - 12) * ik, pillH - 6);
+        final boolean appStyle = "apps".equals(prefs.getString("dock_style", "circle"));
+        for (int i = 0; i < n; i++) {
+            final int idx = i;
+            String t = dockTarget(i);
+            Drawable appIc = t.startsWith("app:") ? appIcon(t.substring(4)) : appStyle ? fnAppIcon(t.substring(3)) : null;
+            FrameLayout b = new FrameLayout(this);
+            View inner;
+            if (appIc != null) {
+                ImageView iv = new ImageView(this);
+                iv.setImageDrawable(appIc);
+                iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                inner = iv;
+            } else {
+                String id = t.startsWith("fn:") ? t.substring(3) : dockDefault(i);
+                FrameLayout tile = new FrameLayout(this);
+                GradientDrawable d = round(Faro.tile(LIGHT), tsz * 0.26f);
+                if (LIGHT) d.setStroke(Math.max(1, (int) s), 0x14000000);
+                tile.setBackground(d);
+                View g;
+                float gs;
+                if ("apps".equals(id)) { g = new Faro.Icon(this, Faro.I_APPS, Faro.pillIcon(LIGHT)); gs = tsz * 0.52f; }
+                else {
+                    ImageView iv = icon(dockFn(id)[2], tsz * 0.5f);
+                    iv.setColorFilter(Faro.pillIcon(LIGHT));
+                    g = iv;
+                    gs = tsz * 0.5f;
+                }
+                FrameLayout.LayoutParams glp = new FrameLayout.LayoutParams((int) (gs * s), (int) (gs * s));
+                glp.gravity = Gravity.CENTER;
+                tile.addView(g, glp);
+                inner = tile;
+            }
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams((int) (tsz * s), (int) (tsz * s));
+            lp.gravity = Gravity.CENTER;
+            b.addView(inner, lp);
+            place(board, b, px + 8 + itemW * i, py, itemW, pillH);
+            b.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { runDock(idx); } });
+            b.setOnLongClickListener(new View.OnLongClickListener() { public boolean onLongClick(View v) { dockMenu(idx, null); return true; } });
+        }
+    }
+
+    /**
+     * Arriba del mapa: buscador discreto a la izquierda (con la navegación integrada abre «Ir a…»; si no, la app de
+     * navegación) y, a la derecha, centrar (zoom automático) y acercar/alejar. Sin GPS el buscador muestra el estado.
+     */
+    private void buildFaroMapTop(FrameLayout card) {
+        FrameLayout box = new FrameLayout(this);
+        place(card, box, 0, 0, mapW, mapH);
+        LinearLayout pill = new LinearLayout(this);
+        pill.setGravity(Gravity.CENTER_VERTICAL);
+        GradientDrawable pd = round(LIGHT ? 0xF2FFFFFF : 0xEB1C1E23, 12);
+        if (LIGHT) pd.setStroke(Math.max(1, (int) s), 0x14000000);
+        pill.setBackground(pd);
+        pill.setPadding((int) (12 * s), 0, (int) (12 * s), 0);
+        faroPillIc = new Faro.Icon(this, Faro.I_SEARCH, TEXT);
+        pill.addView(faroPillIc, new LinearLayout.LayoutParams((int) (18 * s), (int) (18 * s)));
+        faroPillTv = tv("", 14, TEXT, false);
+        faroPillTv.setPadding((int) (10 * s), 0, 0, 0);
+        pill.addView(faroPillTv, new LinearLayout.LayoutParams(0, -2, 1f));
+        float pw = Math.min(250, Math.max(140, mapW - 12 - 12 - 40 - 12));
+        place(box, pill, 12, 12, pw, 40);
+        pill.setOnClickListener(new View.OnClickListener() { public void onClick(View v) {
+            if (liveMap == null || !liveMap.hasFix()) { fixGps(); return; }
+            if ("internal".equals(prefs.getString("nav_app", null))) openNavSearch(); else openNavApp();
+        }});
+        pill.setOnLongClickListener(new View.OnLongClickListener() { public boolean onLongClick(View v) { pickFor("nav_app", "Navegación"); return true; } });
+        // centrar + acercar / alejar
+        FrameLayout loc = faroIconBtn(Faro.I_LOCATE, 40, 19, LIGHT ? 0xF2FFFFFF : 0xEB1C1E23);
+        place(box, loc, mapW - 12 - 40, 12, 40, 40);
+        loc.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { if (liveMap != null) liveMap.autoZoom(); } });
+        LinearLayout zc = new LinearLayout(this);
+        zc.setOrientation(LinearLayout.VERTICAL);
+        GradientDrawable zd = round(LIGHT ? 0xF2FFFFFF : 0xEB1C1E23, 12);
+        if (LIGHT) zd.setStroke(Math.max(1, (int) s), 0x14000000);
+        zc.setBackground(zd);
+        FrameLayout zin = faroIconBtn(Faro.I_PLUS, 40, 18, 0), zout = faroIconBtn(Faro.I_MINUS, 40, 18, 0);
+        zc.addView(zin, new LinearLayout.LayoutParams((int) (40 * s), (int) (42 * s)));
+        zc.addView(zout, new LinearLayout.LayoutParams((int) (40 * s), (int) (42 * s)));
+        place(box, zc, mapW - 12 - 40, 60, 40, 84);
+        zin.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { if (liveMap != null) liveMap.zoomBy(1); } });
+        zout.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { if (liveMap != null) liveMap.zoomBy(-1); } });
+        if (mapH < 200) zc.setVisibility(View.GONE);
+        mapTagTv = tv("", 13, TEXT, true);   // no se muestra: el estado del GPS va en el buscador
+        navSearchBtn = null;
+        mapTagBox = box;
+    }
+
+    /** El texto del buscador: el estado del GPS mientras no hay ubicación; luego «Ir a…» o «Navegar». */
+    private void updateFaroPill() {
+        if (faroPillTv == null) return;
+        boolean fix = liveMap != null && liveMap.hasFix();
+        if (!fix) {
+            faroPillTv.setText(mapTagTv != null ? mapTagTv.getText() : "");
+            faroPillTv.setTextColor(MUTED);
+            faroPillIc.set(Faro.I_LOCATE);
+        } else {
+            faroPillTv.setText(I18n.t("internal".equals(prefs.getString("nav_app", null)) ? "Ir a…" : "Navegar"));
+            faroPillTv.setTextColor(TEXT);
+            faroPillIc.set(Faro.I_SEARCH);
+        }
     }
 
     /** Barra de arriba: saludo (o la hora con «Solo mapa»), íconos, «Solo mapa» y Ajustes. */
@@ -4737,6 +5333,7 @@ public class Main extends Activity {
             View th;
             boolean sel = inUse && (i == 1) == LIGHT;
             if (Cobalto.ID.equals(id)) { Cobalto.Thumb t = new Cobalto.Thumb(this, s, portrait, i == 1); t.selected = sel; th = t; }
+            else if (Faro.ID.equals(id)) { Faro.Thumb t = new Faro.Thumb(this, s, portrait, i == 1); t.selected = sel; th = t; }
             else { Aurora.Thumb t = new Aurora.Thumb(this, s, portrait, i == 1); t.selected = sel; th = t; }
             col.addView(th, new LinearLayout.LayoutParams(-1, -2));
             TextView cap = tv(i == 0 ? "Oscuro" : "Claro", 11, MUTED, false);
@@ -5827,6 +6424,12 @@ public class Main extends Activity {
         speedTv.setText(ok ? String.valueOf(Math.round(kmh < 2 ? 0 : v)) : "--");
         if (carGauge != null) carGauge.setSpeed(kmh < 2 ? 0 : v, ok);
         if (mapGauge != null) mapGauge.setSpeed(kmh < 2 ? 0 : v, ok);
+        if (faroGauge != null) {
+            faroGauge.setSpeed(kmh < 2 ? 0 : v, ok);
+            int lim = Nav.active != null && Nav.curSpeedLimitKmh > 0
+                ? (useMph() ? Math.max(5, (int) (Math.round((Nav.curSpeedLimitKmh / 1.60934) / 5.0) * 5)) : Nav.curSpeedLimitKmh) : 0;
+            faroGauge.setLimit(lim);
+        }
         if (topSpeedTv != null) topSpeedTv.setText((ok ? String.valueOf(Math.round(kmh < 2 ? 0 : v)) : "--") + " " + (useMph() ? "mph" : "km/h"));
         int gs = ok ? 0 : gpsState();
         gpsTv.setText(ok ? "GPS" : I18n.t(gs == 1 ? "Sin permiso" : gs == 2 ? "GPS apagado" : "Buscando GPS"));
@@ -6273,6 +6876,7 @@ public class Main extends Activity {
             timePosTv.setText("");
             playerArt.setArt(null);
             playerArt.setProgress(-1);
+            if (faroBar != null) faroBar.set(-1);
         } else {
             boolean aaOff = curSource != null && curSource.toLowerCase(ES).contains("headunit")
                     && ("Conectado".equalsIgnoreCase(curArtist) || "Connected".equalsIgnoreCase(curArtist));
@@ -6295,12 +6899,15 @@ public class Main extends Activity {
             long p = currentPos();
             playerArt.setProgress(p / (float) durMs);
             timePosTv.setText(fmt(p) + "  /  " + fmt(durMs));
+            if (faroBar != null) faroBar.set(p / (float) durMs);
         } else if (durMs > 0) {
             playerArt.setProgress(-1);
             timePosTv.setText(fmt(durMs));
+            if (faroBar != null) faroBar.set(-1);
         } else {
             playerArt.setProgress(-1);
             timePosTv.setText("");
+            if (faroBar != null) faroBar.set(-1);
         }
     }
 
@@ -7853,6 +8460,17 @@ public class Main extends Activity {
             String pid = prefs.getString("premium_theme", Aurora.ID);
             LinearLayout r = rowBase(pn, I18n.t(Prem.name(pid)) + " · " + I18n.t("En uso"), "El tema arma la pantalla de inicio. Las tarjetas, la barra y el velocímetro de aquí se usan otra vez al quitarlo en Personalización.");
             r.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { showSettings(C_STYLE); } });
+            if (Faro.ID.equals(pid)) {
+                final String[] cols = Faro.CAR_COLORS;
+                int ci = Math.max(0, java.util.Arrays.asList(cols).indexOf(Faro.car(prefs.getString("faro_car", "silver"))));
+                choice(pn, "Color del carro", "El carro del tema Faro, visto desde arriba. También se cambia con una presión larga sobre el carro.", Faro.CAR_NAMES, ci, new IntCb() { public void on(int i) {
+                    prefs.edit().putString("faro_car", cols[i]).apply(); rebuild(); showSettings(C_HOME);
+                }});
+                segmented(pn, "Intensidad del mapa", "Las calles se dibujan en trazo fino sobre el fondo del tema. Súbela si al sol no se ven bien.",
+                    new String[]{"Baja", "Media", "Alta"}, Math.max(0, Math.min(2, prefs.getInt("faro_map", 0))), new IntCb() { public void on(int i) {
+                        prefs.edit().putInt("faro_map", i).apply(); rebuild(); showSettings(C_HOME);
+                    }});
+            }
         }
         if (boxW > 0 && canVertical(boxW, boxH)) {
             // Solo en pantallas casi cuadradas o verticales (en las horizontales no tiene sentido).

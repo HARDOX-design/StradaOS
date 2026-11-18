@@ -1157,3 +1157,16 @@ Irlanda del Norte	أيرلندا الشمالية
 Islas Canarias	جزر الكناري
 Tiempo en StradaOS: {}	الوقت في StradaOS: {}
 Último tiempo por Bluetooth: {}	آخر وقت عبر البلوتوث: {}
+# Bloque 16 (2.25): tema premium Faro
+Fondo carbón (o perla en claro) con un haz de luz diagonal. A la izquierda, el velocímetro y un carro visto desde arriba que enciende los faros de noche; en el centro, el mapa en trazo fino; a la derecha, el clima por horas y tus próximos mantenimientos, con el reproductor debajo.	خلفية فحمية (أو لؤلؤية في الوضع الفاتح) مع شعاع ضوء قطري. على اليسار عدّاد السرعة وسيارة من الأعلى تُشعل مصابيحها الأمامية ليلاً؛ في الوسط الخريطة بخطوط رفيعة؛ وعلى اليمين الطقس بالساعة وصياناتك القادمة، مع المشغّل في الأسفل.
+Color del carro	لون السيارة
+El carro del tema Faro, visto desde arriba. También se cambia con una presión larga sobre el carro.	سيارة سمة Faro، من الأعلى. يمكنك تغييرها أيضًا بالضغط المطوّل على السيارة.
+Intensidad del mapa	شدة الخريطة
+Las calles se dibujan en trazo fino sobre el fondo del tema. Súbela si al sol no se ven bien.	تُرسم الشوارع بخطوط رفيعة فوق خلفية السمة. ارفعها إذا لم تكن واضحة تحت الشمس.
+Baja	منخفضة
+Media	متوسطة
+Alta	عالية
+Negro	أسود
+Sin mantenimientos programados	لا توجد صيانة مجدولة
+Toca para agregar uno	اضغط لإضافة واحدة
+Navegar	تنقّل

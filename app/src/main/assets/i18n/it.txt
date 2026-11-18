@@ -1157,3 +1157,16 @@ Irlanda del Norte	Irlanda del Nord
 Islas Canarias	Isole Canarie
 Tiempo en StradaOS: {}	Tempo in StradaOS: {}
 Último tiempo por Bluetooth: {}	Ultimo tempo via Bluetooth: {}
+# Bloque 16 (2.25): tema premium Faro
+Fondo carbón (o perla en claro) con un haz de luz diagonal. A la izquierda, el velocímetro y un carro visto desde arriba que enciende los faros de noche; en el centro, el mapa en trazo fino; a la derecha, el clima por horas y tus próximos mantenimientos, con el reproductor debajo.	Sfondo antracite (o perla in modalità chiara) con un fascio di luce diagonale. A sinistra, il tachimetro e un'auto vista dall'alto che accende i fari di notte; al centro, la mappa a tratto sottile; a destra, il meteo ora per ora e le prossime manutenzioni, con il lettore sotto.
+Color del carro	Colore dell'auto
+El carro del tema Faro, visto desde arriba. También se cambia con una presión larga sobre el carro.	L'auto del tema Faro, vista dall'alto. Si cambia anche tenendo premuto sull'auto.
+Intensidad del mapa	Intensità della mappa
+Las calles se dibujan en trazo fino sobre el fondo del tema. Súbela si al sol no se ven bien.	Le strade sono disegnate a tratto sottile sullo sfondo del tema. Aumentala se al sole non si vedono bene.
+Baja	Bassa
+Media	Media
+Alta	Alta
+Negro	Nero
+Sin mantenimientos programados	Nessuna manutenzione programmata
+Toca para agregar uno	Tocca per aggiungerne una
+Navegar	Naviga

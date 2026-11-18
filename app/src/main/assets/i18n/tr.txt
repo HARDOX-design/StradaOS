@@ -1157,3 +1157,16 @@ Irlanda del Norte	Kuzey İrlanda
 Islas Canarias	Kanarya Adaları
 Tiempo en StradaOS: {}	StradaOS'taki süre: {}
 Último tiempo por Bluetooth: {}	Bluetooth'tan son süre: {}
+# Bloque 16 (2.25): tema premium Faro
+Fondo carbón (o perla en claro) con un haz de luz diagonal. A la izquierda, el velocímetro y un carro visto desde arriba que enciende los faros de noche; en el centro, el mapa en trazo fino; a la derecha, el clima por horas y tus próximos mantenimientos, con el reproductor debajo.	Diyagonal bir ışık huzmesiyle kömür rengi arka plan (açık modda inci). Solda hız göstergesi ve gece farlarını yakan, yukarıdan görülen bir araba; ortada ince çizgili harita; sağda saatlik hava durumu ve yaklaşan bakımların, altında da oynatıcı.
+Color del carro	Araba rengi
+El carro del tema Faro, visto desde arriba. También se cambia con una presión larga sobre el carro.	Faro temasındaki araba, yukarıdan görünüm. Arabaya uzun basarak da değiştirebilirsin.
+Intensidad del mapa	Harita yoğunluğu
+Las calles se dibujan en trazo fino sobre el fondo del tema. Súbela si al sol no se ven bien.	Sokaklar tema arka planının üzerine ince çizgilerle çizilir. Güneşte zor görünüyorsa artır.
+Baja	Düşük
+Media	Orta
+Alta	Yüksek
+Negro	Siyah
+Sin mantenimientos programados	Planlanmış bakım yok
+Toca para agregar uno	Eklemek için dokun
+Navegar	Yol tarifi

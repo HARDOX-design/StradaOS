@@ -91,10 +91,13 @@ final class Aurora {
     }
 
     /** Grano: ruido monocromo de ±amp/2 por píxel (xorshift: rápido y siempre igual). */
-    static void grain(Bitmap b, boolean light) {
+    static void grain(Bitmap b, boolean light) { grain(b, light ? 12 : 16); }
+
+    /** Grano con la intensidad dada (Faro usa uno más fino). */
+    static void grain(Bitmap b, int amp) {
         int w = b.getWidth(), h = b.getHeight();
         int[] px = new int[w];
-        int seed = 0x2545F491, amp = light ? 12 : 16;
+        int seed = 0x2545F491;
         for (int y = 0; y < h; y++) {
             b.getPixels(px, 0, w, 0, y, w, 1);
             for (int x = 0; x < w; x++) {

@@ -42,6 +42,39 @@ public class PlayerArt extends View {
         bg.setColor(Main.INNER);
     }
 
+    /** Tema Faro: carátula cuadrada con esquinas redondas que llena la vista, sin anillo (el avance va aparte). */
+    private boolean tile;
+    void setTile(int fill) {
+        tile = true;
+        bg.setColor(fill);
+        invalidate();
+    }
+
+    private void drawTile(Canvas c, float w, float h) {
+        float side = Math.min(w, h), k = side * 0.18f;
+        box.set((w - side) / 2, (h - side) / 2, (w + side) / 2, (h + side) / 2);
+        if (bitmap != null && !bitmap.isRecycled()) {
+            BitmapShader sh = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+            float scale = Math.max(box.width() / bitmap.getWidth(), box.height() / bitmap.getHeight());
+            Matrix m = new Matrix();
+            m.setScale(scale, scale);
+            m.postTranslate(box.centerX() - bitmap.getWidth() * scale / 2f, box.centerY() - bitmap.getHeight() * scale / 2f);
+            sh.setLocalMatrix(m);
+            art.setShader(sh);
+            c.drawRoundRect(box, k, k, art);
+        } else {
+            c.drawRoundRect(box, k, k, bg);
+            if (placeholder != null) {
+                float sz = box.width() * 0.46f;
+                RectF d = new RectF(box.centerX() - sz / 2, box.centerY() - sz / 2, box.centerX() + sz / 2, box.centerY() + sz / 2);
+                Paint p = new Paint(Paint.FILTER_BITMAP_FLAG);
+                p.setAlpha(150);
+                if (Main.LIGHT) p.setColorFilter(new android.graphics.PorterDuffColorFilter(Main.MUTED, android.graphics.PorterDuff.Mode.SRC_IN));
+                c.drawBitmap(placeholder, null, d, p);
+            }
+        }
+    }
+
     void setSquare(int track, int fill) {
         square = true;
         ring.setColor(track);
@@ -121,6 +154,7 @@ public class PlayerArt extends View {
     @Override
     protected void onDraw(Canvas c) {
         float w = getWidth(), h = getHeight();
+        if (tile) { drawTile(c, w, h); return; }
         if (square) { drawSquare(c, w, h); return; }
         float cx = w / 2f, cy = h / 2f;
         float rr = Math.min(w, h) / 2f - 8 * s;      // radio del anillo
