@@ -1085,3 +1085,40 @@ En 150 metros	Em 150 metros
 En 500 pies	Em 500 pés
 En un cuarto de milla	Em um quarto de milha
 Parada intermedia	Parada intermediária
+# 2.24: Personalización (temas)
+Personalización	Personalização
+Cambia el aspecto de la pantalla de inicio con un toque. Puedes seguir ajustando cada detalle en las demás secciones.	Mude a aparência da tela inicial com um toque. Você pode ajustar cada detalhe nas outras seções.
+Temas gratis	Temas grátis
+Temas premium	Temas premium
+Próximamente	Em breve
+Temas exclusivos para quienes apoyan StradaOS con una donación. Todas las funciones siguen siendo gratis.	Temas exclusivos para quem apoia o StradaOS com uma doação. Todas as funções continuam grátis.
+En uso	Em uso
+Tema aplicado:	Tema aplicado:
+Clásico	Clássico
+Música a la izquierda	Música à esquerda
+Mapa amplio	Mapa amplo
+Minimalista	Minimalista
+Vehículo a la izquierda, mapa en el centro y música a la derecha	Veículo à esquerda, mapa no centro e música à direita
+Mapa arriba; debajo, vehículo a la izquierda y música a la derecha	Mapa em cima; embaixo, veículo à esquerda e música à direita
+Música a la izquierda, mapa en el centro y vehículo a la derecha	Música à esquerda, mapa no centro e veículo à direita
+Mapa arriba; debajo, música a la izquierda y vehículo a la derecha	Mapa em cima; embaixo, música à esquerda e veículo à direita
+Sin tarjeta del vehículo: mapa más ancho, velocímetro abajo a la izquierda y música a la derecha	Sem cartão do veículo: mapa mais largo, velocímetro embaixo à esquerda e música à direita
+Sin tarjeta del vehículo: mapa más alto con el velocímetro abajo a la izquierda y la música a lo ancho	Sem cartão do veículo: mapa mais alto com o velocímetro embaixo à esquerda e a música na largura toda
+Música a la izquierda, velocímetro abajo a la derecha, panel de conexión plegado y barra compacta	Música à esquerda, velocímetro embaixo à direita, painel de conexão recolhido e barra compacta
+Mapa casi completo: velocímetro abajo a la derecha, panel de conexión plegado, música a lo ancho y barra compacta	Mapa quase inteiro: velocímetro embaixo à direita, painel de conexão recolhido, música na largura toda e barra compacta
+Cada tema se adapta solo a la orientación de la pantalla.	Cada tema se adapta sozinho à orientação da tela.
+Tema premium	Tema premium
+Aurora en uso	Aurora em uso
+El tema arma la pantalla de inicio. Las tarjetas, la barra y el velocímetro de aquí se usan otra vez al quitarlo en Personalización.	O tema monta a tela inicial. Os cartões, a barra e o velocímetro daqui voltam a ser usados ao removê-lo em Personalização.
+Tema premium quitado	Tema premium removido
+Premium	Premium
+Fondo con un arco de color difuminado y granulado, tarjetas translúcidas, la hora en grande con música, vehículo y clima arriba, el mapa a lo ancho y una barra tipo píldora. El botón «Solo mapa» agranda el mapa.	Fundo com um arco de cor suave e granulado, cartões translúcidos, a hora em destaque com música, veículo e clima em cima, o mapa de ponta a ponta e uma barra em forma de pílula. O botão «Só mapa» amplia o mapa.
+Sigue el modo claro u oscuro de Apariencia.	Segue o modo claro ou escuro de Aparência.
+Quitar el tema premium	Remover o tema premium
+Aplicar	Aplicar
+Versión de prueba: se puede aplicar sin código.	Versão de teste: pode ser aplicado sem código.
+Disponible pronto con una donación. Todas las funciones siguen siendo gratis.	Em breve com uma doação. Todas as funções continuam grátis.
+Cobalto	Cobalto
+Azul noche en tres columnas: el mapa se difumina hasta el reproductor de carátula redonda, y tu vehículo muestra el velocímetro arriba, su foto en el medio y el mantenimiento abajo. La temperatura va sobre el mapa.	Azul noturno em três colunas: o mapa se esfuma até o player de capa redonda, e seu veículo mostra o velocímetro em cima, a foto dele no meio e a manutenção embaixo. A temperatura fica sobre o mapa.
+Gratis	Grátis
+Gratis para todos. Los próximos temas premium se desbloquearán con una donación.	Grátis para todos. Os próximos temas premium serão desbloqueados com uma doação.

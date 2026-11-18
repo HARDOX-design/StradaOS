@@ -19,6 +19,93 @@ go() { adb shell am start -n $ACT --es prueba "$1" >/dev/null; sleep "${2:-5}"; 
 prep() { go pista-demo 3; }   # la canción de ejemplo se vuelve a poner tras cada cambio de diseño
 adb shell am start -n $ACT --es prueba saltar >/dev/null; sleep 15
 go demo-aceite 6
+if [ "$MODO" = promo-224 ] || [ "$MODO" = promo-224-v ]; then
+  # Imágenes promocionales de la 2.24 (nov. 2026), en español e inglés: los temas Aurora y Cobalto (gratis),
+  # la navegación en el mapa (Medellín, ciudad de ejemplo), el velocímetro y los mantenimientos.
+  # En Cobalto también va una toma con el recuadro de la foto vacío (foto-vacia:1): la foto se pone al armar la imagen.
+  geo() { kill $GEO 2>/dev/null; ( while true; do adb emu geo fix $2 $1 1495 8 ${3:-26} >/dev/null 2>&1; sleep 2; done ) & GEO=$!; sleep 3; }
+  geo 6.2442 -75.5680
+  # el emulador anuncia IPv6 pero la máquina de GitHub no tiene salida IPv6: sin esto no responden los servidores de rutas
+  adb root >/dev/null 2>&1; sleep 4; adb wait-for-device
+  adb shell sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
+  adb shell sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1
+  setprefs() {
+    adb shell am force-stop $PKG; sleep 2
+    adb shell "run-as $PKG cat shared_prefs/launcher.xml" > p.xml
+    python3 - <<'PYX'
+import re
+s=open('p.xml',encoding='utf-8').read()
+for k,v in [('user_name','Andrés'),('car_name','Kia Picanto'),('car_tag','GT Line')]:
+    s=re.sub(r'\s*<string name="%s">[^<]*</string>'%k,'',s)
+    s=s.replace('</map>','    <string name="%s">%s</string>\n</map>'%(k,v))
+open('p.xml','w',encoding='utf-8').write(s)
+PYX
+    adb push p.xml /data/local/tmp/p.xml >/dev/null; adb shell chmod 644 /data/local/tmp/p.xml
+    adb shell "run-as $PKG cp /data/local/tmp/p.xml shared_prefs/launcher.xml"
+    adb shell am start -n $ACT >/dev/null; sleep 8
+  }
+  if [ -s colombia.map ]; then
+    adb shell mkdir -p /sdcard/Download
+    adb push colombia.map /sdcard/Download/colombia.map | tail -1
+    go mapa-archivo:/sdcard/Download/colombia.map 8
+  fi
+  go idioma:es 8; go unidad:kmh 4; go tema:oscuro 6; go diseno:base 5; go diseno:velo-2 5
+  go pref:nav_app=internal 4; go demo-aceite 4; go demo-mant 4
+  setprefs
+  song() { go pista-demo:Night_Drive 3; }
+  hueco() { adb logcat -d -s StradaPromo:W | grep hueco | tail -1 | sed "s/.*hueco /$1 /" >> $OUT/huecos.txt; }
+  if [ "$MODO" = promo-224-v ]; then
+    adb shell wm size 1080x1920; adb shell wm density 160; sleep 10
+    SW="540 1700 540 400"
+  else
+    SW="1200 1040 1200 200"
+  fi
+  for L in es en; do
+    go idioma:$L 8; go inicio 4
+    # ── Aurora ──
+    go tema-premium:aurora 6; go pref:speedo=2 4; go solo-mapa:0 5
+    go tema:oscuro 7; song; go vel:48 3; sleep 20; shot $L-aurora-oscuro
+    go tema:claro 7; song; go vel:48 3; sleep 15; shot $L-aurora-claro
+    go tema:oscuro 7; go solo-mapa:1 6; song; go vel:62 3; sleep 12; shot $L-aurora-solomapa
+    go solo-mapa:0 5
+    # ── Cobalto ──
+    go tema-premium:cobalto 6; go pref:speedo=1 4
+    go tema:oscuro 7; song; go vel:48 3; sleep 15; shot $L-cobalto-oscuro
+    adb logcat -c; go foto-vacia:1 6; song; go vel:48 3; sleep 6; shot $L-cobalto-oscuro-vacio; hueco $L-cobalto-oscuro-vacio
+    go tema:claro 7; song; go vel:48 3; sleep 8; shot $L-cobalto-claro-vacio; hueco $L-cobalto-claro-vacio
+    go foto-vacia:0 6; song; go vel:48 3; sleep 5; shot $L-cobalto-claro
+    go tema:oscuro 7
+    # ── Personalización (con Aurora y Cobalto gratis) ──
+    go ajustes:11 6; shot $L-personalizacion
+    adb shell input swipe $SW 400; sleep 2; adb shell input swipe $SW 400; sleep 3; shot $L-galeria-premium
+    adb shell input swipe $SW 400; sleep 3; shot $L-galeria-premium-2
+    adb shell input keyevent 4; sleep 2
+    # ── Navegación: ruta real del centro de Medellín al Parque Explora ──
+    go tema-premium: 6; go tema:oscuro 6; go diseno:base 5; go diseno:velo-2 5; go inicio 4; song
+    geo 6.2442 -75.5680
+    go pref:nav_alternatives=false 3
+    go 'nav-ir:6.2702,-75.5660,Parque\ Explora' 25; go vel:42 3; sleep 4; shot $L-nav-clasico
+    go tema:claro 7; song; go vel:42 3; sleep 8; shot $L-nav-clasico-claro
+    go tema:oscuro 7
+    go tema-premium:aurora 6; go solo-mapa:1 6; song; go vel:42 3; sleep 10; shot $L-nav-aurora-solomapa
+    go solo-mapa:0 5; song; go vel:42 3; sleep 8; shot $L-nav-aurora
+    go tema-premium:cobalto 6; song; go vel:42 3; sleep 10; shot $L-nav-cobalto
+    go tema-premium: 6
+    adb shell input keyevent 4; sleep 2
+    # ── velocímetro y mantenimientos (diseño clásico) ──
+    go nav-salir 3; go inicio 4; go tema:oscuro 6; song; go vel:48 3; sleep 10; shot $L-clasico-oscuro
+    go tema:claro 7; song; go vel:48 3; sleep 10; shot $L-clasico-claro
+    go tema:oscuro 7; go diseno:velomapa 6; song; go vel:62 3; sleep 10; shot $L-velocimetro-en-mapa
+    go diseno:base 4; go diseno:velo-2 4
+    go ajustes:2 6; shot $L-mantenimientos
+    go menu-mant 4; shot $L-menu-mantenimiento; adb shell input keyevent 4; sleep 2; adb shell input keyevent 4; sleep 2
+    go ajustes:7 6; shot $L-ajustes-mapa; adb shell input swipe $SW 400; sleep 3; shot $L-ajustes-navegacion; adb shell input keyevent 4; sleep 2
+  done
+  kill $GEO 2>/dev/null
+  adb logcat -d | grep -i "StradaNav\|FATAL\|AndroidRuntime" | tail -80 > $OUT/registro.txt
+  ls -l $OUT
+  exit 0
+fi
 if [ "$MODO" = promo ] || [ "$MODO" = promo-v ]; then
   # Imágenes promocionales (nov. 2026): todo lo de la 2.21 con el vehículo de ejemplo, mapa sin conexión de Medellín
   # y velocímetro mixto. La foto del vehículo se pone después, al armar las imágenes (no se sube al repo).

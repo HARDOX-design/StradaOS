@@ -1085,3 +1085,40 @@ En 150 metros	بعد 150 مترًا
 En 500 pies	بعد 500 قدم
 En un cuarto de milla	بعد ربع ميل
 Parada intermedia	محطة على الطريق
+# 2.24: Personalización (temas)
+Personalización	التخصيص
+Cambia el aspecto de la pantalla de inicio con un toque. Puedes seguir ajustando cada detalle en las demás secciones.	غيّر مظهر الشاشة الرئيسية بلمسة واحدة. يمكنك ضبط كل تفصيل في الأقسام الأخرى.
+Temas gratis	سمات مجانية
+Temas premium	سمات مميزة
+Próximamente	قريبًا
+Temas exclusivos para quienes apoyan StradaOS con una donación. Todas las funciones siguen siendo gratis.	سمات حصرية لمن يدعم StradaOS بتبرع. كل الميزات تبقى مجانية.
+En uso	مستخدم
+Tema aplicado:	تم تطبيق السمة:
+Clásico	كلاسيكي
+Música a la izquierda	الموسيقى على اليسار
+Mapa amplio	خريطة واسعة
+Minimalista	بسيط
+Vehículo a la izquierda, mapa en el centro y música a la derecha	المركبة على اليسار والخريطة في الوسط والموسيقى على اليمين
+Mapa arriba; debajo, vehículo a la izquierda y música a la derecha	الخريطة في الأعلى؛ وفي الأسفل المركبة على اليسار والموسيقى على اليمين
+Música a la izquierda, mapa en el centro y vehículo a la derecha	الموسيقى على اليسار والخريطة في الوسط والمركبة على اليمين
+Mapa arriba; debajo, música a la izquierda y vehículo a la derecha	الخريطة في الأعلى؛ وفي الأسفل الموسيقى على اليسار والمركبة على اليمين
+Sin tarjeta del vehículo: mapa más ancho, velocímetro abajo a la izquierda y música a la derecha	بدون بطاقة المركبة: خريطة أعرض وعداد السرعة أسفل اليسار والموسيقى على اليمين
+Sin tarjeta del vehículo: mapa más alto con el velocímetro abajo a la izquierda y la música a lo ancho	بدون بطاقة المركبة: خريطة أطول مع عداد السرعة أسفل اليسار والموسيقى بعرض الشاشة
+Música a la izquierda, velocímetro abajo a la derecha, panel de conexión plegado y barra compacta	الموسيقى على اليسار وعداد السرعة أسفل اليمين ولوحة الاتصال مطوية وشريط مضغوط
+Mapa casi completo: velocímetro abajo a la derecha, panel de conexión plegado, música a lo ancho y barra compacta	خريطة شبه كاملة: عداد السرعة أسفل اليمين ولوحة الاتصال مطوية والموسيقى بعرض الشاشة وشريط مضغوط
+Cada tema se adapta solo a la orientación de la pantalla.	يتكيف كل مظهر تلقائيًا مع اتجاه الشاشة.
+Tema premium	سمة مميزة
+Aurora en uso	Aurora قيد الاستخدام
+El tema arma la pantalla de inicio. Las tarjetas, la barra y el velocímetro de aquí se usan otra vez al quitarlo en Personalización.	السمة ترتب الشاشة الرئيسية. تُستخدم البطاقات والشريط وعداد السرعة هنا مجددًا عند إزالتها من التخصيص.
+Tema premium quitado	تمت إزالة السمة المميزة
+Premium	مميز
+Fondo con un arco de color difuminado y granulado, tarjetas translúcidas, la hora en grande con música, vehículo y clima arriba, el mapa a lo ancho y una barra tipo píldora. El botón «Solo mapa» agranda el mapa.	خلفية بقوس لوني ناعم ومحبب، وبطاقات شفافة، والساعة كبيرة مع الموسيقى والمركبة والطقس في الأعلى، والخريطة بعرض الشاشة وشريط على شكل كبسولة. زر «الخريطة فقط» يكبّر الخريطة.
+Sigue el modo claro u oscuro de Apariencia.	تتبع الوضع الفاتح أو الداكن من المظهر.
+Quitar el tema premium	إزالة السمة المميزة
+Aplicar	تطبيق
+Versión de prueba: se puede aplicar sin código.	نسخة تجريبية: يمكن تطبيقها دون رمز.
+Disponible pronto con una donación. Todas las funciones siguen siendo gratis.	قريبًا مع تبرع. تبقى كل الميزات مجانية.
+Cobalto	كوبالت
+Azul noche en tres columnas: el mapa se difumina hasta el reproductor de carátula redonda, y tu vehículo muestra el velocímetro arriba, su foto en el medio y el mantenimiento abajo. La temperatura va sobre el mapa.	أزرق ليلي في ثلاثة أعمدة: تتلاشى الخريطة حتى مشغّل الموسيقى ذي الغلاف الدائري، وتعرض مركبتك عداد السرعة في الأعلى وصورتها في الوسط والصيانة في الأسفل. درجة الحرارة فوق الخريطة.
+Gratis	مجاني
+Gratis para todos. Los próximos temas premium se desbloquearán con una donación.	مجاني للجميع. ستُفتح السمات المميزة القادمة بتبرع.

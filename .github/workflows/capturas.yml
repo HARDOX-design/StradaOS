@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       modo:
-        description: "redes (diseños del inicio), proyecto (una captura por función, con mapa sin conexión) o promo (imágenes promocionales de la 2.21)"
+        description: "redes, proyecto, promo / promo-v (2.21) o promo-224 / promo-224-v (temas Aurora y Cobalto, navegación)"
         default: redes
 
 permissions:
@@ -20,14 +20,14 @@ jobs:
       - name: Descargar StradaOS Prueba
         run: curl -fsSL --retry 5 -o prueba.apk "https://github.com/${GITHUB_REPOSITORY}/releases/download/prueba/StradaOS-prueba.apk"
       - name: Mapa de Colombia (con caché)
-        if: inputs.modo == 'proyecto' || inputs.modo == 'promo' || inputs.modo == 'promo-v'
+        if: inputs.modo != 'redes'
         uses: actions/cache@v4
         with:
           path: colombia.map
           key: mapsforge-colombia-${{ github.run_id }}
           restore-keys: mapsforge-colombia-
       - name: Descargar colombia.map
-        if: inputs.modo == 'proyecto' || inputs.modo == 'promo' || inputs.modo == 'promo-v'
+        if: inputs.modo != 'redes'
         run: '[ -s colombia.map ] || curl -fL --retry 5 -o colombia.map https://download.mapsforge.org/maps/v5/south-america/colombia.map'
       - name: Activar KVM
         run: |
@@ -40,7 +40,7 @@ jobs:
           MODO: ${{ inputs.modo }}
         with:
           # promo-v (pantallas verticales) en Android 14: el emulador de Android 11 no pasa de 1200 px de alto
-          api-level: ${{ inputs.modo == 'promo-v' && 34 || 30 }}
+          api-level: ${{ (inputs.modo == 'promo-v' || inputs.modo == 'promo-224-v') && 34 || 30 }}
           arch: x86_64
           target: default
           disable-animations: false

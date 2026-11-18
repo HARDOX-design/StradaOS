@@ -1085,3 +1085,40 @@ En 150 metros	In 150 Metern
 En 500 pies	In 500 Fuß
 En un cuarto de milla	In einer Viertelmeile
 Parada intermedia	Zwischenstopp
+# 2.24: Personalización (temas)
+Personalización	Personalisierung
+Cambia el aspecto de la pantalla de inicio con un toque. Puedes seguir ajustando cada detalle en las demás secciones.	Ändere das Aussehen des Startbildschirms mit einem Tippen. Jedes Detail lässt sich weiter in den anderen Bereichen anpassen.
+Temas gratis	Kostenlose Designs
+Temas premium	Premium-Designs
+Próximamente	Demnächst
+Temas exclusivos para quienes apoyan StradaOS con una donación. Todas las funciones siguen siendo gratis.	Exklusive Designs für alle, die StradaOS mit einer Spende unterstützen. Alle Funktionen bleiben kostenlos.
+En uso	Aktiv
+Tema aplicado:	Design angewendet:
+Clásico	Klassisch
+Música a la izquierda	Musik links
+Mapa amplio	Große Karte
+Minimalista	Minimal
+Vehículo a la izquierda, mapa en el centro y música a la derecha	Fahrzeug links, Karte in der Mitte und Musik rechts
+Mapa arriba; debajo, vehículo a la izquierda y música a la derecha	Karte oben; darunter Fahrzeug links und Musik rechts
+Música a la izquierda, mapa en el centro y vehículo a la derecha	Musik links, Karte in der Mitte und Fahrzeug rechts
+Mapa arriba; debajo, música a la izquierda y vehículo a la derecha	Karte oben; darunter Musik links und Fahrzeug rechts
+Sin tarjeta del vehículo: mapa más ancho, velocímetro abajo a la izquierda y música a la derecha	Ohne Fahrzeugkarte: breitere Karte, Tacho unten links und Musik rechts
+Sin tarjeta del vehículo: mapa más alto con el velocímetro abajo a la izquierda y la música a lo ancho	Ohne Fahrzeugkarte: höhere Karte mit dem Tacho unten links und Musik über die ganze Breite
+Música a la izquierda, velocímetro abajo a la derecha, panel de conexión plegado y barra compacta	Musik links, Tacho unten rechts, Verbindungsleiste eingeklappt und kompakte Leiste
+Mapa casi completo: velocímetro abajo a la derecha, panel de conexión plegado, música a lo ancho y barra compacta	Fast ganze Karte: Tacho unten rechts, Verbindungsleiste eingeklappt, Musik über die ganze Breite und kompakte Leiste
+Cada tema se adapta solo a la orientación de la pantalla.	Jedes Design passt sich selbst an die Ausrichtung des Bildschirms an.
+Tema premium	Premium-Design
+Aurora en uso	Aurora aktiv
+El tema arma la pantalla de inicio. Las tarjetas, la barra y el velocímetro de aquí se usan otra vez al quitarlo en Personalización.	Das Design ordnet den Startbildschirm an. Karten, Leiste und Tacho von hier werden wieder genutzt, wenn du es unter Personalisierung entfernst.
+Tema premium quitado	Premium-Design entfernt
+Premium	Premium
+Fondo con un arco de color difuminado y granulado, tarjetas translúcidas, la hora en grande con música, vehículo y clima arriba, el mapa a lo ancho y una barra tipo píldora. El botón «Solo mapa» agranda el mapa.	Hintergrund mit weichem, körnigem Farbbogen, durchscheinende Karten, große Uhr mit Musik, Fahrzeug und Wetter oben, Karte über die ganze Breite und eine Pillen-Leiste. Die Taste «Nur Karte» vergrößert die Karte.
+Sigue el modo claro u oscuro de Apariencia.	Folgt dem hellen oder dunklen Modus aus Darstellung.
+Quitar el tema premium	Premium-Design entfernen
+Aplicar	Anwenden
+Versión de prueba: se puede aplicar sin código.	Testversion: ohne Code anwendbar.
+Disponible pronto con una donación. Todas las funciones siguen siendo gratis.	Bald mit einer Spende erhältlich. Alle Funktionen bleiben kostenlos.
+Cobalto	Kobalt
+Azul noche en tres columnas: el mapa se difumina hasta el reproductor de carátula redonda, y tu vehículo muestra el velocímetro arriba, su foto en el medio y el mantenimiento abajo. La temperatura va sobre el mapa.	Nachtblau in drei Spalten: Die Karte blendet zum Player mit rundem Cover aus, dein Fahrzeug zeigt oben den Tacho, in der Mitte sein Foto und unten die Wartung. Die Temperatur steht über der Karte.
+Gratis	Kostenlos
+Gratis para todos. Los próximos temas premium se desbloquearán con una donación.	Für alle kostenlos. Die nächsten Premium-Designs werden mit einer Spende freigeschaltet.

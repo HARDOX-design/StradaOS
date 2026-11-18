@@ -1085,3 +1085,40 @@ En 150 metros	Dalam 150 meter
 En 500 pies	Dalam 500 kaki
 En un cuarto de milla	Dalam suku batu
 Parada intermedia	Perhentian di laluan
+# 2.24: Personalización (temas)
+Personalización	Pemperibadian
+Cambia el aspecto de la pantalla de inicio con un toque. Puedes seguir ajustando cada detalle en las demás secciones.	Tukar rupa skrin utama dengan satu ketikan. Anda masih boleh laraskan setiap butiran di bahagian lain.
+Temas gratis	Tema percuma
+Temas premium	Tema premium
+Próximamente	Akan datang
+Temas exclusivos para quienes apoyan StradaOS con una donación. Todas las funciones siguen siendo gratis.	Tema eksklusif untuk mereka yang menyokong StradaOS dengan derma. Semua fungsi kekal percuma.
+En uso	Digunakan
+Tema aplicado:	Tema digunakan:
+Clásico	Klasik
+Música a la izquierda	Muzik di kiri
+Mapa amplio	Peta luas
+Minimalista	Minimalis
+Vehículo a la izquierda, mapa en el centro y música a la derecha	Kenderaan di kiri, peta di tengah dan muzik di kanan
+Mapa arriba; debajo, vehículo a la izquierda y música a la derecha	Peta di atas; di bawah, kenderaan di kiri dan muzik di kanan
+Música a la izquierda, mapa en el centro y vehículo a la derecha	Muzik di kiri, peta di tengah dan kenderaan di kanan
+Mapa arriba; debajo, música a la izquierda y vehículo a la derecha	Peta di atas; di bawah, muzik di kiri dan kenderaan di kanan
+Sin tarjeta del vehículo: mapa más ancho, velocímetro abajo a la izquierda y música a la derecha	Tanpa kad kenderaan: peta lebih lebar, meter kelajuan di bawah kiri dan muzik di kanan
+Sin tarjeta del vehículo: mapa más alto con el velocímetro abajo a la izquierda y la música a lo ancho	Tanpa kad kenderaan: peta lebih tinggi dengan meter kelajuan di bawah kiri dan muzik selebar skrin
+Música a la izquierda, velocímetro abajo a la derecha, panel de conexión plegado y barra compacta	Muzik di kiri, meter kelajuan di bawah kanan, panel sambungan dilipat dan bar padat
+Mapa casi completo: velocímetro abajo a la derecha, panel de conexión plegado, música a lo ancho y barra compacta	Peta hampir penuh: meter kelajuan di bawah kanan, panel sambungan dilipat, muzik selebar skrin dan bar padat
+Cada tema se adapta solo a la orientación de la pantalla.	Setiap tema menyesuaikan diri dengan orientasi skrin.
+Tema premium	Tema premium
+Aurora en uso	Aurora digunakan
+El tema arma la pantalla de inicio. Las tarjetas, la barra y el velocímetro de aquí se usan otra vez al quitarlo en Personalización.	Tema ini menyusun skrin utama. Kad, bar dan meter laju di sini digunakan semula apabila anda membuangnya dalam Pemperibadian.
+Tema premium quitado	Tema premium dibuang
+Premium	Premium
+Fondo con un arco de color difuminado y granulado, tarjetas translúcidas, la hora en grande con música, vehículo y clima arriba, el mapa a lo ancho y una barra tipo píldora. El botón «Solo mapa» agranda el mapa.	Latar dengan lengkung warna lembut dan berbutir, kad lut sinar, jam besar dengan muzik, kenderaan dan cuaca di atas, peta selebar skrin dan bar berbentuk pil. Butang «Peta sahaja» membesarkan peta.
+Sigue el modo claro u oscuro de Apariencia.	Mengikut mod cerah atau gelap dalam Penampilan.
+Quitar el tema premium	Buang tema premium
+Aplicar	Guna
+Versión de prueba: se puede aplicar sin código.	Versi ujian: boleh digunakan tanpa kod.
+Disponible pronto con una donación. Todas las funciones siguen siendo gratis.	Akan datang dengan derma. Semua ciri kekal percuma.
+Cobalto	Kobalt
+Azul noche en tres columnas: el mapa se difumina hasta el reproductor de carátula redonda, y tu vehículo muestra el velocímetro arriba, su foto en el medio y el mantenimiento abajo. La temperatura va sobre el mapa.	Biru malam dalam tiga lajur: peta pudar ke pemain dengan kulit bulat, dan kenderaan anda menunjukkan meter laju di atas, fotonya di tengah dan penyelenggaraan di bawah. Suhu di atas peta.
+Gratis	Percuma
+Gratis para todos. Los próximos temas premium se desbloquearán con una donación.	Percuma untuk semua. Tema premium seterusnya akan dibuka dengan derma.

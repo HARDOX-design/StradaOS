@@ -1085,3 +1085,40 @@ En 150 metros	150 metre sonra
 En 500 pies	500 fit sonra
 En un cuarto de milla	Çeyrek mil sonra
 Parada intermedia	Ara durak
+# 2.24: Personalización (temas)
+Personalización	Kişiselleştirme
+Cambia el aspecto de la pantalla de inicio con un toque. Puedes seguir ajustando cada detalle en las demás secciones.	Ana ekranın görünümünü tek dokunuşla değiştirin. Her ayrıntıyı diğer bölümlerde ayarlamaya devam edebilirsiniz.
+Temas gratis	Ücretsiz temalar
+Temas premium	Premium temalar
+Próximamente	Yakında
+Temas exclusivos para quienes apoyan StradaOS con una donación. Todas las funciones siguen siendo gratis.	StradaOS'u bağışla destekleyenlere özel temalar. Tüm özellikler ücretsiz kalır.
+En uso	Kullanımda
+Tema aplicado:	Tema uygulandı:
+Clásico	Klasik
+Música a la izquierda	Müzik solda
+Mapa amplio	Geniş harita
+Minimalista	Sade
+Vehículo a la izquierda, mapa en el centro y música a la derecha	Araç solda, harita ortada ve müzik sağda
+Mapa arriba; debajo, vehículo a la izquierda y música a la derecha	Harita üstte; altta araç solda ve müzik sağda
+Música a la izquierda, mapa en el centro y vehículo a la derecha	Müzik solda, harita ortada ve araç sağda
+Mapa arriba; debajo, música a la izquierda y vehículo a la derecha	Harita üstte; altta müzik solda ve araç sağda
+Sin tarjeta del vehículo: mapa más ancho, velocímetro abajo a la izquierda y música a la derecha	Araç kartı yok: daha geniş harita, hız göstergesi sol altta ve müzik sağda
+Sin tarjeta del vehículo: mapa más alto con el velocímetro abajo a la izquierda y la música a lo ancho	Araç kartı yok: hız göstergesi sol altta olan daha uzun harita ve tam genişlikte müzik
+Música a la izquierda, velocímetro abajo a la derecha, panel de conexión plegado y barra compacta	Müzik solda, hız göstergesi sağ altta, bağlantı paneli kapalı ve kompakt çubuk
+Mapa casi completo: velocímetro abajo a la derecha, panel de conexión plegado, música a lo ancho y barra compacta	Neredeyse tam harita: hız göstergesi sağ altta, bağlantı paneli kapalı, tam genişlikte müzik ve kompakt çubuk
+Cada tema se adapta solo a la orientación de la pantalla.	Her tema ekran yönüne kendiliğinden uyum sağlar.
+Tema premium	Premium tema
+Aurora en uso	Aurora kullanımda
+El tema arma la pantalla de inicio. Las tarjetas, la barra y el velocímetro de aquí se usan otra vez al quitarlo en Personalización.	Tema ana ekranı düzenler. Buradaki kartlar, çubuk ve hız göstergesi, Kişiselleştirme'den kaldırınca yeniden kullanılır.
+Tema premium quitado	Premium tema kaldırıldı
+Premium	Premium
+Fondo con un arco de color difuminado y granulado, tarjetas translúcidas, la hora en grande con música, vehículo y clima arriba, el mapa a lo ancho y una barra tipo píldora. El botón «Solo mapa» agranda el mapa.	Yumuşak ve grenli renk yayı olan arka plan, yarı saydam kartlar, üstte müzik, araç ve hava durumuyla büyük saat, tam genişlikte harita ve hap şeklinde çubuk. «Yalnızca harita» düğmesi haritayı büyütür.
+Sigue el modo claro u oscuro de Apariencia.	Görünüm'deki açık veya koyu modu izler.
+Quitar el tema premium	Premium temayı kaldır
+Aplicar	Uygula
+Versión de prueba: se puede aplicar sin código.	Test sürümü: kod olmadan uygulanabilir.
+Disponible pronto con una donación. Todas las funciones siguen siendo gratis.	Yakında bağışla. Tüm özellikler ücretsiz kalır.
+Cobalto	Kobalt
+Azul noche en tres columnas: el mapa se difumina hasta el reproductor de carátula redonda, y tu vehículo muestra el velocímetro arriba, su foto en el medio y el mantenimiento abajo. La temperatura va sobre el mapa.	Üç sütunda gece mavisi: harita yuvarlak kapaklı oynatıcıya doğru solar; aracın üstte hız göstergesini, ortada fotoğrafını ve altta bakımı gösterir. Sıcaklık haritanın üstündedir.
+Gratis	Ücretsiz
+Gratis para todos. Los próximos temas premium se desbloquearán con una donación.	Herkes için ücretsiz. Sonraki premium temaların kilidi bağışla açılacak.

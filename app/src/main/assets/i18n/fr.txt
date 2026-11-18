@@ -1085,3 +1085,40 @@ En 150 metros	Dans 150 mètres
 En 500 pies	Dans 500 pieds
 En un cuarto de milla	Dans un quart de mile
 Parada intermedia	Étape intermédiaire
+# 2.24: Personalización (temas)
+Personalización	Personnalisation
+Cambia el aspecto de la pantalla de inicio con un toque. Puedes seguir ajustando cada detalle en las demás secciones.	Changez l'apparence de l'écran d'accueil d'une touche. Vous pouvez toujours régler chaque détail dans les autres sections.
+Temas gratis	Thèmes gratuits
+Temas premium	Thèmes premium
+Próximamente	Bientôt
+Temas exclusivos para quienes apoyan StradaOS con una donación. Todas las funciones siguen siendo gratis.	Des thèmes exclusifs pour ceux qui soutiennent StradaOS par un don. Toutes les fonctions restent gratuites.
+En uso	Utilisé
+Tema aplicado:	Thème appliqué :
+Clásico	Classique
+Música a la izquierda	Musique à gauche
+Mapa amplio	Carte large
+Minimalista	Minimaliste
+Vehículo a la izquierda, mapa en el centro y música a la derecha	Véhicule à gauche, carte au centre et musique à droite
+Mapa arriba; debajo, vehículo a la izquierda y música a la derecha	Carte en haut ; en dessous, véhicule à gauche et musique à droite
+Música a la izquierda, mapa en el centro y vehículo a la derecha	Musique à gauche, carte au centre et véhicule à droite
+Mapa arriba; debajo, música a la izquierda y vehículo a la derecha	Carte en haut ; en dessous, musique à gauche et véhicule à droite
+Sin tarjeta del vehículo: mapa más ancho, velocímetro abajo a la izquierda y música a la derecha	Sans carte du véhicule : carte plus large, compteur en bas à gauche et musique à droite
+Sin tarjeta del vehículo: mapa más alto con el velocímetro abajo a la izquierda y la música a lo ancho	Sans carte du véhicule : carte plus haute avec le compteur en bas à gauche et la musique sur toute la largeur
+Música a la izquierda, velocímetro abajo a la derecha, panel de conexión plegado y barra compacta	Musique à gauche, compteur en bas à droite, panneau de connexion replié et barre compacte
+Mapa casi completo: velocímetro abajo a la derecha, panel de conexión plegado, música a lo ancho y barra compacta	Carte presque entière : compteur en bas à droite, panneau de connexion replié, musique sur toute la largeur et barre compacte
+Cada tema se adapta solo a la orientación de la pantalla.	Chaque thème s'adapte tout seul à l'orientation de l'écran.
+Tema premium	Thème premium
+Aurora en uso	Aurora utilisé
+El tema arma la pantalla de inicio. Las tarjetas, la barra y el velocímetro de aquí se usan otra vez al quitarlo en Personalización.	Le thème organise l'écran d'accueil. Les cartes, la barre et le compteur d'ici reviennent quand vous le retirez dans Personnalisation.
+Tema premium quitado	Thème premium retiré
+Premium	Premium
+Fondo con un arco de color difuminado y granulado, tarjetas translúcidas, la hora en grande con música, vehículo y clima arriba, el mapa a lo ancho y una barra tipo píldora. El botón «Solo mapa» agranda el mapa.	Fond avec un arc de couleur doux et granuleux, cartes translucides, grande horloge avec musique, véhicule et météo en haut, carte sur toute la largeur et barre en forme de pilule. Le bouton « Carte seule » agrandit la carte.
+Sigue el modo claro u oscuro de Apariencia.	Suit le mode clair ou sombre de l'Apparence.
+Quitar el tema premium	Retirer le thème premium
+Aplicar	Appliquer
+Versión de prueba: se puede aplicar sin código.	Version de test : s'applique sans code.
+Disponible pronto con una donación. Todas las funciones siguen siendo gratis.	Bientôt disponible avec un don. Toutes les fonctions restent gratuites.
+Cobalto	Cobalt
+Azul noche en tres columnas: el mapa se difumina hasta el reproductor de carátula redonda, y tu vehículo muestra el velocímetro arriba, su foto en el medio y el mantenimiento abajo. La temperatura va sobre el mapa.	Bleu nuit sur trois colonnes : la carte se fond jusqu'au lecteur à pochette ronde, et votre véhicule affiche le compteur en haut, sa photo au milieu et l'entretien en bas. La température est au-dessus de la carte.
+Gratis	Gratuit
+Gratis para todos. Los próximos temas premium se desbloquearán con una donación.	Gratuit pour tous. Les prochains thèmes premium se débloqueront avec un don.

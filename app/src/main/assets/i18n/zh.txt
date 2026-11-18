@@ -1085,3 +1085,40 @@ En 150 metros	150 米后
 En 500 pies	500 英尺后
 En un cuarto de milla	四分之一英里后
 Parada intermedia	途经点
+# 2.24: Personalización (temas)
+Personalización	个性化
+Cambia el aspecto de la pantalla de inicio con un toque. Puedes seguir ajustando cada detalle en las demás secciones.	轻点一下即可更改主屏幕的外观。你仍可在其他部分调整每个细节。
+Temas gratis	免费主题
+Temas premium	高级主题
+Próximamente	即将推出
+Temas exclusivos para quienes apoyan StradaOS con una donación. Todas las funciones siguen siendo gratis.	为通过捐赠支持 StradaOS 的用户提供的专属主题。所有功能仍然免费。
+En uso	使用中
+Tema aplicado:	已应用主题：
+Clásico	经典
+Música a la izquierda	音乐在左侧
+Mapa amplio	宽地图
+Minimalista	极简
+Vehículo a la izquierda, mapa en el centro y música a la derecha	车辆在左、地图居中、音乐在右
+Mapa arriba; debajo, vehículo a la izquierda y música a la derecha	地图在上；下方车辆在左、音乐在右
+Música a la izquierda, mapa en el centro y vehículo a la derecha	音乐在左、地图居中、车辆在右
+Mapa arriba; debajo, música a la izquierda y vehículo a la derecha	地图在上；下方音乐在左、车辆在右
+Sin tarjeta del vehículo: mapa más ancho, velocímetro abajo a la izquierda y música a la derecha	不显示车辆卡片：地图更宽，车速表在左下角，音乐在右
+Sin tarjeta del vehículo: mapa más alto con el velocímetro abajo a la izquierda y la música a lo ancho	不显示车辆卡片：地图更高，车速表在左下角，音乐占满宽度
+Música a la izquierda, velocímetro abajo a la derecha, panel de conexión plegado y barra compacta	音乐在左，车速表在右下角，连接面板收起，紧凑栏
+Mapa casi completo: velocímetro abajo a la derecha, panel de conexión plegado, música a lo ancho y barra compacta	几乎全屏地图：车速表在右下角，连接面板收起，音乐占满宽度，紧凑栏
+Cada tema se adapta solo a la orientación de la pantalla.	每个主题都会自动适应屏幕方向。
+Tema premium	高级主题
+Aurora en uso	Aurora 使用中
+El tema arma la pantalla de inicio. Las tarjetas, la barra y el velocímetro de aquí se usan otra vez al quitarlo en Personalización.	该主题会排布主屏幕。移除它（在个性化中）后，这里的卡片、栏和车速表会重新生效。
+Tema premium quitado	已移除高级主题
+Premium	高级
+Fondo con un arco de color difuminado y granulado, tarjetas translúcidas, la hora en grande con música, vehículo y clima arriba, el mapa a lo ancho y una barra tipo píldora. El botón «Solo mapa» agranda el mapa.	柔和带颗粒的彩色弧形背景、半透明卡片、大号时钟，顶部有音乐、车辆和天气，全宽地图和胶囊形栏。「仅地图」按钮可放大地图。
+Sigue el modo claro u oscuro de Apariencia.	跟随外观中的浅色或深色模式。
+Quitar el tema premium	移除高级主题
+Aplicar	应用
+Versión de prueba: se puede aplicar sin código.	测试版：无需代码即可应用。
+Disponible pronto con una donación. Todas las funciones siguen siendo gratis.	即将通过捐赠提供。所有功能仍然免费。
+Cobalto	钴蓝
+Azul noche en tres columnas: el mapa se difumina hasta el reproductor de carátula redonda, y tu vehículo muestra el velocímetro arriba, su foto en el medio y el mantenimiento abajo. La temperatura va sobre el mapa.	三栏夜蓝风格：地图渐隐到圆形封面的播放器，车辆卡片上方是车速表、中间是车辆照片、下方是保养。温度显示在地图上方。
+Gratis	免费
+Gratis para todos. Los próximos temas premium se desbloquearán con una donación.	对所有人免费。之后的高级主题将通过捐赠解锁。

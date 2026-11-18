@@ -4,8 +4,6 @@ name: Bloque 13 (navegación)
 # Quedan en la rama «bloque13-capturas».
 on:
   workflow_dispatch:
-  push:
-    branches: [ 'wip-2.23' ]
 
 permissions:
   contents: write

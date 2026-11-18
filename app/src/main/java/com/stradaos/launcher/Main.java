@@ -663,9 +663,10 @@ public class Main extends Activity {
                 else if ("cajon".equals(v)) openDrawer();
                 else if ("ocultas".equals(v)) manageHidden(null);
                 else if ("salir-fabrica".equals(v)) openFactoryLauncher();
-                else if ("pista-demo".equals(v)) {
+                else if ("pista-demo".equals(v) || v.startsWith("pista-demo:")) {
                     // canción de ejemplo con duración y posición, para ver la línea de tiempo en las capturas
-                    curTitle = "Canción de prueba"; curArtist = "StradaOS"; curSource = "Bluetooth";
+                    // («pista-demo:Night_Drive» cambia el título; «_» = espacio)
+                    curTitle = v.length() > 11 ? v.substring(11).replace('_', ' ') : "Canción de prueba"; curArtist = "StradaOS"; curSource = "Bluetooth";
                     durMs = 215000; posBaseMs = 68000; posBaseAt = SystemClock.elapsedRealtime(); posKnown = true; playingState = false;
                     // carátula de ejemplo (degradado con una nota), sin portadas reales
                     int az = 400;
@@ -684,6 +685,7 @@ public class Main extends Activity {
                     applyTheme(); applyAccent(); rebuild();
                 }
                 else if ("nav-buscar".equals(v)) openNavSearch();
+                else if ("nav-salir".equals(v)) stopInternalNav();
                 else if (v.startsWith("nav-ir:")) {
                     // nav-ir:lat,lon,nombre — solo para capturas de la revisión
                     String[] a = v.substring(7).split(",");
@@ -692,6 +694,51 @@ public class Main extends Activity {
                     pl.name = a.length > 2 ? a[2] : "Destino";
                     android.util.Log.w("StradaNav", "nav-ir desde " + wLat + "," + wLon + " a " + v);
                     startInternalNav(pl);
+                }
+                else if (v.startsWith("tema-gratis:")) {
+                    // tema-gratis:N aplica el tema N (1-4) como al tocar su tarjeta
+                    int n = Integer.parseInt(v.substring(12)) - 1;
+                    if (n >= 0 && n < FREE_THEMES.length) applyFreeTheme(FREE_THEMES[n]);
+                }
+                else if (v.startsWith("tema-premium:")) {
+                    // tema-premium:aurora lo aplica; «tema-premium:» lo quita
+                    applyPremium(v.length() > 13 ? v.substring(13) : null);
+                }
+                else if ("solo-mapa-anim".equals(v)) toggleMapOnly();
+                else if (v.startsWith("foto-demo:")) {
+                    // foto-demo:recorte (fondo transparente), foto-demo:normal (con fondo), «foto-demo:» la quita
+                    String k = v.substring(10);
+                    if (k.length() == 0) CarPhoto.delete(Main.this);
+                    else {
+                        Bitmap b = Bitmap.createBitmap(600, 260, Bitmap.Config.ARGB_8888);
+                        android.graphics.Canvas cv = new android.graphics.Canvas(b);
+                        if ("normal".equals(k)) cv.drawColor(0xFF8899AA);
+                        android.graphics.Paint pp = new android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG);
+                        pp.setColor(0xFFC0392B);
+                        cv.drawRoundRect(new android.graphics.RectF(40, 110, 560, 200), 40, 40, pp);
+                        cv.drawRoundRect(new android.graphics.RectF(170, 50, 430, 140), 50, 50, pp);
+                        pp.setColor(0xFF111111);
+                        cv.drawCircle(160, 200, 42, pp);
+                        cv.drawCircle(440, 200, 42, pp);
+                        CarPhoto.save(Main.this, b);
+                    }
+                    rebuild();
+                }
+                else if (v.startsWith("foto-vacia:")) {
+                    // imágenes promocionales: en Cobalto, el recuadro de la foto sin el aviso «Toca para poner…»
+                    // (se pone la foto al armar la imagen); su posición queda en logcat (StradaPromo)
+                    emptyPhotoSlot = v.endsWith("1");
+                    rebuild();
+                }
+                else if (v.startsWith("solo-mapa:")) {
+                    prefs.edit().putBoolean("prem_map_only", v.endsWith("1")).apply();
+                    rebuild();
+                }
+                else if (v.startsWith("vista-temas:")) {
+                    // vista-temas:h|v elige la vista previa de Personalización
+                    stylePreview = "v".equals(v.substring(12)) ? 1 : 0;
+                    stylePreviewFor = vertical;
+                    showSettings(C_STYLE);
                 }
                 else if ("reposo".equals(v)) h.postDelayed(new Runnable() { public void run() { showIdle(); } }, 1500);
                 else if (v.startsWith("pref:") && v.indexOf('=') > 5) {
@@ -1088,6 +1135,11 @@ public class Main extends Activity {
         String rs = prefs.getString("rail_side", "auto");
         railLeft = "left".equals(rs) || (!"right".equals(rs) && playerLeft);
         dockLabels = prefs.getBoolean("dock_labels", true);
+        // 2.24: tema premium «Aurora»: su propia distribución (la barra lateral y la compacta no aplican)
+        premium = premiumActive();
+        Prem.style = premium ? prefs.getString("premium_theme", Aurora.ID) : Aurora.ID;
+        mapOnly = premium && !Prem.cob() && prefs.getBoolean("prem_map_only", false);   // Cobalto es fijo: sin «Solo mapa»
+        if (premium) { sideDock = false; compactDock = false; }
         // Lienzo virtual: 1024x600. Con la barra lateral los botones salen de abajo y el lienzo queda más bajo
         // (1128x460): en pantallas bajas y anchas como 1280x480 todo se ve ~30 % más grande.
         // Diseño (2.22, Jorge Morales): Automático = vertical si la pantalla es al menos 20 % más alta que ancha (como
@@ -1105,6 +1157,7 @@ public class Main extends Activity {
         String lmode = prefs.getString("layout_mode", "auto");
         vertical = "vertical".equals(lmode) ? canVertical(W, H) : !"horizontal".equals(lmode) && H >= W * 1.05f;
         if (vertical) sideDock = false;   // en vertical la barra va abajo (la lateral le quitaría ancho al mapa)
+        if (premium) sideDock = false;
         // Vertical bajo (2.22, Jorge Morales: Tesla con barra de clima, ~768×880): menos de 900 de alto en el lienzo de
         // 720 de ancho. La barra de botones normal se vuelve compacta para que el mapa tenga espacio. Las verticales de
         // siempre (768×1024 = 960, 1080×1920 = 1280) no cambian.
@@ -1131,14 +1184,21 @@ public class Main extends Activity {
         insL = insR = 0;
         }
         if (vertical) dh = boardH;
-        layoutColumns();
-        getWindow().setBackgroundDrawable(new ColorDrawable(sim > 0 ? Color.BLACK : BG));
+        if (premium) premiumMetrics(); else layoutColumns();
+        getWindow().setBackgroundDrawable(new ColorDrawable(sim > 0 ? Color.BLACK : premium ? Prem.base(LIGHT) : BG));
+        if (premium) {
+            // fondo con el arco difuminado y el grano (pintado una vez, a media resolución)
+            premBg = Prem.background(Math.max(1, W), Math.max(1, H), LIGHT, RED);
+            android.graphics.drawable.BitmapDrawable ab = new android.graphics.drawable.BitmapDrawable(getResources(), premBg);
+            premBgHolder = sim > 0 && root.getChildCount() > 0 ? root.getChildAt(0) : root;
+            premBgHolder.setBackground(ab);
+        } else { premBg = null; premBgHolder = null; }
         board = new FrameLayout(this);
         FrameLayout.LayoutParams blp = new FrameLayout.LayoutParams((int) ((dw + ex) * s), (int) (dh * s));
         blp.gravity = Gravity.CENTER;
         root.addView(board, blp);
 
-        if (!sideDock && !noDock) {
+        if (!sideDock && !noDock && !premium) {
             // franja del dock a todo el ancho (aunque la pantalla no sea 1024x600)
             View dockBg = new View(this);
             dockBg.setBackgroundColor(DOCK);
@@ -1148,14 +1208,17 @@ public class Main extends Activity {
             root.addView(dockBg, 0, dlp);
         }
 
-        buildTop();
-        buildCarCard();
-        buildAaCard();
-        buildAudioCard();
-        if (!noDock) buildDock();
+        if (premium) buildPremium();
+        else {
+            buildTop();
+            buildCarCard();
+            buildAaCard();
+            buildAudioCard();
+            if (!noDock) buildDock();
+        }
         if (!showMap) updateNavHud();
         // vertical con solo la tarjeta del vehículo: flota encima del mapa
-        if (vertical && showCar && !showPlayer && carCard != null) carCard.bringToFront();
+        if (!premium && vertical && showCar && !showPlayer && carCard != null) carCard.bringToFront();
 
         drawer = null;
         settingsView = null;
@@ -2533,12 +2596,25 @@ public class Main extends Activity {
             return;
         }
         FrameLayout card = new FrameLayout(this);
-        place(board, card, mapX, mapY, mapW, mapH);
+        mapClipView = null;
+        if (premium) {
+            // Aurora: el mapa va dentro de un marco con su tamaño final; al entrar a «Solo mapa» la tarjeta sube
+            // dentro del marco y el borde de abajo se queda quieto (no se asoma por debajo junto a la barra)
+            FrameLayout clip = new FrameLayout(this);
+            place(board, clip, mapX, mapY, mapW, mapH);
+            place(clip, card, 0, 0, mapW, mapH);
+            mapClipView = clip;
+        } else place(board, card, mapX, mapY, mapW, mapH);
+        mapCardView = card;
         // fondo decorativo mientras no hay GPS; encima, el mapa en vivo
         card.addView(new MapView(this, s, 20 * s), new FrameLayout.LayoutParams(-1, -1));
         if (!prefs.getBoolean("map_live", true)) { liveMap = null; seedLastLocation(); buildAaCardRest(card); return; }
         liveMap = new LiveMapView(this, s, 20 * s);
         card.addView(liveMap, new FrameLayout.LayoutParams(-1, -1));
+        // Aurora: esquinas redondas de verdad sobre el fondo y el mapa un poco translúcido
+        if (premium && premBg != null) liveMap.setBackdrop(premBg, premBgHolder, Prem.mapAlpha(LIGHT));
+        // Cobalto: el mapa se difumina hasta donde empieza el reproductor (abajo, hacia las tarjetas, en vertical)
+        if (premium && Prem.cob() && !mapOnly && premBg != null) liveMap.setFade(vertical ? 2 : 1, (vertical ? 150 : Math.max(260, mapW * 0.5f)) * s);
         liveMap.setVisibility(View.INVISIBLE);
         liveMap.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { liveMap.cycleZoom(); }
@@ -2644,7 +2720,8 @@ public class Main extends Activity {
         String cm = prefs.getString("conn_buttons", "both");
         boolean showAa = "both".equals(cm) || "aa".equals(cm), showCp = "both".equals(cm) || "cp".equals(cm);
         int nBtn = (showAa ? 1 : 0) + (showCp ? 1 : 0);
-        boolean wx = nBtn < 2 && prefs.getBoolean("weather_on", true);
+        // Aurora con su cabecera: el clima ya tiene su tarjeta arriba (con «Solo mapa» vuelve al panel)
+        boolean wx = nBtn < 2 && prefs.getBoolean("weather_on", true) && !(premium && !mapOnly);
         boolean hasPanel = nBtn > 0 || wx;
         final float panelY = hasPanel ? mapH - 96 : mapH, panelW = mapW - 24 - insL - insR;
         final FrameLayout panel = new FrameLayout(this);
@@ -2663,21 +2740,25 @@ public class Main extends Activity {
         // 2.20 (Daniel): mini velocímetro sobre el mapa cuando la tarjeta del vehículo está oculta
         mapGauge = null;
         boolean gaugeTopLeft = false;
-        if (!showCar && carSpeed && prefs.getBoolean("map_gauge", false)) {
+        // Aurora con «Solo mapa»: velocímetro mixto abajo a la izquierda (horizontal y vertical)
+        final boolean premGauge = premium && mapOnly && carSpeed;
+        if (premGauge || (!premium && !showCar && carSpeed && prefs.getBoolean("map_gauge", false))) {
             FrameLayout gb = new FrameLayout(this);
             gb.setBackground(round((CARD & 0x00FFFFFF) | 0xE0000000, 66));
             mapGauge = new Gauge(this, s);
             mapGauge.setColors(RED, TEXT, SOFT);
             mapGauge.setUnit(useMph());
             mapGauge.setSmall(true);
+            if (premGauge) mapGauge.setNumber(true);
             gb.addView(mapGauge, new FrameLayout.LayoutParams(-1, -1));
             // tamaño (pequeño/normal/grande) limitado para que en pantallas bajas no tape el mapa
-            int gsz = prefs.getInt("map_gauge_size", 1);
+            int gsz = premGauge ? 1 : prefs.getInt("map_gauge_size", 1);
             float gs = gsz == 0 ? 108 : gsz == 2 ? 160 : 132;
             gs = Math.min(gs, Math.min(mapH * 0.45f, mapW * 0.42f));
             gb.setBackground(round((CARD & 0x00FFFFFF) | 0xE0000000, gs / 2));
+            if (premGauge) gb.setBackground(round(LIGHT ? 0xD9FFFFFF : 0xD91B1724, gs / 2));
             // esquina: automático = arriba, en el lado contrario al botón del navegador (como antes)
-            String corner = prefs.getString("map_gauge_corner", "auto");
+            String corner = premGauge ? "bl" : prefs.getString("map_gauge_corner", "auto");
             if ("auto".equals(corner)) corner = nbLeft ? "tr" : "tl";
             boolean gLeft = corner.endsWith("l"), gBottom = corner.startsWith("b");
             gaugeTopLeft = gLeft && !gBottom;
@@ -3551,6 +3632,1064 @@ public class Main extends Activity {
             b.setOnLongClickListener(new View.OnLongClickListener() {
                 public boolean onLongClick(View v) { dockMenu(idx, null); return true; }
             });
+        }
+    }
+
+    // ───────────────────────── tema premium «Aurora» (2.24, Bloque 14, fase 2) ─────────────────────────
+    // Otra distribución del inicio: barra de arriba, cabecera con la hora grande y tres tarjetas translúcidas (música,
+    // vehículo y clima), el mapa a lo ancho y la barra de apps tipo píldora con íconos sin círculos. «Solo mapa» oculta
+    // la cabecera y el mapa crece hasta arriba. Usa los mismos campos que el inicio de siempre (timeTv, trackTv,
+    // speedTv, oil…, panelWx…), así que el reloj, la música, el GPS, los mantenimientos y el clima se actualizan con el
+    // código de siempre. Sin controles de aire acondicionado: StradaOS no los maneja.
+
+    private boolean premium, mapOnly;
+    private float premHeadY = 60, premHeadH, premPillH;
+    /** Pantallas muy anchas y bajas (1280×480, 1920×720): hora y tarjetas en una columna a la izquierda y el mapa
+     *  a la derecha con todo el alto; con la cabecera arriba el mapa quedaba como una franja. */
+    private boolean premWide;
+    private float premColW;
+    private View mapCardView;
+    private FrameLayout mapClipView;
+    private View premTopRow;
+    private Bitmap premBg;
+    private View premBgHolder;
+    /** Hora y tarjetas de la cabecera: se animan al entrar y salir de «Solo mapa». */
+    private final List<View> premHeadViews = new ArrayList<View>();
+
+    /**
+     * «Solo mapa» con transición: se toma una foto del inicio actual, se arma el nuevo debajo y la foto se desvanece
+     * subiendo, mientras la cabecera baja y aparece (al volver) o el mapa sube a su sitio (al agrandarlo). Todo con
+     * animaciones de vista (API 16) y sin volver a medir el mapa en cada cuadro: fluido también en el Picanto.
+     */
+    /** Mueve la tarjeta del mapa hasta su sitio redibujando el mapa en cada cuadro (el fondo de las esquinas y la
+     *  transparencia se recalculan con la posición: así no se ve corrido mientras se mueve). */
+    private void slideMap(final View v, float from, android.animation.TimeInterpolator in, long delay, long dur, final Runnable end) {
+        v.setTranslationY(from);
+        android.animation.ValueAnimator va = android.animation.ValueAnimator.ofFloat(from, 0f);
+        va.setDuration(dur);
+        va.setStartDelay(delay);
+        va.setInterpolator(in);
+        if (end != null) va.addListener(new android.animation.AnimatorListenerAdapter() {
+            @Override public void onAnimationEnd(android.animation.Animator a) { end.run(); }
+        });
+        final boolean slow = slowScreen();
+        if (slow) {
+            // pantallas modestas (Android 4.x, como el Picanto): el mapa se dibuja una vez en una capa y solo se mueve
+            // esa capa; al terminar se redibuja en su sitio (esquinas y transparencia alineadas otra vez)
+            v.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+            va.addListener(new android.animation.AnimatorListenerAdapter() {
+                @Override public void onAnimationEnd(android.animation.Animator a) {
+                    v.setLayerType(View.LAYER_TYPE_NONE, null);
+                    if (liveMap != null) liveMap.invalidate();
+                }
+            });
+        }
+        va.addUpdateListener(new android.animation.ValueAnimator.AnimatorUpdateListener() {
+            public void onAnimationUpdate(android.animation.ValueAnimator a) {
+                v.setTranslationY((Float) a.getAnimatedValue());
+                if (!slow && liveMap != null) liveMap.invalidate();
+            }
+        });
+        va.start();
+    }
+
+    /** Android 4.x: pantallas de carro de gama baja. Animaciones un poco más largas y con capas. */
+    private static boolean slowScreen() { return SDK < 21; }
+
+    /** Solo para las capturas promocionales (gancho «foto-vacia:1»). */
+    private static boolean emptyPhotoSlot;
+
+    /** Duración de una animación de Aurora: un 40 % más larga en pantallas lentas para que se aprecie. */
+    private static long dur(long ms) { return slowScreen() ? ms * 7 / 5 : ms; }
+
+    /**
+     * Arranca las animaciones después del primer cuadro del inicio nuevo (el más pesado: armar las vistas y pedir el
+     * mapa). Si arrancan antes, en pantallas lentas ese cuadro se come el comienzo y parecen un salto.
+     */
+    private void afterFirstFrame(final Runnable r) {
+        final View b = board;
+        if (b == null) { r.run(); return; }
+        b.getViewTreeObserver().addOnPreDrawListener(new android.view.ViewTreeObserver.OnPreDrawListener() {
+            public boolean onPreDraw() {
+                b.getViewTreeObserver().removeOnPreDrawListener(this);
+                b.post(r);
+                return true;
+            }
+        });
+    }
+
+    /**
+     * Entrar a «Solo mapa» (pedido de Andrés: sin desvanecer todo): la hora y las tarjetas se van hacia arriba una tras
+     * otra, en el orden contrario al de volver, y el mapa sube hasta arriba. Las tarjetas que se van son fotos de las
+     * de antes (el inicio nuevo ya está armado debajo); el mapa sube dentro de su marco con el borde de abajo quieto.
+     */
+    private void enterMapOnly() {
+        final List<View> heads = new ArrayList<View>(premHeadViews);
+        final List<Bitmap> shots = new ArrayList<Bitmap>();
+        final List<int[]> boxes = new ArrayList<int[]>();
+        for (View v : heads) {
+            try {
+                if (v.getWidth() <= 0 || v.getHeight() <= 0) continue;
+                Bitmap b = Bitmap.createBitmap(v.getWidth(), v.getHeight(), Bitmap.Config.ARGB_8888);
+                v.draw(new android.graphics.Canvas(b));
+                shots.add(b);
+                boxes.add(new int[]{v.getLeft(), v.getTop(), v.getWidth(), v.getHeight()});
+            } catch (Throwable ignored) { }
+        }
+        final boolean cobT = Prem.cob();
+        final float rise = cobT ? (cobTempH > 0 ? (cobTempH + 8) * s : 0) : premWide ? 0 : (premHeadH + 12) * s;
+        final boolean vert = vertical;
+        mapOnly = true;
+        prefs.edit().putBoolean("prem_map_only", true).apply();
+        rebuild();
+        final android.view.animation.DecelerateInterpolator dec = new android.view.animation.DecelerateInterpolator(1.6f);
+        final android.view.animation.AccelerateInterpolator acc = new android.view.animation.AccelerateInterpolator(1.2f);
+        final int n = shots.size();
+        final List<ImageView> leaving = new ArrayList<ImageView>();
+        final List<Integer> dirs = new ArrayList<Integer>();
+        for (int i = n - 1; i >= 0; i--) {
+            final Bitmap b = shots.get(i);
+            int[] bx = boxes.get(i);
+            final ImageView iv = new ImageView(this);
+            iv.setImageBitmap(b);
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(bx[2], bx[3]);
+            lp.gravity = Gravity.TOP | Gravity.LEFT;
+            lp.leftMargin = bx[0];
+            lp.topMargin = bx[1];
+            // Aurora: debajo de todo (el mapa que sube las tapa). Cobalto: encima, y se van hacia los lados dejando
+            // ver el mapa que ya ocupa todo
+            if (cobT) board.addView(iv, lp); else board.addView(iv, 0, lp);
+            iv.setTag(b);
+            dirs.add(i == 0 || !cobT ? 0 : vert ? 2 : 1);
+            leaving.add(iv);
+        }
+        // estado inicial ya puesto (el primer cuadro se ve como antes); las animaciones arrancan después de él
+        if (mapCardView != null && rise > 0) mapCardView.setTranslationY(rise);
+        if (premTopRow != null && !cobT) premTopRow.setAlpha(0f);   // Cobalto: la hora ya estaba arriba
+        final View mapV = mapCardView, topV = cobT ? null : premTopRow;
+        afterFirstFrame(new Runnable() { public void run() {
+            for (int j = 0; j < leaving.size(); j++) {
+                final ImageView iv = leaving.get(j);
+                final Bitmap b = (Bitmap) iv.getTag();
+                int dir = dirs.get(j);
+                android.view.ViewPropertyAnimator an = iv.animate().alpha(0f);
+                if (dir == 1) an.translationX(48 * s); else if (dir == 2) an.translationY(48 * s); else an.translationY(-36 * s);
+                an.setStartDelay(dur(45L * j)).setDuration(dur(300)).setInterpolator(acc)
+                    .withLayer().withEndAction(new Runnable() { public void run() {
+                        if (iv.getParent() instanceof ViewGroup) ((ViewGroup) iv.getParent()).removeView(iv);
+                        iv.setImageDrawable(null);
+                        b.recycle();
+                    }});
+            }
+            // el mapa sube por encima de las tarjetas (que quedaron debajo) dentro de su marco
+            if (mapV != null && rise > 0 && mapV == mapCardView) slideMap(mapV, rise, dec, dur(40), dur(420), null);
+            // la hora pequeña de arriba aparece cuando la grande ya se fue (sin dos horas a la vez)
+            if (topV != null) topV.animate().alpha(1f).setStartDelay(dur(cobT ? 0 : 200)).setDuration(dur(cobT ? 1 : 220));
+        }});
+    }
+
+    private void toggleMapOnly() {
+        if (Prem.cob()) return;   // Cobalto no tiene «Solo mapa»
+        if (!mapOnly) { enterMapOnly(); return; }
+        Bitmap snap = null;
+        FrameLayout.LayoutParams olp = null;
+        // Volver: solo se funde la barra de arriba (hora chica → saludo). Antes era una foto del inicio entero que
+        // bajaba al desvanecerse, y por eso la barra de apps salía duplicada un instante. La barra no se toca.
+        try {
+            int sh = Math.min(board != null ? board.getHeight() : 0, (int) ((premHeadY - 4) * s));
+            if (board != null && board.getWidth() > 0 && sh > 0) {
+                snap = Bitmap.createBitmap(board.getWidth(), sh, Bitmap.Config.ARGB_8888);
+                board.draw(new android.graphics.Canvas(snap));
+                olp = new FrameLayout.LayoutParams(board.getWidth(), sh);
+                olp.gravity = Gravity.TOP | Gravity.LEFT;
+            }
+        } catch (Throwable e) { if (snap != null) snap.recycle(); snap = null; }
+        mapOnly = !mapOnly;
+        prefs.edit().putBoolean("prem_map_only", mapOnly).apply();
+        rebuild();
+        final Bitmap shot = olp != null ? snap : null;
+        final ImageView ov = new ImageView(this);
+        if (shot != null) {
+            ov.setImageBitmap(shot);
+            ov.setScaleType(ImageView.ScaleType.MATRIX);
+            board.addView(ov, olp);
+        }
+        final android.view.animation.DecelerateInterpolator dec = new android.view.animation.DecelerateInterpolator(1.6f);
+        // estado inicial (lo que se ve en el primer cuadro del inicio nuevo)
+        final List<View> heads = new ArrayList<View>(premHeadViews);
+        final boolean cobT = Prem.cob();
+        for (int i = 0; i < heads.size(); i++) {
+            View v = heads.get(i);
+            v.setAlpha(0f);
+            // Cobalto: la temperatura baja desde arriba y las tarjetas entran desde el lado (desde abajo en vertical)
+            if (cobT && i > 0) { if (vertical) v.setTranslationY(40 * s); else v.setTranslationX(40 * s); }
+            else v.setTranslationY(-22 * s);
+        }
+        // al volver baja el marco del mapa completo, con todo lo de adentro: el panel de Android Auto / CarPlay
+        // se mueve junto con el mapa si está abierto y sigue escondido si está plegado
+        final View mv = mapClipView != null ? mapClipView : mapCardView;
+        final float from = Prem.cob() ? -(cobTempH > 0 ? cobTempH + 8 : 0) * s : -premHeadH * 0.45f * s;
+        if (mv != null) mv.setTranslationY(from);
+        afterFirstFrame(new Runnable() { public void run() {
+            if (shot != null) ov.animate().alpha(0f).setDuration(dur(240)).withEndAction(new Runnable() { public void run() {
+                if (ov.getParent() instanceof ViewGroup) ((ViewGroup) ov.getParent()).removeView(ov);
+                ov.setImageDrawable(null);
+                shot.recycle();
+            }});
+            // la cabecera baja desde arriba, una tarjeta tras otra, y el mapa baja a su sitio
+            int k = 0;
+            for (View v : heads)
+                v.animate().alpha(1f).translationX(0).translationY(0).setStartDelay(dur(60 + 45 * k++)).setDuration(dur(320)).setInterpolator(dec).withLayer();
+            if (mv != null && from != 0 && (mv == mapClipView || mv == mapCardView)) slideMap(mv, from, dec, 0, dur(380), null);
+        }});
+    }
+
+    /** Tema premium elegido y desbloqueado. */
+    private boolean premiumActive() {
+        String id = prefs.getString("premium_theme", null);
+        return id != null && premiumUnlocked(id);
+    }
+
+    /** Aurora y Cobalto son gratis para todos desde la 2.24. Los temas siguientes: en StradaOS Prueba sin código
+     *  y, en la versión normal, con el código atado al ID de la pantalla (Fase 3). */
+    private boolean premiumUnlocked(String id) {
+        return Prem.known(id) && (Prem.free(id) || getPackageName().endsWith(".debug"));
+    }
+
+    /** Tarjeta translúcida con un borde fino de luz. */
+    private GradientDrawable glass(float r) {
+        GradientDrawable d;
+        if (Prem.cob()) {
+            d = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[]{Cobalto.glassTop(LIGHT), Cobalto.glassBottom(LIGHT)});
+            d.setCornerRadius(r * s);
+        } else d = round(Prem.glass(LIGHT), r);
+        d.setStroke(Math.max(1, (int) s), Prem.glassEdge(LIGHT));
+        return d;
+    }
+
+    /** Ancho del lienzo del inicio (720 en vertical; 1024 + lo que sobre en pantallas anchas). */
+    private float premW() { return vertical ? 720 : 1024 + ex; }
+
+    /** Medidas: cabecera arriba, el mapa a lo ancho (desde arriba con «Solo mapa») y la píldora abajo. */
+    private void premiumMetrics() {
+        premPillH = noDock ? 0 : vertical ? 68 : 64;
+        dockTop = noDock ? boardH : boardH - 16 - premPillH;
+        premHeadY = 60;
+        if (Prem.cob()) { cobaltoMetrics(); return; }
+        if (mapOnly) premHeadH = 0;
+        else if (vertical) premHeadH = 92 + 8 + (shortVertical ? 150 : 172);
+        else premHeadH = 150;
+        mapX = 16;
+        mapW = premW() - 32;
+        mapY = mapOnly ? premHeadY : premHeadY + premHeadH + 12;
+        premWide = !vertical && !mapOnly && ex >= 380;
+        if (premWide) {
+            premColW = 372 + Math.min(120, (ex - 380) / 3f);
+            mapX = 16 + premColW + 12;
+            mapW = premW() - 32 - premColW - 12;
+            mapY = premHeadY;
+        }
+        mapH = Math.max(120, dockTop - (noDock ? 16 : 12) - mapY);
+        cardH = mapH; rowY = mapY; insL = insR = 0;
+        carX = audX = 16; audW = 248;
+    }
+
+    private void buildPremium() {
+        carCard = null; mapGauge = null; mapGaugeBox = null; carGauge = null; chipTv = null;
+        buildPremiumTop();
+        buildAaCard();
+        if (mapOnly) premiumDetached();
+        else if (Prem.cob()) buildCobalto();
+        else buildPremiumHeader();
+        if (!noDock) buildPremiumDock();
+        setGps(false, 0);
+    }
+
+    // ───────────────────────── tema premium «Cobalto» (2.24) ─────────────────────────
+    // Horizontal: temperatura arriba del mapa; el mapa se difumina hasta la tarjeta del reproductor; reproductor con la
+    // carátula redonda; vehículo con el velocímetro arriba, el auto en el medio y el mantenimiento abajo. Vertical: el
+    // mapa arriba (se difumina hacia las tarjetas) y reproductor y vehículo lado a lado. Reusa la barra de arriba, la
+    // barra de apps, «Solo mapa» y las transiciones de Aurora.
+
+    private float cobTempH, cobColW, cobCardsY, cobCardsH;
+
+    private void cobaltoMetrics() {
+        float W0 = premW(), bottom = dockTop - (noDock ? 16 : 12);
+        premHeadH = 0;
+        premWide = false;
+        cobTempH = prefs.getBoolean("weather_on", true) ? 52 : 0;
+        mapX = 16;
+        if (mapOnly) {
+            mapY = premHeadY;
+            mapW = W0 - 32;
+        } else if (vertical) {
+            cobCardsH = shortVertical ? 360 : 450;   // más altas: llegan hasta el mapa
+            cobCardsY = bottom - cobCardsH;
+            mapY = premHeadY + (cobTempH > 0 ? cobTempH + 8 : 0);
+            mapW = W0 - 32;
+            bottom = cobCardsY;   // el difuminado termina donde empiezan las tarjetas
+        } else {
+            cobColW = 256 + Math.min(60, Math.max(0, ex) / 6f);
+            float px = W0 - 16 - 2 * cobColW;   // reproductor y vehículo pegados (como la referencia)
+            mapY = premHeadY + (cobTempH > 0 ? cobTempH + 8 : 0);
+            // el difuminado termina donde empieza el reproductor (un poco por debajo de su borde inclinado)
+            mapW = px - 16 + cobSkew(cobColW, bottom - premHeadY) * 0.5f;
+        }
+        mapH = Math.max(120, bottom - mapY);
+        cardH = mapH; rowY = mapY; insL = insR = 0;
+        carX = audX = 16; audW = 248;
+    }
+
+    private void buildCobalto() {
+        premHeadViews.clear();
+        float W0 = premW();
+        if (cobTempH > 0) buildCobTemp(24, premHeadY, (vertical ? W0 - 32 : mapW) - 8, cobTempH);
+        if (vertical) {
+            float cw = (W0 - 32) / 2;
+            buildCobMusic(16, cobCardsY, cw, cobCardsH);
+            buildCobCar(16 + cw, cobCardsY, cw, cobCardsH);
+        } else {
+            float top = premHeadY, hh = dockTop - (noDock ? 16 : 12) - top;
+            float vx = W0 - 16 - cobColW, px = vx - cobColW;
+            buildCobMusic(px, top, cobColW, hh);
+            buildCobCar(vx, top, cobColW, hh);
+        }
+    }
+
+    /** Temperatura sobre el mapa: ícono, grados en grande, estado y máxima/mínima. */
+    private void buildCobTemp(float x, float y, float w, float hh) {
+        LinearLayout row = new LinearLayout(this);
+        row.setGravity(Gravity.CENTER_VERTICAL);
+        panelWxIc = icon("cloud", 34);
+        row.addView(panelWxIc, new LinearLayout.LayoutParams((int) (34 * s), (int) (34 * s)));
+        panelWxTemp = tv("--°", 30, TEXT, true);
+        panelWxTemp.setPadding((int) (10 * s), 0, (int) (12 * s), 0);
+        row.addView(panelWxTemp);
+        LinearLayout col = new LinearLayout(this);
+        col.setOrientation(LinearLayout.VERTICAL);
+        panelWxDesc = tv("Clima", 14, TEXT, false);
+        col.addView(panelWxDesc);
+        panelWxHiLo = tv("", 12, MUTED, false);
+        col.addView(panelWxHiLo);
+        row.addView(col, new LinearLayout.LayoutParams(0, -2, 1));
+        panelWxHours = null;
+        panelWx = row;
+        place(board, row, x, y, w, hh);
+        premHeadViews.add(row);
+        row.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { showWeatherDetail(); } });
+        showPanelWeather();
+    }
+
+    /** Reproductor: carátula redonda con el avance alrededor, canción y artista centrados y los controles abajo. */
+    /** Inclinación de las tarjetas de Cobalto (el borde de arriba corrido a la derecha), en unidades del lienzo. */
+    private float cobSkew(float w, float hh) { return Math.min(w * 0.22f, hh * 0.15f); }
+
+    /** Centro horizontal de una tarjeta inclinada a la altura y (el borde izquierdo se corre hacia la derecha al bajar). */
+    private static float cobMid(float w, float hh, float sk, float y) { return (w + sk * Math.max(0, Math.min(1, y / hh))) / 2; }
+
+    private void buildCobMusic(float x, float y, float w, float hh) {
+        final FrameLayout card = new FrameLayout(this);
+        final float sk = vertical ? 0 : cobSkew(w, hh);   // en vertical, rectas (mismas luces y línea)
+        card.setBackground(new Cobalto.SkewCard(LIGHT, 24 * s, sk * s, s));
+        place(board, card, x, y, w, hh);
+        premHeadViews.add(card);
+        float m = 16;
+        placeWrap(card, tv("Música", 12, MUTED, true), m + 6, 16);
+        sourceTv = tv("", 11, RED, true);
+        sourceTv.setGravity(Gravity.RIGHT);
+        place(card, sourceTv, w * 0.38f, 14, w * 0.62f - m, 16);
+        // elementos grandes: carátula, títulos y botones
+        float d = vertical ? Math.min(w * 0.56f, hh * 0.40f) : Math.min(w * 0.72f, hh * 0.44f);
+        float ps = vertical ? 56 : 60, bs = ps - 8;
+        float tH = vertical ? 24 : 28, aH = vertical ? 20 : 22;
+        float block = d + 14 + tH + 2 + aH + 4 + 16, avail = hh - 38 - 16, total = block + 16 + ps;
+        float y0 = 38 + Math.max(0, (avail - total) / 2);
+        playerArt = new PlayerArt(this, s, asset("ic/music_note.png"));
+        // todo centrado en la parte visible de la tarjeta a esa altura (el borde izquierdo está inclinado)
+        place(card, playerArt, cobMid(w, hh, sk, y0 + d / 2) - d / 2, y0, d, d);
+        float ty = y0 + d + 14;
+        float tx = sk * (ty + 30) / hh + m, tw = w - m - tx;
+        trackTv = tv("Nada sonando", vertical ? 18 : 20, TEXT, true);
+        trackTv.setGravity(Gravity.CENTER_HORIZONTAL);
+        place(card, trackTv, tx, ty, tw, tH);
+        artistTv = tv("Radio, Bluetooth o USB", vertical ? 14 : 15, MUTED, false);
+        artistTv.setGravity(Gravity.CENTER_HORIZONTAL);
+        place(card, artistTv, tx, ty + tH + 2, tw, aH);
+        timePosTv = tv("", 11, MUTED, false);
+        timePosTv.setGravity(Gravity.CENTER_HORIZONTAL);
+        place(card, timePosTv, tx, ty + tH + 2 + aH + 4, tw, 16);
+        float ry = y0 + block + 16, cx = cobMid(w, hh, sk, ry + ps / 2);
+        float aw = w - sk * (ry + ps) / hh - 16;   // ancho visible a la altura de los botones
+        if (ps + 2 * bs + 16 > aw) { bs = Math.max(36, (aw - ps - 16) / 2); }
+        float sp = Math.max(4, Math.min(20, (aw - ps - 2 * bs) / 4));
+        final View prev = circleIcon("skip_previous", bs, bs * 0.56f, 0), next = circleIcon("skip_next", bs, bs * 0.56f, 0);
+        prev.setBackground(round(Prem.soft(LIGHT), bs / 2));
+        next.setBackground(round(Prem.soft(LIGHT), bs / 2));
+        View play = circleIcon("play_arrow", ps, ps * 0.5f, RED);
+        place(card, prev, cx - ps / 2 - sp - bs, ry + (ps - bs) / 2, bs, bs);
+        place(card, play, cx - ps / 2, ry, ps, ps);
+        place(card, next, cx + ps / 2 + sp, ry + (ps - bs) / 2, bs, bs);
+        playIc = (ImageView) ((FrameLayout) play).getChildAt(0);
+        final View.OnClickListener goPrev = mediaClick(KeyEvent.KEYCODE_MEDIA_PREVIOUS), goNext = mediaClick(KeyEvent.KEYCODE_MEDIA_NEXT);
+        prev.setOnClickListener(goPrev);
+        play.setOnClickListener(mediaClick(KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE));
+        next.setOnClickListener(goNext);
+        card.setOnTouchListener(new View.OnTouchListener() {
+            float x0, y0;
+            public boolean onTouch(View v, MotionEvent e) {
+                if (e.getActionMasked() == MotionEvent.ACTION_DOWN) { x0 = e.getX(); y0 = e.getY(); return false; }
+                if (e.getActionMasked() != MotionEvent.ACTION_UP) return false;
+                float dx = e.getX() - x0, dy = e.getY() - y0;
+                if (Math.abs(dx) < 50 * s || Math.abs(dx) < 2 * Math.abs(dy)) return false;
+                MotionEvent c = MotionEvent.obtain(e);
+                c.setAction(MotionEvent.ACTION_CANCEL);
+                v.onTouchEvent(c);
+                c.recycle();
+                (dx < 0 ? goNext : goPrev).onClick(v);
+                return true;
+            }
+        });
+        card.setOnLongClickListener(new View.OnLongClickListener() { public boolean onLongClick(View v) { showPlayerDiag(); return true; } });
+        card.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { openMusicApp(); } });
+        renderTrack();
+    }
+
+    /** Vehículo: velocímetro arriba (digital, analógico o mixto), el auto en el medio y el mantenimiento abajo. */
+    private void buildCobCar(float x, float y, float w, float hh) {
+        FrameLayout card = new FrameLayout(this);
+        final float sk = vertical ? 0 : cobSkew(w, hh);
+        card.setBackground(new Cobalto.SkewCard(LIGHT, 24 * s, sk * s, s));
+        place(board, card, x, y, w, hh);
+        premHeadViews.add(card);
+        float m = 14;
+        // nombre del vehículo y su etiqueta en el color de acento (la de Tu vehículo, como en el inicio de siempre)
+        LinearLayout nameRow = new LinearLayout(this);
+        nameRow.setGravity(Gravity.CENTER_VERTICAL);
+        carTv = tv(prefs.getString("car_name", "Mi vehículo"), 12, MUTED, true);
+        carTv.setMaxWidth((int) ((w - 2 * m - 80) * 0.6f * s));
+        nameRow.addView(carTv);
+        String tag = prefs.getString("car_tag", "").trim();
+        TextView chip = tv(tag, 10, Color.WHITE, true);
+        chip.setPadding((int) (7 * s), (int) (2 * s), (int) (7 * s), (int) (2 * s));
+        chip.setBackground(round(RED, 7));
+        LinearLayout.LayoutParams clp = new LinearLayout.LayoutParams(-2, -2);
+        clp.leftMargin = (int) (8 * s);
+        nameRow.addView(chip, clp);
+        if (tag.length() == 0) chip.setVisibility(View.GONE);
+        chipTv = chip;
+        place(card, nameRow, m + 8, 13, w - 2 * m - 80, 22);
+        LinearLayout g = new LinearLayout(this);
+        g.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+        gpsDot = new View(this);
+        gpsDot.setBackground(round(MUTED, 4));
+        g.addView(gpsDot, new LinearLayout.LayoutParams((int) (7 * s), (int) (7 * s)));
+        gpsTv = tv("GPS", 10, MUTED, false);
+        gpsTv.setPadding((int) (5 * s), 0, 0, 0);
+        g.addView(gpsTv);
+        place(card, g, w - m - 100, 16, 100, 16);
+        float stripH = 38, stripY = hh - stripH - 14;
+        float top = 36, gh = carSpeed ? Math.min(hh * 0.42f, w * 0.78f) : 0;
+        // velocímetro
+        final int speedo = carSpeed ? prefs.getInt("speedo", 0) : 0;
+        LinearLayout sv = new LinearLayout(this);
+        sv.setBaselineAligned(true);
+        sv.setGravity(Gravity.CENTER);
+        speedTv = tv("0", vertical ? 52 : 60, TEXT, true);
+        TextView unit = tv(useMph() ? "mph" : "km/h", 14, MUTED, false);
+        unit.setPadding((int) (6 * s), 0, 0, 0);
+        sv.addView(speedTv);
+        sv.addView(unit);
+        carGauge = null;
+        if (carSpeed && speedo > 0) {
+            carGauge = new Gauge(this, s);
+            carGauge.setColors(RED, TEXT, SOFT);
+            carGauge.setUnit(useMph());
+            carGauge.setNumber(speedo == 2);
+            carGauge.setCompact(gh < 170);
+            float gx = sk * (top + gh / 2) / hh;   // centrado en la parte visible (borde inclinado)
+            place(card, carGauge, 10 + gx, top, w - 20 - gx, gh);
+        } else if (carSpeed) {
+            float gx = sk * (top + gh / 2) / hh;
+            place(card, sv, 10 + gx, top, w - 20 - gx, gh);
+        }
+        // la foto de Tu vehículo (como el inicio de siempre). Recortada (fondo transparente): completa y centrada, con
+        // sombra suave. Con fondo: recuadro redondeado. Sin foto: tocar para ponerla.
+        float cy = top + gh + (carSpeed ? 4 : 0), ch = (oilHome ? stripY - 8 : hh - 12) - cy;
+        float px0 = sk * (cy + ch) / hh + m, pw = w - m - px0;
+        final boolean oilTap = oilHome;
+        View.OnClickListener cardTap = new View.OnClickListener() { public void onClick(View v) {
+            if (oilTap) badgeMenu(); else showSettings(C_VEHICLE);
+        }};
+        View.OnLongClickListener photoLong = new View.OnLongClickListener() {
+            public boolean onLongClick(View v) { photoMenu(); return true; }
+        };
+        Bitmap photo = CarPhoto.load(this);
+        if (photo != null) {
+            boolean cut = false;
+            try { cut = CarPhoto.hasTransparency(photo); } catch (Throwable ignored) { }
+            View pv;
+            // en el mismo recuadro que «Toca para poner la foto»: completa, centrada y sin cortarse
+            if (cut) {
+                pv = new Cobalto.CarFit(this, photo);
+                place(card, pv, px0, cy + 4, pw, ch - 8);
+            } else {
+                ImageView car = new ImageView(this);
+                car.setImageBitmap(CarPhoto.cardCrop(photo, (int) (pw * s), (int) ((ch - 8) * s), 16 * s));
+                car.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                place(card, car, px0, cy + 4, pw, ch - 8);
+                pv = car;
+            }
+            pv.setOnClickListener(cardTap);
+            pv.setOnLongClickListener(photoLong);
+        } else if (emptyPhotoSlot) {
+            final View slot = new View(this);
+            place(card, slot, px0, cy + 4, pw, ch - 8);
+            slot.postDelayed(new Runnable() { public void run() {
+                int[] l = new int[2];
+                slot.getLocationOnScreen(l);
+                android.util.Log.w("StradaPromo", "hueco " + l[0] + "," + l[1] + "," + slot.getWidth() + "," + slot.getHeight());
+            }}, 2500);
+        } else {
+            LinearLayout ph = new LinearLayout(this);
+            ph.setOrientation(LinearLayout.VERTICAL);
+            ph.setGravity(Gravity.CENTER);
+            ph.setBackground(round(Prem.soft(LIGHT), 16));
+            float is = Math.min(56, ch * 0.45f);
+            ImageView ic = icon("directions_car", is);
+            ic.setAlpha(0.4f);
+            ph.addView(ic, new LinearLayout.LayoutParams((int) (is * s), (int) (is * s)));
+            TextView t = tv("Toca para poner la foto de tu vehículo", 12, MUTED, false);
+            t.setSingleLine(false);
+            t.setMaxLines(2);
+            t.setGravity(Gravity.CENTER);
+            t.setPadding((int) (10 * s), (int) (4 * s), (int) (10 * s), 0);
+            ph.addView(t, new LinearLayout.LayoutParams(-1, -2));
+            if (ch < 90) t.setVisibility(View.GONE);
+            place(card, ph, px0, cy + 4, pw, ch - 8);
+            ph.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { pickPhoto(); } });
+        }
+        float ox = sk * (stripY + stripH) / hh + m;   // la barrita del mantenimiento sigue el borde inclinado
+        if (oilHome) premOilStrip(card, ox, stripY, w - ox - m, stripH);
+        else { oilValTv = null; oilBar = null; oilBarBg = null; oilLblTv = null; oilIc = null; }
+        card.setOnClickListener(new View.OnClickListener() { public void onClick(View v) {
+            if (oilHome) badgeMenu(); else showSettings(C_VEHICLE);
+        }});
+    }
+
+    /** Barra de arriba: saludo (o la hora con «Solo mapa»), íconos, «Solo mapa» y Ajustes. */
+    private void buildPremiumTop() {
+        float W0 = premW();
+        LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setGravity(Gravity.CENTER_VERTICAL);
+        greetTv = tv("", 16, SOFT, false);
+        greetTv.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { openSettings(); } });
+        if (mapOnly || Prem.cob()) {
+            // sin cabecera: la hora y la fecha vuelven a la barra de arriba, como en el inicio de siempre
+            // (Cobalto no tiene hora grande: siempre va aquí)
+            row.setBaselineAligned(true);
+            row.setGravity(Gravity.NO_GRAVITY);
+            timeTv = tv("", 30, TEXT, true);
+            dateTv = tv("", 14, RED, true);
+            dateTv.setPadding((int) (12 * s), 0, 0, 0);
+            row.addView(timeTv);
+            row.addView(dateTv);
+            if (vertical) dateTv.setVisibility(View.GONE);
+        } else row.addView(greetTv);
+        topSpeedTv = null;   // con «Solo mapa» la velocidad va en el velocímetro del mapa
+        topOilTv = null;
+        topIconName = null;
+        if (mapOnly && oilHome) {
+            topOilTv = tv("", 13, TEXT, true);
+            topOilTv.setBackground(glass(12));
+            topOilTv.setPadding((int) (10 * s), (int) (4 * s), (int) (12 * s), (int) (4 * s));
+            setTopIcon("water_drop");
+            topOilTv.setCompoundDrawablePadding((int) (6 * s));
+            LinearLayout.LayoutParams olp = new LinearLayout.LayoutParams(-2, -2);
+            olp.leftMargin = (int) (14 * s);
+            row.addView(topOilTv, olp);
+            topOilTv.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { badgeMenu(); } });
+        }
+        LinearLayout pill = new LinearLayout(this);
+        pill.setGravity(Gravity.CENTER_VERTICAL);
+        pill.setBackground(glass(14));
+        pill.setPadding((int) (8 * s), (int) (4 * s), (int) (11 * s), (int) (4 * s));
+        FrameLayout pIcBox = new FrameLayout(this);
+        pIcBox.setBackground(round(RED, 8));
+        topNavIc = new Nav.ManeuverView(this);
+        pIcBox.addView(topNavIc, new FrameLayout.LayoutParams(-1, -1));
+        pill.addView(pIcBox, new LinearLayout.LayoutParams((int) (22 * s), (int) (22 * s)));
+        topNavDistTv = tv("", 13, TEXT, true);
+        topNavDistTv.setPadding((int) (7 * s), 0, 0, 0);
+        pill.addView(topNavDistTv);
+        LinearLayout.LayoutParams plp = new LinearLayout.LayoutParams(-2, -2);
+        plp.leftMargin = (int) (12 * s);
+        plp.gravity = Gravity.CENTER_VERTICAL;
+        pill.setVisibility(View.GONE);
+        pill.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { openNavMenu(); } });
+        topNavPill = pill;
+        row.addView(pill, plp);
+        placeWrap(board, row, 24, mapOnly ? 10 : 20);
+        premTopRow = row;
+
+        LinearLayout right = new LinearLayout(this);
+        right.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+        wifiIc = null;
+        btIc = null;
+        if (prefs.getBoolean("status_icons", true)) {
+            LinearLayout st = new LinearLayout(this);
+            st.setGravity(Gravity.CENTER_VERTICAL);
+            st.setPadding(0, 0, (int) (4 * s), 0);
+            wifiIc = statusIcon(st, "wifi", new Runnable() { public void run() { toggleWifi(); } },
+                new Runnable() { public void run() { openSettingsPage(Settings.ACTION_WIFI_SETTINGS, new Runnable() { public void run() { openSystemSettings(); } }); } });
+            btIc = statusIcon(st, "bluetooth", new Runnable() { public void run() { toggleBt(); } },
+                new Runnable() { public void run() {
+                    if (clwBt) openSlot(1);
+                    else openSettingsPage(Settings.ACTION_BLUETOOTH_SETTINGS, new Runnable() { public void run() { openSlot(1); } });
+                } });
+            right.addView(st);
+        }
+        // el clima de arriba solo con «Solo mapa» (con la cabecera ya tiene su tarjeta)
+        weatherBox = null;
+        if (mapOnly) {
+            weatherBox = new LinearLayout(this);
+            weatherBox.setGravity(Gravity.CENTER_VERTICAL);
+            weatherIc = icon("cloud", 20);
+            weatherBox.addView(weatherIc, new LinearLayout.LayoutParams((int) (20 * s), (int) (20 * s)));
+            weatherTv = tv("", 15, TEXT, true);
+            weatherTv.setPadding((int) (6 * s), 0, 0, 0);
+            weatherBox.addView(weatherTv);
+            weatherCityTv = tv("", 13, MUTED, false);
+            weatherCityTv.setPadding((int) (6 * s), 0, (int) (8 * s), 0);
+            weatherBox.addView(weatherCityTv);
+            if (vertical) weatherCityTv.setVisibility(View.GONE);
+            weatherBox.setVisibility(View.GONE);
+            weatherBox.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { showWeatherDetail(); } });
+            right.addView(weatherBox);
+        }
+        float bx = W0 - 60;   // Ajustes; a su izquierda «Solo mapa» y, sin barra, Apps
+        View gear = circleIcon("settings", 40, 22, 0);
+        gear.setBackground(glass(20));
+        place(board, gear, bx, 12, 40, 40);
+        gear.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { openSettings(); } });
+        if (!Prem.cob()) {
+            bx -= 50;
+            FrameLayout tg = new FrameLayout(this);
+            tg.setBackground(glass(20));
+            Aurora.Corners cr = new Aurora.Corners(this, ICON, 2.2f * s);
+            cr.inward = mapOnly;
+            tg.addView(cr, new FrameLayout.LayoutParams(-1, -1));
+            place(board, tg, bx, 12, 40, 40);
+            tg.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { toggleMapOnly(); } });
+        }
+        if (noDock) {
+            bx -= 50;
+            View appsBtn = circleIcon("apps", 40, 22, 0);
+            appsBtn.setBackground(glass(20));
+            place(board, appsBtn, bx, 12, 40, 40);
+            appsBtn.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { openDrawer(); } });
+        }
+        place(board, right, bx - 10 - 560, 16, 560, 32);
+    }
+
+    /** Con «Solo mapa» no hay tarjetas: la velocidad y el GPS se siguen calculando (para la de arriba) sin mostrarse. */
+    private void premiumDetached() {
+        speedTv = tv("0", 12, TEXT, true);
+        gpsTv = tv("", 10, MUTED, false);
+        gpsDot = new View(this);
+        carTv = null;
+        oilValTv = null; oilBar = null; oilBarBg = null; oilLblTv = null; oilIc = null;
+        trackTv = null; artistTv = null; sourceTv = null; timePosTv = null; playerArt = null; playIc = null;
+        updateOilBadge();
+    }
+
+    /** Cabecera: hora grande con la fecha en el acento, y las tarjetas de música, vehículo y clima. */
+    private void buildPremiumHeader() {
+        premHeadViews.clear();
+        float cw = premW() - 32, y = premHeadY, gap = 12;
+        boolean wxOn = prefs.getBoolean("weather_on", true);
+        int k = wxOn ? 3 : 2;
+        timeTv = tv("", vertical ? 54 : 56, TEXT, true);
+        dateTv = tv("", 17, RED, true);
+        dateTv.setPadding((int) (2 * s), (int) (6 * s), 0, 0);
+        LinearLayout clock = new LinearLayout(this);
+        clock.setOrientation(LinearLayout.VERTICAL);
+        clock.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+        clock.addView(timeTv);
+        clock.addView(dateTv);
+        premHeadViews.add(clock);
+        float wy, wh, wW, wx0;
+        if (premWide) {
+            // columna izquierda: la hora, la música a lo ancho y debajo el vehículo y el clima
+            float colW = premColW, bottom = dockTop - (noDock ? 16 : 12), wy0 = y + 96;
+            float rowH = (bottom - wy0 - gap) / 2;
+            place(board, clock, 24, y, colW - 8, 88);
+            buildPremMusic(16, wy0, colW, rowH);
+            float hw = wxOn ? (colW - gap) / 2 : colW;
+            buildPremCar(16, wy0 + rowH + gap, hw, rowH);
+            if (wxOn) buildPremWeather(16 + hw + gap, wy0 + rowH + gap, hw, rowH);
+            return;
+        }
+        if (vertical) {
+            place(board, clock, 24, y, cw - 16, 92);
+            wy = y + 100;
+            wh = shortVertical ? 150 : 172;
+            wW = (cw - (k - 1) * gap) / k;
+            wx0 = 16;
+        } else {
+            wh = premHeadH;
+            wW = Math.min(240, 188 + Math.max(0, ex) / 6f);
+            if (k == 2) wW = Math.min(260, wW + 30);
+            wx0 = 16 + cw - k * wW - (k - 1) * gap;
+            wy = y;
+            place(board, clock, 24, y, wx0 - 24 - gap, wh);
+        }
+        float x = wx0;
+        buildPremMusic(x, wy, wW, wh);
+        x += wW + gap;
+        buildPremCar(x, wy, wW, wh);
+        x += wW + gap;
+        if (wxOn) buildPremWeather(x, wy, wW, wh);
+    }
+
+    private void buildPremMusic(float x, float y, float w, float hh) {
+        final FrameLayout card = new FrameLayout(this);
+        card.setBackground(glass(18));
+        place(board, card, x, y, w, hh);
+        premHeadViews.add(card);
+        float m = 14;
+        placeWrap(card, tv("Música", 11, MUTED, true), m, 12);
+        sourceTv = tv("", 10, RED, true);
+        sourceTv.setGravity(Gravity.RIGHT);
+        sourceTv.setPadding(0, 0, (int) (4 * s), 0);
+        place(card, sourceTv, w * 0.38f, 12, w * 0.62f - m + 4, 16);
+        // horizontal: carátula un poco más chica para dejar aire entre la línea de tiempo y los botones
+        float A = vertical ? Math.min(hh * 0.46f, w * 0.36f) : Math.min(hh * 0.39f, w * 0.34f), ay = vertical ? 32 : 30;
+        playerArt = new PlayerArt(this, s, asset("ic/music_note.png"));
+        // carátula cuadrada con esquinas redondas y el avance alrededor con la misma forma (como la referencia)
+        playerArt.setSquare(LIGHT ? 0x1F000000 : 0x2EFFFFFF, LIGHT ? 0x14000000 : 0x1AFFFFFF);
+        place(card, playerArt, m, ay, A, A);
+        float tx = m + A + 10, tw = w - tx - m + 2;
+        trackTv = tv("Nada sonando", 14, TEXT, true);
+        place(card, trackTv, tx, ay + A * 0.5f - 21, tw, 20);
+        artistTv = tv("Radio, Bluetooth o USB", 11, MUTED, false);
+        place(card, artistTv, tx, ay + A * 0.5f + 3, tw, 16);
+        timePosTv = tv("", 10, MUTED, false);   // no se muestra: el avance va en el anillo de la carátula
+        float rowTop = ay + A + (vertical ? 2 : 10), rowH = hh - rowTop - (vertical ? 6 : 8), ps = Math.min(40, rowH), bs = ps;
+        float cx = w / 2, ry = rowTop + (rowH - ps) / 2, sp = Math.min(14, (w - 3 * ps) / 4);
+        final View prev = circleIcon("skip_previous", bs, bs * 0.58f, 0), next = circleIcon("skip_next", bs, bs * 0.58f, 0);
+        prev.setBackground(round(Prem.soft(LIGHT), bs / 2));
+        next.setBackground(round(Prem.soft(LIGHT), bs / 2));
+        View play = circleIcon("play_arrow", ps, ps * 0.52f, RED);
+        place(card, prev, cx - ps / 2 - sp - bs, ry, bs, bs);
+        place(card, play, cx - ps / 2, ry, ps, ps);
+        place(card, next, cx + ps / 2 + sp, ry, bs, bs);
+        playIc = (ImageView) ((FrameLayout) play).getChildAt(0);
+        final View.OnClickListener goPrev = mediaClick(KeyEvent.KEYCODE_MEDIA_PREVIOUS), goNext = mediaClick(KeyEvent.KEYCODE_MEDIA_NEXT);
+        prev.setOnClickListener(goPrev);
+        play.setOnClickListener(mediaClick(KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE));
+        next.setOnClickListener(goNext);
+        // deslizar sobre la tarjeta: ← siguiente canción, → anterior (igual que el reproductor de siempre)
+        card.setOnTouchListener(new View.OnTouchListener() {
+            float x0, y0;
+            public boolean onTouch(View v, MotionEvent e) {
+                if (e.getActionMasked() == MotionEvent.ACTION_DOWN) { x0 = e.getX(); y0 = e.getY(); return false; }
+                if (e.getActionMasked() != MotionEvent.ACTION_UP) return false;
+                float dx = e.getX() - x0, dy = e.getY() - y0;
+                if (Math.abs(dx) < 50 * s || Math.abs(dx) < 2 * Math.abs(dy)) return false;
+                MotionEvent c = MotionEvent.obtain(e);
+                c.setAction(MotionEvent.ACTION_CANCEL);
+                v.onTouchEvent(c);
+                c.recycle();
+                (dx < 0 ? goNext : goPrev).onClick(v);
+                return true;
+            }
+        });
+        card.setOnLongClickListener(new View.OnLongClickListener() { public boolean onLongClick(View v) { showPlayerDiag(); return true; } });
+        card.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { openMusicApp(); } });
+        renderTrack();
+    }
+
+    private void buildPremCar(float x, float y, float w, float hh) {
+        FrameLayout card = new FrameLayout(this);
+        card.setBackground(glass(18));
+        place(board, card, x, y, w, hh);
+        premHeadViews.add(card);
+        float m = 14;
+        // velocímetro elegido en Pantalla de inicio: digital (número) o analógico / mixto (el aro de StradaOS)
+        final int speedo = carSpeed ? prefs.getInt("speedo", 0) : 0;
+        float stripH = 34, stripY = hh - stripH - 8;
+        carTv = tv(prefs.getString("car_name", "Mi vehículo"), 11, MUTED, true);
+        LinearLayout g = new LinearLayout(this);
+        g.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+        gpsDot = new View(this);
+        gpsDot.setBackground(round(MUTED, 4));
+        g.addView(gpsDot, new LinearLayout.LayoutParams((int) (7 * s), (int) (7 * s)));
+        gpsTv = tv("GPS", 10, MUTED, false);
+        gpsTv.setPadding((int) (5 * s), 0, 0, 0);
+        g.addView(gpsTv);
+        LinearLayout sv = new LinearLayout(this);
+        sv.setBaselineAligned(true);
+        speedTv = tv("0", oilHome ? 44 : 54, TEXT, true);
+        TextView unit = tv(useMph() ? "mph" : "km/h", 13, MUTED, false);
+        unit.setPadding((int) (6 * s), 0, 0, 0);
+        sv.addView(speedTv);
+        sv.addView(unit);
+        carGauge = null;
+        if (speedo > 0) {
+            // el aro ocupa la tarjeta (sin el nombre, que no cabría); el GPS queda como un punto en la esquina
+            float gb = oilHome ? stripY - 2 : hh - 6;
+            carGauge = new Gauge(this, s);
+            carGauge.setColors(RED, TEXT, SOFT);
+            carGauge.setUnit(useMph());
+            carGauge.setNumber(speedo == 2);
+            carGauge.setCompact(true);
+            place(card, carGauge, 6, 6, w - 12, gb - 6);
+            gpsTv.setVisibility(View.GONE);
+            place(card, g, w - 22, 12, 12, 12);
+        } else {
+            place(card, carTv, m, 12, w - 2 * m - 70, 16);
+            place(card, g, w - m - 100, 12, 100, 16);
+            if (oilHome) placeWrap(card, sv, m, 34 + Math.max(0, (stripY - 34 - 50) / 2));
+            else placeWrap(card, sv, m, 34 + Math.max(0, (hh - 34 - 64) / 2));
+        }
+        if (!carSpeed) {
+            // carros sin GPS: la foto del vehículo (o su ícono) en lugar de la velocidad
+            sv.setVisibility(View.GONE);
+            g.setVisibility(View.GONE);
+            Bitmap photo = CarPhoto.load(this);
+            float pw = w - 2 * m + 8, ph = hh - 34 - 10;
+            if (photo != null) {
+                ImageView car = new ImageView(this);
+                boolean cut = false;
+                try { cut = CarPhoto.hasTransparency(photo); } catch (Throwable ignored) { }
+                if (cut) car.setImageBitmap(photo);
+                else car.setImageBitmap(CarPhoto.cardCrop(photo, (int) (pw * s), (int) (ph * s), 12 * s));
+                car.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                place(card, car, m - 4, 34, pw, ph);
+            } else {
+                ImageView ic = icon("directions_car", 56);
+                ic.setAlpha(0.4f);
+                place(card, ic, (w - 56) / 2, 34 + (ph - 56) / 2, 56, 56);
+            }
+        }
+        if (oilHome) premOilStrip(card, m - 4, stripY, w - 2 * m + 8, stripH);
+        else { oilValTv = null; oilBar = null; oilBarBg = null; oilLblTv = null; oilIc = null; }
+        card.setOnClickListener(new View.OnClickListener() { public void onClick(View v) {
+            if (oilHome) badgeMenu(); else showSettings(C_VEHICLE);
+        }});
+    }
+
+    /** Mantenimiento más próximo dentro de la tarjeta del vehículo: ícono, nombre, lo que falta y la barra. */
+    private void premOilStrip(FrameLayout card, float x, float y, float w, float h) {
+        LinearLayout col = new LinearLayout(this);
+        col.setOrientation(LinearLayout.VERTICAL);
+        col.setBackground(round(Prem.soft(LIGHT), 11));
+        col.setPadding((int) (9 * s), (int) (5 * s), (int) (9 * s), (int) (6 * s));
+        LinearLayout row = new LinearLayout(this);
+        row.setGravity(Gravity.CENTER_VERTICAL);
+        ImageView ic = icon("water_drop", 13);
+        ic.setAlpha(0.75f);
+        row.addView(ic, new LinearLayout.LayoutParams((int) (13 * s), (int) (13 * s)));
+        TextView t = tv("Aceite", 11, MUTED, false);
+        t.setPadding((int) (5 * s), 0, (int) (5 * s), 0);
+        row.addView(t, new LinearLayout.LayoutParams(0, -2, 1));
+        oilLblTv = t;
+        oilIc = ic;
+        oilValTv = tv("", 12, TEXT, true);
+        row.addView(oilValTv, new LinearLayout.LayoutParams(-2, -2));
+        col.addView(row, new LinearLayout.LayoutParams(-1, 0, 1));
+        FrameLayout bar = new FrameLayout(this);
+        oilBarBg = bar;
+        bar.setBackground(round(LIGHT ? 0x1F000000 : 0x29FFFFFF, 2));
+        oilBar = new View(this);
+        bar.addView(oilBar, new FrameLayout.LayoutParams(0, -1));
+        LinearLayout.LayoutParams blp = new LinearLayout.LayoutParams(-1, (int) (3 * s));
+        blp.topMargin = (int) (3 * s);
+        col.addView(bar, blp);
+        place(card, col, x, y, w, h);
+        col.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { badgeMenu(); } });
+        updateOilBadge();
+    }
+
+    private void buildPremWeather(float x, float y, float w, float hh) {
+        LinearLayout card = new LinearLayout(this);
+        card.setOrientation(LinearLayout.VERTICAL);
+        card.setGravity(Gravity.CENTER_HORIZONTAL);
+        card.setBackground(glass(18));
+        card.setPadding((int) (10 * s), (int) (12 * s), (int) (10 * s), (int) (8 * s));
+        place(board, card, x, y, w, hh);
+        premHeadViews.add(card);
+        TextView wl = tv("Clima", 11, MUTED, true);
+        wl.setGravity(Gravity.CENTER_HORIZONTAL);
+        card.addView(wl);
+        float is = hh >= 170 ? 46 : 40;
+        panelWxIc = icon("cloud", is);
+        LinearLayout.LayoutParams ilp = new LinearLayout.LayoutParams((int) (is * s), (int) (is * s));
+        ilp.topMargin = (int) ((hh >= 170 ? 10 : 6) * s);
+        card.addView(panelWxIc, ilp);
+        panelWxTemp = tv("--°", hh >= 170 ? 30 : 26, TEXT, true);
+        panelWxTemp.setPadding(0, (int) (4 * s), 0, 0);
+        panelWxTemp.setGravity(Gravity.CENTER_HORIZONTAL);
+        card.addView(panelWxTemp);
+        panelWxDesc = tv("Clima", 12, TEXT, false);
+        panelWxDesc.setPadding(0, (int) (4 * s), 0, 0);
+        panelWxDesc.setGravity(Gravity.CENTER_HORIZONTAL);
+        card.addView(panelWxDesc);
+        panelWxHiLo = tv("", 11, MUTED, false);
+        panelWxHiLo.setPadding(0, (int) (3 * s), 0, 0);
+        panelWxHiLo.setGravity(Gravity.CENTER_HORIZONTAL);
+        card.addView(panelWxHiLo);
+        panelWxHours = null;
+        panelWx = card;
+        card.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { showWeatherDetail(); } });
+        showPanelWeather();
+    }
+
+    /** Barra de apps tipo píldora, centrada, con los íconos sin círculos (mismos botones y menús que la barra normal). */
+    private void buildPremiumDock() {
+        final int n = dockCount;
+        int isz = prefs.getInt("dock_icon_size", 1);
+        float ik = isz == 0 ? 0.82f : isz == 2 ? 1.2f : 1f;
+        float W0 = premW(), avail = W0 - 32, pillH = premPillH;
+        float itemW = Math.min(vertical ? 80 : 84, (avail - 24) / n), pillW = itemW * n + 24;
+        float px = (W0 - pillW) / 2, py = dockTop;
+        View bg = new View(this);
+        GradientDrawable d = round(Prem.pill(LIGHT), pillH / 2);
+        d.setStroke(Math.max(1, (int) s), Prem.pillEdge(LIGHT));
+        bg.setBackground(d);
+        place(board, bg, px, py, pillW, pillH);
+        float ic = Math.min(itemW - 18, 30 * ik);
+        final boolean appStyle = "apps".equals(prefs.getString("dock_style", "circle"));
+        for (int i = 0; i < n; i++) {
+            final int idx = i;
+            String t = dockTarget(i);
+            Drawable appIc = t.startsWith("app:") ? appIcon(t.substring(4)) : appStyle ? fnAppIcon(t.substring(3)) : null;
+            FrameLayout b = new FrameLayout(this);
+            ImageView iv;
+            float sz = ic;
+            if (appIc != null) {
+                iv = new ImageView(this);
+                iv.setImageDrawable(appIc);
+                iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                sz = Math.min(itemW - 14, ic * 1.18f);
+            } else {
+                String id = t.startsWith("fn:") ? t.substring(3) : dockDefault(i);
+                iv = icon(dockFn(id)[2], ic);
+                iv.setColorFilter(Prem.pillIcon(LIGHT));
+            }
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams((int) (sz * s), (int) (sz * s));
+            lp.gravity = Gravity.CENTER;
+            b.addView(iv, lp);
+            place(board, b, px + 12 + itemW * i, py, itemW, pillH);
+            b.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { runDock(idx); } });
+            b.setOnLongClickListener(new View.OnLongClickListener() { public boolean onLongClick(View v) { dockMenu(idx, null); return true; } });
+        }
+    }
+
+    // ── galería premium en Personalización ──
+
+    /** id del tema premium o null para quitarlo. */
+    private void applyPremium(String id) {
+        if (id != null && !Prem.known(id)) id = null;
+        SharedPreferences.Editor e = prefs.edit();
+        if (id != null) e.putString("premium_theme", id); else e.remove("premium_theme");
+        e.apply();
+        rebuild();
+        showSettings(C_STYLE);
+        if (id != null) toast(I18n.t("Tema aplicado:") + " " + I18n.t(Prem.name(id)));
+        else toast("Tema premium quitado");
+    }
+
+    private void premiumGallery(LinearLayout body, boolean portrait) {
+        TextView h2 = tv(I18n.t("Temas premium").toUpperCase(I18n.loc), 11, MUTED, true);
+        h2.setPadding((int) (6 * s), (int) (10 * s), 0, (int) (8 * s));
+        body.addView(h2);
+        for (String id : Prem.IDS) premiumCell(body, portrait, id);
+    }
+
+    private void premiumCell(LinearLayout body, boolean portrait, final String id) {
+        final boolean unlocked = premiumUnlocked(id), inUse = premiumActive() && id.equals(prefs.getString("premium_theme", null));
+        LinearLayout cell = new LinearLayout(this);
+        cell.setOrientation(portrait ? LinearLayout.HORIZONTAL : LinearLayout.VERTICAL);
+        cell.setBackground(round(inUse ? RED_DARK : CARD, 16));
+        int cp = (int) (10 * s);
+        cell.setPadding(cp, cp, cp, (int) (12 * s));
+        LinearLayout.LayoutParams cellLp = new LinearLayout.LayoutParams(-1, -2);
+        cellLp.bottomMargin = (int) (10 * s);
+        body.addView(cell, cellLp);
+        // las dos versiones, oscura y clara: el tema sigue el modo de Apariencia
+        LinearLayout thumbs = new LinearLayout(this);
+        thumbs.setOrientation(LinearLayout.HORIZONTAL);
+        for (int i = 0; i < 2; i++) {
+            LinearLayout col = new LinearLayout(this);
+            col.setOrientation(LinearLayout.VERTICAL);
+            View th;
+            boolean sel = inUse && (i == 1) == LIGHT;
+            if (Cobalto.ID.equals(id)) { Cobalto.Thumb t = new Cobalto.Thumb(this, s, portrait, i == 1); t.selected = sel; th = t; }
+            else { Aurora.Thumb t = new Aurora.Thumb(this, s, portrait, i == 1); t.selected = sel; th = t; }
+            col.addView(th, new LinearLayout.LayoutParams(-1, -2));
+            TextView cap = tv(i == 0 ? "Oscuro" : "Claro", 11, MUTED, false);
+            cap.setGravity(Gravity.CENTER);
+            cap.setPadding(0, (int) (5 * s), 0, 0);
+            col.addView(cap, new LinearLayout.LayoutParams(-1, -2));
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, -2, 1f);
+            if (i == 0) lp.rightMargin = (int) (10 * s);
+            thumbs.addView(col, lp);
+        }
+        LinearLayout info = new LinearLayout(this);
+        info.setOrientation(LinearLayout.VERTICAL);
+        if (portrait) {
+            cell.addView(thumbs, new LinearLayout.LayoutParams(0, -2, 1f));
+            info.setPadding((int) (14 * s), (int) (4 * s), (int) (4 * s), 0);
+            cell.addView(info, new LinearLayout.LayoutParams(0, -2, 1f));
+        } else {
+            cell.addView(thumbs, new LinearLayout.LayoutParams(-1, -2));
+            info.setPadding((int) (4 * s), (int) (10 * s), (int) (4 * s), 0);
+            cell.addView(info, new LinearLayout.LayoutParams(-1, -2));
+        }
+        LinearLayout nameRow = new LinearLayout(this);
+        nameRow.setGravity(Gravity.CENTER_VERTICAL);
+        TextView nm = tv(Prem.name(id), 16, TEXT, true);
+        nameRow.addView(nm, new LinearLayout.LayoutParams(0, -2, 1));
+        final boolean free = Prem.free(id);
+        TextView badge = tv(inUse ? "En uso" : free ? "Gratis" : "Premium", 11, inUse ? 0xFFFFFFFF : RED, true);
+        badge.setBackground(inUse ? round(RED, 10) : round(RED_DARK, 10));
+        badge.setPadding((int) (8 * s), (int) (2 * s), (int) (8 * s), (int) (2 * s));
+        nameRow.addView(badge);
+        info.addView(nameRow);
+        TextView ds = tv(Prem.desc(id), 12, MUTED, false);
+        multiLine(ds);
+        ds.setMaxLines(8);
+        ds.setLineSpacing(2 * s, 1f);
+        ds.setPadding(0, (int) (5 * s), 0, 0);
+        info.addView(ds);
+        TextView mode = tv("Sigue el modo claro u oscuro de Apariencia.", 12, SOFT, false);
+        multiLine(mode);
+        mode.setPadding(0, (int) (6 * s), 0, 0);
+        info.addView(mode);
+        if (unlocked) {
+            TextView btn = tv(inUse ? "Quitar el tema premium" : "Aplicar", 14, inUse ? TEXT : 0xFFFFFFFF, true);
+            btn.setText(btn.getText() + " ");   // en negrita la última letra se recortaba
+            btn.setEllipsize(null);
+            btn.setGravity(Gravity.CENTER);
+            btn.setBackground(round(inUse ? BTN : RED, 18));
+            btn.setPadding((int) (18 * s), (int) (9 * s), (int) (18 * s), (int) (9 * s));
+            LinearLayout.LayoutParams blp = new LinearLayout.LayoutParams(-2, -2);
+            blp.topMargin = (int) (10 * s);
+            info.addView(btn, blp);
+            btn.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { applyPremium(inUse ? null : id); } });
+            if (!inUse) cell.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { applyPremium(id); } });
+            TextView test = tv(free ? "Gratis para todos. Los próximos temas premium se desbloquearán con una donación." : "Versión de prueba: se puede aplicar sin código.", 11, MUTED, false);
+            multiLine(test);
+            test.setPadding(0, (int) (8 * s), 0, 0);
+            info.addView(test);
+        } else {
+            TextView soon = tv("Disponible pronto con una donación. Todas las funciones siguen siendo gratis.", 12, SOFT, true);
+            multiLine(soon);
+            soon.setPadding(0, (int) (8 * s), 0, 0);
+            info.addView(soon);
         }
     }
 
@@ -4516,7 +5655,7 @@ public class Main extends Activity {
         String fmt = prefs.getString("clock", "auto");
         boolean h24 = "24".equals(fmt) || ("auto".equals(fmt) && android.text.format.DateFormat.is24HourFormat(this));
         timeTv.setText(I18n.sdf(h24 ? "HH:mm" : "h:mm a").format(now));
-        String d = I18n.sdf(vertical ? "EEE d MMM" : I18n.datePattern()).format(now);
+        String d = I18n.sdf(vertical && !(premium && !mapOnly) ? "EEE d MMM" : I18n.datePattern()).format(now);
         dateTv.setText(d.substring(0, 1).toUpperCase(I18n.loc) + d.substring(1));
         int hr = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         String saludo = I18n.t(hr >= 5 && hr < 12 ? "Buenos días" : (hr >= 12 && hr < 19 ? "Buenas tardes" : "Buenas noches"));
@@ -5820,9 +6959,12 @@ public class Main extends Activity {
 
     // 2.20: Ajustes reordenados (Andrés): cada opción en el apartado donde uno la busca
     static final String[] CAT_NAMES = {"Volver al inicio", "Tu vehículo", "Mantenimientos", "Pantalla de inicio", "Barra de apps", "Apariencia",
-        "Conexión", "Mapa y clima", "Música", "Sistema", "Acerca de"};
-    static final String[] CAT_ICONS = {"arrow_back", "directions_car", "car_repair", "dehaze", "apps", "palette", "usb", "map", "music_note", "tune", "info"};
-    static final int C_VEHICLE = 1, C_MAINT = 2, C_HOME = 3, C_DOCK = 4, C_LOOK = 5, C_CONN = 6, C_MAP = 7, C_MUSIC = 8, C_SYS = 9, C_ABOUT = 10;
+        "Conexión", "Mapa y clima", "Música", "Sistema", "Acerca de", "Personalización"};
+    static final String[] CAT_ICONS = {"arrow_back", "directions_car", "car_repair", "dehaze", "apps", "palette", "usb", "map", "music_note", "tune", "info", "star"};
+    static final int C_VEHICLE = 1, C_MAINT = 2, C_HOME = 3, C_DOCK = 4, C_LOOK = 5, C_CONN = 6, C_MAP = 7, C_MUSIC = 8, C_SYS = 9, C_ABOUT = 10,
+        C_STYLE = 11;
+    /** Orden en pantalla (los números de categoría no cambian: los usan los ganchos de prueba «ajustes:N»). */
+    static final int[] CAT_ORDER = {0, C_STYLE, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
     private android.widget.ScrollView settingsScroll;
     private int settingsScrollCat = -1;
@@ -5881,7 +7023,8 @@ public class Main extends Activity {
         bt.setPadding((int) (10 * s), 0, 0, 0);
         brand.addView(bt);
         side.addView(brand);
-        for (int i = 0; i < CAT_NAMES.length; i++) {
+        for (int k = 0; k < CAT_ORDER.length; k++) {
+            final int i = CAT_ORDER[k];
             final int idx = i;
             boolean sel = i == cat;
             LinearLayout it = new LinearLayout(this);
@@ -5895,7 +7038,7 @@ public class Main extends Activity {
             TextView lt = tv(CAT_NAMES[i], 14, sel ? RED : SOFT, sel);
             lt.setPadding((int) (12 * s), 0, 0, 0);
             it.addView(lt);
-            LinearLayout.LayoutParams ilp = new LinearLayout.LayoutParams(-1, (int) (40 * s));
+            LinearLayout.LayoutParams ilp = new LinearLayout.LayoutParams(-1, (int) (38 * s));
             ilp.bottomMargin = (int) (3 * s);
             side.addView(it, ilp);
             if (i == 0) {
@@ -5949,6 +7092,7 @@ public class Main extends Activity {
             case C_MUSIC: catMusic(body); break;
             case C_SYS: catSystem(body); break;
             case C_ABOUT: catAbout(body); break;
+            case C_STYLE: catStyle(body); break;
         }
     }
 
@@ -5957,7 +7101,8 @@ public class Main extends Activity {
         final LinearLayout tabs = new LinearLayout(this);
         tabs.setGravity(Gravity.CENTER_VERTICAL);
         final View[] chosen = new View[1];
-        for (int i = 0; i < CAT_NAMES.length; i++) {
+        for (int k = 0; k < CAT_ORDER.length; k++) {
+            final int i = CAT_ORDER[k];
             final int idx = i;
             boolean sel = i == cat;
             LinearLayout it = new LinearLayout(this);
@@ -5998,6 +7143,187 @@ public class Main extends Activity {
     }
 
     // ── piezas de diseño ──
+
+    // ───────────────────────── Personalización (2.24, Bloque 14) ─────────────────────────
+    // Temas gratis: aplican con un toque combinaciones de lo que ya existe en Ajustes. No guardan nada propio:
+    // el tema «en uso» es el que coincide con los ajustes actuales (si el usuario cambia algo, ninguno queda marcado).
+
+    static final class FreeTheme {
+        final String name, descH, descV, corner; final boolean car, left, gauge, compact, panel;
+        /** corner: esquina del velocímetro sobre el mapa (bl/br) cuando no hay tarjeta del vehículo; panel: conexión abierta. */
+        FreeTheme(String name, String descH, String descV, boolean car, boolean left, boolean gauge, String corner,
+                  boolean compact, boolean panel) {
+            this.name = name; this.descH = descH; this.descV = descV; this.car = car; this.left = left; this.gauge = gauge;
+            this.corner = corner; this.compact = compact; this.panel = panel;
+        }
+    }
+
+    // Cada tema fija todo lo que se ve en su miniatura (lado de la música, velocímetro y su esquina, lado del botón del
+    // navegador, panel de conexión y barra), para que la miniatura y la descripción coincidan con lo que se aplica.
+    static final FreeTheme[] FREE_THEMES = {
+        new FreeTheme("Clásico",
+            "Vehículo a la izquierda, mapa en el centro y música a la derecha",
+            "Mapa arriba; debajo, vehículo a la izquierda y música a la derecha",
+            true, false, false, null, false, true),
+        new FreeTheme("Música a la izquierda",
+            "Música a la izquierda, mapa en el centro y vehículo a la derecha",
+            "Mapa arriba; debajo, música a la izquierda y vehículo a la derecha",
+            true, true, false, null, false, true),
+        new FreeTheme("Mapa amplio",
+            "Sin tarjeta del vehículo: mapa más ancho, velocímetro abajo a la izquierda y música a la derecha",
+            "Sin tarjeta del vehículo: mapa más alto con el velocímetro abajo a la izquierda y la música a lo ancho",
+            false, false, true, "bl", false, true),
+        new FreeTheme("Minimalista",
+            "Música a la izquierda, velocímetro abajo a la derecha, panel de conexión plegado y barra compacta",
+            "Mapa casi completo: velocímetro abajo a la derecha, panel de conexión plegado, música a lo ancho y barra compacta",
+            false, true, true, "br", true, false),
+    };
+
+    /** Vista previa elegida en Personalización: -1 = la orientación actual, 0 = horizontal, 1 = vertical. */
+    private int stylePreview = -1;
+    private boolean stylePreviewFor;   // orientación en la que se eligió: al girar la pantalla vuelve a la actual
+
+    // El panel de conexión se abre y se pliega a mano desde el mapa: no cuenta para marcar el tema «en uso».
+    private boolean themeInUse(FreeTheme t) {
+        return !premiumActive() && prefs.getBoolean("show_car", true) == t.car && prefs.getBoolean("show_player", true)
+            && "left".equals(prefs.getString("player_side", "right")) == t.left
+            && "auto".equals(prefs.getString("nav_btn_side", "auto"))
+            && (t.car || (prefs.getBoolean("map_gauge", false) == t.gauge && prefs.getBoolean("car_speed", true)
+                && t.corner.equals(prefs.getString("map_gauge_corner", "auto"))))
+            && (t.compact ? "compact" : "normal").equals(prefs.getString("dock_mode", "normal"));
+    }
+
+    private void applyFreeTheme(FreeTheme t) {
+        SharedPreferences.Editor e = prefs.edit()
+            .putBoolean("show_car", t.car).putBoolean("show_player", true)
+            .putString("player_side", t.left ? "left" : "right")
+            .putString("nav_btn_side", "auto")
+            .putBoolean("aa_panel_open", t.panel)
+            .putString("dock_mode", t.compact ? "compact" : "normal")
+            .remove("premium_theme");   // un tema gratis quita el premium
+        if (!t.car) e.putBoolean("map_gauge", t.gauge).putBoolean("car_speed", true).putString("map_gauge_corner", t.corner);
+        e.apply();
+        rebuild();
+        showSettings(C_STYLE);
+        toast(I18n.t("Tema aplicado:") + " " + I18n.t(t.name));
+    }
+
+    private void catStyle(LinearLayout body) {
+        TextView intro = tv("Cambia el aspecto de la pantalla de inicio con un toque. Puedes seguir ajustando cada detalle en las demás secciones.", 13, MUTED, false);
+        multiLine(intro);
+        intro.setPadding((int) (6 * s), 0, (int) (6 * s), (int) (6 * s));
+        body.addView(intro);
+        TextView h2 = tv(I18n.t("Temas gratis").toUpperCase(I18n.loc), 11, MUTED, true);
+        h2.setPadding((int) (6 * s), (int) (10 * s), 0, (int) (8 * s));
+        body.addView(h2);
+
+        // Subsección Horizontal | Vertical: el mismo tema sirve en las dos orientaciones; aquí se ve cómo queda en cada una
+        if (stylePreview >= 0 && stylePreviewFor != vertical) stylePreview = -1;
+        final boolean portrait = stylePreview < 0 ? vertical : stylePreview == 1;
+        LinearLayout tabs = new LinearLayout(this);
+        tabs.setGravity(Gravity.CENTER_VERTICAL);
+        LinearLayout g = new LinearLayout(this);
+        g.setBackground(round(BTN, 18));
+        int pp = (int) (3 * s);
+        g.setPadding(pp, pp, pp, pp);
+        String[] opts = {"Horizontal", "Vertical"};
+        for (int i = 0; i < 2; i++) {
+            final int idx = i;
+            boolean sel = (i == 1) == portrait;
+            TextView o = tv(opts[i], 13, sel ? Color.WHITE : SOFT, sel);
+            o.setGravity(Gravity.CENTER);
+            o.setText(o.getText() + " ");
+            o.setEllipsize(null);
+            o.setPadding((int) (18 * s), (int) (7 * s), (int) (15 * s), (int) (7 * s));
+            if (sel) o.setBackground(round(RED, 15));
+            o.setOnClickListener(new View.OnClickListener() { public void onClick(View v) {
+                stylePreview = idx;
+                stylePreviewFor = vertical;
+                showSettings(C_STYLE);
+            }});
+            g.addView(o);
+        }
+        tabs.addView(g);
+        TextView note = tv("Cada tema se adapta solo a la orientación de la pantalla.", 12, MUTED, false);
+        multiLine(note);
+        note.setPadding((int) (12 * s), 0, 0, 0);
+        tabs.addView(note, new LinearLayout.LayoutParams(0, -2, 1));
+        tabs.setPadding((int) (2 * s), 0, 0, (int) (10 * s));
+        body.addView(tabs);
+
+        // mismas reglas que la pantalla de inicio, para que la miniatura muestre lo que de verdad aparece
+        boolean navShown = prefs.getInt("nav_btn_size", 0) != 3;
+        String cm = prefs.getString("conn_buttons", "both");
+        boolean hasPanel = !"none".equals(cm) || prefs.getBoolean("weather_on", true);
+        boolean labels = prefs.getBoolean("dock_labels", true);
+        boolean forceCompact = portrait && vertical && shortVertical;
+        // horizontal: 2 por fila; vertical: las 4 en una fila (son altas)
+        int perRow = portrait ? 4 : 2;
+        float cellGap = portrait ? 10 : 12;
+        LinearLayout rowL = null;
+        for (int i = 0; i < FREE_THEMES.length; i++) {
+            final FreeTheme t = FREE_THEMES[i];
+            if (i % perRow == 0) {
+                rowL = new LinearLayout(this);
+                rowL.setOrientation(LinearLayout.HORIZONTAL);
+                LinearLayout.LayoutParams rlp = new LinearLayout.LayoutParams(-1, -2);
+                rlp.bottomMargin = (int) (cellGap * s);
+                body.addView(rowL, rlp);
+            }
+            boolean inUse = themeInUse(t);
+            LinearLayout cell = new LinearLayout(this);
+            cell.setOrientation(LinearLayout.VERTICAL);
+            cell.setBackground(round(inUse ? RED_DARK : CARD, 16));
+            int cp = (int) ((portrait ? 8 : 10) * s);
+            cell.setPadding(cp, cp, cp, (int) (12 * s));
+            ThemeThumb th = new ThemeThumb(this, s, portrait, t.car, t.left, t.gauge, "bl".equals(t.corner),
+                t.compact || forceCompact, t.left, navShown, labels, t.panel && hasPanel);
+            th.selected = inUse;
+            cell.addView(th, new LinearLayout.LayoutParams(-1, -2));
+            LinearLayout nameRow = new LinearLayout(this);
+            nameRow.setGravity(Gravity.CENTER_VERTICAL);
+            nameRow.setPadding((int) (4 * s), (int) (10 * s), (int) (4 * s), 0);
+            TextView nm = tv(t.name, portrait ? 14 : 15, TEXT, true);
+            multiLine(nm);
+            nameRow.addView(nm, new LinearLayout.LayoutParams(0, -2, 1));
+            if (inUse && !portrait) {
+                TextView badge = tv("En uso", 11, 0xFFFFFFFF, true);
+                badge.setBackground(round(RED, 10));
+                badge.setPadding((int) (8 * s), (int) (2 * s), (int) (8 * s), (int) (2 * s));
+                nameRow.addView(badge);
+            }
+            cell.addView(nameRow);
+            if (inUse && portrait) {
+                // celda angosta: la etiqueta va debajo del nombre para que no lo corte
+                TextView badge = tv("En uso", 11, 0xFFFFFFFF, true);
+                badge.setBackground(round(RED, 10));
+                badge.setPadding((int) (8 * s), (int) (2 * s), (int) (8 * s), (int) (2 * s));
+                LinearLayout.LayoutParams blp = new LinearLayout.LayoutParams(-2, -2);
+                blp.leftMargin = (int) (4 * s);
+                blp.topMargin = (int) (4 * s);
+                cell.addView(badge, blp);
+            }
+            // la descripción completa, sin cortar: dice exactamente lo que cambia al aplicar el tema
+            TextView ds = tv(portrait ? t.descV : t.descH, 12, MUTED, false);
+            multiLine(ds);
+            ds.setLineSpacing(2 * s, 1f);
+            ds.setPadding((int) (4 * s), (int) (3 * s), (int) (4 * s), 0);
+            cell.addView(ds);
+            LinearLayout.LayoutParams clp = new LinearLayout.LayoutParams(0, -1, 1f);
+            if (i % perRow != perRow - 1) clp.rightMargin = (int) (cellGap * s);
+            rowL.addView(cell, clp);
+            cell.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) { applyFreeTheme(t); }
+            });
+        }
+        premiumGallery(body, portrait);
+    }
+
+    private static void multiLine(TextView v) {
+        v.setSingleLine(false);
+        v.setMaxLines(6);
+        v.setEllipsize(null);
+    }
 
     private LinearLayout section(LinearLayout body, String name) {
         TextView h2 = tv(I18n.t(name).toUpperCase(I18n.loc), 11, MUTED, true);
@@ -6297,6 +7623,12 @@ public class Main extends Activity {
 
     /** Pantalla de inicio: qué tarjetas se ven, el mapa y la barra de arriba. */
     private void catHome(LinearLayout body) {
+        if (premiumActive()) {
+            LinearLayout pn = section(body, "Tema premium");
+            String pid = prefs.getString("premium_theme", Aurora.ID);
+            LinearLayout r = rowBase(pn, I18n.t(Prem.name(pid)) + " · " + I18n.t("En uso"), "El tema arma la pantalla de inicio. Las tarjetas, la barra y el velocímetro de aquí se usan otra vez al quitarlo en Personalización.");
+            r.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { showSettings(C_STYLE); } });
+        }
         if (boxW > 0 && canVertical(boxW, boxH)) {
             // Solo en pantallas casi cuadradas o verticales (en las horizontales no tiene sentido).
             final String[] lk = {"auto", "horizontal", "vertical"};
