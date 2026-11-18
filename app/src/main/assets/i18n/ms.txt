@@ -1155,3 +1155,5 @@ Esta pantalla no informa su brillo	Skrin ini tidak melaporkan kecerahannya
 Países del Golfo	Negara Teluk
 Irlanda del Norte	Ireland Utara
 Islas Canarias	Kepulauan Canary
+Tiempo en StradaOS: {}	Masa dalam StradaOS: {}
+Último tiempo por Bluetooth: {}	Masa terakhir melalui Bluetooth: {}

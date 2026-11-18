@@ -1155,3 +1155,5 @@ Esta pantalla no informa su brillo	Bu ekran parlaklığını bildirmiyor
 Países del Golfo	Körfez ülkeleri
 Irlanda del Norte	Kuzey İrlanda
 Islas Canarias	Kanarya Adaları
+Tiempo en StradaOS: {}	StradaOS'taki süre: {}
+Último tiempo por Bluetooth: {}	Bluetooth'tan son süre: {}

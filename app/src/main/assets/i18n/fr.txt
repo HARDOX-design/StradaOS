@@ -1155,3 +1155,5 @@ Esta pantalla no informa su brillo	Cet écran n'indique pas sa luminosité
 Países del Golfo	Pays du Golfe
 Irlanda del Norte	Irlande du Nord
 Islas Canarias	Îles Canaries
+Tiempo en StradaOS: {}	Temps dans StradaOS : {}
+Último tiempo por Bluetooth: {}	Dernier temps via Bluetooth : {}

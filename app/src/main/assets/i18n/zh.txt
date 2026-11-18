@@ -1155,3 +1155,5 @@ Esta pantalla no informa su brillo	此屏幕不提供亮度信息
 Países del Golfo	海湾国家
 Irlanda del Norte	北爱尔兰
 Islas Canarias	加那利群岛
+Tiempo en StradaOS: {}	StradaOS 中的时间：{}
+Último tiempo por Bluetooth: {}	蓝牙最后一次的时间：{}

@@ -1155,3 +1155,5 @@ Esta pantalla no informa su brillo	This screen doesn't report its brightness
 Países del Golfo	Gulf countries
 Irlanda del Norte	Northern Ireland
 Islas Canarias	Canary Islands
+Tiempo en StradaOS: {}	Time in StradaOS: {}
+Último tiempo por Bluetooth: {}	Last time from Bluetooth: {}

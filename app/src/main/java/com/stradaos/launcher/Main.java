@@ -167,6 +167,9 @@ public class Main extends Activity {
     private String curTitle, curArtist, curSource;
     private Bitmap curArt;
     private long durMs = -1, posBaseMs = 0, posBaseAt = 0;
+    // para el diagnóstico del reproductor: de dónde salió el tiempo y el último que mandó Bluetooth
+    private String posSrc = "—";
+    private long btPosMs = -1, btPosAt;
     private boolean posKnown;
     private String curOrigin;
     private BtBridge bt;
@@ -5874,6 +5877,7 @@ public class Main extends Activity {
 
     private void showTrack(NowPlaying.Track t) {
         long now = SystemClock.elapsedRealtime();
+        if ("bt".equals(t.origin) && t.positionMs >= 0) { btPosMs = t.positionMs; btPosAt = now; }
         boolean hasContent = t.title != null || t.artist != null;
         // Un aviso sin pista de otra fuente (p. ej. el sistema cuando entra la cámara de reversa)
         // no debe borrar ni pausar lo que muestra la fuente actual.
@@ -5930,6 +5934,7 @@ public class Main extends Activity {
             posBaseMs = 0;
             posBaseAt = now;
             posKnown = true;
+            posSrc = "canción nueva";
             durMs = -1;
             if (!t.artSet) curArt = null;
             // ¿La notificación de Open Headunit ya trae la carátula de esta canción?
@@ -5946,7 +5951,7 @@ public class Main extends Activity {
         if (t.durationMs > 0) durMs = t.durationMs;
         if (t.artSet) curArt = t.art;
         long pos = currentPos();
-        if (t.positionMs >= 0) { pos = t.positionMs; posKnown = true; }
+        if (t.positionMs >= 0) { pos = t.positionMs; posKnown = true; posSrc = String.valueOf(t.origin); }
         if (t.playing != null) {
             playingState = t.playing;
         }
@@ -6082,6 +6087,7 @@ public class Main extends Activity {
             posBaseMs = Math.max(0, NotifArt.lastPosMs);
             posBaseAt = now;
             posKnown = NotifArt.lastPosMs >= 0;
+            if (posKnown) posSrc = "Android Auto";
             if (NotifArt.lastPlaying != null) playingState = NotifArt.lastPlaying;
             aaWaitTitle = null;
             h.removeCallbacks(aaWait);
@@ -6099,7 +6105,7 @@ public class Main extends Activity {
             // Sin Bluetooth, el tiempo y el estado también salen de la notificación.
             if (curArtist == null && NotifArt.lastArtist != null) curArtist = NotifArt.lastArtist;
             if (NotifArt.lastDurMs > 0) durMs = NotifArt.lastDurMs;
-            if (NotifArt.lastPosMs >= 0) { posBaseMs = NotifArt.lastPosMs; posBaseAt = now; posKnown = true; }
+            if (NotifArt.lastPosMs >= 0) { posBaseMs = NotifArt.lastPosMs; posBaseAt = now; posKnown = true; posSrc = "Android Auto"; }
             if (NotifArt.lastPlaying != null) playingState = NotifArt.lastPlaying;
         }
         renderTrack();
@@ -6109,6 +6115,9 @@ public class Main extends Activity {
         String msg = "Fuente: " + (curOrigin != null ? curOrigin : "—") + " / " + (curSource != null ? curSource : "—")
                 + "\nPista: " + curTitle + " — " + curArtist
                 + "\nCarátula: " + (curArt != null ? curArt.getWidth() + "x" + curArt.getHeight() : "no")
+                + "\nTiempo en StradaOS: " + (currentPos() / 1000) + "/" + (durMs / 1000) + " s · " + posSrc
+                + "\nÚltimo tiempo por Bluetooth: " + (btPosMs < 0 ? "ninguno"
+                    : (btPosMs / 1000) + " s, hace " + ((SystemClock.elapsedRealtime() - btPosAt) / 1000) + " s")
                 + "\n\nLector de notificaciones (accesibilidad): " + (NotifArt.running ? "ACTIVO" : "apagado")
                 + "\nÚltima notificación de Open Headunit: " + (NotifArt.lastAt == 0 ? "ninguna"
                     : ((SystemClock.elapsedRealtime() - NotifArt.lastAt) / 1000) + " s, carátula "

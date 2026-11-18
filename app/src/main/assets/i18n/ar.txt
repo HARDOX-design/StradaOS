@@ -1155,3 +1155,5 @@ Esta pantalla no informa su brillo	هذه الشاشة لا تُبلغ عن سط
 Países del Golfo	دول الخليج
 Irlanda del Norte	أيرلندا الشمالية
 Islas Canarias	جزر الكناري
+Tiempo en StradaOS: {}	الوقت في StradaOS: {}
+Último tiempo por Bluetooth: {}	آخر وقت عبر البلوتوث: {}
