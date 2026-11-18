@@ -179,7 +179,7 @@ class Hcn {
         t.origin = "hcn";
         t.source = label();
         t.title = tTitle;
-        t.artist = tArtist;
+        t.artist = tArtist != null ? tArtist : withTags ? "" : null;   // archivo sin artista: no queda el del anterior
         t.album = tAlbum;
         if (withTags) { t.art = tArt; t.artSet = true; }
         t.playing = playing;
