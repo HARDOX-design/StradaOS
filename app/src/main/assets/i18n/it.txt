@@ -1122,3 +1122,26 @@ Cobalto	Cobalto
 Azul noche en tres columnas: el mapa se difumina hasta el reproductor de carátula redonda, y tu vehículo muestra el velocímetro arriba, su foto en el medio y el mantenimiento abajo. La temperatura va sobre el mapa.	Blu notte su tre colonne: la mappa sfuma fino al lettore con la copertina rotonda, e il tuo veicolo mostra il tachimetro in alto, la sua foto al centro e la manutenzione in basso. La temperatura sta sopra la mappa.
 Gratis	Gratis
 Gratis para todos. Los próximos temas premium se desbloquearán con una donación.	Gratis per tutti. I prossimi temi premium si sbloccheranno con una donazione.
+Radar	Autovelox
++ Añadir parada intermedia	+ Aggiungi tappa intermedia
+incidente	incidente
+incidentes	incidenti
+incidente en la ruta	incidente sul percorso
+incidentes en la ruta	incidenti sul percorso
+Incidentes en la ruta	Incidenti sul percorso
+Consulta cierres o accidentes una sola vez al calcular ruta (TomTom)	Controlla chiusure o incidenti una sola volta al calcolo del percorso (TomTom)
+Límite y alerta de velocidad	Limite e avviso di velocità
+Muestra la señal de límite en el mapa y avisa al excederlo	Mostra il cartello del limite sulla mappa e avvisa quando lo superi
+Tolerancia de exceso	Tolleranza di superamento
+Margen sobre el límite antes de activar alerta	Margine oltre il limite prima dell'avviso
+Sonido al exceder límite	Suono al superamento del limite
+Pitido de alerta cuando superas la tolerancia	Segnale acustico quando superi la tolleranza
+Alertas de radares sin conexión	Avvisi autovelox offline
+Avisa al acercarse a radares del mapa local .map	Avvisa quando ti avvicini agli autovelox della mappa locale .map
+Vía cerrada	Strada chiusa
+Carril cerrado	Corsia chiusa
+Accidente	Incidente
+Obras en la vía	Lavori in corso
+Tráfico detenido	Traffico fermo
+Incidente en la vía	Evento sulla strada
+Radar de velocidad adelante	Autovelox più avanti

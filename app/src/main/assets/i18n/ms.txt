@@ -1122,3 +1122,26 @@ Cobalto	Kobalt
 Azul noche en tres columnas: el mapa se difumina hasta el reproductor de carátula redonda, y tu vehículo muestra el velocímetro arriba, su foto en el medio y el mantenimiento abajo. La temperatura va sobre el mapa.	Biru malam dalam tiga lajur: peta pudar ke pemain dengan kulit bulat, dan kenderaan anda menunjukkan meter laju di atas, fotonya di tengah dan penyelenggaraan di bawah. Suhu di atas peta.
 Gratis	Percuma
 Gratis para todos. Los próximos temas premium se desbloquearán con una donación.	Percuma untuk semua. Tema premium seterusnya akan dibuka dengan derma.
+Radar	Kamera laju
++ Añadir parada intermedia	+ Tambah hentian perantaraan
+incidente	insiden
+incidentes	insiden
+incidente en la ruta	insiden di laluan
+incidentes en la ruta	insiden di laluan
+Incidentes en la ruta	Insiden di laluan
+Consulta cierres o accidentes una sola vez al calcular ruta (TomTom)	Semak penutupan atau kemalangan sekali semasa mengira laluan (TomTom)
+Límite y alerta de velocidad	Had laju dan amaran
+Muestra la señal de límite en el mapa y avisa al excederlo	Tunjukkan papan had laju pada peta dan beri amaran apabila melebihinya
+Tolerancia de exceso	Toleransi melebihi had
+Margen sobre el límite antes de activar alerta	Margin melebihi had sebelum amaran berbunyi
+Sonido al exceder límite	Bunyi apabila melebihi had
+Pitido de alerta cuando superas la tolerancia	Bunyi bip apabila melebihi toleransi
+Alertas de radares sin conexión	Amaran kamera laju luar talian
+Avisa al acercarse a radares del mapa local .map	Beri amaran apabila menghampiri kamera laju dalam peta .map tempatan
+Vía cerrada	Jalan ditutup
+Carril cerrado	Lorong ditutup
+Accidente	Kemalangan
+Obras en la vía	Kerja jalan raya
+Tráfico detenido	Trafik terhenti
+Incidente en la vía	Insiden jalan raya
+Radar de velocidad adelante	Kamera laju di hadapan

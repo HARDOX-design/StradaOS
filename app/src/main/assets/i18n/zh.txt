@@ -1122,3 +1122,26 @@ Cobalto	钴蓝
 Azul noche en tres columnas: el mapa se difumina hasta el reproductor de carátula redonda, y tu vehículo muestra el velocímetro arriba, su foto en el medio y el mantenimiento abajo. La temperatura va sobre el mapa.	三栏夜蓝风格：地图渐隐到圆形封面的播放器，车辆卡片上方是车速表、中间是车辆照片、下方是保养。温度显示在地图上方。
 Gratis	免费
 Gratis para todos. Los próximos temas premium se desbloquearán con una donación.	对所有人免费。之后的高级主题将通过捐赠解锁。
+Radar	测速摄像头
++ Añadir parada intermedia	+ 添加途经点
+incidente	事件
+incidentes	事件
+incidente en la ruta	路线上的事件
+incidentes en la ruta	路线上的事件
+Incidentes en la ruta	路线事件
+Consulta cierres o accidentes una sola vez al calcular ruta (TomTom)	计算路线时查询一次封路或事故（TomTom）
+Límite y alerta de velocidad	限速与提醒
+Muestra la señal de límite en el mapa y avisa al excederlo	在地图上显示限速标志，超速时提醒
+Tolerancia de exceso	超速容差
+Margen sobre el límite antes de activar alerta	触发提醒前允许超出限速的幅度
+Sonido al exceder límite	超速提示音
+Pitido de alerta cuando superas la tolerancia	超出容差时发出提示音
+Alertas de radares sin conexión	离线测速摄像头提醒
+Avisa al acercarse a radares del mapa local .map	接近本地 .map 地图中的测速摄像头时提醒
+Vía cerrada	道路封闭
+Carril cerrado	车道封闭
+Accidente	事故
+Obras en la vía	道路施工
+Tráfico detenido	交通停滞
+Incidente en la vía	道路事件
+Radar de velocidad adelante	前方测速摄像头

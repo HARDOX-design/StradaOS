@@ -1122,3 +1122,26 @@ Cobalto	Cobalt
 Azul noche en tres columnas: el mapa se difumina hasta el reproductor de carátula redonda, y tu vehículo muestra el velocímetro arriba, su foto en el medio y el mantenimiento abajo. La temperatura va sobre el mapa.	Bleu nuit sur trois colonnes : la carte se fond jusqu'au lecteur à pochette ronde, et votre véhicule affiche le compteur en haut, sa photo au milieu et l'entretien en bas. La température est au-dessus de la carte.
 Gratis	Gratuit
 Gratis para todos. Los próximos temas premium se desbloquearán con una donación.	Gratuit pour tous. Les prochains thèmes premium se débloqueront avec un don.
+Radar	Radar
++ Añadir parada intermedia	+ Ajouter une étape
+incidente	incident
+incidentes	incidents
+incidente en la ruta	incident sur l'itinéraire
+incidentes en la ruta	incidents sur l'itinéraire
+Incidentes en la ruta	Incidents sur l'itinéraire
+Consulta cierres o accidentes una sola vez al calcular ruta (TomTom)	Vérifie les fermetures ou accidents une seule fois au calcul de l'itinéraire (TomTom)
+Límite y alerta de velocidad	Limite et alerte de vitesse
+Muestra la señal de límite en el mapa y avisa al excederlo	Affiche le panneau de limite sur la carte et alerte en cas de dépassement
+Tolerancia de exceso	Tolérance de dépassement
+Margen sobre el límite antes de activar alerta	Marge au-dessus de la limite avant l'alerte
+Sonido al exceder límite	Son en cas de dépassement
+Pitido de alerta cuando superas la tolerancia	Bip d'alerte quand vous dépassez la tolérance
+Alertas de radares sin conexión	Alertes radars hors ligne
+Avisa al acercarse a radares del mapa local .map	Alerte à l'approche des radars de la carte locale .map
+Vía cerrada	Route fermée
+Carril cerrado	Voie fermée
+Accidente	Accident
+Obras en la vía	Travaux
+Tráfico detenido	Circulation à l'arrêt
+Incidente en la vía	Incident sur la route
+Radar de velocidad adelante	Radar de vitesse devant

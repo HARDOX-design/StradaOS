@@ -1122,3 +1122,26 @@ Cobalto	كوبالت
 Azul noche en tres columnas: el mapa se difumina hasta el reproductor de carátula redonda, y tu vehículo muestra el velocímetro arriba, su foto en el medio y el mantenimiento abajo. La temperatura va sobre el mapa.	أزرق ليلي في ثلاثة أعمدة: تتلاشى الخريطة حتى مشغّل الموسيقى ذي الغلاف الدائري، وتعرض مركبتك عداد السرعة في الأعلى وصورتها في الوسط والصيانة في الأسفل. درجة الحرارة فوق الخريطة.
 Gratis	مجاني
 Gratis para todos. Los próximos temas premium se desbloquearán con una donación.	مجاني للجميع. ستُفتح السمات المميزة القادمة بتبرع.
+Radar	رادار
++ Añadir parada intermedia	+ إضافة محطة توقف
+incidente	حادث
+incidentes	حوادث
+incidente en la ruta	حادث على المسار
+incidentes en la ruta	حوادث على المسار
+Incidentes en la ruta	حوادث على المسار
+Consulta cierres o accidentes una sola vez al calcular ruta (TomTom)	يتحقق من الإغلاقات أو الحوادث مرة واحدة عند حساب المسار (TomTom)
+Límite y alerta de velocidad	حد السرعة والتنبيه
+Muestra la señal de límite en el mapa y avisa al excederlo	يعرض لافتة حد السرعة على الخريطة وينبّه عند تجاوزه
+Tolerancia de exceso	هامش التجاوز
+Margen sobre el límite antes de activar alerta	الهامش فوق الحد قبل تفعيل التنبيه
+Sonido al exceder límite	صوت عند تجاوز الحد
+Pitido de alerta cuando superas la tolerancia	صفارة تنبيه عند تجاوز الهامش
+Alertas de radares sin conexión	تنبيهات الرادار دون اتصال
+Avisa al acercarse a radares del mapa local .map	ينبّه عند الاقتراب من رادارات الخريطة المحلية .map
+Vía cerrada	طريق مغلق
+Carril cerrado	مسار مغلق
+Accidente	حادث سير
+Obras en la vía	أعمال طرق
+Tráfico detenido	حركة مرور متوقفة
+Incidente en la vía	حادث على الطريق
+Radar de velocidad adelante	رادار سرعة أمامك
