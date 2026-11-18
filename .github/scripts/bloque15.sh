@@ -45,14 +45,14 @@ go tema-premium: 6
 # ── Línea de tiempo con Android Auto (caso de Andrés, 18 nov.): canción por «rcc» sin tiempo y la
 # notificación de Open Headunit con el tiempo. Al adelantar en el celular, StradaOS debe seguir a la notificación.
 go aa-simular:1 2
-go 'aa-rcc:Todo_Va_a_Estar_Bien|191' 3
-go 'aa-notif:Todo_Va_a_Estar_Bien|2|191' 3; shot a01-tiempo-al-empezar
-go 'aa-notif:Todo_Va_a_Estar_Bien|154|191' 2; shot a02-adelanto-a-2-34
-go 'aa-notif:Todo_Va_a_Estar_Bien|156|191' 2; shot a03-sigue-sin-saltos
-go 'aa-notif:Todo_Va_a_Estar_Bien|30|191' 2; shot a04-atraso-a-0-30
-go 'aa-rcc:La_Bondad_De_Dios|294' 2; go 'aa-notif:La_Bondad_De_Dios|1|294' 2; shot a05-cancion-nueva
-go 'aa-notif:La_Bondad_De_Dios|207|294' 2; shot a06-adelanto-a-3-27
-go tema-premium:cobalto 6; go 'aa-notif:La_Bondad_De_Dios|120|294' 3; shot a07-cobalto-adelanto-2-00
+go 'aa-rcc:Todo_Va_a_Estar_Bien,191' 3
+go 'aa-notif:Todo_Va_a_Estar_Bien,2,191' 3; shot a01-tiempo-al-empezar
+go 'aa-notif:Todo_Va_a_Estar_Bien,154,191' 2; shot a02-adelanto-a-2-34
+go 'aa-notif:Todo_Va_a_Estar_Bien,156,191' 2; shot a03-sigue-sin-saltos
+go 'aa-notif:Todo_Va_a_Estar_Bien,30,191' 2; shot a04-atraso-a-0-30
+go 'aa-rcc:La_Bondad_De_Dios,294' 2; go 'aa-notif:La_Bondad_De_Dios,1,294' 2; shot a05-cancion-nueva
+go 'aa-notif:La_Bondad_De_Dios,207,294' 2; shot a06-adelanto-a-3-27
+go tema-premium:cobalto 6; go 'aa-notif:La_Bondad_De_Dios,120,294' 3; shot a07-cobalto-adelanto-2-00
 go tema-premium: 6
 go aa-simular:0 2
 

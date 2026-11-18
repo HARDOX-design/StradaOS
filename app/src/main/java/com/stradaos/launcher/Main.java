@@ -678,16 +678,17 @@ public class Main extends Activity {
                     aaCheckedAt = 0;
                 }
                 else if (v.startsWith("aa-rcc:")) {
-                    // canción por el control remoto de Open Headunit, sin tiempo: «aa-rcc:Título|duración_s»
-                    String[] a = v.substring(7).split("\\|");
+                    // canción por el control remoto de Open Headunit, sin tiempo: «aa-rcc:Título,duración_s»
+                    // (con coma: «|» lo corta la consola del equipo)
+                    String[] a = v.substring(7).split(",");
                     NowPlaying.Track t = new NowPlaying.Track();
                     t.origin = "rcc"; t.title = a[0].replace('_', ' '); t.artist = "StradaOS"; t.source = "Android Auto";
                     t.durationMs = a.length > 1 ? Long.parseLong(a[1]) * 1000 : -1; t.playing = true;
                     showTrack(t);
                 }
                 else if (v.startsWith("aa-notif:")) {
-                    // notificación de Open Headunit con el tiempo: «aa-notif:Título|posición_s|duración_s»
-                    String[] a = v.substring(9).split("\\|");
+                    // notificación de Open Headunit con el tiempo: «aa-notif:Título,posición_s,duración_s»
+                    String[] a = v.substring(9).split(",");
                     long ps = Long.parseLong(a[1]), ds = Long.parseLong(a[2]);
                     String prog = String.format(Locale.US, "%02d:%02d / %02d:%02d", ps / 60, ps % 60, ds / 60, ds % 60);
                     java.util.List<String> tx = new java.util.ArrayList<String>();
