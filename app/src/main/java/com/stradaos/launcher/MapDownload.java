@@ -135,7 +135,8 @@ public class MapDownload {
                 {"bosnia-herzegovina", "BA"}, {"taiwan", "TW"}, {"brunei", "BN"}, {"micronesia", "FM"},
                 {"polynesie-francaise", "PF"}, {"wallis-et-futuna", "WF"}, {"pitcairn-islands", "PN"},
                 {"saint-helena-ascension-and-tristan-da-cunha", "SH"}, {"moldova", "MD"}, {"bolivia", "BO"},
-                {"venezuela", "VE"}, {"tanzania", "TZ"}, {"turkey", "TR"}, {"netherlands", "NL"}};
+                {"venezuela", "VE"}, {"tanzania", "TZ"}, {"turkey", "TR"}, {"netherlands", "NL"},
+                {"sao-tome-and-principe", "ST"}, {"comores", "KM"}};
             for (String[] a : alias) m.put(a[0], cn(a[1]));
             countries = m;
         }
@@ -144,15 +145,20 @@ public class MapDownload {
         if ("malaysia-singapore-brunei".equals(slug)) return cns("MY", "SG", "BN");
         if ("haiti-and-domrep".equals(slug)) return cns("HT", "DO");
         if ("guernsey-jersey".equals(slug)) return cns("GG", "JE");
-        if ("ireland-and-northern-ireland".equals(slug)) return cn("IE") + ", " + I18n.t("Irlanda del Norte");
+        if ("ireland-and-northern-ireland".equals(slug)) return cn("IE") + sep() + I18n.t("Irlanda del Norte");
         if ("canary-islands".equals(slug)) return I18n.t("Islas Canarias");
         String n = countries.get(slug);
         if (n != null && n.length() > 0) return n;
+        // países partidos en varios archivos: «new-zealand-1» → Nueva Zelanda 1
+        java.util.regex.Matcher part = java.util.regex.Pattern.compile("(.+)-(\\d+)").matcher(slug);
+        if (part.matches()) return place(part.group(1)) + " " + part.group(2);
+        // «us-midwest» → Estados Unidos (Midwest)
+        if (slug.startsWith("us-")) return cn("US") + " (" + pretty(slug.substring(3)) + ")";
         // «israel-and-palestine», «senegal-and-gambia»…
         int and = slug.indexOf("-and-");
         if (and > 0) {
             String a = countries.get(slug.substring(0, and)), b = countries.get(slug.substring(and + 5));
-            if (a != null && b != null && a.length() > 0 && b.length() > 0) return a + ", " + b;
+            if (a != null && b != null && a.length() > 0 && b.length() > 0) return a + sep() + b;
         }
         return pretty(slug);
     }
@@ -165,8 +171,14 @@ public class MapDownload {
 
     private static String cns(String... ccs) {
         StringBuilder b = new StringBuilder();
-        for (String cc : ccs) { if (b.length() > 0) b.append(", "); b.append(cn(cc)); }
+        for (String cc : ccs) { if (b.length() > 0) b.append(sep()); b.append(cn(cc)); }
         return b.toString();
+    }
+
+    /** Separador de listas: «، » en árabe, «、» en chino, «, » en los demás. */
+    private static String sep() {
+        String l = I18n.loc.getLanguage();
+        return "ar".equals(l) ? "، " : "zh".equals(l) ? "、" : ", ";
     }
 
     private static String pretty(String slug) {
