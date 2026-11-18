@@ -672,6 +672,31 @@ public class Main extends Activity {
                 else if ("cajon".equals(v)) openDrawer();
                 else if ("ocultas".equals(v)) manageHidden(null);
                 else if ("salir-fabrica".equals(v)) openFactoryLauncher();
+                else if (v.startsWith("aa-simular:")) {
+                    // simula Android Auto conectado (solo StradaOS Prueba, se pierde al cerrar la app)
+                    aaSim = v.endsWith("1");
+                    aaCheckedAt = 0;
+                }
+                else if (v.startsWith("aa-rcc:")) {
+                    // canción por el control remoto de Open Headunit, sin tiempo: «aa-rcc:Título|duración_s»
+                    String[] a = v.substring(7).split("\\|");
+                    NowPlaying.Track t = new NowPlaying.Track();
+                    t.origin = "rcc"; t.title = a[0].replace('_', ' '); t.artist = "StradaOS"; t.source = "Android Auto";
+                    t.durationMs = a.length > 1 ? Long.parseLong(a[1]) * 1000 : -1; t.playing = true;
+                    showTrack(t);
+                }
+                else if (v.startsWith("aa-notif:")) {
+                    // notificación de Open Headunit con el tiempo: «aa-notif:Título|posición_s|duración_s»
+                    String[] a = v.substring(9).split("\\|");
+                    long ps = Long.parseLong(a[1]), ds = Long.parseLong(a[2]);
+                    String prog = String.format(Locale.US, "%02d:%02d / %02d:%02d", ps / 60, ps % 60, ds / 60, ds % 60);
+                    java.util.List<String> tx = new java.util.ArrayList<String>();
+                    tx.add(a[0].replace('_', ' ')); tx.add("StradaOS"); tx.add(prog);
+                    NotifArt.lastTitle = tx.get(0); NotifArt.lastArtist = "StradaOS";
+                    NotifArt.lastPosMs = ps * 1000; NotifArt.lastDurMs = ds * 1000; NotifArt.lastPlaying = Boolean.TRUE;
+                    NotifArt.lastTexts = tx; NotifArt.lastAt = SystemClock.elapsedRealtime();
+                    applyAaNotif(curArt, tx);
+                }
                 else if ("pista-demo".equals(v) || v.startsWith("pista-demo:")) {
                     // canción de ejemplo con duración y posición, para ver la línea de tiempo en las capturas
                     // («pista-demo:Night_Drive» cambia el título; «_» = espacio)
@@ -5951,7 +5976,13 @@ public class Main extends Activity {
         if (t.durationMs > 0) durMs = t.durationMs;
         if (t.artSet) curArt = t.art;
         long pos = currentPos();
-        if (t.positionMs >= 0) { pos = t.positionMs; posKnown = true; posSrc = String.valueOf(t.origin); }
+        if (t.positionMs >= 0) {
+            // Con Android Auto, el tiempo bueno es el de la notificación de Open Headunit: si otra fuente (Bluetooth)
+            // manda uno que se aleja más de 3 s, es el que no se corrigió al adelantar en el celular y se ignora.
+            long aa = "aa".equals(t.origin) ? -1 : aaPosNow();
+            if (aa >= 0 && Math.abs(t.positionMs - aa) > 3000) { pos = aa; posKnown = true; posSrc = "Android Auto"; }
+            else { pos = t.positionMs; posKnown = true; posSrc = String.valueOf(t.origin); }
+        }
         if (t.playing != null) {
             playingState = t.playing;
         }
@@ -5974,7 +6005,10 @@ public class Main extends Activity {
      * Open Headunit sigue corriendo después de quitar el cable, así que el proceso solo no basta.
      * Se revisa cada 3 s como máximo.
      */
+    private static boolean aaSim;   // gancho «aa-simular:1» (pruebas)
+
     private boolean aaRunning() {
+        if (aaSim) return true;
         long now = SystemClock.elapsedRealtime();
         if (now - aaCheckedAt > 3000) {
             aaCheckedAt = now;
@@ -6095,9 +6129,13 @@ public class Main extends Activity {
             return;
         }
         boolean own = "aa".equals(curOrigin);
-        if (art == null && !own) return;
         // Al quitar el cable Open Headunit manda una última notificación: sin Android Auto no se pone su carátula.
         if (!aaRunning()) return;
+        if (art == null && !own) {
+            // sin carátula no cambia la etiqueta ni la carátula, pero el tiempo sí se corrige
+            if (fresh && aaFixPos(now)) renderTrack();
+            return;
+        }
         if (aaWaitTitle != null && sameTitle(aaWaitTitle, curTitle)) { aaWaitTitle = null; h.removeCallbacks(aaWait); }
         if (art != null) curArt = art;
         curSource = "Android Auto";
@@ -6107,8 +6145,36 @@ public class Main extends Activity {
             if (NotifArt.lastDurMs > 0) durMs = NotifArt.lastDurMs;
             if (NotifArt.lastPosMs >= 0) { posBaseMs = NotifArt.lastPosMs; posBaseAt = now; posKnown = true; posSrc = "Android Auto"; }
             if (NotifArt.lastPlaying != null) playingState = NotifArt.lastPlaying;
+        } else if (fresh) {
+            aaFixPos(now);
         }
         renderTrack();
+    }
+
+    /**
+     * La canción llega por otra fuente (el control remoto de Open Headunit, «rcc», o Bluetooth), que no trae el
+     * tiempo o no lo corrige al adelantar desde el celular (Andrés, 18 nov.: adelantó de 0:46 a 2:34 y StradaOS
+     * siguió en 1:11). La notificación de Open Headunit sí lo trae cada segundo: si se aleja más de 3 s de lo que
+     * cuenta StradaOS, manda la notificación. Con 3 s de margen no se mueve por el redondeo. Devuelve si corrigió.
+     */
+    private boolean aaFixPos(long now) {
+        if (NotifArt.lastPosMs < 0) return false;
+        if (durMs <= 0 && NotifArt.lastDurMs > 0) durMs = NotifArt.lastDurMs;
+        if (posKnown && Math.abs(currentPos() - NotifArt.lastPosMs) <= 3000) return false;
+        posBaseMs = NotifArt.lastPosMs;
+        posBaseAt = now;
+        posKnown = true;
+        posSrc = "Android Auto (corregido)";
+        return true;
+    }
+
+    /** Tiempo de la notificación de Open Headunit si es de la canción actual y de hace 5 s o menos; si no, -1. */
+    private long aaPosNow() {
+        if (NotifArt.lastPosMs < 0 || NotifArt.lastAt == 0 || curTitle == null) return -1;
+        long age = SystemClock.elapsedRealtime() - NotifArt.lastAt;
+        if (age > 5000 || !aaRunning()) return -1;
+        if (!sameTitle(NotifArt.lastTitle, curTitle) && !textsMatch(NotifArt.lastTexts, curTitle)) return -1;
+        return NotifArt.lastPosMs + (Boolean.FALSE.equals(NotifArt.lastPlaying) ? 0 : age);
     }
 
     private void showPlayerDiag() {
