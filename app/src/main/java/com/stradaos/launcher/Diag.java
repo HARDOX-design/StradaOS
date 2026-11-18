@@ -84,6 +84,9 @@ public class Diag {
             bw.println();
             bw.println("Eventos Bluetooth de StradaOS:");
             bw.println(BtBridge.logText());
+            bw.println();
+            bw.println(Hcn.report());
+            bw.println("Bluetooth del sistema (AVRCP): " + NowPlaying.avrcpCount + " avisos · último: " + NowPlaying.avrcpLast);
         } catch (Throwable e) {
             if (bw != null) bw.println("ERROR: " + e);
         } finally {

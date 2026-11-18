@@ -107,6 +107,7 @@ public class NowPlaying {
                 if (x == null) return;
                 String a = i.getAction();
                 if (handleVendor(a, x)) return;
+                if (AvrcpMeta.ACTION.equals(a) && android.os.Build.VERSION.SDK_INT >= 21 && handleAvrcp(x)) return;
                 Track t = new Track();
                 t.title = str(x, "track", "title", "song", "name", "com.maxmpz.audioplayer.TRACK", "id3_title", "music_title", "TITLE");
                 t.artist = str(x, "artist", "singer", "id3_artist", "music_artist", "ARTIST");
@@ -188,6 +189,35 @@ public class NowPlaying {
             return true;
         }
         return false;
+    }
+
+    // ── Bluetooth del sistema (AVRCP de Android 5+): para el diagnóstico ──
+    static String avrcpLast = "ninguno";
+    static long avrcpAt;
+    static int avrcpCount;
+
+    /** Aviso TRACK_EVENT del Bluetooth del sistema: canción (MediaMetadata) y/o estado (PlaybackState). */
+    private boolean handleAvrcp(Bundle x) {
+        Track t = new Track();
+        t.origin = "bt";
+        t.source = "Bluetooth";
+        int got = AvrcpMeta.fill(x, t);
+        if (got == 0) return false;
+        if ((got & AvrcpMeta.META) != 0) {
+            btTitle = t.title;
+            btArtist = t.artist;
+        } else {
+            t.title = btTitle;   // el aviso de estado no trae la canción: se usa la última conocida
+            t.artist = btArtist;
+        }
+        avrcpCount++;
+        avrcpAt = android.os.SystemClock.elapsedRealtime();
+        avrcpLast = "«" + btTitle + "» — " + btArtist
+                + (t.playing == null ? "" : t.playing ? " · sonando" : " · en pausa")
+                + (t.positionMs >= 0 ? " · " + (t.positionMs / 1000) + " s" : "");
+        if (t.title == null && t.artist == null && t.playing == null) return true;
+        emit(t);
+        return true;
     }
 
     private String sourceFromAction(String a) {
