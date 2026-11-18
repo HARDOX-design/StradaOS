@@ -1145,3 +1145,13 @@ Obras en la vía	Lavori in corso
 Tráfico detenido	Traffico fermo
 Incidente en la vía	Evento sulla strada
 Radar de velocidad adelante	Autovelox più avanti
+Brillo de la pantalla	Luminosità dello schermo
+Amanecer y atardecer: se calcula con el GPS, sin internet. Brillo: para pantallas que bajan el brillo al encender las luces	Alba e tramonto: calcolati con il GPS, senza internet. Luminosità: per gli schermi che si abbassano quando accendi i fari
+Brillo actual	Luminosità attuale
+Prende y apaga las luces del carro para ver cuánto cambia	Accendi e spegni i fari dell'auto per vedere quanto cambia
+Oscuro con brillo menor a	Scuro con luminosità sotto
+Elige un nivel entre el brillo de día y el de noche	Scegli un livello tra la luminosità di giorno e quella di notte
+Esta pantalla no informa su brillo	Questo schermo non comunica la sua luminosità
+Países del Golfo	Paesi del Golfo
+Irlanda del Norte	Irlanda del Nord
+Islas Canarias	Isole Canarie

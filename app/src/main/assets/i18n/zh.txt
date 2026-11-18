@@ -1145,3 +1145,13 @@ Obras en la vía	道路施工
 Tráfico detenido	交通停滞
 Incidente en la vía	道路事件
 Radar de velocidad adelante	前方测速摄像头
+Brillo de la pantalla	屏幕亮度
+Amanecer y atardecer: se calcula con el GPS, sin internet. Brillo: para pantallas que bajan el brillo al encender las luces	日出和日落：用 GPS 计算，无需联网。亮度：适用于开车灯时会调暗的屏幕
+Brillo actual	当前亮度
+Prende y apaga las luces del carro para ver cuánto cambia	开关车灯，看看亮度变化多少
+Oscuro con brillo menor a	亮度低于此值时为深色
+Elige un nivel entre el brillo de día y el de noche	在白天和夜间亮度之间选一个值
+Esta pantalla no informa su brillo	此屏幕不提供亮度信息
+Países del Golfo	海湾国家
+Irlanda del Norte	北爱尔兰
+Islas Canarias	加那利群岛

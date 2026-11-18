@@ -1145,3 +1145,13 @@ Obras en la vía	أعمال طرق
 Tráfico detenido	حركة مرور متوقفة
 Incidente en la vía	حادث على الطريق
 Radar de velocidad adelante	رادار سرعة أمامك
+Brillo de la pantalla	سطوع الشاشة
+Amanecer y atardecer: se calcula con el GPS, sin internet. Brillo: para pantallas que bajan el brillo al encender las luces	الشروق والغروب: يُحسب بالـ GPS دون إنترنت. السطوع: للشاشات التي يقل سطوعها عند تشغيل الأضواء
+Brillo actual	السطوع الحالي
+Prende y apaga las luces del carro para ver cuánto cambia	شغّل أضواء السيارة وأطفئها لترى مقدار التغيّر
+Oscuro con brillo menor a	داكن عندما يكون السطوع أقل من
+Elige un nivel entre el brillo de día y el de noche	اختر مستوى بين سطوع النهار وسطوع الليل
+Esta pantalla no informa su brillo	هذه الشاشة لا تُبلغ عن سطوعها
+Países del Golfo	دول الخليج
+Irlanda del Norte	أيرلندا الشمالية
+Islas Canarias	جزر الكناري

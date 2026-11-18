@@ -1145,3 +1145,13 @@ Cobalto	Cobalt
 Azul noche en tres columnas: el mapa se difumina hasta el reproductor de carátula redonda, y tu vehículo muestra el velocímetro arriba, su foto en el medio y el mantenimiento abajo. La temperatura va sobre el mapa.	Night blue in three columns: the map fades into the player with a round cover, and your vehicle shows the speedometer on top, its photo in the middle and maintenance below. The temperature sits above the map.
 Gratis	Free
 Gratis para todos. Los próximos temas premium se desbloquearán con una donación.	Free for everyone. Upcoming premium themes will be unlocked with a donation.
+Brillo de la pantalla	Screen brightness
+Amanecer y atardecer: se calcula con el GPS, sin internet. Brillo: para pantallas que bajan el brillo al encender las luces	Sunrise and sunset: calculated with GPS, no internet. Brightness: for screens that dim when you turn on the lights
+Brillo actual	Current brightness
+Prende y apaga las luces del carro para ver cuánto cambia	Turn the car lights on and off to see how much it changes
+Oscuro con brillo menor a	Dark when brightness is below
+Elige un nivel entre el brillo de día y el de noche	Pick a level between your daytime and nighttime brightness
+Esta pantalla no informa su brillo	This screen doesn't report its brightness
+Países del Golfo	Gulf countries
+Irlanda del Norte	Northern Ireland
+Islas Canarias	Canary Islands

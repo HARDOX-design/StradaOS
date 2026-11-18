@@ -108,23 +108,65 @@ public class MapDownload {
     }
 
     private static java.util.HashMap<String, String> countries;
+    private static Locale countriesLoc;   // idioma con que se armó la tabla (al cambiar el idioma se rehace)
 
     /** Nombre del país en el idioma de la app (germany → Alemania), o el del archivo bien escrito. */
     private static String place(String slug) {
-        if (countries == null) {
+        if (countries == null || !I18n.loc.equals(countriesLoc)) {
+            countriesLoc = I18n.loc;
             java.util.HashMap<String, String> m = new java.util.HashMap<String, String>();
             for (String cc : Locale.getISOCountries()) {
                 Locale l = new Locale("", cc);
                 String en = l.getDisplayCountry(Locale.ENGLISH).toLowerCase(Locale.US).replace("&", "and").replace(' ', '-').replace(".", "").replace(",", "");
-                m.put(en, l.getDisplayCountry(I18n.loc));
+                String name = l.getDisplayCountry(I18n.loc);
+                m.put(en, name);
+                // «Myanmar (Burma)» → myanmar
+                int par = en.indexOf("-(");
+                if (par > 0 && !m.containsKey(en.substring(0, par))) m.put(en.substring(0, par), name);
             }
-            m.put("great-britain", new Locale("", "GB").getDisplayCountry(I18n.loc));
-            m.put("czech-republic", new Locale("", "CZ").getDisplayCountry(I18n.loc));
-            m.put("us", new Locale("", "US").getDisplayCountry(I18n.loc));
+            m.put("great-britain", cn("GB"));
+            m.put("czech-republic", cn("CZ"));
+            m.put("us", cn("US"));
+            // nombres del servidor de mapas que no coinciden con el nombre en inglés de Android
+            String[][] alias = {{"ivory-coast", "CI"}, {"east-timor", "TL"}, {"congo-brazzaville", "CG"},
+                {"congo-democratic-republic", "CD"}, {"macedonia", "MK"}, {"cape-verde", "CV"}, {"swaziland", "SZ"},
+                {"myanmar", "MM"}, {"burma", "MM"}, {"south-korea", "KR"}, {"north-korea", "KP"}, {"laos", "LA"},
+                {"syria", "SY"}, {"iran", "IR"}, {"russia", "RU"}, {"vietnam", "VN"}, {"palestine", "PS"},
+                {"bosnia-herzegovina", "BA"}, {"taiwan", "TW"}, {"brunei", "BN"}, {"micronesia", "FM"},
+                {"polynesie-francaise", "PF"}, {"wallis-et-futuna", "WF"}, {"pitcairn-islands", "PN"},
+                {"saint-helena-ascension-and-tristan-da-cunha", "SH"}, {"moldova", "MD"}, {"bolivia", "BO"},
+                {"venezuela", "VE"}, {"tanzania", "TZ"}, {"turkey", "TR"}, {"netherlands", "NL"}};
+            for (String[] a : alias) m.put(a[0], cn(a[1]));
             countries = m;
         }
+        // #34: regiones que el servidor trae juntas
+        if ("gcc-states".equals(slug)) return I18n.t("Países del Golfo") + " (" + cns("SA", "AE", "KW", "QA", "BH", "OM") + ")";
+        if ("malaysia-singapore-brunei".equals(slug)) return cns("MY", "SG", "BN");
+        if ("haiti-and-domrep".equals(slug)) return cns("HT", "DO");
+        if ("guernsey-jersey".equals(slug)) return cns("GG", "JE");
+        if ("ireland-and-northern-ireland".equals(slug)) return cn("IE") + ", " + I18n.t("Irlanda del Norte");
+        if ("canary-islands".equals(slug)) return I18n.t("Islas Canarias");
         String n = countries.get(slug);
-        return n != null && n.length() > 0 ? n : pretty(slug);
+        if (n != null && n.length() > 0) return n;
+        // «israel-and-palestine», «senegal-and-gambia»…
+        int and = slug.indexOf("-and-");
+        if (and > 0) {
+            String a = countries.get(slug.substring(0, and)), b = countries.get(slug.substring(and + 5));
+            if (a != null && b != null && a.length() > 0 && b.length() > 0) return a + ", " + b;
+        }
+        return pretty(slug);
+    }
+
+    /** Nombre de un país por su código ISO en el idioma de la app. */
+    private static String cn(String cc) {
+        String n = new Locale("", cc).getDisplayCountry(I18n.loc);
+        return n != null && n.length() > 0 ? n : cc;
+    }
+
+    private static String cns(String... ccs) {
+        StringBuilder b = new StringBuilder();
+        for (String cc : ccs) { if (b.length() > 0) b.append(", "); b.append(cn(cc)); }
+        return b.toString();
     }
 
     private static String pretty(String slug) {

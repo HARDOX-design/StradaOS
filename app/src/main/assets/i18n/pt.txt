@@ -1145,3 +1145,13 @@ Obras en la vía	Obras na via
 Tráfico detenido	Trânsito parado
 Incidente en la vía	Incidente na via
 Radar de velocidad adelante	Radar de velocidade à frente
+Brillo de la pantalla	Brilho da tela
+Amanecer y atardecer: se calcula con el GPS, sin internet. Brillo: para pantallas que bajan el brillo al encender las luces	Nascer e pôr do sol: calculado com o GPS, sem internet. Brilho: para telas que diminuem o brilho ao acender os faróis
+Brillo actual	Brilho atual
+Prende y apaga las luces del carro para ver cuánto cambia	Acenda e apague os faróis do carro para ver quanto muda
+Oscuro con brillo menor a	Escuro com brilho abaixo de
+Elige un nivel entre el brillo de día y el de noche	Escolha um nível entre o brilho de dia e o de noite
+Esta pantalla no informa su brillo	Esta tela não informa o brilho
+Países del Golfo	Países do Golfo
+Irlanda del Norte	Irlanda do Norte
+Islas Canarias	Ilhas Canárias

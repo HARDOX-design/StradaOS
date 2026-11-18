@@ -1145,3 +1145,13 @@ Obras en la vía	Travaux
 Tráfico detenido	Circulation à l'arrêt
 Incidente en la vía	Incident sur la route
 Radar de velocidad adelante	Radar de vitesse devant
+Brillo de la pantalla	Luminosité de l'écran
+Amanecer y atardecer: se calcula con el GPS, sin internet. Brillo: para pantallas que bajan el brillo al encender las luces	Lever et coucher du soleil : calculés avec le GPS, sans internet. Luminosité : pour les écrans qui baissent quand on allume les phares
+Brillo actual	Luminosité actuelle
+Prende y apaga las luces del carro para ver cuánto cambia	Allumez et éteignez les phares pour voir de combien elle change
+Oscuro con brillo menor a	Sombre si la luminosité est sous
+Elige un nivel entre el brillo de día y el de noche	Choisissez un niveau entre la luminosité de jour et celle de nuit
+Esta pantalla no informa su brillo	Cet écran n'indique pas sa luminosité
+Países del Golfo	Pays du Golfe
+Irlanda del Norte	Irlande du Nord
+Islas Canarias	Îles Canaries

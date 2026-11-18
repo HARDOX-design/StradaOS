@@ -1145,3 +1145,13 @@ Cobalto	Kobalt
 Azul noche en tres columnas: el mapa se difumina hasta el reproductor de carátula redonda, y tu vehículo muestra el velocímetro arriba, su foto en el medio y el mantenimiento abajo. La temperatura va sobre el mapa.	Üç sütunda gece mavisi: harita yuvarlak kapaklı oynatıcıya doğru solar; aracın üstte hız göstergesini, ortada fotoğrafını ve altta bakımı gösterir. Sıcaklık haritanın üstündedir.
 Gratis	Ücretsiz
 Gratis para todos. Los próximos temas premium se desbloquearán con una donación.	Herkes için ücretsiz. Sonraki premium temaların kilidi bağışla açılacak.
+Brillo de la pantalla	Ekran parlaklığı
+Amanecer y atardecer: se calcula con el GPS, sin internet. Brillo: para pantallas que bajan el brillo al encender las luces	Gün doğumu ve batımı: GPS ile, internetsiz hesaplanır. Parlaklık: farlar açılınca kararan ekranlar için
+Brillo actual	Mevcut parlaklık
+Prende y apaga las luces del carro para ver cuánto cambia	Ne kadar değiştiğini görmek için aracın farlarını açıp kapatın
+Oscuro con brillo menor a	Parlaklık şunun altındaysa koyu
+Elige un nivel entre el brillo de día y el de noche	Gündüz ve gece parlaklığı arasında bir seviye seçin
+Esta pantalla no informa su brillo	Bu ekran parlaklığını bildirmiyor
+Países del Golfo	Körfez ülkeleri
+Irlanda del Norte	Kuzey İrlanda
+Islas Canarias	Kanarya Adaları

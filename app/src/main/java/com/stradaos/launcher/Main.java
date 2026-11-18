@@ -215,8 +215,9 @@ public class Main extends Activity {
         setContentView(root);
         try {
             Location ll = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if (ll == null) ll = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            if (ll != null) { wLat = ll.getLatitude(); wLon = ll.getLongitude(); }
+            if (!validLoc(ll)) ll = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if (!validLoc(ll)) ll = savedLoc();
+            if (validLoc(ll)) { wLat = ll.getLatitude(); wLon = ll.getLongitude(); }
         } catch (Throwable ignored) { }
         if (prefs.contains("sun_lat")) { sunLat = prefs.getFloat("sun_lat", 0); sunLon = prefs.getFloat("sun_lon", 0); }
         if (!Double.isNaN(wLat)) sunSpot(wLat, wLon);
@@ -235,6 +236,10 @@ public class Main extends Activity {
         f.addAction(Intent.ACTION_PACKAGE_CHANGED);
         f.addDataScheme("package");
         registerReceiver(pkgReceiver, f);
+        try {
+            getContentResolver().registerContentObserver(
+                android.provider.Settings.System.getUriFor(android.provider.Settings.System.SCREEN_BRIGHTNESS), false, brightObs);
+        } catch (Throwable ignored) { }
         IntentFilter t = new IntentFilter(Intent.ACTION_TIME_TICK);
         t.addAction(Intent.ACTION_TIME_CHANGED);
         t.addAction(Intent.ACTION_TIMEZONE_CHANGED);
@@ -420,6 +425,7 @@ public class Main extends Activity {
 
     @Override
     protected void onDestroy() {
+        try { getContentResolver().unregisterContentObserver(brightObs); } catch (Throwable ignored) { }
         try { unregisterReceiver(screenReceiver); } catch (Throwable ignored) { }
         try { prefs.unregisterOnSharedPreferenceChangeListener(backupWatch); } catch (Throwable ignored) { }
         try { unregisterReceiver(pkgReceiver); } catch (Exception ignored) { }
@@ -845,6 +851,16 @@ public class Main extends Activity {
                 else if (v.startsWith("mapa-zoom:")) { if (liveMap != null) liveMap.setZoom(Integer.parseInt(v.substring(10))); }
                 else if ("mapa-buscar".equals(v)) pickMapFile();
                 else if ("mapa-diag".equals(v)) showMapDiag();
+                else if (v.startsWith("mapa-nombres:")) {
+                    // registro (StradaMapas) con el nombre que la lista de descargas le da a cada archivo de una carpeta
+                    final String folder = v.substring(13);
+                    new Thread(new Runnable() { public void run() {
+                        try {
+                            for (MapDownload.Entry e : MapDownload.list(folder))
+                                android.util.Log.w("StradaMapas", e.path + " = " + e.name);
+                        } catch (Throwable e) { android.util.Log.w("StradaMapas", folder + " error " + e); }
+                    }}).start();
+                }
                 else if (v.startsWith("mapa-lista")) chooseMapToDownload(v.length() > 11 ? v.substring(11) : "");
                 else if (v.startsWith("mapa-descargar:")) { String pth = v.substring(15); MapDownload.start(Main.this, pth, pth.substring(pth.lastIndexOf('/') + 1)); }
                 else if ("mapa-pausar".equals(v)) MapDownload.stop(false);
@@ -1742,7 +1758,7 @@ public class Main extends Activity {
     };
 
     private void odoStep(Location l) {
-        if (l == null) return;
+        if (!validLoc(l)) return;
         if (!odoNeeded()) return;
         if (l.hasAccuracy() && l.getAccuracy() > 40) return;
         if (odoLast == null) { odoLast = l; return; }
@@ -3107,13 +3123,53 @@ public class Main extends Activity {
         for (String p : new String[]{LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER, "passive"}) {
             try {
                 Location l = lm.getLastKnownLocation(p);
-                if (l != null && (best == null || l.getTime() > best.getTime())) best = l;
+                if (validLoc(l) && (best == null || l.getTime() > best.getTime())) best = l;
             } catch (Throwable ignored) { }
         }
-        if (best != null) feedMap(best);
+        if (best != null) { feedMap(best); return; }
+        // #37: la pantalla no recuerda ninguna ubicación buena (o solo el 0,0): se usa la última que guardó StradaOS.
+        // Solo ubica el mapa; no pasa por la navegación para no recalcular con una posición vieja.
+        Location sv = savedLoc();
+        if (sv == null) return;
+        if (Double.isNaN(wLat) || Double.isNaN(wLon)) { wLat = sv.getLatitude(); wLon = sv.getLongitude(); }
+        if (liveMap != null && !liveMap.hasFix()) {
+            liveMap.setPosition(sv.getLatitude(), sv.getLongitude(), Float.NaN, 0);
+            liveMap.setVisibility(View.VISIBLE);
+            updateMapTag();
+        }
+    }
+
+    /**
+     * #37 (jothaxc): algunas pantallas mandan 0,0 («Null Island», en medio del mar) cuando no hay señal, en túneles
+     * o al arrancar. Eso no es una ubicación: se ignora en el mapa, la navegación, el clima y el amanecer.
+     */
+    static boolean validLoc(Location l) {
+        if (l == null) return false;
+        double la = l.getLatitude(), lo = l.getLongitude();
+        if (Double.isNaN(la) || Double.isNaN(lo) || Math.abs(la) > 90 || Math.abs(lo) > 180) return false;
+        return Math.abs(la) > 0.0001 || Math.abs(lo) > 0.0001;
+    }
+
+    private long locSavedAt;
+
+    /** Guarda la última ubicación buena del GPS (cada 2 min como mucho) para cuando la pantalla arranque sin señal. */
+    private void saveLoc(Location l) {
+        long now = SystemClock.elapsedRealtime();
+        if (locSavedAt != 0 && now - locSavedAt < 120000) return;
+        locSavedAt = now;
+        prefs.edit().putFloat("last_lat", (float) l.getLatitude()).putFloat("last_lon", (float) l.getLongitude()).apply();
+    }
+
+    private Location savedLoc() {
+        if (prefs == null || !prefs.contains("last_lat")) return null;
+        Location l = new Location("saved");
+        l.setLatitude(prefs.getFloat("last_lat", 0));
+        l.setLongitude(prefs.getFloat("last_lon", 0));
+        return validLoc(l) ? l : null;
     }
 
     private void feedMap(Location l) {
+        if (l != null && !validLoc(l)) return;
         if (l != null) {
             wLat = l.getLatitude(); wLon = l.getLongitude();
             if (Nav.active != null) {
@@ -5665,11 +5721,13 @@ public class Main extends Activity {
 
     private final LocationListener gpsListener = new LocationListener() {
         public void onLocationChanged(Location l) {
+            if (!validLoc(l)) return;   // 0,0 sin señal (#37): cuenta como «sin GPS»
             lastFix = SystemClock.elapsedRealtime();
             lastFixAny = lastFix;
             setGps(true, l.hasSpeed() ? l.getSpeed() * 3.6f : 0);
             feedMap(l);
             sunSpot(l.getLatitude(), l.getLongitude());
+            saveLoc(l);
         }
         public void onStatusChanged(String p, int st, Bundle e) { }
         public void onProviderEnabled(String p) { }
@@ -5678,7 +5736,7 @@ public class Main extends Activity {
 
     /** Ubicación por red (WiFi/datos): solo para ubicar el mapa mientras llega el GPS. */
     private final LocationListener netListener = new LocationListener() {
-        public void onLocationChanged(Location l) { if (lastFix == 0) feedMap(l); }
+        public void onLocationChanged(Location l) { if (lastFix == 0 && validLoc(l)) feedMap(l); }
         public void onStatusChanged(String p, int st, Bundle e) { }
         public void onProviderEnabled(String p) { }
         public void onProviderDisabled(String p) { }
@@ -6778,6 +6836,19 @@ public class Main extends Activity {
 
     /** Modo automático: ¿estamos en el horario oscuro? (por defecto de 6 p. m. a 6 a. m., como siempre). */
     private boolean darkHours() {
+        // #36 (RGalindo2004): pantallas que bajan el brillo al prender las luces → oscuro con poco brillo.
+        // Si la pantalla no informa su brillo, siguen las horas fijas.
+        if (prefs.getBoolean("auto_bright", false)) {
+            int b = brightnessPct();
+            if (b >= 0) {
+                int thr = prefs.getInt("bright_dark", 40);
+                // 5 puntos de margen para volver a claro: el brillo automático de algunas pantallas oscila
+                if (brightDark == null) brightDark = b < thr;
+                else if (brightDark && b >= thr + 5) brightDark = false;
+                else if (!brightDark && b < thr) brightDark = true;
+                return brightDark;
+            }
+        }
         Calendar c = Calendar.getInstance();
         int m = c.get(Calendar.HOUR_OF_DAY) * 60 + c.get(Calendar.MINUTE);
         int a = prefs.getInt("dark_start", 18 * 60), b = prefs.getInt("dark_end", 6 * 60);
@@ -6786,6 +6857,37 @@ public class Main extends Activity {
         if (a == b) return false;
         return a < b ? (m >= a && m < b) : (m >= a || m < b);
     }
+
+    private Boolean brightDark;
+
+    /** Brillo de la pantalla en % (0–100), o -1 si la pantalla no lo informa. */
+    private int brightnessPct() {
+        try {
+            int v = android.provider.Settings.System.getInt(getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, -1);
+            if (v < 0) return -1;
+            return Math.min(100, Math.round(v * 100f / 255f));
+        } catch (Throwable e) { return -1; }
+    }
+
+    /** Cambió el brillo: en «Auto · Brillo de la pantalla» se revisa el tema enseguida (con 0,8 s de espera). */
+    private final android.database.ContentObserver brightObs = new android.database.ContentObserver(new Handler(android.os.Looper.getMainLooper())) {
+        @Override public void onChange(boolean selfChange) {
+            try {
+                if (prefs == null || root == null || !"auto".equals(prefs.getString("theme", "dark")) || !prefs.getBoolean("auto_bright", false)) return;
+                h.removeCallbacks(brightApply);
+                h.postDelayed(brightApply, 800);
+            } catch (Throwable ignored) { }
+        }
+    };
+
+    private final Runnable brightApply = new Runnable() { public void run() {
+        try {
+            boolean was = LIGHT;
+            applyTheme();
+            if (was != LIGHT) { applyAccent(); rebuild(); }
+            else if (settingsView != null && settingsCat == C_LOOK) showSettings(settingsCat);   // «Brillo actual» al día
+        } catch (Throwable e) { Guard.log("Tema por brillo: " + e); }
+    }};
 
     /** Modo «Sistema»: sigue el modo oscuro de la pantalla (algunas lo activan al encender las luces del carro). */
     private boolean systemNight() {
@@ -7542,17 +7644,33 @@ public class Main extends Activity {
             }});
         if ("auto".equals(t)) {
             final boolean sunOn = prefs.getBoolean("auto_sun", false);
-            segmented(c, "Horario", "Amanecer y atardecer: se calcula con el GPS, sin internet", new String[]{"Horas fijas", "Amanecer y atardecer"},
-                sunOn ? 1 : 0, new IntCb() { public void on(int i) {
-                    prefs.edit().putBoolean("auto_sun", i == 1).apply();
+            final boolean brOn = prefs.getBoolean("auto_bright", false);
+            choice(c, "Horario", "Amanecer y atardecer: se calcula con el GPS, sin internet. Brillo: para pantallas que bajan el brillo al encender las luces",
+                new String[]{"Horas fijas", "Amanecer y atardecer", "Brillo de la pantalla"},
+                brOn ? 2 : sunOn ? 1 : 0, new IntCb() { public void on(int i) {
+                    prefs.edit().putBoolean("auto_sun", i == 1).putBoolean("auto_bright", i == 2).apply();
+                    brightDark = null;
                     applyTheme(); applyAccent(); rebuild(); showSettings(settingsCat);
                 }});
             int[] sun = sunToday();
-            if (sunOn && sun != null) {
+            final int bright = brOn ? brightnessPct() : -1;
+            if (brOn && bright >= 0) {
+                row(c, "Brillo actual", "Prende y apaga las luces del carro para ver cuánto cambia", bright + " %", null);
+                final int[] lv = {10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 90};
+                String[] lo = new String[lv.length];
+                int cur = prefs.getInt("bright_dark", 40), sel = 6;
+                for (int i = 0; i < lv.length; i++) { lo[i] = lv[i] + " %"; if (lv[i] == cur) sel = i; }
+                choice(c, "Oscuro con brillo menor a", "Elige un nivel entre el brillo de día y el de noche", lo, sel, new IntCb() { public void on(int i) {
+                    prefs.edit().putInt("bright_dark", lv[i]).apply();
+                    brightDark = null;
+                    applyTheme(); applyAccent(); rebuild(); showSettings(settingsCat);
+                }});
+            } else if (!brOn && sunOn && sun != null) {
                 row(c, "Hoy", I18n.t("Amanecer") + " " + fmtMinutes(sun[0]) + " · " + I18n.t("Atardecer") + " " + fmtMinutes(sun[1])
                     + " · " + I18n.t("oscuro desde el atardecer hasta el amanecer"), null, null);
             } else {
-                if (sunOn) row(c, "Esperando la ubicación del GPS", "Mientras tanto usa las horas fijas", "", null);
+                if (brOn) row(c, "Esta pantalla no informa su brillo", "Mientras tanto usa las horas fijas", "", null);
+                else if (sunOn) row(c, "Esperando la ubicación del GPS", "Mientras tanto usa las horas fijas", "", null);
                 row(c, "Oscuro desde", null, fmtMinutes(prefs.getInt("dark_start", 18 * 60)), new Runnable() { public void run() {
                     askDarkTime("dark_start", 18 * 60, "Oscuro desde");
                 }});

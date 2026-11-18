@@ -1145,3 +1145,13 @@ Obras en la vía	Kerja jalan raya
 Tráfico detenido	Trafik terhenti
 Incidente en la vía	Insiden jalan raya
 Radar de velocidad adelante	Kamera laju di hadapan
+Brillo de la pantalla	Kecerahan skrin
+Amanecer y atardecer: se calcula con el GPS, sin internet. Brillo: para pantallas que bajan el brillo al encender las luces	Matahari terbit dan terbenam: dikira dengan GPS, tanpa internet. Kecerahan: untuk skrin yang malap apabila lampu dihidupkan
+Brillo actual	Kecerahan semasa
+Prende y apaga las luces del carro para ver cuánto cambia	Hidupkan dan matikan lampu kereta untuk melihat berapa banyak ia berubah
+Oscuro con brillo menor a	Gelap apabila kecerahan di bawah
+Elige un nivel entre el brillo de día y el de noche	Pilih tahap antara kecerahan siang dan malam
+Esta pantalla no informa su brillo	Skrin ini tidak melaporkan kecerahannya
+Países del Golfo	Negara Teluk
+Irlanda del Norte	Ireland Utara
+Islas Canarias	Kepulauan Canary

@@ -1145,3 +1145,13 @@ Obras en la vía	Baustelle
 Tráfico detenido	Stillstand
 Incidente en la vía	Störung auf der Straße
 Radar de velocidad adelante	Blitzer voraus
+Brillo de la pantalla	Bildschirmhelligkeit
+Amanecer y atardecer: se calcula con el GPS, sin internet. Brillo: para pantallas que bajan el brillo al encender las luces	Sonnenauf- und -untergang: per GPS berechnet, ohne Internet. Helligkeit: für Bildschirme, die beim Einschalten des Lichts dunkler werden
+Brillo actual	Aktuelle Helligkeit
+Prende y apaga las luces del carro para ver cuánto cambia	Schalte das Licht am Auto ein und aus, um zu sehen, wie stark sie sich ändert
+Oscuro con brillo menor a	Dunkel bei Helligkeit unter
+Elige un nivel entre el brillo de día y el de noche	Wähle einen Wert zwischen der Helligkeit am Tag und in der Nacht
+Esta pantalla no informa su brillo	Dieser Bildschirm meldet seine Helligkeit nicht
+Países del Golfo	Golfstaaten
+Irlanda del Norte	Nordirland
+Islas Canarias	Kanarische Inseln
