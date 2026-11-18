@@ -2687,6 +2687,7 @@ public class Main extends Activity {
         if (premium && premBg != null) liveMap.setBackdrop(premBg, premBgHolder, Prem.mapAlpha(LIGHT));
         // Faro: un velo muy suave marca el área del mapa (debajo de las calles en trazo)
         if (premium && Prem.faro() && premBg != null) liveMap.setTint(LIGHT ? 0x40FFFFFF : 0x0DFFFFFF);
+        if (premium && Prem.faro()) liveMap.setAttribution(14 * s, 70 * s);
         // Cobalto: el mapa se difumina hasta donde empieza el reproductor (abajo, hacia las tarjetas, en vertical)
         if (premium && Prem.cob() && !mapOnly && premBg != null) liveMap.setFade(vertical ? 2 : 1, (vertical ? 150 : Math.max(260, mapW * 0.5f)) * s);
         liveMap.setVisibility(premium && Prem.faro() ? View.VISIBLE : View.INVISIBLE);
@@ -2803,7 +2804,7 @@ public class Main extends Activity {
         boolean hasPanel = nBtn > 0 || wx;
         final float panelY = hasPanel ? mapH - 96 : mapH, panelW = mapW - 24 - insL - insR;
         final FrameLayout panel = new FrameLayout(this);
-        panel.setBackground(round((CARD & 0x00FFFFFF) | 0xEB000000, 16));
+        panel.setBackground(round(faroT ? Faro.glass(LIGHT) : (CARD & 0x00FFFFFF) | 0xEB000000, 16));
         place(card, panel, 12 + insL, panelY, panelW, 84);
         if (!hasPanel) panel.setVisibility(View.GONE);
 
@@ -2888,14 +2889,16 @@ public class Main extends Activity {
         aaBtnTv = null; aaSubTv = null; cpSubTv = null;
         float x = 10;
         if (showAa) {
-            aa = projButton("navigation", "Android Auto", RED, true);
+            aa = projButton("navigation", "Android Auto", faroT ? Faro.tile(LIGHT) : RED, !faroT);
+            if (faroT) faroProj(aa, true);
             aaBtnTv = (TextView) aa.getTag();
             float w = nBtn == 2 || wx ? slotW : fullW;
             place(panel, aa, x, 10, w, 64);
             x += w + 8;
         }
         if (showCp) {
-            cp = projButton("phone_iphone", "CarPlay", BTN, false);
+            cp = projButton("phone_iphone", "CarPlay", faroT ? Faro.tile(LIGHT) : BTN, false);
+            if (faroT) faroProj(cp, false);
             cpSubTv = (TextView) cp.getTag();
             float w = nBtn == 2 || wx ? slotW : fullW;
             place(panel, cp, x, 10, w, 64);
@@ -2908,7 +2911,7 @@ public class Main extends Activity {
         // Android Auto / CarPlay plegables: una flechita los esconde para ver todo el mapa (Druids07, idea de Andrés).
         // Tocar o deslizar la flechita hacia arriba los muestra; hacia abajo (o deslizar los botones) los esconde.
         final FrameLayout handle = new FrameLayout(this);
-        handle.setBackground(round((CARD & 0x00FFFFFF) | 0xEB000000, 11));
+        handle.setBackground(round(faroT ? Faro.glass(LIGHT) : (CARD & 0x00FFFFFF) | 0xEB000000, 11));
         final ImageView chev = icon("chevron_right", 18);
         FrameLayout.LayoutParams clp = new FrameLayout.LayoutParams((int) (18 * s), (int) (18 * s));
         clp.gravity = Gravity.CENTER;
@@ -4462,8 +4465,9 @@ public class Main extends Activity {
         float x = faroColX, y = faroColY, w = faroColW, hh = faroColH;
         float D = carSpeed ? Math.min(w - 36, hh * (vertical ? 0.42f : 0.40f)) : 0;
         float gx = x + (w - D) / 2, gy = y + 6;
-        float labelY = carSpeed ? gy + D + 2 : y + 4, labelH = 22;
-        float carY = labelY + labelH + 4, carH = Math.max(60, y + hh - carY);
+        float labelH = 22, carMax = Math.min(hh * 0.66f, 320);
+        float labelY = carSpeed ? gy + D + 2 : y + Math.max(4, (hh - carMax - labelH - 4) * 0.45f);
+        float carY = labelY + labelH + 4, carH = Math.max(60, carSpeed ? y + hh - carY : Math.min(carMax, y + hh - carY));
         String col = Faro.car(prefs.getString("faro_car", "silver"));
         Faro.Car car = new Faro.Car(this, col, LIGHT);
         place(board, car, x, carY, w, carH);
@@ -4865,6 +4869,15 @@ public class Main extends Activity {
         mapTagTv = tv("", 13, TEXT, true);   // no se muestra: el estado del GPS va en el buscador
         navSearchBtn = null;
         mapTagBox = box;
+    }
+
+    /** Faro: botón de Android Auto / CarPlay en un recuadro neutro con borde fino; el acento solo en el ícono. */
+    private void faroProj(View b, boolean accentIcon) {
+        if (LIGHT && b.getBackground() instanceof GradientDrawable) ((GradientDrawable) b.getBackground()).setStroke(Math.max(1, (int) s), 0x14000000);
+        if (b instanceof LinearLayout && ((LinearLayout) b).getChildAt(0) instanceof ImageView) {
+            ImageView ic = (ImageView) ((LinearLayout) b).getChildAt(0);
+            if (accentIcon) ic.setColorFilter(RED); else ic.setColorFilter(TEXT);
+        }
     }
 
     /** El texto del buscador: el estado del GPS mientras no hay ubicación; luego «Ir a…» o «Navegar». */

@@ -41,7 +41,7 @@ final class Faro {
 
     // ── colores (oscuro / claro) ──
     static int base(boolean l) { return l ? 0xFFECEEF1 : 0xFF0B0C0F; }
-    static int glass(boolean l) { return l ? 0xCCFFFFFF : 0xB81A1C21; }
+    static int glass(boolean l) { return l ? 0xCCFFFFFF : 0x9E1A1C21; }
     static int glassEdge(boolean l) { return l ? 0xE6FFFFFF : 0x17FFFFFF; }
     static int pill(boolean l) { return l ? 0xD9FFFFFF : 0xE6141519; }
     static int pillEdge(boolean l) { return l ? 0xF2FFFFFF : 0x1AFFFFFF; }
@@ -88,28 +88,28 @@ final class Faro {
             new float[]{0f, 0.55f, 1f}, Shader.TileMode.CLAMP));
         c.drawRect(0, 0, w, h, p);
         // brillo detrás del velocímetro (arriba a la izquierda; en vertical, a la izquierda del medio)
-        float gx = tall ? w * 0.22f : w * 0.155f, gy = tall ? h * 0.52f : h * 0.24f, gr = Math.min(w, h) * (tall ? 0.40f : 0.36f);
+        float gx = tall ? w * 0.22f : w * 0.155f, gy = tall ? h * 0.56f : h * 0.20f, gr = Math.min(w, h) * (tall ? 0.36f : 0.36f);
         p.setShader(new RadialGradient(gx, gy, gr, new int[]{Aurora.a(light ? 0xFFFFFFFF : LAVENDER, light ? 0.85f : 0.05f),
             Aurora.a(light ? 0xFFFFFFFF : LAVENDER, light ? 0.30f : 0.015f), 0}, new float[]{0f, 0.55f, 1f}, Shader.TileMode.CLAMP));
         c.drawRect(0, 0, w, h, p);
         // haz diagonal: banda suave perpendicular a la diagonal (0,h)→(w,0)
         float diag = (float) Math.hypot(w, h), nx = h / diag, ny = w / diag;
-        float cx = w * 0.56f, cy = h * 0.54f, bw = diag * 0.24f;
+        float cx = w * 0.56f, cy = h * 0.54f, bw = diag * (light ? 0.24f : 0.20f);
         int core = light ? 0xFFFFFFFF : 0xFFC9D3E6;
-        float a = light ? 0.80f : 0.11f;
+        float a = light ? 0.80f : 0.17f;
         p.setShader(new LinearGradient(cx - nx * bw, cy - ny * bw, cx + nx * bw, cy + ny * bw,
             new int[]{0, Aurora.a(core, a * 0.30f), Aurora.a(core, a), Aurora.a(core, a * 0.30f), 0},
             new float[]{0f, 0.28f, 0.5f, 0.72f, 1f}, Shader.TileMode.CLAMP));
         c.drawRect(0, 0, w, h, p);
         // reflejo de borde nítido, paralelo al haz y un poco más abajo
         float ox = cx + nx * bw * 0.55f, oy = cy + ny * bw * 0.55f, sw = diag * 0.10f;
-        float a2 = light ? 0.45f : 0.045f;
+        float a2 = light ? 0.45f : 0.06f;
         p.setShader(new LinearGradient(ox - nx * sw, oy - ny * sw, ox + nx * sw, oy + ny * sw,
             new int[]{0, Aurora.a(core, a2 * 0.5f), Aurora.a(core, a2), 0, 0},
             new float[]{0f, 0.40f, 0.5f, 0.506f, 1f}, Shader.TileMode.CLAMP));
         c.drawRect(0, 0, w, h, p);
         // el haz se apaga hacia abajo a la izquierda (encima, el color de la base cada vez más opaco)
-        p.setShader(new LinearGradient(0, h, w * 0.5f, h * 0.5f, new int[]{Aurora.a(base, light ? 0.55f : 0.85f), Aurora.a(base, 0)},
+        p.setShader(new LinearGradient(0, h, w * 0.5f, h * 0.5f, new int[]{Aurora.a(base, light ? 0.55f : 0.70f), Aurora.a(base, 0)},
             null, Shader.TileMode.CLAMP));
         c.drawRect(0, 0, w, h, p);
         p.setShader(null);

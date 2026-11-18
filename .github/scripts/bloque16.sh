@@ -14,6 +14,13 @@ size() {  # tamaño de la pantalla, densidad 160
   sleep 6
 }
 size 1024x600
+# El emulador anuncia IPv6 pero la máquina de GitHub no tiene salida IPv6: sin esto no responden los servidores de rutas
+if [ "$API" -ge 21 ]; then
+  adb root >/dev/null 2>&1; sleep 4; adb wait-for-device
+  adb shell sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
+  adb shell sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1
+  sleep 3
+fi
 if [ "$API" -ge 23 ]; then adb install -r -g "$APK" | tail -1; else adb install -r "$APK" | tail -1; fi
 shot() {
   rm -f /tmp/shot.png; rm -rf /tmp/emushot; mkdir -p /tmp/emushot
@@ -39,11 +46,11 @@ demo; shot f01-faro-oscuro-mixto
 go pref:speedo=1 5; demo; shot f02-oscuro-analogico
 go pref:speedo=0 5; demo; shot f03-oscuro-digital
 go pref:speedo=2 5
-go tema:claro 1; shot f04a-apagando-faros; sleep 6; demo; shot f04-faro-claro
+go tema:claro 0; sleep 1.6; shot f04a-apagando-faros; sleep 6; demo; shot f04-faro-claro
 go pref:speedo=1 5; demo; shot f05-claro-analogico
 go pref:speedo=0 5; demo; shot f06-claro-digital
 go pref:speedo=2 5
-go tema:oscuro 1; sleep 0.4; shot f07a-encendiendo-faros; sleep 5; demo
+go tema:oscuro 0; sleep 1.8; shot f07a-encendiendo-faros; sleep 5; demo
 for c in red blue black white; do go pref:faro_car=$c 5; demo; shot f10-color-$c; done
 go tema:claro 6; for c in black red; do go pref:faro_car=$c 5; demo; shot f11-claro-color-$c; done
 go pref:faro_car=silver 5
@@ -56,7 +63,7 @@ go pref:faro_map=0 6
 go mapa-zoom:15 3; shot f16-zoom-15
 go mapa-zoom:17 3; shot f17-zoom-17
 # navegación integrada: límite de la vía en el velocímetro (si OSRM lo trae)
-go pref:nav_app=internal 5; go nav-ir:6.2707,-75.5653,Parque_Explora 15; demo; shot f18-navegando
+go pref:nav_app=internal 5; go inicio 4; go 'nav-ir:6.2702,-75.5660,Parque\ Explora' 25; go pista-demo:Night_Drive 3; sleep 4; shot f18-navegando
 sleep 8; shot f18b-navegando-2
 go nav-salir 4; go pref:nav_app= 5
 # sin mantenimientos, sin aceite, sin clima
@@ -77,7 +84,7 @@ go pref:car_speed=true 5
 go ajustes:11 5; adb shell input swipe 600 520 600 80 400; sleep 2; adb shell input swipe 600 520 600 80 400; sleep 2; adb shell input swipe 600 520 600 80 400; sleep 2; shot f30-galeria
 adb shell input swipe 600 520 600 80 400; sleep 2; shot f30b-galeria-2
 go ajustes:3 5; shot f31-pantalla-inicio-faro
-go clima 5; shot f32-detalle-clima
+go clima 5; shot f32-detalle-clima; adb shell input keyevent 4; sleep 3
 go idioma:en 6; demo; shot f40-ingles
 go idioma:ar 6; demo; shot f41-arabe
 go idioma:zh 6; demo; shot f42-chino

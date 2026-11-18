@@ -133,6 +133,10 @@ public class LiveMapView extends View {
     static int ink = -1;
     private int tint;
 
+    private float attrX = -1, attrY = -1;
+    /** Faro: dónde va la atribución de OSM (px; alineada a la izquierda), si no se navega. */
+    void setAttribution(float x, float y) { attrX = x; attrY = y; invalidate(); }
+
     /** Faro: un velo muy suave sobre el fondo (debajo de las líneas) para marcar el área del mapa. */
     void setTint(int color) { tint = color; invalidate(); }
 
@@ -517,6 +521,7 @@ public class LiveMapView extends View {
             String attr = anyFile ? I18n.t("© colaboradores de OpenStreetMap") + " · mapsforge"
                     : provider == 5 ? "© Esri, HERE, Garmin, © OpenStreetMap" : provider == 4 ? "© OpenStreetMap, SRTM · © OpenTopoMap" : I18n.t("© colaboradores de OpenStreetMap");
             float ax = w - text.measureText(attr) - 10 * s, ay = (Nav.active != null ? 96 : 14) * s;
+            if (attrY >= 0 && Nav.active == null) { ax = attrX; ay = attrY; }
             if (bd && fadeEdge == 1 && fadeLen > 0) {
                 // Cobalto: antes del difuminado (si no, queda detrás de la tarjeta del reproductor) y un poco más
                 // arriba para no rozar los botones de la esquina
