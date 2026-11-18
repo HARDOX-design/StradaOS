@@ -1,0 +1,102 @@
+name: Issue 5 (pantallas HCN)
+
+# Compila la rama y toma capturas de la 2.24.2: reproductor de pantallas HCN (#5) y Bluetooth del sistema (AVRCP).
+# Quedan en la rama «hcn-capturas».
+on:
+  workflow_dispatch:
+  push:
+    branches: [ 'wip-2.24.2' ]
+    paths-ignore: [ 'docs/**' ]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hcn5
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - run: ./gradlew --no-daemon assembleDebug
+      - run: cp app/build/outputs/apk/debug/*.apk app-prueba.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: apk
+          path: app-prueba.apk
+
+  emulador:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { api: 16, arch: x86 }
+          - { api: 27, arch: x86 }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: apk
+      - name: Canciones de prueba (con y sin etiquetas)
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null
+          mkdir -p musica
+          ffmpeg -loglevel error -f lavfi -i "sine=frequency=330:duration=244" -f lavfi -i "testsrc=size=320x320:rate=1" -frames:v 1 \
+            -map 0:a -map 1:v -c:a libmp3lame -b:a 32k -ac 1 -c:v mjpeg -disposition:v attached_pic -id3v2_version 3 \
+            -metadata title="Canción de Prueba HCN" -metadata artist="StradaOS Band" -metadata album="Pruebas" musica/prueba_hcn.mp3
+          ffmpeg -loglevel error -f lavfi -i "sine=frequency=440:duration=180" -c:a libmp3lame -b:a 32k -ac 1 \
+            -map_metadata -1 -write_id3v1 0 -id3v2_version 0 -write_xing 0 musica/Mi_Cancion-Sin_Etiquetas.mp3
+          ls -la musica
+      - name: Activar KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Emulador Android API ${{ matrix.api }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api }}
+          arch: ${{ matrix.arch }}
+          target: default
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -skin 1024x600
+          emulator-boot-timeout: 900
+          script: bash .github/scripts/hcn.sh ${{ matrix.api }} app-prueba.apk capturas/api${{ matrix.api }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hcn-api${{ matrix.api }}
+          path: capturas/
+
+  publicar:
+    needs: emulador
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: hcn-*
+          path: out
+          merge-multiple: true
+      - name: Subir capturas
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd out
+          echo "# Issue 5 · ${GITHUB_SHA::7}" > README.md
+          git init -q -b hcn-capturas
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Capturas issue 5 (${GITHUB_SHA::7})"
+          git push -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" hcn-capturas

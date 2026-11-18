@@ -160,6 +160,7 @@ public class Main extends Activity {
     private final List<Nav.Place> pendingStops = new ArrayList<Nav.Place>();
     private LiveMapView liveMap;
     private MediaWatcher mediaWatcher;
+    private Hcn hcn;   // pantallas HCN / Hengchen (issue #5)
     private boolean askedPerms;
     static final int SDK = android.os.Build.VERSION.SDK_INT;
     private PlayerArt playerArt;
@@ -275,6 +276,12 @@ public class Main extends Activity {
         bt = new BtBridge(this, new BtBridge.Listener() {
             public void onBtState(NowPlaying.Track t) { showTrack(t); }
         });
+        try {
+            hcn = new Hcn(this, new NowPlaying.Listener() {
+                public void onTrack(NowPlaying.Track t) { showTrack(t); }
+            });
+            hcn.start();   // en cualquier otra pantalla no hace nada
+        } catch (Throwable e) { hcn = null; }
         clwBt = BtBridge.available(this);
         prefs.registerOnSharedPreferenceChangeListener(backupWatch);
         try {
@@ -441,6 +448,7 @@ public class Main extends Activity {
         h.removeCallbacks(btTicker);
         h.removeCallbacks(aaWait);
         try { if (mediaWatcher != null) mediaWatcher.stop(); } catch (Throwable ignored) { }
+        try { if (hcn != null) hcn.stop(); } catch (Throwable ignored) { }
         try { lm.removeUpdates(odoListener); } catch (Throwable ignored) { }
         odoRunning = false;
         if (odoPending > 0) prefs.edit().putFloat("odo_gps_m", prefs.getFloat("odo_gps_m", 0) + odoPending).apply();
@@ -686,6 +694,22 @@ public class Main extends Activity {
                     t.durationMs = a.length > 1 ? Long.parseLong(a[1]) * 1000 : -1; t.playing = true;
                     showTrack(t);
                 }
+                else if (v.startsWith("hcn-sim:")) {
+                    // reproductor de una pantalla HCN: «hcn-sim:ruta,estado,posición_s,duración_s» (ruta vacía = nada)
+                    String[] a = v.substring(8).split(",", -1);
+                    Hcn.simulate(a[0], a.length > 1 ? a[1] : "start", a.length > 2 ? Integer.parseInt(a[2]) : 0,
+                            a.length > 3 ? Integer.parseInt(a[3]) : 0);
+                }
+                else if (v.startsWith("avrcp-sim:") && SDK >= 21) {
+                    // aviso del Bluetooth del sistema: «avrcp-sim:Título,Artista,estado,posición_s,duración_s»
+                    // (título «-» = solo estado; estado 3 sonando, 2 en pausa, -1 sin estado)
+                    String[] a = v.substring(10).split(",", -1);
+                    String ti = "-".equals(a[0]) ? null : a[0].replace('_', ' ');
+                    sendBroadcast(AvrcpMeta.testIntent(ti, a.length > 1 ? a[1].replace('_', ' ') : null,
+                            a.length > 2 ? Integer.parseInt(a[2]) : 3, a.length > 3 ? Long.parseLong(a[3]) * 1000 : 0,
+                            a.length > 4 ? Long.parseLong(a[4]) * 1000 : 0));
+                }
+                else if ("diag-reproductor".equals(v)) showPlayerDiag();
                 else if (v.startsWith("aa-notif:")) {
                     // notificación de Open Headunit con el tiempo: «aa-notif:Título,posición_s,duración_s»
                     String[] a = v.substring(9).split(",");
@@ -5904,6 +5928,9 @@ public class Main extends Activity {
     private void showTrack(NowPlaying.Track t) {
         long now = SystemClock.elapsedRealtime();
         if ("bt".equals(t.origin) && t.positionMs >= 0) { btPosMs = t.positionMs; btPosAt = now; }
+        // Pantalla HCN con una canción local sonando (issue #5): el celular conectado por Bluetooth manda su canción
+        // aunque esté en pausa; no reemplaza la del equipo. Al cambiar de fuente, el equipo borra el archivo y entra.
+        if ("bt".equals(t.origin) && "hcn".equals(curOrigin) && Hcn.blocksBt()) return;
         boolean hasContent = t.title != null || t.artist != null;
         // Un aviso sin pista de otra fuente (p. ej. el sistema cuando entra la cámara de reversa)
         // no debe borrar ni pausar lo que muestra la fuente actual.
@@ -6195,6 +6222,10 @@ public class Main extends Activity {
                 + "\nOpen Headunit corriendo: " + (processRunning(PKG_HUR) ? "sí" : "no")
                 + " · celular por USB en modo Android Auto: " + (aaUsbState() == 1 ? "sí" : aaUsbState() == 0 ? "no" : "no se sabe")
                 + "\nAndroid Auto conectado (para StradaOS): " + (aaRunning() ? "sí" : "no")
+                + "\n\n" + Hcn.report()
+                + "\nBluetooth del sistema (AVRCP): " + (NowPlaying.avrcpAt == 0 ? "ningún aviso"
+                    : NowPlaying.avrcpCount + " avisos, el último hace " + ((SystemClock.elapsedRealtime() - NowPlaying.avrcpAt) / 1000)
+                    + " s: " + NowPlaying.avrcpLast)
                 + "\nApp Bluetooth conectada: " + (bt != null && bt.isConnected() ? "sí" : "no")
                 + "\nAudio Bluetooth automático: " + (clwBt ? (btAutoOn() ? "activado" : "desactivado") : "no aplica (otra marca)")
                 + (clwBt ? "" : "\nApp de música Bluetooth: " + (btMusicApp() != null ? btMusicApp().getPackageName() : "no encontrada")
