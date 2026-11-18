@@ -1,0 +1,1 @@
+Arreglos: la línea de tiempo sigue los adelantos hechos en el celular con Android Auto; sin GPS el mapa ya no se va al punto 0,0; países del Golfo con su nombre en la lista de mapas. Nuevo: tema oscuro según el brillo de la pantalla y navegación traducida en todos los idiomas.

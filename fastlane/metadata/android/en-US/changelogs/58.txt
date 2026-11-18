@@ -1,0 +1,1 @@
+Fixes: the progress bar follows seeks made on the phone with Android Auto; without GPS the map no longer jumps to 0,0; Gulf countries now have a proper name in the map list. New: dark theme based on screen brightness, and navigation fully translated in every language.
