@@ -1158,11 +1158,8 @@ Islas Canarias	Canary Islands
 Tiempo en StradaOS: {}	Time in StradaOS: {}
 Último tiempo por Bluetooth: {}	Last time from Bluetooth: {}
 # Pantallas FYT: tema según las luces, espera para cambiar de tema y datos del carro
-Luces ahora	Lights now
-Enciende y apaga las luces del carro para probarlo	Turn the car's lights on and off to test it
 Encendidas	On
 Apagadas	Off
-Esta pantalla no informa las luces	This screen doesn't report the lights
 Espera para pasar a oscuro	Delay before switching to dark
 Cuánto debe durar el cambio (luces encendidas, poco brillo…) antes de oscurecer	How long the change (lights on, low brightness…) must last before going dark
 Espera para pasar a claro	Delay before switching to light
@@ -1173,7 +1170,6 @@ Genérica	Generic
 Detectada:	Detected:
 No se detectó una marca con funciones propias	No brand with its own features was detected
 Datos del carro	Car data
-Tensión de la batería y temperatura exterior en la tarjeta del vehículo. La temperatura necesita la caja CAN	Battery voltage and outside temperature on the vehicle card. The temperature needs the CAN box
 Lectura actual	Current reading
 Servicio com.syu.ms:	com.syu.ms service:
 sin caja CAN	no CAN box
@@ -1190,9 +1186,12 @@ com.syu.ms se reinició	com.syu.ms restarted
 Tema según las luces, batería y temperatura exterior	Theme by the lights, battery and outside temperature
 Pantallas FYT (com.syu.ms)	FYT head units (com.syu.ms)
 luces detectadas	lights detected
-esta pantalla no informa las luces	this screen doesn't report the lights
 Auto: por horario. Sistema: sigue las luces del carro (pantalla FYT)	Auto: by schedule. System: follows the car's lights (FYT head unit)
-Mientras tanto sigue el modo oscuro de Android	Meanwhile it follows Android's dark mode
 Espera para cambiar de tema	Delay theme changes
 Evita cambios de golpe, p. ej. al apagar el carro de noche	Avoids sudden changes, e.g. when turning off the car at night
 Para seguirlas, elige Apariencia → Tema → Modo → Sistema	To follow them, choose Appearance → Theme → Mode → System
+Elige qué datos del carro se ven arriba, junto al Wi-Fi	Choose which car data appears at the top, next to Wi-Fi
+Tensión de la batería	Battery voltage
+Medida por la pantalla; no necesita la caja CAN	Measured by the head unit; doesn't need the CAN box
+Temperatura exterior	Outside temperature
+Del sensor del carro; necesita la caja CAN	From the car's sensor; needs the CAN box

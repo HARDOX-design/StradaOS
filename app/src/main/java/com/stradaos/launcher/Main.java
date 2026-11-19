@@ -1492,6 +1492,7 @@ public class Main extends Activity {
         // Íconos de Wi-Fi y Bluetooth (2.17, Reinaldo y Daniel): ver si están activos sin abrir los ajustes
         wifiIc = null;
         btIc = null;
+        addCarData(right);
         if (prefs.getBoolean("status_icons", true)) {
             LinearLayout st = new LinearLayout(this);
             st.setGravity(Gravity.CENTER_VERTICAL);
@@ -1678,11 +1679,6 @@ public class Main extends Activity {
         chip.setBackground(round(RED, 8));
         chip.setVisibility(prefs.getString("car_tag", "").trim().length() == 0 ? View.GONE : View.VISIBLE);
         placeWrap(card, chip, 20, 46);
-        // pantallas FYT: tensión de la batería y temperatura exterior, arriba a la derecha (solo con la opción activada)
-        carDataTv = tv("", 12, MUTED, true);
-        carDataTv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
-        place(card, carDataTv, 128, 48, 154, 18);
-        updateCarData();
 
         Bitmap photo = CarPhoto.load(this);
         if (photo != null) {
@@ -4344,6 +4340,7 @@ public class Main extends Activity {
         right.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         wifiIc = null;
         btIc = null;
+        addCarData(right);
         if (prefs.getBoolean("status_icons", true)) {
             LinearLayout st = new LinearLayout(this);
             st.setGravity(Gravity.CENTER_VERTICAL);
@@ -6903,8 +6900,8 @@ public class Main extends Activity {
     // Caso típico: de noche, al apagar el carro se apagan las luces y la pantalla pasaba a claro de golpe.
     // Cada sentido tiene su espera (por defecto 0 = como siempre). El tema que se ve se guarda en theme_last_dark,
     // así que al encender de nuevo la pantalla arranca con el último tema y la espera también se respeta.
-    static final int[] THEME_DELAYS = {0, 5, 10, 30, 60, 120, 300, 600};
-    static final String[] THEME_DELAY_LBL = {"Sin espera", "5 s", "10 s", "30 s", "1 min", "2 min", "5 min", "10 min"};
+    static final int[] THEME_DELAYS = {0, 1, 2, 3, 4, 5};
+    static final String[] THEME_DELAY_LBL = {"Sin espera", "1 s", "2 s", "3 s", "4 s", "5 s"};
     private Boolean themeShown, themeWant;
     private long themeWantAt;
     private boolean themeForce;
@@ -6924,7 +6921,7 @@ public class Main extends Activity {
     private boolean themeDark(String mode) {
         boolean want = themeWanted(mode);
         boolean manual = "dark".equals(mode) || "light".equals(mode);
-        int dDark = prefs.getInt("theme_delay_dark", 0), dLight = prefs.getInt("theme_delay_light", 0);
+        int dDark = Math.min(5, prefs.getInt("theme_delay_dark", 0)), dLight = Math.min(5, prefs.getInt("theme_delay_light", 0));
         if (manual || themeForce || !themeDelayOn() || (dDark <= 0 && dLight <= 0)) { themeForce = false; return themeSettle(want); }
         if (themeShown == null) themeShown = prefs.getBoolean("theme_last_dark", want);   // al arrancar: el último tema
         if (want == themeShown) {
@@ -7007,12 +7004,24 @@ public class Main extends Activity {
         updateCarData();
     }
 
-    /** «13,9 V · 17 °C» (lo que haya llegado), o "" sin datos. */
-    private String carDataText() {
+    /** Datos del carro en la barra de arriba, a la izquierda de los íconos de Wi-Fi y Bluetooth. */
+    private void addCarData(LinearLayout bar) {
+        carDataTv = tv("", 15, TEXT, true);
+        carDataTv.setPadding(0, 0, (int) (12 * s), 0);
+        bar.addView(carDataTv);
+        updateCarData();
+    }
+
+    /** «13,9 V · 17 °C»: lo que esté activado y haya llegado, o "" sin datos. */
+    private String carDataText() { return carDataText(false); }
+
+    /** all = true: todo lo que llegó, aunque no se muestre en el inicio (para Ajustes). */
+    private String carDataText(boolean all) {
         if (fyt == null) return "";
         StringBuilder b = new StringBuilder();
-        if (fyt.hasVolt()) b.append(String.format(java.util.Locale.getDefault(), "%.1f V", fyt.voltDeci / 10f));
-        if (fyt.hasTemp()) {
+        if (fyt.hasVolt() && (all || prefs.getBoolean("fyt_volt", false)))
+            b.append(String.format(java.util.Locale.getDefault(), "%.1f V", fyt.voltDeci / 10f));
+        if (fyt.hasTemp() && (all || prefs.getBoolean("fyt_temp", false))) {
             if (b.length() > 0) b.append("  ·  ");
             float c = fyt.tempDeci / 10f;
             boolean f = "F".equals(prefs.getString("temp_unit", "C"));
@@ -7810,14 +7819,24 @@ public class Main extends Activity {
                 applyThemeNow(); applyAccent(); rebuild(); showSettings(settingsCat);   // «Sistema» pasa a seguir (o no) las luces
             }});
         if (fytOn()) {
-            toggle(eq, "Datos del carro", "Tensión de la batería y temperatura exterior en la tarjeta del vehículo. La temperatura necesita la caja CAN",
+            toggle(eq, "Datos del carro", "Elige qué datos del carro se ven arriba, junto al Wi-Fi",
                 prefs.getBoolean("fyt_data", false), new IntCb() { public void on(int i) {
                     prefs.edit().putBoolean("fyt_data", i == 1).apply();
                     if (i == 1) startFyt(); else stopFyt();
                     rebuild(); showSettings(settingsCat);
                 }});
+            if (prefs.getBoolean("fyt_data", false)) {
+                toggle(eq, "Tensión de la batería", "Medida por la pantalla; no necesita la caja CAN",
+                    prefs.getBoolean("fyt_volt", false), new IntCb() { public void on(int i) {
+                        prefs.edit().putBoolean("fyt_volt", i == 1).apply(); updateCarData(); showSettings(settingsCat);
+                    }});
+                toggle(eq, "Temperatura exterior", "Del sensor del carro; necesita la caja CAN",
+                    prefs.getBoolean("fyt_temp", false), new IntCb() { public void on(int i) {
+                        prefs.edit().putBoolean("fyt_temp", i == 1).apply(); updateCarData(); showSettings(settingsCat);
+                    }});
+            }
             if (fyt != null) {
-                String now = carDataText();
+                String now = carDataText(true);
                 row(eq, "Lectura actual", I18n.t("Servicio com.syu.ms:") + " " + I18n.t(fyt.state)
                         + (fyt.canType > 0 ? " · CAN " + fyt.canType : fyt.canType == 0 ? " · " + I18n.t("sin caja CAN") : ""),
                     now.length() > 0 ? now : I18n.t("Esperando datos"), new Runnable() { public void run() { showSettings(settingsCat); } });
@@ -7900,13 +7919,6 @@ public class Main extends Activity {
                 prefs.edit().putString("theme", themes[i]).apply();
                 applyThemeNow(); applyAccent(); rebuild(); showSettings(settingsCat);
             }});
-        if ("system".equals(t) && fy) {
-            int l = Fyt.lights(this);
-            if (l >= 0)
-                row(c, "Luces ahora", "Enciende y apaga las luces del carro para probarlo", I18n.t(l == 1 ? "Encendidas" : "Apagadas"), null);
-            else
-                row(c, "Esta pantalla no informa las luces", "Mientras tanto sigue el modo oscuro de Android", "", null);
-        }
         if ("auto".equals(t)) {
             final boolean sunOn = prefs.getBoolean("auto_sun", false);
             final boolean brOn = prefs.getBoolean("auto_bright", false);
@@ -7951,9 +7963,9 @@ public class Main extends Activity {
             toggle(c, "Espera para cambiar de tema", "Evita cambios de golpe, p. ej. al apagar el carro de noche",
                 dOn, new IntCb() { public void on(int i) {
                     SharedPreferences.Editor e = prefs.edit().putBoolean("theme_delay_on", i == 1);
-                    // al activarla por primera vez: 1 min para volver a claro, el caso típico
+                    // al activarla por primera vez: 5 s para volver a claro, el caso típico
                     if (i == 1 && prefs.getInt("theme_delay_dark", 0) <= 0 && prefs.getInt("theme_delay_light", 0) <= 0)
-                        e.putInt("theme_delay_light", 60);
+                        e.putInt("theme_delay_light", 5);
                     e.apply();
                     applyThemeNow(); applyAccent(); rebuild(); showSettings(settingsCat);
                 }});

@@ -1158,11 +1158,8 @@ Islas Canarias	Ilhas Canárias
 Tiempo en StradaOS: {}	Tempo no StradaOS: {}
 Último tiempo por Bluetooth: {}	Último tempo pelo Bluetooth: {}
 # Pantallas FYT: tema según las luces, espera para cambiar de tema y datos del carro
-Luces ahora	Luzes agora
-Enciende y apaga las luces del carro para probarlo	Acenda e apague as luzes do carro para testar
 Encendidas	Acesas
 Apagadas	Apagadas
-Esta pantalla no informa las luces	Esta tela não informa as luzes
 Espera para pasar a oscuro	Espera para passar ao escuro
 Cuánto debe durar el cambio (luces encendidas, poco brillo…) antes de oscurecer	Quanto tempo a mudança (luzes acesas, pouco brilho…) deve durar antes de escurecer
 Espera para pasar a claro	Espera para passar ao claro
@@ -1173,7 +1170,6 @@ Genérica	Genérica
 Detectada:	Detectada:
 No se detectó una marca con funciones propias	Não foi detectada uma marca com funções próprias
 Datos del carro	Dados do carro
-Tensión de la batería y temperatura exterior en la tarjeta del vehículo. La temperatura necesita la caja CAN	Tensão da bateria e temperatura exterior no cartão do veículo. A temperatura precisa da caixa CAN
 Lectura actual	Leitura atual
 Servicio com.syu.ms:	Serviço com.syu.ms:
 sin caja CAN	sem caixa CAN
@@ -1190,9 +1186,12 @@ com.syu.ms se reinició	com.syu.ms reiniciou
 Tema según las luces, batería y temperatura exterior	Tema pelas luzes, bateria e temperatura exterior
 Pantallas FYT (com.syu.ms)	Telas FYT (com.syu.ms)
 luces detectadas	luzes detectadas
-esta pantalla no informa las luces	esta tela não informa as luzes
 Auto: por horario. Sistema: sigue las luces del carro (pantalla FYT)	Auto: por horário. Sistema: segue as luzes do carro (tela FYT)
-Mientras tanto sigue el modo oscuro de Android	Enquanto isso segue o modo escuro do Android
 Espera para cambiar de tema	Espera para mudar de tema
 Evita cambios de golpe, p. ej. al apagar el carro de noche	Evita mudanças de repente, p. ex. ao desligar o carro à noite
 Para seguirlas, elige Apariencia → Tema → Modo → Sistema	Para segui-las, escolha Aparência → Tema → Modo → Sistema
+Elige qué datos del carro se ven arriba, junto al Wi-Fi	Escolha quais dados do carro aparecem em cima, junto ao Wi-Fi
+Tensión de la batería	Tensão da bateria
+Medida por la pantalla; no necesita la caja CAN	Medida pela tela; não precisa da caixa CAN
+Temperatura exterior	Temperatura exterior
+Del sensor del carro; necesita la caja CAN	Do sensor do carro; precisa da caixa CAN
