@@ -1,0 +1,1202 @@
+# StradaOS · traducción hu (magyar). Formato: español<TAB>traducción. Ver I18n.java.
+Radio	Rádió
+Cámara	Kamera
+Archivos	Fájlok
+Ajustes	Beállítások
+Música	Zene
+Navegación	Navigáció
+Navegador	Böngésző
+Navegador web	Webböngésző
+Equipo	Fejegység
+Elige primero la app de música Bluetooth	Először válaszd ki a Bluetooth-zene alkalmazást
+Música Bluetooth	Bluetooth-zene
+No se pudo abrir la app	Nem sikerült megnyitni az alkalmazást
+Mi app	Saját alkalmazás
+Mi vehículo	Járművem
+Toca para poner la foto de tu vehículo	Koppints, és adj hozzá egy fotót a járművedről
+Velocidad	Sebesség
+Diagnóstico del mapa	Térkép-diagnosztika
+Buscando GPS…	GPS keresése…
+Buscando GPS	GPS keresése
+En vivo · sin internet	Élő · offline
+Última posición · sin internet	Utolsó pozíció · offline
+Mapa en vivo	Élő térkép
+Última posición conocida	Utolsó ismert pozíció
+Nada sonando	Nincs lejátszás
+Radio, Bluetooth o USB	Rádió, Bluetooth vagy USB
+Internet desde la pantalla	Internet a kijelzőn
+No se pudo abrir «{}». Déjalo presionado para elegir otra app.	Nem sikerült megnyitni: „{}”. Tartsd lenyomva, és válassz másik alkalmazást.
+Botón {} · {}	{}. gomb · {}
+Cambiar app o función	Alkalmazás vagy funkció módosítása
+Cambiar el nombre	Átnevezés
+Restablecer ({})	Visszaállítás ({})
+Botón restablecido	Gomb visszaállítva
+Cerrar	Bezárás
+Cerrar  ✕	Bezárás  ✕
+★  Funciones de StradaOS (Música, Navegación, Android Auto…)	★  StradaOS-funkciók (Zene, Navigáció, Android Auto…)
+¿Qué abre el botón {}?	Mit nyisson meg a(z) {}. gomb?
+Función del botón {}	{}. gomb funkciója
+Nombre del botón {} (vacío = el de la app)	{}. gomb neve (üres = az alkalmazás neve)
+Guardar	Mentés
+Cancelar	Mégse
+Guardado: {}	Mentve: {}
+Elige tu app de música	Válaszd ki a zenelejátszó alkalmazást
+Elige tu app de navegación	Válaszd ki a navigációs alkalmazást
+Automático · {}	Automatikus · {}
+{}\n    → {}	{}\n    → {}
+Buenos días	Jó reggelt
+Buenas tardes	Jó napot
+Buenas noches	Jó estét
+Diagnóstico del reproductor	Lejátszó-diagnosztika
+Accesibilidad	Kisegítő lehetőségek
+Activa «Carátula de Android Auto» (StradaOS)	Kapcsold be az „Android Auto albumborító” (StradaOS) lehetőséget
+No se pudo abrir Accesibilidad	Nem sikerült megnyitni a Kisegítő lehetőségeket
+Activa «Pista actual de AA» en Open Headunit	Kapcsold be az „AA current track” opciót az Open Headunitban
+«Ninguna aplic. funciona con este accesorio USB»	„Egyik telepített alkalmazás sem működik ezzel az USB-tartozékkal”
+Ese aviso lo causa una app de espejo de fábrica (EasyConnection/CarbitLink) que toma el USB antes que la app que elegiste.\n\n1. Desconecta el celular.\n2. Ajustes → Aplicaciones → EasyConnection → «Borrar datos».\n3. Apaga y enciende el carro.\n4. En Open Headunit → USB, si tu celular aparece como «Ignorado», tócalo para permitirlo.	Ezt az üzenetet egy gyári tükrözőalkalmazás (EasyConnection/CarbitLink) okozza, amely a választott alkalmazás előtt lefoglalja az USB-t.\n\n1. Húzd ki a telefont.\n2. Beállítások → Alkalmazások → EasyConnection → „Adatok törlése”.\n3. Kapcsold ki, majd be az autót.\n4. Az Open Headunit → USB menüben, ha a telefonod „Ignored” (figyelmen kívül hagyva) állapotú, koppints rá az engedélyezéshez.
+Abrir EasyConnection	EasyConnection megnyitása
+No hay apps de espejo instaladas	Nincs telepített tükrözőalkalmazás
+Exportando… puede tardar un minuto	Exportálás… ez egy percig is eltarthat
+Diagnóstico listo	A diagnosztika elkészült
+Se guardó en:\n{}\n\nCopia la carpeta StradaDiag a una memoria USB y adjúntala en un «issue» del repositorio de StradaOS en GitHub.	Mentve ide:\n{}\n\nMásold a StradaDiag mappát egy pendrive-ra, és csatold egy hibajegyhez (issue) a StradaOS GitHub-tárolójában.
+12 horas	12 órás
+24 horas	24 órás
+Automático	Automatikus
+Automática	Automatikus
+Auto	Auto
+12 horas (a.m./p.m.)	12 órás (de./du.)
+Formato de hora	Időformátum
+Se aplicará al reiniciar StradaOS	A StradaOS újraindításakor lép életbe
+Rojo	Piros
+Naranja	Narancs
+Amarillo	Sárga
+Verde	Zöld
+Turquesa	Türkiz
+Azul	Kék
+Morado	Lila
+Rosa	Rózsaszín
+Plata	Ezüst
+Bienvenido a StradaOS	Üdvözöl a StradaOS
+Vamos a dejar el launcher a tu gusto: tu nombre, tu vehículo, el color y la foto. Toma menos de un minuto y lo puedes cambiar después en el engranaje ⚙.	Állítsuk be a launchert ízlésed szerint: a neved, a járműved, a szín és a fotó. Kevesebb mint egy perc, és később a fogaskerékkel ⚙ bármikor módosíthatod.
+Empezar	Kezdés
+¿Cómo te llamas?	Mi a neved?
+Nombre del vehículo (ej.: Mazda 2, Spark GT)	Jármű neve (pl. Mazda 2, Spark GT)
+Etiqueta corta (versión o placa). Déjalo vacío si no quieres	Rövid címke (felszereltség vagy rendszám). Hagyd üresen, ha nem kell
+Después	Később
+No encontrada	Nem található
+¿Qué app abre cada botón?	Melyik gomb melyik alkalmazást nyissa meg?
+Están bien	Rendben
+Siguiente	Tovább
+Color de acento	Kiemelőszín
+Elegir otra foto	Másik fotó választása
+Quitar la foto	Fotó eltávolítása
+Elegir foto	Fotó választása
+Foto del vehículo	Jármű fotója
+¿De dónde sacamos la foto?	Honnan vegyük a fotót?
+Consejo: usa una foto del carro de lado o de frente con fondo liso (blanco, gris o cielo). El fondo se quita solo.	Tipp: használj oldalról vagy elölről készült fotót az autóról, egyszínű háttérrel (fehér, szürke vagy ég). A háttér automatikusan eltűnik.
+Memoria / USB	Tárhely / USB
+Galería	Galéria
+Elige la foto	Válaszd ki a fotót
+Buscando fotos…	Fotók keresése…
+No encontré fotos (.jpg/.png). Cópialas a la memoria USB o a Download.	Nem található fotó (.jpg/.png). Másold őket a pendrive-ra vagy a Download mappába.
+Quitando el fondo…	Háttér eltávolítása…
+No se pudo abrir la imagen	Nem sikerült megnyitni a képet
+No se pudo abrir la imagen: {}	Nem sikerült megnyitni a képet: {}
+La foto ya trae fondo transparente	A fotó háttere már átlátszó
+No se detectó un fondo liso (se usará tal cual)	Nem található egyszínű háttér (változatlanul lesz használva)
+Vista previa · nivel {} de 4	Előnézet · {}/4. szint
+Vista previa · nivel {} de 4 (también quita el reflejo del piso)	Előnézet · {}/4. szint (a padló tükröződését is eltávolítja)
+Usar esta	Ezt használom
+Foto guardada	Fotó mentve
+No se pudo guardar la foto	Nem sikerült menteni a fotót
+Quitar más fondo	Több háttér eltávolítása
+Quitando más fondo…	Több háttér eltávolítása…
+No es una imagen válida	Nem érvényes kép
+App elegida	Választott alkalmazás
+CarPlay necesita un chip de autenticación de Apple dentro del equipo, así que no se puede activar solo con una app.\n\n• Si tu pantalla trae CarPlay integrado, deja presionado este botón y elige su app (ZLink, CarLink, TLink…).\n• Si no, puedes usar un adaptador CarPlay USB para pantallas Android (tipo Carlinkit/AutoKit): instala su app y este botón la abrirá.	A CarPlay-hez egy Apple hitelesítő chip kell a fejegységben, ezért pusztán egy alkalmazással nem kapcsolható be.\n\n• Ha a kijelződ beépített CarPlay-jel rendelkezik, tartsd lenyomva ezt a gombot, és válaszd ki az alkalmazását (ZLink, CarLink, TLink…).\n• Ha nem, használhatsz Android-kijelzőkhöz készült USB-s CarPlay-adaptert (Carlinkit/AutoKit típusút): telepítsd az alkalmazását, és ez a gomb azt fogja megnyitni.
+Entendido	Értem
+Elegir app	Alkalmazás választása
+Volver al inicio	Vissza a kezdőképernyőre
+Tu vehículo	Járműved
+Apariencia	Megjelenés
+Conexión	Kapcsolat
+Accesos y apps	Parancsikonok és alkalmazások
+Mapa y clima	Térkép és időjárás
+Sistema	Rendszer
+Acerca de	Névjegy
+Datos	Adatok
+Tu nombre	A neved
+Aparece en el saludo de la pantalla de inicio	A kezdőképernyő üdvözlésében jelenik meg
+Nombre del vehículo	Jármű neve
+Etiqueta	Címke
+Versión o placa. Déjala vacía para ocultarla	Felszereltség vagy rendszám. Hagyd üresen az elrejtéshez
+Etiqueta (vacío para ocultarla)	Címke (üresen elrejtve)
+Foto	Fotó
+Se recorta y se le quita el fondo automáticamente	Automatikusan levágva és háttér nélkül
+Configurada	Beállítva
+Sin foto	Nincs fotó
+Idioma	Nyelv
+Automático: el del sistema	Automatikus: a rendszer nyelve
+Tema	Téma
+Modo	Mód
+Automático: claro de 6 a.m. a 6 p.m.	Automatikus: világos reggel 6-tól este 6-ig
+Oscuro	Sötét
+Claro	Világos
+Color	Szín
+Botones, anillo del reproductor, ruta y etiquetas	Gombok, lejátszógyűrű, útvonal és címkék
+Reloj	Óra
+Celular	Telefon
+Cómo conectar el celular	A telefon csatlakoztatása
+La app que se abre al conectar por USB	Az USB-s csatlakozáskor megnyíló alkalmazás
+Preguntar	Kérdezzen
+App de Android Auto	Android Auto alkalmazás
+Botón naranja de la tarjeta central	Narancssárga gomb a középső kártyán
+App de CarPlay	CarPlay alkalmazás
+Requiere pantalla con CarPlay o un adaptador	CarPlay-es kijelző vagy adapter kell hozzá
+Ninguna	Nincs
+Ninguno	Nincs
+Ayuda	Súgó
+El celular dice «Ninguna aplic. funciona…»	A telefon azt írja: „Egyik telepített alkalmazás sem működik…”
+Cómo evitar que EasyConnection tome el USB	Hogyan akadályozd meg, hogy az EasyConnection lefoglalja az USB-t
+Barra inferior (déjalos presionados en el inicio para cambiarlos)	Alsó sáv (a kezdőképernyőn lenyomva tartva módosíthatod őket)
+App: {}	Alkalmazás: {}
+Función: {}	Funkció: {}
+Apps preferidas	Kedvenc alkalmazások
+Se abre al tocar el reproductor	A lejátszóra koppintva nyílik meg
+Toca para elegir	Koppints a választáshoz
+Se abre con el botón del mapa	A térkép gombjával nyílik meg
+Apps de cada función	Alkalmazás funkciónként
+La app que hace sonar el Bluetooth (se usa para pasar el sonido)	A Bluetooth-hangot lejátszó alkalmazás (a hang átváltásához)
+Revisar todos los botones	Összes gomb áttekintése
+Lista rápida de qué abre cada uno, como en el asistente	Gyors lista arról, mit nyit meg mindegyik, mint a beállítóvarázslóban
+Restablecer	Visszaállítás
+Restablecer accesos	Parancsikonok visszaállítása
+La barra vuelve a lo de siempre y se buscan las apps de fábrica	A sáv visszaáll alapállapotba, és újra megkeresi a gyári alkalmazásokat
+Accesos restablecidos	Parancsikonok visszaállítva
+Clima	Időjárás
+Mostrar el clima	Időjárás megjelenítése
+Arriba, junto al saludo (necesita internet)	Fent, az üdvözlés mellett (internet kell hozzá)
+Unidad	Mértékegység
+Ciudad	Város
+Vacío = automática por GPS	Üres = automatikus GPS alapján
+{} (GPS)	{} (GPS)
+Ciudad (vacío = automática por GPS)	Város (üres = automatikus GPS alapján)
+App de navegación preferida	Kedvenc navigációs alkalmazás
+Se abre con el botón del mapa (Waze, Maps, OsmAnd…)	A térkép gombjával nyílik meg (Waze, Maps, OsmAnd…)
+Mapa	Térkép
+Brillo del mapa	Térkép fényereje
+Solo en modo oscuro	Csak sötét módban
+Bajo	Alacsony
+Medio	Közepes
+Alto	Magas
+Fuentes probadas y errores	Kipróbált források és hibák
+Mapa no disponible	A térkép nem érhető el
+Fuente del mapa (avanzado)	Térképforrás (haladó)
+URL propia con {z}/{x}/{y}	Egyéni URL {z}/{x}/{y} formában
+Personalizada	Egyéni
+URL de teselas {z}/{x}/{y} (vacío = automático)	Csempe-URL {z}/{x}/{y} (üres = automatikus)
+© colaboradores de OpenStreetMap	© OpenStreetMap közreműködők
+App de música	Zenei alkalmazás
+App de música preferida	Kedvenc zenei alkalmazás
+Se abre al tocar el reproductor del inicio	A kezdőképernyő lejátszójára koppintva nyílik meg
+Pista en reproducción	Most szól
+Carátula de Android Auto	Android Auto albumborító
+Lee la notificación de Open Headunit (accesibilidad)	Az Open Headunit értesítését olvassa (kisegítő lehetőségek)
+Activada	Be
+Desactivada	Ki
+Activado	Be
+Desactivado	Ki
+Música de cualquier app	Zene bármely alkalmazásból
+Android 5+: acceso a notificaciones	Android 5+: hozzáférés az értesítésekhez
+No se pudo abrir el ajuste	Nem sikerült megnyitni a beállítást
+Fuente activa, lector de notificaciones y Bluetooth	Aktív forrás, értesítésolvasó és Bluetooth
+Audio Bluetooth	Bluetooth-hang
+Volver al Bluetooth al desconectar Android Auto	Vissza a Bluetooth-ra, amikor az Android Auto leválik
+Al quitar el cable, abre un instante la app de música Bluetooth para que el sonido siga por Bluetooth	A kábel kihúzásakor rövid időre megnyitja a Bluetooth-zene alkalmazást, hogy a hang tovább szóljon Bluetooth-on
+Escuchar el Bluetooth	Bluetooth hallgatása
+En esta pantalla, toca ▶ en el inicio: StradaOS pasa el sonido a Bluetooth (por ejemplo, si venías de la radio)	Ezen a kijelzőn koppints a ▶ gombra a kezdőképernyőn: a StradaOS Bluetooth-ra váltja a hangot (például a rádióról)
+Pasar a Bluetooth al dar play en el celular (en prueba)	Váltás Bluetooth-ra, ha a telefonon elindítod a lejátszást (béta)
+Abre un instante «Audio Bluetooth» y vuelve. En algunas pantallas no detecta el play del celular	Rövid időre megnyitja a „Bluetooth audio” alkalmazást, majd visszatér. Egyes kijelzők nem érzékelik a telefonon indított lejátszást
+Probar ahora	Kipróbálás most
+Abre «Audio Bluetooth» un instante y vuelve al inicio	Rövid időre megnyitja a „Bluetooth audio” alkalmazást, majd visszatér a kezdőképernyőre
+Abrir la app de música Bluetooth al conectar el celular	A Bluetooth-zene alkalmazás megnyitása a telefon csatlakozásakor
+Para pantallas que solo dejan sonar el Bluetooth con su app abierta: la abre un momento y vuelve al inicio	Olyan kijelzőkhöz, amelyek csak nyitott alkalmazással játszanak le Bluetooth-t: egy pillanatra megnyitja, majd visszatér a kezdőképernyőre
+App de música Bluetooth	Bluetooth-zene alkalmazás
+La que hace sonar el Bluetooth en esta pantalla	Amelyik ezen a kijelzőn a Bluetooth-t lejátssza
+Tiempo antes de volver al inicio	Idő a kezdőképernyőre való visszatérés előtt
+Súbelo si el audio se corta al volver	Növeld, ha a hang visszatéréskor megszakad
+Abre la app de música Bluetooth y vuelve al inicio	Megnyitja a Bluetooth-zene alkalmazást, és visszatér a kezdőképernyőre
+Avanzado	Haladó
+Avisos extra de música	További zenei broadcastok
+Nombres de avisos (broadcast) de otros equipos	Más fejegységek broadcast-nevei
+Configurados	Beállítás
+Acciones de aviso extra (separadas por coma)	További broadcast-műveletek (vesszővel elválasztva)
+Ajustes del equipo	Fejegység beállításai
+Los ajustes de la pantalla (los de la marca si los tiene)	A kijelző beállításai (a márka sajátja, ha van)
+Asistente de configuración inicial	Beállítóvarázsló
+Nombre, vehículo, color y foto	Név, jármű, szín és fotó
+Compatibilidad	Kompatibilitás
+Qué funciona en esta pantalla	Mi működik ezen a kijelzőn
+Cada función, desde qué Android sirve y su estado aquí	Minden funkció, a szükséges Android-verzió és az itteni állapota
+Soporte	Támogatás
+Exportar diagnóstico	Diagnosztika exportálása
+Guarda información de las apps de audio en la memoria interna	Az audioalkalmazások adatait a belső tárhelyre menti
+Esta pantalla:	Ez a kijelző:
+Ojo: la pantalla dice Android {}, pero por dentro es {}.	Megjegyzés: a kijelző Android {} verziót ír, de valójában {} fut rajta.
+Requiere:	Követelmény:
+Aquí:	Itt:
+Inicio, mapa, clima, velocímetro	Kezdőképernyő, térkép, időjárás, sebességmérő
+Pista y carátula por Bluetooth	Szám és albumborító Bluetooth-on
+app Bluetooth de fábrica detectada	gyári Bluetooth-alkalmazás észlelve
+depende de la marca	márkától függ
+Botón ▶ del inicio pasa el sonido a Bluetooth	A kezdőképernyő ▶ gombja Bluetooth-ra váltja a hangot
+Pantallas Clinkway / Autochips	Clinkway / Autochips kijelzők
+funciona aunque vengas de la radio	a rádióról is működik
+en otras marcas: «Abrir la app de música Bluetooth al conectar»	más márkáknál: „A Bluetooth-zene alkalmazás megnyitása a telefon csatlakozásakor”
+activado	be
+activada	be
+desactivado; en algunas pantallas no detecta el play del celular	ki; egyes kijelzők nem érzékelik a telefonon indított lejátszást
+Carátula de Android Auto (Open Headunit)	Android Auto albumborító (Open Headunit)
+Android 4.1+ · accesibilidad	Android 4.1+ · kisegítő lehetőségek
+falta activar la accesibilidad	a kisegítő lehetőség még nincs bekapcsolva
+Música de cualquier app (Spotify, YouTube…)	Zene bármely alkalmazásból (Spotify, YouTube…)
+falta dar acceso a notificaciones	az értesítési hozzáférés még nincs megadva
+no disponible en {}	nem érhető el ezen: {}
+Android Auto con Open Headunit	Android Auto Open Headunittal
+Android 4.1+ · cable USB	Android 4.1+ · USB-kábel
+Open Headunit instalado	Open Headunit telepítve
+falta instalar Open Headunit	Open Headunit még nincs telepítve
+Android Auto / CarPlay de la pantalla	A kijelző saját Android Auto / CarPlay rendszere
+Si la pantalla lo trae	Ha a kijelzőn van
+no detectado	nem észlelhető
+Pantalla con CarPlay o adaptador USB	CarPlay-es kijelző vagy USB-adapter
+Mapa con internet seguro (TLS 1.2)	Térkép biztonságos internettel (TLS 1.2)
+Android 4.1+ (StradaOS lo activa)	Android 4.1+ (a StradaOS bekapcsolja)
+en Android 4.x solo algunos servidores de mapas responden	Android 4.x-en csak néhány térképszerver válaszol
+Instalar actualizaciones desde la app	Frissítések telepítése az alkalmazásból
+pide permiso «Instalar apps desconocidas»	„Ismeretlen alkalmazások telepítése” engedélyt kér
+No hay fallos registrados	Nincs naplózott összeomlás
+Registro de fallos	Összeomlásnapló
+Borrar	Törlés
+Registro borrado	Napló törölve
+Gratis y de código abierto. Una nueva vida para las pantallas Android del carro.	Ingyenes és nyílt forráskódú. Új élet az autók Android-kijelzőinek.
+Versión	Verzió
+Android de la pantalla	A kijelző Android-verziója
+Real: {} · ver qué funciona aquí	Valójában: {} · nézd meg, mi működik itt
+Cierres inesperados o bloqueos de StradaOS en esta pantalla	A StradaOS váratlan összeomlásai vagy lefagyásai ezen a kijelzőn
+Sin fallos	Nincs összeomlás
+Ver	Megtekintés
+Actualizaciones	Frissítések
+Instalado desde {}	Telepítve innen: {}
+Las actualizaciones llegan por esa app	A frissítések azon az alkalmazáson keresztül érkeznek
+Avisar también de versiones en GitHub	A GitHubon megjelent verziókról is értesítsen
+Comprobar actualizaciones automáticamente	Frissítések automatikus keresése
+Opcional: las descargas de GitHub no pasan por la revisión de la tienda	Opcionális: a GitHubról letöltött fájlok nem mennek át az áruház ellenőrzésén
+Al abrir StradaOS con internet, una vez al día	Amikor a StradaOS internettel nyílik meg, naponta egyszer
+Actualizaciones desde GitHub	Frissítések a GitHubról
+Instalaste StradaOS desde {}. Si activas esto, StradaOS revisará una vez al día las versiones publicadas en github.com/{} y te ofrecerá descargarlas desde ahí.\n\nEsas descargas no pasan por la revisión de la tienda. Puede que GitHub tenga una versión un poco antes que la tienda.	A StradaOS-t innen telepítetted: {}. Ha ezt bekapcsolod, a StradaOS naponta egyszer megnézi a github.com/{} oldalon közzétett verziókat, és felajánlja a letöltésüket onnan.\n\nEzek a letöltések nem mennek át az áruház ellenőrzésén. A GitHubon egy verzió valamivel az áruház előtt is megjelenhet.
+Activar	Bekapcsolás
+Canal de actualizaciones	Frissítési csatorna
+Buscar actualizaciones	Frissítések keresése
+Aún no se ha comprobado	Még nem volt ellenőrizve
+Última comprobación: {}	Utolsó ellenőrzés: {}
+Comunidad	Közösség
+Dar una estrella en GitHub	Adj csillagot a GitHubon
+Ayuda a que más personas encuentren StradaOS	Segít, hogy többen megtalálják a StradaOS-t
+Dar una estrella ⭐	Adj egy csillagot ⭐
+Abre el repositorio y toca «Star». ¡Gracias!	Nyisd meg a tárolót, és koppints a „Star” gombra. Köszönjük!
+Donar	Adományozás
+Si StradaOS revivió tu pantalla, invítame un café	Ha a StradaOS új életet adott a kijelződnek, hívj meg egy kávéra
+Apoya el proyecto ☕	A projekt támogatása ☕
+StradaOS es gratis. Las donaciones ayudan a mantenerlo y a probarlo en más pantallas.	A StradaOS ingyenes. Az adományok segítenek a karbantartásában és a további kijelzőkön való tesztelésében.
+Reportar un problema o sugerir algo	Hiba bejelentése vagy javaslat
+Crea un «issue» en GitHub (adjunta el diagnóstico)	Hozz létre egy hibajegyet (issue) a GitHubon (csatold a diagnosztikát)
+Reportar un problema	Hiba bejelentése
+Cuenta tu modelo de pantalla y su versión de Android. Puedes adjuntar la carpeta StradaDiag (Sistema → Exportar diagnóstico).	Add meg a kijelződ típusát és az Android-verzióját. Csatolhatod a StradaDiag mappát is (Rendszer → Diagnosztika exportálása).
+Código fuente	Forráskód
+Licencia GPL-3.0	GPL-3.0 licenc
+Créditos y licencias	Köszönet és licencek
+Licencia	Licenc
+Mapas	Térképek
+© colaboradores de OpenStreetMap, OpenTopoMap, Esri	© OpenStreetMap közreműködők, OpenTopoMap, Esri
+Open Headunit (GPL-3.0) · Android Auto es marca de Google	Open Headunit (GPL-3.0) · Az Android Auto a Google védjegye
+Códigos QR	QR-kódok
+Íconos	Ikonok
+Certificados raíz	Gyökértanúsítványok
+Buscando actualizaciones…	Frissítések keresése…
+No se pudo comprobar	Nem sikerült ellenőrizni
+Esta pantalla no logró conectarse con GitHub ({}). Puedes revisar las versiones desde tu celular:	Ez a kijelző nem tudott csatlakozni a GitHubhoz ({}). A verziókat a telefonodról is megnézheted:
+Tienes la última versión ({})	A legújabb verzió van telepítve ({})
+Fuentes consultadas:\n{}	Ellenőrzött források:\n{}
+cifrado no compatible	nem kompatibilis titkosítás
+sin internet	nincs internet
+sin internet / DNS	nincs internet / DNS
+tiempo agotado	időtúllépés
+error de red	hálózati hiba
+tu tienda de apps	az alkalmazásáruházad
+Tienes la {} · nueva: {}	Telepítve: {} · új: {}
+Mejoras y correcciones.	Fejlesztések és javítások.
+Nueva versión de StradaOS	Új StradaOS-verzió
+Tienes la {} · en GitHub: {}\nActualiza desde {} cuando llegue. Descargar de GitHub omite la revisión de la tienda.	Telepítve: {} · a GitHubon: {}\nFrissíts innen: {}, amikor megérkezik. A GitHubról letöltve kimarad az áruház ellenőrzése.
+Ver en GitHub	Megtekintés a GitHubon
+Descarga desde GitHub:	Letöltés a GitHubról:
+Descargar e instalar	Letöltés és telepítés
+Descarga la nueva versión desde:	Töltsd le az új verziót innen:
+Omitir esta versión	Ezt a verziót kihagyom
+Más tarde	Később
+Descargando StradaOS {}…	StradaOS {} letöltése…
+Descárgala desde tu celular	Töltsd le a telefonodról
+Esta pantalla no pudo descargar el archivo. Escanea el código, descarga el APK y pásalo por USB.	Ez a kijelző nem tudta letölteni a fájlt. Olvasd be a kódot, töltsd le az APK-t, és másold át USB-n.
+¿Disfrutando StradaOS?	Tetszik a StradaOS?
+Si te gusta usar StradaOS, dale una estrella en GitHub. Y si revivió tu pantalla, considera invitarme un café ☕	Ha szívesen használod a StradaOS-t, adj neki egy csillagot a GitHubon. És ha új életet adott a kijelződnek, hívj meg egy kávéra ☕
+Dar una estrella	Csillag adása
+StradaOS es gratis. Las donaciones ayudan a mantenerlo.	A StradaOS ingyenes. Az adományok segítenek a karbantartásában.
+Escanéalo con la cámara de tu celular o entra a:	Olvasd be a telefonod kamerájával, vagy nyisd meg:
+Abrir aquí	Megnyitás itt
+No hay navegador disponible	Nincs elérhető böngésző
+Open Headunit · USB	Open Headunit · USB
+Toca para instalar	Koppints a telepítéshez
+Pantalla o adaptador	Kijelző vagy adapter
+Elige la app de ajustes de tu pantalla	Válaszd ki a kijelződ beállítási alkalmazását
+No se pudieron abrir los ajustes	Nem sikerült megnyitni a beállításokat
+No encontré la app de {}. Elígela de la lista.	Nem található a(z) {} alkalmazás. Válaszd ki a listából.
+↺  Automático (por defecto)	↺  Automatikus (alapértelmezett)
+¿Qué app abre «{}»?	Melyik alkalmazás nyissa meg ezt: „{}”?
+Restablecido	Visszaállítás
+Esta pantalla no trae Android Auto integrado.\n\nInstala la app gratuita «Open Headunit» (github.com/andreknieriem/headunit-revived): copia su APK en la memoria USB o en Download y vuelve a tocar el botón. Luego conecta el celular por cable USB.	Ennek a kijelzőnek nincs beépített Android Autója.\n\nTelepítsd az ingyenes „Open Headunit” alkalmazást (github.com/andreknieriem/headunit-revived): másold az APK-ját a pendrive-ra vagy a Download mappába, és koppints újra a gombra. Ezután csatlakoztasd a telefont USB-kábellel.
+Android Auto por cable USB (necesita la app Android Auto en el celular)	Android Auto USB-kábellel (a telefonon kell az Android Auto alkalmazás)
+Espejo de pantalla (necesita la app CarbitLink en el celular)	Képernyőtükrözés (a telefonon kell a CarbitLink alkalmazás)
+Android Auto / CarPlay integrados en la pantalla	A kijelzőbe épített Android Auto / CarPlay
+Otra app…	Másik alkalmazás…
+¿Cómo quieres conectar tu celular?	Hogyan szeretnéd csatlakoztatni a telefonodat?
+Conexión: {}. Cámbiala dejando presionado el botón.	Kapcsolat: {}. A gomb lenyomva tartásával módosíthatod.
+el navegador	a böngésző
+«{}» necesita un Android más nuevo que el de esta pantalla. Abro el navegador de fábrica.	A(z) „{}” újabb Androidot igényel, mint ami ezen a kijelzőn van. A gyári böngésző nyílik meg.
+No encontré un navegador. Déjalo presionado para elegir uno.	Nem található böngésző. Tartsd lenyomva, és válassz egyet.
+Permite «Instalar apps desconocidas» para StradaOS y vuelve a tocar.	Engedélyezd az „Ismeretlen alkalmazások telepítése” lehetőséget a StradaOS-nek, és koppints újra.
+Activa «Orígenes desconocidos» y vuelve a tocar.	Kapcsold be az „Ismeretlen források” lehetőséget, és koppints újra.
+No se pudo preparar {}	Nem sikerült előkészíteni: {}
+No se pudo abrir el instalador para {}	Nem sikerült megnyitni a telepítőt ehhez: {}
+Aplicaciones  ·  Android {} (API {})	Alkalmazások  ·  Android {} (API {})
+Despejado	Derült
+Parcialmente nublado	Részben felhős
+Nublado	Felhős
+Niebla	Köd
+Llovizna	Szitálás
+Lluvia	Eső
+Nieve	Hó
+Tormenta	Vihar
+Mapa en vivo apagado	Élő térkép kikapcsolva
+Rendimiento	Teljesítmény
+Apágalo si la pantalla va lenta: queda un mapa de adorno y el velocímetro sigue funcionando	Kapcsold ki, ha a kijelző lassú: egy díszítő térkép marad, és a sebességmérő tovább működik
+StradaOS aún no es tu pantalla de inicio	A StradaOS még nem a kezdőképernyőd
+Por eso al encender el carro o al tocar Inicio aparece el menú de fábrica.\n\nToca «Fijar ahora», elige StradaOS y luego «Siempre».	Ezért jelenik meg a gyári menü, amikor beindítod az autót vagy megnyomod a Kezdőlap gombot.\n\nKoppints a „Beállítás most” gombra, válaszd a StradaOS-t, majd a „Mindig” lehetőséget.
+Fijar ahora	Beállítás most
+Ahora no	Most nem
+No volver a preguntar	Ne kérdezze újra
+Elige StradaOS y toca «Siempre»	Válaszd a StradaOS-t, és koppints a „Mindig” gombra
+Listo: StradaOS es tu pantalla de inicio	Kész: a StradaOS a kezdőképernyőd
+Fijar StradaOS a mano	A StradaOS kézi beállítása
+Algunas pantallas no muestran la lista para elegir. Prueba así:\n\n1. Toca el botón Inicio (la casita) de la pantalla. Si pregunta qué app usar, elige StradaOS → Siempre.\n2. Si no pregunta: en los ajustes de la pantalla busca Aplicaciones → Aplicaciones predeterminadas → Pantalla de inicio (o «App de inicio») y elige StradaOS.\n3. Con Android 10 o más nuevo, no lo elijas desde el modo fábrica de la pantalla («Launcher», «Interfaz» o «UI»): en algunas marcas eso deja las demás apps sin poder abrirse. En Android 4 a 9 sí puedes usar esa opción.\n\nSi tu pantalla siempre vuelve a su menú de fábrica al encender, activa «Abrir StradaOS al encender» en Ajustes → Sistema.	Egyes kijelzők nem mutatják a választólistát. Próbáld így:\n\n1. Nyomd meg a kijelző Kezdőlap gombját (a házikót). Ha megkérdezi, melyik alkalmazást használja, válaszd: StradaOS → Mindig.\n2. Ha nem kérdezi: a kijelző beállításaiban keresd meg az Alkalmazások → Alapértelmezett alkalmazások → Kezdőalkalmazás menüt, és válaszd a StradaOS-t.\n3. Android 10-en vagy újabban ne a kijelző gyári módjából válaszd („Launcher”, „Interface” vagy „UI”): egyes márkáknál emiatt más alkalmazások nem nyílnak meg. Android 4–9-en használhatod ezt a lehetőséget.\n\nHa a kijelződ indításkor mindig a gyári menüjére tér vissza, kapcsold be a „StradaOS megnyitása indításkor” lehetőséget a Beállítások → Rendszer menüben.
+Pantalla de inicio	Kezdőképernyő
+La que aparece al encender y al tocar Inicio	Ami indításkor és a Kezdőlap gomb megnyomásakor megjelenik
+StradaOS ✓	StradaOS ✓
+Otra · toca para cambiar	Másik · koppints a módosításhoz
+Abrir StradaOS al encender	StradaOS megnyitása indításkor
+Para pantallas que siempre arrancan en su menú de fábrica (Android 4 a 9)	Olyan kijelzőkhöz, amelyek mindig a gyári menüvel indulnak (Android 4–9)
+¿La música Bluetooth se corta o no aparece?	Akadozik vagy nem látszik a Bluetooth-zene?
+Qué hacer en cada caso	Mit tegyél az egyes esetekben
+• Se corta al salir de la app Bluetooth: sal con el botón Inicio (la casita), no con Atrás. Atrás cierra la app de fábrica y con ella la música.\n\n• No suena hasta abrir la app Bluetooth: activa «Abrir la app de música Bluetooth al conectar el celular» (aquí mismo). Abre la app un instante y vuelve al inicio.\n\n• La canción no aparece en el inicio (Android 5 o más nuevo): activa «Música de cualquier app» arriba y dale acceso a notificaciones a StradaOS.\n\n• Revisa en Ajustes → Accesos y apps que «Música Bluetooth» sea la app Bluetooth de tu pantalla.	• Megszakad, amikor kilépsz a Bluetooth-alkalmazásból: a Kezdőlap gombbal (a házikó) lépj ki, ne a Vissza gombbal. A Vissza bezárja a gyári alkalmazást, és vele a zenét is.\n\n• Nem szól, amíg meg nem nyitod a Bluetooth-alkalmazást: kapcsold be „A Bluetooth-zene alkalmazás megnyitása a telefon csatlakozásakor” lehetőséget (itt). Egy pillanatra megnyitja az alkalmazást, majd visszatér a kezdőképernyőre.\n\n• A dal nem látszik a kezdőképernyőn (Android 5 vagy újabb): kapcsold be fent a „Zene bármely alkalmazásból” lehetőséget, és adj a StradaOS-nek értesítési hozzáférést.\n\n• Ellenőrizd a Beállítások → Parancsikonok és alkalmazások menüben, hogy a „Bluetooth-zene” a kijelződ Bluetooth-alkalmazása legyen.
+Sin permiso	Nincs engedély
+GPS apagado	GPS kikapcsolva
+Unidades	Mértékegységek
+Automático: mph en EE. UU. y Reino Unido	Automatikus: mph az USA-ban és az Egyesült Királyságban
+Permisos → Ubicación → Permitir	Engedélyek → Helymeghatározás → Engedélyezés
+Activa la ubicación para StradaOS en los ajustes de la pantalla	Kapcsold be a helymeghatározást a StradaOS-nek a kijelző beállításaiban
+Activa la ubicación (GPS)	Kapcsold be a helymeghatározást (GPS)
+Activa la ubicación (GPS) en los ajustes de la pantalla	Kapcsold be a helymeghatározást (GPS) a kijelző beállításaiban
+Sin permiso de ubicación · toca aquí	Nincs helymeghatározási engedély · koppints ide
+Ubicación apagada · toca aquí	Helymeghatározás kikapcsolva · koppints ide
+Sin señal GPS · toca aquí	Nincs GPS-jel · koppints ide
+Versión de prueba	Tesztverzió
+Simular pantalla	Kijelző szimulálása
+Para probar otros tamaños en una tablet o celular	Más méretek kipróbálásához tableten vagy telefonon
+Real	Valós
+Aceite	Olaj
+Configurar	Beállítás
+¡Cambiar!	Cseréld!
+Kilometraje estimado	Becsült kilométeróra-állás
+Próximo cambio	Következő csere
+Faltan {}	Még {}
+¡Ya toca!	Esedékes!
+Cambio de aceite	Olajcsere
+Ya hice el cambio de aceite	Elvégeztem az olajcserét
+Corregir el kilometraje actual	Az aktuális kilométeróra-állás javítása
+Cambiar cada cuánto se hace	A csere gyakoriságának módosítása
+Desactivar el recordatorio	Emlékeztető kikapcsolása
+Recordatorio de cambio de aceite	Olajcsere-emlékeztető
+StradaOS no puede leer el kilometraje del tablero del carro. Escríbelo una vez y StradaOS le irá sumando lo que recorras con el GPS, para avisarte cuando toque el cambio.\n\nDe vez en cuando puedes corregirlo con el valor real del tablero.	A StradaOS nem tudja kiolvasni az autó műszerfalán lévő kilométeróra-állást. Add meg egyszer, és a StradaOS a GPS alapján hozzáadja a megtett távolságot, hogy szóljon, amikor esedékes a csere.\n\nIdőnként javíthatod a műszerfal valós értékével.
+¿A cuántos {} fue el último cambio de aceite?	Kilométeróra-állás az utolsó olajcserekor ({})
+Kilometraje actual del tablero	Aktuális kilométeróra-állás a műszerfalon
+¿Cada cuántos {} cambias el aceite?	Hány {} legyen két olajcsere között?
+Escribe un número válido	Adj meg egy érvényes számot
+Kilometraje del tablero al hacer el cambio	Kilométeróra-állás a cserekor
+Es hora del cambio de aceite	Ideje olajat cserélni
+El kilometraje estimado es ≈ {} y ya toca el cambio de aceite (cada {}).	A becsült kilométeróra-állás ≈ {}, és esedékes az olajcsere ({} gyakorisággal).
+¿Ya lo hiciste?	Elvégezted?
+Ya lo hice	Kész
+Aún no	Még nem
+Se muestra al lado de la velocidad y avisa cuando toca	A sebesség mellett jelenik meg; szól, ha esedékes
+Kilometraje actual	Aktuális kilométeróra-állás
+Estimado con el GPS. Corrígelo con el del tablero cuando quieras	GPS alapján becsülve. Bármikor javíthatod a műszerfal értékével
+Cada cuánto	Gyakoriság
+Orientación del mapa	Térkép tájolása
+El mapa apunta	A térkép iránya
+Según tu dirección: gira con el carro mientras te mueves	Haladási irány: vezetés közben az autóval együtt fordul
+Norte arriba	Észak felfelé
+Según tu dirección	Haladási irány
+Último cambio	Utolsó csere
+Corregir el último cambio	Az utolsó csere javítása
+¿Tu tablero marca kilómetros o millas?	A műszerfalad kilométert vagy mérföldet mutat?
+Kilómetros (km)	Kilométer (km)
+Millas (mi)	Mérföld (mi)
+Revisa el último cambio	Ellenőrizd az utolsó cserét
+El último cambio ({}) queda por encima del kilometraje actual ({}). ¿Lo escribiste en otra unidad?	Az utolsó csere ({}) nagyobb, mint az aktuális kilométeróra-állás ({}). Esetleg más mértékegységben adtad meg?
+Corregir	Javítás
+Guardar igual	Mentés így is
+Kilometraje del tablero cuando se hizo	Kilométeróra-állás a műszerfalon a cserekor
+Ocultas: {}	Elrejtve: {}
+Ocultar del cajón	Elrejtés a fiókból
+Información de la app	Alkalmazásinfó
+Oculta. Para volver a verla: Ajustes → Accesos y apps → Apps ocultas	Elrejtve. Újbóli megjelenítéshez: Beállítások → Parancsikonok és alkalmazások → Rejtett alkalmazások
+Cajón de apps	Alkalmazásfiók
+Apps ocultas	Rejtett alkalmazások
+No se ven en el cajón, pero siguen instaladas y se pueden poner en los botones	Nem jelennek meg a fiókban, de telepítve maradnak, és a gombokhoz is választhatók
+Buscar app	Alkalmazások keresése
+Apps ocultas en el cajón	A fiókból elrejtett alkalmazások
+Se muestran todas las apps	Minden alkalmazás látható
+Apps ocultas: {}	Rejtett alkalmazások: {}
+Desinstalar	Eltávolítás
+Salir de StradaOS	Kilépés a StradaOS-ből
+Abrir el launcher de fábrica	A gyári launcher megnyitása
+Sale de StradaOS sin desinstalarlo	Kilép a StradaOS-ből anélkül, hogy eltávolítaná
+Desactivar StradaOS	A StradaOS letiltása
+Si la pantalla quedó atrapada en StradaOS: se apaga solo, sin ventanas de Android	Ha a kijelző beragadt a StradaOS-be: kikapcsolja magát, Android-felugró ablakok nélkül
+Desinstalar StradaOS	A StradaOS eltávolítása
+Android pide confirmar	Az Android megerősítést kér
+No encontré otra pantalla de inicio en este equipo	Nem találtam másik kezdőképernyőt ezen az eszközön
+¿Cuál es el launcher de fábrica?	Melyik a gyári launcher?
+No se pudo abrir	Nem sikerült megnyitni
+No encontré otra pantalla de inicio: StradaOS no se puede desactivar en este equipo	Nem találtam másik kezdőképernyőt: a StradaOS nem tiltható le ezen az eszközön
+¿Desactivar StradaOS?	Letiltod a StradaOS-t?
+StradaOS deja de ser la pantalla de inicio, ya no se abre al encender y vuelve el launcher de fábrica. No pide confirmaciones de Android, así que sirve aunque la pantalla haya quedado atrapada.\n\nPara volver a usarlo después: desinstálalo desde los ajustes de la pantalla e instálalo de nuevo.	A StradaOS többé nem a kezdőképernyő, nem nyílik meg indításkor, és visszatér a gyári launcher. Nincs szüksége Android-megerősítésre, ezért akkor is működik, ha a kijelző beragadt.\n\nHa később újra használnád: távolítsd el a kijelző beállításaiból, és telepítsd újra.
+Desactivar	Letiltás
+Diseño del inicio	Kezdőképernyő elrendezése
+Reproductor de música	Zenelejátszó
+Ponlo del lado del conductor para tenerlo a la mano	Tedd a vezető oldalára, hogy kézre essen
+Derecha	Jobbra
+Izquierda	Balra
+Tarjeta del vehículo	Járműkártya
+Si la ocultas, la velocidad pasa arriba y el mapa y el reproductor ganan espacio	Ha elrejted, a sebesség felülre kerül, és a térkép meg a lejátszó több helyet kap
+Barra de botones	Gombsáv
+Lateral: los botones van al costado y todo se ve más grande en pantallas bajas como 1280×480	Oldalt: a gombok oldalra kerülnek, és alacsony kijelzőkön (pl. 1280×480) minden nagyobbnak látszik
+Normal	Normál
+Compacta	Kompakt
+Lateral	Oldalt
+Aceite: configurar	Olaj: beállítás
+¡Cambiar aceite!	Cseréld az olajat!
+Aceite: {}	Olaj: {}
+Mapa sin conexión	Offline térkép
+Archivo del mapa	Térképfájl
+Un archivo .map (p. ej. colombia.map) en la memoria de la pantalla o en una USB: el mapa se ve sin internet	Egy .map fájl (pl. hungary.map) a kijelző tárhelyén vagy pendrive-on: a térkép internet nélkül is működik
+Error	Hiba
+No se pudo abrir: {}	Nem sikerült megnyitni: {}
+Toca para dejar de usarlo	Koppints, ha már nem akarod használni
+Mapa sin conexión quitado	Offline térkép eltávolítva
+¿Dónde consigo el mapa?	Honnan szerezzem be a térképet?
+Mapas gratis de OpenStreetMap por país	Ingyenes OpenStreetMap-térképek országonként
+Buscando mapas…	Térképek keresése…
+No se encontró ningún mapa	Nem található térkép
+No hay archivos .map en la memoria de la pantalla ni en las USB conectadas. Toca «Cómo conseguirlo» para ver de dónde bajarlo.	Nincsenek .map fájlok a kijelző tárhelyén vagy a csatlakoztatott pendrive-okon. Koppints a „Hogyan szerezhetem be” gombra, és megnézheted, honnan tölthetsz le egyet.
+Cómo conseguirlo	Hogyan szerezhetem be
+Elige el mapa	Válaszd ki a térképet
+No se pudo usar este archivo	Ez a fájl nem használható
+Debe ser un mapa de mapsforge (.map) copiado completo.	Mapsforge-térképnek (.map) kell lennie, teljesen átmásolva.
+Mapa sin conexión listo: {}	Az offline térkép kész: {}
+Sin permiso de almacenamiento no se pueden buscar mapas	Tárhely-engedély nélkül nem lehet térképeket keresni
+Última posición · mapa sin conexión	Utolsó pozíció · offline térkép
+no se encuentra el archivo	a fájl nem található
+sin permiso para leer el archivo	nincs engedély a fájl olvasásához
+no es un mapa de mapsforge (.map)	nem mapsforge-térkép (.map)
+el archivo está incompleto (¿se copió entero?)	a fájl hiányos (teljesen átmásoltad?)
+1. En un computador o celular, descarga el mapa de tu país (formato mapsforge, gratis):\ndownload.mapsforge.org/maps/v5\n\nColombia:\ndownload.mapsforge.org/maps/v5/south-america/colombia.map\n\n2. Cópialo a una memoria USB o a la carpeta Download de la pantalla.\n\n3. En Ajustes → Mapa y clima → Mapa sin conexión, toca «Archivo del mapa» y elígelo.\n\nEl mapa se usa en el inicio incluso con internet. Para actualizarlo, descarga uno nuevo y reemplaza el archivo.	1. Számítógépen vagy telefonon töltsd le az országod térképét (mapsforge formátum, ingyenes):\ndownload.mapsforge.org/maps/v5\n\nMagyarország:\ndownload.mapsforge.org/maps/v5/europe/hungary.map\n\n2. Másold pendrive-ra vagy a kijelző Download mappájába.\n\n3. A Beállítások → Térkép és időjárás → Offline térkép menüben koppints a „Térképfájl” elemre, és válaszd ki.\n\nA térkép internet mellett is ezt használja a kezdőképernyőn. A frissítéshez tölts le egy újat, és cseréld le a fájlt.
+Toca para dejar de usarlo o borrarlo	Koppints, ha már nem akarod használni, vagy törölni szeretnéd
+Descargar un mapa	Térkép letöltése
+Elige tu país: se descarga gratis de OpenStreetMap (mapsforge) y se usa sin internet	Válaszd ki az országodat: ingyenesen letöltődik az OpenStreetMapről (mapsforge), és internet nélkül is működik
+Cargando la lista de mapas…	Térképlista betöltése…
+No se pudo cargar la lista de mapas	Nem sikerült betölteni a térképlistát
+Revisa la conexión a internet e inténtalo de nuevo.	Ellenőrizd az internetkapcsolatot, és próbáld újra.
+por regiones	régiónként
+Elige el continente	Válaszd ki a kontinenst
+Tamaño	Méret
+Se guarda en	Mentés helye
+Espacio libre	Szabad hely
+memoria	tárhely
+Usa datos: mejor con WiFi o un plan amplio. Puedes seguir usando la pantalla; si se corta la señal o la apagas, la descarga continúa después.	Adatforgalommal jár: legjobb Wi-Fin vagy bőséges adatcsomaggal. Közben használhatod a kijelzőt; ha megszakad a jel vagy kikapcsolod, a letöltés később folytatódik.
+No hay espacio suficiente en la memoria.	Nincs elég szabad tárhely.
+Descargar	Letöltés
+Descargando el mapa… puedes seguir usando la pantalla	Térkép letöltése… közben használhatod a kijelzőt
+Descarga en curso	Letöltés folyamatban
+Descarga en pausa	Letöltés szüneteltetve
+Pausar	Szünet
+Continuar	Folytatás
+Cancelar descarga	Letöltés megszakítása
+Descarga cancelada	Letöltés megszakítva
+Este mapa lo descargó StradaOS. Puedes dejar de usarlo o borrarlo para liberar espacio.	Ezt a térképet a StradaOS töltötte le. Abbahagyhatod a használatát, vagy törölheted, hogy helyet szabadíts fel.
+Puedes dejar de usar este mapa (el archivo no se borra).	Abbahagyhatod a térkép használatát (a fájl nem törlődik).
+Dejar de usarlo	Használat befejezése
+Borrar el archivo	Fájl törlése
+Mapa borrado	Térkép törölve
+Mapa descargado y listo: {}	A térkép letöltve és kész: {}
+Descargando	Letöltés
+África	Afrika
+Australia y Oceanía	Ausztrália és Óceánia
+Centroamérica y el Caribe	Közép-Amerika és a Karib-térség
+Europa	Európa
+Norteamérica	Észak-Amerika
+Rusia	Oroszország
+Sudamérica	Dél-Amerika
+sin conexión, reintentando…	nincs kapcsolat, újrapróbálás…
+el archivo quedó incompleto	a fájl hiányos
+no se pudo guardar el archivo	nem sikerült menteni a fájlt
+no hay espacio suficiente	nincs elég hely
+se cortó la descarga	a letöltés megszakadt
+Sin señal GPS · mapa sin conexión	Nincs GPS-jel · offline térkép
+Sin señal GPS ni internet	Nincs GPS-jel és internet
+Sin señal GPS · última posición	Nincs GPS-jel · utolsó pozíció
+Auto: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)	Auto: időbeosztás szerint. Rendszer: a kijelző sötét módját követi (egyesek a fényszóró bekapcsolásakor váltanak)
+Oscuro desde	Sötét ettől:
+Claro desde	Világos ettől:
+Íconos de Wi-Fi y Bluetooth	Wi-Fi és Bluetooth ikonok
+Arriba, junto al clima. Toca para encender o apagar; déjalo presionado para abrir sus ajustes	Fent, az időjárás mellett. Koppintással be- vagy kikapcsolod; lenyomva tartva megnyílnak a beállításai
+¿Apagar el Wi-Fi?	Kikapcsolod a Wi-Fit?
+La pantalla se queda sin internet (mapa en vivo, clima y actualizaciones).	A kijelző elveszíti az internetet (élő térkép, időjárás és frissítések).
+Apagar	Kikapcsolás
+Esta pantalla no deja cambiar el Wi-Fi desde otra app: abre sus ajustes	Ez a kijelző nem engedi, hogy más alkalmazások módosítsák a Wi-Fit: megnyílnak a beállításai
+Encendiendo el Wi-Fi…	Wi-Fi bekapcsolása…
+Wi-Fi apagado	Wi-Fi kikapcsolva
+¿Apagar el Bluetooth?	Kikapcsolod a Bluetooth-t?
+Se desconecta el celular (música y llamadas).	A telefonod leválik (zene és hívások).
+Esta pantalla no deja cambiar el Bluetooth desde otra app: abre sus ajustes	Ez a kijelző nem engedi, hogy más alkalmazások módosítsák a Bluetooth-t: megnyílnak a beállításai
+Encendiendo el Bluetooth…	Bluetooth bekapcsolása…
+Bluetooth apagado	Bluetooth kikapcsolva
+Lado de la barra lateral	Az oldalsáv helyzete
+Automático: del lado del reproductor	Automatikus: a lejátszó oldalán
+Nombres de los botones	Gombnevek
+Debajo de cada ícono de la barra	Az egyes ikonok alatt a sávban
+Permiso de ubicación: {}	Helymeghatározási engedély: {}
+NO (toca el letrero del mapa)	NINCS (koppints a térkép feliratára)
+sí	igen
+GPS del equipo: {} · ubicación por red: {}	Fejegység GPS: {} · hálózati hely: {}
+no encontrado	nem található
+encendido	be
+apagado	ki
+encendida	be
+apagada	ki
+Última señal: {}	Utolsó jel: {}
+ninguna desde que abrió StradaOS	nincs a StradaOS megnyitása óta
+hace {} s	{} mp-e
+hace {} min	{} perce
+Buscando desde hace {} min	{} perce keres
+Posición: {}	Pozíció: {}
+sin GPS	nincs GPS
+Zoom: {}	Nagyítás: {}
+Mapa sin conexión: {}	Offline térkép: {}
+ninguno	nincs
+error: {}	hiba: {}
+{} · en uso	{} · használatban
+{} · fuera del área del archivo	{} · a fájl területén kívül
+Teselas dibujadas desde el archivo: {} · {} ms cada una	A fájlból rajzolt csempék: {} · {} ms/db
+Proveedor: {}	Szolgáltató: {}
+{} · ninguna fuente respondió ({} vueltas)	{} · egyik forrás sem válaszolt ({} kör)
+Teselas descargadas: {} · en caché: {}	Letöltött csempék: {} · gyorsítótárban: {}
+Errores seguidos: {}	Egymás utáni hibák: {}
+Último error: {}	Utolsó hiba: {}
+Fuentes probadas:	Kipróbált források:
+• {}: {}	• {}: {}
+sin probar	nem kipróbált
+certificado	tanúsítvány
+OSM Alemania	OSM Németország
+OSM Francia	OSM Franciaország
+OSM Humanitario	OSM Humanitárius
+Esri gris oscuro	Esri sötétszürke
+sin iniciar	nem indult el
+TLS listo ({}), {} raíces	TLS kész ({}), {} gyökér
+TLS listo ({}), {} raíces, {} omitidas	TLS kész ({}), {} gyökér, {} kihagyva
+TLS no disponible: {}	TLS nem érhető el: {}
+Íconos de Wi-Fi y Bluetooth arriba	Wi-Fi és Bluetooth ikonok fent
+Bluetooth: estado del celular desde la app de fábrica; toca para abrirla	Bluetooth: a telefon állapota a gyári alkalmazásból; koppints a megnyitásához
+Tema según el modo oscuro del sistema	A rendszer sötét módját követő téma
+Pantallas que lo cambian (p. ej. con las luces)	Az ezt váltó kijelzők (pl. a fényszóróval)
+el sistema está en modo oscuro	a rendszer sötét módban van
+el sistema está en modo claro	a rendszer világos módban van
+Cargando…	Betöltés…
+Esperando la ubicación…	Várakozás a helyre…
+Máx {} · Mín {}	Max. {} · Min. {}
+Sensación {}	Hőérzet {}
+Humedad {}	Páratartalom {}
+Viento {}	Szél {}
+PRÓXIMAS HORAS	KÖVETKEZŐ ÓRÁK
+PRÓXIMOS DÍAS	KÖVETKEZŐ NAPOK
+Ahora	Most
+Hoy	Ma
+El clima está apagado en Ajustes → Mapa y clima	Az időjárás ki van kapcsolva a Beállítások → Térkép és időjárás menüben
+Esperando la ubicación para el clima…	Várakozás a helyre az időjáráshoz…
+Cargando el clima…	Időjárás betöltése…
+Velocidad y servicio	Sebesség és szerviz
+En la tarjeta del vehículo (o arriba si la ocultas). Apágalo si tu carro o pantalla no tiene GPS: la foto ocupa ese espacio	A járműkártyán (vagy fent, ha elrejted). Kapcsold ki, ha az autódban vagy a kijelződön nincs GPS: a fotó veszi át a helyét
+Aceite en el inicio	Olaj a kezdőképernyőn
+Junto a la velocidad. Aunque lo ocultes, el aviso del cambio de aceite sigue saliendo	A sebesség mellett. Ha elrejted, az olajcsere-figyelmeztetés akkor is megjelenik
+Tarjeta del reproductor	Lejátszókártya
+Si la ocultas, el mapa gana espacio	Ha elrejted, a térkép több helyet kap
+Botones de conexión	Csatlakozási gombok
+Con uno o ninguno, el clima ocupa el espacio libre del mapa	Eggyel vagy egy nélkül az időjárás kitölti a szabad helyet a térképen
+Android Auto y CarPlay	Android Auto és CarPlay
+Solo Android Auto	Csak Android Auto
+Solo CarPlay	Csak CarPlay
+Botón del navegador	Navigációs gomb
+El botón redondo del mapa que abre tu app de navegación	A kerek térképgomb, amely a navigációs alkalmazásodat nyitja meg
+Grande	Nagy
+Muy grande	Extra nagy
+Oculto	Rejtett
+Lado del botón del navegador	A navigációs gomb oldala
+Automático: del lado del reproductor (el del conductor)	Automatikus: a lejátszó oldalán (a vezető oldalán)
+Usar la foto original, sin recortar ni quitar el fondo	Az eredeti fotó használata vágás és háttéreltávolítás nélkül
+Se le quita el fondo automáticamente, o la puedes usar tal cual	A háttér automatikusan eltűnik, vagy változatlanul is használhatod
+Lluvia {}	Eső {}
+Abriendo la foto…	Fotó megnyitása…
+Vista previa	Előnézet
+Sin fondo · nivel {} de 4	Háttér eltávolítva · {}/4. szint
+Sin fondo · nivel {} de 4 (también quita el reflejo del piso)	Háttér eltávolítva · {}/4. szint (a padló tükröződését is eltávolítja)
+Usar la foto original, con fondo	Az eredeti fotó használata háttérrel
+Quitar el fondo	Háttér eltávolítása
+No se detectó un fondo liso: se usa la foto tal cual	Nem található egyszínű háttér: a fotó változatlanul lesz használva
+Se usa tal cual; si quieres, le puedes quitar el fondo	Változatlanul használva; ha szeretnéd, eltávolíthatod a hátteret
+Cantidad de botones	Gombok száma
+«Apps» siempre queda al final	Az „Alkalmazások” mindig az utolsó marad
+Tamaño de los íconos	Ikonméret
+Pequeño	Kicsi
+Pequeña	Kicsi
+Íconos de la barra	Sávikonok
+Apps: el ícono de la app que abre cada botón (radio, cámara…)	Alkalmazások: annak az alkalmazásnak az ikonja, amelyet a gomb megnyit (rádió, kamera…)
+Pack de íconos	Ikoncsomag
+Instala uno (los de Nova o ADW sirven) y elígelo aquí	Telepíts egyet (a Nova vagy ADW csomagok működnek), és válaszd ki itt
+Cambia los íconos de la barra y del cajón de apps	A sáv és az alkalmazásfiók ikonjait cseréli le
+Ninguno (íconos de siempre)	Nincs (alapértelmezett ikonok)
+No hay packs de íconos instalados	Nincs telepített ikoncsomag
+Ese pack no trae la lista de íconos (appfilter)	Ennek a csomagnak nincs ikonlistája (appfilter)
+Pack listo: {} íconos	A csomag kész: {} ikon
+Lateral: los botones van al costado y todo se ve más grande en pantallas bajas como 1280×480. Oculta: el botón Apps va arriba	Oldalt: a gombok oldalra kerülnek, és alacsony kijelzőkön (pl. 1280×480) minden nagyobbnak látszik. Rejtett: az Alkalmazások gomb felülre kerül
+Oculta	Rejtett
+Tamaño de la letra	Szövegméret
+Para leer mejor de lejos o que quepa más	Hogy messziről is jól olvasható legyen, vagy több férjen el
+Velocímetro	Sebességmérő
+En la tarjeta del vehículo. Toma el color de acento	A járműkártyán. A kiemelőszínt használja
+Digital	Digitális
+Analógico	Analóg
+Mixto	Vegyes
+Velocímetro sobre el mapa	Sebességmérő a térképen
+Redondo, en una esquina del mapa (en vez de la velocidad de arriba)	Kerek, a térkép egyik sarkában (a fenti sebesség helyett)
+Mantenimiento	Karbantartás
+Otros mantenimientos	Egyéb karbantartás
+Agregar mantenimiento	Karbantartás hozzáadása
+Filtros, bujías, frenos, correa, SOAT… Avisa por kilómetros, por tiempo o lo que llegue primero	Szűrők, gyújtógyertyák, fékek, szíj, biztosítás… Távolság, idő vagy amelyik előbb jön alapján emlékeztet
+Filtro de aire	Levegőszűrő
+Bujías	Gyújtógyertyák
+Pastillas de freno	Fékbetétek
+Líquido de frenos	Fékfolyadék
+Refrigerante	Hűtőfolyadék
+Correa de distribución	Vezérműszíj
+Rotación de llantas	Gumiforgatás
+Alineación y balanceo	Futómű-beállítás és kiegyensúlyozás
+Revisión de la batería	Akkumulátor-ellenőrzés
+Seguro obligatorio (SOAT)	Kötelező biztosítás
+Revisión técnico-mecánica	Műszaki vizsga
+Otro (escribe el nombre)	Egyéb (írd be a nevét)
+Nombre del mantenimiento	Karbantartás neve
+Por kilómetros	Távolság szerint
+Por tiempo	Idő szerint
+Lo que llegue primero	Amelyik előbb jön
+¿Cada cuántos meses?	Hány havonta?
+¿Cada cuántos {}?	Hány {} után?
+¿A cuántos {} fue la última vez?	Hány {}-nél volt utoljára?
+¿Cuándo fue la última vez?	Mikor volt utoljára?
+Kilometraje del tablero	Kilométeróra-állás a műszerfalon
+StradaOS no puede leer el kilometraje del carro. Escríbelo una vez y StradaOS le suma lo que recorras con el GPS.	A StradaOS nem tudja kiolvasni az autó kilométeróra-állását. Írd be egyszer, és a StradaOS a GPS alapján hozzáadja, amennyit vezetsz.
+Escribirlo	Beírás
+Última vez	Utoljára
+Cambiar cada cuánto	Gyakoriság módosítása
+Corregir la última vez	Az utolsó alkalom javítása
+¿Borrar «{}»?	Törlöd: „{}”?
+Kilometraje del tablero al hacerlo	Kilométeróra-állás a műszerfalon az elvégzéskor
+Es hora de: {}	Ideje elvégezni: {}
+¡Toca: {}!	Esedékes: {}!
+Cada {}	{} gyakorisággal
+cada {} mes	{} havonta
+cada {} meses	{} havonta
+¿Cada cuánto tiempo?	Milyen gyakran?
+Días	Nap
+Semanas	Hét
+Meses	Hónap
+cada día	naponta
+cada semana	hetente
+cada mes	havonta
+cada {} días	{} naponta
+cada {} semanas	{} hetente
+(lo primero)	(amelyik előbb)
+{} meses	{} hónap
+{} día	{} nap
+{} días	{} nap
+Mantenimientos	Karbantartás
+Barra de apps	Alkalmazássáv
+Tarjetas	Kártyák
+Barra de arriba	Felső sáv
+Diseño de la barra	Sáv elrendezése
+Botones (déjalos presionados en el inicio para cambiarlos)	Gombok (a kezdőképernyőn lenyomva tartva módosíthatod őket)
+Texto	Szöveg
+Kilometraje	Kilométeróra
+Escríbelo una vez y StradaOS le suma lo que recorras con el GPS	Írd be egyszer, és a StradaOS a GPS alapján hozzáadja, amennyit vezetsz
+Avisa cuando toca el cambio	Szól, amikor esedékes a csere
+En el inicio	A kezdőképernyőn
+Mantenimiento en el inicio	Karbantartás a kezdőképernyőn
+Junto a la velocidad se ve el más próximo (el aceite u otro). Los avisos siguen saliendo aunque lo ocultes	A sebesség mellett a legközelebbi látszik (olaj vagy más). A figyelmeztetések akkor is megjelennek, ha elrejted
+Se muestra junto a la velocidad: activa «Velocidad y servicio» en Pantalla de inicio	A sebesség mellett jelenik meg: kapcsold be a „Sebesség és szerviz” lehetőséget a Kezdőképernyő menüben
+Aceite, filtros, SOAT y más	Olaj, szűrők, biztosítás és egyebek
+Ahora están en su propia sección	Mostantól saját menüpontjuk van
+Al encender	Indításkor
+Launcher predeterminado	Alapértelmezett launcher
+Esquina del velocímetro	A sebességmérő sarka
+Automático: arriba, en el lado contrario al botón del navegador	Automatikus: fent, a navigációs gombbal szemközt
+Arriba a la izquierda	Bal felső
+Arriba a la derecha	Jobb felső
+Abajo a la izquierda	Bal alsó
+Abajo a la derecha	Jobb alsó
+Tamaño del velocímetro	Sebességmérő mérete
+En pantallas bajas se limita para no tapar el mapa	Alacsony kijelzőkön korlátozott, hogy ne takarja el a térképet
+Elige un ícono	Válassz ikont
+Cambiar el ícono	Ikon cseréje
+Filtro de combustible	Üzemanyagszűrő
+Aire acondicionado	Klíma
+Lavado	Autómosás
+Fuente: {}	Forrás: {}
+Pista: {}	Szám: {}
+Carátula: {}	Albumborító: {}
+Lector de notificaciones (accesibilidad): {}	Értesítésolvasó (kisegítő lehetőségek): {}
+ACTIVO	AKTÍV
+Última notificación de Open Headunit: {}	Utolsó Open Headunit-értesítés: {}
+ninguna	nincs
+{} s, carátula {}, textos {}	{} mp, albumborító {}, szövegek {}
+Open Headunit corriendo: {} · celular por USB en modo Android Auto: {}	Open Headunit fut: {} · telefon USB-n Android Auto módban: {}
+no se sabe	ismeretlen
+Android Auto conectado (para StradaOS): {}	Android Auto csatlakoztatva (a StradaOS szerint): {}
+App Bluetooth conectada: {}	Bluetooth-alkalmazás csatlakoztatva: {}
+Audio Bluetooth automático: {}	Automatikus Bluetooth-hang: {}
+desactivado	ki
+no aplica (otra marca)	nem alkalmazható (más márka)
+App de música Bluetooth: {} · abrir al conectar: {}	Bluetooth-zene alkalmazás: {} · megnyitás csatlakozáskor: {}
+no encontrada	nem található
+Sonido en Bluetooth (estimado): {} · app al frente: {}	Hang Bluetooth-on (becsült): {} · előtérben lévő alkalmazás: {}
+Activaciones: {}	Aktiválások: {}
+Eventos Bluetooth:	Bluetooth-események:
+(sin eventos)	(nincs esemény)
+no	nem
+conectado a la app Bluetooth	csatlakozva a Bluetooth-alkalmazáshoz
+la app Bluetooth se cerró	a Bluetooth-alkalmazás bezárult
+se reinicia muy seguido: pausa de 15 min	túl gyakran indul újra: 15 perc szünet
+activar audio: el celular no está conectado por Bluetooth	hang engedélyezése: a telefon nem csatlakozik Bluetooth-on
+activar audio: el celular está en pausa	hang engedélyezése: a telefon szünetel
+modo de audio Bluetooth solicitado	Bluetooth-hang mód kérve
+activar audio falló: {}	a hang engedélyezése sikertelen: {}
+el celular empezó a sonar	a telefon elindította a lejátszást
+revisión falló: {}	az ellenőrzés sikertelen: {}
+otra fuente al frente: {}	másik forrás van előtérben: {}
+no se cambió: StradaOS acaba de arrancar	nincs váltás: a StradaOS épp most indult el
+no se cambió: llamada en curso	nincs váltás: hívás folyamatban
+no se cambió: Android Auto tiene el sonido	nincs váltás: az Android Autónál van a hang
+el sonido ya es Bluetooth	a hang már Bluetooth-on szól
+celular conectado por Bluetooth	telefon csatlakoztatva Bluetooth-on
+no se abrió la app BT: cámara de reversa al frente	a BT-alkalmazás nem nyílt meg: a tolatókamera van előtérben
+no se abrió la app BT: no sé qué app está al frente	a BT-alkalmazás nem nyílt meg: nem állapítható meg, melyik alkalmazás van előtérben
+no se abrió la app BT: ajustes abiertos	a BT-alkalmazás nem nyílt meg: a beállítások vannak megnyitva
+abierta {} para tomar el sonido (luego vuelve a {})	megnyitva: {} a hang átvételéhez (utána vissza ide: {})
+abierta {} para tomar el sonido	megnyitva: {} a hang átvételéhez
+no se volvió: el usuario abrió {}	nem tért vissza: a felhasználó megnyitotta ezt: {}
+Android Auto se desconectó	Android Auto leválasztva
+Registro técnico para enviar al desarrollador (se guarda en español).	Műszaki napló a fejlesztőnek (spanyolul marad).
+Preparando {}…	{} előkészítése…
+Copia de seguridad	Biztonsági mentés
+Guardar una copia	Biztonsági mentés készítése
+Ajustes, mantenimientos, kilometraje y la foto del vehículo en un archivo, en la pantalla o en una USB. Nada se sube a internet	Beállítások, karbantartások, kilométeróra-állás és a jármű fotója egy fájlban, a kijelzőn vagy pendrive-on. Semmi nem kerül fel az internetre
+Restaurar una copia	Biztonsági mentés visszaállítása
+Recupera todo después de restablecer la pantalla, o pásalo a otra pantalla	Mindent visszakapsz a kijelző alaphelyzetbe állítása után, vagy átviheted egy másik kijelzőre
+Copia automática	Automatikus biztonsági mentés
+Cada vez que cambias algo se actualiza una copia en la pantalla y en la USB que esté conectada	Minden módosításkor frissül egy mentés a kijelzőn és a csatlakoztatott pendrive-on
+Memoria de la pantalla	A kijelző tárhelye
+Memoria USB	Pendrive
+Elegir otra carpeta…	Másik mappa választása…
+¿Dónde guardar la copia?	Hová kerüljön a biztonsági mentés?
+No se pudo abrir el selector de archivos	Nem sikerült megnyitni a fájlválasztót
+No se pudo guardar la copia	Nem sikerült elmenteni a biztonsági mentést
+Esa memoria no dejó escribir el archivo. Prueba con otra memoria o con «Elegir otra carpeta…».	Ez a tárhely nem engedte a fájl írását. Próbálj egy másikat, vagy válaszd a „Másik mappa választása…” lehetőséget.
+Copia guardada	Biztonsági mentés elmentve
+Se guardó en:	Mentve ide:
+Al restablecer la pantalla de fábrica también se puede borrar su memoria: guarda otra copia en una USB para tenerla a salvo.	A kijelző gyári visszaállítása a tárhelyét is törölheti: a biztonság kedvéért tarts egy másik mentést pendrive-on.
+No se pudo leer el archivo	Nem sikerült olvasni a fájlt
+Buscando copias…	Biztonsági mentések keresése…
+No se encontró ninguna copia	Nem található biztonsági mentés
+No hay copias de StradaOS en la memoria de la pantalla ni en las USB conectadas. El archivo se llama «StradaOS-backup» y termina en .json.	Nincs StradaOS biztonsági mentés a kijelző tárhelyén vagy a csatlakoztatott pendrive-okon. A fájl neve „StradaOS-backup”, és .json-ra végződik.
+automática	automatikus
+Buscar el archivo…	Fájl tallózása…
+Elige la copia	Válaszd ki a biztonsági mentést
+No se pudo restaurar	Nem sikerült visszaállítani
+Este archivo no es una copia de seguridad de StradaOS	Ez a fájl nem StradaOS biztonsági mentés
+Copia del	Mentés dátuma
+Pantalla:	Kijelző:
+Ajustes guardados:	Mentett beállítások:
+con la foto del vehículo	a jármű fotójával
+Se reemplaza toda la configuración actual de StradaOS por la de la copia.	A StradaOS összes jelenlegi beállítását felülírják a mentésben lévők.
+¿Restaurar esta copia?	Visszaállítod ezt a biztonsági mentést?
+Restaurar	Visszaállítás
+Copia restaurada	Biztonsági mentés visszaállítva
+Esta copia se hizo con una versión más nueva de StradaOS. Actualiza StradaOS y vuelve a intentarlo	Ez a mentés a StradaOS egy újabb verziójával készült. Frissítsd a StradaOS-t, és próbáld újra
+No se pudo guardar la configuración	Nem sikerült menteni a beállításokat
+La copia está dañada o incompleta	A biztonsági mentés sérült vagy hiányos
+Abrir una app al encender	Alkalmazás megnyitása indításkor
+StradaOS la abre un momento al arrancar (por ejemplo la radio, para que empiece a sonar) y vuelve al inicio	A StradaOS indításkor egy pillanatra megnyitja (például a rádiót, hogy elinduljon a lejátszás), majd visszatér a kezdőképernyőre
+Copia de seguridad en un archivo (pantalla o USB)	Biztonsági mentés fájlba (kijelző vagy USB)
+en Android 10+ la carpeta se elige con el selector de archivos	Android 10+ esetén a mappát a fájlválasztóval választod ki
+Diseño vertical	Álló elrendezés
+Pantallas en vertical (tipo Tesla)	Álló kijelzők (Tesla-stílus)
+en uso	használatban
+esta pantalla es horizontal	ez a kijelző fekvő
+Pantalla completa	Teljes képernyő
+Ocultar la barra del sistema	A rendszersáv elrejtése
+Esconde también la barra de navegación de tu pantalla (abajo o al costado). Desliza desde el borde para verla un momento	A kijelződ navigációs sávját is elrejti (alul vagy oldalt). Húzz a szélétől, hogy egy pillanatra lásd
+Corrección del velocímetro	Sebességmérő-korrekció
+Suma o resta a la velocidad del GPS para que coincida con el tablero de tu carro	Hozzáad vagy levon a GPS-sebességből, hogy egyezzen az autód műszerfalával
+Diseño	Elrendezés
+Diseño de la pantalla	Képernyő-elrendezés
+Automático: según la forma de la pantalla. Elige Vertical si tu pantalla es vertical y se ve chica en el medio	Automatikus: a kijelző alakja alapján. Válaszd a Függőlegest, ha a kijelződ álló, és középen kicsinek látszik
+Horizontal	Vízszintes
+Vertical	Függőleges
+se puede elegir en Ajustes → Pantalla de inicio → Diseño	a Beállítások → Kezdőképernyő → Elrendezés menüben választhatod ki
+Área útil de la pantalla:	Használható képernyőterület:
+Horario	Időbeosztás
+Amanecer y atardecer: se calcula con el GPS, sin internet	Napkelte és napnyugta: GPS alapján számolva, internet nélkül
+Horas fijas	Rögzített időpontok
+Amanecer y atardecer	Napkelte és napnyugta
+Amanecer	Napkelte
+Atardecer	Napnyugta
+oscuro desde el atardecer hasta el amanecer	sötét napnyugtától napkeltéig
+Esperando la ubicación del GPS	Várakozás a GPS-helyre
+Mientras tanto usa las horas fijas	Addig a rögzített időpontokat használja
+Orden	Sorrend
+Usadas recientemente	Legutóbb használt
+Instaladas recientemente	Legutóbb telepített
+A mano	Kézi
+Orden de las apps	Alkalmazások sorrendje
+Deja presionada una app y elige «Mover» para cambiarla de lugar	Tarts lenyomva egy alkalmazást, és válaszd az „Áthelyezés” lehetőséget a helye módosításához
+Mover	Áthelyezés
+Toca el lugar donde quieres poner «{}»	Koppints arra a helyre, ahová a(z) „{}” kerüljön
+Pantalla en reposo	Készenléti képernyő
+Si no tocas la pantalla un rato, se pone negra con la hora, la fecha y la velocidad. Un toque la quita	Ha egy ideig nem érinted meg a kijelzőt, elsötétül, és csak az idő, a dátum és a sebesség látszik. Egy érintés visszahozza
+1 minuto	1 perc
+{} minutos	{} perc
+Después de	Ennyi idő után
+Tiempo sin tocar la pantalla	Idő a kijelző érintése nélkül
+Con el diseño de velocímetro que prefieras	A kedvenc sebességmérő-stílusoddal
+Sin velocidad	Sebesség nélkül
+Color de la letra	Szövegszín
+Blanco	Fehér
+Gris suave	Halványszürke
+Ámbar	Borostyán
+Ver ahora	Előnézet most
+Toca la pantalla para volver	Koppints a kijelzőre a visszatéréshez
+Ir a…	Úti cél…
+Recalculando…	Útvonal újratervezése…
+Llegaste a tu destino	Megérkeztél az úti célhoz
+Activa el mapa en vivo en Ajustes → Mapa y clima	Kapcsold be az Élő térképet a Beállítások → Térkép és időjárás menüben
+Escribe una dirección o lugar	Írj be egy címet vagy helyet
+RECIENTES	LEGUTÓBBIAK
+¿A dónde vamos?	Hová mész?
+Buscar	Keresés
+Detener	Leállítás
+Buscando…	Keresés…
+No se pudo buscar	Nem sikerült keresni
+No se encontraron resultados	Nincs találat
+Resultados	Találatok
+Esperando señal GPS para calcular la ruta	Várakozás a GPS-jelre az útvonal kiszámításához
+Calculando ruta…	Útvonal kiszámítása…
+No se pudo calcular la ruta	Nem sikerült kiszámítani az útvonalat
+Cambiar destino	Úti cél módosítása
+Silenciar voz de guía	Hangnavigáció némítása
+Activar voz de guía	Hangnavigáció bekapcsolása
+Vista Norte arriba	Észak felfelé nézet
+Vista en dirección de marcha	Haladási irány nézet
+Abrir en otra app	Megnyitás másik alkalmazásban
+Detener navegación	Navigáció leállítása
+Navegación en el mapa	Navigáció a térképen
+Voz activada	Hang bekapcsolva
+Voz silenciada	Hang némítva
+En el mapa de StradaOS	A StradaOS térképén
+Se abre con el botón del mapa (Waze, Maps, OsmAnd… o integrada en el mapa)	A térkép gombjával nyílik meg (Waze, Maps, OsmAnd… vagy a beépített térkép)
+Voz de navegación	Navigációs hang
+Indicaciones paso a paso habladas durante el recorrido	Hangos, lépésenkénti útbaigazítás az út során
+★  En el mapa de StradaOS (integrada)	★  A StradaOS térképén (beépített)
+Guardado: Navegación en el mapa	Mentve: Navigáció a térképen
+Coordenadas	Koordináták
+No se encontró ruta	Nem található útvonal
+Ruta recalculada	Útvonal újratervezve
+Sal por {}	Indulj el ezen: {}
+Inicia el recorrido	Indulj el
+En la rotonda, salida {} hacia {}	A körforgalomban hajts ki itt: {}. kijárat, {} felé
+En la rotonda, toma la salida {}	A körforgalomban hajts ki itt: {}. kijárat
+En la rotonda, sigue hacia {}	A körforgalomban haladj tovább, {} felé
+En la rotonda, toma la salida	A körforgalomban hajts ki
+Haz un giro en U en {}	Fordulj vissza, {} felé
+Haz un giro en U	Fordulj vissza
+Gira levemente a la derecha en {}	Fordulj enyhén jobbra, {} felé
+Gira levemente a la derecha	Fordulj enyhén jobbra
+Gira a la derecha en {}	Fordulj jobbra, {} felé
+Gira a la derecha	Fordulj jobbra
+Gira fuerte a la derecha en {}	Fordulj élesen jobbra, {} felé
+Gira fuerte a la derecha	Fordulj élesen jobbra
+Gira levemente a la izquierda en {}	Fordulj enyhén balra, {} felé
+Gira levemente a la izquierda	Fordulj enyhén balra
+Gira a la izquierda en {}	Fordulj balra, {} felé
+Gira a la izquierda	Fordulj balra
+Gira fuerte a la izquierda en {}	Fordulj élesen balra, {} felé
+Gira fuerte a la izquierda	Fordulj élesen balra
+Incorpórate a {}	Sorolj be, {} felé
+Toma el desvío	Hajts fel a rámpára
+Continúa por {}	Haladj tovább ezen: {}
+Sigue recto	Haladj egyenesen
+En 500 metros	500 méter múlva
+En 150 metros	150 méter múlva
+En 500 pies	500 láb múlva
+En un cuarto de milla	Negyed mérföld múlva
+En {}	{} múlva
+Sin conexión · vuelve a la ruta	Offline · térj vissza az útvonalra
+Casa	Otthon
+Trabajo	Munkahely
+Toca para guardar GPS	Koppints az aktuális GPS-hely mentéséhez
+Ir ahora	Indulás most
+Actualizar con GPS actual	Frissítés az aktuális GPS-hellyel
+Eliminado	Eltávolítva
+Esperando señal GPS para guardar ubicación	Várakozás a GPS-jelre a hely mentéséhez
+Guardado en Casa	Mentve Otthonként
+Guardado en Trabajo	Mentve Munkahelyként
+Gasolina	Üzemanyag
+Salud	Egészség
+Parqueo	Parkolás
+Comida	Étel
+FAVORITOS	KEDVENCEK
+Quitar de favoritos	Eltávolítás a kedvencek közül
+Añadir a favoritos	Hozzáadás a kedvencekhez
+Guardar como Casa	Mentés Otthonként
+Guardar como Trabajo	Mentés Munkahelyként
+Añadido a favoritos	Hozzáadva a kedvencekhez
+Quitado de favoritos	Eltávolítva a kedvencek közül
+Ruta aproximada (mapa local sin conexión)	Hozzávetőleges útvonal (helyi offline térkép)
+Ruta guardada (sin conexión)	Mentett útvonal (offline)
+Recalcular ruta	Útvonal újratervezése
+ruta guardada	mentett útvonal
+sin conexión · aproximada	offline · hozzávetőleges
+aproximada	hozzávetőleges
+Para rutas largas o sin mapa local hace falta internet	Hosszú útvonalakhoz vagy helyi térkép nélkül internet szükséges
+Mapa local	Helyi térkép
+Pueblo	Település
+Barrio	Városrész
+Calle	Utca
+Estación de servicio	Benzinkút
+Hospital	Kórház
+Clínica	Rendelő
+Farmacia	Gyógyszertár
+Parqueadero	Parkoló
+Restaurante	Étterem
+Cafetería	Kávézó
+Supermercado	Szupermarket
+Hotel	Szálloda
+Aeropuerto	Repülőtér
+Estación	Állomás
+Lugar	Hely
+con tráfico	forgalommal
+Tráfico en vivo activado	Élő forgalom bekapcsolva
+Tráfico en vivo	Élő forgalom
+Muestra congestión en el mapa y evita trancones (usa clave gratis de TomTom)	Megjeleníti a torlódásokat a térképen, és elkerüli a dugókat (ingyenes TomTom-kulcsot használ)
+Clave gratis de TomTom	Ingyenes TomTom-kulcs
+Para capas de tráfico y rutas con tráfico (regístrate gratis en developer.tomtom.com)	Élő forgalmi rétegekhez és a forgalmat figyelembe vevő útvonalakhoz (ingyenes regisztráció: developer.tomtom.com)
+Clave API gratis de TomTom	Ingyenes TomTom API-kulcs
+Capa de tráfico propia (avanzado)	Egyéni forgalmi réteg (haladó)
+URL transparente de tráfico con {z}/{x}/{y}	Átlátszó forgalmi csempe-URL {z}/{x}/{y} formában
+URL capa de tráfico {z}/{x}/{y} (vacío = automático)	Forgalmi réteg URL-je {z}/{x}/{y} (üres = automatikus)
+Servidor de rutas OSRM (avanzado)	OSRM útvonaltervező szerver (haladó)
+URL propia compatible con OSRM (vacío = automático)	Egyéni OSRM-kompatibilis URL (üres = automatikus)
+URL servidor OSRM (vacío = automático)	OSRM-szerver URL-je (üres = automatikus)
+Compatibilidad TLS en rutas	TLS-kompatibilitás az útvonaltervezéshez
+Para radios antiguas donde falle el HTTPS de rutas o búsqueda	Régebbi fejegységekhez, ahol a HTTPS-es útvonaltervezés vagy keresés nem működik
+Mostrando hora de llegada	Érkezési idő megjelenítve
+Mostrando tiempo restante	Hátralévő idő megjelenítve
+Radar	Traffipax
+Ir a Casa	Navigálás haza
+Ir a Trabajo	Navigálás a munkahelyre
+Configura «{}» primero en Navegación	Előbb állítsd be a(z) „{}” helyet a Navigációban
+PARADAS	MEGÁLLÓK
+Limpiar	Törlés
++ Añadir parada intermedia	+ Megálló hozzáadása az útvonal mentén
+Modo parada activo: elige una parada	Megállómód aktív: válassz megállót
+Buscar parada intermedia	Megálló keresése az útvonal mentén
+Añadir parada en ruta	Megálló hozzáadása az útvonal mentén
+Elegir destino final	Végső úti cél kiválasztása
+Añadir como parada	Hozzáadás megállóként
+Parada añadida	Megálló hozzáadva
+Elegir parada	Válassz megállót
+Elegir ruta	Válassz útvonalat
+Ruta	Útvonal
+Más rápida	Leggyorsabb
+incidente	esemény
+incidentes	esemény
+incidente en la ruta	esemény az útvonalon
+incidentes en la ruta	esemény az útvonalon
+Incidentes en la ruta	Események az útvonalon
+Mostrar tiempo restante	Hátralévő idő megjelenítése
+Mostrar hora de llegada	Érkezési idő megjelenítése
+Evitar peajes	Fizetős utak elkerülése
+Intenta evitar vías de peaje al calcular la ruta	Útvonaltervezéskor próbálja elkerülni a fizetős utakat
+Evitar autopistas	Autópályák elkerülése
+Intenta evitar autopistas o vías rápidas	Próbálja elkerülni az autópályákat és gyorsforgalmi utakat
+Rutas alternativas	Alternatív útvonalak
+Muestra 2 o 3 opciones de ruta antes de iniciar	Indulás előtt 2-3 útvonal-lehetőség megjelenítése
+Muestra la hora estimada en lugar del tiempo restante	A hátralévő idő helyett a becsült érkezési időpont megjelenítése
+Consulta cierres o accidentes una sola vez al calcular ruta (TomTom)	Lezárások és balesetek ellenőrzése egyszer, útvonaltervezéskor (TomTom)
+Límite y alerta de velocidad	Sebességkorlátozás és figyelmeztetés
+Muestra la señal de límite en el mapa y avisa al excederlo	Megjeleníti a sebességkorlátozó táblát a térképen, és figyelmeztet, ha túlléped
+Tolerancia de exceso	Gyorshajtási küszöb
+Margen sobre el límite antes de activar alerta	Ennyivel lépheted túl a korlátozást, mielőtt figyelmeztet
+Sonido al exceder límite	Gyorshajtás-figyelmeztető hang
+Pitido de alerta cuando superas la tolerancia	Sípolás a küszöb túllépésekor
+Alertas de radares sin conexión	Offline traffipax-figyelmeztetések
+Avisa al acercarse a radares del mapa local .map	Figyelmeztet, ha a helyi .map fájlban szereplő traffipaxhoz közeledsz
+Vía cerrada	Út lezárva
+Carril cerrado	Sáv lezárva
+Accidente	Baleset
+Obras en la vía	Útépítés
+Tráfico detenido	Álló forgalom
+Incidente en la vía	Közúti esemény
+Radar de velocidad adelante	Traffipax előttünk
+Personalización	Személyre szabás
+Cambia el aspecto de la pantalla de inicio con un toque. Puedes seguir ajustando cada detalle en las demás secciones.	Egy koppintással megváltoztathatod a kezdőképernyő kinézetét. A többi menüben továbbra is minden részletet finomhangolhatsz.
+Temas gratis	Ingyenes témák
+Temas premium	Prémium témák
+Próximamente	Hamarosan
+Temas exclusivos para quienes apoyan StradaOS con una donación. Todas las funciones siguen siendo gratis.	Exkluzív témák azoknak, akik adománnyal támogatják a StradaOS-t. Minden funkció ingyenes marad.
+En uso	Használatban
+Tema aplicado:	Alkalmazott téma:
+Clásico	Klasszikus
+Música a la izquierda	Zene balra
+Mapa amplio	Széles térkép
+Minimalista	Minimál
+Vehículo a la izquierda, mapa en el centro y música a la derecha	Jármű balra, térkép középen és zene jobbra
+Mapa arriba; debajo, vehículo a la izquierda y música a la derecha	Térkép felül; alatta jármű balra és zene jobbra
+Música a la izquierda, mapa en el centro y vehículo a la derecha	Zene balra, térkép középen és jármű jobbra
+Mapa arriba; debajo, música a la izquierda y vehículo a la derecha	Térkép felül; alatta zene balra és jármű jobbra
+Sin tarjeta del vehículo: mapa más ancho, velocímetro abajo a la izquierda y música a la derecha	Járműkártya nélkül: szélesebb térkép, sebességmérő bal alul és zene jobbra
+Sin tarjeta del vehículo: mapa más alto con el velocímetro abajo a la izquierda y la música a lo ancho	Járműkártya nélkül: magasabb térkép a sebességmérővel bal alul és teljes szélességű zene
+Música a la izquierda, velocímetro abajo a la derecha, panel de conexión plegado y barra compacta	Zene balra, sebességmérő jobb alul, összecsukott csatlakozási panel és kompakt sáv
+Mapa casi completo: velocímetro abajo a la derecha, panel de conexión plegado, música a lo ancho y barra compacta	Majdnem teljes térkép: sebességmérő jobb alul, összecsukott csatlakozási panel, teljes szélességű zene és kompakt sáv
+Cada tema se adapta solo a la orientación de la pantalla.	Minden téma magától alkalmazkodik a kijelző tájolásához.
+Tema premium	Prémium téma
+Aurora en uso	Aurora használatban
+El tema arma la pantalla de inicio. Las tarjetas, la barra y el velocímetro de aquí se usan otra vez al quitarlo en Personalización.	A téma rendezi el a kezdőképernyőt. Az itteni kártyák, sáv és sebességmérő akkor lépnek újra életbe, amikor a Személyre szabás menüben eltávolítod.
+Tema premium quitado	Prémium téma eltávolítva
+Premium	Prémium
+Fondo con un arco de color difuminado y granulado, tarjetas translúcidas, la hora en grande con música, vehículo y clima arriba, el mapa a lo ancho y una barra tipo píldora. El botón «Solo mapa» agranda el mapa.	Háttér lágy, szemcsés színívvel, áttetsző kártyák, nagy óra zenével, járművel és időjárással felül, teljes szélességű térkép és kapszula alakú sáv. A «Csak térkép» gomb felnagyítja a térképet.
+Sigue el modo claro u oscuro de Apariencia.	A Megjelenés menüben beállított világos vagy sötét módot követi.
+Quitar el tema premium	A prémium téma eltávolítása
+Aplicar	Alkalmazás
+Versión de prueba: se puede aplicar sin código.	Tesztverzió: kód nélkül is alkalmazható.
+Disponible pronto con una donación. Todas las funciones siguen siendo gratis.	Hamarosan, adomány ellenében. Minden funkció ingyenes marad.
+Cobalto	Kobalt
+Azul noche en tres columnas: el mapa se difumina hasta el reproductor de carátula redonda, y tu vehículo muestra el velocímetro arriba, su foto en el medio y el mantenimiento abajo. La temperatura va sobre el mapa.	Éjkék, három oszlopban: a térkép beleolvad a kerek borítós lejátszóba, a járműved felül a sebességmérőt, középen a fotóját, alul a karbantartásokat mutatja. A hőmérséklet a térkép fölött látható.
+Gratis	Ingyenes
+Gratis para todos. Los próximos temas premium se desbloquearán con una donación.	Mindenkinek ingyenes. A következő prémium témák adomány ellenében lesznek elérhetők.
+Brillo de la pantalla	Kijelző fényereje
+Amanecer y atardecer: se calcula con el GPS, sin internet. Brillo: para pantallas que bajan el brillo al encender las luces	Napkelte és napnyugta: GPS alapján számolva, internet nélkül. Fényerő: olyan kijelzőkhöz, amelyek a lámpák bekapcsolásakor elsötétülnek
+Brillo actual	Aktuális fényerő
+Prende y apaga las luces del carro para ver cuánto cambia	Kapcsold be és ki az autó lámpáit, és nézd meg, mennyit változik
+Oscuro con brillo menor a	Sötét, ha a fényerő ez alatt van
+Elige un nivel entre el brillo de día y el de noche	Válassz egy szintet a nappali és az éjszakai fényerő között
+Esta pantalla no informa su brillo	Ez a kijelző nem jelzi a fényerejét
+Países del Golfo	Öböl-menti országok
+Irlanda del Norte	Észak-Írország
+Islas Canarias	Kanári-szigetek
+Tiempo en StradaOS: {}	Idő a StradaOS-ben: {}
+Último tiempo por Bluetooth: {}	Utolsó idő a Bluetooth-ról: {}
+Fondo carbón (o perla en claro) con un haz de luz diagonal. A la izquierda, el velocímetro y un carro visto desde arriba que enciende los faros de noche; en el centro, el mapa integrado al fondo; a la derecha, el clima por horas y tus próximos mantenimientos, con el reproductor y la barra de apps debajo.	Szénszürke háttér (világos módban gyöngyház) átlós fénysugárral. Balra a sebességmérő és egy felülnézeti autó, amely éjszaka felkapcsolja a fényszóróit; középen a háttérbe olvadó térkép; jobbra az óránkénti időjárás és a közelgő karbantartások, alul a lejátszó és az alkalmazássáv.
+Color del carro	Autó színe
+El carro del tema Faro, visto desde arriba. También se cambia con una presión larga sobre el carro.	Az autó a Faro témában, felülnézetből. Az autót lenyomva tartva is módosíthatod.
+Intensidad del mapa	Térkép intenzitása
+Qué tan visible es el mapa sobre el fondo. Auto lo pone más fuerte en las pantallas sencillas de los radios y suave en las de alta gama. Súbela si al sol no se ve bien.	Mennyire látszik a térkép a háttér előtt. Az Auto az autórádiók egyszerű kijelzőin erősebbé, a csúcskategóriás kijelzőkön lágyabbá teszi. Növeld, ha napfényben nehezen látható.
+Baja	Alacsony
+Media	Közepes
+Alta	Magas
+Negro	Fekete
+Sin mantenimientos programados	Nincs ütemezett karbantartás
+Toca para agregar uno	Koppints egy hozzáadásához
+Navegar	Navigálás
+Música sonando	Zene szól
+Toca para ver la canción	Koppints a dal megtekintéséhez
+Ver la canción de tus apps	A dal megjelenítése az alkalmazásaidból
+Para mostrar la canción, el artista y la carátula de Spotify, YouTube Music y otras apps, StradaOS necesita «Acceso a notificaciones». Solo lo usa para leer lo que suena: no guarda ni envía nada.	Ahhoz, hogy a Spotify, a YouTube Music és más alkalmazások dalát, előadóját és borítóját megjelenítse, a StradaOS-nek „Hozzáférés az értesítésekhez” engedély kell. Csak arra használja, hogy kiolvassa, mi szól: semmit nem tárol és nem küld el.
+No volver a mostrar	Ne jelenjen meg újra
+Esta pantalla no tiene el ajuste de «Acceso a notificaciones». Se puede activar una sola vez desde una computadora con ADB:	Ezen a kijelzőn nincs „Hozzáférés az értesítésekhez” beállítás. Egyszer bekapcsolhatod számítógépről, ADB-vel:
+Spotify, YouTube Music y otras apps de la pantalla (acceso a notificaciones)	Spotify, YouTube Music és más alkalmazások a kijelzőn (értesítési hozzáférés)
+Encendidas	Bekapcsolva
+Apagadas	Kikapcsolva
+Espera para pasar a oscuro	Várakozás a sötétre váltás előtt
+Cuánto debe durar el cambio (luces encendidas, poco brillo…) antes de oscurecer	Mennyi ideig kell tartania a változásnak (lámpák bekapcsolva, alacsony fényerő…), mielőtt sötétre vált
+Espera para pasar a claro	Várakozás a világosra váltás előtt
+Útil si al apagar el carro de noche se apagan las luces y la pantalla pasa a claro de golpe	Hasznos, ha éjszaka az autó leállításakor kialszanak a lámpák, és a kijelző hirtelen világosra vált
+Sin espera	Nincs várakozás
+Marca de la pantalla	A fejegység márkája
+Genérica	Általános
+Detectada:	Észlelve:
+No se detectó una marca con funciones propias	Nem észlelhető saját funkciókkal rendelkező márka
+Datos del carro	Autóadatok
+Lectura actual	Aktuális érték
+Servicio com.syu.ms:	com.syu.ms szolgáltatás:
+sin caja CAN	nincs CAN-doboz
+Esperando datos	Várakozás az adatokra
+Luces del carro	Autó lámpái
+Sin datos	Nincs adat
+sin conectar	nincs csatlakoztatva
+conectando	csatlakozás
+conectado	csatlakoztatva
+desconectado	leválasztva
+no se encontró com.syu.ms	com.syu.ms nem található
+com.syu.ms no respondió	com.syu.ms nem válaszolt
+com.syu.ms se reinició	com.syu.ms újraindult
+Tema según las luces, batería y temperatura exterior	Téma a lámpák szerint, akkufeszültség és külső hőmérséklet
+Pantallas FYT (com.syu.ms)	FYT fejegységek (com.syu.ms)
+luces detectadas	lámpák észlelve
+Auto: por horario. Sistema: sigue las luces del carro (pantalla FYT)	Auto: időbeosztás szerint. Rendszer: az autó lámpáit követi (FYT fejegység)
+Espera para cambiar de tema	Várakozás témaváltáskor
+Evita cambios de golpe, p. ej. al apagar el carro de noche	Megelőzi a hirtelen váltásokat, pl. amikor éjszaka leállítod az autót
+Para seguirlas, elige Apariencia → Tema → Modo → Sistema	A követésükhöz válaszd: Megjelenés → Téma → Mód → Rendszer
+Elige qué datos del carro se ven arriba, junto al Wi-Fi	Válaszd ki, mely autóadatok jelenjenek meg fent, a Wi-Fi mellett
+Tensión de la batería	Akkumulátorfeszültség
+Medida por la pantalla; no necesita la caja CAN	A fejegység méri; nem kell hozzá CAN-doboz
+Temperatura exterior	Külső hőmérséklet
+Del sensor del carro; necesita la caja CAN	Az autó érzékelőjéből; CAN-doboz kell hozzá
+pantalla FYT detectada: elígela en Tu vehículo → Equipo	FYT kijelző észlelve: válaszd ki a Járműved → Fejegység menüben
+esta pantalla no informa las luces	ez a kijelző nem jelzi a lámpák állapotát

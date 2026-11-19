@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Idiomas de StradaOS (español, inglés, portugués, italiano, alemán, malayo, árabe, turco, francés, chino). El código se escribe en español y cada texto se traduce al
+ * Idiomas de StradaOS (español, inglés, portugués, italiano, alemán, malayo, árabe, turco, francés, chino, húngaro). El código se escribe en español y cada texto se traduce al
  * mostrarse (tv(), toast(), ventanas TB, etc.) buscándolo en assets/i18n/LANG.txt.
  *
  * Formato del archivo: una línea por texto, «español<TAB>traducción». «\n» representa un salto de línea.
@@ -21,8 +21,8 @@ import java.util.regex.Pattern;
  * tabla. En la traducción, {1}, {2}… permiten cambiar el orden. Si un texto no está en la tabla queda en español.
  */
 public class I18n {
-    static final String[] CODES = {"es", "en", "pt", "it", "de", "ms", "ar", "tr", "fr", "zh"};
-    static final String[] NAMES = {"Español", "English", "Português", "Italiano", "Deutsch", "Melayu", "العربية", "Türkçe", "Français", "中文"};
+    static final String[] CODES = {"es", "en", "pt", "it", "de", "ms", "ar", "tr", "fr", "zh", "hu"};
+    static final String[] NAMES = {"Español", "English", "Português", "Italiano", "Deutsch", "Melayu", "العربية", "Türkçe", "Français", "中文", "Magyar"};
 
     static String lang = "es";
     static Locale loc = new Locale("es", "CO");
@@ -38,7 +38,7 @@ public class I18n {
         int lit;   // letras fijas: se prueban primero los patrones más específicos
     }
 
-    /** Idioma guardado («auto», «es», «en», «pt», «it», «de», «ms», «ar», «tr», «fr», «zh»). Instalaciones anteriores a los idiomas siguen en español. */
+    /** Idioma guardado («auto», «es», «en», «pt», «it», «de», «ms», «ar», «tr», «fr», «zh», «hu»). Instalaciones anteriores a los idiomas siguen en español. */
     static String pref(SharedPreferences p) {
         String v = p.getString("lang", null);
         if (v == null) {
@@ -67,7 +67,8 @@ public class I18n {
             : "it".equals(code) ? Locale.ITALY : "de".equals(code) ? Locale.GERMANY
             : "ms".equals(code) ? new Locale("ms", "MY") : "ar".equals(code) ? new Locale("ar")
             : "tr".equals(code) ? new Locale("tr", "TR") : "fr".equals(code) ? Locale.FRANCE
-            : "zh".equals(code) ? Locale.SIMPLIFIED_CHINESE : new Locale("es", "CO");
+            : "zh".equals(code) ? Locale.SIMPLIFIED_CHINESE : "hu".equals(code) ? new Locale("hu", "HU")
+            : new Locale("es", "CO");
         num = "ar".equals(code) ? Locale.US : loc;
         map.clear();
         pats.clear();
@@ -212,6 +213,7 @@ public class I18n {
         if ("ms".equals(lang) || "tr".equals(lang)) return "EEEE, d MMMM";
         if ("ar".equals(lang)) return "EEEE، d MMMM";
         if ("zh".equals(lang)) return "EEEE, M月d日";
+        if ("hu".equals(lang)) return "MMMM d., EEEE";
         return "EEEE, d 'de' MMMM";
     }
 }
