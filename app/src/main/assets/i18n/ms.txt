@@ -1158,11 +1158,11 @@ Islas Canarias	Kepulauan Canary
 Tiempo en StradaOS: {}	Masa dalam StradaOS: {}
 Último tiempo por Bluetooth: {}	Masa terakhir melalui Bluetooth: {}
 # Bloque 16 (2.25): tema premium Faro
-Fondo carbón (o perla en claro) con un haz de luz diagonal. A la izquierda, el velocímetro y un carro visto desde arriba que enciende los faros de noche; en el centro, el mapa en trazo fino; a la derecha, el clima por horas y tus próximos mantenimientos, con el reproductor debajo.	Latar arang (atau mutiara dalam mod cerah) dengan alur cahaya pepenjuru. Di kiri, meter laju dan kereta dilihat dari atas yang menyalakan lampu hadapan pada waktu malam; di tengah, peta dalam garisan halus; di kanan, cuaca setiap jam dan penyelenggaraan anda yang akan datang, dengan pemain di bawah.
+Fondo carbón (o perla en claro) con un haz de luz diagonal. A la izquierda, el velocímetro y un carro visto desde arriba que enciende los faros de noche; en el centro, el mapa integrado al fondo; a la derecha, el clima por horas y tus próximos mantenimientos, con el reproductor y la barra de apps debajo.	Latar arang (atau mutiara dalam mod cerah) dengan alur cahaya pepenjuru. Di kiri, meter laju dan kereta dilihat dari atas yang menyalakan lampu hadapan pada waktu malam; di tengah, peta yang menyatu dengan latar; di kanan, cuaca setiap jam dan penyelenggaraan anda yang akan datang, dengan pemain dan bar aplikasi di bawah.
 Color del carro	Warna kereta
 El carro del tema Faro, visto desde arriba. También se cambia con una presión larga sobre el carro.	Kereta dalam tema Faro, dilihat dari atas. Boleh juga ditukar dengan tekan lama pada kereta.
 Intensidad del mapa	Keamatan peta
-Las calles se dibujan en trazo fino sobre el fondo del tema. Súbela si al sol no se ven bien.	Jalan dilukis dengan garisan halus di atas latar tema. Naikkan jika sukar dilihat di bawah cahaya matahari.
+Qué tan visible es el mapa sobre el fondo del tema (Baja = como Cobalto). Súbela si al sol no se ve bien.	Sejauh mana peta kelihatan di atas latar tema (Rendah = seperti Cobalt). Naikkan jika sukar dilihat di bawah cahaya matahari.
 Baja	Rendah
 Media	Sederhana
 Alta	Tinggi

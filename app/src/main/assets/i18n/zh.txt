@@ -1158,11 +1158,11 @@ Islas Canarias	加那利群岛
 Tiempo en StradaOS: {}	StradaOS 中的时间：{}
 Último tiempo por Bluetooth: {}	蓝牙最后一次的时间：{}
 # Bloque 16 (2.25): tema premium Faro
-Fondo carbón (o perla en claro) con un haz de luz diagonal. A la izquierda, el velocímetro y un carro visto desde arriba que enciende los faros de noche; en el centro, el mapa en trazo fino; a la derecha, el clima por horas y tus próximos mantenimientos, con el reproductor debajo.	炭黑背景（浅色模式下为珍珠白），一道光束斜向穿过。左侧是车速表和一辆俯视的汽车，夜间会打开前灯；中间是细线条地图；右侧是逐小时天气和即将到来的保养项目，下方是播放器。
+Fondo carbón (o perla en claro) con un haz de luz diagonal. A la izquierda, el velocímetro y un carro visto desde arriba que enciende los faros de noche; en el centro, el mapa integrado al fondo; a la derecha, el clima por horas y tus próximos mantenimientos, con el reproductor y la barra de apps debajo.	炭黑背景（浅色模式下为珍珠白），一道光束斜向穿过。左侧是车速表和一辆俯视的汽车，夜间会打开前灯；中间是融入背景的地图；右侧是逐小时天气和即将到来的保养项目，下方是播放器和应用栏。
 Color del carro	车身颜色
 El carro del tema Faro, visto desde arriba. También se cambia con una presión larga sobre el carro.	Faro 主题中的俯视汽车。也可以长按汽车来更换。
 Intensidad del mapa	地图浓度
-Las calles se dibujan en trazo fino sobre el fondo del tema. Súbela si al sol no se ven bien.	街道以细线绘制在主题背景上。如果在阳光下看不清，请调高。
+Qué tan visible es el mapa sobre el fondo del tema (Baja = como Cobalto). Súbela si al sol no se ve bien.	地图在主题背景上的清晰程度（低 = 与 Cobalto 相同）。如果在阳光下看不清，请调高。
 Baja	低
 Media	中
 Alta	高

@@ -127,68 +127,9 @@ public class LiveMapView extends View {
     private final android.graphics.Matrix backM = new android.graphics.Matrix();
     private final int[] locA = new int[2], locB = new int[2];
 
-    // Tema Faro (2.25): el mapa «en trazo». Cada tesela se convierte una vez (al cargarla, en segundo plano) en una
-    // máscara de un solo tono: el terreno queda 100 % transparente y solo calles, agua y nombres se ven como línea
-    // fina. -1 = apagado; 0, 1, 2 = intensidad baja, media, alta. La clave de la tesela lo incluye (bit 63).
-    static int ink = -1;
-    private int tint;
-
+    // Tema Faro (2.25): dónde va la atribución de OSM (px; alineada a la izquierda), si no se navega.
     private float attrX = -1, attrY = -1;
-    /** Faro: dónde va la atribución de OSM (px; alineada a la izquierda), si no se navega. */
     void setAttribution(float x, float y) { attrX = x; attrY = y; invalidate(); }
-
-    /** Faro: un velo muy suave sobre el fondo (debajo de las líneas) para marcar el área del mapa. */
-    void setTint(int color) { tint = color; invalidate(); }
-
-    /**
-     * Tesela → trazo. Paso alto: la diferencia de cada píxel con el promedio de su alrededor (caja separable, sumas
-     * corridas). Lo liso (terreno, parques, manzanas) da 0; los bordes de calles, el agua y las letras dan línea.
-     * darkSrc: la tesela ya viene oscura (se invierte el brillo antes).
-     */
-    static Bitmap inkTile(Bitmap src, boolean light, int level, boolean darkSrc) {
-        int w = src.getWidth(), h = src.getHeight(), n = w * h;
-        int[] px = new int[n], lum = new int[n], tmp = new int[n];
-        src.getPixels(px, 0, w, 0, 0, w, h);
-        src.recycle();
-        for (int i = 0; i < n; i++) {
-            int c = px[i];
-            int l = (((c >> 16) & 255) * 77 + ((c >> 8) & 255) * 150 + (c & 255) * 29) >> 8;
-            lum[i] = darkSrc ? 255 - l : l;
-        }
-        int r = Math.max(2, Math.round(3f * w / 512f)), win = 2 * r + 1;
-        for (int y = 0; y < h; y++) {               // horizontal
-            int row = y * w, sum = lum[row] * (r + 1);
-            for (int i = 1; i <= r; i++) sum += lum[row + Math.min(i, w - 1)];
-            for (int x = 0; x < w; x++) {
-                tmp[row + x] = sum / win;
-                sum += lum[row + Math.min(x + r + 1, w - 1)] - lum[row + Math.max(x - r, 0)];
-            }
-        }
-        for (int x = 0; x < w; x++) {               // vertical (el resultado queda en px)
-            int sum = tmp[x] * (r + 1);
-            for (int i = 1; i <= r; i++) sum += tmp[Math.min(i, h - 1) * w + x];
-            for (int y = 0; y < h; y++) {
-                px[y * w + x] = sum / win;
-                sum += tmp[Math.min(y + r + 1, h - 1) * w + x] - tmp[Math.max(y - r, 0) * w + x];
-            }
-        }
-        float mul = level <= 0 ? 0.8f : level == 1 ? 1.1f : 1.5f;
-        int f = Math.round(256 * (light ? 0.42f : 0.32f) * mul);
-        int rgb = Faro.ink(light) & 0x00FFFFFF;
-        for (int i = 0; i < n; i++) {
-            int l = lum[i], d = l - px[i];
-            if (d < 0) d = -d;
-            int v = (d - 6) * 32 / 10;
-            if (v > 0) {
-                int dk = (235 - l) * 35 / 100;
-                v += dk < 0 ? 0 : dk > 80 ? 80 : dk;
-                if (v > 255) v = 255;
-                int a = v * f >> 8;
-                px[i] = ((a > 255 ? 255 : a) << 24) | rgb;
-            } else px[i] = 0;
-        }
-        return Bitmap.createBitmap(px, w, h, Bitmap.Config.ARGB_8888);
-    }
 
     // Tema Cobalto: el mapa se difumina hacia un borde (1 = derecha, 2 = abajo) hasta quedar en el fondo.
     private int fadeEdge;
@@ -299,10 +240,8 @@ public class LiveMapView extends View {
 
     /** Clave de una tesela: capa, estilo (claro/oscuro y brillo), fuente, zoom, x, y. */
     private long key(int layer, int pv, int z, int x, int y) {
-        boolean ik = ink >= 0 && layer != L_TRAFFIC && layer != L_LABELS;
-        int style = (Main.LIGHT ? 4 : 0) | (ik ? ink & 3 : bright & 3);
-        long k = ((long) layer << 61) | ((long) style << 58) | ((long) pv << 55) | ((long) z << 48) | ((long) x << 24) | (long) y;
-        return ik ? k | (1L << 63) : k;
+        int style = (Main.LIGHT ? 4 : 0) | (bright & 3);
+        return ((long) layer << 61) | ((long) style << 58) | ((long) pv << 55) | ((long) z << 48) | ((long) x << 24) | (long) y;
     }
 
     /** Tesela guardada de cualquier fuente (sin internet vale cualquiera). Devuelve {bitmap, fuente} o null. */
@@ -461,7 +400,6 @@ public class LiveMapView extends View {
         boolean bd = syncBackdrop();
         if (bd) c.drawRect(0, 0, w, h, back);
         else c.drawColor(Main.LIGHT ? 0xFFE8EBF0 : 0xFF15171C);
-        if (bd && tint != 0) c.drawColor(tint);
         boolean moving = step(SystemClock.uptimeMillis());
 
         if (!Double.isNaN(dLat)) {
@@ -770,14 +708,11 @@ public class LiveMapView extends View {
                 }
                 Bitmap b = null;
                 int layer = (int) (k >>> 61) & 3, pv = (int) (k >>> 55) & 7, z = (int) (k >>> 48) & 31;
-                final boolean inkK = k < 0, lightK = ((k >>> 58) & 4) != 0;
-                final int inkLv = (int) (k >>> 58) & 3;
                 int x = (int) (k >>> 24) & 0xFFFFFF, y = (int) k & 0xFFFFFF;
                 try {
                     if (layer == L_FILE) {
                         OfflineMap fm = fileMap;
-                        if (fm != null) b = fm.render(z, x, y, fileTile, inkK || Main.LIGHT, inkK ? 1 : bright);
-                        if (b != null && inkK) b = inkTile(b, lightK, inkLv, false);
+                        if (fm != null) b = fm.render(z, x, y, fileTile, Main.LIGHT, bright);
                     } else if (layer == L_TRAFFIC) {
                         b = fetchTrafficTile(z, x, y);
                     } else {
@@ -806,8 +741,7 @@ public class LiveMapView extends View {
                                     if (any != null) {
                                         netErrors++;
                                         netOffline = netErrors >= 3;
-                                        final Bitmap ab = inkK ? inkTile((Bitmap) any[0], lightK, inkLv, !DARKEN[(Integer) any[1]])
-                                            : DARKEN[(Integer) any[1]] && !Main.LIGHT ? darken((Bitmap) any[0], bright) : (Bitmap) any[0];
+                                        final Bitmap ab = DARKEN[(Integer) any[1]] && !Main.LIGHT ? darken((Bitmap) any[0], bright) : (Bitmap) any[0];
                                         final long fk0 = k;
                                         ui.post(new Runnable() { public void run() {
                                             synchronized (queue) { pending.remove(fk0); }
@@ -835,8 +769,7 @@ public class LiveMapView extends View {
                                 netOffline = false;
                             }
                         }
-                        if (b != null && inkK && layer == 0) b = inkTile(b, lightK, inkLv, !DARKEN[pv]);
-                        else if (b != null && DARKEN[pv] && layer == 0 && !Main.LIGHT) b = darken(b, bright);
+                        if (b != null && DARKEN[pv] && layer == 0 && !Main.LIGHT) b = darken(b, bright);
                     }
                 } catch (Throwable e) {
                     if (layer != L_FILE && layer != L_TRAFFIC) { netErrors++; netOffline = netErrors >= 3; }

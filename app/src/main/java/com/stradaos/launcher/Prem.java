@@ -25,7 +25,7 @@ final class Prem {
     static String name(String id) { return Cobalto.ID.equals(id) ? "Cobalto" : Faro.ID.equals(id) ? "Faro" : "Aurora"; }
     static String desc(String id) {
         if (Faro.ID.equals(id))
-            return "Fondo carbón (o perla en claro) con un haz de luz diagonal. A la izquierda, el velocímetro y un carro visto desde arriba que enciende los faros de noche; en el centro, el mapa en trazo fino; a la derecha, el clima por horas y tus próximos mantenimientos, con el reproductor debajo.";
+            return "Fondo carbón (o perla en claro) con un haz de luz diagonal. A la izquierda, el velocímetro y un carro visto desde arriba que enciende los faros de noche; en el centro, el mapa integrado al fondo; a la derecha, el clima por horas y tus próximos mantenimientos, con el reproductor y la barra de apps debajo.";
         return Cobalto.ID.equals(id)
             ? "Azul noche en tres columnas: el mapa se difumina hasta el reproductor de carátula redonda, y tu vehículo muestra el velocímetro arriba, su foto en el medio y el mantenimiento abajo. La temperatura va sobre el mapa."
             : "Fondo con un arco de color difuminado y granulado, tarjetas translúcidas, la hora en grande con música, vehículo y clima arriba, el mapa a lo ancho y una barra tipo píldora. El botón «Solo mapa» agranda el mapa.";

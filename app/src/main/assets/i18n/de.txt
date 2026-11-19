@@ -1158,11 +1158,11 @@ Islas Canarias	Kanarische Inseln
 Tiempo en StradaOS: {}	Zeit in StradaOS: {}
 Último tiempo por Bluetooth: {}	Letzte Zeit über Bluetooth: {}
 # Bloque 16 (2.25): tema premium Faro
-Fondo carbón (o perla en claro) con un haz de luz diagonal. A la izquierda, el velocímetro y un carro visto desde arriba que enciende los faros de noche; en el centro, el mapa en trazo fino; a la derecha, el clima por horas y tus próximos mantenimientos, con el reproductor debajo.	Anthrazitfarbener Hintergrund (perlweiß im hellen Modus) mit einem diagonalen Lichtstrahl. Links der Tacho und ein Auto von oben, das nachts die Scheinwerfer einschaltet; in der Mitte die Karte in feinen Linien; rechts das Wetter nach Stunden und deine nächsten Wartungen, darunter der Player.
+Fondo carbón (o perla en claro) con un haz de luz diagonal. A la izquierda, el velocímetro y un carro visto desde arriba que enciende los faros de noche; en el centro, el mapa integrado al fondo; a la derecha, el clima por horas y tus próximos mantenimientos, con el reproductor y la barra de apps debajo.	Anthrazitfarbener Hintergrund (perlweiß im hellen Modus) mit einem diagonalen Lichtstrahl. Links der Tacho und ein Auto von oben, das nachts die Scheinwerfer einschaltet; in der Mitte die Karte, in den Hintergrund eingebettet; rechts das Wetter nach Stunden und deine nächsten Wartungen, darunter der Player und die App-Leiste.
 Color del carro	Autofarbe
 El carro del tema Faro, visto desde arriba. También se cambia con una presión larga sobre el carro.	Das Auto im Faro-Design, von oben gesehen. Lässt sich auch durch langes Drücken auf das Auto ändern.
 Intensidad del mapa	Kartenintensität
-Las calles se dibujan en trazo fino sobre el fondo del tema. Súbela si al sol no se ven bien.	Straßen werden als feine Linien über dem Hintergrund gezeichnet. Erhöhe sie, wenn sie in der Sonne schlecht zu sehen sind.
+Qué tan visible es el mapa sobre el fondo del tema (Baja = como Cobalto). Súbela si al sol no se ve bien.	Wie deutlich die Karte über dem Hintergrund zu sehen ist (Niedrig = wie Cobalt). Erhöhe sie, wenn sie in der Sonne schlecht zu sehen ist.
 Baja	Niedrig
 Media	Mittel
 Alta	Hoch

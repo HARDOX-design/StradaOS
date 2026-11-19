@@ -1158,11 +1158,11 @@ Islas Canarias	Ilhas Canárias
 Tiempo en StradaOS: {}	Tempo no StradaOS: {}
 Último tiempo por Bluetooth: {}	Último tempo pelo Bluetooth: {}
 # Bloque 16 (2.25): tema premium Faro
-Fondo carbón (o perla en claro) con un haz de luz diagonal. A la izquierda, el velocímetro y un carro visto desde arriba que enciende los faros de noche; en el centro, el mapa en trazo fino; a la derecha, el clima por horas y tus próximos mantenimientos, con el reproductor debajo.	Fundo carvão (ou pérola no modo claro) com um feixe de luz diagonal. À esquerda, o velocímetro e um carro visto de cima que acende os faróis à noite; no centro, o mapa em traço fino; à direita, o clima por hora e suas próximas manutenções, com o player embaixo.
+Fondo carbón (o perla en claro) con un haz de luz diagonal. A la izquierda, el velocímetro y un carro visto desde arriba que enciende los faros de noche; en el centro, el mapa integrado al fondo; a la derecha, el clima por horas y tus próximos mantenimientos, con el reproductor y la barra de apps debajo.	Fundo carvão (ou pérola no modo claro) com um feixe de luz diagonal. À esquerda, o velocímetro e um carro visto de cima que acende os faróis à noite; no centro, o mapa integrado ao fundo; à direita, o clima por hora e suas próximas manutenções, com o player e a barra de apps embaixo.
 Color del carro	Cor do carro
 El carro del tema Faro, visto desde arriba. También se cambia con una presión larga sobre el carro.	O carro do tema Faro, visto de cima. Também muda com um toque longo no carro.
 Intensidad del mapa	Intensidade do mapa
-Las calles se dibujan en trazo fino sobre el fondo del tema. Súbela si al sol no se ven bien.	As ruas são desenhadas em traço fino sobre o fundo do tema. Aumente se não estiverem bem visíveis ao sol.
+Qué tan visible es el mapa sobre el fondo del tema (Baja = como Cobalto). Súbela si al sol no se ve bien.	Quão visível o mapa fica sobre o fundo do tema (Baixa = como Cobalto). Aumente se não estiver bem visível ao sol.
 Baja	Baixa
 Media	Média
 Alta	Alta

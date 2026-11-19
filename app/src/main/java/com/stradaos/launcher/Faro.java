@@ -50,10 +50,9 @@ final class Faro {
     /** Recuadro de los botones de la barra y de los controles del mapa. */
     static int tile(boolean l) { return l ? 0xFFFFFFFF : 0xFF202328; }
     static int track(boolean l) { return l ? 0xFFD8DBE0 : 0xFF2A2D33; }
-    /** Trazo del mapa: blanco frío en oscuro, grafito en claro. */
-    static int ink(boolean l) { return l ? 0xFF1E222A : 0xFFEBF0FA; }
-    /** Las teselas ya traen su transparencia (terreno 0 %): se dibujan enteras. */
-    static float mapAlpha(boolean l) { return 1f; }
+    /** Mapa como en Cobalto: las teselas de siempre, translúcidas sobre el fondo (baja 50 %, media 70 %, alta 90 %). */
+    static int mapLevel;
+    static float mapAlpha(boolean l) { return mapLevel <= 0 ? 0.50f : mapLevel == 1 ? 0.70f : 0.90f; }
     static final int COPPER = 0xFFE7B08A, COPPER_LIGHT = 0xFFF6E7DA, COPPER_DEEP = 0xFFC98B5E;
     static final int WARM = 0xFFFFF4E0, LAVENDER = 0xFFC9C4FF;
 
@@ -384,10 +383,14 @@ final class Faro {
     static final float LAMP_X = 0.21f, LAMP_Y = 0.066f;   // faros (fracción del recuadro del carro)
     static final float TAIL_X = 0.24f, TAIL_Y = 0.955f;   // luces traseras
 
-    /** Recuadro del carro dentro de una vista de vw×vh px (deja aire para la sombra). */
+    /**
+     * Recuadro del carro dentro de una vista de vw×vh px. La sombra (difuminada, corrida a la derecha y abajo) queda
+     * entera DENTRO de la vista: así nunca se ve cortada en la base ni a los lados.
+     */
     static RectF carRect(float vw, float vh) {
-        float ch = Math.min(vh * 0.95f, vw * 0.82f / CAR_ASPECT), cw = ch * CAR_ASPECT;
-        float l = (vw - cw) / 2, t = (vh - ch) * 0.4f;
+        float ch = Math.min(vh / 1.16f, vw / 1.62f / CAR_ASPECT), cw = ch * CAR_ASPECT;
+        float slack = Math.max(0, vh - ch * 1.16f);
+        float l = (vw - cw) / 2, t = ch * 0.045f + slack * 0.3f;
         return new RectF(l, t, l + cw, t + ch);
     }
 
@@ -539,16 +542,20 @@ final class Faro {
                 Canvas c = new Canvas(frame);
                 Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
                 // pozo de luz en la base del velocímetro (lavanda muy suave, como la referencia)
+                // el degradado termina antes de los bordes de la capa (si no, se ve el rectángulo de la vista)
+                float ry = Math.max(8, Math.min(poolR, Math.min(poolY, h - poolY) - 6 * k));
+                float rx = Math.max(8, Math.min(poolR * 1.35f, Math.min(poolX, w - poolX) - 6 * k));
                 c.save();
-                c.scale(1.35f, 1f, poolX, poolY);
-                p.setShader(new RadialGradient(poolX, poolY, poolR, new int[]{Aurora.a(LAVENDER, 0.26f), Aurora.a(LAVENDER, 0.09f), 0},
+                c.scale(rx / ry, 1f, poolX, poolY);
+                p.setShader(new RadialGradient(poolX, poolY, ry, new int[]{Aurora.a(LAVENDER, 0.24f), Aurora.a(LAVENDER, 0.08f), 0},
                     new float[]{0f, 0.5f, 1f}, Shader.TileMode.CLAMP));
-                c.drawCircle(poolX, poolY, poolR, p);
+                c.drawCircle(poolX, poolY, ry, p);
                 c.restore();
                 for (int i = 0; i < 2; i++) {
                     float lx = lamps[i * 2], ly = lamps[i * 2 + 1];
                     boolean left = i == 0;
-                    float out = w * 0.30f, in = w * 0.10f, half = 3 * k;
+                    float blur = Math.max(2, 11 * k), half = 3 * k;
+                    float out = Math.max(w * 0.05f, Math.min(w * 0.30f, (left ? lx : w - lx) - blur * 1.6f)), in = w * 0.10f;
                     Path cone = new Path();
                     cone.moveTo(lx - half, ly);
                     cone.lineTo(left ? lx - out : lx - in, topY);
@@ -557,7 +564,7 @@ final class Faro {
                     cone.close();
                     p.setShader(new LinearGradient(0, ly, 0, topY, new int[]{Aurora.a(WARM, 0.55f), Aurora.a(WARM, 0.17f), 0},
                         new float[]{0f, 0.42f, 1f}, Shader.TileMode.CLAMP));
-                    p.setMaskFilter(new BlurMaskFilter(Math.max(2, 11 * k), BlurMaskFilter.Blur.NORMAL));
+                    p.setMaskFilter(new BlurMaskFilter(blur, BlurMaskFilter.Blur.NORMAL));
                     c.drawPath(cone, p);
                     // destello del faro
                     p.setShader(null);
@@ -679,9 +686,11 @@ final class Faro {
             float pad = u * 0.035f, gap = u * 0.025f;
             float pillH = u * (portrait ? 0.075f : 0.10f), pillY = h - pad * 0.8f - pillH;
             float playH = u * (portrait ? 0.085f : 0.12f), playY = pillY - gap - playH;
+            float dockX = pad, dockW = w - 2 * pad;
             if (!portrait) {
                 float colW = w * 0.29f, rx = pad + colW + gap, rw = w - pad - rx, mw = (rw - gap) * 0.52f, top = pad + u * 0.06f;
-                column(c, pad, pad, colW, pillY - gap - pad, text, muted);
+                column(c, pad, pad, colW, h - pad, text, muted);
+                dockX = rx; dockW = w - pad - rx;
                 map(c, rx, top, rx + mw, playY - gap, crad, u);
                 float wx = rx + mw + gap, wh = (playY - gap - top) * 0.55f;
                 weather(c, wx, top, w - pad - wx, wh, crad, text, muted);
@@ -697,7 +706,7 @@ final class Faro {
                 maint(c, wx, rowY + wh + gap, w - pad - wx, rowH - wh - gap, crad, text);
                 player(c, pad, playY, w - 2 * pad, playH, crad, text, muted);
             }
-            float pw2 = w * (portrait ? 0.72f : 0.46f), px2 = (w - pw2) / 2;
+            float pw2 = Math.min(dockW, w * (portrait ? 0.72f : 0.46f)), px2 = dockX + (dockW - pw2) / 2;
             rr(c, px2, pillY, px2 + pw2, pillY + pillH, pillH * 0.32f, pill(light));
             float tsz = pillH * 0.62f;
             for (int i = 0; i < 6; i++) {
@@ -728,7 +737,7 @@ final class Faro {
             c.drawArc(r, 135, 70, false, p);
             p.setStrokeCap(Paint.Cap.BUTT);
             rr(c, cx - gr * 0.35f, gy - gr * 0.22f, cx + gr * 0.35f, gy + gr * 0.18f, gr * 0.08f, Aurora.a(text, 0.9f));
-            float ct = gy + gr * 1.35f, ch = y + hh - ct;
+            float ct = gy + gr * 1.25f, ch = y + hh - ct;
             if (!light) {
                 p.setStyle(Paint.Style.FILL);
                 p.setShader(new LinearGradient(0, ct + ch * 0.1f, 0, gy, Aurora.a(WARM, 0.35f), 0, Shader.TileMode.CLAMP));
@@ -750,13 +759,18 @@ final class Faro {
 
         private void map(Canvas c, float l, float t, float rt, float b, float crad, float u) {
             float mw = rt - l, mh = b - t;
+            // como un mapa de verdad, translúcido sobre el fondo (igual que Cobalto)
+            rr(c, l, t, rt, b, crad, light ? 0x80F1F1EE : 0x8026292F);
             c.save();
             c.clipRect(l, t, rt, b);
             p.setStyle(Paint.Style.STROKE);
-            p.setStrokeWidth(Math.max(1f, u * 0.006f));
-            p.setColor(Aurora.a(ink(light), light ? 0.30f : 0.26f));
+            p.setStrokeWidth(Math.max(1.5f, u * 0.014f));
+            p.setColor(light ? 0xB3FFFFFF : 0x8C3C414B);
             for (int i = 1; i < 6; i++) c.drawLine(l, t + mh * i / 6f, rt, t + mh * i / 6f - mh * 0.18f, p);
             for (int i = 1; i < 6; i++) c.drawLine(l + mw * i / 6f, t, l + mw * i / 6f + mw * 0.08f, b, p);
+            p.setStrokeWidth(Math.max(2f, u * 0.022f));
+            p.setColor(light ? 0x99F3D9A6 : 0x8C5A5240);
+            c.drawLine(l, t + mh * 0.62f, rt, t + mh * 0.40f, p);
             c.restore();
             rr(c, l + mw * 0.05f, t + mh * 0.04f, l + mw * 0.55f, t + mh * 0.04f + u * 0.045f, u * 0.012f, tile(light));
             p.setStyle(Paint.Style.FILL);

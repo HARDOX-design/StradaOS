@@ -1208,8 +1208,8 @@ public class Main extends Activity {
         premium = premiumActive();
         Prem.style = premium ? prefs.getString("premium_theme", Aurora.ID) : Aurora.ID;
         mapOnly = premium && Prem.mapOnlyOk() && prefs.getBoolean("prem_map_only", false);   // Cobalto y Faro son fijos: sin «Solo mapa»
-        // Faro (2.25): el mapa en trazo fino (intensidad baja/media/alta); los demás temas, como siempre
-        LiveMapView.ink = premium && Prem.faro() ? Math.max(0, Math.min(2, prefs.getInt("faro_map", 0))) : -1;
+        // Faro (2.25): qué tan visible es el mapa sobre el fondo (baja = como Cobalto)
+        Faro.mapLevel = Math.max(0, Math.min(2, prefs.getInt("faro_map", 0)));
         if (premium) { sideDock = false; compactDock = false; }
         // Lienzo virtual: 1024x600. Con la barra lateral los botones salen de abajo y el lienzo queda más bajo
         // (1128x460): en pantallas bajas y anchas como 1280x480 todo se ve ~30 % más grande.
@@ -2685,8 +2685,6 @@ public class Main extends Activity {
         card.addView(liveMap, new FrameLayout.LayoutParams(-1, -1));
         // Aurora: esquinas redondas de verdad sobre el fondo y el mapa un poco translúcido
         if (premium && premBg != null) liveMap.setBackdrop(premBg, premBgHolder, Prem.mapAlpha(LIGHT));
-        // Faro: un velo muy suave marca el área del mapa (debajo de las calles en trazo)
-        if (premium && Prem.faro() && premBg != null) liveMap.setTint(LIGHT ? 0x40FFFFFF : 0x0DFFFFFF);
         if (premium && Prem.faro()) liveMap.setAttribution(14 * s, 70 * s);
         // Cobalto: el mapa se difumina hasta donde empieza el reproductor (abajo, hacia las tarjetas, en vertical)
         if (premium && Prem.cob() && !mapOnly && premBg != null) liveMap.setFade(vertical ? 2 : 1, (vertical ? 150 : Math.max(260, mapW * 0.5f)) * s);
@@ -4346,7 +4344,8 @@ public class Main extends Activity {
             faroWxY = ry; faroWxH = wx ? Math.round(rh * 0.54f) : 0;
             faroPlX = 12; faroPlW = W0 - 24;
         } else {
-            faroColX = 12; faroColY = top; faroColW = 292 + Math.min(64, ex / 6f); faroColH = bottom - top;
+            // la columna llega hasta el borde de abajo: la barra de apps va solo debajo del reproductor
+            faroColX = 12; faroColY = top; faroColW = 292 + Math.min(64, ex / 6f); faroColH = boardH - top;
             float rx0 = faroColX + faroColW + 12;
             faroRW = 324 + Math.min(48, ex / 8f);
             faroRX = W0 - 12 - faroRW;
@@ -4463,11 +4462,12 @@ public class Main extends Activity {
     /** Columna izquierda: velocímetro arriba, nombre del vehículo con el GPS y el carro visto desde arriba. */
     private void buildFaroColumn() {
         float x = faroColX, y = faroColY, w = faroColW, hh = faroColH;
-        float D = carSpeed ? Math.min(w - 36, hh * (vertical ? 0.42f : 0.40f)) : 0;
+        float D = carSpeed ? Math.min(w - 36, vertical ? hh * 0.36f : (boardH - 16) * 0.33f) : 0;
         float gx = x + (w - D) / 2, gy = y + 6;
-        float labelH = 22, carMax = Math.min(hh * 0.66f, 320);
-        float labelY = carSpeed ? gy + D + 2 : y + Math.max(4, (hh - carMax - labelH - 4) * 0.45f);
-        float carY = labelY + labelH + 4, carH = Math.max(60, carSpeed ? y + hh - carY : Math.min(carMax, y + hh - carY));
+        float labelH = 20, carMax = Math.min(hh * 0.70f, 380);
+        float labelY = carSpeed ? gy + D + 2 : y + Math.max(4, (hh - carMax - labelH - 4) * 0.40f);
+        // el carro (y su sombra) llega hasta abajo: en horizontal, hasta el borde de la pantalla
+        float carY = labelY + labelH + 2, carH = Math.max(60, carSpeed ? y + hh - carY : Math.min(carMax, y + hh - carY));
         String col = Faro.car(prefs.getString("faro_car", "silver"));
         Faro.Car car = new Faro.Car(this, col, LIGHT);
         place(board, car, x, carY, w, carH);
@@ -4477,12 +4477,12 @@ public class Main extends Activity {
         android.graphics.RectF cr = Faro.carRect(w * s, carH * s);
         float lampY = carY + (cr.top + cr.height() * Faro.LAMP_Y) / s;
         float lxL = (cr.left + cr.width() * Faro.LAMP_X) / s, lxR = (cr.left + cr.width() * (1 - Faro.LAMP_X)) / s;
-        float bTop = carSpeed ? gy + D * 0.28f : Math.max(y, lampY - 160), bH = lampY + 14 - bTop;
+        float bTop = carSpeed ? y : Math.max(y, lampY - 160), bH = lampY + 16 - bTop;
         Boolean prev = faroLastLight;
         faroLastLight = LIGHT;
         boolean fadeOut = LIGHT && prev != null && !prev;
         if ((!LIGHT || fadeOut) && bH > 40) {
-            float poolY = carSpeed ? gy + D * 0.84f - bTop : (lampY - bTop) * 0.25f;
+            float poolY = carSpeed ? gy + D * 0.80f - bTop : (lampY - bTop) * 0.25f;
             final Faro.Beams beams = new Faro.Beams(this, s, new float[]{lxL * s, (lampY - bTop) * s, lxR * s, (lampY - bTop) * s},
                 (carSpeed ? gy + D * 0.5f - bTop : 0) * s, w / 2 * s, poolY * s, w * 0.42f * s);
             place(board, beams, x, bTop, w, bH);
@@ -4777,9 +4777,11 @@ public class Main extends Activity {
         final int n = dockCount;
         int isz = prefs.getInt("dock_icon_size", 1);
         float ik = isz == 0 ? 0.86f : isz == 2 ? 1.12f : 1f;
-        float W0 = premW(), pillH = premPillH;
-        float itemW = Math.min(vertical ? 66 : 62, (W0 - 48) / n), pillW = itemW * n + 16;
-        float px = (W0 - pillW) / 2, py = dockTop;
+        float pillH = premPillH;
+        // centrada en el reproductor y sin pasarse de sus bordes: crece desde el centro hacia los lados
+        float areaX = faroPlX, areaW = faroPlW;
+        float itemW = Math.min(vertical ? 66 : 62, (areaW - 16) / n), pillW = itemW * n + 16;
+        float px = areaX + (areaW - pillW) / 2, py = dockTop;
         View bg = new View(this);
         bg.setBackground(new Faro.Card(LIGHT, Math.min(20, pillH * 0.36f) * s, 8 * s, s));
         place(board, bg, px - 8, py - 8, pillW + 16, pillH + 16);
@@ -8479,7 +8481,7 @@ public class Main extends Activity {
                 choice(pn, "Color del carro", "El carro del tema Faro, visto desde arriba. También se cambia con una presión larga sobre el carro.", Faro.CAR_NAMES, ci, new IntCb() { public void on(int i) {
                     prefs.edit().putString("faro_car", cols[i]).apply(); rebuild(); showSettings(C_HOME);
                 }});
-                segmented(pn, "Intensidad del mapa", "Las calles se dibujan en trazo fino sobre el fondo del tema. Súbela si al sol no se ven bien.",
+                segmented(pn, "Intensidad del mapa", "Qué tan visible es el mapa sobre el fondo del tema (Baja = como Cobalto). Súbela si al sol no se ve bien.",
                     new String[]{"Baja", "Media", "Alta"}, Math.max(0, Math.min(2, prefs.getInt("faro_map", 0))), new IntCb() { public void on(int i) {
                         prefs.edit().putInt("faro_map", i).apply(); rebuild(); showSettings(C_HOME);
                     }});

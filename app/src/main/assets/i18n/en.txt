@@ -1158,11 +1158,11 @@ Islas Canarias	Canary Islands
 Tiempo en StradaOS: {}	Time in StradaOS: {}
 Último tiempo por Bluetooth: {}	Last time from Bluetooth: {}
 # Bloque 16 (2.25): tema premium Faro
-Fondo carbón (o perla en claro) con un haz de luz diagonal. A la izquierda, el velocímetro y un carro visto desde arriba que enciende los faros de noche; en el centro, el mapa en trazo fino; a la derecha, el clima por horas y tus próximos mantenimientos, con el reproductor debajo.	Charcoal background (pearl in light mode) with a diagonal beam of light. On the left, the speedometer and a top-down car that turns its headlights on at night; in the center, the map in fine lines; on the right, the hourly weather and your upcoming maintenance, with the player below.
+Fondo carbón (o perla en claro) con un haz de luz diagonal. A la izquierda, el velocímetro y un carro visto desde arriba que enciende los faros de noche; en el centro, el mapa integrado al fondo; a la derecha, el clima por horas y tus próximos mantenimientos, con el reproductor y la barra de apps debajo.	Charcoal background (pearl in light mode) with a diagonal beam of light. On the left, the speedometer and a top-down car that turns its headlights on at night; in the center, the map blended into the background; on the right, the hourly weather and your upcoming maintenance, with the player and the app bar below.
 Color del carro	Car color
 El carro del tema Faro, visto desde arriba. También se cambia con una presión larga sobre el carro.	The car in the Faro theme, seen from above. You can also change it by long-pressing the car.
 Intensidad del mapa	Map intensity
-Las calles se dibujan en trazo fino sobre el fondo del tema. Súbela si al sol no se ven bien.	Streets are drawn as fine lines over the theme background. Turn it up if they're hard to see in the sun.
+Qué tan visible es el mapa sobre el fondo del tema (Baja = como Cobalto). Súbela si al sol no se ve bien.	How visible the map is over the theme background (Low = like Cobalt). Turn it up if it's hard to see in the sun.
 Baja	Low
 Media	Medium
 Alta	High
