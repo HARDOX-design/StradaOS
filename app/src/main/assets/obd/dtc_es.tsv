@@ -1,0 +1,84 @@
+# Explicación en español de los códigos genéricos más comunes (SAE J2012), escrita para StradaOS.
+# código<TAB>gravedad (1 = se puede seguir, 2 = revisar pronto, 3 = detenerse o ir al taller ya)<TAB>qué es<TAB>qué hacer
+P0011	2	Árbol de levas de admisión adelantado más de lo esperado (variador CVVT).	Revisa nivel y estado del aceite: el variador funciona con presión de aceite. Si el aceite está bien, revisar la válvula solenoide OCV.
+P0012	2	Árbol de levas de admisión atrasado más de lo esperado (variador CVVT).	Revisa nivel y estado del aceite. Si sigue, revisar la válvula OCV y la cadena de distribución.
+P0014	2	Árbol de levas de escape adelantado más de lo esperado.	Revisa nivel y estado del aceite. Si sigue, revisar la válvula OCV de escape.
+P0016	3	La posición del cigüeñal y del árbol de levas no coinciden.	Puede ser la cadena de distribución estirada o saltada. Evita exigir el motor y llévalo al taller pronto.
+P0101	2	El sensor de flujo de aire (MAF) marca fuera de lo esperado.	Revisa el filtro de aire y que no haya mangueras sueltas después del sensor. Limpiar el MAF con limpiador especial.
+P0102	2	Señal baja del sensor de flujo de aire (MAF).	Revisa el conector y el cableado del MAF.
+P0103	2	Señal alta del sensor de flujo de aire (MAF).	Revisa el conector y el cableado del MAF.
+P0106	2	El sensor de presión del múltiple (MAP) marca fuera de lo esperado.	Revisa mangueras de vacío y el conector del sensor MAP.
+P0111	1	El sensor de temperatura del aire de admisión marca fuera de lo esperado.	Revisa el conector del sensor. No suele dejarte botado.
+P0112	1	Señal baja del sensor de temperatura del aire de admisión.	Revisa el conector y el cableado del sensor.
+P0113	1	Señal alta del sensor de temperatura del aire de admisión.	Revisa el conector y el cableado del sensor.
+P0116	2	El sensor de temperatura del refrigerante marca fuera de lo esperado.	No confíes en el indicador de temperatura hasta revisarlo. Vigila que el electroventilador encienda.
+P0117	3	Señal baja del sensor de temperatura del refrigerante.	Sin este dato el motor puede sobrecalentarse sin avisar. Revisa nivel de refrigerante y el conector del sensor.
+P0118	3	Señal alta del sensor de temperatura del refrigerante.	Sin este dato el motor puede sobrecalentarse sin avisar. Revisa nivel de refrigerante y el conector del sensor.
+P0121	2	El sensor de posición del acelerador marca fuera de lo esperado.	El motor puede entrar en modo de emergencia (poca potencia). Revisa el cuerpo de aceleración y su conector.
+P0122	2	Señal baja del sensor de posición del acelerador.	Puede entrar en modo de emergencia. Revisa el conector del cuerpo de aceleración.
+P0123	2	Señal alta del sensor de posición del acelerador.	Puede entrar en modo de emergencia. Revisa el conector del cuerpo de aceleración.
+P0125	1	El motor tarda mucho en llegar a temperatura para el control de mezcla.	Suele ser el termostato abierto o el sensor de temperatura. Revisa en el taller.
+P0128	1	El refrigerante no llega a la temperatura del termostato.	Casi siempre es el termostato pegado abierto. Gasta más combustible y calienta poco la cabina; cámbialo cuando puedas.
+P0130	1	Falla en el circuito del sensor de oxígeno delantero (banco 1).	Revisa el conector del sensor. Gastarás algo más de combustible.
+P0133	1	El sensor de oxígeno delantero responde lento.	El sensor está viejo. Cámbialo cuando puedas.
+P0135	1	Falla en el calentador del sensor de oxígeno delantero.	Revisa el fusible y el conector del sensor. Se puede seguir.
+P0141	1	Falla en el calentador del sensor de oxígeno trasero.	Revisa el fusible y el conector del sensor. Se puede seguir.
+P0171	2	Mezcla pobre: entra más aire o llega menos combustible de lo que debería.	Busca fugas de vacío (mangueras, junta de admisión), revisa el MAF, la presión de combustible y el filtro. En subidas largas puede perder fuerza.
+P0172	2	Mezcla rica: llega más combustible del que debería.	Revisa el filtro de aire, el MAF, inyectores que goteen y el regulador de presión.
+P0217	3	Temperatura del motor excesiva.	Detente en un lugar seguro y apaga el motor. No abras la tapa del radiador en caliente. Revisa refrigerante, ventilador y correa.
+P0230	2	Falla en el circuito del relé de la bomba de combustible.	El motor puede apagarse sin aviso. Revisa relé y fusible de la bomba.
+P0261	2	Falla en el inyector del cilindro 1.	Puede fallar el cilindro 1. Revisa el conector del inyector.
+P0264	2	Falla en el inyector del cilindro 2.	Puede fallar el cilindro 2. Revisa el conector del inyector.
+P0267	2	Falla en el inyector del cilindro 3.	Puede fallar el cilindro 3. Revisa el conector del inyector.
+P0270	2	Falla en el inyector del cilindro 4.	Puede fallar el cilindro 4. Revisa el conector del inyector.
+P0300	3	Fallas de encendido en varios cilindros.	Si la luz del motor parpadea, baja la velocidad y no exijas el motor: el catalizador se puede dañar. Revisa bujías, bobinas, combustible y fugas de vacío.
+P0301	3	Falla de encendido en el cilindro 1.	Si la luz parpadea, no exijas el motor. Intercambia la bobina del cilindro 1 con otra para ver si la falla se mueve; revisa la bujía.
+P0302	3	Falla de encendido en el cilindro 2.	Si la luz parpadea, no exijas el motor. Intercambia la bobina del cilindro 2 con otra para ver si la falla se mueve; revisa la bujía.
+P0303	3	Falla de encendido en el cilindro 3.	Si la luz parpadea, no exijas el motor. Intercambia la bobina del cilindro 3 con otra para ver si la falla se mueve; revisa la bujía.
+P0304	3	Falla de encendido en el cilindro 4.	Si la luz parpadea, no exijas el motor. Intercambia la bobina del cilindro 4 con otra para ver si la falla se mueve; revisa la bujía.
+P0325	2	Falla en el circuito del sensor de detonación.	El motor se protege atrasando el encendido: tendrá menos fuerza. Usa el combustible recomendado y revisa el conector del sensor.
+P0335	3	Falla en el sensor de posición del cigüeñal.	El motor puede apagarse o no volver a arrancar. Evita lugares aislados y revisa el sensor y su conector.
+P0336	3	El sensor de posición del cigüeñal marca fuera de lo esperado.	El motor puede apagarse o no volver a arrancar. Revisa el sensor y su conector.
+P0340	3	Falla en el sensor de posición del árbol de levas.	Puede costar arrancar o apagarse. Revisa el sensor y su conector.
+P0341	2	El sensor del árbol de levas marca fuera de lo esperado.	Revisa el sensor, su conector y la distribución.
+P0351	2	Falla en el circuito de la bobina del cilindro 1.	Puede fallar el cilindro 1. Revisa la bobina y su conector.
+P0352	2	Falla en el circuito de la bobina del cilindro 2.	Puede fallar el cilindro 2. Revisa la bobina y su conector.
+P0353	2	Falla en el circuito de la bobina del cilindro 3.	Puede fallar el cilindro 3. Revisa la bobina y su conector.
+P0354	2	Falla en el circuito de la bobina del cilindro 4.	Puede fallar el cilindro 4. Revisa la bobina y su conector.
+P0420	1	El catalizador (banco 1) ya no limpia los gases como debería.	Se puede seguir manejando. Antes de cambiarlo, descarta fallas de encendido, fugas de escape y sensores de oxígeno.
+P0441	1	Flujo incorrecto en el sistema de vapores de combustible (EVAP).	No afecta cómo maneja. Revisa la válvula de purga.
+P0442	1	Pequeña fuga en el sistema de vapores de combustible (EVAP).	Revisa que la tapa del estanque cierre bien. No afecta cómo maneja.
+P0455	1	Fuga grande en el sistema de vapores de combustible (EVAP).	Revisa que la tapa del estanque esté puesta y bien cerrada.
+P0456	1	Fuga muy pequeña en el sistema de vapores de combustible (EVAP).	Revisa la tapa del estanque. No afecta cómo maneja.
+P0500	2	Falla en el sensor de velocidad del vehículo.	La caja automática puede cambiar mal y el velocímetro fallar. Revisa el sensor y su conector.
+P0505	1	Falla en el control de ralentí.	El motor puede quedar acelerado o apagarse en ralentí. Limpia el cuerpo de aceleración.
+P0506	1	Ralentí más bajo de lo esperado.	Limpia el cuerpo de aceleración y revisa fugas de vacío.
+P0507	1	Ralentí más alto de lo esperado.	Suele ser una fuga de vacío o el cuerpo de aceleración sucio.
+P0562	2	Voltaje del sistema bajo.	El alternador puede no estar cargando. Revisa la correa, los bornes de la batería y el alternador antes de un viaje largo.
+P0563	2	Voltaje del sistema alto.	El regulador del alternador puede estar fallando y dañar la batería. Revísalo pronto.
+P0600	2	Falla de comunicación interna del computador del motor.	Revisa masas (tierras) y conectores del computador.
+P0601	3	Falla de memoria del computador del motor.	Llévalo al taller.
+P0700	2	La caja automática registró una falla (pide leer el computador de la caja).	Hay otro código guardado en el computador de la caja. Si la caja queda en un solo cambio (modo de emergencia), maneja suave hasta el taller.
+P0705	2	Falla en el sensor de posición de la palanca de cambios.	Puede no arrancar en P o N o mostrar mal el cambio. Revisa el interruptor de rango.
+P0710	2	Falla en el circuito del sensor de temperatura del aceite de la caja automática.	La caja puede cambiar brusco. Revisa el nivel y el color del aceite de la caja y el conector del sensor. Evita remolcar o subir pendientes largas exigiendo la caja.
+P0711	2	El sensor de temperatura del aceite de la caja automática marca fuera de lo esperado.	La caja puede cambiar brusco o quedar en modo de emergencia. Revisa nivel y color del aceite de la caja (oscuro u olor a quemado es mala señal) y el conector del sensor. En subidas largas usa una marcha baja y descansa la caja.
+P0712	2	Señal baja del sensor de temperatura del aceite de la caja automática.	Revisa el conector y el cableado del sensor. La caja puede cambiar brusco.
+P0713	2	Señal alta del sensor de temperatura del aceite de la caja automática.	Revisa el conector y el cableado del sensor. La caja puede cambiar brusco.
+P0715	2	Falla en el sensor de velocidad de entrada de la caja.	La caja puede cambiar brusco o quedar en modo de emergencia. Revisa el sensor y su conector.
+P0720	2	Falla en el sensor de velocidad de salida de la caja.	La caja puede cambiar brusco y el velocímetro fallar. Revisa el sensor y su conector.
+P0730	3	La relación de cambios no es la correcta (la caja patina).	Revisa el nivel del aceite de la caja de inmediato. Maneja suave: seguir exigiéndola puede dañarla.
+P0731	3	Relación incorrecta en 1ª: la caja patina en primera.	Revisa el nivel del aceite de la caja. Maneja suave hasta el taller.
+P0732	3	Relación incorrecta en 2ª: la caja patina en segunda.	Revisa el nivel del aceite de la caja. Maneja suave hasta el taller.
+P0733	3	Relación incorrecta en 3ª: la caja patina en tercera.	Revisa el nivel del aceite de la caja. Maneja suave hasta el taller.
+P0734	3	Relación incorrecta en 4ª: la caja patina en cuarta.	Revisa el nivel del aceite de la caja. Maneja suave hasta el taller.
+P0740	2	Falla en el circuito del embrague del convertidor de torque.	Gastará más combustible y la caja se calentará más. Revisa el aceite de la caja.
+P0741	2	El embrague del convertidor de torque no acopla o patina.	La caja se calienta más: evita subidas largas exigentes y revisa el aceite de la caja.
+P0743	2	Falla eléctrica en el embrague del convertidor de torque.	Revisa el conector de la caja. Gastará más combustible.
+P0750	2	Falla en el solenoide de cambio A.	La caja puede quedar en un solo cambio. Maneja suave hasta el taller.
+P0755	2	Falla en el solenoide de cambio B.	La caja puede quedar en un solo cambio. Maneja suave hasta el taller.
+P0760	2	Falla en el solenoide de cambio C.	La caja puede quedar en un solo cambio. Maneja suave hasta el taller.
+P0765	2	Falla en el solenoide de cambio D.	La caja puede quedar en un solo cambio. Maneja suave hasta el taller.
+P2096	1	El sensor de oxígeno trasero ve mezcla pobre después del catalizador.	Revisa fugas de escape antes del sensor.
+P2097	1	El sensor de oxígeno trasero ve mezcla rica después del catalizador.	Revisa sensores de oxígeno y el catalizador.
+P2187	2	Mezcla pobre en ralentí.	Suele ser una fuga de vacío. Revisa mangueras y la válvula PCV.
+P2188	2	Mezcla rica en ralentí.	Revisa inyectores y la válvula de purga del EVAP.

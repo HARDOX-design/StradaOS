@@ -2,4 +2,5 @@
 <resources>
     <string name="acc_desc">Permite que o StradaOS mostre a capa e a faixa do Android Auto lendo a notificação do Open Headunit. Não lê mais nada.</string>
     <string name="acc_label">Capa do Android Auto</string>
+    <string name="obd_label">Veículo</string>
 </resources>

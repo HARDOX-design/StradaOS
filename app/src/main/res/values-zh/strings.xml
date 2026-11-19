@@ -2,4 +2,5 @@
 <resources>
     <string name="acc_desc">允许 StradaOS 通过读取 Open Headunit 的通知来显示 Android Auto 的专辑封面和曲目，不会读取其他内容。</string>
     <string name="acc_label">Android Auto 专辑封面</string>
+    <string name="obd_label">车辆</string>
 </resources>

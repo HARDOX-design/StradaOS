@@ -2,4 +2,5 @@
 <resources>
     <string name="acc_desc">Ermöglicht StradaOS, Albumcover und Titel von Android Auto anzuzeigen, indem es die Benachrichtigung von Open Headunit liest. Sonst liest es nichts.</string>
     <string name="acc_label">Android-Auto-Albumcover</string>
+    <string name="obd_label">Fahrzeug</string>
 </resources>

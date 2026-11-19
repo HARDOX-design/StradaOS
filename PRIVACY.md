@@ -10,12 +10,14 @@ StradaOS **no tiene cuentas, anuncios, rastreadores ni analíticas**, y no enví
 | Pista en reproducción | Mostrar la canción en el reproductor | No. Se lee del sistema y de la notificación de Open Headunit solo en el equipo. |
 | Foto del vehículo | Mostrarla en la pantalla de inicio | No. Se procesa y se guarda en el equipo. |
 | Lista de apps instaladas | Accesos directos y cajón de apps | No. |
+| Datos del motor (OBD-II), VIN y códigos de falla | Pantalla «Vehículo» y alertas por voz, si conectas un escáner | No, salvo que configures una IA: entonces, al explicar un código, se envían a tu proveedor (Anthropic u otro compatible con OpenAI, con tu propia API key) el código, el vehículo que escribiste y los datos del motor de ese momento. El VIN solo se envía si lo activas en *⚙ → Inteligencia artificial*. Nunca la ubicación. Las respuestas se guardan en el equipo. |
 
 ## Conexiones de red
 
 - **Mapas:** OpenStreetMap (servidores comunitarios), OpenTopoMap y Esri.
 - **Clima:** Open-Meteo (y BigDataCloud para el nombre de la ciudad).
 - **Mapa sin conexión:** solo si eliges *Descargar un mapa*, el archivo del país se baja de `download.mapsforge.org`. Después el mapa se dibuja en el equipo, sin conexión.
+- **IA para códigos de falla (opcional):** solo si pones tu API key en *Vehículo → ⚙ → Inteligencia artificial*: `api.anthropic.com` o la dirección que escribas.
 - **Actualizaciones:** GitHub (`api.github.com`, `raw.githubusercontent.com`) y jsDelivr, para saber si hay una versión nueva. Se puede desactivar en *Ajustes → Acerca de*.
 
 ## Permisos

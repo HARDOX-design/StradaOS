@@ -2,4 +2,5 @@
 <resources>
     <string name="acc_desc">Permite que StradaOS muestre la carátula y la pista de Android Auto leyendo la notificación de Open Headunit. No lee nada más.</string>
     <string name="acc_label">Carátula de Android Auto</string>
+    <string name="obd_label">Vehículo</string>
 </resources>

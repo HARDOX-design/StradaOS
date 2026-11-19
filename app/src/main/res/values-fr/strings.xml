@@ -2,4 +2,5 @@
 <resources>
     <string name="acc_desc">Permet à StradaOS d\'afficher la pochette et la piste d\'Android Auto en lisant la notification d\'Open Headunit. Il ne lit rien d\'autre.</string>
     <string name="acc_label">Pochette Android Auto</string>
+    <string name="obd_label">Véhicule</string>
 </resources>

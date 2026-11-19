@@ -2,4 +2,5 @@
 <resources>
     <string name="acc_desc">Permette a StradaOS di mostrare la copertina e il brano di Android Auto leggendo la notifica di Open Headunit. Non legge nient\'altro.</string>
     <string name="acc_label">Copertina di Android Auto</string>
+    <string name="obd_label">Veicolo</string>
 </resources>

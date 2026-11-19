@@ -1218,3 +1218,317 @@ Temperatura exterior	Outside temperature
 Del sensor del carro; necesita la caja CAN	From the car's sensor; needs the CAN box
 pantalla FYT detectada: elígela en Tu vehículo → Equipo	FYT screen detected: choose it in Your vehicle → Head unit
 esta pantalla no informa las luces	this screen doesn't report the lights
+# OBD-II (PR #42, Jaacern)
+Vehículo	Vehicle
+Monitor del vehículo	Vehicle monitor
+Batería	Battery
+Carga del motor	Engine load
+Acelerador	Throttle
+Aire de admisión	Intake air
+Combustible	Fuel
+Mezcla corta	Short fuel trim
+Mezcla larga	Long fuel trim
+Flujo de aire	Air flow
+Presión del múltiple	Manifold pressure
+Consumo del motor	Engine fuel rate
+Consumo por hora	Fuel rate
+Aceite del motor	Engine oil
+Panel de datos	Data panel
+Datos del panel	Panel data
+Datos del motor	Engine data
+Cilindrada del motor	Engine displacement
+Cilindrada del motor (litros)	Engine displacement (liters)
+Protocolo	Protocol
+CAN 11 bits · 500 kbps	CAN 11-bit · 500 kbps
+CAN 29 bits · 500 kbps	CAN 29-bit · 500 kbps
+CAN 11 bits · 250 kbps	CAN 11-bit · 250 kbps
+CAN 29 bits · 250 kbps	CAN 29-bit · 250 kbps
+Escribe un número entre 0,5 y 8	Enter a number between 0.5 and 8
+Máximo 6 datos	Maximum 6 values
+Hasta 6 datos del escáner, por ejemplo RPM, velocidad, refrigerante y consumo	Up to 6 scanner values, for example RPM, speed, coolant and fuel consumption
+Conectando con el escáner…	Connecting to the scanner…
+Conectado	Connected
+Esperando al auto (¿contacto apagado?)	Waiting for the car (ignition off?)
+Escáner conectado. Vigilando el motor.	Scanner connected. Watching the engine.
+Se perdió la conexión con el escáner.	Lost connection to the scanner.
+Códigos borrados.	Codes cleared.
+El auto no aceptó borrar los códigos.	The car didn't accept clearing the codes.
+El escáner no logra hablar con el auto. ¿Está el contacto puesto?	The scanner can't talk to the car. Is the ignition on?
+El escáner no responde	The scanner isn't responding
+El escáner cerró la conexión	The scanner closed the connection
+El Bluetooth está apagado	Bluetooth is off
+Este equipo no tiene Bluetooth	This device has no Bluetooth
+No se pudo conectar	Couldn't connect
+Motor sobrecalentado: {}	Engine overheating: {}
+Refrigerante alto: {}	Coolant high: {}
+El refrigerante sube rápido: {} °C	Coolant rising fast: {} °C
+Voltaje alto: {}	Voltage high: {}
+Voltaje bajo: {}	Voltage low: {}
+RPM muy altas: {}	RPM very high: {}
+Motor muy exigido: {}	Engine working very hard: {}
+Aire de admisión muy caliente: {}	Intake air very hot: {}
+Poco combustible: {}	Low fuel: {}
+Mezcla pobre ({}): {}	Lean mixture ({}): {}
+Mezcla rica ({}): {}	Rich mixture ({}): {}
+Aceite del motor muy caliente: {}	Engine oil very hot: {}
+Código de falla {}	Trouble code {}
+Código pendiente {}	Pending code {}
+revisa el detalle en la pantalla	check the details on the screen
+Detente en un lugar seguro y apaga el motor. No abras la tapa del radiador en caliente. Espera que enfríe y revisa el nivel de refrigerante, el electroventilador y la correa.	Stop somewhere safe and turn off the engine. Don't open the radiator cap while hot. Let it cool, then check the coolant level, the radiator fan and the belt.
+Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y, si sigue subiendo, pon la calefacción al máximo y busca dónde parar.	Ease off: use a lower gear, turn off the A/C and, if it keeps rising, set the heater to maximum and find a place to stop.
+Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y vigila que el electroventilador encienda.	Ease off: use a lower gear, turn off the A/C and check that the radiator fan turns on.
+El alternador está cargando de más y puede dañar la batería. Revísalo pronto.	The alternator is overcharging and may damage the battery. Have it checked soon.
+El alternador no está cargando bien: apaga lo que no necesites (aire, luces extra) y ve a un taller antes de que se descargue la batería. Revisa la correa.	The alternator isn't charging properly: turn off what you don't need (A/C, extra lights) and get to a garage before the battery runs flat. Check the belt.
+Baja la velocidad o usa una marcha más alta. En bajadas, frena con motor sin pasar la zona roja.	Slow down or use a higher gear. On descents, engine-brake without entering the red zone.
+El motor va al máximo hace rato. En cuestas largas usa una marcha más baja y deja descansar el motor y la caja.	The engine has been at full load for a while. On long climbs use a lower gear and let the engine and transmission rest.
+El aire que entra al motor está muy caliente: pierde potencia. Si estás detenido, avanza para que circule aire.	The air entering the engine is very hot, so it loses power. If you're stopped, move so air can flow.
+Carga combustible en la próxima estación. En la montaña puede no haber más adelante.	Refuel at the next station. In the mountains there may be none further on.
+El motor recibe menos combustible del que necesita: puede ser una fuga de vacío, el filtro de combustible o el sensor MAF. Puede perder fuerza en subidas.	The engine is getting less fuel than it needs: it could be a vacuum leak, the fuel filter or the MAF sensor. It may lose power on climbs.
+El motor recibe más combustible del necesario: revisa el filtro de aire, el sensor MAF o un inyector que gotee.	The engine is getting more fuel than it needs: check the air filter, the MAF sensor or a leaking injector.
+Baja la exigencia y revisa el nivel de aceite cuando puedas parar.	Ease off and check the oil level when you can stop.
+código	code
+códigos	codes
+Carrocería (airbag, cinturones, luces, cierre…)	Body (airbag, seat belts, lights, locks…)
+Chasis (frenos ABS, dirección, suspensión, 4x4)	Chassis (ABS brakes, steering, suspension, 4x4)
+Comunicación entre computadores del auto	Communication between the car's computers
+Motor: mezcla de aire y combustible	Engine: air and fuel mixture
+Motor: encendido y fallas de encendido	Engine: ignition and misfires
+Control de emisiones	Emission control
+Velocidad, ralentí y entradas auxiliares	Speed, idle and auxiliary inputs
+Computador del motor y sus salidas	Engine computer and its outputs
+Caja de cambios	Transmission
+Motor o caja (sistema híbrido u otro)	Engine or transmission (hybrid or other)
+código propio de la marca	manufacturer-specific code
+La API key no es válida	The API key isn't valid
+La IA está ocupada o sin saldo. Intenta más tarde.	The AI is busy or out of credit. Try again later.
+La IA no quiso responder	The AI declined to answer
+La IA respondió vacío	The AI returned an empty answer
+Luz del motor	Check engine
+Conectar	Connect
+Auto simulado	Simulated car
+Apagado	Off
+En vivo	Live
+Conecta tu escáner OBD-II	Connect your OBD-II scanner
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Si es Bluetooth, emparéjalo primero en los ajustes de Bluetooth del equipo (clave 1234 o 0000).\n3. Toca ⚙ para elegirlo y luego Conectar.\n\nStradaOS vigila la temperatura, el voltaje, la mezcla y los códigos de falla, y te avisa por voz aunque estés en otra app.	1. Plug the ELM327 scanner into the OBD port (under the steering wheel) and turn the ignition on.\n2. If it's Bluetooth, pair it first in the head unit's Bluetooth settings (PIN 1234 or 0000).\n3. Tap ⚙ to choose it, then Connect.\n\nStradaOS watches temperature, voltage, fuel mixture and trouble codes, and warns you by voice even while you use another app.
+Elegir escáner	Choose scanner
+Probar con un auto simulado	Try with a simulated car
+Alertas	Alerts
+Todo normal por ahora.	All normal for now.
+Sin monitor activo.	Monitor not running.
+Códigos de falla	Trouble codes
+El auto no tiene códigos guardados.	The car has no stored codes.
+Se revisan al conectar y cada 30 segundos.	Checked on connect and every 30 seconds.
+Pendiente	Pending
+Grave	Serious
+Leve	Minor
+Revisar	Check
+Toca para ver qué hacer	Tap to see what to do
+Borrar códigos	Clear codes
+Hace {} min	{} min ago
+Qué hacer	What to do
+Explicación de la IA	AI explanation
+Este código no está en la tabla sin conexión: suele ser un código propio de la marca. La IA puede explicarlo.	This code isn't in the offline table: it's usually a manufacturer-specific code. The AI can explain it.
+Ojo: los códigos de airbag, ABS y carrocería normalmente no se leen con OBD-II genérico; si aparece aquí es porque el auto lo reporta al computador del motor.	Note: airbag, ABS and body codes usually can't be read with generic OBD-II; if it shows here, the car reports it to the engine computer.
+Volver a preguntar a la IA	Ask the AI again
+Explicar con IA	Explain with AI
+Para que una IA explique los códigos, pon tu API key (Claude, Groq, Gemini u otra) en ⚙ → Inteligencia artificial. Las explicaciones se guardan en el equipo y después funcionan sin internet.	To have an AI explain the codes, add your API key (Claude, Groq, Gemini or another) in ⚙ → Artificial intelligence. Explanations are saved on the device and then work offline.
+Preguntando a la IA…	Asking the AI…
+No se pudo consultar la IA	Couldn't reach the AI
+Apaga el motor y deja solo el contacto puesto para borrar los códigos.	Turn off the engine and leave only the ignition on to clear the codes.
+¿Borrar los códigos de falla?	Clear the trouble codes?
+Se apaga la luz del motor y se borran los datos que usa el taller para diagnosticar. Si la falla sigue, el código volverá a aparecer. Anota los códigos antes.	The check-engine light turns off and the data the garage uses for diagnosis is erased. If the fault persists, the code will come back. Write the codes down first.
+Escáner	Scanner
+Mi vehículo (para la IA)	My vehicle (for the AI)
+Inteligencia artificial	Artificial intelligence
+Sin configurar	Not set up
+Avisos por voz	Voice alerts
+Sí	Yes
+Encender el monitor al iniciar StradaOS	Start the monitor when StradaOS starts
+Registro de la conexión	Connection log
+Ajustes del vehículo	Vehicle settings
+Tu vehículo: marca, modelo, año, motor y caja	Your vehicle: make, model, year, engine and transmission
+Ej.: Kia Sorento 2010 2.4 bencina 4x4 automático	E.g.: Kia Sorento 2010 2.4 petrol 4x4 automatic
+Escáner Wi-Fi (escribir IP y puerto)	Wi-Fi scanner (enter IP and port)
+Auto simulado (para probar)	Simulated car (for testing)
+No hay escáneres Bluetooth emparejados: emparéjalo en los ajustes del equipo	No paired Bluetooth scanners: pair it in the head unit's settings
+Elige tu escáner	Choose your scanner
+IP y puerto del escáner Wi-Fi	Wi-Fi scanner IP and port
+Escribe IP:puerto, por ejemplo 192.168.0.10:35000	Enter IP:port, for example 192.168.0.10:35000
+Proveedor	Provider
+Modelo	Model
+Dirección de la API	API address
+Borrar la API key	Delete the API key
+La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. Cada consulta la cobra tu proveedor con tu API key.	The AI only receives the code, the vehicle you entered and the engine data; never your location. Each request is billed by your provider to your API key.
+Aviso sobre	Warning above
+alerta sobre	alert above
+Aviso bajo	Warning below
+alerta bajo	alert below
+Aviso sobre ±	Warning above ±
+alerta sobre ±	alert above ±
+Con el motor en marcha debe estar entre 13,5 y 14,8 V. Con el motor apagado, 12,4 a 12,8 V es normal.	With the engine running it should be 13.5 to 14.8 V. With the engine off, 12.4 to 12.8 V is normal.
+Normal en marcha: 85 a 98 °C. También avisa si sube más de 4 °C por minuto sobre 95 °C.	Normal when running: 85 to 98 °C. It also warns if it rises more than 4 °C per minute above 95 °C.
+Cuánto corrige el computador la mezcla. Positivo = le falta combustible (fuga de aire); negativo = le sobra.	How much the computer corrects the mixture. Positive = short of fuel (air leak); negative = too much fuel.
+Solo informativo: este dato no genera alertas.	Information only: this value doesn't trigger alerts.
+Otra compatible con OpenAI	Other OpenAI-compatible
+elegir…	choose…
+Probar la IA	Test the AI
+Primero escribe la API key	Enter the API key first
+Buscando los modelos del proveedor…	Fetching the provider's models…
+recomendado	recommended
+Escribir otro…	Type another…
+Preguntando por el código de ejemplo P0711…	Asking about sample code P0711…
+La IA funciona · P0711 de ejemplo	The AI works · sample P0711
+Volver	Back
+Elige el modelo de la IA en los ajustes	Choose the AI model in the settings
+Escribe la dirección de la API en los ajustes	Enter the API address in the settings
+Escaneando	Scanning
+Escaneo terminado.	Scan finished.
+El escaneo se cortó	The scan was interrupted
+Escanear todo lo que entrega el auto	Scan everything the car provides
+Conecta el escáner con el contacto puesto (mejor con el motor en marcha) y vuelve a intentarlo.	Connect the scanner with the ignition on (ideally with the engine running) and try again.
+Pregunta al auto por cada dato estándar y por los datos propios de la marca del motor y la caja. Tarda hasta 2 minutos y mientras tanto las alertas se pausan: hazlo detenido. Solo lee, no cambia nada en el auto.	Asks the car for every standard value and for the manufacturer's own engine and transmission data. Takes up to 2 minutes and alerts pause meanwhile, so do it while stopped. It only reads; it changes nothing in the car.
+Escanear	Scan
+Guardado en	Saved to
+Lo que entrega tu auto	What your car provides
+Consumo	Fuel consumption
+calculado	calculated
+Panel	Dashboard
+Todos los datos	All data
+Datos en vivo	Live data
+Monitores de emisiones	Emission monitors
+✓ listo · ✗ aún no termina su prueba (normal después de borrar códigos o desconectar la batería).	✓ ready · ✗ test not finished yet (normal after clearing codes or disconnecting the battery).
+Fallas de encendido	Misfire
+Sistema de combustible	Fuel system
+Componentes	Components
+Catalizador	Catalyst
+Catalizador calefaccionado	Heated catalyst
+Vapores de combustible (EVAP)	Fuel vapor (EVAP)
+Aire secundario	Secondary air
+Sensores de oxígeno	Oxygen sensors
+Calefactor de sensores de oxígeno	Oxygen sensor heater
+Recirculación de gases (EGR)	Exhaust gas recirculation (EGR)
+Preguntar a la IA	Ask the AI
+Ajustar esta alerta	Adjust this alert
+Alertas a vigilar	Alerts to watch
+Subida rápida del refrigerante	Fast coolant rise
+Códigos de falla nuevos (aviso por voz)	New trouble codes (voice alert)
+aviso	warning
+alerta	alert
+bajo	low
+Vigilar	Watch
+Valores de fábrica	Factory values
+Escribe un número	Enter a number
+Datos del motor cuando se registró la falla	Engine data when the fault was recorded
+Buscar escáneres Bluetooth cercanos	Search for nearby Bluetooth scanners
+Emparejado	Paired
+emparejado	paired
+No se pudo emparejar. Prueba con la clave 1234 o 0000.	Couldn't pair. Try PIN 1234 or 0000.
+Sin el permiso de ubicación Android no deja buscar equipos Bluetooth	Without location permission Android won't allow searching for Bluetooth devices
+No se encontraron equipos. ¿Está el escáner enchufado y el contacto puesto?	No devices found. Is the scanner plugged in and the ignition on?
+Buscando… (enchufa el escáner y pon el contacto)	Searching… (plug in the scanner and turn the ignition on)
+Emparejando… si pide clave, escribe 1234 o 0000	Pairing… if asked for a PIN, enter 1234 or 0000
+Emparéjalo en los ajustes de Bluetooth del equipo	Pair it in the head unit's Bluetooth settings
+Los escáneres suelen llamarse OBDII, OBD2, V-LINK o Vgate.	Scanners are usually called OBDII, OBD2, V-LINK or Vgate.
+Buscar de nuevo	Search again
+Gráficos en vivo	Live charts
+Desliza el dedo sobre un gráfico para ver el valor de cada momento. Toca los datos de arriba para comparar hasta 3.	Slide your finger over a chart to see the value at each moment. Tap the items above to compare up to 3.
+mín	min
+máx	max
+prom	avg
+ahora	now
+hace	ago
+Esperando datos…	Waiting for data…
+Monitor apagado · toca para conectar	Monitor off · tap to connect
+monitor apagado	monitor off
+VEHÍCULO	VEHICLE
+Qué muestra cada tarjeta	What each card shows
+Música, el monitor del vehículo (temperatura, voltaje, RPM y alertas) o un gráfico en vivo	Music, the vehicle monitor (temperature, voltage, RPM and alerts) or a live chart
+Gráfico en vivo	Live chart
+Gráfico del reproductor	Player card chart
+Dato del escáner que se grafica (últimos 5 minutos)	Scanner value to chart (last 5 minutes)
+Tarjeta del centro	Center card
+El mapa, el monitor del vehículo o un gráfico en vivo. Sin el mapa, Android Auto y CarPlay se abren desde la barra de botones	The map, the vehicle monitor or a live chart. Without the map, Android Auto and CarPlay open from the button bar
+Gráfico del centro	Center card chart
+Velocidad (GPS)	Speed (GPS)
+Recuadro de la velocidad	Speed box
+La velocidad del GPS o, en grande, otro dato del escáner (por ejemplo la temperatura del refrigerante)	GPS speed or, in large type, another scanner value (for example coolant temperature)
+Esta tarjeta	This card
+Cambiar esta tarjeta…	Change this card…
+¿Qué dato graficar?	Which value to chart?
+Monitor apagado	Monitor off
+Cambiar qué muestra…	Change what it shows…
+◀  Mover a la izquierda	◀  Move left
+Mover a la derecha  ▶	Move right  ▶
+Ancho de la tarjeta…	Card width…
+Ancho de la tarjeta	Card width
+Volver al orden y tamaño de siempre	Back to the default order and size
+Ya está a la izquierda	It's already on the left
+Ya está a la derecha	It's already on the right
+Ancha	Wide
+Muy ancha	Extra wide
+✋  Ajustar con el dedo (mover y cambiar tamaño)	✋  Adjust by touch (move and resize)
+Arrastra la manija entre dos tarjetas para cambiar el ancho · arrastra una tarjeta para moverla	Drag the handle between two cards to resize · drag a card to move it
+Listo	Done
+límite	limit
+se ajusta solo	adjusts itself
+ancho	width
+VIAJE	TRIP
+ALTITUD	ALTITUDE
+APPS	APPS
+pendiente —	grade —
+normal	normal
+Mantén presionado para reiniciar el viaje o cambiar los widgets	Long-press to reset the trip or change the widgets
+Quitar este acceso	Remove this shortcut
+Acceso directo {}	Shortcut {}
+Altitud, pendiente y rumbo	Altitude, grade and heading
+Viaje (km, tiempo, consumo)	Trip (km, time, consumption)
+Dato del vehículo…	Vehicle value…
+Accesos directos (3 apps)	Shortcuts (3 apps)
+Dato del vehículo	Vehicle value
+Widget	Widget
+Reiniciar el viaje	Reset trip
+Quitar la franja	Remove the strip
+Franja de widgets	Widget strip
+¿Qué dato mostrar?	Which value to show?
+Viaje reiniciado	Trip reset
+Quitar la franja de widgets de abajo	Remove the widget strip below
+Franja de widgets debajo (altitud, viaje, apps…)	Widget strip below (altitude, trip, apps…)
+Arrastra las manijas para cambiar tamaños · arrastra una tarjeta para moverla · toca un widget para cambiarlo	Drag the handles to resize · drag a card to move it · tap a widget to change it
+Agregar franja de widgets	Add widget strip
+Agregar un widget	Add a widget
+Ajustar tamaños con el dedo	Adjust sizes by touch
+Quitar este widget	Remove this widget
+Accesos directos (apps)	Shortcuts (apps)
+MÚSICA	MUSIC
+Música (canción y controles)	Music (song and controls)
+Arrastra las manijas para cambiar tamaños · arrastra una tarjeta para moverla · toca un widget para cambiarlo · ✕ oculta una tarjeta	Drag the handles to resize · drag a card to move it · tap a widget to change it · ✕ hides a card
+Ocultar la tarjeta del vehículo	Hide the vehicle card
+Ocultar la tarjeta de música	Hide the music card
+Mostrar la tarjeta del vehículo	Show the vehicle card
+Mostrar la tarjeta de música	Show the music card
+Avance del encendido	Ignition timing
+Sonda O2 banco 1	O2 sensor bank 1
+Sonda O2 banco 1 sensor 2	O2 sensor bank 1 sensor 2
+Tiempo de marcha	Run time
+Distancia con la luz del motor	Distance with check engine light
+EGR comandada	Commanded EGR
+Arranques desde borrar códigos	Warm-ups since codes cleared
+Distancia desde borrar códigos	Distance since codes cleared
+Presión barométrica	Barometric pressure
+Catalizador banco 1	Catalyst bank 1
+Catalizador banco 1 sensor 2	Catalyst bank 1 sensor 2
+Carga absoluta	Absolute load
+Mezcla comandada	Commanded equivalence ratio
+Acelerador relativo	Relative throttle
+Acelerador B	Throttle B
+Pedal D	Pedal D
+Pedal E	Pedal E
+Acelerador comandado	Commanded throttle
+Tiempo con la luz del motor	Time with check engine light
+Tiempo desde borrar códigos	Time since codes cleared
+Mezcla O2 banco 1	O2 trim bank 1
+Mezcla O2 banco 1 sensor 2	O2 trim bank 1 sensor 2
+API key	API key
+Enviar el VIN a la IA	Send the VIN to the AI
+La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. El VIN solo se envía si lo activas aquí. Cada consulta la cobra tu proveedor con tu API key.	The AI receives only the code, the vehicle you typed and the engine data; never your location. The VIN is sent only if you enable it here. Each query is charged by your provider with your API key.
+RPM	RPM

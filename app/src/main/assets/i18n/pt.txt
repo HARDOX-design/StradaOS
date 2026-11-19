@@ -1218,3 +1218,187 @@ Temperatura exterior	Temperatura exterior
 Del sensor del carro; necesita la caja CAN	Do sensor do carro; precisa da caixa CAN
 pantalla FYT detectada: elígela en Tu vehículo → Equipo	tela FYT detectada: escolha-a em Seu veículo → Equipamento
 esta pantalla no informa las luces	esta tela não informa as luzes
+# OBD-II (PR #42, Jaacern)
+Presión del múltiple	Pressão do coletor
+Consumo del motor	Consumo do motor
+Consumo por hora	Consumo por hora
+Panel de datos	Painel de dados
+Datos del panel	Dados do painel
+Datos del motor	Dados do motor
+Cilindrada del motor	Cilindrada do motor
+Cilindrada del motor (litros)	Cilindrada do motor (litros)
+Protocolo	Protocolo
+CAN 11 bits · 500 kbps	CAN 11 bits · 500 kbps
+CAN 29 bits · 500 kbps	CAN 29 bits · 500 kbps
+CAN 11 bits · 250 kbps	CAN 11 bits · 250 kbps
+CAN 29 bits · 250 kbps	CAN 29 bits · 250 kbps
+Escribe un número entre 0,5 y 8	Digite um número entre 0,5 e 8
+Máximo 6 datos	Máximo 6 dados
+Hasta 6 datos del escáner, por ejemplo RPM, velocidad, refrigerante y consumo	Até 6 dados do scanner, por exemplo RPM, velocidade, líquido de arrefecimento e consumo
+Avance del encendido	Avanço da ignição
+Sonda O2 banco 1	Sonda O2 banco 1
+Sonda O2 banco 1 sensor 2	Sonda O2 banco 1 sensor 2
+Tiempo de marcha	Tempo de funcionamento
+Distancia con la luz del motor	Distância com a luz do motor
+EGR comandada	EGR comandada
+Arranques desde borrar códigos	Partidas desde limpar códigos
+Distancia desde borrar códigos	Distância desde limpar códigos
+Presión barométrica	Pressão barométrica
+Catalizador banco 1	Catalisador banco 1
+Catalizador banco 1 sensor 2	Catalisador banco 1 sensor 2
+Carga absoluta	Carga absoluta
+Mezcla comandada	Mistura comandada
+Acelerador relativo	Acelerador relativo
+Acelerador B	Acelerador B
+Pedal D	Pedal D
+Pedal E	Pedal E
+Acelerador comandado	Acelerador comandado
+Tiempo con la luz del motor	Tempo com a luz do motor
+Tiempo desde borrar códigos	Tempo desde limpar códigos
+Mezcla O2 banco 1	Mistura O2 banco 1
+Mezcla O2 banco 1 sensor 2	Mistura O2 banco 1 sensor 2
+ALTITUD	ALTITUDE
+API key	Chave de API
+APPS	APPS
+Accesos directos (apps)	Atalhos (apps)
+Aceite del motor	Óleo do motor
+Acelerador	Acelerador
+Agregar franja de widgets	Adicionar faixa de widgets
+Aire de admisión	Ar de admissão
+Ajustar esta alerta	Ajustar este alerta
+Ajustes del vehículo	Ajustes do veículo
+Alertas	Alertas
+Alertas a vigilar	Alertas a monitorar
+Altitud, pendiente y rumbo	Altitude, inclinação e rumo
+Apagado	Desligado
+Arrastra las manijas para cambiar tamaños · arrastra una tarjeta para moverla · toca un widget para cambiarlo · ✕ oculta una tarjeta	Arraste as alças para mudar tamanhos · arraste um cartão para movê-lo · toque em um widget para alterá-lo · ✕ oculta um cartão
+Auto simulado	Carro simulado
+Auto simulado (para probar)	Carro simulado (para testar)
+Aviso bajo	Aviso baixo
+Aviso sobre	Aviso alto
+Aviso sobre ±	Aviso alto ±
+Avisos por voz	Avisos por voz
+Baja la exigencia y revisa el nivel de aceite cuando puedas parar.	Reduza a exigência e verifique o nível de óleo quando puder parar.
+Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y vigila que el electroventilador encienda.	Reduza a exigência: use uma marcha mais baixa, desligue o ar-condicionado e verifique se o eletroventilador liga.
+Baja la velocidad o usa una marcha más alta. En bajadas, frena con motor sin pasar la zona roja.	Reduza a velocidade ou use uma marcha mais alta. Em descidas, freie com o motor sem passar da zona vermelha.
+Batería	Bateria
+Borrar códigos	Apagar códigos
+Borrar la API key	Apagar a chave de API
+Buscar de nuevo	Buscar de novo
+Buscar escáneres Bluetooth cercanos	Buscar scanners Bluetooth próximos
+Carga combustible en la próxima estación. En la montaña puede no haber más adelante.	Abasteça no próximo posto. Na serra pode não haver outro adiante.
+Carga del motor	Carga do motor
+Combustible	Combustível
+Con el motor en marcha debe estar entre 13,5 y 14,8 V. Con el motor apagado, 12,4 a 12,8 V es normal.	Com o motor em marcha deve ficar entre 13,5 e 14,8 V. Com o motor desligado, 12,4 a 12,8 V é normal.
+Conecta tu escáner OBD-II	Conecte seu scanner OBD-II
+Consumo	Consumo
+Cuánto corrige el computador la mezcla. Positivo = le falta combustible (fuga de aire); negativo = le sobra.	Quanto o computador corrige a mistura. Positivo = falta combustível (vazamento de ar); negativo = sobra.
+Códigos de falla	Códigos de falha
+Códigos de falla nuevos (aviso por voz)	Códigos de falha novos (aviso por voz)
+Dato del vehículo…	Dado do veículo…
+Datos del motor cuando se registró la falla	Dados do motor quando a falha foi registrada
+Datos en vivo	Dados ao vivo
+Desliza el dedo sobre un gráfico para ver el valor de cada momento. Toca los datos de arriba para comparar hasta 3.	Deslize o dedo sobre um gráfico para ver o valor de cada momento. Toque nos dados acima para comparar até 3.
+Dirección de la API	Endereço da API
+El Bluetooth está apagado	O Bluetooth está desligado
+El aire que entra al motor está muy caliente: pierde potencia. Si estás detenido, avanza para que circule aire.	O ar que entra no motor está muito quente: perde potência. Se estiver parado, avance para que o ar circule.
+El auto no tiene códigos guardados.	O carro não tem códigos guardados.
+El escaneo se cortó	A varredura foi interrompida
+El motor va al máximo hace rato. En cuestas largas usa una marcha más baja y deja descansar el motor y la caja.	O motor está no máximo há um tempo. Em subidas longas use uma marcha mais baixa e deixe o motor e o câmbio descansarem.
+Elegir escáner	Escolher scanner
+Elige el modelo de la IA en los ajustes	Escolha o modelo da IA nos ajustes
+Emparejado	Emparelhado
+Emparejando… si pide clave, escribe 1234 o 0000	Emparelhando… se pedir senha, digite 1234 ou 0000
+Emparéjalo en los ajustes de Bluetooth del equipo	Emparelhe-o nos ajustes de Bluetooth do aparelho
+En vivo	Ao vivo
+Encender el monitor al iniciar StradaOS	Ligar o monitor ao iniciar o StradaOS
+Enviar el VIN a la IA	Enviar o VIN para a IA
+Escaneando	Escaneando
+Escanear todo lo que entrega el auto	Escanear tudo o que o carro fornece
+Escaneo terminado.	Varredura concluída.
+Escribe IP:puerto, por ejemplo 192.168.0.10:35000	Digite IP:porta, por exemplo 192.168.0.10:35000
+Escribe la dirección de la API en los ajustes	Digite o endereço da API nos ajustes
+Escribe un número	Digite um número
+Escribir otro…	Digitar outro…
+Escáner	Scanner
+Escáner Wi-Fi (escribir IP y puerto)	Scanner Wi-Fi (digitar IP e porta)
+Escáner conectado. Vigilando el motor.	Scanner conectado. Monitorando o motor.
+Este código no está en la tabla sin conexión: suele ser un código propio de la marca. La IA puede explicarlo.	Este código não está na tabela offline: geralmente é um código próprio da marca. A IA pode explicá-lo.
+Este equipo no tiene Bluetooth	Este aparelho não tem Bluetooth
+Explicación de la IA	Explicação da IA
+Flujo de aire	Fluxo de ar
+Gráficos en vivo	Gráficos ao vivo
+Guardado en	Salvo em
+IP y puerto del escáner Wi-Fi	IP e porta do scanner Wi-Fi
+Inteligencia artificial	Inteligência artificial
+La API key no es válida	A chave de API não é válida
+La IA está ocupada o sin saldo. Intenta más tarde.	A IA está ocupada ou sem saldo. Tente mais tarde.
+La IA no quiso responder	A IA não quis responder
+La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. El VIN solo se envía si lo activas aquí. Cada consulta la cobra tu proveedor con tu API key.	A IA recebe apenas o código, o veículo que você digitou e os dados do motor; nunca sua localização. O VIN só é enviado se você o ativar aqui. Cada consulta é cobrada pelo seu provedor com sua chave de API.
+La IA respondió vacío	A IA respondeu vazio
+Listo	Pronto
+Lo que entrega tu auto	O que o seu carro fornece
+Luz del motor	Luz do motor
+Mantén presionado para reiniciar el viaje o cambiar los widgets	Mantenha pressionado para reiniciar a viagem ou mudar os widgets
+Mezcla corta	Mistura curta
+Mezcla larga	Mistura longa
+Mi vehículo (para la IA)	Meu veículo (para a IA)
+Modelo	Modelo
+Monitor apagado	Monitor desligado
+Monitor apagado · toca para conectar	Monitor desligado · toque para conectar
+Monitor del vehículo	Monitor do veículo
+Monitores de emisiones	Monitores de emissões
+MÚSICA	MÚSICA
+Música (canción y controles)	Música (canção e controles)
+No se pudo consultar la IA	Não foi possível consultar a IA
+No se pudo emparejar. Prueba con la clave 1234 o 0000.	Não foi possível emparelhar. Tente a senha 1234 ou 0000.
+Normal en marcha: 85 a 98 °C. También avisa si sube más de 4 °C por minuto sobre 95 °C.	Normal em marcha: 85 a 98 °C. Também avisa se subir mais de 4 °C por minuto acima de 95 °C.
+Ojo: los códigos de airbag, ABS y carrocería normalmente no se leen con OBD-II genérico; si aparece aquí es porque el auto lo reporta al computador del motor.	Atenção: os códigos de airbag, ABS e carroceria normalmente não são lidos com OBD-II genérico; se aparecer aqui é porque o carro o reporta ao computador do motor.
+Preguntar a la IA	Perguntar à IA
+Primero escribe la API key	Primeiro digite a chave de API
+Probar con un auto simulado	Testar com um carro simulado
+Probar la IA	Testar a IA
+Proveedor	Provedor
+Qué hacer	O que fazer
+RPM	RPM
+Registro de la conexión	Registro da conexão
+Se perdió la conexión con el escáner.	Perdeu-se a conexão com o scanner.
+Se revisan al conectar y cada 30 segundos.	São revisados ao conectar e a cada 30 segundos.
+Sin configurar	Sem configurar
+Sin el permiso de ubicación Android no deja buscar equipos Bluetooth	Sem a permissão de localização o Android não deixa buscar aparelhos Bluetooth
+Sin monitor activo.	Sem monitor ativo.
+Solo informativo: este dato no genera alertas.	Apenas informativo: este dado não gera alertas.
+Subida rápida del refrigerante	Aumento rápido do líquido de arrefecimento
+Toca para ver qué hacer	Toque para ver o que fazer
+Todo normal por ahora.	Tudo normal por enquanto.
+Tu vehículo: marca, modelo, año, motor y caja	Seu veículo: marca, modelo, ano, motor e câmbio
+VIAJE	VIAGEM
+Valores de fábrica	Valores de fábrica
+Vehículo	Veículo
+Viaje (km, tiempo, consumo)	Viagem (km, tempo, consumo)
+Vigilar	Monitorar
+Volver	Voltar
+ahora	agora
+alerta	alerta
+alerta bajo	alerta baixo
+alerta sobre	alerta alto
+alerta sobre ±	alerta alto ±
+ancho	largura
+aviso	aviso
+bajo	baixo
+calculado	calculado
+código propio de la marca	código próprio da marca
+elegir…	escolher…
+emparejado	emparelhado
+hace	há
+límite	limite
+monitor apagado	monitor desligado
+máx	máx
+mín	mín
+normal	normal
+pendiente —	pendente —
+prom	méd
+recomendado	recomendado
+revisa el detalle en la pantalla	veja o detalhe na tela
+se ajusta solo	ajusta-se sozinho
+✓ listo · ✗ aún no termina su prueba (normal después de borrar códigos o desconectar la batería).	✓ pronto · ✗ ainda não terminou seu teste (normal após apagar códigos ou desconectar a bateria).
