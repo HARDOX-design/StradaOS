@@ -6980,9 +6980,12 @@ public class Main extends Activity {
 
     // ── Equipo: marca de la pantalla (Ajustes → Tu vehículo → Equipo) ──
 
-    /** Pantalla FYT: elegida a mano o detectada (pref hw = auto | generic | fyt). */
+    /**
+     * Pantalla FYT: elegida a mano o detectada (pref hw = auto | generic | fyt).
+     * Por defecto «generic»: nada cambia hasta que el usuario elige FYT o Automático.
+     */
     private boolean fytOn() {
-        String hw = prefs.getString("hw", "auto");
+        String hw = prefs.getString("hw", "generic");
         return "fyt".equals(hw) || ("auto".equals(hw) && Fyt.detect(this));
     }
 
@@ -7813,7 +7816,7 @@ public class Main extends Activity {
         String detTxt = det ? I18n.t("Detectada:") + " FYT" + (Fyt.platform().length() > 0 ? " · " + Fyt.platform() : "")
                 : I18n.t("No se detectó una marca con funciones propias");
         segmented(eq, "Marca de la pantalla", detTxt, new String[]{"Auto", "Genérica", "FYT"},
-            Math.max(0, java.util.Arrays.asList(hws).indexOf(prefs.getString("hw", "auto"))), new IntCb() { public void on(int i) {
+            Math.max(0, java.util.Arrays.asList(hws).indexOf(prefs.getString("hw", "generic"))), new IntCb() { public void on(int i) {
                 prefs.edit().putString("hw", hws[i]).apply();
                 stopFyt(); startFyt();
                 applyThemeNow(); applyAccent(); rebuild(); showSettings(settingsCat);   // «Sistema» pasa a seguir (o no) las luces
@@ -8989,7 +8992,8 @@ public class Main extends Activity {
         compatLine(b, "Pasar a Bluetooth al dar play en el celular (en prueba)", "Pantallas Clinkway / Autochips", clwBt, clwBt ? (btAutoOn() ? "activado" : "desactivado; en algunas pantallas no detecta el play del celular") : null);
         boolean fy = fytOn();
         compatLine(b, "Tema según las luces, batería y temperatura exterior", "Pantallas FYT (com.syu.ms)", fy,
-            fy ? (Fyt.lights(this) >= 0 ? "luces detectadas" : "esta pantalla no informa las luces") : null);
+            fy ? (Fyt.lights(this) >= 0 ? "luces detectadas" : "esta pantalla no informa las luces")
+               : Fyt.detect(this) ? "pantalla FYT detectada: elígela en Tu vehículo → Equipo" : null);
         compatLine(b, "Carátula de Android Auto (Open Headunit)", "Android 4.1+ · accesibilidad", true, NotifArt.running ? "activada" : "falta activar la accesibilidad");
         compatLine(b, "Música de cualquier app (Spotify, YouTube…)", "Android 5+", SDK >= 21, SDK >= 21 ? (MediaListener.connected ? "activada" : "falta dar acceso a notificaciones") : "no disponible en " + androidName(SDK));
         compatLine(b, "Android Auto con Open Headunit", "Android 4.1+ · cable USB", true, installed(PKG_HUR) ? "Open Headunit instalado" : "falta instalar Open Headunit");

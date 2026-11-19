@@ -1195,3 +1195,4 @@ Tensión de la batería	Battery voltage
 Medida por la pantalla; no necesita la caja CAN	Measured by the head unit; doesn't need the CAN box
 Temperatura exterior	Outside temperature
 Del sensor del carro; necesita la caja CAN	From the car's sensor; needs the CAN box
+pantalla FYT detectada: elígela en Tu vehículo → Equipo	FYT screen detected: choose it in Your vehicle → Head unit

@@ -1195,3 +1195,4 @@ Tensión de la batería	Tensão da bateria
 Medida por la pantalla; no necesita la caja CAN	Medida pela tela; não precisa da caixa CAN
 Temperatura exterior	Temperatura exterior
 Del sensor del carro; necesita la caja CAN	Do sensor do carro; precisa da caixa CAN
+pantalla FYT detectada: elígela en Tu vehículo → Equipo	tela FYT detectada: escolha-a em Seu veículo → Equipamento
