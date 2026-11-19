@@ -8064,9 +8064,10 @@ public class Main extends Activity {
                 }});
         }
         LinearLayout lay = section(body, "Tarjetas");
-        segmented(lay, "Reproductor de música", "Ponlo del lado del conductor para tenerlo a la mano", new String[]{"Derecha", "Izquierda"},
-            playerLeft ? 1 : 0, new IntCb() { public void on(int i) {
-                prefs.edit().putString("player_side", i == 1 ? "left" : "right").apply(); rebuild();
+        segmented(lay, "Reproductor de música", "Ponlo del lado del conductor para tenerlo a la mano", new String[]{"Izquierda", "Derecha"},
+            playerLeft ? 0 : 1, new IntCb() { public void on(int i) {
+                // botones en el orden de la pantalla: izquierda, derecha
+                prefs.edit().putString("player_side", i == 0 ? "left" : "right").apply(); rebuild();
             }});
         toggle(lay, "Tarjeta del reproductor", "Si la ocultas, el mapa gana espacio", showPlayer, new IntCb() { public void on(int i) {
             prefs.edit().putBoolean("show_player", i == 1).apply(); rebuild();
