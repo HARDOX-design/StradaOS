@@ -482,7 +482,8 @@ class VehiclePanel extends FrameLayout implements Obd.Listener {
             if (has) {
                 float f = Math.max(0f, Math.min(1f, (s.value - s.min) / (s.max - s.min)));
                 arc.setStrokeWidth(sw);
-                arc.setColor(s.level == Obd.CRIT ? ObdDialogs.DANGER : s.level == Obd.WARN ? ObdDialogs.AMBER : Main.RED);
+                // verde = normal, ámbar = aviso, rojo = alerta (no el color de acento: rojo por defecto, se leería como peligro)
+                arc.setColor(s.level == Obd.CRIT ? ObdDialogs.DANGER : s.level == Obd.WARN ? ObdDialogs.AMBER : ObdDialogs.GOOD);
                 if (f > 0.004f) c.drawArc(box, 135, 270 * f, false, arc);
             }
             txt.setColor(has ? Main.TEXT : Main.MUTED);
