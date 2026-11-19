@@ -2685,7 +2685,7 @@ public class Main extends Activity {
         card.addView(liveMap, new FrameLayout.LayoutParams(-1, -1));
         // Aurora: esquinas redondas de verdad sobre el fondo y el mapa un poco translúcido
         if (premium && premBg != null) liveMap.setBackdrop(premBg, premBgHolder, Prem.mapAlpha(LIGHT));
-        if (premium && Prem.faro()) liveMap.setAttribution(14 * s, 70 * s);
+        if (premium && Prem.faro()) { liveMap.setAttribution(14 * s, 70 * s); liveMap.setTone(true, LIGHT); }
         // Cobalto: el mapa se difumina hasta donde empieza el reproductor (abajo, hacia las tarjetas, en vertical)
         if (premium && Prem.cob() && !mapOnly && premBg != null) liveMap.setFade(vertical ? 2 : 1, (vertical ? 150 : Math.max(260, mapW * 0.5f)) * s);
         liveMap.setVisibility(premium && Prem.faro() ? View.VISIBLE : View.INVISIBLE);

@@ -127,6 +127,23 @@ public class LiveMapView extends View {
     private final android.graphics.Matrix backM = new android.graphics.Matrix();
     private final int[] locA = new int[2], locB = new int[2];
 
+    // Tema Faro (2.25): el mapa en el tono del tema. Mismas teselas que Cobalto, con menos color (gris azulado en
+    // oscuro, suave en claro). Es un filtro de color al dibujar (la GPU lo hace gratis); el tráfico conserva sus colores.
+    private final Paint tileTone = new Paint(Paint.FILTER_BITMAP_FLAG);
+    private boolean toned;
+    void setTone(boolean on, boolean light) {
+        toned = on;
+        if (on) {
+            android.graphics.ColorMatrix m = new android.graphics.ColorMatrix();
+            m.setSaturation(light ? 0.22f : 0.18f);
+            android.graphics.ColorMatrix t = new android.graphics.ColorMatrix();
+            if (light) t.setScale(0.98f, 0.99f, 1.03f, 1f); else t.setScale(0.92f, 0.98f, 1.12f, 1f);
+            m.postConcat(t);
+            tileTone.setColorFilter(new android.graphics.ColorMatrixColorFilter(m));
+        }
+        invalidate();
+    }
+
     // Tema Faro (2.25): dónde va la atribución de OSM (px; alineada a la izquierda), si no se navega.
     private float attrX = -1, attrY = -1;
     void setAttribution(float x, float y) { attrX = x; attrY = y; invalidate(); }
@@ -436,7 +453,9 @@ public class LiveMapView extends View {
                     Bitmap b = get(zoom, wx, ty, fromFile ? L_FILE : L_BASE);
                     if (b != null) {
                         tile.setFilterBitmap(rot || b.getWidth() != dst.width());
-                        c.drawBitmap(b, null, dst, tile);
+                        Paint tp = tile;
+                        if (toned) { tileTone.setAlpha(tile.getAlpha()); tileTone.setFilterBitmap(tile.isFilterBitmap()); tp = tileTone; }
+                        c.drawBitmap(b, null, dst, tp);
                         if (trTpl != null && zoom >= 11) {
                             Bitmap tr = getTraffic(zoom, wx, ty, trPv);
                             if (tr != null) c.drawBitmap(tr, null, dst, tile);
@@ -444,7 +463,7 @@ public class LiveMapView extends View {
                         if (fromFile) anyFile = true;
                         else if (LABELS[provider] != null) {
                             Bitmap l = get(zoom, wx, ty, L_LABELS);
-                            if (l != null) c.drawBitmap(l, null, dst, tile);
+                            if (l != null) c.drawBitmap(l, null, dst, toned ? tileTone : tile);
                         }
                     } else {
                         c.drawLine(dst.left, dst.top, dst.right, dst.top, grid);
