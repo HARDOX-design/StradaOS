@@ -74,6 +74,7 @@ public class Diag {
         try {
             bw = new PrintWriter(new FileOutputStream(new File(out, "bluetooth.txt")));
             bw.println("App Bluetooth Clinkway: " + (BtBridge.available(c) ? "sí" : "no") + " · activaciones: " + BtBridge.activations);
+            bw.println("Pantalla FYT: " + (Fyt.detect(c) ? "sí (plataforma " + Fyt.platform() + ")" : "no") + " · luces (car_mode): " + Fyt.lights(c));
             bw.println();
             bw.println("Servicios corriendo ahora (haz el diagnóstico con el celular sonando por Bluetooth):");
             android.app.ActivityManager am = (android.app.ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);

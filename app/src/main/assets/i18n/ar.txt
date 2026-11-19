@@ -1178,3 +1178,43 @@ Para mostrar la canción, el artista y la carátula de Spotify, YouTube Music y 
 No volver a mostrar	عدم الإظهار مرة أخرى
 Esta pantalla no tiene el ajuste de «Acceso a notificaciones». Se puede activar una sola vez desde una computadora con ADB:	هذه الشاشة لا تحتوي على إعداد «الوصول إلى الإشعارات». يمكن تفعيله مرة واحدة من كمبيوتر باستخدام ADB:
 Spotify, YouTube Music y otras apps de la pantalla (acceso a notificaciones)	Spotify وYouTube Music وتطبيقات أخرى على الشاشة (الوصول إلى الإشعارات)
+# Pantallas FYT: tema según las luces, espera para cambiar de tema y datos del carro
+Encendidas	مضاءة
+Apagadas	مطفأة
+Espera para pasar a oscuro	مهلة قبل التحويل إلى الداكن
+Cuánto debe durar el cambio (luces encendidas, poco brillo…) antes de oscurecer	المدة التي يجب أن يستمر فيها التغيير (الأضواء مضاءة، سطوع منخفض…) قبل التحويل إلى الداكن
+Espera para pasar a claro	مهلة قبل التحويل إلى الفاتح
+Útil si al apagar el carro de noche se apagan las luces y la pantalla pasa a claro de golpe	مفيد إذا انطفأت الأضواء عند إطفاء السيارة ليلاً وتحولت الشاشة فجأة إلى الفاتح
+Sin espera	بدون مهلة
+Marca de la pantalla	علامة الشاشة
+Genérica	عامة
+Detectada:	تم الكشف:
+No se detectó una marca con funciones propias	لم يتم الكشف عن علامة لها وظائف خاصة
+Datos del carro	بيانات السيارة
+Lectura actual	القراءة الحالية
+Servicio com.syu.ms:	خدمة com.syu.ms:
+sin caja CAN	بدون صندوق CAN
+Esperando datos	في انتظار البيانات
+Luces del carro	أضواء السيارة
+Sin datos	لا توجد بيانات
+sin conectar	غير متصل
+conectando	جارٍ الاتصال
+conectado	متصل
+desconectado	انقطع الاتصال
+no se encontró com.syu.ms	لم يتم العثور على com.syu.ms
+com.syu.ms no respondió	لم يستجب com.syu.ms
+com.syu.ms se reinició	أُعيد تشغيل com.syu.ms
+Tema según las luces, batería y temperatura exterior	السمة حسب الأضواء، والبطارية ودرجة الحرارة الخارجية
+Pantallas FYT (com.syu.ms)	شاشات FYT (com.syu.ms)
+luces detectadas	تم الكشف عن الأضواء
+Auto: por horario. Sistema: sigue las luces del carro (pantalla FYT)	تلقائي: حسب الجدول. النظام: يتبع أضواء السيارة (شاشة FYT)
+Espera para cambiar de tema	مهلة لتغيير السمة
+Evita cambios de golpe, p. ej. al apagar el carro de noche	يتجنب التغييرات المفاجئة، مثلاً عند إطفاء السيارة ليلاً
+Para seguirlas, elige Apariencia → Tema → Modo → Sistema	لاتباعها، اختر المظهر ← السمة ← الوضع ← النظام
+Elige qué datos del carro se ven arriba, junto al Wi-Fi	اختر بيانات السيارة التي تظهر في الأعلى بجانب Wi-Fi
+Tensión de la batería	جهد البطارية
+Medida por la pantalla; no necesita la caja CAN	تقيسه الشاشة؛ لا يحتاج إلى صندوق CAN
+Temperatura exterior	درجة الحرارة الخارجية
+Del sensor del carro; necesita la caja CAN	من حساس السيارة؛ يحتاج إلى صندوق CAN
+pantalla FYT detectada: elígela en Tu vehículo → Equipo	تم الكشف عن شاشة FYT: اخترها في مركبتك ← جهاز السيارة
+esta pantalla no informa las luces	هذه الشاشة لا تُبلغ عن الأضواء

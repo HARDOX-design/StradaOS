@@ -1178,3 +1178,43 @@ Para mostrar la canción, el artista y la carátula de Spotify, YouTube Music y 
 No volver a mostrar	Ne plus afficher
 Esta pantalla no tiene el ajuste de «Acceso a notificaciones». Se puede activar una sola vez desde una computadora con ADB:	Cet écran n'a pas le réglage « Accès aux notifications ». On peut l'activer une seule fois depuis un ordinateur avec ADB :
 Spotify, YouTube Music y otras apps de la pantalla (acceso a notificaciones)	Spotify, YouTube Music et autres applis de l'écran (accès aux notifications)
+# Pantallas FYT: tema según las luces, espera para cambiar de tema y datos del carro
+Encendidas	Allumés
+Apagadas	Éteints
+Espera para pasar a oscuro	Délai avant de passer en sombre
+Cuánto debe durar el cambio (luces encendidas, poco brillo…) antes de oscurecer	Durée pendant laquelle le changement (feux allumés, faible luminosité…) doit durer avant de passer en sombre
+Espera para pasar a claro	Délai avant de passer en clair
+Útil si al apagar el carro de noche se apagan las luces y la pantalla pasa a claro de golpe	Utile si, en éteignant la voiture la nuit, les feux s'éteignent et l'écran passe brusquement en clair
+Sin espera	Aucun délai
+Marca de la pantalla	Marque de l'autoradio
+Genérica	Générique
+Detectada:	Détectée :
+No se detectó una marca con funciones propias	Aucune marque avec des fonctions propres n'a été détectée
+Datos del carro	Données de la voiture
+Lectura actual	Lecture actuelle
+Servicio com.syu.ms:	Service com.syu.ms :
+sin caja CAN	sans boîtier CAN
+Esperando datos	En attente de données
+Luces del carro	Feux de la voiture
+Sin datos	Aucune donnée
+sin conectar	non connecté
+conectando	connexion…
+conectado	connecté
+desconectado	déconnecté
+no se encontró com.syu.ms	com.syu.ms introuvable
+com.syu.ms no respondió	com.syu.ms n'a pas répondu
+com.syu.ms se reinició	com.syu.ms a redémarré
+Tema según las luces, batería y temperatura exterior	Thème selon les feux, batterie et température extérieure
+Pantallas FYT (com.syu.ms)	Autoradios FYT (com.syu.ms)
+luces detectadas	feux détectés
+Auto: por horario. Sistema: sigue las luces del carro (pantalla FYT)	Auto : selon l'horaire. Système : suit les feux de la voiture (autoradio FYT)
+Espera para cambiar de tema	Délai de changement de thème
+Evita cambios de golpe, p. ej. al apagar el carro de noche	Évite les changements brusques, p. ex. en éteignant la voiture la nuit
+Para seguirlas, elige Apariencia → Tema → Modo → Sistema	Pour les suivre, choisissez Apparence → Thème → Mode → Système
+Elige qué datos del carro se ven arriba, junto al Wi-Fi	Choisissez les données de la voiture affichées en haut, à côté du Wi-Fi
+Tensión de la batería	Tension de la batterie
+Medida por la pantalla; no necesita la caja CAN	Mesurée par l'autoradio ; pas besoin du boîtier CAN
+Temperatura exterior	Température extérieure
+Del sensor del carro; necesita la caja CAN	Du capteur de la voiture ; nécessite le boîtier CAN
+pantalla FYT detectada: elígela en Tu vehículo → Equipo	autoradio FYT détecté : choisissez-le dans Votre véhicule → Autoradio
+esta pantalla no informa las luces	cet autoradio ne signale pas les feux

@@ -1178,3 +1178,43 @@ Para mostrar la canción, el artista y la carátula de Spotify, YouTube Music y 
 No volver a mostrar	不再显示
 Esta pantalla no tiene el ajuste de «Acceso a notificaciones». Se puede activar una sola vez desde una computadora con ADB:	此屏幕没有“通知使用权”设置。可以用装有 ADB 的电脑开启一次：
 Spotify, YouTube Music y otras apps de la pantalla (acceso a notificaciones)	屏幕上的 Spotify、YouTube Music 和其他应用（通知使用权）
+# Pantallas FYT: tema según las luces, espera para cambiar de tema y datos del carro
+Encendidas	开启
+Apagadas	关闭
+Espera para pasar a oscuro	切换到深色前的等待
+Cuánto debe durar el cambio (luces encendidas, poco brillo…) antes de oscurecer	变化（车灯开启、亮度降低……）需持续多久才切换到深色
+Espera para pasar a claro	切换到浅色前的等待
+Útil si al apagar el carro de noche se apagan las luces y la pantalla pasa a claro de golpe	适用于夜间熄火时车灯熄灭、屏幕突然变成浅色的情况
+Sin espera	不等待
+Marca de la pantalla	屏幕品牌
+Genérica	通用
+Detectada:	已检测到：
+No se detectó una marca con funciones propias	未检测到具有专属功能的品牌
+Datos del carro	车辆数据
+Lectura actual	当前读数
+Servicio com.syu.ms:	com.syu.ms 服务：
+sin caja CAN	无 CAN 盒
+Esperando datos	等待数据
+Luces del carro	车灯
+Sin datos	无数据
+sin conectar	未连接
+conectando	正在连接
+conectado	已连接
+desconectado	已断开
+no se encontró com.syu.ms	未找到 com.syu.ms
+com.syu.ms no respondió	com.syu.ms 无响应
+com.syu.ms se reinició	com.syu.ms 已重启
+Tema según las luces, batería y temperatura exterior	随车灯切换主题、电瓶电压和车外温度
+Pantallas FYT (com.syu.ms)	FYT 屏幕 (com.syu.ms)
+luces detectadas	已检测到车灯
+Auto: por horario. Sistema: sigue las luces del carro (pantalla FYT)	自动：按时间表。系统：跟随车灯（FYT 屏幕）
+Espera para cambiar de tema	主题切换等待
+Evita cambios de golpe, p. ej. al apagar el carro de noche	避免突然切换，例如夜间熄火时
+Para seguirlas, elige Apariencia → Tema → Modo → Sistema	如需跟随，请选择 外观 → 主题 → 模式 → 系统
+Elige qué datos del carro se ven arriba, junto al Wi-Fi	选择在顶部 Wi-Fi 旁显示哪些车辆数据
+Tensión de la batería	电瓶电压
+Medida por la pantalla; no necesita la caja CAN	由屏幕测量；无需 CAN 盒
+Temperatura exterior	车外温度
+Del sensor del carro; necesita la caja CAN	来自车辆传感器；需要 CAN 盒
+pantalla FYT detectada: elígela en Tu vehículo → Equipo	检测到 FYT 屏幕：请在 你的车辆 → 车机 中选择
+esta pantalla no informa las luces	此屏幕不提供车灯信息

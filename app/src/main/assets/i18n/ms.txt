@@ -1178,3 +1178,43 @@ Para mostrar la canción, el artista y la carátula de Spotify, YouTube Music y 
 No volver a mostrar	Jangan tunjukkan lagi
 Esta pantalla no tiene el ajuste de «Acceso a notificaciones». Se puede activar una sola vez desde una computadora con ADB:	Skrin ini tiada tetapan «Akses pemberitahuan». Anda boleh mengaktifkannya sekali sahaja dari komputer dengan ADB:
 Spotify, YouTube Music y otras apps de la pantalla (acceso a notificaciones)	Spotify, YouTube Music dan aplikasi lain pada skrin (akses pemberitahuan)
+# Pantallas FYT: tema según las luces, espera para cambiar de tema y datos del carro
+Encendidas	Hidup
+Apagadas	Mati
+Espera para pasar a oscuro	Tunda sebelum bertukar ke gelap
+Cuánto debe durar el cambio (luces encendidas, poco brillo…) antes de oscurecer	Berapa lama perubahan (lampu hidup, kecerahan rendah…) mesti kekal sebelum menjadi gelap
+Espera para pasar a claro	Tunda sebelum bertukar ke cerah
+Útil si al apagar el carro de noche se apagan las luces y la pantalla pasa a claro de golpe	Berguna jika lampu terpadam ketika kereta dimatikan pada waktu malam dan skrin tiba-tiba menjadi cerah
+Sin espera	Tiada tunda
+Marca de la pantalla	Jenama skrin
+Genérica	Generik
+Detectada:	Dikesan:
+No se detectó una marca con funciones propias	Tiada jenama dengan fungsi tersendiri dikesan
+Datos del carro	Data kereta
+Lectura actual	Bacaan semasa
+Servicio com.syu.ms:	Perkhidmatan com.syu.ms:
+sin caja CAN	tiada kotak CAN
+Esperando datos	Menunggu data
+Luces del carro	Lampu kereta
+Sin datos	Tiada data
+sin conectar	tidak disambung
+conectando	menyambung
+conectado	disambung
+desconectado	terputus
+no se encontró com.syu.ms	com.syu.ms tidak ditemui
+com.syu.ms no respondió	com.syu.ms tidak bertindak balas
+com.syu.ms se reinició	com.syu.ms dimulakan semula
+Tema según las luces, batería y temperatura exterior	Tema ikut lampu, bateri dan suhu luar
+Pantallas FYT (com.syu.ms)	Skrin FYT (com.syu.ms)
+luces detectadas	lampu dikesan
+Auto: por horario. Sistema: sigue las luces del carro (pantalla FYT)	Auto: ikut jadual. Sistem: ikut lampu kereta (skrin FYT)
+Espera para cambiar de tema	Tunda pertukaran tema
+Evita cambios de golpe, p. ej. al apagar el carro de noche	Elak perubahan mendadak, cth. ketika mematikan kereta pada waktu malam
+Para seguirlas, elige Apariencia → Tema → Modo → Sistema	Untuk mengikutinya, pilih Penampilan → Tema → Mod → Sistem
+Elige qué datos del carro se ven arriba, junto al Wi-Fi	Pilih data kereta yang dipaparkan di atas, di sebelah Wi-Fi
+Tensión de la batería	Voltan bateri
+Medida por la pantalla; no necesita la caja CAN	Diukur oleh skrin; tidak perlu kotak CAN
+Temperatura exterior	Suhu luar
+Del sensor del carro; necesita la caja CAN	Daripada sensor kereta; perlu kotak CAN
+pantalla FYT detectada: elígela en Tu vehículo → Equipo	skrin FYT dikesan: pilihnya dalam Kenderaan anda → Unit utama
+esta pantalla no informa las luces	skrin ini tidak melaporkan lampu

@@ -1178,3 +1178,43 @@ Para mostrar la canción, el artista y la carátula de Spotify, YouTube Music y 
 No volver a mostrar	Bir daha gösterme
 Esta pantalla no tiene el ajuste de «Acceso a notificaciones». Se puede activar una sola vez desde una computadora con ADB:	Bu ekranda «Bildirim erişimi» ayarı yok. ADB'li bir bilgisayardan bir kez açılabilir:
 Spotify, YouTube Music y otras apps de la pantalla (acceso a notificaciones)	Ekrandaki Spotify, YouTube Music ve diğer uygulamalar (bildirim erişimi)
+# Pantallas FYT: tema según las luces, espera para cambiar de tema y datos del carro
+Encendidas	Açık
+Apagadas	Kapalı
+Espera para pasar a oscuro	Koyuya geçmeden önce bekleme
+Cuánto debe durar el cambio (luces encendidas, poco brillo…) antes de oscurecer	Koyulaşmadan önce değişikliğin (farlar açık, düşük parlaklık…) ne kadar sürmesi gerektiği
+Espera para pasar a claro	Açığa geçmeden önce bekleme
+Útil si al apagar el carro de noche se apagan las luces y la pantalla pasa a claro de golpe	Gece arabayı kapatınca farlar sönüp ekran birden açık temaya geçiyorsa işe yarar
+Sin espera	Beklemesiz
+Marca de la pantalla	Ekran markası
+Genérica	Genel
+Detectada:	Algılandı:
+No se detectó una marca con funciones propias	Kendi işlevleri olan bir marka algılanmadı
+Datos del carro	Araç verileri
+Lectura actual	Güncel okuma
+Servicio com.syu.ms:	com.syu.ms hizmeti:
+sin caja CAN	CAN kutusu yok
+Esperando datos	Veri bekleniyor
+Luces del carro	Araç farları
+Sin datos	Veri yok
+sin conectar	bağlı değil
+conectando	bağlanıyor
+conectado	bağlı
+desconectado	bağlantı kesildi
+no se encontró com.syu.ms	com.syu.ms bulunamadı
+com.syu.ms no respondió	com.syu.ms yanıt vermedi
+com.syu.ms se reinició	com.syu.ms yeniden başladı
+Tema según las luces, batería y temperatura exterior	Farlara göre tema, akü ve dış sıcaklık
+Pantallas FYT (com.syu.ms)	FYT ekranlar (com.syu.ms)
+luces detectadas	farlar algılandı
+Auto: por horario. Sistema: sigue las luces del carro (pantalla FYT)	Otomatik: zamanlamaya göre. Sistem: araç farlarını izler (FYT ekran)
+Espera para cambiar de tema	Tema değişiminde bekleme
+Evita cambios de golpe, p. ej. al apagar el carro de noche	Ani değişiklikleri önler, ör. gece arabayı kapatırken
+Para seguirlas, elige Apariencia → Tema → Modo → Sistema	İzlemek için Görünüm → Tema → Mod → Sistem seçin
+Elige qué datos del carro se ven arriba, junto al Wi-Fi	Üstte, Wi-Fi'nin yanında hangi araç verilerinin görüneceğini seçin
+Tensión de la batería	Akü voltajı
+Medida por la pantalla; no necesita la caja CAN	Ekran ölçer; CAN kutusu gerekmez
+Temperatura exterior	Dış sıcaklık
+Del sensor del carro; necesita la caja CAN	Araç sensöründen; CAN kutusu gerekir
+pantalla FYT detectada: elígela en Tu vehículo → Equipo	FYT ekran algılandı: Aracınız → Ünite bölümünden seçin
+esta pantalla no informa las luces	bu ekran far bilgisini vermiyor

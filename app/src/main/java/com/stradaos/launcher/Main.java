@@ -244,6 +244,10 @@ public class Main extends Activity {
             getContentResolver().registerContentObserver(
                 android.provider.Settings.System.getUriFor(android.provider.Settings.System.SCREEN_BRIGHTNESS), false, brightObs);
         } catch (Throwable ignored) { }
+        try {
+            getContentResolver().registerContentObserver(android.provider.Settings.System.getUriFor(Fyt.CAR_MODE), false, lightsObs);
+        } catch (Throwable ignored) { }
+        startFyt();
         IntentFilter t = new IntentFilter(Intent.ACTION_TIME_TICK);
         t.addAction(Intent.ACTION_TIME_CHANGED);
         t.addAction(Intent.ACTION_TIMEZONE_CHANGED);
@@ -436,6 +440,9 @@ public class Main extends Activity {
     @Override
     protected void onDestroy() {
         try { getContentResolver().unregisterContentObserver(brightObs); } catch (Throwable ignored) { }
+        try { getContentResolver().unregisterContentObserver(lightsObs); } catch (Throwable ignored) { }
+        h.removeCallbacks(themeRecheck);
+        stopFyt();
         try { unregisterReceiver(screenReceiver); } catch (Throwable ignored) { }
         try { prefs.unregisterOnSharedPreferenceChangeListener(backupWatch); } catch (Throwable ignored) { }
         try { unregisterReceiver(pkgReceiver); } catch (Exception ignored) { }
@@ -656,7 +663,7 @@ public class Main extends Activity {
     /**
      * Solo en la versión de prueba (paquete .debug): permite que las pruebas automáticas abran cada pantalla
      * sin tocar coordenadas. adb shell am start -n com.stradaos.launcher.debug/com.stradaos.launcher.Main --es prueba VALOR
-     * VALOR: saltar (omite el asistente), inicio, ajustes:N, boton:N (menú del botón N), elegir:N (lista de apps del botón N),
+     * VALOR: saltar (omite el asistente), inicio, ajustes:N, fyt-demo:139,1170 (datos del carro de prueba), boton:N (menú del botón N), elegir:N (lista de apps del botón N),
      * cajon (todas las apps), musica (lista de música preferida), asistente, demo-barra (cambia los botones 3 y 4), idioma:es|en|pt|auto,
      * ultimo-aceite / ultimo-alto / unidad-aceite (recordatorio de aceite), ocultas / ocultar-demo / ocultar-limpiar (apps ocultas),
      * salir-fabrica (abre el launcher de fábrica), desactivar (apaga StradaOS; solo lo usa salida.yml),
@@ -741,7 +748,7 @@ public class Main extends Activity {
                 }
                 else if ("tema:claro".equals(v) || "tema:oscuro".equals(v) || "tema:sistema".equals(v)) {
                     prefs.edit().putString("theme", "tema:claro".equals(v) ? "light" : "tema:sistema".equals(v) ? "system" : "dark").apply();
-                    applyTheme(); applyAccent(); rebuild();
+                    applyThemeNow(); applyAccent(); rebuild();
                 }
                 else if ("nav-buscar".equals(v)) openNavSearch();
                 else if ("nav-salir".equals(v)) stopInternalNav();
@@ -799,6 +806,15 @@ public class Main extends Activity {
                     stylePreviewFor = vertical;
                     showSettings(C_STYLE);
                 }
+                else if (v.startsWith("fyt-demo:")) {
+                    // fyt-demo:139,1170 = 13,9 V y 17 °C, como si llegaran de com.syu.ms (con «Datos del carro» activado)
+                    String[] a = v.substring(9).split(",");
+                    if (fyt != null) {
+                        fyt.voltDeci = Integer.parseInt(a[0].trim());
+                        if (a.length > 1) fyt.tempDeci = Integer.parseInt(a[1].trim()) - 1000;
+                        updateCarData();
+                    }
+                }
                 else if ("reposo".equals(v)) h.postDelayed(new Runnable() { public void run() { showIdle(); } }, 1500);
                 else if (v.startsWith("pref:") && v.indexOf('=') > 5) {
                     // pref:clave=valor (true/false, número o texto); «pref:clave=» la borra
@@ -809,7 +825,8 @@ public class Main extends Activity {
                     else if (val.matches("-?\\d{1,9}")) e.putInt(k, Integer.parseInt(val));
                     else e.putString(k, val);
                     e.apply();
-                    applyTheme(); applyAccent(); rebuild();
+                    if (k.startsWith("fyt_data") || "hw".equals(k)) { stopFyt(); startFyt(); }
+                    applyThemeNow(); applyAccent(); rebuild();
                 }
                 else if (v.startsWith("diseno:")) {
                     // diseno:izq|der|sinauto|conauto|normal|compacta|lateral|base  (base = como viene)
@@ -1511,6 +1528,7 @@ public class Main extends Activity {
         // Íconos de Wi-Fi y Bluetooth (2.17, Reinaldo y Daniel): ver si están activos sin abrir los ajustes
         wifiIc = null;
         btIc = null;
+        addCarData(right);
         if (prefs.getBoolean("status_icons", true)) {
             LinearLayout st = new LinearLayout(this);
             st.setGravity(Gravity.CENTER_VERTICAL);
@@ -4029,7 +4047,7 @@ public class Main extends Activity {
     }
 
     private void buildPremium() {
-        carCard = null; mapGauge = null; mapGaugeBox = null; carGauge = null; chipTv = null;
+        carCard = null; mapGauge = null; mapGaugeBox = null; carGauge = null; chipTv = null; carDataTv = null;
         faroGauge = null; faroBar = null; faroWxIc = null; faroMaintBox = null; faroPillTv = null;
         if (Prem.faro()) { buildFaro(); setGps(false, 0); return; }
         buildPremiumTop();
@@ -4439,6 +4457,7 @@ public class Main extends Activity {
         right.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         wifiIc = null;
         btIc = null;
+        addCarData(right);
         if (prefs.getBoolean("status_icons", true)) {
             LinearLayout st = new LinearLayout(this);
             st.setGravity(Gravity.CENTER_VERTICAL);
@@ -4976,6 +4995,7 @@ public class Main extends Activity {
         right.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         wifiIc = null;
         btIc = null;
+        addCarData(right);
         if (prefs.getBoolean("status_icons", true)) {
             LinearLayout st = new LinearLayout(this);
             st.setGravity(Gravity.CENTER_VERTICAL);
@@ -7585,9 +7605,7 @@ public class Main extends Activity {
 
     private void applyTheme() {
         String mode = prefs.getString("theme", "dark");
-        LIGHT = "light".equals(mode)
-                || ("auto".equals(mode) && !darkHours())
-                || ("system".equals(mode) && !systemNight());
+        LIGHT = !themeDark(mode);
         if (LIGHT) {
             BG = 0xFFE9ECF1; CARD = 0xFFFFFFFF; INNER = 0xFFF1F3F7; BTN = 0xFFE2E6EC; DOCK = 0xFFDDE1E8;
             TEXT = 0xFF14161B; MUTED = 0xFF6B7280; SOFT = 0xFF3A404C; CIRCLE = 0xFFFFFFFF; ICON = 0xFF2B303A;
@@ -7595,6 +7613,150 @@ public class Main extends Activity {
             BG = 0xFF15171C; CARD = 0xFF1E2128; INNER = 0xFF262A33; BTN = 0xFF2A2E37; DOCK = 0xFF0D0E11;
             TEXT = 0xFFF2F3F5; MUTED = 0xFF8B9099; SOFT = 0xFFC5C8CE; CIRCLE = 0xFF23262E; ICON = 0xFFFFFFFF;
         }
+    }
+
+    // ── Espera antes de cambiar de tema (Auto, Sistema y Luces) ──
+    // Caso típico: de noche, al apagar el carro se apagan las luces y la pantalla pasaba a claro de golpe.
+    // Cada sentido tiene su espera (por defecto 0 = como siempre). El tema que se ve se guarda en theme_last_dark,
+    // así que al encender de nuevo la pantalla arranca con el último tema y la espera también se respeta.
+    static final int[] THEME_DELAYS = {0, 1, 2, 3, 4, 5};
+    static final String[] THEME_DELAY_LBL = {"Sin espera", "1 s", "2 s", "3 s", "4 s", "5 s"};
+    private Boolean themeShown, themeWant;
+    private long themeWantAt;
+    private boolean themeForce;
+
+    /** Lo que pide el modo elegido, sin espera: true = oscuro. */
+    private boolean themeWanted(String mode) {
+        if ("dark".equals(mode)) return true;
+        if ("light".equals(mode)) return false;
+        if ("system".equals(mode)) return systemNight();
+        return darkHours();   // auto
+    }
+
+    /** Espera activada (Apariencia → Tema → «Espera para cambiar de tema»); apagada por defecto. */
+    private boolean themeDelayOn() { return prefs.getBoolean("theme_delay_on", false); }
+
+    /** ¿Oscuro? Aplica la espera elegida para cada sentido; los modos Oscuro y Claro cambian al instante. */
+    private boolean themeDark(String mode) {
+        boolean want = themeWanted(mode);
+        boolean manual = "dark".equals(mode) || "light".equals(mode);
+        int dDark = Math.min(5, prefs.getInt("theme_delay_dark", 0)), dLight = Math.min(5, prefs.getInt("theme_delay_light", 0));
+        if (manual || themeForce || !themeDelayOn() || (dDark <= 0 && dLight <= 0)) { themeForce = false; return themeSettle(want); }
+        if (themeShown == null) themeShown = prefs.getBoolean("theme_last_dark", want);   // al arrancar: el último tema
+        if (want == themeShown) {
+            themeWant = null;
+            h.removeCallbacks(themeRecheck);
+            return want;
+        }
+        long now = SystemClock.elapsedRealtime();
+        if (themeWant == null || themeWant != want) { themeWant = want; themeWantAt = now; }
+        long left = themeWantAt + (want ? dDark : dLight) * 1000L - now;
+        if (left <= 0) return themeSettle(want);
+        h.removeCallbacks(themeRecheck);
+        h.postDelayed(themeRecheck, left + 100);
+        return themeShown;
+    }
+
+    private boolean themeSettle(boolean dark) {
+        themeShown = dark;
+        themeWant = null;
+        h.removeCallbacks(themeRecheck);
+        if (prefs.getBoolean("theme_last_dark", !dark) != dark) prefs.edit().putBoolean("theme_last_dark", dark).apply();
+        return dark;
+    }
+
+    /** Cambio pedido por el usuario (modo, horario…): se aplica ya, sin espera. */
+    private void applyThemeNow() {
+        themeForce = true;
+        applyTheme();
+    }
+
+    private final Runnable themeRecheck = new Runnable() { public void run() {
+        try {
+            if (root == null) return;
+            boolean was = LIGHT;
+            applyTheme();
+            if (was != LIGHT) { applyAccent(); rebuild(); }
+        } catch (Throwable e) { Guard.log("Tema con espera: " + e); }
+    }};
+
+    // ── Modo «Sistema» en pantallas FYT: sigue las luces (Settings.System car_mode = 1 con las luces encendidas) ──
+    // En estas pantallas el modo oscuro de Android está bloqueado (mNightModeLocked), así que uiMode nunca cambia.
+
+    /** Luces del carro si la pantalla es FYT y las informa: 1 encendidas, 0 apagadas; -1 si no (se usa uiMode). */
+    private int fytLights() { return fytOn() ? Fyt.lights(this) : -1; }
+
+    /** Encendieron o apagaron las luces: en el modo «Sistema» de una FYT se revisa el tema (con la espera elegida). */
+    private final android.database.ContentObserver lightsObs = new android.database.ContentObserver(new Handler(android.os.Looper.getMainLooper())) {
+        @Override public void onChange(boolean selfChange) {
+            try {
+                if (prefs == null || root == null || !"system".equals(prefs.getString("theme", "dark")) || !fytOn()) return;
+                h.removeCallbacks(brightApply);
+                h.postDelayed(brightApply, 300);
+            } catch (Throwable ignored) { }
+        }
+    };
+
+    // ── Equipo: marca de la pantalla (Ajustes → Tu vehículo → Equipo) ──
+
+    /**
+     * Pantalla FYT: elegida a mano o detectada (pref hw = auto | generic | fyt).
+     * Por defecto «generic»: nada cambia hasta que el usuario elige FYT o Automático.
+     */
+    private boolean fytOn() {
+        String hw = prefs.getString("hw", "generic");
+        return "fyt".equals(hw) || ("auto".equals(hw) && Fyt.detect(this));
+    }
+
+    private Fyt fyt;
+    private TextView carDataTv;
+
+    /** Datos del carro de la FYT (batería y temperatura exterior): solo con la opción activada. */
+    private void startFyt() {
+        if (fyt != null || !fytOn() || !prefs.getBoolean("fyt_data", false)) return;
+        try {
+            fyt = new Fyt(this, new Fyt.Listener() { public void onCarData() { updateCarData(); } });
+            fyt.start();
+        } catch (Throwable e) { Guard.log("FYT: " + e); fyt = null; }
+    }
+
+    private void stopFyt() {
+        if (fyt != null) try { fyt.stop(); } catch (Throwable ignored) { }
+        fyt = null;
+        updateCarData();
+    }
+
+    /** Datos del carro en la barra de arriba, a la izquierda de los íconos de Wi-Fi y Bluetooth. */
+    private void addCarData(LinearLayout bar) {
+        carDataTv = tv("", 15, TEXT, true);
+        carDataTv.setPadding(0, 0, (int) (12 * s), 0);
+        bar.addView(carDataTv);
+        updateCarData();
+    }
+
+    /** «13,9 V · 17 °C»: lo que esté activado y haya llegado, o "" sin datos. */
+    private String carDataText() { return carDataText(false); }
+
+    /** all = true: todo lo que llegó, aunque no se muestre en el inicio (para Ajustes). */
+    private String carDataText(boolean all) {
+        if (fyt == null) return "";
+        StringBuilder b = new StringBuilder();
+        if (fyt.hasVolt() && (all || prefs.getBoolean("fyt_volt", false)))
+            b.append(String.format(java.util.Locale.getDefault(), "%.1f V", fyt.voltDeci / 10f));
+        if (fyt.hasTemp() && (all || prefs.getBoolean("fyt_temp", false))) {
+            if (b.length() > 0) b.append("  ·  ");
+            float c = fyt.tempDeci / 10f;
+            boolean f = "F".equals(prefs.getString("temp_unit", "C"));
+            b.append(Math.round(f ? c * 9f / 5f + 32 : c)).append(f ? " °F" : " °C");
+        }
+        return b.toString();
+    }
+
+    private void updateCarData() {
+        if (carDataTv == null) return;
+        String t = carDataText();
+        carDataTv.setText(t);
+        carDataTv.setVisibility(t.length() == 0 ? View.GONE : View.VISIBLE);
     }
 
     /** Guarda la ubicación para el amanecer/atardecer solo si cambió bastante (~25 km): no escribe a cada lectura. */
@@ -7685,6 +7847,8 @@ public class Main extends Activity {
 
     /** Modo «Sistema»: sigue el modo oscuro de la pantalla (algunas lo activan al encender las luces del carro). */
     private boolean systemNight() {
+        int l = fytLights();   // FYT: las luces del carro (car_mode); las demás pantallas, el modo oscuro de Android
+        if (l >= 0) return l == 1;
         try {
             return (getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
                     == android.content.res.Configuration.UI_MODE_NIGHT_YES;
@@ -7708,7 +7872,7 @@ public class Main extends Activity {
         pickTime(title, cur, h24, new IntCb() { public void on(int minutes) {
             prefs.edit().putInt(key, minutes).apply();
             boolean was = LIGHT;
-            applyTheme();
+            applyThemeNow();   // horario elegido a mano: sin espera
             if (was != LIGHT) { applyAccent(); rebuild(); }
             showSettings(settingsCat);
         }});
@@ -8364,6 +8528,45 @@ public class Main extends Activity {
             offLbl, Math.max(0, java.util.Arrays.asList(SPEED_OFFSETS).indexOf(prefs.getString("speed_offset", "0"))), new IntCb() { public void on(int i) {
                 prefs.edit().putString("speed_offset", SPEED_OFFSETS[i]).apply(); rebuild(); showSettings(settingsCat);
             }});
+        // Equipo: marca de la pantalla. Automático detecta FYT (com.syu.ms); con FYT se ofrecen las luces y los datos del carro
+        LinearLayout eq = section(body, "Equipo");
+        final String[] hws = {"auto", "generic", "fyt"};
+        boolean det = Fyt.detect(this);
+        String detTxt = det ? I18n.t("Detectada:") + " FYT" + (Fyt.platform().length() > 0 ? " · " + Fyt.platform() : "")
+                : I18n.t("No se detectó una marca con funciones propias");
+        segmented(eq, "Marca de la pantalla", detTxt, new String[]{"Auto", "Genérica", "FYT"},
+            Math.max(0, java.util.Arrays.asList(hws).indexOf(prefs.getString("hw", "generic"))), new IntCb() { public void on(int i) {
+                prefs.edit().putString("hw", hws[i]).apply();
+                stopFyt(); startFyt();
+                applyThemeNow(); applyAccent(); rebuild(); showSettings(settingsCat);   // «Sistema» pasa a seguir (o no) las luces
+            }});
+        if (fytOn()) {
+            toggle(eq, "Datos del carro", "Elige qué datos del carro se ven arriba, junto al Wi-Fi",
+                prefs.getBoolean("fyt_data", false), new IntCb() { public void on(int i) {
+                    prefs.edit().putBoolean("fyt_data", i == 1).apply();
+                    if (i == 1) startFyt(); else stopFyt();
+                    rebuild(); showSettings(settingsCat);
+                }});
+            if (prefs.getBoolean("fyt_data", false)) {
+                toggle(eq, "Tensión de la batería", "Medida por la pantalla; no necesita la caja CAN",
+                    prefs.getBoolean("fyt_volt", false), new IntCb() { public void on(int i) {
+                        prefs.edit().putBoolean("fyt_volt", i == 1).apply(); updateCarData(); showSettings(settingsCat);
+                    }});
+                toggle(eq, "Temperatura exterior", "Del sensor del carro; necesita la caja CAN",
+                    prefs.getBoolean("fyt_temp", false), new IntCb() { public void on(int i) {
+                        prefs.edit().putBoolean("fyt_temp", i == 1).apply(); updateCarData(); showSettings(settingsCat);
+                    }});
+            }
+            if (fyt != null) {
+                String now = carDataText(true);
+                row(eq, "Lectura actual", I18n.t("Servicio com.syu.ms:") + " " + I18n.t(fyt.state)
+                        + (fyt.canType > 0 ? " · CAN " + fyt.canType : fyt.canType == 0 ? " · " + I18n.t("sin caja CAN") : ""),
+                    now.length() > 0 ? now : I18n.t("Esperando datos"), new Runnable() { public void run() { showSettings(settingsCat); } });
+            }
+            int l = Fyt.lights(this);
+            row(eq, "Luces del carro", "Para seguirlas, elige Apariencia → Tema → Modo → Sistema",
+                l < 0 ? I18n.t("Sin datos") : I18n.t(l == 1 ? "Encendidas" : "Apagadas"), new Runnable() { public void run() { showSettings(C_LOOK); } });
+        }
         LinearLayout mt = section(body, "Mantenimientos");
         row(mt, "Aceite, filtros, SOAT y más", "Ahora están en su propia sección", null, new Runnable() { public void run() { showSettings(C_MAINT); } });
     }
@@ -8430,11 +8633,13 @@ public class Main extends Activity {
         LinearLayout c = section(body, "Tema");
         String t = prefs.getString("theme", "dark");
         final String[] themes = {"dark", "light", "auto", "system"};
-        segmented(c, "Modo", "Auto: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)",
+        final boolean fy = fytOn();
+        segmented(c, "Modo", fy ? "Auto: por horario. Sistema: sigue las luces del carro (pantalla FYT)"
+                : "Auto: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)",
             new String[]{"Oscuro", "Claro", "Auto", "Sistema"},
             Math.max(0, java.util.Arrays.asList(themes).indexOf(t)), new IntCb() { public void on(int i) {
                 prefs.edit().putString("theme", themes[i]).apply();
-                applyTheme(); applyAccent(); rebuild(); showSettings(settingsCat);
+                applyThemeNow(); applyAccent(); rebuild(); showSettings(settingsCat);
             }});
         if ("auto".equals(t)) {
             final boolean sunOn = prefs.getBoolean("auto_sun", false);
@@ -8444,7 +8649,7 @@ public class Main extends Activity {
                 brOn ? 2 : sunOn ? 1 : 0, new IntCb() { public void on(int i) {
                     prefs.edit().putBoolean("auto_sun", i == 1).putBoolean("auto_bright", i == 2).apply();
                     brightDark = null;
-                    applyTheme(); applyAccent(); rebuild(); showSettings(settingsCat);
+                    applyThemeNow(); applyAccent(); rebuild(); showSettings(settingsCat);
                 }});
             int[] sun = sunToday();
             final int bright = brOn ? brightnessPct() : -1;
@@ -8457,7 +8662,7 @@ public class Main extends Activity {
                 choice(c, "Oscuro con brillo menor a", "Elige un nivel entre el brillo de día y el de noche", lo, sel, new IntCb() { public void on(int i) {
                     prefs.edit().putInt("bright_dark", lv[i]).apply();
                     brightDark = null;
-                    applyTheme(); applyAccent(); rebuild(); showSettings(settingsCat);
+                    applyThemeNow(); applyAccent(); rebuild(); showSettings(settingsCat);
                 }});
             } else if (!brOn && sunOn && sun != null) {
                 row(c, "Hoy", I18n.t("Amanecer") + " " + fmtMinutes(sun[0]) + " · " + I18n.t("Atardecer") + " " + fmtMinutes(sun[1])
@@ -8472,6 +8677,35 @@ public class Main extends Activity {
                     askDarkTime("dark_end", 6 * 60, "Claro desde");
                 }});
             }
+        }
+        // Espera antes de cambiar de tema, en cada sentido (por defecto sin espera, como siempre)
+        // primero solo el interruptor; las dos esperas aparecen al activarlo (menos cosas para quien no lo usa)
+        if ("auto".equals(t) || "system".equals(t)) {
+            final boolean dOn = themeDelayOn();
+            toggle(c, "Espera para cambiar de tema", "Evita cambios de golpe, p. ej. al apagar el carro de noche",
+                dOn, new IntCb() { public void on(int i) {
+                    SharedPreferences.Editor e = prefs.edit().putBoolean("theme_delay_on", i == 1);
+                    // al activarla por primera vez: 5 s para volver a claro, el caso típico
+                    if (i == 1 && prefs.getInt("theme_delay_dark", 0) <= 0 && prefs.getInt("theme_delay_light", 0) <= 0)
+                        e.putInt("theme_delay_light", 5);
+                    e.apply();
+                    applyThemeNow(); applyAccent(); rebuild(); showSettings(settingsCat);
+                }});
+        }
+        if (("auto".equals(t) || "system".equals(t)) && themeDelayOn()) {
+            final int dd = prefs.getInt("theme_delay_dark", 0), dl = prefs.getInt("theme_delay_light", 0);
+            int sd = 0, sl = 0;
+            for (int i = 0; i < THEME_DELAYS.length; i++) { if (THEME_DELAYS[i] == dd) sd = i; if (THEME_DELAYS[i] == dl) sl = i; }
+            choice(c, "Espera para pasar a oscuro", "Cuánto debe durar el cambio (luces encendidas, poco brillo…) antes de oscurecer",
+                THEME_DELAY_LBL, sd, new IntCb() { public void on(int i) {
+                    prefs.edit().putInt("theme_delay_dark", THEME_DELAYS[i]).apply();
+                    showSettings(settingsCat);
+                }});
+            choice(c, "Espera para pasar a claro", "Útil si al apagar el carro de noche se apagan las luces y la pantalla pasa a claro de golpe",
+                THEME_DELAY_LBL, sl, new IntCb() { public void on(int i) {
+                    prefs.edit().putInt("theme_delay_light", THEME_DELAYS[i]).apply();
+                    showSettings(settingsCat);
+                }});
         }
         LinearLayout a = section(body, "Color de acento");
         LinearLayout r = rowBase(a, "Color", "Botones, anillo del reproductor, ruta y etiquetas");
@@ -8564,9 +8798,10 @@ public class Main extends Activity {
                 }});
         }
         LinearLayout lay = section(body, "Tarjetas");
-        segmented(lay, "Reproductor de música", "Ponlo del lado del conductor para tenerlo a la mano", new String[]{"Derecha", "Izquierda"},
-            playerLeft ? 1 : 0, new IntCb() { public void on(int i) {
-                prefs.edit().putString("player_side", i == 1 ? "left" : "right").apply(); rebuild();
+        segmented(lay, "Reproductor de música", "Ponlo del lado del conductor para tenerlo a la mano", new String[]{"Izquierda", "Derecha"},
+            playerLeft ? 0 : 1, new IntCb() { public void on(int i) {
+                // botones en el orden de la pantalla: izquierda, derecha
+                prefs.edit().putString("player_side", i == 0 ? "left" : "right").apply(); rebuild();
             }});
         toggle(lay, "Tarjeta del reproductor", "Si la ocultas, el mapa gana espacio", showPlayer, new IntCb() { public void on(int i) {
             prefs.edit().putBoolean("show_player", i == 1).apply(); rebuild();
@@ -9397,7 +9632,7 @@ public class Main extends Activity {
     private void reloadAll() {
         I18n.init(this, prefs);
         LiveMapView.headingUp = prefs.getBoolean("map_heading", false);
-        applyTheme();
+        applyThemeNow();
         applyAccent();
         try { lm.removeUpdates(odoListener); } catch (Throwable ignored) { }
         odoRunning = false;
@@ -9487,6 +9722,10 @@ public class Main extends Activity {
         compatLine(b, "Pista y carátula por Bluetooth", "Android 4.1+", true, clwBt ? "app Bluetooth de fábrica detectada" : "depende de la marca");
         compatLine(b, "Botón ▶ del inicio pasa el sonido a Bluetooth", "Pantallas Clinkway / Autochips", clwBt, clwBt ? "funciona aunque vengas de la radio" : "en otras marcas: «Abrir la app de música Bluetooth al conectar»");
         compatLine(b, "Pasar a Bluetooth al dar play en el celular (en prueba)", "Pantallas Clinkway / Autochips", clwBt, clwBt ? (btAutoOn() ? "activado" : "desactivado; en algunas pantallas no detecta el play del celular") : null);
+        boolean fy = fytOn();
+        compatLine(b, "Tema según las luces, batería y temperatura exterior", "Pantallas FYT (com.syu.ms)", fy,
+            fy ? (Fyt.lights(this) >= 0 ? "luces detectadas" : "esta pantalla no informa las luces")
+               : Fyt.detect(this) ? "pantalla FYT detectada: elígela en Tu vehículo → Equipo" : null);
         compatLine(b, "Carátula de Android Auto (Open Headunit)", "Android 4.1+ · accesibilidad", true, NotifArt.running ? "activada" : "falta activar la accesibilidad");
         compatLine(b, "Música de cualquier app (Spotify, YouTube…)", "Android 5+", SDK >= 21, SDK >= 21 ? (MediaListener.connected ? "activada" : "falta dar acceso a notificaciones") : "no disponible en " + androidName(SDK));
         compatLine(b, "Android Auto con Open Headunit", "Android 4.1+ · cable USB", true, installed(PKG_HUR) ? "Open Headunit instalado" : "falta instalar Open Headunit");

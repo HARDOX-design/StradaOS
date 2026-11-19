@@ -1178,3 +1178,43 @@ Para mostrar la canción, el artista y la carátula de Spotify, YouTube Music y 
 No volver a mostrar	Não mostrar de novo
 Esta pantalla no tiene el ajuste de «Acceso a notificaciones». Se puede activar una sola vez desde una computadora con ADB:	Esta tela não tem o ajuste de «Acesso a notificações». Dá para ativar uma única vez por um computador com ADB:
 Spotify, YouTube Music y otras apps de la pantalla (acceso a notificaciones)	Spotify, YouTube Music e outros apps da tela (acesso a notificações)
+# Pantallas FYT: tema según las luces, espera para cambiar de tema y datos del carro
+Encendidas	Acesas
+Apagadas	Apagadas
+Espera para pasar a oscuro	Espera para passar ao escuro
+Cuánto debe durar el cambio (luces encendidas, poco brillo…) antes de oscurecer	Quanto tempo a mudança (luzes acesas, pouco brilho…) deve durar antes de escurecer
+Espera para pasar a claro	Espera para passar ao claro
+Útil si al apagar el carro de noche se apagan las luces y la pantalla pasa a claro de golpe	Útil se, ao desligar o carro à noite, as luzes apagam e a tela passa de repente ao claro
+Sin espera	Sem espera
+Marca de la pantalla	Marca da tela
+Genérica	Genérica
+Detectada:	Detectada:
+No se detectó una marca con funciones propias	Não foi detectada uma marca com funções próprias
+Datos del carro	Dados do carro
+Lectura actual	Leitura atual
+Servicio com.syu.ms:	Serviço com.syu.ms:
+sin caja CAN	sem caixa CAN
+Esperando datos	Aguardando dados
+Luces del carro	Luzes do carro
+Sin datos	Sem dados
+sin conectar	sem conexão
+conectando	conectando
+conectado	conectado
+desconectado	desconectado
+no se encontró com.syu.ms	com.syu.ms não encontrado
+com.syu.ms no respondió	com.syu.ms não respondeu
+com.syu.ms se reinició	com.syu.ms reiniciou
+Tema según las luces, batería y temperatura exterior	Tema pelas luzes, bateria e temperatura exterior
+Pantallas FYT (com.syu.ms)	Telas FYT (com.syu.ms)
+luces detectadas	luzes detectadas
+Auto: por horario. Sistema: sigue las luces del carro (pantalla FYT)	Auto: por horário. Sistema: segue as luzes do carro (tela FYT)
+Espera para cambiar de tema	Espera para mudar de tema
+Evita cambios de golpe, p. ej. al apagar el carro de noche	Evita mudanças de repente, p. ex. ao desligar o carro à noite
+Para seguirlas, elige Apariencia → Tema → Modo → Sistema	Para segui-las, escolha Aparência → Tema → Modo → Sistema
+Elige qué datos del carro se ven arriba, junto al Wi-Fi	Escolha quais dados do carro aparecem em cima, junto ao Wi-Fi
+Tensión de la batería	Tensão da bateria
+Medida por la pantalla; no necesita la caja CAN	Medida pela tela; não precisa da caixa CAN
+Temperatura exterior	Temperatura exterior
+Del sensor del carro; necesita la caja CAN	Do sensor do carro; precisa da caixa CAN
+pantalla FYT detectada: elígela en Tu vehículo → Equipo	tela FYT detectada: escolha-a em Seu veículo → Equipamento
+esta pantalla no informa las luces	esta tela não informa as luzes

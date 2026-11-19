@@ -1178,3 +1178,43 @@ Para mostrar la canción, el artista y la carátula de Spotify, YouTube Music y 
 No volver a mostrar	Nicht mehr anzeigen
 Esta pantalla no tiene el ajuste de «Acceso a notificaciones». Se puede activar una sola vez desde una computadora con ADB:	Dieser Bildschirm hat die Einstellung „Zugriff auf Benachrichtigungen“ nicht. Du kannst sie einmalig von einem Computer mit ADB aktivieren:
 Spotify, YouTube Music y otras apps de la pantalla (acceso a notificaciones)	Spotify, YouTube Music und andere Apps des Bildschirms (Zugriff auf Benachrichtigungen)
+# Pantallas FYT: tema según las luces, espera para cambiar de tema y datos del carro
+Encendidas	An
+Apagadas	Aus
+Espera para pasar a oscuro	Verzögerung bis Dunkel
+Cuánto debe durar el cambio (luces encendidas, poco brillo…) antes de oscurecer	Wie lange die Änderung (Licht an, geringe Helligkeit …) anhalten muss, bevor es dunkel wird
+Espera para pasar a claro	Verzögerung bis Hell
+Útil si al apagar el carro de noche se apagan las luces y la pantalla pasa a claro de golpe	Nützlich, wenn beim Abstellen des Autos nachts das Licht ausgeht und der Bildschirm plötzlich hell wird
+Sin espera	Keine Verzögerung
+Marca de la pantalla	Marke des Autoradios
+Genérica	Generisch
+Detectada:	Erkannt:
+No se detectó una marca con funciones propias	Keine Marke mit eigenen Funktionen erkannt
+Datos del carro	Fahrzeugdaten
+Lectura actual	Aktueller Wert
+Servicio com.syu.ms:	Dienst com.syu.ms:
+sin caja CAN	ohne CAN-Box
+Esperando datos	Warte auf Daten
+Luces del carro	Fahrzeuglicht
+Sin datos	Keine Daten
+sin conectar	nicht verbunden
+conectando	verbinde
+conectado	verbunden
+desconectado	getrennt
+no se encontró com.syu.ms	com.syu.ms nicht gefunden
+com.syu.ms no respondió	com.syu.ms hat nicht geantwortet
+com.syu.ms se reinició	com.syu.ms wurde neu gestartet
+Tema según las luces, batería y temperatura exterior	Design nach Fahrlicht, Batterie und Außentemperatur
+Pantallas FYT (com.syu.ms)	FYT-Autoradios (com.syu.ms)
+luces detectadas	Licht erkannt
+Auto: por horario. Sistema: sigue las luces del carro (pantalla FYT)	Auto: nach Uhrzeit. System: folgt dem Fahrlicht (FYT-Autoradio)
+Espera para cambiar de tema	Verzögerung beim Designwechsel
+Evita cambios de golpe, p. ej. al apagar el carro de noche	Verhindert plötzliche Wechsel, z. B. beim Abstellen des Autos nachts
+Para seguirlas, elige Apariencia → Tema → Modo → Sistema	Dazu Darstellung → Design → Modus → System wählen
+Elige qué datos del carro se ven arriba, junto al Wi-Fi	Wähle, welche Fahrzeugdaten oben neben dem WLAN erscheinen
+Tensión de la batería	Batteriespannung
+Medida por la pantalla; no necesita la caja CAN	Vom Autoradio gemessen; keine CAN-Box nötig
+Temperatura exterior	Außentemperatur
+Del sensor del carro; necesita la caja CAN	Vom Fahrzeugsensor; CAN-Box nötig
+pantalla FYT detectada: elígela en Tu vehículo → Equipo	FYT-Autoradio erkannt: wähle es unter Dein Fahrzeug → Autoradio
+esta pantalla no informa las luces	dieses Autoradio meldet das Fahrlicht nicht
