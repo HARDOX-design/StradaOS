@@ -11,4 +11,4 @@
 <li>Modo oscuro, claro, por horario o del sistema, 10 colores y 9 idiomas.</li>
 <li>Avisos de actualización con código QR.</li>
 </ul>
-<p>Compatible desde Android 4.1. Pesa menos de 1 MB. Gratis, sin anuncios y de código abierto (GPL-3.0).</p>
+<p>Compatible desde Android 4.1. Pesa alrededor de 1 MB. Gratis, sin anuncios y de código abierto (GPL-3.0).</p>

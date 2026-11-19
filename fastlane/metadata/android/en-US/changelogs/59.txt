@@ -1,0 +1,1 @@
+Fixes: song info from the factory player on HCN units and from phone music over Bluetooth (Android 5+). New: a hint to see the song from Spotify and other apps, more complete player diagnostics, and the Faro theme as "coming soon".

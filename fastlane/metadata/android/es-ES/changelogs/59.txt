@@ -1,0 +1,1 @@
+Arreglos: canción del reproductor de fábrica en pantallas HCN y de la música del celular por Bluetooth (Android 5+). Nuevo: aviso para ver la canción de Spotify y otras apps, diagnóstico del reproductor más completo y el tema Faro como «pronto».

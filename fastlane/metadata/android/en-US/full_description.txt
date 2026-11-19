@@ -11,4 +11,4 @@
 <li>Dark, light, scheduled or system theme, 10 colors and 9 languages.</li>
 <li>Update notices with a QR code.</li>
 </ul>
-<p>Works on Android 4.1+. Under 1 MB. Free, no ads, open source (GPL-3.0).</p>
+<p>Works on Android 4.1+. About 1 MB. Free, no ads, open source (GPL-3.0).</p>
