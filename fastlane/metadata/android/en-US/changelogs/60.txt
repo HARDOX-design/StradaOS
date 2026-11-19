@@ -1,0 +1,1 @@
+New for FYT head units: the "System" theme follows the car's lights, battery voltage and outside temperature in the top bar, and an optional delay before switching themes (thanks to linorks-maker).

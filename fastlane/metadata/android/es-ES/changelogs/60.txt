@@ -1,0 +1,1 @@
+Nuevo para pantallas FYT: el tema «Sistema» sigue las luces del carro, tensión de la batería y temperatura exterior en la barra de arriba, y espera opcional para cambiar de tema (gracias a linorks-maker).
