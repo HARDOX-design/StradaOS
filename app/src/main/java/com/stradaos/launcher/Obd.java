@@ -391,7 +391,6 @@ public class Obd {
             // consumo: el dato del auto (PID 5E), el MAF o, en los Kia/Hyundai sin MAF, la presión del múltiple
             float lph = fuelRateLph();
             if (!Float.isNaN(lph)) {
-                Trip.addFuel(lph);
                 FUEL_H.push(lph);
                 if (SPEED.has() && SPEED.value > 3)
                     CONSUMPTION.push(Math.min(99, lph / SPEED.value * 100f));

@@ -12,7 +12,8 @@ import android.os.IBinder;
 
 /**
  * Mantiene vivo el monitor OBD ({@link Obd}) mientras se usan otras apps: servicio en primer plano con una
- * notificación que muestra temperatura, voltaje y RPM. Se apaga desde la pantalla del vehículo.
+ * notificación que muestra temperatura, voltaje y RPM (al tocarla se abre el panel del vehículo). Se apaga en Ajustes →
+ * Tu vehículo → Escáner OBD-II.
  */
 public class ObdService extends Service implements Obd.Listener {
     private static final int ID = 7311;
@@ -63,7 +64,7 @@ public class ObdService extends Service implements Obd.Listener {
         } else {
             b = new Notification.Builder(this);
         }
-        Intent open = new Intent(this, ObdActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent open = new Intent(this, Main.class).putExtra("vehiculo", true).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);   // abre el panel del vehículo
         PendingIntent pi = PendingIntent.getActivity(this, 0, open, Build.VERSION.SDK_INT >= 23 ? PendingIntent.FLAG_IMMUTABLE : 0);
         b.setSmallIcon(R.drawable.ic_launcher)
             .setContentTitle(I18n.t("Monitor del vehículo"))

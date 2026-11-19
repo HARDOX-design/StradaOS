@@ -201,6 +201,10 @@ public class Main extends Activity {
         testHook(getIntent());
         applyTheme();
         applyAccent();
+        // escáner OBD-II: si está encendido y elegido, el monitor arranca con StradaOS (alertas aunque no se mire)
+        if (obdOn() && prefs.contains("obd_addr") && prefs.getBoolean("obd_autostart", true) && !Obd.running()) {
+            try { ObdService.start(this); } catch (Throwable ignored) { }
+        }
 
         root = new FrameLayout(this) {
             @Override
@@ -467,6 +471,7 @@ public class Main extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        Obd.addListener(obdWatch);
         if (homeFixing && SDK < 29) h.postDelayed(new Runnable() { public void run() { homeResult(); } }, 700);
         immersive();
         if (SDK >= 23 && !askedPerms) {
@@ -605,6 +610,10 @@ public class Main extends Activity {
 
     /** Android 6+: respuesta a la solicitud de permisos. */
     public void onRequestPermissionsResult(int req, String[] perms, int[] res) {
+        if (req == ObdDialogs.REQ_BT_SCAN) {
+            obdDialogs().onPermission(res.length > 0 && res[0] == android.content.pm.PackageManager.PERMISSION_GRANTED);
+            return;
+        }
         if (req == REQ_STORAGE_W) {   // con o sin permiso se sigue (sin él, el mapa se guarda en la carpeta de la app)
             h.post(new Runnable() { public void run() { chooseMapToDownload(""); } });
             return;
@@ -629,6 +638,8 @@ public class Main extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
+        Obd.removeListener(obdWatch);
+        if (obdDlg != null) obdDlg.stopDiscovery();
         h.removeCallbacks(idleRun);
         stopGps();
         h.removeCallbacks(ticker);
@@ -657,6 +668,7 @@ public class Main extends Activity {
     protected void onNewIntent(Intent i) {
         super.onNewIntent(i);
         closeDrawer();
+        if (i != null && i.getBooleanExtra("vehiculo", false)) h.post(new Runnable() { public void run() { openVehiclePanel(); } });
         testHook(i);
     }
 
@@ -685,6 +697,10 @@ public class Main extends Activity {
                 else if (v.startsWith("boton:")) dockMenu(Integer.parseInt(v.substring(6)), null);
                 else if (v.startsWith("elegir:")) pickDock(Integer.parseInt(v.substring(7)), null);
                 else if ("cajon".equals(v)) openDrawer();
+                else if ("obd-demo".equals(v)) obdDialogs().choose("demo", I18n.t("Auto simulado"));
+                else if ("obd-off".equals(v)) obdDialogs().turnOff();
+                else if ("obd-panel".equals(v)) openVehiclePanel();
+                else if (v.startsWith("obd-ajustes:")) { settingsSub = v.substring(12); showSettings(C_VEHICLE); }
                 else if ("ocultas".equals(v)) manageHidden(null);
                 else if ("salir-fabrica".equals(v)) openFactoryLauncher();
                 else if (v.startsWith("aa-simular:")) {
@@ -1034,7 +1050,11 @@ public class Main extends Activity {
 
     @Override
     public void onBackPressed() {
-        if (settingsView != null) { closeSettings(); return; }
+        if (vpanel != null && vpanel.isOpen()) { vpanel.close(); return; }
+        if (settingsView != null) {
+            if (settingsSub != null && settingsCat == C_VEHICLE) { settingsBack(); return; }
+            closeSettings(); return;
+        }
         closeDrawer(); // es la pantalla de inicio: atrás no la cierra
     }
 
@@ -1187,6 +1207,11 @@ public class Main extends Activity {
     // ───────────────────────── construcción de la UI ─────────────────────────
 
     private void build(int W, int H) {
+        build0(W, H);
+        attachVehicle();
+    }
+
+    private void build0(int W, int H) {
         root.removeAllViews();
         idleView = null; idleClock = idleDate = idleSpeedTv = null; idleGauge = null;
         // versión de prueba: simular otra pantalla (p. ej. una ancha de 1920x720 en una tablet)
@@ -3619,6 +3644,7 @@ public class Main extends Activity {
         {"music", "Música", "music_note"}, {"nav", "Navegación", "map"}, {"aa", "Android Auto", "navigation"},
         {"carplay", "CarPlay", "phone_iphone"}, {"web", "Navegador web", "public"}, {"files", "Archivos", "folder"},
         {"nav_home", "Ir a Casa", "location_on"}, {"nav_work", "Ir a Trabajo", "directions_car"},
+        {"obd", "Vehículo (OBD-II)", "car_repair"},
         {"settings", "Ajustes", "settings"}, {"apps", "Apps", "apps"},
     };
 
@@ -5483,6 +5509,7 @@ public class Main extends Activity {
         else if ("carplay".equals(id)) openCarPlay();
         else if ("nav_home".equals(id)) navigateSavedSlot("nav_home", "Casa");
         else if ("nav_work".equals(id)) navigateSavedSlot("nav_work", "Trabajo");
+        else if ("obd".equals(id)) openVehiclePanel();
         else openDrawer();
     }
 
@@ -8028,10 +8055,13 @@ public class Main extends Activity {
 
     private android.widget.ScrollView settingsScroll;
     private int settingsScrollCat = -1;
+    private String settingsScrollSub = "";
     private int settingsPendingY = -1;   // posición por restaurar en una página que aún no se ha acomodado
 
     private void closeSettings() {
         settingsCat = -1;
+        settingsSub = null;
+        Obd.removeListener(obdSettingsL);
         settingsScroll = null; settingsScrollCat = -1; settingsPendingY = -1;
         if (settingsView != null) { root.removeView(settingsView); settingsView = null; }
     }
@@ -8044,10 +8074,14 @@ public class Main extends Activity {
 
     private void showSettings0(int cat) {
         if (cat == 0) { closeSettings(); return; }
+        if (cat != C_VEHICLE) settingsSub = null;
+        Obd.removeListener(obdSettingsL);
+        obdLive.clear();
         // al cambiar un ajuste se redibuja la página: que se quede donde estaba, no que vuelva arriba
         // (algunos ajustes redibujan dos veces seguidas: la segunda vez la página anterior aún no se acomodó y su
         // posición sigue pendiente; se usa esa y no un 0)
-        final int keepY = settingsScroll == null || settingsScrollCat != cat ? 0
+        String subKey = settingsSub == null ? "" : settingsSub;
+        final int keepY = settingsScroll == null || settingsScrollCat != cat || !subKey.equals(settingsScrollSub) ? 0
                 : settingsPendingY >= 0 ? settingsPendingY : settingsScroll.getScrollY();
         settingsPendingY = keepY > 0 ? keepY : -1;
         settingsCat = cat;
@@ -8110,7 +8144,7 @@ public class Main extends Activity {
                 side.addView(d, dl);
             }
             it.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) { showSettings(idx); }
+                public void onClick(View v) { settingsSub = null; showSettings(idx); }
             });
         }
         }
@@ -8132,17 +8166,20 @@ public class Main extends Activity {
         sc.setVerticalScrollBarEnabled(false);
         if (vertical) place(panel, sc, 16, 84, 688, boardH - 96);
         else place(panel, sc, 272, 16, 736, 568);
-        settingsScroll = sc; settingsScrollCat = cat;
+        settingsScroll = sc; settingsScrollCat = cat; settingsScrollSub = subKey;
         LinearLayout body = new LinearLayout(this);
         body.setOrientation(LinearLayout.VERTICAL);
         body.setPadding((int) (8 * s), (int) (6 * s), (int) (8 * s), (int) (24 * s));
         sc.addView(body, new FrameLayout.LayoutParams(-1, -2));
+        if (cat == C_VEHICLE && settingsSub != null) obdHeader(body);
+        else {
         TextView title = tv(CAT_NAMES[cat], 24, TEXT, true);
         title.setPadding((int) (4 * s), 0, 0, (int) (14 * s));
         body.addView(title);
+        }
 
         switch (cat) {
-            case C_VEHICLE: catVehicle(body); break;
+            case C_VEHICLE: if (settingsSub != null) obdPage(body, settingsSub); else catVehicle(body); break;
             case C_MAINT: catMaint(body); break;
             case C_HOME: catHome(body); break;
             case C_DOCK: catDock(body); break;
@@ -8183,7 +8220,7 @@ public class Main extends Activity {
             tabs.addView(it, ilp);
             if (sel) chosen[0] = it;
             it.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) { showSettings(idx); }
+                public void onClick(View v) { settingsSub = null; showSettings(idx); }
             });
         }
         // la categoría elegida se deja a la vista durante el acomodo, antes de dibujar (sin salto)
@@ -8566,6 +8603,15 @@ public class Main extends Activity {
             int l = Fyt.lights(this);
             row(eq, "Luces del carro", "Para seguirlas, elige Apariencia → Tema → Modo → Sistema",
                 l < 0 ? I18n.t("Sin datos") : I18n.t(l == 1 ? "Encendidas" : "Apagadas"), new Runnable() { public void run() { showSettings(C_LOOK); } });
+        }
+        // 2.26: escáner OBD-II (motor del PR #42 de Jaacern). Apagado por defecto: sin él, nada cambia en el inicio
+        LinearLayout ob = section(body, "Escáner OBD-II");
+        toggle(ob, "Monitor del motor", "Con un escáner ELM327 por Wi-Fi o Bluetooth: temperatura, batería, alertas por voz y códigos de falla",
+            obdOn(), new IntCb() { public void on(int i) { if (i == 1) obdDialogs().turnOn(); else obdDialogs().turnOff(); }});
+        if (obdOn()) {
+            row(ob, "Escáner OBD-II", ObdDialogs.deviceName(this) + " · " + obdStateText(), null, obdGo("obd"));
+            row(ob, "Abrir el panel del vehículo", "También con la pestaña del borde o con un botón de la barra", null,
+                new Runnable() { public void run() { openVehiclePanel(); } });
         }
         LinearLayout mt = section(body, "Mantenimientos");
         row(mt, "Aceite, filtros, SOAT y más", "Ahora están en su propia sección", null, new Runnable() { public void run() { showSettings(C_MAINT); } });
@@ -11010,6 +11056,309 @@ public class Main extends Activity {
         if (drawer != null) {
             root.removeView(drawer);
             drawer = null;
+        }
+    }
+
+    // ───────────────────────── Escáner OBD-II (2.26) ─────────────────────────
+    // Motor del PR #42 (Jaacern). Nada cambia en las pantallas de inicio: el vehículo se ve en un panel que se despliega
+    // encima de cualquier tema (VehiclePanel) y se configura en Ajustes → Tu vehículo → Escáner OBD-II.
+
+    private VehiclePanel vpanel;
+    private VehiclePanel.Handle vhandle;
+    private ObdDialogs obdDlg;
+    /** Subpágina de «Tu vehículo» (null = la categoría): obd, obd_conn, obd_alerts, obd_codes, obd_live, obd_ai, obd_adv. */
+    private String settingsSub;
+    private final java.util.HashMap<String, TextView> obdLive = new java.util.HashMap<String, TextView>();
+    private String obdPageKey = "";
+    private final java.util.HashSet<String> critShown = new java.util.HashSet<String>();
+
+    static final String[][] OBD_PAGES = {
+        {"obd", "Escáner OBD-II"}, {"obd_conn", "Conexión"}, {"obd_alerts", "Alertas"}, {"obd_codes", "Códigos de falla"},
+        {"obd_live", "Datos en vivo"}, {"obd_ai", "Inteligencia artificial"}, {"obd_adv", "Avanzado"},
+    };
+
+    private boolean obdOn() { return prefs.getBoolean("obd_on", false); }
+
+    private ObdDialogs obdDialogs() {
+        if (obdDlg == null) obdDlg = new ObdDialogs(this, new Runnable() { public void run() { obdChanged(); } });
+        return obdDlg;
+    }
+
+    /** Después de un cambio hecho en una ventana del escáner: redibuja Ajustes y el panel o la pestaña. */
+    private void obdChanged() {
+        if (settingsView != null && settingsCat == C_VEHICLE) showSettings(C_VEHICLE);
+        attachVehicle();
+    }
+
+    private boolean vehicleLeft() {
+        String side = prefs.getString("obd_panel_side", "auto");
+        return "left".equals(side) || ("auto".equals(side) && playerLeft);
+    }
+
+    private final VehiclePanel.Host vhost = new VehiclePanel.Host() {
+        public void openSettings(String sub) { settingsSub = sub; showSettings(C_VEHICLE); }
+        public void openChart(String key) { openObdChart(key); }
+        public ObdDialogs dialogs() { return obdDialogs(); }
+        public View backdrop() { return root; }
+        public void onClosed() { }
+    };
+
+    /** Pone (o quita) el panel y la pestaña del borde según el ajuste; van encima del tema y debajo de Ajustes. */
+    private void attachVehicle() {
+        if (root == null) return;
+        boolean wasOpen = vpanel != null && vpanel.isOpen();
+        if (vhandle != null) { root.removeView(vhandle); vhandle = null; }
+        if (vpanel != null) { vpanel.closeNow(); root.removeView(vpanel); vpanel = null; }
+        if (!obdOn() || root.getWidth() <= 0 || s <= 0) return;
+        boolean left = vehicleLeft();
+        vpanel = new VehiclePanel(this, s, root.getWidth() / s, root.getHeight() / s, left, vhost);
+        int at = settingsView != null && settingsView.getParent() == root ? root.indexOfChild(settingsView) : -1;
+        if (at >= 0) root.addView(vpanel, at, new FrameLayout.LayoutParams(-1, -1));
+        else root.addView(vpanel, new FrameLayout.LayoutParams(-1, -1));
+        if (prefs.getBoolean("obd_handle", true)) {
+            vhandle = new VehiclePanel.Handle(this, s, left, new Runnable() { public void run() { openVehiclePanel(); } });
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams((int) (26 * s), (int) (120 * s));
+            lp.gravity = (left ? Gravity.LEFT : Gravity.RIGHT) | Gravity.CENTER_VERTICAL;
+            at = settingsView != null && settingsView.getParent() == root ? root.indexOfChild(settingsView) : -1;
+            if (at >= 0) root.addView(vhandle, at, lp);
+            else root.addView(vhandle, lp);
+        }
+        if (wasOpen) vpanel.open();
+    }
+
+    /** Abre el panel del vehículo; con el monitor apagado lleva a sus ajustes. */
+    private void openVehiclePanel() {
+        if (!obdOn()) { settingsSub = null; showSettings(C_VEHICLE); toast(I18n.t("Enciende el monitor del motor en «Escáner OBD-II»")); return; }
+        if (settingsView != null) closeSettings();
+        closeDrawer();
+        if (vpanel == null) attachVehicle();
+        if (vpanel != null) vpanel.open();
+    }
+
+    private void openObdChart(String key) {
+        try { startActivity(new Intent(this, ObdActivity.class).putExtra("chart", key)); } catch (Throwable e) { toast("No se pudo abrir la app"); }
+    }
+
+    private String obdStateText() {
+        if (!Obd.running()) return I18n.t(prefs.contains("obd_addr") ? "Apagado" : "Elige tu escáner");
+        if (Obd.status == Obd.LIVE) return I18n.t("En vivo") + (Obd.vin != null ? " · VIN " + Obd.vin : "");
+        if (Obd.statusMsg.length() > 0) return I18n.t(Obd.statusMsg);
+        return I18n.t("Conectando…");
+    }
+
+    /** Alertas graves: abren el panel aunque se esté en otra cosa (una vez por alerta); también avisa a las ventanas. */
+    private final Obd.Listener obdWatch = new Obd.Listener() { public void onObd() {
+        if (obdDlg != null) obdDlg.onObd();
+        java.util.HashSet<String> now = new java.util.HashSet<String>();
+        boolean fresh = false;
+        synchronized (Obd.alerts) {
+            for (Obd.Alert a : Obd.alerts) if (a.level == Obd.CRIT) { now.add(a.key); if (!critShown.contains(a.key)) fresh = true; }
+        }
+        critShown.retainAll(now);
+        critShown.addAll(now);
+        if (fresh && obdOn() && prefs.getBoolean("obd_panel_auto", true) && settingsView == null && !isFinishing()
+                && vpanel != null && !vpanel.isOpen()) vpanel.open();
+    }};
+
+    /** Mientras se ve una página del escáner en Ajustes: los valores cambian en su sitio; si cambia lo que hay, se redibuja. */
+    private final Obd.Listener obdSettingsL = new Obd.Listener() { public void onObd() {
+        if (settingsView == null || settingsCat != C_VEHICLE) return;
+        String k = obdStructure();
+        if (!k.equals(obdPageKey)) { showSettings(C_VEHICLE); return; }
+        for (java.util.Map.Entry<String, TextView> e : obdLive.entrySet()) {
+            String v = obdLiveValue(e.getKey());
+            if (v != null && !v.contentEquals(e.getValue().getText())) e.getValue().setText(v);
+        }
+    }};
+
+    private String obdStructure() {
+        StringBuilder b = new StringBuilder(settingsSub == null ? "" : settingsSub).append(Obd.running()).append(Obd.status == Obd.LIVE);
+        if ("obd_codes".equals(settingsSub) || "obd".equals(settingsSub)) b.append(Obd.dtcs).append(Obd.pending).append(Obd.lastDtcCheck > 0);
+        if ("obd_alerts".equals(settingsSub) || "obd".equals(settingsSub)) synchronized (Obd.alerts) { for (Obd.Alert a : Obd.alerts) b.append(a.key).append(a.level); }
+        if ("obd_live".equals(settingsSub)) for (Obd.Sensor x : Obd.ALL) if (x.has()) b.append(x.key);
+        return b.toString();
+    }
+
+    private String obdLiveValue(String key) {
+        if ("status".equals(key)) return obdStateText();
+        Obd.Sensor x = ObdDialogs.sensorOf(key);
+        return x == null ? null : x.has() ? x.text() + " " + x.unit : "—";
+    }
+
+    /** Fila cuyo valor se actualiza solo (estado o un dato del motor). */
+    private void liveRow(LinearLayout card, String title, String sub, String key, Runnable onClick) {
+        row(card, title, sub, obdLiveValue(key), onClick);
+        LinearLayout r = (LinearLayout) card.getChildAt(card.getChildCount() - 1);
+        if (r.getChildCount() > 1 && r.getChildAt(1) instanceof TextView) obdLive.put(key, (TextView) r.getChildAt(1));
+    }
+
+    private Runnable obdGo(final String sub) {
+        return new Runnable() { public void run() { settingsSub = sub; showSettings(C_VEHICLE); } };
+    }
+
+    private void settingsBack() {
+        settingsSub = "obd".equals(settingsSub) ? null : "obd";
+        showSettings(C_VEHICLE);
+    }
+
+    /** Encabezado de una subpágina: volver y el título. */
+    private void obdHeader(LinearLayout body) {
+        String title = "", back = "Tu vehículo";
+        for (String[] pg : OBD_PAGES) if (pg[0].equals(settingsSub)) title = pg[1];
+        if (!"obd".equals(settingsSub)) back = "Escáner OBD-II";
+        TextView b = tv("‹  " + I18n.t(back), 14, RED, true);
+        b.setPadding((int) (4 * s), (int) (2 * s), (int) (12 * s), (int) (6 * s));
+        b.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { settingsBack(); } });
+        body.addView(b, new LinearLayout.LayoutParams(-2, -2));
+        TextView t = tv(title, 24, TEXT, true);
+        t.setPadding((int) (4 * s), 0, 0, (int) (14 * s));
+        body.addView(t);
+    }
+
+    private void obdPage(LinearLayout body, String sub) {
+        final ObdDialogs d = obdDialogs();
+        obdPageKey = obdStructure();
+        Obd.addListener(obdSettingsL);
+        if (!obdOn() && !"obd_ai".equals(sub) && !"obd_adv".equals(sub)) {
+            LinearLayout c = section(body, "Monitor del motor");
+            toggle(c, "Monitor del motor", "Está apagado: enciéndelo para conectar el escáner", false,
+                new IntCb() { public void on(int i) { d.turnOn(); }});
+            return;
+        }
+        if ("obd".equals(sub)) {
+            LinearLayout st = section(body, "Estado");
+            row(st, "Escáner", null, ObdDialogs.deviceName(this), obdGo("obd_conn"));
+            liveRow(st, "Conexión", null, "status", obdGo("obd_conn"));
+            row(st, "Abrir el panel del vehículo", "Medidores, alertas y códigos encima del tema que tengas", null,
+                new Runnable() { public void run() { openVehiclePanel(); } });
+            List<Obd.Alert> al;
+            synchronized (Obd.alerts) { al = new ArrayList<Obd.Alert>(Obd.alerts); }
+            int nc = Obd.dtcs.size();
+            for (String x : Obd.pending) if (!Obd.dtcs.contains(x)) nc++;
+            LinearLayout dg = section(body, "Diagnóstico");
+            row(dg, "Alertas", "Qué vigila StradaOS y cuándo avisa por voz",
+                al.isEmpty() ? I18n.t("Todo normal") : I18n.t(al.size() == 1 ? "1 activa" : al.size() + " activas"), obdGo("obd_alerts"));
+            row(dg, "Códigos de falla", "Qué significan y qué hacer; borrarlos con el motor apagado",
+                nc == 0 ? I18n.t(Obd.lastDtcCheck > 0 ? "Ninguno" : "—") : String.valueOf(nc), obdGo("obd_codes"));
+            row(dg, "Datos en vivo", "Cada dato que entrega tu auto, con gráficos", null, obdGo("obd_live"));
+            LinearLayout mo = section(body, "Más");
+            row(mo, "Inteligencia artificial", "Opcional: explica los códigos para tu auto en particular",
+                I18n.t(DtcInfo.aiReady(this) ? "Configurada" : "Sin configurar"), obdGo("obd_ai"));
+            row(mo, "Avanzado", "Motor, protocolo, panel y escaneo completo", null, obdGo("obd_adv"));
+        } else if ("obd_conn".equals(sub)) {
+            LinearLayout c = section(body, "Escáner");
+            row(c, "Escáner", "Bluetooth emparejado, Wi-Fi (IP y puerto) o un auto simulado para probar", ObdDialogs.deviceName(this),
+                new Runnable() { public void run() { d.pickAdapter(); } });
+            row(c, "Buscar escáneres Bluetooth cercanos", "Empareja el escáner sin salir de StradaOS (clave 1234 o 0000)", null,
+                new Runnable() { public void run() { d.discover(); } });
+            liveRow(c, "Conexión", null, "status", new Runnable() { public void run() { d.reconnect(); } });
+            row(c, "Reconectar", null, null, new Runnable() { public void run() { d.reconnect(); } });
+            LinearLayout o = section(body, "Al encender");
+            toggle(o, "Conectar al iniciar StradaOS", "Las alertas funcionan aunque estés en otra app (con una notificación fija)",
+                prefs.getBoolean("obd_autostart", true), new IntCb() { public void on(int i) {
+                    prefs.edit().putBoolean("obd_autostart", i == 1).apply(); showSettings(C_VEHICLE); }});
+            LinearLayout h2 = section(body, "Ayuda");
+            row(h2, "Cómo conectar el escáner", null, null, new Runnable() { public void run() {
+                new TB(Main.this, dlg()).setTitle("Cómo conectar el escáner")
+                    .setMessage("1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Bluetooth: emparéjalo con la clave 1234 o 0000. Wi-Fi: conecta la pantalla a la red del escáner y escribe su IP y puerto (casi siempre 192.168.0.10:35000).\n3. Elígelo arriba en «Escáner».")
+                    .setNegativeButton("Cerrar", null).show(); }});
+            row(h2, "Registro de la conexión", "Lo que respondió el escáner (para reportar un problema)", null,
+                new Runnable() { public void run() { d.showLog(); } });
+        } else if ("obd_alerts".equals(sub)) {
+            LinearLayout now = section(body, "Ahora");
+            List<Obd.Alert> al;
+            synchronized (Obd.alerts) { al = new ArrayList<Obd.Alert>(Obd.alerts); }
+            if (al.isEmpty()) row(now, "Todo normal por ahora", null, null, null);
+            for (final Obd.Alert a : al) row(now, a.title, a.advice, I18n.t(a.level == Obd.CRIT ? "Alerta" : "Aviso"),
+                new Runnable() { public void run() { d.showAlert(a); } });
+            LinearLayout av = section(body, "Avisos");
+            toggle(av, "Avisos por voz", "Habla aunque estés en Waze o con música", prefs.getBoolean("obd_voice", true), new IntCb() { public void on(int i) {
+                prefs.edit().putBoolean("obd_voice", i == 1).apply(); Obd.reloadPrefs(Main.this); showSettings(C_VEHICLE); }});
+            toggle(av, "Abrir el panel con una alerta grave", "Por ejemplo, el motor muy caliente o la batería que no carga",
+                prefs.getBoolean("obd_panel_auto", true), new IntCb() { public void on(int i) {
+                    prefs.edit().putBoolean("obd_panel_auto", i == 1).apply(); showSettings(C_VEHICLE); }});
+            toggle(av, "Subida rápida del refrigerante", "Más de 4 °C por minuto con el motor caliente",
+                prefs.getBoolean("obd_alert_coolant_rise", true), new IntCb() { public void on(int i) {
+                    prefs.edit().putBoolean("obd_alert_coolant_rise", i == 1).apply(); Obd.reloadPrefs(Main.this); showSettings(C_VEHICLE); }});
+            toggle(av, "Códigos de falla nuevos (aviso por voz)", null,
+                prefs.getBoolean("obd_alert_dtc", true), new IntCb() { public void on(int i) {
+                    prefs.edit().putBoolean("obd_alert_dtc", i == 1).apply(); Obd.reloadPrefs(Main.this); showSettings(C_VEHICLE); }});
+            LinearLayout th = section(body, "Cuándo avisa cada dato");
+            for (final Obd.Sensor x : ObdDialogs.alertSensors(prefs)) row(th, I18n.t(x.label), null, ObdDialogs.limits(x),
+                new Runnable() { public void run() { d.editAlert(x); } });
+        } else if ("obd_codes".equals(sub)) {
+            List<String> codes = new ArrayList<String>(Obd.dtcs);
+            for (String x : Obd.pending) if (!codes.contains(x)) codes.add(x);
+            LinearLayout c = section(body, "Códigos guardados en el auto");
+            if (codes.isEmpty()) row(c, Obd.lastDtcCheck > 0 ? "El auto no tiene códigos guardados" : "Se revisan al conectar y cada 30 segundos", null, null, null);
+            for (final String code : codes) {
+                DtcInfo.Entry e = DtcInfo.get(this, code);
+                boolean pend = !Obd.dtcs.contains(code);
+                String what = e.es != null ? e.es : e.en != null ? e.en : DtcInfo.system(code);
+                row(c, code, what, I18n.t(pend ? "Pendiente" : e.severity >= 3 ? "Grave" : e.severity == 1 ? "Leve" : "Revisar"),
+                    new Runnable() { public void run() { d.showCode(code); } });
+            }
+            if (Obd.mil) row(c, "Luz del motor encendida", "El computador del motor confirmó una falla", null, null);
+            if (!Obd.dtcs.isEmpty()) {
+                LinearLayout b = section(body, "Borrar");
+                row(b, "Borrar códigos", "Con el motor apagado y el contacto puesto. Anota los códigos antes: no se puede deshacer", null,
+                    new Runnable() { public void run() { d.confirmClear(); } });
+            }
+            String rd = Scan.readiness(Obd.status01);
+            if (rd != null) {
+                LinearLayout m = section(body, "Monitores de emisiones");
+                row(m, rd, "✓ listo · ✗ aún no termina su prueba (normal después de borrar códigos o desconectar la batería).", null, null);
+            }
+        } else if ("obd_live".equals(sub)) {
+            LinearLayout c = section(body, "Datos del motor");
+            int n = 0;
+            for (final Obd.Sensor x : Obd.ALL) {
+                if (!x.has()) continue;
+                n++;
+                liveRow(c, I18n.t(x.label) + (x.pid == -2 ? " (" + I18n.t("calculado") + ")" : ""), null, x.key,
+                    new Runnable() { public void run() { openObdChart(x.key); } });
+            }
+            if (n == 0) row(c, Obd.status == Obd.LIVE ? "Esperando datos" : "Conecta el escáner para ver los datos", null, null, null);
+            LinearLayout g = section(body, "Gráficos");
+            row(g, "Gráficos en vivo", "Hasta 3 datos a la vez, de 1 a 30 minutos", null, new Runnable() { public void run() { openObdChart("coolant"); } });
+        } else if ("obd_ai".equals(sub)) {
+            final String[] pr = DtcInfo.preset(this);
+            LinearLayout c = section(body, "Proveedor");
+            row(c, "Proveedor", null, I18n.t(pr[1]), new Runnable() { public void run() { d.pickProvider(); } });
+            row(c, "API key", "La tuya: cada consulta la cobra tu proveedor", ObdDialogs.mask(prefs.getString("ai_key", "")),
+                new Runnable() { public void run() { d.askKey(); } });
+            row(c, "Modelo", null, DtcInfo.model(this).length() > 0 ? DtcInfo.model(this) : I18n.t("elegir…"),
+                new Runnable() { public void run() { d.pickModel(); } });
+            if ("custom".equals(pr[0])) row(c, "Dirección de la API", null, DtcInfo.baseUrl(this).length() > 0 ? DtcInfo.baseUrl(this) : "—",
+                new Runnable() { public void run() { d.askUrl(); } });
+            LinearLayout pv = section(body, "Privacidad");
+            row(pv, "Qué se envía", "Solo el código, el vehículo que escribas y los datos del motor de ese momento; nunca tu ubicación. Las respuestas se guardan en la pantalla", null, null);
+            row(pv, "Tu vehículo (para la IA)", "Marca, modelo, año, motor y caja", prefs.getString("obd_vehicle", "").length() > 0 ? prefs.getString("obd_vehicle", "") : "—",
+                new Runnable() { public void run() { d.askVehicle(); } });
+            toggle(pv, "Enviar el VIN a la IA", "Identifica tu auto de forma única. Apagado por defecto", prefs.getBoolean("obd_ai_vin", false), new IntCb() { public void on(int i) {
+                prefs.edit().putBoolean("obd_ai_vin", i == 1).apply(); showSettings(C_VEHICLE); }});
+            LinearLayout t = section(body, "Probar");
+            row(t, "Probar la IA", "Pregunta por un código de ejemplo", null, new Runnable() { public void run() { d.testAi(); } });
+            if (prefs.getString("ai_key", "").length() > 0) row(t, "Borrar la API key", null, null, new Runnable() { public void run() {
+                prefs.edit().remove("ai_key").apply(); showSettings(C_VEHICLE); }});
+        } else if ("obd_adv".equals(sub)) {
+            LinearLayout m = section(body, "Motor");
+            row(m, "Cilindrada del motor", "Para calcular el consumo en motores sin sensor MAF",
+                String.format(java.util.Locale.US, "%.1f L", prefs.getFloat("obd_displacement", 2.4f)), new Runnable() { public void run() { d.askDisplacement(); } });
+            row(m, "Protocolo", "Automático casi siempre; fuerza uno si el escáner no lo detecta", ObdDialogs.protocolName(prefs.getString("obd_protocol", "auto")),
+                new Runnable() { public void run() { d.pickProtocol(); } });
+            LinearLayout pn = section(body, "Panel del vehículo");
+            final String[] sides = {"auto", "left", "right"};
+            segmented(pn, "Lado del panel", "Automático: del lado del reproductor (el del conductor)", new String[]{"Automático", "Izquierda", "Derecha"},
+                Math.max(0, java.util.Arrays.asList(sides).indexOf(prefs.getString("obd_panel_side", "auto"))), new IntCb() { public void on(int i) {
+                    prefs.edit().putString("obd_panel_side", sides[i]).apply(); attachVehicle(); showSettings(C_VEHICLE); }});
+            toggle(pn, "Pestaña en el borde", "Toca o desliza la pestaña para abrir el panel. Sin ella, ábrelo con un botón de la barra",
+                prefs.getBoolean("obd_handle", true), new IntCb() { public void on(int i) {
+                    prefs.edit().putBoolean("obd_handle", i == 1).apply(); attachVehicle(); showSettings(C_VEHICLE); }});
+            LinearLayout sc = section(body, "Diagnóstico");
+            row(sc, "Escanear todo lo que entrega el auto", "Informe de cada dato estándar y los propios de la marca. Solo lee", null,
+                new Runnable() { public void run() { d.scanAll(); } });
+            if (Obd.report != null) row(sc, "Ver el último informe", null, null, new Runnable() { public void run() { d.showReport(); } });
         }
     }
 }
