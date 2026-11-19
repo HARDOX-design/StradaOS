@@ -1,6 +1,6 @@
 {
-  "version": "2.25.1",
-  "notes": "## StradaOS 2.25.1 — Pantallas FYT\n\nGracias a **linorks-maker**, que hizo y probó estas funciones en su pantalla EKIY T7 (FYT).\n\n### Nuevo\n- **Tu vehículo → Equipo → Marca de la pantalla** (Auto, Genérica o FYT). Viene en «Genérica»: si no eliges nada, todo sigue igual.\n- **Pantallas FYT: el modo «Sistema» del tema sigue las luces del carro.** En estas pantallas el modo oscuro de Android está bloqueado; ahora el tema cambia al encender o apagar las luces.\n- **Datos del carro en la barra de arriba (FYT):** tensión de la batería (no necesita caja CAN) y temperatura exterior (con caja CAN). En todos los temas, también en Faro.\n- **Espera para cambiar de tema** (modos Auto y Sistema): de 1 a 5 segundos para cada sentido. Evita que la pantalla pase a claro de golpe al apagar el carro de noche. Viene apagada.\n\n### Cambiado\n- Pantalla de inicio → Reproductor de música: los botones ahora van «Izquierda / Derecha», en el mismo orden que la pantalla.\n",
-  "url": "https://github.com/lordnordic-debug/StradaOS/releases/tag/v2.25.1",
-  "apk": "https://github.com/lordnordic-debug/StradaOS/releases/download/v2.25.1/StradaOS-2.25.1.apk"
+  "version": "2.25.2",
+  "notes": "## StradaOS 2.25.2 — Magyar (húngaro)\n\n### Nuevo\n- **Húngaro:** StradaOS ya está en magyar (Ajustes → Sistema → Idioma → Magyar), con la fecha en formato húngaro. Gracias a **Kazsmerlaca**, que lo pidió y nos ayuda a revisarlo. Ya son 11 idiomas.\n",
+  "url": "https://github.com/lordnordic-debug/StradaOS/releases/tag/v2.25.2",
+  "apk": "https://github.com/lordnordic-debug/StradaOS/releases/download/v2.25.2/StradaOS-2.25.2.apk"
 }
