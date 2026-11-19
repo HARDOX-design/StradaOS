@@ -107,6 +107,40 @@ public class MediaWatcher {
         switchTo(best);
     }
 
+    /** Para el diagnóstico: cada sesión multimedia activa (app, estado, canción). «*» = la que se muestra. */
+    static String report() {
+        MediaWatcher w = instance;
+        if (w == null) return "el lector no arrancó";
+        List<MediaController> list;
+        try {
+            list = w.msm.getActiveSessions(new ComponentName(w.ctx, MediaListener.class));
+        } catch (Throwable e) {
+            return "sin acceso (" + e.getClass().getSimpleName() + ")";
+        }
+        if (list == null || list.isEmpty()) return "ninguna (ninguna app publica lo que suena)";
+        StringBuilder sb = new StringBuilder(list.size() + "");
+        for (MediaController m : list) {
+            boolean cur = w.current != null && w.current.getSessionToken().equals(m.getSessionToken());
+            String st = "?";
+            try {
+                PlaybackState p = m.getPlaybackState();
+                if (p != null) st = p.getState() == PlaybackState.STATE_PLAYING ? "sonando"
+                    : p.getState() == PlaybackState.STATE_PAUSED ? "en pausa"
+                    : p.getState() == PlaybackState.STATE_BUFFERING ? "cargando" : "estado " + p.getState();
+            } catch (Throwable ignored) { }
+            String song = "sin datos de la canción";
+            try {
+                MediaMetadata md = m.getMetadata();
+                if (md != null) {
+                    String t = md.getString(MediaMetadata.METADATA_KEY_TITLE), a = md.getString(MediaMetadata.METADATA_KEY_ARTIST);
+                    if (t != null || a != null) song = "«" + t + "» — " + a;
+                }
+            } catch (Throwable ignored) { }
+            sb.append("\n  ").append(cur ? "* " : "· ").append(m.getPackageName()).append(": ").append(st).append(", ").append(song);
+        }
+        return sb.toString();
+    }
+
     /** true si hay una sesión activa de cualquier app (aunque esté en pausa). */
     public boolean hasSession() { return current != null; }
 

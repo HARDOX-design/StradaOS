@@ -1170,3 +1170,11 @@ Negro	Noir
 Sin mantenimientos programados	Aucun entretien programmé
 Toca para agregar uno	Touchez pour en ajouter un
 Navegar	Naviguer
+# 2.25: canción de las apps (acceso a notificaciones)
+Música sonando	Musique en cours
+Toca para ver la canción	Touchez pour voir le titre
+Ver la canción de tus apps	Voir le titre de vos applis
+Para mostrar la canción, el artista y la carátula de Spotify, YouTube Music y otras apps, StradaOS necesita «Acceso a notificaciones». Solo lo usa para leer lo que suena: no guarda ni envía nada.	Pour afficher le titre, l'artiste et la pochette de Spotify, YouTube Music et d'autres applis, StradaOS a besoin de l'« Accès aux notifications ». Il ne sert qu'à lire ce qui joue : rien n'est enregistré ni envoyé.
+No volver a mostrar	Ne plus afficher
+Esta pantalla no tiene el ajuste de «Acceso a notificaciones». Se puede activar una sola vez desde una computadora con ADB:	Cet écran n'a pas le réglage « Accès aux notifications ». On peut l'activer une seule fois depuis un ordinateur avec ADB :
+Spotify, YouTube Music y otras apps de la pantalla (acceso a notificaciones)	Spotify, YouTube Music et autres applis de l'écran (accès aux notifications)

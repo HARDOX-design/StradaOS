@@ -106,6 +106,12 @@ else
   go sim:7 6; demo; shot f60-vertical
   go sim:0 6
 fi
+# diagnóstico del reproductor: permiso de notificaciones y sesiones multimedia
+go inicio 3; go diag-reproductor 5; shot f80-diagnostico-sin-permiso; adb shell input keyevent 4; sleep 2
+if [ "$API" -ge 27 ]; then
+  adb shell cmd notification allow_listener $PKG/com.stradaos.launcher.MediaListener; sleep 4
+  go inicio 3; go diag-reproductor 5; shot f81-diagnostico-con-permiso; adb shell input keyevent 4; sleep 2
+fi
 # un tema gratis quita el premium y todo vuelve a lo de siempre
 go tema-gratis:1 6; demo; shot f90-gratis-quita-premium
 go tema-premium:aurora 6; demo; shot f91-aurora-sigue-igual

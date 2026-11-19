@@ -1137,6 +1137,13 @@ public class Main extends Activity {
             else if (lastFix == 0) setGps(false, 0);
             if (++usbTick % 5 == 0) guardUsb();
             if (bt != null && bt.isConnected() && (++btPoll % 3 == 0 || curTitle == null)) bt.refresh();
+            // Android 5+: suena música sin canción y sin permiso → el reproductor lo dice (y se quita solo)
+            if (trackTv != null && curTitle == null && curArtist == null && wantsNotifAccess() != notifHint) renderTrack();
+            // permiso dado pero el sistema no conectó el lector (algunas pantallas): pedirlo otra vez cada minuto
+            if (SDK >= 24 && usbTick % 30 == 0 && !MediaListener.connected && Modern.notificationAccess(Main.this)) {
+                Modern.rebindListener(Main.this);
+                if (mediaWatcher != null) mediaWatcher.start();
+            }
             updatePlayIcon();
             updateStatusIcons();
             if (++themeTick % 30 == 0) {
@@ -5605,7 +5612,48 @@ public class Main extends Activity {
     }
 
     /** Toca el reproductor: la app de música elegida; si no hay, la de la fuente que suena. */
+    private boolean notifHint;
+
+    /** Android 5+: suena música pero StradaOS no tiene «Acceso a notificaciones», así que no puede ver la canción. */
+    private boolean wantsNotifAccess() {
+        if (SDK < 21 || curTitle != null || curArtist != null || prefs.getBoolean("notif_hint_off", false)) return false;
+        try {
+            if (Modern.notificationAccess(this)) return false;
+            return ((AudioManager) getSystemService(AUDIO_SERVICE)).isMusicActive();
+        } catch (Throwable e) { return false; }
+    }
+
+    /** Explica el permiso y abre el ajuste; si la pantalla no lo tiene, da el comando de ADB. */
+    private void askNotifAccess() {
+        new TB(this, dlg())
+            .setTitle("Ver la canción de tus apps")
+            .setMessage("Para mostrar la canción, el artista y la carátula de Spotify, YouTube Music y otras apps, StradaOS necesita «Acceso a notificaciones». Solo lo usa para leer lo que suena: no guarda ni envía nada.")
+            .setPositiveButton("Activar", new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) {
+                try { startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)); }
+                catch (Throwable e) { notifAccessAdb(); }
+            }})
+            .setNeutralButton("No volver a mostrar", new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) {
+                prefs.edit().putBoolean("notif_hint_off", true).apply();
+                renderTrack();
+            }})
+            .setNegativeButton("Cancelar", null)
+            .show();
+    }
+
+    /** Pantallas sin el ajuste de «Acceso a notificaciones»: se activa desde una computadora con ADB. */
+    private void notifAccessAdb() {
+        String cn = getPackageName() + "/" + MediaListener.class.getName();
+        String cmd = SDK >= 27 ? "adb shell cmd notification allow_listener " + cn
+            : "adb shell settings put secure enabled_notification_listeners " + cn;
+        new TB(this, dlg()).raw()
+            .setTitle(I18n.t("Ver la canción de tus apps"))
+            .setMessage(I18n.t("Esta pantalla no tiene el ajuste de «Acceso a notificaciones». Se puede activar una sola vez desde una computadora con ADB:") + "\n\n" + cmd)
+            .setPositiveButton("OK", null)
+            .show();
+    }
+
     private void openMusicApp() {
+        if (notifHint && wantsNotifAccess()) { askNotifAccess(); return; }
         if (launchSaved("music_app")) return;
         if ("Android Auto".equals(curSource) && launchPkg(PKG_HUR)) return;
         if ("Bluetooth".equals(curSource)) { ComponentName cn = btMusicApp(); if (cn != null && launchComponent(cn)) return; }
@@ -6852,6 +6900,10 @@ public class Main extends Activity {
                 + "\nOpen Headunit corriendo: " + (processRunning(PKG_HUR) ? "sí" : "no")
                 + " · celular por USB en modo Android Auto: " + (aaUsbState() == 1 ? "sí" : aaUsbState() == 0 ? "no" : "no se sabe")
                 + "\nAndroid Auto conectado (para StradaOS): " + (aaRunning() ? "sí" : "no")
+                + "\n\nMúsica de cualquier app (Android 5+): " + (SDK < 21 ? "no aplica en este Android"
+                    : "acceso a notificaciones " + (Modern.notificationAccess(this) ? "SÍ" : "NO") + " · lector conectado " + (MediaListener.connected ? "sí" : "no")
+                    + "\nSonido de música en el sistema: " + (((AudioManager) getSystemService(AUDIO_SERVICE)).isMusicActive() ? "sí" : "no")
+                    + "\nSesiones multimedia: " + MediaWatcher.report())
                 + "\n\n" + Hcn.report()
                 + "\nBluetooth del sistema (AVRCP): " + (NowPlaying.avrcpAt == 0 ? "ningún aviso"
                     : NowPlaying.avrcpCount + " avisos, el último hace " + ((SystemClock.elapsedRealtime() - NowPlaying.avrcpAt) / 1000)
@@ -6897,8 +6949,9 @@ public class Main extends Activity {
     private void renderTrack() {
         if (trackTv == null) return;
         if (curTitle == null && curArtist == null) {
-            trackTv.setText(I18n.t("Nada sonando"));
-            artistTv.setText(I18n.t("Radio, Bluetooth o USB"));
+            notifHint = wantsNotifAccess();
+            trackTv.setText(I18n.t(notifHint ? "Música sonando" : "Nada sonando"));
+            artistTv.setText(I18n.t(notifHint ? "Toca para ver la canción" : "Radio, Bluetooth o USB"));
             sourceTv.setText("");
             timePosTv.setText("");
             playerArt.setArt(null);
@@ -9046,10 +9099,11 @@ public class Main extends Activity {
         LinearLayout c = section(body, "Pista en reproducción");
         row(c, "Carátula de Android Auto", "Lee la notificación de Open Headunit (accesibilidad)", NotifArt.running ? "Activada" : "Desactivada",
             new Runnable() { public void run() { openAccessibility(); } });
-        if (SDK >= 18) row(c, "Música de cualquier app", "Android 5+: acceso a notificaciones", MediaListener.connected ? "Activado" : "Desactivado",
+        if (SDK >= 18) row(c, "Música de cualquier app", "Spotify, YouTube Music y otras apps de la pantalla (acceso a notificaciones)",
+            Modern.notificationAccess(this) ? "Activado" : "Desactivado",
             new Runnable() { public void run() {
                 try { startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)); }
-                catch (Throwable e) { toast("No se pudo abrir el ajuste"); }
+                catch (Throwable e) { notifAccessAdb(); }
             }});
         row(c, "Diagnóstico del reproductor", "Fuente activa, lector de notificaciones y Bluetooth", null, new Runnable() { public void run() { showPlayerDiag(); } });
         LinearLayout b = section(body, "Audio Bluetooth");

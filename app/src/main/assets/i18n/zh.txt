@@ -1170,3 +1170,11 @@ Negro	黑色
 Sin mantenimientos programados	没有已安排的保养
 Toca para agregar uno	点按即可添加
 Navegar	导航
+# 2.25: canción de las apps (acceso a notificaciones)
+Música sonando	正在播放音乐
+Toca para ver la canción	点按查看歌曲
+Ver la canción de tus apps	查看应用中的歌曲
+Para mostrar la canción, el artista y la carátula de Spotify, YouTube Music y otras apps, StradaOS necesita «Acceso a notificaciones». Solo lo usa para leer lo que suena: no guarda ni envía nada.	要显示 Spotify、YouTube Music 等应用的歌曲、歌手和封面，StradaOS 需要“通知使用权”。它只用来读取正在播放的内容：不会保存或发送任何信息。
+No volver a mostrar	不再显示
+Esta pantalla no tiene el ajuste de «Acceso a notificaciones». Se puede activar una sola vez desde una computadora con ADB:	此屏幕没有“通知使用权”设置。可以用装有 ADB 的电脑开启一次：
+Spotify, YouTube Music y otras apps de la pantalla (acceso a notificaciones)	屏幕上的 Spotify、YouTube Music 和其他应用（通知使用权）

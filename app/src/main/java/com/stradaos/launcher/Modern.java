@@ -34,6 +34,15 @@ public class Modern {
         return false;
     }
 
+    /** Android 7+: el permiso está dado pero el sistema no conectó el lector (pasa en algunas pantallas): pedirlo otra vez. */
+    public static void rebindListener(Context c) {
+        if (android.os.Build.VERSION.SDK_INT < 24) return;
+        try {
+            android.service.notification.NotificationListenerService.requestRebind(
+                new android.content.ComponentName(c, MediaListener.class));
+        } catch (Throwable ignored) { }
+    }
+
     public static boolean notificationAccess(Context c) {
         String s = Settings.Secure.getString(c.getContentResolver(), "enabled_notification_listeners");
         return s != null && s.contains(c.getPackageName());
