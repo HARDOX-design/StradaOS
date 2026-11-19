@@ -7176,7 +7176,7 @@ public class Main extends Activity {
     private void wizard() {
         int sel = Math.max(0, java.util.Arrays.asList(I18n.CODES).indexOf(I18n.lang));
         wizardDlg = new TB(this, dlg()).raw()
-            .setTitle("Idioma · Language · Langue · Lingua · Sprache · Bahasa · Dil · اللغة")
+            .setTitle("Idioma · Language · Langue · Lingua · Sprache · Bahasa · Dil · Nyelv · اللغة")
             .setSingleChoiceItems(I18n.NAMES, sel, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface d, int w) {
                     d.dismiss();

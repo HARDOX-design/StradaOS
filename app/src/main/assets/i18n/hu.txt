@@ -1200,3 +1200,4 @@ Temperatura exterior	Külső hőmérséklet
 Del sensor del carro; necesita la caja CAN	Az autó érzékelőjéből; CAN-doboz kell hozzá
 pantalla FYT detectada: elígela en Tu vehículo → Equipo	FYT kijelző észlelve: válaszd ki a Járműved → Fejegység menüben
 esta pantalla no informa las luces	ez a kijelző nem jelzi a lámpák állapotát
+Apps	Appok
