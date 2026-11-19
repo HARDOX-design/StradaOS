@@ -1158,8 +1158,6 @@ Islas Canarias	Canary Islands
 Tiempo en StradaOS: {}	Time in StradaOS: {}
 Último tiempo por Bluetooth: {}	Last time from Bluetooth: {}
 # Pantallas FYT: tema según las luces, espera para cambiar de tema y datos del carro
-Luces	Lights
-Auto: por horario. Sistema: sigue el modo oscuro de la pantalla. Luces: sigue las luces del carro (pantallas FYT)	Auto: by schedule. System: follows the screen's dark mode. Lights: follows the car's lights (FYT head units)
 Luces ahora	Lights now
 Enciende y apaga las luces del carro para probarlo	Turn the car's lights on and off to test it
 Encendidas	On
@@ -1181,7 +1179,6 @@ Servicio com.syu.ms:	com.syu.ms service:
 sin caja CAN	no CAN box
 Esperando datos	Waiting for data
 Luces del carro	Car lights
-Para seguirlas, elige Apariencia → Tema → Modo → Luces	To follow them, choose Appearance → Theme → Mode → Lights
 Sin datos	No data
 sin conectar	not connected
 conectando	connecting
@@ -1194,3 +1191,8 @@ Tema según las luces, batería y temperatura exterior	Theme by the lights, batt
 Pantallas FYT (com.syu.ms)	FYT head units (com.syu.ms)
 luces detectadas	lights detected
 esta pantalla no informa las luces	this screen doesn't report the lights
+Auto: por horario. Sistema: sigue las luces del carro (pantalla FYT)	Auto: by schedule. System: follows the car's lights (FYT head unit)
+Mientras tanto sigue el modo oscuro de Android	Meanwhile it follows Android's dark mode
+Espera para cambiar de tema	Delay theme changes
+Evita cambios de golpe, p. ej. al apagar el carro de noche	Avoids sudden changes, e.g. when turning off the car at night
+Para seguirlas, elige Apariencia → Tema → Modo → Sistema	To follow them, choose Appearance → Theme → Mode → System

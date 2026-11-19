@@ -1158,8 +1158,6 @@ Islas Canarias	Ilhas Canárias
 Tiempo en StradaOS: {}	Tempo no StradaOS: {}
 Último tiempo por Bluetooth: {}	Último tempo pelo Bluetooth: {}
 # Pantallas FYT: tema según las luces, espera para cambiar de tema y datos del carro
-Luces	Luzes
-Auto: por horario. Sistema: sigue el modo oscuro de la pantalla. Luces: sigue las luces del carro (pantallas FYT)	Auto: por horário. Sistema: segue o modo escuro da tela. Luzes: segue as luzes do carro (telas FYT)
 Luces ahora	Luzes agora
 Enciende y apaga las luces del carro para probarlo	Acenda e apague as luzes do carro para testar
 Encendidas	Acesas
@@ -1181,7 +1179,6 @@ Servicio com.syu.ms:	Serviço com.syu.ms:
 sin caja CAN	sem caixa CAN
 Esperando datos	Aguardando dados
 Luces del carro	Luzes do carro
-Para seguirlas, elige Apariencia → Tema → Modo → Luces	Para segui-las, escolha Aparência → Tema → Modo → Luzes
 Sin datos	Sem dados
 sin conectar	sem conexão
 conectando	conectando
@@ -1194,3 +1191,8 @@ Tema según las luces, batería y temperatura exterior	Tema pelas luzes, bateria
 Pantallas FYT (com.syu.ms)	Telas FYT (com.syu.ms)
 luces detectadas	luzes detectadas
 esta pantalla no informa las luces	esta tela não informa as luzes
+Auto: por horario. Sistema: sigue las luces del carro (pantalla FYT)	Auto: por horário. Sistema: segue as luzes do carro (tela FYT)
+Mientras tanto sigue el modo oscuro de Android	Enquanto isso segue o modo escuro do Android
+Espera para cambiar de tema	Espera para mudar de tema
+Evita cambios de golpe, p. ej. al apagar el carro de noche	Evita mudanças de repente, p. ex. ao desligar o carro à noite
+Para seguirlas, elige Apariencia → Tema → Modo → Sistema	Para segui-las, escolha Aparência → Tema → Modo → Sistema

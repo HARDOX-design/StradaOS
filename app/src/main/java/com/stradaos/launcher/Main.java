@@ -6914,16 +6914,18 @@ public class Main extends Activity {
         if ("dark".equals(mode)) return true;
         if ("light".equals(mode)) return false;
         if ("system".equals(mode)) return systemNight();
-        if ("lights".equals(mode)) return lightsDark();
         return darkHours();   // auto
     }
+
+    /** Espera activada (Apariencia → Tema → «Espera para cambiar de tema»); apagada por defecto. */
+    private boolean themeDelayOn() { return prefs.getBoolean("theme_delay_on", false); }
 
     /** ¿Oscuro? Aplica la espera elegida para cada sentido; los modos Oscuro y Claro cambian al instante. */
     private boolean themeDark(String mode) {
         boolean want = themeWanted(mode);
         boolean manual = "dark".equals(mode) || "light".equals(mode);
         int dDark = prefs.getInt("theme_delay_dark", 0), dLight = prefs.getInt("theme_delay_light", 0);
-        if (manual || themeForce || (dDark <= 0 && dLight <= 0)) { themeForce = false; return themeSettle(want); }
+        if (manual || themeForce || !themeDelayOn() || (dDark <= 0 && dLight <= 0)) { themeForce = false; return themeSettle(want); }
         if (themeShown == null) themeShown = prefs.getBoolean("theme_last_dark", want);   // al arrancar: el último tema
         if (want == themeShown) {
             themeWant = null;
@@ -6962,22 +6964,17 @@ public class Main extends Activity {
         } catch (Throwable e) { Guard.log("Tema con espera: " + e); }
     }};
 
-    // ── Modo «Luces»: pantallas FYT (Settings.System car_mode = 1 con las luces encendidas) ──
+    // ── Modo «Sistema» en pantallas FYT: sigue las luces (Settings.System car_mode = 1 con las luces encendidas) ──
+    // En estas pantallas el modo oscuro de Android está bloqueado (mNightModeLocked), así que uiMode nunca cambia.
 
-    /** Luces encendidas = oscuro. Si la pantalla no informa las luces, siguen las horas fijas. */
-    private boolean lightsDark() {
-        int l = Fyt.lights(this);
-        return l < 0 ? darkHours() : l == 1;
-    }
+    /** Luces del carro si la pantalla es FYT y las informa: 1 encendidas, 0 apagadas; -1 si no (se usa uiMode). */
+    private int fytLights() { return fytOn() ? Fyt.lights(this) : -1; }
 
-    /** ¿Se ofrece el modo «Luces»? En pantallas FYT o si la pantalla ya informa car_mode. */
-    private boolean lightsAvailable() { return fytOn() || Fyt.lights(this) >= 0; }
-
-    /** Encendieron o apagaron las luces: en el modo «Luces» se revisa el tema (con la espera elegida). */
+    /** Encendieron o apagaron las luces: en el modo «Sistema» de una FYT se revisa el tema (con la espera elegida). */
     private final android.database.ContentObserver lightsObs = new android.database.ContentObserver(new Handler(android.os.Looper.getMainLooper())) {
         @Override public void onChange(boolean selfChange) {
             try {
-                if (prefs == null || root == null || !"lights".equals(prefs.getString("theme", "dark"))) return;
+                if (prefs == null || root == null || !"system".equals(prefs.getString("theme", "dark")) || !fytOn()) return;
                 h.removeCallbacks(brightApply);
                 h.postDelayed(brightApply, 300);
             } catch (Throwable ignored) { }
@@ -7119,6 +7116,8 @@ public class Main extends Activity {
 
     /** Modo «Sistema»: sigue el modo oscuro de la pantalla (algunas lo activan al encender las luces del carro). */
     private boolean systemNight() {
+        int l = fytLights();   // FYT: las luces del carro (car_mode); las demás pantallas, el modo oscuro de Android
+        if (l >= 0) return l == 1;
         try {
             return (getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
                     == android.content.res.Configuration.UI_MODE_NIGHT_YES;
@@ -7807,7 +7806,8 @@ public class Main extends Activity {
         segmented(eq, "Marca de la pantalla", detTxt, new String[]{"Auto", "Genérica", "FYT"},
             Math.max(0, java.util.Arrays.asList(hws).indexOf(prefs.getString("hw", "auto"))), new IntCb() { public void on(int i) {
                 prefs.edit().putString("hw", hws[i]).apply();
-                stopFyt(); startFyt(); rebuild(); showSettings(settingsCat);
+                stopFyt(); startFyt();
+                applyThemeNow(); applyAccent(); rebuild(); showSettings(settingsCat);   // «Sistema» pasa a seguir (o no) las luces
             }});
         if (fytOn()) {
             toggle(eq, "Datos del carro", "Tensión de la batería y temperatura exterior en la tarjeta del vehículo. La temperatura necesita la caja CAN",
@@ -7823,7 +7823,7 @@ public class Main extends Activity {
                     now.length() > 0 ? now : I18n.t("Esperando datos"), new Runnable() { public void run() { showSettings(settingsCat); } });
             }
             int l = Fyt.lights(this);
-            row(eq, "Luces del carro", "Para seguirlas, elige Apariencia → Tema → Modo → Luces",
+            row(eq, "Luces del carro", "Para seguirlas, elige Apariencia → Tema → Modo → Sistema",
                 l < 0 ? I18n.t("Sin datos") : I18n.t(l == 1 ? "Encendidas" : "Apagadas"), new Runnable() { public void run() { showSettings(C_LOOK); } });
         }
         LinearLayout mt = section(body, "Mantenimientos");
@@ -7891,26 +7891,21 @@ public class Main extends Activity {
     private void catLook(LinearLayout body) {
         LinearLayout c = section(body, "Tema");
         String t = prefs.getString("theme", "dark");
-        final boolean lightsOk = lightsAvailable() || "lights".equals(t);
-        final String[] themes = lightsOk ? new String[]{"dark", "light", "auto", "system", "lights"} : new String[]{"dark", "light", "auto", "system"};
-        String[] themeLbl = lightsOk ? new String[]{"Oscuro", "Claro", "Auto", "Sistema", "Luces"} : new String[]{"Oscuro", "Claro", "Auto", "Sistema"};
-        IntCb onMode = new IntCb() { public void on(int i) {
-            prefs.edit().putString("theme", themes[i]).apply();
-            applyThemeNow(); applyAccent(); rebuild(); showSettings(settingsCat);
-        }};
-        int modeSel = Math.max(0, java.util.Arrays.asList(themes).indexOf(t));
-        if (lightsOk)   // 5 botones no caben en pantallas angostas: lista
-            choice(c, "Modo", "Auto: por horario. Sistema: sigue el modo oscuro de la pantalla. Luces: sigue las luces del carro (pantallas FYT)",
-                themeLbl, modeSel, onMode);
-        else
-            segmented(c, "Modo", "Auto: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)",
-                themeLbl, modeSel, onMode);
-        if ("lights".equals(t)) {
+        final String[] themes = {"dark", "light", "auto", "system"};
+        final boolean fy = fytOn();
+        segmented(c, "Modo", fy ? "Auto: por horario. Sistema: sigue las luces del carro (pantalla FYT)"
+                : "Auto: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)",
+            new String[]{"Oscuro", "Claro", "Auto", "Sistema"},
+            Math.max(0, java.util.Arrays.asList(themes).indexOf(t)), new IntCb() { public void on(int i) {
+                prefs.edit().putString("theme", themes[i]).apply();
+                applyThemeNow(); applyAccent(); rebuild(); showSettings(settingsCat);
+            }});
+        if ("system".equals(t) && fy) {
             int l = Fyt.lights(this);
             if (l >= 0)
                 row(c, "Luces ahora", "Enciende y apaga las luces del carro para probarlo", I18n.t(l == 1 ? "Encendidas" : "Apagadas"), null);
             else
-                row(c, "Esta pantalla no informa las luces", "Mientras tanto usa las horas fijas", "", null);
+                row(c, "Esta pantalla no informa las luces", "Mientras tanto sigue el modo oscuro de Android", "", null);
         }
         if ("auto".equals(t)) {
             final boolean sunOn = prefs.getBoolean("auto_sun", false);
@@ -7950,7 +7945,20 @@ public class Main extends Activity {
             }
         }
         // Espera antes de cambiar de tema, en cada sentido (por defecto sin espera, como siempre)
-        if ("auto".equals(t) || "system".equals(t) || "lights".equals(t)) {
+        // primero solo el interruptor; las dos esperas aparecen al activarlo (menos cosas para quien no lo usa)
+        if ("auto".equals(t) || "system".equals(t)) {
+            final boolean dOn = themeDelayOn();
+            toggle(c, "Espera para cambiar de tema", "Evita cambios de golpe, p. ej. al apagar el carro de noche",
+                dOn, new IntCb() { public void on(int i) {
+                    SharedPreferences.Editor e = prefs.edit().putBoolean("theme_delay_on", i == 1);
+                    // al activarla por primera vez: 1 min para volver a claro, el caso típico
+                    if (i == 1 && prefs.getInt("theme_delay_dark", 0) <= 0 && prefs.getInt("theme_delay_light", 0) <= 0)
+                        e.putInt("theme_delay_light", 60);
+                    e.apply();
+                    applyThemeNow(); applyAccent(); rebuild(); showSettings(settingsCat);
+                }});
+        }
+        if (("auto".equals(t) || "system".equals(t)) && themeDelayOn()) {
             final int dd = prefs.getInt("theme_delay_dark", 0), dl = prefs.getInt("theme_delay_light", 0);
             int sd = 0, sl = 0;
             for (int i = 0; i < THEME_DELAYS.length; i++) { if (THEME_DELAYS[i] == dd) sd = i; if (THEME_DELAYS[i] == dl) sl = i; }
