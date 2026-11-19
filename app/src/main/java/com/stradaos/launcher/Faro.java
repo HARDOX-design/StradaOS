@@ -68,7 +68,7 @@ final class Faro {
         float sat, con, pivot = l ? 240f : 50f;
         float[] tint;
         if (mapLevel <= 0) { sat = l ? 0.22f : 0.18f; con = 1f; tint = l ? new float[]{0.98f, 0.99f, 1.03f} : new float[]{0.92f, 0.98f, 1.12f}; }
-        else if (mapLevel == 1) { sat = 0.55f; con = l ? 1.18f : 1.30f; tint = l ? new float[]{0.99f, 1f, 1.02f} : new float[]{0.96f, 0.99f, 1.06f}; }
+        else if (mapLevel == 1) { sat = l ? 0.45f : 0.40f; con = l ? 1.20f : 1.32f; tint = l ? new float[]{0.98f, 0.995f, 1.025f} : new float[]{0.93f, 0.98f, 1.10f}; }
         else { sat = l ? 0.80f : 0.85f; con = l ? 1.12f : 1.25f; tint = new float[]{1f, 1f, l ? 1.01f : 1.03f}; }
         ColorMatrix m = new ColorMatrix();
         m.setSaturation(sat);
