@@ -37,7 +37,7 @@ public class Backup {
 
     /** Datos que no se copian ni se restauran: son de este equipo o de este momento (descargas, cachés, pruebas). */
     static final String[] SKIP = {"map_dl_", "map_file", "map_provider", "upd_last", "sim_screen", "city_key", "city_name",
-        "opens", "donate_url", "backup_", "first_use", "enjoy_"};
+        "opens", "donate_url", "backup_", "first_use", "enjoy_", "theme_last_dark"};
 
     static boolean skip(String k) {
         for (String p : SKIP) if (k.startsWith(p)) return true;

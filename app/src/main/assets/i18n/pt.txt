@@ -1157,3 +1157,40 @@ Irlanda del Norte	Irlanda do Norte
 Islas Canarias	Ilhas Canárias
 Tiempo en StradaOS: {}	Tempo no StradaOS: {}
 Último tiempo por Bluetooth: {}	Último tempo pelo Bluetooth: {}
+# Pantallas FYT: tema según las luces, espera para cambiar de tema y datos del carro
+Luces	Luzes
+Auto: por horario. Sistema: sigue el modo oscuro de la pantalla. Luces: sigue las luces del carro (pantallas FYT)	Auto: por horário. Sistema: segue o modo escuro da tela. Luzes: segue as luzes do carro (telas FYT)
+Luces ahora	Luzes agora
+Enciende y apaga las luces del carro para probarlo	Acenda e apague as luzes do carro para testar
+Encendidas	Acesas
+Apagadas	Apagadas
+Esta pantalla no informa las luces	Esta tela não informa as luzes
+Espera para pasar a oscuro	Espera para passar ao escuro
+Cuánto debe durar el cambio (luces encendidas, poco brillo…) antes de oscurecer	Quanto tempo a mudança (luzes acesas, pouco brilho…) deve durar antes de escurecer
+Espera para pasar a claro	Espera para passar ao claro
+Útil si al apagar el carro de noche se apagan las luces y la pantalla pasa a claro de golpe	Útil se, ao desligar o carro à noite, as luzes apagam e a tela passa de repente ao claro
+Sin espera	Sem espera
+Marca de la pantalla	Marca da tela
+Genérica	Genérica
+Detectada:	Detectada:
+No se detectó una marca con funciones propias	Não foi detectada uma marca com funções próprias
+Datos del carro	Dados do carro
+Tensión de la batería y temperatura exterior en la tarjeta del vehículo. La temperatura necesita la caja CAN	Tensão da bateria e temperatura exterior no cartão do veículo. A temperatura precisa da caixa CAN
+Lectura actual	Leitura atual
+Servicio com.syu.ms:	Serviço com.syu.ms:
+sin caja CAN	sem caixa CAN
+Esperando datos	Aguardando dados
+Luces del carro	Luzes do carro
+Para seguirlas, elige Apariencia → Tema → Modo → Luces	Para segui-las, escolha Aparência → Tema → Modo → Luzes
+Sin datos	Sem dados
+sin conectar	sem conexão
+conectando	conectando
+conectado	conectado
+desconectado	desconectado
+no se encontró com.syu.ms	com.syu.ms não encontrado
+com.syu.ms no respondió	com.syu.ms não respondeu
+com.syu.ms se reinició	com.syu.ms reiniciou
+Tema según las luces, batería y temperatura exterior	Tema pelas luzes, bateria e temperatura exterior
+Pantallas FYT (com.syu.ms)	Telas FYT (com.syu.ms)
+luces detectadas	luzes detectadas
+esta pantalla no informa las luces	esta tela não informa as luzes
