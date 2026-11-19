@@ -50,9 +50,35 @@ final class Faro {
     /** Recuadro de los botones de la barra y de los controles del mapa. */
     static int tile(boolean l) { return l ? 0xFFFFFFFF : 0xFF202328; }
     static int track(boolean l) { return l ? 0xFFD8DBE0 : 0xFF2A2D33; }
-    /** Mapa como en Cobalto: las teselas de siempre, translúcidas sobre el fondo (baja 50 %, media 70 %, alta 90 %). */
+    /**
+     * Mapa como en Cobalto: las teselas de siempre, translúcidas sobre el fondo y en el tono del tema. Nivel ya resuelto
+     * (0 baja, 1 media, 2 alta; «Auto» se resuelve en Main según la pantalla). Baja es el aspecto suave que se ve bien
+     * en pantallas buenas (S23). En las pantallas sencillas de los radios los grises oscuros se aplastan hacia el negro
+     * y los claros se lavan: media y alta suben la opacidad, el contraste y devuelven parte del color.
+     */
     static int mapLevel;
-    static float mapAlpha(boolean l) { return mapLevel <= 0 ? 0.50f : mapLevel == 1 ? 0.70f : 0.90f; }
+    static float mapAlpha(boolean l) {
+        if (mapLevel <= 0) return 0.50f;
+        if (mapLevel == 1) return l ? 0.72f : 0.80f;
+        return l ? 0.92f : 1f;
+    }
+
+    /** Filtro de color del mapa: saturación, contraste (alrededor del tono del terreno) y un toque azul en oscuro. */
+    static android.graphics.ColorMatrixColorFilter mapTone(boolean l) {
+        float sat, con, pivot = l ? 240f : 50f;
+        float[] tint;
+        if (mapLevel <= 0) { sat = l ? 0.22f : 0.18f; con = 1f; tint = l ? new float[]{0.98f, 0.99f, 1.03f} : new float[]{0.92f, 0.98f, 1.12f}; }
+        else if (mapLevel == 1) { sat = 0.55f; con = l ? 1.18f : 1.30f; tint = l ? new float[]{0.99f, 1f, 1.02f} : new float[]{0.96f, 0.99f, 1.06f}; }
+        else { sat = l ? 0.80f : 0.85f; con = l ? 1.12f : 1.25f; tint = new float[]{1f, 1f, l ? 1.01f : 1.03f}; }
+        ColorMatrix m = new ColorMatrix();
+        m.setSaturation(sat);
+        float off = pivot * (1 - con);
+        m.postConcat(new ColorMatrix(new float[]{con, 0, 0, 0, off, 0, con, 0, 0, off, 0, 0, con, 0, off, 0, 0, 0, 1, 0}));
+        ColorMatrix t = new ColorMatrix();
+        t.setScale(tint[0], tint[1], tint[2], 1f);
+        m.postConcat(t);
+        return new android.graphics.ColorMatrixColorFilter(m);
+    }
     static final int COPPER = 0xFFE7B08A, COPPER_LIGHT = 0xFFF6E7DA, COPPER_DEEP = 0xFFC98B5E;
     static final int WARM = 0xFFFFF4E0, LAVENDER = 0xFFC9C4FF;
 

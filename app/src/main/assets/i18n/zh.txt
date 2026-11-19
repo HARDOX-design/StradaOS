@@ -1162,7 +1162,7 @@ Fondo carbón (o perla en claro) con un haz de luz diagonal. A la izquierda, el 
 Color del carro	车身颜色
 El carro del tema Faro, visto desde arriba. También se cambia con una presión larga sobre el carro.	Faro 主题中的俯视汽车。也可以长按汽车来更换。
 Intensidad del mapa	地图浓度
-Qué tan visible es el mapa sobre el fondo del tema (Baja = como Cobalto). Súbela si al sol no se ve bien.	地图在主题背景上的清晰程度（低 = 与 Cobalto 相同）。如果在阳光下看不清，请调高。
+Qué tan visible es el mapa sobre el fondo. Auto lo pone más fuerte en las pantallas sencillas de los radios y suave en las de alta gama. Súbela si al sol no se ve bien.	地图在背景上的清晰程度。“自动”会在车机的普通屏幕上加强显示，在高端屏幕上保持柔和。如果在阳光下看不清，请调高。
 Baja	低
 Media	中
 Alta	高

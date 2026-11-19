@@ -1208,8 +1208,11 @@ public class Main extends Activity {
         premium = premiumActive();
         Prem.style = premium ? prefs.getString("premium_theme", Aurora.ID) : Aurora.ID;
         mapOnly = premium && Prem.mapOnlyOk() && prefs.getBoolean("prem_map_only", false);   // Cobalto y Faro son fijos: sin «Solo mapa»
-        // Faro (2.25): qué tan visible es el mapa sobre el fondo (baja = como Cobalto)
-        Faro.mapLevel = Math.max(0, Math.min(2, prefs.getInt("faro_map", 0)));
+        // Faro (2.25): qué tan visible es el mapa sobre el fondo. Auto (por defecto): suave en pantallas de alta
+        // resolución y más fuerte en las pantallas sencillas de los radios (lado corto ≤ 720 px y densidad baja)
+        int fml = prefs.getInt("faro_mapa", -1);
+        if (fml < 0) fml = simpleScreen() ? 1 : 0;
+        Faro.mapLevel = Math.max(0, Math.min(2, fml));
         if (premium) { sideDock = false; compactDock = false; }
         // Lienzo virtual: 1024x600. Con la barra lateral los botones salen de abajo y el lienzo queda más bajo
         // (1128x460): en pantallas bajas y anchas como 1280x480 todo se ve ~30 % más grande.
@@ -2685,7 +2688,7 @@ public class Main extends Activity {
         card.addView(liveMap, new FrameLayout.LayoutParams(-1, -1));
         // Aurora: esquinas redondas de verdad sobre el fondo y el mapa un poco translúcido
         if (premium && premBg != null) liveMap.setBackdrop(premBg, premBgHolder, Prem.mapAlpha(LIGHT));
-        if (premium && Prem.faro()) { liveMap.setAttribution(14 * s, 70 * s); liveMap.setTone(true, LIGHT); }
+        if (premium && Prem.faro()) { liveMap.setAttribution(14 * s, 70 * s); liveMap.setTone(Faro.mapTone(LIGHT)); }
         // Cobalto: el mapa se difumina hasta donde empieza el reproductor (abajo, hacia las tarjetas, en vertical)
         if (premium && Prem.cob() && !mapOnly && premBg != null) liveMap.setFade(vertical ? 2 : 1, (vertical ? 150 : Math.max(260, mapW * 0.5f)) * s);
         liveMap.setVisibility(premium && Prem.faro() ? View.VISIBLE : View.INVISIBLE);
@@ -4528,6 +4531,15 @@ public class Main extends Activity {
         place(board, lab, x, labelY, w, labelH);
         chipTv = null;
         oilValTv = null; oilBar = null; oilBarBg = null; oilLblTv = null; oilIc = null;
+    }
+
+    /**
+     * Pantalla sencilla (la típica de los radios: 1024×600, 1280×720…): lado corto ≤ 720 px y densidad ≤ 240. En
+     * esas pantallas el mapa de Faro va más fuerte por defecto; en celulares y tabletas de alta resolución, suave.
+     */
+    private boolean simpleScreen() {
+        android.util.DisplayMetrics dm = getResources().getDisplayMetrics();
+        return Math.min(dm.widthPixels, dm.heightPixels) <= 720 && dm.densityDpi <= 240;
     }
 
     /** Elegir el color del carro (presión larga sobre el carro o Ajustes → Pantalla de inicio). */
@@ -8481,9 +8493,10 @@ public class Main extends Activity {
                 choice(pn, "Color del carro", "El carro del tema Faro, visto desde arriba. También se cambia con una presión larga sobre el carro.", Faro.CAR_NAMES, ci, new IntCb() { public void on(int i) {
                     prefs.edit().putString("faro_car", cols[i]).apply(); rebuild(); showSettings(C_HOME);
                 }});
-                segmented(pn, "Intensidad del mapa", "Qué tan visible es el mapa sobre el fondo del tema (Baja = como Cobalto). Súbela si al sol no se ve bien.",
-                    new String[]{"Baja", "Media", "Alta"}, Math.max(0, Math.min(2, prefs.getInt("faro_map", 0))), new IntCb() { public void on(int i) {
-                        prefs.edit().putInt("faro_map", i).apply(); rebuild(); showSettings(C_HOME);
+                segmented(pn, "Intensidad del mapa", "Qué tan visible es el mapa sobre el fondo. Auto lo pone más fuerte en las pantallas sencillas de los radios y suave en las de alta gama. Súbela si al sol no se ve bien.",
+                    new String[]{"Auto", "Baja", "Media", "Alta"}, Math.max(-1, Math.min(2, prefs.getInt("faro_mapa", -1))) + 1, new IntCb() { public void on(int i) {
+                        if (i == 0) prefs.edit().remove("faro_mapa").apply(); else prefs.edit().putInt("faro_mapa", i - 1).apply();
+                        rebuild(); showSettings(C_HOME);
                     }});
             }
         }

@@ -131,16 +131,9 @@ public class LiveMapView extends View {
     // oscuro, suave en claro). Es un filtro de color al dibujar (la GPU lo hace gratis); el tráfico conserva sus colores.
     private final Paint tileTone = new Paint(Paint.FILTER_BITMAP_FLAG);
     private boolean toned;
-    void setTone(boolean on, boolean light) {
-        toned = on;
-        if (on) {
-            android.graphics.ColorMatrix m = new android.graphics.ColorMatrix();
-            m.setSaturation(light ? 0.22f : 0.18f);
-            android.graphics.ColorMatrix t = new android.graphics.ColorMatrix();
-            if (light) t.setScale(0.98f, 0.99f, 1.03f, 1f); else t.setScale(0.92f, 0.98f, 1.12f, 1f);
-            m.postConcat(t);
-            tileTone.setColorFilter(new android.graphics.ColorMatrixColorFilter(m));
-        }
+    void setTone(android.graphics.ColorFilter f) {
+        toned = f != null;
+        tileTone.setColorFilter(f);
         invalidate();
     }
 

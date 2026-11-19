@@ -54,12 +54,14 @@ go tema:oscuro 0; sleep 1.8; shot f07a-encendiendo-faros; sleep 5; demo
 for c in red blue black white; do go pref:faro_car=$c 5; demo; shot f10-color-$c; done
 go tema:claro 6; for c in black red; do go pref:faro_car=$c 5; demo; shot f11-claro-color-$c; done
 go pref:faro_car=silver 5
-go pref:faro_map=1 8; demo; shot f12-claro-mapa-media
-go pref:faro_map=2 8; demo; shot f13-claro-mapa-alta
+# intensidad del mapa: Auto (en 1024×600 = media), baja (la del S23), alta
+go pref:faro_mapa=0 8; demo; shot f12-claro-mapa-baja
+go pref:faro_mapa=2 8; demo; shot f13-claro-mapa-alta
+go pref:faro_mapa= 8; demo; shot f13b-claro-mapa-auto
 go tema:oscuro 6
-go pref:faro_map=1 8; demo; shot f14-oscuro-mapa-media
-go pref:faro_map=2 8; demo; shot f15-oscuro-mapa-alta
-go pref:faro_map=0 6
+go pref:faro_mapa=0 8; demo; shot f14-oscuro-mapa-baja
+go pref:faro_mapa=2 8; demo; shot f15-oscuro-mapa-alta
+go pref:faro_mapa= 8; demo; shot f15b-oscuro-mapa-auto
 go mapa-zoom:15 3; shot f16-zoom-15
 go mapa-zoom:17 3; shot f17-zoom-17
 # navegación integrada: límite de la vía en el velocímetro (si OSRM lo trae)

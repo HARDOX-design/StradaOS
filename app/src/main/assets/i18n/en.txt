@@ -1162,7 +1162,7 @@ Fondo carbón (o perla en claro) con un haz de luz diagonal. A la izquierda, el 
 Color del carro	Car color
 El carro del tema Faro, visto desde arriba. También se cambia con una presión larga sobre el carro.	The car in the Faro theme, seen from above. You can also change it by long-pressing the car.
 Intensidad del mapa	Map intensity
-Qué tan visible es el mapa sobre el fondo del tema (Baja = como Cobalto). Súbela si al sol no se ve bien.	How visible the map is over the theme background (Low = like Cobalt). Turn it up if it's hard to see in the sun.
+Qué tan visible es el mapa sobre el fondo. Auto lo pone más fuerte en las pantallas sencillas de los radios y suave en las de alta gama. Súbela si al sol no se ve bien.	How visible the map is over the background. Auto makes it stronger on the simple screens of car radios and softer on high-end screens. Turn it up if it's hard to see in the sun.
 Baja	Low
 Media	Medium
 Alta	High
