@@ -788,6 +788,7 @@ public class Main extends Activity {
                 }
                 else if (v.startsWith("lic-prueba:")) prefs.edit().putBoolean("lic_test", v.endsWith("1")).apply();
                 else if (v.startsWith("desbloquear:")) unlockDialog(v.substring(12));
+                else if (v.startsWith("paquete:")) Prem.forceBundle = v.endsWith("1");
                 else if (v.startsWith("lic-codigo:")) checkCode(Faro.ID, v.substring(11));
                 else if ("lic-usb".equals(v)) importLicense(Faro.ID);
                 else if ("solo-mapa-anim".equals(v)) toggleMapOnly();
@@ -5494,12 +5495,13 @@ public class Main extends Activity {
             View.OnClickListener open = new View.OnClickListener() { public void onClick(View v) { unlockDialog(id); } };
             btn.setOnClickListener(open);
             cell.setOnClickListener(open);
-            TextView soon = tv("Se desbloquea con una donación. Todas las funciones de StradaOS siguen siendo gratis.", 11, MUTED, false);
+            TextView soon = tv(Prem.bundle() ? "Se desbloquea con una donación de 4 USD, o 6 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis."
+                : "Se desbloquea con una donación. Todas las funciones de StradaOS siguen siendo gratis.", 11, MUTED, false);
             multiLine(soon);
             soon.setPadding(0, (int) (8 * s), 0, 0);
             info.addView(soon);
         }
-        if (getPackageName().endsWith(".debug") && !free && Faro.ID.equals(id)) {
+        if (getPackageName().endsWith(".debug") && !free) {
             // solo en StradaOS Prueba: probar el desbloqueo de verdad (con el ID y el código de esta pantalla)
             final boolean t = prefs.getBoolean("lic_test", false);
             TextView tt = tv(t ? "Prueba: volver a aplicar sin código" : "Prueba: desbloquear como en la versión normal", 11, RED, true);
@@ -5530,10 +5532,13 @@ public class Main extends Activity {
         LinearLayout col = new LinearLayout(this);
         col.setOrientation(LinearLayout.VERTICAL);
         col.setPadding(narrow ? 0 : (int) (20 * s), narrow ? (int) (14 * s) : 0, 0, 0);
-        TextView m1 = tv(I18n.t("1. Dona 4 USD en Ko-fi: escanea el código con tu celular o entra a {}.").replace("{}", url.replace("https://", "")), 13, SOFT, false);
+        final boolean pack = Prem.bundle();   // con dos o más temas de pago: 6 USD por dos
+        TextView m1 = tv(I18n.t(pack ? "1. Dona en Ko-fi 4 USD por un tema o 6 USD por dos: escanea el código con tu celular o entra a {}."
+            : "1. Dona 4 USD en Ko-fi: escanea el código con tu celular o entra a {}.").replace("{}", url.replace("https://", "")), 13, SOFT, false);
         multiLine(m1);
         col.addView(m1);
-        TextView m2 = tv("2. En el mensaje de la donación escribe el ID de esta pantalla:", 13, SOFT, false);
+        TextView m2 = tv(pack ? "2. En el mensaje de la donación escribe el ID de esta pantalla y qué temas quieres:"
+            : "2. En el mensaje de la donación escribe el ID de esta pantalla:", 13, SOFT, false);
         multiLine(m2);
         m2.setPadding(0, (int) (10 * s), 0, (int) (4 * s));
         col.addView(m2);

@@ -1697,3 +1697,6 @@ Copia el archivo que te enviamos (stradaos-licencia.txt) en la raíz de una USB,
 ¡Listo!	Siap!
 {} quedó desbloqueado en esta pantalla. Gracias por apoyar StradaOS.	{} kini dibuka pada skrin ini. Terima kasih kerana menyokong StradaOS.
 Aplicar ahora	Guna sekarang
+1. Dona en Ko-fi 4 USD por un tema o 6 USD por dos: escanea el código con tu celular o entra a {}.	1. Derma di Ko-fi 4 USD untuk satu tema atau 6 USD untuk dua: imbas kod dengan telefon anda atau pergi ke {}.
+2. En el mensaje de la donación escribe el ID de esta pantalla y qué temas quieres:	2. Dalam mesej derma, tulis ID skrin ini dan tema yang anda mahu:
+Se desbloquea con una donación de 4 USD, o 6 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	Dibuka dengan derma 4 USD, atau 6 USD untuk dua tema. Semua fungsi StradaOS kekal percuma.

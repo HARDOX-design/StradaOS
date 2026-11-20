@@ -60,7 +60,13 @@ go obd-off 4; go inicio 3
 go tema-premium:aurora 6; go pista-demo:Night_Drive 3; shot p50-aurora
 go tema-premium:cobalto 6; go pista-demo:Night_Drive 3; shot p51-cobalto
 go tema-gratis:1 6; go inicio 3
-go lic-prueba:1 3; go desbloquear:faro 5; shot p52-desbloquear; back; go lic-prueba:0 3
+go lic-prueba:1 3; go desbloquear:faro 5; shot p52-desbloquear; back
+# 2.28: paquete de 6 USD por dos temas (aparece solo con dos temas de pago; aquí se fuerza con «paquete:1»)
+go paquete:1 2; go desbloquear:faro 5; shot p53-paquete; back
+go ajustes:0 5; sc; sc; sc; sc; shot p54-paquete-tarjeta
+for L in es en hu ar; do go idioma:$L 6; go desbloquear:faro 5; shot p55-paquete-$L; back; done
+go idioma:hu 6; go inicio 4; shot p56-hu-inicio; go idioma:pl 6
+go paquete:0 2; go lic-prueba:0 3
 go nav-demo 12; shot p60-nav; back
 go inicio 3
 sleep 3; kill $LC $GEO 2>/dev/null

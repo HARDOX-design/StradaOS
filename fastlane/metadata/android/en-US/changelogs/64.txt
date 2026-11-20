@@ -1,1 +1,1 @@
-New language: Polish (Polski), thanks to darlo-Pl. The whole app and the OBD-II scanner guide in Polish. StradaOS now speaks 12 languages.
+New language: Polish (Polski), thanks to darlo-Pl. The whole app and the OBD-II scanner guide in Polish. Hungarian fixes by Kazsmerlaca. StradaOS now speaks 12 languages.

@@ -45,8 +45,8 @@ Elige tu app de navegación	Válaszd ki a navigációs alkalmazást
 Automático · {}	Automatikus · {}
 {}\n    → {}	{}\n    → {}
 Buenos días	Jó reggelt
-Buenas tardes	Jó napot
-Buenas noches	Jó estét
+Buenas tardes	Szép napot
+Buenas noches	Szép estét
 Diagnóstico del reproductor	Lejátszó-diagnosztika
 Accesibilidad	Kisegítő lehetőségek
 Activa «Carátula de Android Auto» (StradaOS)	Kapcsold be az „Android Auto albumborító” (StradaOS) lehetőséget
@@ -93,7 +93,7 @@ Quitar la foto	Fotó eltávolítása
 Elegir foto	Fotó választása
 Foto del vehículo	Jármű fotója
 ¿De dónde sacamos la foto?	Honnan vegyük a fotót?
-Consejo: usa una foto del carro de lado o de frente con fondo liso (blanco, gris o cielo). El fondo se quita solo.	Tipp: használj oldalról vagy elölről készült fotót az autóról, egyszínű háttérrel (fehér, szürke vagy ég). A háttér automatikusan eltűnik.
+Consejo: usa una foto del carro de lado o de frente con fondo liso (blanco, gris o cielo). El fondo se quita solo.	Tipp: használj oldalról vagy elölről készült fotót az autóról, egyszínű háttérrel (fehér, szürke vagy ég). A háttér automatikusan eltávolításra kerül.
 Memoria / USB	Tárhely / USB
 Galería	Galéria
 Elige la foto	Válaszd ki a fotót
@@ -107,8 +107,8 @@ No se detectó un fondo liso (se usará tal cual)	Nem található egyszínű há
 Vista previa · nivel {} de 4	Előnézet · {}/4. szint
 Vista previa · nivel {} de 4 (también quita el reflejo del piso)	Előnézet · {}/4. szint (a padló tükröződését is eltávolítja)
 Usar esta	Ezt használom
-Foto guardada	Fotó mentve
-No se pudo guardar la foto	Nem sikerült menteni a fotót
+Foto guardada	Fotó elmentve
+No se pudo guardar la foto	Nem sikerült elmenteni a fotót
 Quitar más fondo	Több háttér eltávolítása
 Quitando más fondo…	Több háttér eltávolítása…
 No es una imagen válida	Nem érvényes kép
@@ -420,7 +420,7 @@ Ubicación apagada · toca aquí	Helymeghatározás kikapcsolva · koppints ide
 Sin señal GPS · toca aquí	Nincs GPS-jel · koppints ide
 Versión de prueba	Tesztverzió
 Simular pantalla	Kijelző szimulálása
-Para probar otros tamaños en una tablet o celular	Más méretek kipróbálásához tableten vagy telefonon
+Para probar otros tamaños en una tablet o celular	Ha más méreteket is kipróbálnál tableten vagy telefonon
 Real	Valós
 Aceite	Olaj
 Configurar	Beállítás
@@ -464,7 +464,7 @@ Revisa el último cambio	Ellenőrizd az utolsó cserét
 El último cambio ({}) queda por encima del kilometraje actual ({}). ¿Lo escribiste en otra unidad?	Az utolsó csere ({}) nagyobb, mint az aktuális kilométeróra-állás ({}). Esetleg más mértékegységben adtad meg?
 Corregir	Javítás
 Guardar igual	Mentés így is
-Kilometraje del tablero cuando se hizo	Kilométeróra-állás a műszerfalon a cserekor
+Kilometraje del tablero cuando se hizo	Kilométeróra-állás a műszerfalon a csere időpontjában
 Ocultas: {}	Elrejtve: {}
 Ocultar del cajón	Elrejtés a fiókból
 Información de la app	Alkalmazásinfó
@@ -607,6 +607,7 @@ apagada	ki
 ninguna desde que abrió StradaOS	nincs a StradaOS megnyitása óta
 hace {} s	{} mp-e
 hace {} min	{} perce
+Hace {} min	{} perce
 Buscando desde hace {} min	{} perce keres
 Posición: {}	Pozíció: {}
 sin GPS	nincs GPS
@@ -678,12 +679,12 @@ Abriendo la foto…	Fotó megnyitása…
 Vista previa	Előnézet
 Sin fondo · nivel {} de 4	Háttér eltávolítva · {}/4. szint
 Sin fondo · nivel {} de 4 (también quita el reflejo del piso)	Háttér eltávolítva · {}/4. szint (a padló tükröződését is eltávolítja)
-Usar la foto original, con fondo	Az eredeti fotó használata háttérrel
+Usar la foto original, con fondo	Az eredeti fotó használata háttérrel együtt
 Quitar el fondo	Háttér eltávolítása
 No se detectó un fondo liso: se usa la foto tal cual	Nem található egyszínű háttér: a fotó változatlanul lesz használva
 Se usa tal cual; si quieres, le puedes quitar el fondo	Változatlanul használva; ha szeretnéd, eltávolíthatod a hátteret
 Cantidad de botones	Gombok száma
-«Apps» siempre queda al final	Az „Alkalmazások” mindig az utolsó marad
+«Apps» siempre queda al final	Az „Alkalmazások” mindig az utolsók maradnak
 Tamaño de los íconos	Ikonméret
 Pequeño	Kicsi
 Pequeña	Kicsi
@@ -738,7 +739,7 @@ Escribirlo	Beírás
 Cambiar cada cuánto	Gyakoriság módosítása
 Corregir la última vez	Az utolsó alkalom javítása
 ¿Borrar «{}»?	Törlöd: „{}”?
-Kilometraje del tablero al hacerlo	Kilométeróra-állás a műszerfalon az elvégzéskor
+Kilometraje del tablero al hacerlo	Kilométeróra-állás a műszerfalon, amikor kész
 Es hora de: {}	Ideje elvégezni: {}
 ¡Toca: {}!	Esedékes: {}!
 Cada {}	{} gyakorisággal
@@ -1013,7 +1014,7 @@ Recalcular ruta	Útvonal újratervezése
 ruta guardada	mentett útvonal
 sin conexión · aproximada	offline · hozzávetőleges
 aproximada	hozzávetőleges
-Para rutas largas o sin mapa local hace falta internet	Hosszú útvonalakhoz vagy helyi térkép nélkül internet szükséges
+Para rutas largas o sin mapa local hace falta internet	Hosszú útvonalakhoz, illetve helyi térkép hiányában internetkapcsolat szükséges
 Mapa local	Helyi térkép
 Pueblo	Település
 Barrio	Városrész
@@ -1065,7 +1066,7 @@ Elegir ruta	Válassz útvonalat
 Ruta	Útvonal
 Más rápida	Leggyorsabb
 incidente	esemény
-incidentes	esemény
+incidentes	események
 incidente en la ruta	esemény az útvonalon
 incidentes en la ruta	esemény az útvonalon
 Incidentes en la ruta	Események az útvonalon
@@ -1120,7 +1121,7 @@ Aurora en uso	Aurora használatban
 El tema arma la pantalla de inicio. Las tarjetas, la barra y el velocímetro de aquí se usan otra vez al quitarlo en Personalización.	A téma rendezi el a kezdőképernyőt. Az itteni kártyák, sáv és sebességmérő akkor lépnek újra életbe, amikor a Személyre szabás menüben eltávolítod.
 Tema premium quitado	Prémium téma eltávolítva
 Premium	Prémium
-Fondo con un arco de color difuminado y granulado, tarjetas translúcidas, la hora en grande con música, vehículo y clima arriba, el mapa a lo ancho y una barra tipo píldora. El botón «Solo mapa» agranda el mapa.	Háttér lágy, szemcsés színívvel, áttetsző kártyák, nagy óra zenével, járművel és időjárással felül, teljes szélességű térkép és kapszula alakú sáv. A «Csak térkép» gomb felnagyítja a térképet.
+Fondo con un arco de color difuminado y granulado, tarjetas translúcidas, la hora en grande con música, vehículo y clima arriba, el mapa a lo ancho y una barra tipo píldora. El botón «Solo mapa» agranda el mapa.	Lágy, szemcsés, íves színhatású háttér áttetsző kártyákkal, nagy órával a tetején – amelyen zene-, jármű- és időjárás-adatok is megjelennek –, teljes szélességű térképpel és kapszula alakú sávval. A „Csak térkép” gomb felnagyítja a térképet.
 Sigue el modo claro u oscuro de Apariencia.	A Megjelenés menüben beállított világos vagy sötét módot követi.
 Quitar el tema premium	A prémium téma eltávolítása
 Aplicar	Alkalmazás
@@ -1682,3 +1683,6 @@ Copia el archivo que te enviamos (stradaos-licencia.txt) en la raíz de una USB,
 ¡Listo!	Kész!
 {} quedó desbloqueado en esta pantalla. Gracias por apoyar StradaOS.	A(z) {} feloldva ezen a kijelzőn. Köszönjük, hogy támogatod a StradaOS-t.
 Aplicar ahora	Alkalmazás most
+1. Dona en Ko-fi 4 USD por un tema o 6 USD por dos: escanea el código con tu celular o entra a {}.	1. Adományozz a Ko-fin 4 USD-t egy témáért vagy 6 USD-t kettőért: olvasd be a kódot a telefonoddal, vagy nyisd meg: {}.
+2. En el mensaje de la donación escribe el ID de esta pantalla y qué temas quieres:	2. Az adomány üzenetébe írd be ennek a kijelzőnek az azonosítóját és azt, hogy mely témákat szeretnéd:
+Se desbloquea con una donación de 4 USD, o 6 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	4 USD-s adománnyal oldható fel, két téma 6 USD. A StradaOS minden funkciója ingyenes marad.

@@ -1697,3 +1697,6 @@ Copia el archivo que te enviamos (stradaos-licencia.txt) en la raíz de una USB,
 ¡Listo!	Fatto!
 {} quedó desbloqueado en esta pantalla. Gracias por apoyar StradaOS.	{} è sbloccato su questo schermo. Grazie per sostenere StradaOS.
 Aplicar ahora	Applica ora
+1. Dona en Ko-fi 4 USD por un tema o 6 USD por dos: escanea el código con tu celular o entra a {}.	1. Dona su Ko-fi 4 USD per un tema o 6 USD per due: scansiona il codice con il telefono o vai su {}.
+2. En el mensaje de la donación escribe el ID de esta pantalla y qué temas quieres:	2. Nel messaggio della donazione scrivi l'ID di questo schermo e quali temi vuoi:
+Se desbloquea con una donación de 4 USD, o 6 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	Si sblocca con una donazione di 4 USD, o 6 USD per due temi. Tutte le funzioni di StradaOS restano gratuite.

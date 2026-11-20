@@ -1789,3 +1789,6 @@ Copia el archivo que te enviamos (stradaos-licencia.txt) en la raíz de una USB,
 ¡Listo!	Done!
 {} quedó desbloqueado en esta pantalla. Gracias por apoyar StradaOS.	{} is now unlocked on this screen. Thanks for supporting StradaOS.
 Aplicar ahora	Apply now
+1. Dona en Ko-fi 4 USD por un tema o 6 USD por dos: escanea el código con tu celular o entra a {}.	1. Donate on Ko-fi, 4 USD for one theme or 6 USD for two: scan the code with your phone or go to {}.
+2. En el mensaje de la donación escribe el ID de esta pantalla y qué temas quieres:	2. In the donation message, write this screen's ID and which themes you want:
+Se desbloquea con una donación de 4 USD, o 6 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	Unlocks with a 4 USD donation, or 6 USD for two themes. Every StradaOS feature stays free.

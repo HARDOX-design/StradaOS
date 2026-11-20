@@ -17,6 +17,15 @@ final class Prem {
 
     /** Temas premium que se regalan a todos (lanzamiento de la 2.24). Los que vengan después se desbloquean con una donación (Fase 3). */
     static boolean free(String id) { return Aurora.ID.equals(id) || Cobalto.ID.equals(id); }
+    /** Cuántos temas se desbloquean con donación. Con dos o más, la app ofrece sola el paquete de 6 USD por dos temas. */
+    static int paidCount() {
+        int n = 0;
+        for (String id : IDS) if (!free(id)) n++;
+        return n;
+    }
+    /** Solo para las pruebas en el emulador (gancho «paquete:1»): ver el paquete antes de que exista el segundo tema. */
+    static boolean forceBundle;
+    static boolean bundle() { return forceBundle || paidCount() >= 2; }
     static boolean cob() { return Cobalto.ID.equals(style); }
     static boolean faro() { return Faro.ID.equals(style); }
     /** Solo Aurora tiene «Solo mapa» (Cobalto y Faro son fijos). */

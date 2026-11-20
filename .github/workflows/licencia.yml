@@ -16,7 +16,7 @@ on:
         description: 'ID de la pantalla (XXXX-XXXX), tal como sale en StradaOS'
         required: true
       temas:
-        description: 'Temas separados por comas'
+        description: 'Temas separados por comas (por ejemplo faro o faro,otro), o «todos»'
         required: true
         default: 'faro'
 
@@ -31,6 +31,11 @@ jobs:
   licencia:
     runs-on: ubuntu-latest
     steps:
+      # Lee del código de la app qué temas son de pago: un tema nuevo de pago sirve aquí sin tocar este archivo.
+      - uses: actions/checkout@v4
+        with:
+          path: src
+          sparse-checkout: app/src/main/java/com/stradaos/launcher
       - name: Revisar los datos
         id: datos
         env:
@@ -41,9 +46,22 @@ jobs:
           if ! printf '%s' "$ID" | grep -Eq '^[0-9ABCDEFGHJKMNPQRSTVWXYZ]{8}$'; then
             echo "::error::El ID debe tener 8 letras o números (por ejemplo 7KQ2-M9XA)."; exit 1
           fi
+          J=src/app/src/main/java/com/stradaos/launcher
+          IDS=$(grep 'static final String\[\] IDS' $J/Prem.java)
+          FREE=$(grep 'static boolean free(String id)' $J/Prem.java)
+          PAGO=""
+          for c in $(printf '%s' "$IDS" | grep -o '[A-Z][A-Za-z]*\.ID' | cut -d. -f1); do
+            printf '%s' "$FREE" | grep -q "$c\.ID" && continue
+            t=$(grep -o 'static final String ID = "[a-z]*"' "$J/$c.java" | cut -d'"' -f2)
+            [ -n "$t" ] && PAGO="$PAGO,$t"
+          done
+          PAGO=${PAGO#,}
+          echo "Temas de pago: $PAGO"
+          [ -n "$PAGO" ] || { echo "::error::No encontré temas de pago en Prem.java"; exit 1; }
           TEMAS=$(printf '%s' "$RAW_TEMAS" | tr 'A-Z' 'a-z' | tr -d ' ')
+          [ "$TEMAS" = "todos" ] && TEMAS=$PAGO
           for t in $(printf '%s' "$TEMAS" | tr ',' ' '); do
-            case "$t" in faro) ;; *) echo "::error::Tema desconocido: $t (temas de pago: faro)"; exit 1;; esac
+            case ",$PAGO," in *",$t,"*) ;; *) echo "::error::Tema desconocido: $t (temas de pago: $PAGO)"; exit 1;; esac
           done
           echo "id=$ID" >> "$GITHUB_OUTPUT"
           echo "temas=$TEMAS" >> "$GITHUB_OUTPUT"
