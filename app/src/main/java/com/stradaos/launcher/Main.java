@@ -11269,7 +11269,7 @@ public class Main extends Activity {
             List<Obd.Alert> al;
             synchronized (Obd.alerts) { al = new ArrayList<Obd.Alert>(Obd.alerts); }
             if (al.isEmpty()) row(now, "Todo normal por ahora", null, null, null);
-            for (final Obd.Alert a : al) row(now, a.title, a.advice, I18n.t(a.level == Obd.CRIT ? "Alerta" : "Aviso"),
+            for (final Obd.Alert a : al) row(now, a.title(), a.advice(), I18n.t(a.level == Obd.CRIT ? "Alerta" : "Aviso"),
                 new Runnable() { public void run() { d.showAlert(a); } });
             LinearLayout av = section(body, "Avisos");
             toggle(av, "Avisos por voz", "Habla aunque estés en Waze o con música", prefs.getBoolean("obd_voice", true), new IntCb() { public void on(int i) {

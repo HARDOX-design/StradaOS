@@ -31,6 +31,10 @@ public class I18n {
     private static final HashMap<String, String> map = new HashMap<String, String>();
     private static final List<Pat> pats = new ArrayList<Pat>();
     private static final HashMap<String, String> cache = new HashMap<String, String>();
+    /** Solo en StradaOS Prueba: anota en el logcat (StradaI18n) cada texto que quedó sin traducir. */
+    private static boolean audit;
+    private static final java.util.HashSet<String> missed = new java.util.HashSet<String>();
+    private static final java.util.regex.Pattern WORD = java.util.regex.Pattern.compile("[a-záéíóúñ]{3,}");
 
     private static class Pat {
         Pattern re;
@@ -63,6 +67,8 @@ public class I18n {
     static synchronized void set(Context c, String code) {
         if (code == null) code = "es";
         lang = code;
+        audit = c != null && c.getPackageName().endsWith(".debug");
+        missed.clear();
         loc = "en".equals(code) ? Locale.US : "pt".equals(code) ? new Locale("pt", "BR")
             : "it".equals(code) ? Locale.ITALY : "de".equals(code) ? Locale.GERMANY
             : "ms".equals(code) ? new Locale("ms", "MY") : "ar".equals(code) ? new Locale("ar")
@@ -117,6 +123,11 @@ public class I18n {
         String s = cs.toString();
         if ("es".equals(lang) || s.length() == 0) return s;
         return tr(s, 0);
+    }
+
+    /** ¿Hay traducción exacta de este texto en el idioma de ahora? (en español, siempre) */
+    static synchronized boolean has(String s) {
+        return "es".equals(lang) || s != null && map.containsKey(s);
     }
 
     /** Texto de varias líneas (diagnósticos): se traduce cada línea por separado. */
@@ -181,6 +192,8 @@ public class I18n {
                 break;
             }
         }
+        if (audit && out.equals(s) && missed.size() < 3000 && WORD.matcher(s).find() && missed.add(s))
+            android.util.Log.w("StradaI18n", lang + "\t" + s.replace("\n", "\\n"));
         if (cache.size() > 3000) cache.clear();
         cache.put(s, out);
         return out;

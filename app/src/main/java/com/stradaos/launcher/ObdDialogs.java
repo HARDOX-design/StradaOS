@@ -242,7 +242,7 @@ class ObdDialogs {
     void showAlert(final Obd.Alert al) {
         if (al.key.startsWith("dtc_")) { showCode(al.key.substring(4)); return; }
         final Obd.Sensor sensor = sensorOf(al.key);
-        TB b = (TB) tb().raw().wide().setTitle(al.title).setMessage(al.advice);
+        TB b = (TB) tb().raw().wide().setTitle(al.title()).setMessage(al.advice());
         b.setPositiveButton(I18n.t("Preguntar a la IA"), new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) { askAiAlert(al); } });
         if (sensor != null) b.setNeutralButton(I18n.t("Ajustar esta alerta"), new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) { editAlert(sensor); } });
         b.setNegativeButton(I18n.t("Cerrar"), null);
@@ -251,11 +251,11 @@ class ObdDialogs {
 
     private void askAiAlert(final Obd.Alert al) {
         if (!DtcInfo.aiReady(a)) { askAi(null); return; }
-        final AlertDialog wait = tb().setTitle(al.title).setMessage("Preguntando a la IA…").setNegativeButton("Cerrar", null).show();
-        DtcInfo.explainAlert(a, al.title, new DtcInfo.AiCb() { public void on(String text, String error) {
+        final AlertDialog wait = tb().setTitle(al.title()).setMessage("Preguntando a la IA…").setNegativeButton("Cerrar", null).show();
+        DtcInfo.explainAlert(a, al.title(), new DtcInfo.AiCb() { public void on(String text, String error) {
             try { wait.dismiss(); } catch (Throwable ignored) { }
             if (a.isFinishing()) return;
-            tb().raw().wide().setTitle(text != null ? al.title : I18n.t("No se pudo consultar la IA"))
+            tb().raw().wide().setTitle(text != null ? al.title() : I18n.t("No se pudo consultar la IA"))
                 .setMessage(text != null ? text : I18n.t(error)).setNegativeButton(I18n.t("Cerrar"), null).show();
         }});
     }

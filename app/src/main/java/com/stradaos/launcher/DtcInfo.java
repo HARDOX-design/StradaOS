@@ -75,10 +75,11 @@ public class DtcInfo {
         String[] s = es.get(code);
         if (s != null) {
             e.severity = Integer.parseInt(s[0]);
-            // la tabla propia está en español: en otros idiomas se usa la descripción SAE en inglés (y la IA, si hay)
-            if ("es".equals(I18n.lang)) {
-                e.es = s[1];
-                e.advice = s[2];
+            // la tabla propia está escrita en español y traducida en assets/i18n; si un idioma no la tiene,
+            // se usa la descripción SAE en inglés (y la IA, si hay). «es» = la explicación en el idioma de ahora.
+            if (I18n.has(s[1])) {
+                e.es = I18n.t(s[1]);
+                e.advice = I18n.t(s[2]);
             }
         }
         e.en = en.get(code);

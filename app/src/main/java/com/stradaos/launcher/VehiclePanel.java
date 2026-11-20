@@ -2,6 +2,7 @@ package com.stradaos.launcher;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -177,26 +178,49 @@ class VehiclePanel extends FrameLayout implements Obd.Listener {
 
     boolean isOpen() { return open; }
 
+    /**
+     * Cuánto tarda en este equipo dibujar el inicio difuminado (ms, -1 = aún no se sabe). En los equipos rápidos
+     * (celulares, pantallas nuevas) el difuminado se calcula antes y entra junto con el panel, en un solo movimiento.
+     * En los lentos (Android 4, AC8227) el panel entra primero y el difuminado aparece cuando ya llegó, para que la
+     * animación no se trabe.
+     */
+    private static long shotMs = -1;
+
+    private static boolean slowShot() {
+        if (Build.VERSION.SDK_INT < 21) return true;    // Android 4: siempre en dos tiempos (así quedó fluido en el Picanto)
+        return shotMs > 28;                            // Android 5+: en un solo movimiento, salvo que el equipo resulte lento
+    }
+
     void open() {
         if (open) return;
         open = true;
-        // Primero el panel (con la capa de la GPU mientras se mueve) y el fondo oscurecido; el difuminado se calcula
-        // cuando el panel ya llegó y aparece suave: así la animación no espera a dibujar el inicio en pantallas lentas.
+        boolean deferred = slowShot();
         blur.setImageDrawable(null);
         blur.setAlpha(0f); dim.setAlpha(0f);
+        if (!deferred) timedShot();
         setVisibility(VISIBLE);
         Obd.addListener(this);
         listKey = ""; miniKey = "";
         onObd();
         float from = (left ? -1 : 1) * (px(sheetW) + px(30));
         sheet.setTranslationX(from);
-        sheet.animate().translationX(0).setDuration(240).setInterpolator(new DecelerateInterpolator(1.6f)).withLayer()
-            .withEndAction(new Runnable() { public void run() { post(new Runnable() { public void run() {
-                if (!open) return;
-                takeShot();
-                blur.animate().alpha(1f).setDuration(200).start();
-            }}); }}).start();
+        android.view.ViewPropertyAnimator an = sheet.animate().translationX(0).setDuration(240)
+            .setInterpolator(new DecelerateInterpolator(1.6f)).withLayer();
+        if (deferred) an.withEndAction(new Runnable() { public void run() { post(new Runnable() { public void run() {
+            if (!open) return;
+            timedShot();
+            blur.animate().alpha(1f).setDuration(200).start();
+        }}); }});
+        else blur.animate().alpha(1f).setDuration(240).start();
+        an.start();
         dim.animate().alpha(1f).setDuration(240).start();
+    }
+
+    private void timedShot() {
+        long t0 = android.os.SystemClock.uptimeMillis();
+        takeShot();
+        long ms = android.os.SystemClock.uptimeMillis() - t0;
+        shotMs = shotMs < 0 ? ms : (shotMs + ms) / 2;
     }
 
     void close() {
@@ -342,7 +366,7 @@ class VehiclePanel extends FrameLayout implements Obd.Listener {
         List<String> codes = new ArrayList<String>(Obd.dtcs);
         for (String p : Obd.pending) if (!codes.contains(p)) codes.add(p);
         StringBuilder key = new StringBuilder(on ? "on" : "off");
-        for (Obd.Alert a : al) key.append(a.key).append(a.level).append(a.title).append(',');
+        for (Obd.Alert a : al) key.append(a.key).append(a.level).append(a.title()).append(',');
         key.append('|').append(codes).append(Obd.lastDtcCheck > 0);
         if (key.toString().equals(listKey)) return;
         listKey = key.toString();
@@ -353,11 +377,11 @@ class VehiclePanel extends FrameLayout implements Obd.Listener {
         for (int i = 0; i < al.size() && i < 3; i++) {
             final Obd.Alert a = al.get(i);
             LinearLayout c = item(a.level == Obd.CRIT ? ObdDialogs.DANGER : ObdDialogs.AMBER);
-            TextView t = tv(a.title, 14, Main.TEXT, true);
+            TextView t = tv(a.title(), 14, Main.TEXT, true);
             t.setSingleLine(true);
             t.setEllipsize(TextUtils.TruncateAt.END);
             c.addView(t);
-            TextView d = tv(a.advice, 12, Main.SOFT, false);
+            TextView d = tv(a.advice(), 12, Main.SOFT, false);
             d.setMaxLines(2);
             d.setEllipsize(TextUtils.TruncateAt.END);
             c.addView(d);
@@ -396,7 +420,9 @@ class VehiclePanel extends FrameLayout implements Obd.Listener {
         LinearLayout r = new LinearLayout(getContext());
         r.setGravity(Gravity.CENTER_VERTICAL);
         r.setPadding(px(2), 0, 0, px(6));
-        r.addView(tv(title.toUpperCase(I18n.loc), 11, Main.MUTED, true), new LinearLayout.LayoutParams(0, -2, 1));
+        TextView tt = tv(title.toUpperCase(I18n.loc), 11, Main.MUTED, true);
+        tt.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);   // en árabe quedaba pegado a «Ver todo»
+        r.addView(tt, new LinearLayout.LayoutParams(0, -2, 1));
         if (more != null) {
             TextView m = tv(I18n.t("Ver todo") + " ›", 12, Main.RED, true);
             m.setOnClickListener(new OnClickListener() { public void onClick(View v) { closeNow(); host.openSettings(more); } });

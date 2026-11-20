@@ -40,10 +40,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { api: 16, arch: x86 }
-          - { api: 23, arch: x86 }
-
-          - { api: 34, arch: x86_64 }
+          - { api: 16, arch: x86, script: obd }
+          - { api: 23, arch: x86, script: obd }
+          - { api: 34, arch: x86_64, script: obd }
+          - { api: 34, arch: x86_64, script: obd-i18n }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
@@ -63,11 +63,11 @@ jobs:
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -skin 1024x600
           emulator-boot-timeout: 900
-          script: bash .github/scripts/obd.sh ${{ matrix.api }} app-prueba.apk capturas/api${{ matrix.api }}
+          script: bash .github/scripts/${{ matrix.script }}.sh ${{ matrix.api }} app-prueba.apk capturas/${{ matrix.script }}-api${{ matrix.api }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: obd-api${{ matrix.api }}
+          name: obd-${{ matrix.script }}-api${{ matrix.api }}
           path: capturas/
 
   publicar:

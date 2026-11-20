@@ -194,10 +194,31 @@ public class Obd {
     }
 
     /** Alerta activa o reciente, para la lista de la pantalla. */
+    /**
+     * Una alerta. Se guarda en español y se traduce al mostrarla: si el usuario cambia de idioma, las alertas que
+     * ya estaban salen en el idioma nuevo (antes quedaban en el idioma en que se crearon).
+     */
     static class Alert {
-        String key, title, advice;
+        String key, titleEs, adviceEs;
+        String label;                 // nombre del sensor cuando el título es «nombre: valor» (límites a medida)
+        String code;                  // códigos de falla: el texto sale de la tabla, en el idioma de ahora
+        boolean pending;
         int level;
         long at;
+
+        String title() {
+            if (code != null) return I18n.t((pending ? "Código pendiente " : "Código de falla ") + code);
+            if (label != null && titleEs.startsWith(label + ": ")) return I18n.t(label) + titleEs.substring(label.length());
+            return I18n.t(titleEs);
+        }
+
+        String advice() {
+            if (code != null && app != null) {
+                DtcInfo.Entry e = DtcInfo.get(app, code);
+                return e.es != null ? e.es + " " + e.advice : e.en != null ? e.en : "";
+            }
+            return I18n.t(adviceEs);
+        }
     }
 
     // ── estado (lo lee la pantalla) ──
@@ -509,60 +530,65 @@ public class Obd {
             if (s.badSince == 0) s.badSince = now;
             if (now - s.badSince < s.holdS * 1000L) continue;
             s.level = raw;
-            raise(s.key, raw, title(s, raw), advice(s, raw));
+            Alert a = raise(s.key, raw, title(s, raw), advice(s, raw));
+            if (a != null) synchronized (alerts) { a.label = s.label; }
         }
         // subida rápida del refrigerante: avisa antes de llegar al límite (cuestas largas, ventilador que no prende)
         if (COOLANT.histN > 80) {
             float rise = COOLANT.value - COOLANT.hist[COOLANT.hist.length - 80];   // ~1 minuto atrás
             float perMin = rise * 60f / (80 * 0.7f);
             if (perMin >= 4 && COOLANT.value >= 95 && COOLANT.level == OK && prefs(app).getBoolean("obd_alert_coolant_rise", true))
-                raise("coolant_rise", WARN, I18n.t("El refrigerante sube rápido: " + I18n.integer(Math.round(COOLANT.value)) + " °C"),
-                    I18n.t("Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y vigila que el electroventilador encienda."));
+                raise("coolant_rise", WARN, "El refrigerante sube rápido: " + I18n.integer(Math.round(COOLANT.value)) + " °C",
+                    "Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y vigila que el electroventilador encienda.");
         }
     }
 
+    /** Título de la alerta, en español (se traduce al mostrarlo). */
     private static String title(Sensor s, int lvl) {
         String v = s.text() + " " + s.unit;
-        if (s == COOLANT) return I18n.t((lvl == CRIT ? "Motor sobrecalentado: " : "Refrigerante alto: ") + v);
-        if (s == VOLT) return I18n.t((s.value >= s.hi1 ? "Voltaje alto: " : "Voltaje bajo: ") + v);
-        if (s == RPM) return I18n.t("RPM muy altas: " + I18n.integer(Math.round(s.value)));
-        if (s == LOAD) return I18n.t("Motor muy exigido: " + v);
-        if (s == INTAKE) return I18n.t("Aire de admisión muy caliente: " + v);
-        if (s == FUEL) return I18n.t("Poco combustible: " + v);
-        if (s == STFT || s == LTFT) return I18n.t((s.value > 0 ? "Mezcla pobre" : "Mezcla rica") + " (" + I18n.t(s.label) + "): " + v);
-        if (s == OILT) return I18n.t("Aceite del motor muy caliente: " + v);
-        return I18n.t(s.label) + ": " + v;
+        if (s == COOLANT) return (lvl == CRIT ? "Motor sobrecalentado: " : "Refrigerante alto: ") + v;
+        if (s == VOLT) return (s.value >= s.hi1 ? "Voltaje alto: " : "Voltaje bajo: ") + v;
+        if (s == RPM) return "RPM muy altas: " + I18n.integer(Math.round(s.value));
+        if (s == LOAD) return "Motor muy exigido: " + v;
+        if (s == INTAKE) return "Aire de admisión muy caliente: " + v;
+        if (s == FUEL) return "Poco combustible: " + v;
+        if (s == STFT || s == LTFT) return (s.value > 0 ? "Mezcla pobre" : "Mezcla rica") + " (" + s.label + "): " + v;
+        if (s == OILT) return "Aceite del motor muy caliente: " + v;
+        return s.label + ": " + v;
     }
 
+    /** Qué hacer, en español (se traduce al mostrarlo). */
     private static String advice(Sensor s, int lvl) {
-        if (s == COOLANT) return I18n.t(lvl == CRIT
+        if (s == COOLANT) return lvl == CRIT
             ? "Detente en un lugar seguro y apaga el motor. No abras la tapa del radiador en caliente. Espera que enfríe y revisa el nivel de refrigerante, el electroventilador y la correa."
-            : "Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y, si sigue subiendo, pon la calefacción al máximo y busca dónde parar.");
-        if (s == VOLT) return I18n.t(s.value > 14.9f
+            : "Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y, si sigue subiendo, pon la calefacción al máximo y busca dónde parar.";
+        if (s == VOLT) return s.value > 14.9f
             ? "El alternador está cargando de más y puede dañar la batería. Revísalo pronto."
-            : "El alternador no está cargando bien: apaga lo que no necesites (aire, luces extra) y ve a un taller antes de que se descargue la batería. Revisa la correa.");
-        if (s == RPM) return I18n.t("Baja la velocidad o usa una marcha más alta. En bajadas, frena con motor sin pasar la zona roja.");
-        if (s == LOAD) return I18n.t("El motor va al máximo hace rato. En cuestas largas usa una marcha más baja y deja descansar el motor y la caja.");
-        if (s == INTAKE) return I18n.t("El aire que entra al motor está muy caliente: pierde potencia. Si estás detenido, avanza para que circule aire.");
-        if (s == FUEL) return I18n.t("Carga combustible en la próxima estación. En la montaña puede no haber más adelante.");
-        if (s == STFT || s == LTFT) return I18n.t(s.value > 0
+            : "El alternador no está cargando bien: apaga lo que no necesites (aire, luces extra) y ve a un taller antes de que se descargue la batería. Revisa la correa.";
+        if (s == RPM) return "Baja la velocidad o usa una marcha más alta. En bajadas, frena con motor sin pasar la zona roja.";
+        if (s == LOAD) return "El motor va al máximo hace rato. En cuestas largas usa una marcha más baja y deja descansar el motor y la caja.";
+        if (s == INTAKE) return "El aire que entra al motor está muy caliente: pierde potencia. Si estás detenido, avanza para que circule aire.";
+        if (s == FUEL) return "Carga combustible en la próxima estación. En la montaña puede no haber más adelante.";
+        if (s == STFT || s == LTFT) return s.value > 0
             ? "El motor recibe menos combustible del que necesita: puede ser una fuga de vacío, el filtro de combustible o el sensor MAF. Puede perder fuerza en subidas."
-            : "El motor recibe más combustible del necesario: revisa el filtro de aire, el sensor MAF o un inyector que gotee.");
-        if (s == OILT) return I18n.t("Baja la exigencia y revisa el nivel de aceite cuando puedas parar.");
+            : "El motor recibe más combustible del necesario: revisa el filtro de aire, el sensor MAF o un inyector que gotee.";
+        if (s == OILT) return "Baja la exigencia y revisa el nivel de aceite cuando puedas parar.";
         return "";
     }
 
-    private static void raise(String key, int level, String title, String advice) {
+    /** Anota o actualiza una alerta (textos en español) y la dice en voz alta en el idioma de ahora. */
+    private static Alert raise(String key, int level, String titleEs, String adviceEs) {
         Alert a = null;
         synchronized (alerts) {
             for (Alert x : alerts) if (x.key.equals(key)) a = x;
             if (a == null) { a = new Alert(); a.key = key; alerts.add(0, a); while (alerts.size() > 30) alerts.remove(alerts.size() - 1); }
             a.level = level;                       // la gravedad de ahora (el título también es el de ahora)
-            a.title = title;
-            a.advice = advice;
+            a.titleEs = titleEs;
+            a.adviceEs = adviceEs;
             a.at = System.currentTimeMillis();
         }
-        say(key, level, title + ". " + firstSentence(advice));
+        say(key, level, a.title() + ". " + firstSentence(a.advice()));
+        return a;
     }
 
     private static void checkDtcs() throws java.io.IOException {
@@ -587,11 +613,18 @@ public class Obd {
         DtcInfo.Entry e = DtcInfo.get(app, code);
         int lvl = isPending ? WARN : e.severity >= 3 ? CRIT : WARN;
         if (!prefs(app).getBoolean("obd_alert_dtc", true)) { log("código " + code + " (aviso apagado)"); DtcInfo.autoExplain(app, code); return; }
-        String what = e.es != null ? e.es : I18n.t("revisa el detalle en la pantalla");
-        raise("dtc_" + code, lvl, I18n.t((isPending ? "Código pendiente " : "Código de falla ") + code), e.es != null ? e.es + " " + e.advice : e.en);
+        Alert a = null;
+        synchronized (alerts) {
+            for (Alert x : alerts) if (x.key.equals("dtc_" + code)) a = x;
+            if (a == null) { a = new Alert(); a.key = "dtc_" + code; alerts.add(0, a); while (alerts.size() > 30) alerts.remove(alerts.size() - 1); }
+            a.code = code;
+            a.pending = isPending;
+            a.level = lvl;
+            a.at = System.currentTimeMillis();
+        }
+        say(a.key, lvl, a.title() + ". " + firstSentence(e.es != null ? e.es : I18n.t("revisa el detalle en la pantalla")));
         log((isPending ? "pendiente " : "código ") + code);
         if (!isPending) requestFreeze();      // la «foto» del motor de cuando se guardó el código
-        if (e.es == null) say("dtc_what_" + code, WARN, what);
         DtcInfo.autoExplain(app, code);
     }
 
