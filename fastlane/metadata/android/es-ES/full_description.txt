@@ -3,12 +3,14 @@
 <p><b>Funciones</b></p>
 <ul>
 <li>Mapa en vivo y sin conexión: descarga el mapa de tu país desde la app y úsalo sin internet.</li>
+<li>Navegación guiada opcional: busca un destino y StradaOS te guía con voz, con rutas alternas y recálculo; sin internet, con una ruta aproximada sobre el mapa descargado.</li>
+<li>Escáner OBD-II opcional (ELM327 por Bluetooth clásico o Wi-Fi): panel con temperatura, batería y RPM encima de cualquier tema, alertas por voz, códigos de falla explicados, gráficos en vivo y una guía dentro de la app.</li>
 <li>Botones de Android Auto y CarPlay: abre la app de proyección de tu pantalla o Open Headunit.</li>
 <li>Tu música en el inicio: título, artista y tiempo de lo que suena por Bluetooth; con Android Auto, también la carátula.</li>
-<li>Velocímetro por GPS, clima, reloj, recordatorio de cambio de aceite y la foto de tu vehículo con el fondo quitado.</li>
+<li>Velocímetro por GPS, clima, reloj, recordatorio de cambio de aceite y la foto de tu vehículo.</li>
 <li>Diseña tu inicio: reproductor a la izquierda o a la derecha, barra normal, compacta o lateral, y Android Auto y CarPlay plegables.</li>
 <li>Barra inferior a tu medida y apps ocultables. La cámara de reversa sigue funcionando.</li>
-<li>Modo oscuro, claro, por horario o del sistema, 10 colores y 9 idiomas.</li>
+<li>Temas Clásico, Aurora y Cobalto (y Faro, pronto con una donación), modo oscuro, claro o automático, 10 colores y 11 idiomas.</li>
 <li>Avisos de actualización con código QR.</li>
 </ul>
-<p>Compatible desde Android 4.1. Pesa alrededor de 1 MB. Gratis, sin anuncios y de código abierto (GPL-3.0).</p>
+<p>Compatible desde Android 4.1. Pesa alrededor de 1,5 MB. Gratis, sin anuncios y de código abierto (GPL-3.0).</p>

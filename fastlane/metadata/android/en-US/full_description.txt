@@ -3,12 +3,14 @@
 <p><b>Features</b></p>
 <ul>
 <li>Live and offline map: download your country's map from the app and use it without internet.</li>
+<li>Optional turn-by-turn navigation: search for a place and StradaOS guides you by voice, with alternative routes and rerouting; offline, with an approximate route on the downloaded map.</li>
+<li>Optional OBD-II scanner (ELM327 over classic Bluetooth or Wi-Fi): a panel with coolant, battery and RPM over any theme, voice alerts, explained trouble codes, live charts and a built-in guide.</li>
 <li>Android Auto and CarPlay buttons: opens your unit's projection app or Open Headunit.</li>
 <li>Your music on the home screen: title, artist and time of what plays over Bluetooth; with Android Auto, the album art too.</li>
-<li>GPS speedometer, weather, clock, oil change reminder and a photo of your vehicle with its background removed.</li>
+<li>GPS speedometer, weather, clock, oil change reminder and a photo of your vehicle.</li>
 <li>Design your home screen: player on the left or right, normal, compact or side button bar, and foldable Android Auto and CarPlay buttons.</li>
 <li>A bottom bar your way and hideable apps. The reverse camera keeps working.</li>
-<li>Dark, light, scheduled or system theme, 10 colors and 9 languages.</li>
+<li>Classic, Aurora and Cobalto themes (and Faro, coming soon with a donation), dark, light or automatic mode, 10 colors and 11 languages.</li>
 <li>Update notices with a QR code.</li>
 </ul>
-<p>Works on Android 4.1+. About 1 MB. Free, no ads, open source (GPL-3.0).</p>
+<p>Works on Android 4.1+. About 1.5 MB. Free, no ads, open source (GPL-3.0).</p>

@@ -5,14 +5,14 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <title>StradaOS · Una nueva vida para la pantalla Android de tu carro</title>
-<meta content="Launcher gratis y de código abierto para pantallas Android de carro. Funciona desde Android 4.1, pesa alrededor de 1 MB y no toca el sistema. Android Auto, mapa en vivo y sin conexión, música y más." name="description"/>
+<meta content="Launcher gratis y de código abierto para pantallas Android de carro. Funciona desde Android 4.1, pesa alrededor de 1,5 MB y no toca el sistema. Android Auto, mapa en vivo y sin conexión, navegación guiada, escáner OBD-II, temas y más." name="description"/>
 <meta content="#0A0B0E" name="theme-color"/>
 <link href="img/favicon.png" rel="icon"/>
 <link href="img/apple-touch-icon.png" rel="apple-touch-icon"/>
 <meta content="website" property="og:type"/>
 <meta content="StradaOS" property="og:site_name"/>
 <meta content="StradaOS · Tu pantalla del carro, como nueva" property="og:title"/>
-<meta content="Gratis, sin anuncios y de código abierto. Revive esa radio china que dice «Android 6» pero no instala nada. Alrededor de 1 MB, desde Android 4.1." property="og:description"/>
+<meta content="Gratis, sin anuncios y de código abierto. Revive esa radio china que dice «Android 6» pero no instala nada. Alrededor de 1,5 MB, desde Android 4.1." property="og:description"/>
 <meta content="https://lordnordic-debug.github.io/StradaOS/img/og.png" property="og:image"/>
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
@@ -212,6 +212,112 @@ h2{font-size:clamp(32px,5vw,54px);line-height:1.06;font-weight:900;letter-spacin
 .palette span{width:38px;height:38px;border-radius:50%;background:var(--c);box-shadow:0 6px 16px -4px var(--c);transition:transform .3s}
 .palette span:hover{transform:translateY(-4px) scale(1.1)}
 
+/* ---------- Temas (2.24–2.25): pantalla que cambia de tema sola ---------- */
+.tshow{max-width:1060px;margin:44px auto 0}
+.tshow .unit{max-width:1060px}
+.ts-screen,#odScreen,#nvScreen{aspect-ratio:1024/600}
+.ts-screen img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ts-b{clip-path:circle(0% at 92% 7%);will-change:clip-path}
+.ts-b.go{transition:clip-path 1.05s cubic-bezier(.65,0,.35,1);clip-path:circle(150% at 92% 7%)}
+.ts-a.out{transition:transform 1.05s cubic-bezier(.65,0,.35,1),filter 1.05s;transform:scale(.97);filter:brightness(.55)}
+.ts-prog{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.08)}
+.ts-prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--a),var(--a2))}
+.ts-ctl{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:22px}
+.ts-ctl .seg button{font-size:14px;padding:8px 14px}
+.ts-dot{width:12px;height:12px;border-radius:50%;background:var(--c);box-shadow:0 0 0 1px rgba(255,255,255,.25) inset}
+.ts-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
+@media(max-width:860px){.ts-cards{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.ts-cards{grid-template-columns:1fr}}
+.tcard{position:relative;padding:16px 16px 14px;border-radius:16px;background:var(--panel);border:1px solid var(--line);cursor:pointer;transition:border-color .3s,background .3s,transform .3s}
+.tcard:hover{transform:translateY(-2px)}
+.tcard.on{border-color:rgba(254,50,17,.55);background:linear-gradient(160deg,rgba(254,50,17,.13),var(--panel) 60%)}
+.tcard>b{font-size:17px}
+.tcard p{color:#AEB3BC;font-size:14px;margin-top:6px}
+.tb{display:inline-block;margin-left:8px;vertical-align:2px;font-size:11px;font-weight:700;letter-spacing:.3px;padding:3px 8px;border-radius:7px}
+.tb.free{background:rgba(61,220,132,.13);color:var(--ok)}
+.tb.soon{background:rgba(245,184,0,.13);color:#F5B800}
+.ts-auto{display:flex;gap:12px;align-items:center;justify-content:center;max-width:760px;margin:22px auto 0;padding:14px 18px;border-radius:16px;background:rgba(255,255,255,.035);border:1px solid var(--line);color:#C2C7CF;font-size:15px}
+.ts-auto .mi{color:var(--a)}
+
+/* ---------- Demos animadas (OBD y navegación): lienzo de 1024×600 escalado ---------- */
+.demo-wrap{max-width:1060px;margin:44px auto 0}
+.od,.nv{position:absolute;left:0;top:0;width:1024px;height:600px;transform-origin:0 0;overflow:hidden;font-family:R,sans-serif;color:#F2F3F5;user-select:none;-webkit-user-select:none}
+.obd-feats{margin-top:26px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+
+/* Panel del vehículo */
+.od-bg,.od-blur{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.od-blur{filter:blur(16px) brightness(.55) saturate(1.2);transform:scale(1.06);opacity:0;transition:opacity .55s}
+.od.open .od-blur{opacity:1}
+.od-tab{position:absolute;right:0;top:240px;width:13px;height:120px;border-radius:10px 0 0 10px;background:rgba(30,33,40,.9);box-shadow:0 0 0 1px rgba(255,255,255,.12);transition:opacity .3s}
+.od-tab:after{content:"";position:absolute;left:4px;top:48px;width:3px;height:24px;border-radius:2px;background:var(--a)}
+.od.open .od-tab{opacity:0}
+.od-panel{position:absolute;right:13px;top:13px;width:768px;height:512px;padding:16px 18px;border-radius:20px;background:rgba(23,25,31,.93);box-shadow:0 30px 70px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.08);transform:translateX(830px);transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.od.open .od-panel{transform:none}
+.od-head{display:flex;align-items:center;gap:10px}
+.od-head>div{flex:1}
+.od-head b{display:block;font-size:22px;font-weight:700;line-height:1.1}
+.od-head small{display:flex;align-items:center;gap:6px;font-size:13px;color:#3DDC84}
+.od-head small i{width:7px;height:7px;border-radius:50%;background:#3DDC84;animation:ping 1.8s infinite}
+.od-btn{padding:8px 14px;border-radius:12px;background:#2A2E37;font-size:14px;font-weight:500}
+.od-x{width:38px;height:38px;border-radius:12px;background:#2A2E37;display:flex;align-items:center;justify-content:center;font-size:15px}
+.od-gauges{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.od-g{position:relative;height:136px;border-radius:16px;background:rgba(255,255,255,.05);text-align:center}
+.od-g svg{position:absolute;left:50%;top:6px;width:104px;height:104px;margin-left:-52px}
+.od-g path{fill:none;stroke-width:9;stroke-linecap:round}
+.od-g .tr{stroke:rgba(255,255,255,.12)}
+.od-g .ar{stroke:#3DDC84;stroke-dasharray:236 400;stroke-dashoffset:236;transition:stroke-dashoffset .5s,stroke .4s}
+.od-g .v{position:absolute;left:0;right:0;top:40px;font-size:26px;font-weight:700;line-height:1}
+.od-g small{position:absolute;left:0;right:0;top:70px;font-size:11px;color:#8B9099}
+.od-g>span{position:absolute;left:0;right:0;bottom:9px;font-size:13px;color:#C5C8CE}
+.od-minis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+.od-minis div{padding:9px 14px;border-radius:14px;background:rgba(255,255,255,.05)}
+.od-minis span{display:block;font-size:12px;color:#8B9099}
+.od-minis b{font-size:19px;font-weight:700}
+.od-chart{position:relative;margin-top:12px;height:164px;padding:10px 14px;border-radius:16px;background:rgba(255,255,255,.05);overflow:hidden}
+.od-ct{display:flex;justify-content:space-between;font-size:12px;color:#8B9099}
+.od-ct b{font-size:15px;color:#F2F3F5}
+.od-chart svg{position:absolute;left:14px;right:14px;bottom:10px;width:calc(100% - 28px);height:118px}
+.od-chart .line{fill:none;stroke:var(--a);stroke-width:2.5;vector-effect:non-scaling-stroke}
+.od-chart .fill{fill:rgba(254,50,17,.16)}
+.od-chart .lim1,.od-chart .lim2{stroke-width:1;stroke-dasharray:5 5;vector-effect:non-scaling-stroke}
+.od-chart .lim1{stroke:rgba(245,184,0,.6)}.od-chart .lim2{stroke:rgba(227,38,47,.65)}
+.od-alert{position:absolute;left:14px;right:14px;top:36px;padding:9px 12px;border-radius:12px;background:rgba(60,44,16,.96);border:1px solid rgba(245,184,0,.55);font-size:12px;color:#E8DCC2;transform:translateY(-12px);opacity:0;transition:opacity .35s,transform .35s}
+.od-alert b{display:block;font-size:14px;color:#fff}
+.od-alert.on{opacity:1;transform:none}
+
+/* Navegación */
+.nv{background:#1A1D23}
+.nv-map{position:absolute;inset:0;width:1024px;height:600px}
+.nv-map .blk{fill:#22262D}
+.nv-map .park{fill:#1E3A2B}
+.nv-map .water{fill:#173149}
+.nv-map .st{stroke:#3A404B;stroke-width:16;fill:none;stroke-linecap:round}
+.nv-map .st2{stroke:#30353F;stroke-width:6;fill:none}
+.nv-map .rto{fill:none;stroke:rgba(0,0,0,.45);stroke-width:18;stroke-linecap:round;stroke-linejoin:round}
+.nv-map .av{stroke:#8A6A33;stroke-width:24;fill:none;stroke-linecap:round}
+.nv-map .avc{stroke:#B08A45;stroke-width:3;fill:none;stroke-linecap:round;opacity:.55}
+.nv-map .lb{fill:#8E949E;font:500 13px R,sans-serif;letter-spacing:.2px}
+.nv-map .lbp{fill:#6FA37F;font:500 13px R,sans-serif}
+.nv-map .rt{fill:none;stroke:#FE3211;stroke-width:12;stroke-linecap:round;stroke-linejoin:round}
+.nv-map .rtc{fill:none;stroke:#FF8A6B;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:.6}
+.nv-map .done{fill:none;stroke:#6B7180;stroke-width:12;stroke-linecap:round;stroke-linejoin:round}
+.nv-map .dest{fill:#FE3211;stroke:#fff;stroke-width:3}
+.nv-car{position:absolute;left:488px;top:356px;width:48px;height:48px;transition:transform .25s linear}
+.nv-ban{position:absolute;left:20px;top:18px;width:560px;height:78px;display:flex;align-items:center;gap:14px;padding:0 14px;border-radius:18px;background:rgba(30,33,40,.95);box-shadow:0 12px 30px rgba(0,0,0,.45)}
+.nv-ic{flex:none;width:54px;height:54px;border-radius:13px;background:#FE3211;display:flex;align-items:center;justify-content:center}
+.nv-ic svg{width:38px;height:38px;transition:transform .35s}
+.nv-tx{flex:1;min-width:0}
+.nv-tx b{display:block;font-size:26px;font-weight:700;line-height:1.05}
+.nv-tx span{display:block;font-size:15px;color:#C5C8CE;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nv-eta{flex:none;font-size:13px;color:#8B9099;align-self:flex-start;margin-top:14px}
+.nv-x{flex:none;width:36px;height:36px;border-radius:50%;background:#2A2E37;display:flex;align-items:center;justify-content:center;font-size:14px;color:#C5C8CE}
+.nv-chip{position:absolute;left:20px;top:110px;display:flex;align-items:center;gap:8px;padding:8px 13px;border-radius:12px;background:rgba(30,33,40,.92);font-size:14px;color:#E9EBEE}
+.nv-spd{position:absolute;left:22px;bottom:22px;width:86px;height:86px;border-radius:50%;background:rgba(30,33,40,.95);box-shadow:0 0 0 3px rgba(254,50,17,.85);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.nv-spd b{font-size:30px;font-weight:700;line-height:1}
+.nv-spd small{font-size:11px;color:#8B9099}
+.nv-att{position:absolute;right:12px;bottom:8px;font-size:11px;color:#7A808A}
+@media(prefers-reduced-motion:reduce){.ts-b.go,.ts-a.out,.od-panel,.nv-car{transition:none!important}}
+
 /* Pasos */
 .steps{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;margin-top:50px;align-items:start}
 @media(max-width:860px){.steps{grid-template-columns:1fr}}
@@ -274,7 +380,12 @@ footer .legal{margin-top:22px;font-size:12px;color:#646A73;max-width:820px}
  .nav .nav-dl{margin-left:0}
  section{padding:40px 0}
  section+section{padding-top:16px}
- .pain,.feats,.conn,.themes,.steps,.compat,.support,.faq{margin-top:28px!important}
+ .pain,.feats,.conn,.themes,.steps,.compat,.support,.faq,.tshow,.demo-wrap{margin-top:28px!important}
+ .obd-feats{margin-top:18px!important;gap:10px}
+ .obd-feats .feat{display:grid;grid-template-columns:44px 1fr;column-gap:14px;padding:16px 16px 14px}
+ .obd-feats .feat .ico{grid-row:span 2;width:44px;height:44px;margin:0}
+ .obd-feats .feat h3{font-size:16px;margin:2px 0 2px}
+ .obd-feats .feat p{font-size:14px}
  .ba{margin-top:28px}
  .final{padding:40px 0 56px}
  .demo-ctl{margin-top:18px}
@@ -324,6 +435,7 @@ footer .legal{margin-top:22px;font-size:12px;color:#646A73;max-width:820px}
 <ul>
 <li data-i18n="t2"><a href="#funciones">Funciones</a></li>
 <li data-i18n="t3"><a href="#android-auto">Android Auto</a></li>
+<li data-i18n="t242"><a href="#temas">Novedades</a></li>
 <li data-i18n="t4"><a href="#instalar">Instalar</a></li>
 <li data-i18n="t5"><a href="#preguntas">Preguntas</a></li>
 </ul>
@@ -340,11 +452,11 @@ footer .legal{margin-top:22px;font-size:12px;color:#646A73;max-width:820px}
 <div>
 <span class="pill rv" data-i18n="t7"><i></i>Gratis · Código abierto · Hecho en Colombia</span>
 <h1 class="rv" data-i18n="t8" style="--d:.08s">Tu pantalla del carro,<br/><em class="hl">como nueva.</em></h1>
-<p class="lead rv" data-i18n="t9" style="--d:.16s">¿Tu radio dice <b>«Android 6»</b> pero no instala nada y el menú parece de 2012? <b>StradaOS</b> la convierte en una pantalla moderna en minutos: mapa en vivo, Android Auto, tu música y velocímetro. <b>Sin flashear, sin root, sin pagar.</b></p>
+<p class="lead rv" data-i18n="t9" style="--d:.16s">¿Tu radio dice <b>«Android 6»</b> pero no instala nada y el menú parece de 2012? <b>StradaOS</b> la convierte en una pantalla moderna en minutos: mapa en vivo con navegación, Android Auto, tu música, velocímetro y hasta los datos del motor. <b>Sin flashear, sin root, sin pagar.</b></p>
 <div class="cta rv" style="--d:.24s">
 <a class="btn btn-a btn-dl" data-dl="" href="https://github.com/lordnordic-debug/StradaOS/releases/latest">
 <span class="mi" style="--i:url(ic/download.png);--s:24px"></span>
-<span class="tx"><span data-i18n="t10">Descargar gratis</span><span class="dl-meta" data-dlmeta="">APK · alrededor de 1 MB</span></span>
+<span class="tx"><span data-i18n="t10">Descargar gratis</span><span class="dl-meta" data-dlmeta="">APK · alrededor de 1,5 MB</span></span>
 </a>
 <a class="btn btn-g" href="#demo"><span class="mi" style="--i:url(ic/touch_app.png);--s:20px"></span><span data-i18n="t11">Pruébala aquí mismo</span></a>
 </div>
@@ -365,7 +477,7 @@ footer .legal{margin-top:22px;font-size:12px;color:#646A73;max-width:820px}
 <div class="card" style="left:16px;top:64px;width:300px;height:380px">
 <div class="x" data-i18n="t15" style="left:20px;top:16px;font-size:20px;font-weight:500">Mi vehículo</div>
 <div class="x ac" data-i18n="t16" style="left:20px;top:46px;font-size:11px;font-weight:500;padding:3px 8px;border-radius:8px;letter-spacing:.8px">GT LINE</div>
-<div class="x tap" data-t="Pon la foto de tu carro: StradaOS le quita el fondo solo" style="left:18px;top:82px;width:264px;height:152px;background:var(--in);border-radius:16px;overflow:hidden">
+<div class="x tap" data-t="Pon la foto de tu carro: se ajusta sola al recuadro" style="left:18px;top:82px;width:264px;height:152px;background:var(--in);border-radius:16px;overflow:hidden">
 <svg height="152" viewbox="0 0 264 152" width="264">
 <ellipse cx="132" cy="122" fill="#000" opacity=".28" rx="104" ry="9"></ellipse>
 <g transform="translate(12 32)">
@@ -377,7 +489,7 @@ footer .legal{margin-top:22px;font-size:12px;color:#646A73;max-width:820px}
 <circle cx="177" cy="83" fill="#1B1E23" r="19"></circle><circle cx="177" cy="83" fill="#9AA1AB" r="10"></circle>
 </g>
 </svg>
-<div class="x" data-i18n="t17" style="right:8px;top:8px;font-size:10px;font-weight:500;padding:3px 7px;border-radius:7px;background:rgba(61,220,132,.16);color:#2fb36b">✓ Fondo quitado</div>
+<div class="x" data-i18n="t17" style="right:8px;top:8px;font-size:10px;font-weight:500;padding:3px 7px;border-radius:7px;background:rgba(61,220,132,.16);color:#2fb36b">✓ Tu foto</div>
 </div>
 <div class="x" style="left:12px;top:250px;width:276px;height:118px;background:var(--in);border-radius:16px">
 <div class="x" data-i18n="t18" style="left:16px;top:12px;font-size:13px;color:var(--m)">Velocidad</div>
@@ -463,7 +575,7 @@ footer .legal{margin-top:22px;font-size:12px;color:#646A73;max-width:820px}
 <section>
 <div class="wrap">
 <div class="stats">
-<div class="stat rv"><b>&lt;<span data-count="1" data-dec="0">1</span> <span data-i18n="t48">MB</span></b><span data-i18n="t49">Lo que pesa. Menos que una canción en MP3.</span></div>
+<div class="stat rv"><b>≈<span data-count="1.5" data-dec="1">1,5</span> <span data-i18n="t48">MB</span></b><span data-i18n="t49">Lo que pesa. Menos que una canción en MP3.</span></div>
 <div class="stat rv" style="--d:.06s"><b><span data-count="4.1" data-dec="1">4,1</span>+</b><span data-i18n="t50">Versión mínima de Android. Revive pantallas que nadie más soporta.</span></div>
 <div class="stat rv" style="--d:.12s"><b><span data-count="0">0</span></b><span data-i18n="t51">Anuncios, cuentas o rastreadores. Ninguno.</span></div>
 <div class="stat rv" style="--d:.18s"><b><span data-count="100">100</span>%</b><span data-i18n="t52">Gratis y de código abierto (GPL-3.0).</span></div>
@@ -496,17 +608,17 @@ footer .legal{margin-top:22px;font-size:12px;color:#646A73;max-width:820px}
 <h2 data-i18n="t60">Lo que necesitas al volante,<br/><em class="hl">sin buscarlo.</em></h2>
 </div>
 <div class="feats">
-<div class="feat big rv"><div class="ico"><span class="mi" style="--i:url(ic/add_photo_alternate.png);--s:26px"></span></div><h3 data-i18n="t61">Tu carro, con tu foto</h3><p data-i18n="t62">Sube una foto de tu vehículo y StradaOS <b>le quita el fondo automáticamente</b> y la ajusta al recuadro, con vista previa y hasta el reflejo del piso. Ponle nombre, año o lo que quieras.</p></div>
-<div class="feat rv" style="--d:.05s"><div class="ico"><span class="mi" style="--i:url(ic/map.png);--s:26px"></span></div><h3 data-i18n="t63">Mapa en vivo</h3><p data-i18n="t64">Tu ciudad con tu posición y rumbo (OpenStreetMap). Guarda lo que ya recorriste para verlo aunque te quedes sin señal.</p></div>
+<div class="feat big rv"><div class="ico"><span class="mi" style="--i:url(ic/add_photo_alternate.png);--s:26px"></span></div><h3 data-i18n="t61">Tu carro, con tu foto</h3><p data-i18n="t62">Sube una foto de tu vehículo y StradaOS la <b>ajusta sola al recuadro</b>, con esquinas redondas y bien derecha aunque la tomes con el celular. Si quieres, le quitas el fondo. Ponle nombre, año o lo que quieras.</p></div>
+<div class="feat rv" style="--d:.05s"><div class="ico"><span class="mi" style="--i:url(ic/map.png);--s:26px"></span></div><h3 data-i18n="t63">Mapa en vivo y sin conexión</h3><p data-i18n="t64">Tu ciudad con tu posición y rumbo (OpenStreetMap). Descarga el mapa de tu país desde la app y úsalo sin internet.</p></div>
 <div class="feat rv"><div class="ico"><span class="mi" style="--i:url(ic/navigation.png);--s:26px"></span></div><h3 data-i18n="t65">Android Auto y CarPlay</h3><p data-i18n="t66">Un botón para cada uno. Abre el de tu pantalla o, si no trae, Android Auto por cable con Open Headunit.</p></div>
 <div class="feat rv" style="--d:.05s"><div class="ico"><span class="mi" style="--i:url(ic/music_note.png);--s:26px"></span></div><h3 data-i18n="t67">Tu música en el inicio</h3><p data-i18n="t68">Título, artista y tiempo de lo que suena por <b>Bluetooth</b>, con controles grandes. Con <b>Android Auto</b> o las apps de música de la pantalla, también la carátula. Y el Bluetooth suena apenas le das play, sin abrir la app de fábrica.</p></div>
 <div class="feat rv" style="--d:.1s"><div class="ico"><span class="mi" style="--i:url(ic/speed.png);--s:26px"></span></div><h3 data-i18n="t69">Velocímetro GPS</h3><p data-i18n="t70">Tu velocidad real en grande, más reloj, fecha y un saludo con tu nombre.</p></div>
 <div class="feat rv"><div class="ico"><span class="mi" style="--i:url(ic/wb_sunny.png);--s:26px"></span></div><h3 data-i18n="t71">Clima de tu ciudad</h3><p data-i18n="t72">Temperatura y estado del tiempo donde estás, en °C o °F.</p></div>
 <div class="feat rv" style="--d:.05s"><div class="ico"><span class="mi" style="--i:url(ic/photo_camera.png);--s:26px"></span></div><h3 data-i18n="t73">Tu cámara de reversa intacta</h3><p data-i18n="t74">Radio, Bluetooth, cámara y archivos de fábrica siguen a un toque. Nada deja de funcionar.</p></div>
-<div class="feat rv" style="--d:.1s"><div class="ico"><span class="mi" style="--i:url(ic/palette.png);--s:26px"></span></div><h3 data-i18n="t75">Oscuro, claro o automático</h3><p data-i18n="t76">Cambia solo según la hora y elige entre 10 colores de acento.</p></div>
+<div class="feat rv" style="--d:.1s"><div class="ico"><span class="mi" style="--i:url(ic/palette.png);--s:26px"></span></div><h3 data-i18n="t75">Oscuro, claro o automático</h3><p data-i18n="t76">Cambia solo por horario, con el amanecer y el atardecer o con el sistema, y elige entre 10 colores de acento.</p></div>
 <div class="feat rv"><div class="ico"><span class="mi" style="--i:url(ic/system_update.png);--s:26px"></span></div><h3 data-i18n="t77">Se actualiza sola</h3><p data-i18n="t78">Te avisa cuando hay versión nueva, con sus cambios. Si tu pantalla no puede bajarla, te muestra un QR para el celular.</p></div>
 <div class="feat rv" style="--d:.05s"><div class="ico"><span class="mi" style="--i:url(ic/tune.png);--s:26px"></span></div><h3 data-i18n="t79">Ajustes que se entienden</h3><p data-i18n="t80">Ordenados por categorías y con un asistente inicial: tu nombre, tu carro, tu color y listo.</p></div>
-<div class="feat big rv" style="--d:.1s"><span class="badge" data-i18n="t81">LIVIANO DE VERDAD</span><div class="ico"><span class="mi" style="--i:url(ic/code.png);--s:26px"></span></div><h3 data-i18n="t82">Pensado para pantallas modestas</h3><p data-i18n="t83">Pesa alrededor de 1 MB y está hecho en Java puro, sin librerías pesadas, para que corra bien en procesadores sencillos como los de las radios chinas. Todo el código es público en GitHub: cualquiera puede revisarlo, mejorarlo o adaptarlo.</p></div>
+<div class="feat big rv" style="--d:.1s"><span class="badge" data-i18n="t81">LIVIANO DE VERDAD</span><div class="ico"><span class="mi" style="--i:url(ic/code.png);--s:26px"></span></div><h3 data-i18n="t82">Pensado para pantallas modestas</h3><p data-i18n="t83">Pesa alrededor de 1,5 MB y está hecho en Java puro, sin librerías pesadas, para que corra bien en procesadores sencillos como los de las radios chinas. Todo el código es público en GitHub: cualquiera puede revisarlo, mejorarlo o adaptarlo.</p></div>
 </div>
 </div>
 </section>
@@ -540,34 +652,125 @@ footer .legal{margin-top:22px;font-size:12px;color:#646A73;max-width:820px}
 </div>
 </div>
 </section>
-<!-- ================= NOVEDADES 2.10 ================= -->
-<section id="novedades">
+<!-- ================= TEMAS (2.24–2.25) ================= -->
+<section id="temas">
 <div class="wrap">
 <div class="center rv">
-<span class="kicker" data-i18n="t177">Nuevo en la 2.10</span>
-<h2 data-i18n="t178">Tu barra, tus apps,<br/><em class="hl">tu idioma.</em></h2>
-<p class="sub" data-i18n="t179">Cada botón de abajo puede abrir la app que tú quieras, con su ícono y su nombre. Y StradaOS habla español, inglés, portugués, italiano y alemán.</p>
+<span class="kicker" data-i18n="t177">Temas</span>
+<h2 data-i18n="t178">Cambia el estilo,<br/><em class="hl">no la pantalla.</em></h2>
+<p class="sub" data-i18n="t179">Además del diseño clásico, StradaOS trae temas con otra cara: tarjetas translúcidas, velocímetros grandes y hasta tu carro con los faros encendidos. Se eligen en Ajustes → Personalización y cada uno tiene versión oscura y clara.</p>
 </div>
-<div class="themes">
-<figure class="rv"><img alt="Elegir la app de un botón de la barra inferior" data-i18n-src="img/barra" height="900" loading="lazy" src="img/barra-es.webp" width="1536"/><figcaption><span class="mi" style="--i:url(ic/touch_app.png);--s:18px"></span><span data-i18n="t180">Deja presionado un botón y elige cualquier app de tu pantalla</span></figcaption></figure>
-<figure class="rv" style="--d:.1s"><img alt="Elegir el idioma en los ajustes de StradaOS" data-i18n-src="img/idioma" height="900" loading="lazy" src="img/idioma-es.webp" width="1536"/><figcaption><span class="mi" style="--i:url(ic/public.png);--s:18px"></span><span data-i18n="t181">Español, English, Português, Italiano o Deutsch, en Ajustes → Apariencia</span></figcaption></figure>
+<div class="tshow rv">
+<div class="unit on"><div class="screen ts-screen" id="tsScreen">
+<img alt="" class="ts-a" decoding="async" height="900" id="tsA" src="img/tema-clasico-oscuro-es.webp" width="1536"/>
+<img alt="" class="ts-b" decoding="async" height="900" id="tsB" src="img/tema-clasico-oscuro-es.webp" width="1536"/>
+<div class="ts-prog"><i id="tsProg"></i></div>
+</div></div>
+<div class="ts-ctl">
+<div class="seg" id="tsThemes" role="group">
+<button class="on" data-th="clasico" type="button"><span class="ts-dot" style="--c:#FE3211"></span><span data-i18n="t191">Clásico</span></button>
+<button data-th="aurora" type="button"><span class="ts-dot" style="--c:linear-gradient(135deg,#7b4dff,#ff3d6e)"></span>Aurora</button>
+<button data-th="cobalto" type="button"><span class="ts-dot" style="--c:linear-gradient(135deg,#1f4fd6,#0b1e4d)"></span>Cobalto</button>
+<button data-th="faro" type="button"><span class="ts-dot" style="--c:linear-gradient(135deg,#d9dde3,#4a4f58)"></span>Faro</button>
 </div>
-<p class="hint" data-i18n="t182">Además: elige tu app de música (se abre al tocar el reproductor) y tu app de navegación (botón nuevo en el mapa).</p>
+<div class="seg" id="tsModes" role="group">
+<button class="on" data-md="oscuro" type="button"><span class="mi" style="--i:url(ic/dark_mode.png);--s:16px"></span><span data-i18n="t35">Oscuro</span></button>
+<button data-md="claro" type="button"><span class="mi" style="--i:url(ic/light_mode.png);--s:16px"></span><span data-i18n="t36">Claro</span></button>
+</div>
+</div>
+<div class="ts-cards">
+<div class="tcard on" data-th="clasico"><b data-i18n="t191">Clásico</b><span class="tb free" data-i18n="t192">Gratis</span><p data-i18n="t193">El de siempre, con 10 colores de acento y todas las opciones para armar tu inicio.</p></div>
+<div class="tcard" data-th="aurora"><b>Aurora</b><span class="tb free" data-i18n="t192">Gratis</span><p data-i18n="t194">Arco degradado, tarjetas translúcidas y un modo «solo mapa» de pantalla completa.</p></div>
+<div class="tcard" data-th="cobalto"><b>Cobalto</b><span class="tb free" data-i18n="t192">Gratis</span><p data-i18n="t195">Azul profundo, tarjetas de vidrio inclinadas y velocímetro analógico.</p></div>
+<div class="tcard" data-th="faro"><b>Faro</b><span class="tb soon" data-i18n="t196">Pronto, con una donación</span><p data-i18n="t197">Tu carro visto desde arriba con los faros encendidos, en el color de tu carrocería.</p></div>
+</div>
+</div>
+<div class="ts-auto rv"><span class="mi" style="--i:url(ic/nights_stay.png);--s:20px"></span><p data-i18n="t198">Oscuro, claro o automático: por horario, con el amanecer y el atardecer de donde estés, o siguiendo al sistema de tu pantalla.</p></div>
+<div class="palette rv" id="palette"></div>
+<p class="hint" data-i18n="t101">Los 10 colores de acento del tema Clásico.</p>
 </div>
 </section>
-<!-- ================= TEMAS ================= -->
-<section>
+<!-- ================= ESCÁNER OBD-II (2.26) ================= -->
+<section id="obd" style="background:linear-gradient(transparent,var(--bg2) 20%,var(--bg2) 80%,transparent)">
 <div class="wrap">
 <div class="center rv">
-<span class="kicker" data-i18n="t97">Hazla tuya</span>
-<h2 data-i18n="t98">De día o de noche,<br/><em class="hl">siempre se ve bien.</em></h2>
+<span class="kicker" data-i18n="t199">Nuevo · Escáner OBD-II</span>
+<h2 data-i18n="t200">Tu motor,<br/><em class="hl">a la vista.</em></h2>
+<p class="sub" data-i18n="t201">Conecta un escáner ELM327 y StradaOS te muestra la temperatura, la batería y las revoluciones en un panel que sale encima de cualquier tema. Si algo anda mal, te avisa por voz, aunque estés en Waze o con música.</p>
+</div>
+<div class="demo-wrap rv">
+<div class="unit on"><div class="screen" id="odScreen">
+<div class="od" id="od">
+<img alt="" class="od-bg" decoding="async" height="900" id="odBg" src="img/tema-aurora-oscuro-es.webp" width="1536"/>
+<img alt="" class="od-blur" decoding="async" height="900" id="odBlur" src="img/tema-aurora-oscuro-es.webp" width="1536"/>
+<div class="od-tab"></div>
+<div class="od-panel" id="odPanel">
+<div class="od-head"><div><b data-i18n="t202">Vehículo</b><small><i></i><span data-i18n="t203">En vivo · Auto simulado</span></small></div><span class="od-btn" data-i18n="t32">Ajustes</span><span class="od-x">✕</span></div>
+<div class="od-gauges">
+<div class="od-g" data-k="cool"><svg viewBox="0 0 120 120"><path class="tr" d="M24 96 A50 50 0 1 1 96 96"/><path class="ar" d="M24 96 A50 50 0 1 1 96 96"/></svg><b class="v">88</b><small>°C</small><span data-i18n="t204">Refrigerante</span></div>
+<div class="od-g" data-k="volt"><svg viewBox="0 0 120 120"><path class="tr" d="M24 96 A50 50 0 1 1 96 96"/><path class="ar" d="M24 96 A50 50 0 1 1 96 96"/></svg><b class="v">14,1</b><small>V</small><span data-i18n="t205">Batería</span></div>
+<div class="od-g" data-k="rpm"><svg viewBox="0 0 120 120"><path class="tr" d="M24 96 A50 50 0 1 1 96 96"/><path class="ar" d="M24 96 A50 50 0 1 1 96 96"/></svg><b class="v">1.850</b><small>rpm</small><span>RPM</span></div>
+</div>
+<div class="od-minis">
+<div><span data-i18n="t18">Velocidad</span><b id="odSpd">52 km/h</b></div>
+<div><span data-i18n="t206">Carga del motor</span><b id="odLoad">38 %</b></div>
+<div><span data-i18n="t207">Consumo</span><b id="odCons">5,4 L/100 km</b></div>
+</div>
+<div class="od-chart"><div class="od-ct"><span data-i18n="t208">Refrigerante · últimos minutos</span><b id="odCoolBig">88 °C</b></div>
+<svg preserveAspectRatio="none" viewBox="0 0 700 120"><line class="lim2" x1="0" x2="700" y1="22" y2="22"/><line class="lim1" x1="0" x2="700" y1="38" y2="38"/><path class="fill" id="odFill"/><path class="line" id="odLine"/></svg>
+<div class="od-alert" id="odAlert"><b id="odAlertT">Refrigerante alto: 101 °C</b><span data-i18n="t209">Baja la exigencia: usa una marcha más baja y apaga el aire acondicionado.</span></div>
+</div>
+</div>
+</div>
+</div></div>
+<p class="hint" data-i18n="t210">Animación del panel con el auto simulado. Así se ve encima del tema Aurora.</p>
+</div>
+<div class="feats obd-feats">
+<div class="feat rv"><div class="ico"><span class="mi" style="--i:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 13c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4zm0 2c-2.7 0-8 1.3-8 4v2h16v-2c0-2.7-5.3-4-8-4zm7.8-9.6-1.7 1.7c.8 1.2.8 2.7 0 3.8l1.7 1.7c2-2 2-5 0-7.2zM20.1 2l-1.6 1.6c2.8 3 2.8 7.5 0 10.7l1.6 1.6c3.9-3.8 3.9-9.8 0-13.9z'/%3E%3C/svg%3E&quot;);--s:26px"></span></div><h3 data-i18n="t211">Alertas por voz</h3><p data-i18n="t212">Motor caliente, batería que no carga o revoluciones muy altas. Con una alerta grave, el panel se abre solo.</p></div>
+<div class="feat rv" style="--d:.05s"><div class="ico"><span class="mi" style="--i:url(ic/fact_check.png);--s:26px"></span></div><h3 data-i18n="t213">Códigos de falla explicados</h3><p data-i18n="t214">Qué significa cada código, qué tan grave es y qué hacer, sin internet y en 11 idiomas. Y los borras con el motor apagado.</p></div>
+<div class="feat rv" style="--d:.1s"><div class="ico"><span class="mi" style="--i:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3.5 18.5l6-6 4 4L22 6.9 20.6 5.5l-7.1 8-4-4L2 17z'/%3E%3C/svg%3E&quot;);--s:26px"></span></div><h3 data-i18n="t215">Datos en vivo y gráficos</h3><p data-i18n="t216">Todo lo que entrega tu carro, con gráficos de hasta 3 datos a la vez, de 1 a 30 minutos.</p></div>
+<div class="feat rv"><div class="ico"><span class="mi" style="--i:url(ic/lightbulb.png);--s:26px"></span></div><h3 data-i18n="t217">IA opcional</h3><p data-i18n="t218">Con tu propia clave (Groq es gratis, o Claude u OpenAI), te explica los códigos para tu carro en particular.</p></div>
+<div class="feat rv" style="--d:.05s"><div class="ico"><span class="mi" style="--i:url(ic/description.png);--s:26px"></span></div><h3 data-i18n="t219">Guía incluida</h3><p data-i18n="t220">Qué escáner comprar, dónde se conecta y qué significa cada color, dentro de la app y sin internet.</p></div>
+<div class="feat rv" style="--d:.1s"><div class="ico"><span class="mi" style="--i:url(ic/tune.png);--s:26px"></span></div><h3 data-i18n="t221">Viene apagado</h3><p data-i18n="t222">Si no tienes escáner, nada cambia. Pruébalo antes con el auto simulado en Ajustes → Tu vehículo.</p></div>
 </div>
 <div class="themes">
-<figure class="rv"><img alt="StradaOS en modo oscuro" height="900" loading="lazy" src="img/inicio-oscuro.webp" width="1536"/><figcaption><span class="mi" style="--i:url(ic/dark_mode.png);--s:18px"></span><span data-i18n="t99">Modo oscuro: no encandila de noche</span></figcaption></figure>
-<figure class="rv" style="--d:.1s"><img alt="StradaOS en modo claro" height="900" loading="lazy" src="img/inicio-claro.webp" width="1536"/><figcaption><span class="mi" style="--i:url(ic/light_mode.png);--s:18px"></span><span data-i18n="t100">Modo claro: se lee bien con sol</span></figcaption></figure>
+<figure class="rv"><img alt="Panel del vehículo de StradaOS con medidores, alertas y códigos" data-i18n-src="img/obd-panel" height="900" loading="lazy" src="img/obd-panel-es.webp" width="1536"/><figcaption><span class="mi" style="--i:url(ic/thermostat.png);--s:18px"></span><span data-i18n="t223">El panel con alertas y un código de falla, encima del tema</span></figcaption></figure>
+<figure class="rv" style="--d:.1s"><img alt="Guía del escáner OBD-II dentro de StradaOS" data-i18n-src="img/obd-guia" height="900" loading="lazy" src="img/obd-guia-es.webp" width="1536"/><figcaption><span class="mi" style="--i:url(ic/description.png);--s:18px"></span><span data-i18n="t224">La guía del escáner, dentro de la app y sin internet</span></figcaption></figure>
 </div>
-<div class="palette rv" id="palette"></div>
-<p class="hint" data-i18n="t101">Los 10 colores de acento que trae StradaOS.</p>
+<p class="hint" data-i18n="t225">Necesitas un escáner ELM327 con Bluetooth clásico o Wi-Fi. Los que son solo BLE (Bluetooth Low Energy) no funcionan.</p>
+</div>
+</section>
+<!-- ================= NAVEGACIÓN GUIADA (2.23) ================= -->
+<section id="navegacion">
+<div class="wrap">
+<div class="center rv">
+<span class="kicker" data-i18n="t226">Navegación guiada</span>
+<h2 data-i18n="t227">Te lleva paso a paso,<br/><em class="hl">aunque no haya señal.</em></h2>
+<p class="sub" data-i18n="t228">Toca «Ir a…», elige el destino y StradaOS te guía con voz sobre el mapa. Descarga el mapa de tu país desde la app y las calles se siguen viendo sin internet.</p>
+</div>
+<div class="demo-wrap rv">
+<div class="unit on"><div class="screen" id="nvScreen">
+<div class="nv" id="nv">
+<svg class="nv-map" viewBox="0 0 1024 600"><g id="nvWorld"></g></svg>
+<div class="nv-car" id="nvCar"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="rgba(254,50,17,.25)"/><path d="M24 7 37 39 24 32 11 39z" fill="#FE3211" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+<div class="nv-ban"><div class="nv-ic" id="nvIc"><svg viewBox="0 0 24 24"><path id="nvArrow" d="M11 20V8.8l-4.6 4.6L5 12l7-7 7 7-1.4 1.4L13 8.8V20z" fill="#fff"/></svg></div><div class="nv-tx"><b id="nvDist">300 m</b><span id="nvInstr">Continúa por Carrera 46</span></div><div class="nv-eta" id="nvEta">8 min · 3,2 km</div><span class="nv-x">✕</span></div>
+<div class="nv-chip"><span class="mi" style="--i:url(ic/wifi_off.png);--s:16px"></span><span data-i18n="t229">Mapa sin conexión</span></div>
+<div class="nv-spd"><b id="nvSpd">42</b><small>km/h</small></div>
+<div class="nv-att">© OpenStreetMap · mapsforge</div>
+</div>
+</div></div>
+<p class="hint" data-i18n="t230">Animación de una ruta guiada con el mapa descargado. Calles de ejemplo.</p>
+</div>
+<div class="feats obd-feats">
+<div class="feat rv"><div class="ico"><span class="mi" style="--i:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9.8 8.6 8.4 7.2 12 3.6l3.6 3.6-1.4 1.4L13 7.4V12l-5 5v4H6v-4.8l5-5V7.4zM15.6 15l1.4-1.4 2.4 2.4V21h-2v-4.2z'/%3E%3C/svg%3E&quot;);--s:26px"></span></div><h3 data-i18n="t231">Rutas alternas y paradas</h3><p data-i18n="t232">Elige entre varias rutas, agrega paradas, evita peajes o autopistas y guarda tu casa, tu trabajo y tus favoritos.</p></div>
+<div class="feat rv" style="--d:.05s"><div class="ico"><span class="mi" style="--i:url(ic/autorenew.png);--s:26px"></span></div><h3 data-i18n="t233">Recalcula si te desvías</h3><p data-i18n="t234">Instrucciones por voz que bajan el volumen de la música, con la hora de llegada siempre a la vista.</p></div>
+<div class="feat rv" style="--d:.1s"><div class="ico"><span class="mi" style="--i:url(ic/wifi_off.png);--s:26px"></span></div><h3 data-i18n="t235">Sin internet</h3><p data-i18n="t236">Con el mapa descargado, ves las calles en cualquier parte y la ruta se calcula de forma aproximada, sin señal.</p></div>
+</div>
+<div class="themes">
+<figure class="rv"><img alt="Ruta guiada en la pantalla de inicio de StradaOS" data-i18n-src="img/nav-guiada" height="900" loading="lazy" src="img/nav-guiada-es.webp" width="1536"/><figcaption><span class="mi" style="--i:url(ic/navigation.png);--s:18px"></span><span data-i18n="t237">La ruta y el próximo giro, en el inicio</span></figcaption></figure>
+<figure class="rv" style="--d:.1s"><img alt="Ruta guiada con el tema Aurora en modo solo mapa" data-i18n-src="img/nav-solomapa" height="900" loading="lazy" src="img/nav-solomapa-es.webp" width="1536"/><figcaption><span class="mi" style="--i:url(ic/map.png);--s:18px"></span><span data-i18n="t238">Con Aurora, la ruta en el modo «solo mapa»</span></figcaption></figure>
+</div>
+<p class="hint" data-i18n="t239">Viene apagada: actívala en Ajustes → Mapa y clima. ¿Prefieres Waze o Google Maps? El botón del mapa los sigue abriendo.</p>
 </div>
 </section>
 <!-- ================= INSTALAR ================= -->
@@ -579,7 +782,7 @@ footer .legal{margin-top:22px;font-size:12px;color:#646A73;max-width:820px}
 </div>
 <div class="steps">
 <ol>
-<li class="rv" data-i18n="t104"><b>Descarga el APK</b><span>Desde esta página o desde GitHub. Pesa alrededor de 1 MB.</span></li>
+<li class="rv" data-i18n="t104"><b>Descarga el APK</b><span>Desde esta página o desde GitHub. Pesa alrededor de 1,5 MB.</span></li>
 <li class="rv" data-i18n="t105"><b>Pásalo a la pantalla</b><span>Cópialo a una memoria USB y, en la pantalla, muévelo a la <b>memoria interna</b> con el explorador de archivos. Muchas radios no instalan directo desde la USB.</span></li>
 <li class="rv" data-i18n="t106"><b>Permite la instalación</b><span>En la pantalla: Ajustes → Seguridad → <b>Orígenes desconocidos</b>.</span></li>
 <li class="rv" data-i18n="t107"><b>Instálala y hazla tu inicio</b><span>Toca el APK, instala, presiona el botón de Inicio y elige <b>StradaOS → Siempre</b>.</span></li>
@@ -618,6 +821,7 @@ footer .legal{margin-top:22px;font-size:12px;color:#646A73;max-width:820px}
 <div class="center rv"><span class="kicker" data-i18n="t121">Preguntas frecuentes</span><h2 data-i18n="t122">Lo que <em class="hl">todos preguntan.</em></h2></div>
 <div class="faq">
 <details class="rv"><summary data-i18n="t123">¿Es gratis de verdad?</summary><div class="ans" data-i18n="t124">Sí. Sin anuncios, sin versión «pro», sin cuentas. Es código abierto bajo licencia GPL-3.0. Si quieres, puedes apoyar con un café, pero no es obligatorio.</div></details>
+<details class="rv"><summary data-i18n="t240">¿Qué escáner OBD-II necesito?</summary><div class="ans" data-i18n="t241">Uno ELM327 con <b>Bluetooth clásico</b> (también dice SPP, 2.0 o 3.0) o con Wi-Fi, como el Vgate iCar Pro Bluetooth 3.0, el Veepeak Mini Bluetooth o los OBDLink LX y MX+. Los que son <b>solo BLE</b> o «solo para iPhone» no funcionan. Se conecta en el puerto OBD, casi siempre debajo del volante. La guía de Ajustes → Tu vehículo → Escáner OBD-II te explica todo paso a paso.</div></details>
 <details class="rv"><summary data-i18n="t189">¿Por qué se llama StradaOS si no es un sistema operativo?</summary><div class="ans" data-i18n="t190">Porque el «OS» es de <b>Open Source</b>: código abierto. StradaOS es un launcher: no reemplaza Android ni toca el sistema, solo cambia lo que ves en la pantalla del carro. Y «Strada» significa «camino» en italiano. Un launcher libre para el camino.</div></details>
 <details class="rv"><summary data-i18n="t183">Al encender sale el menú de fábrica, no StradaOS</summary><div class="ans" data-i18n="t184">StradaOS es un launcher, pero hay que fijarlo como pantalla de inicio una vez. Desde la versión 2.10.1 StradaOS te avisa: toca <b>«Fijar ahora»</b>, elige <b>StradaOS</b> y luego <b>«Siempre»</b>. También está en Ajustes → Sistema → Pantalla de inicio. Si tu pantalla siempre vuelve a su menú de fábrica al encender, activa ahí mismo <b>«Abrir StradaOS al encender»</b>.</div></details>
 <details class="rv"><summary data-i18n="t185">La música Bluetooth se corta cuando salgo de la app Bluetooth</summary><div class="ans" data-i18n="t186">Sal de la app Bluetooth con el botón <b>Inicio</b> (la casita), no con Atrás: Atrás cierra la app de fábrica y con ella la música. Para ver la canción en el inicio en Android 5 o más nuevo, activa en StradaOS → Ajustes → Música <b>«Música de cualquier app»</b> y dale acceso a notificaciones. No hace falta conectar el celular por USB: el cable solo se usa para Android Auto.</div></details>
@@ -651,7 +855,7 @@ footer .legal{margin-top:22px;font-size:12px;color:#646A73;max-width:820px}
 <h2 data-i18n="t155">Dale una segunda vida<br/>a tu pantalla <em class="hl">hoy.</em></h2>
 <p class="sub" data-i18n="t156" style="margin:16px auto 0">Descárgala, pruébala y, si no te convence, la quitas en un minuto. No tienes nada que perder.</p>
 <div class="cta">
-<a class="btn btn-a btn-dl" data-dl="" href="https://github.com/lordnordic-debug/StradaOS/releases/latest"><span class="mi" style="--i:url(ic/download.png);--s:24px"></span><span class="tx"><span data-i18n="t157">Descargar StradaOS</span><span class="dl-meta" data-dlmeta="">APK · alrededor de 1 MB</span></span></a>
+<a class="btn btn-a btn-dl" data-dl="" href="https://github.com/lordnordic-debug/StradaOS/releases/latest"><span class="mi" style="--i:url(ic/download.png);--s:24px"></span><span class="tx"><span data-i18n="t157">Descargar StradaOS</span><span class="dl-meta" data-dlmeta="">APK · alrededor de 1,5 MB</span></span></a>
 <a class="btn btn-g" href="https://github.com/lordnordic-debug/StradaOS" rel="noopener" target="_blank"><span class="mi" style="--i:url(ic/code.png);--s:20px"></span><span data-i18n="t158">Ver el código</span></a>
 </div>
 </div>
@@ -693,6 +897,7 @@ footer .legal{margin-top:22px;font-size:12px;color:#646A73;max-width:820px}
 </div>
 <div class="fab" id="fab"><a class="btn btn-a" data-dl="" href="https://github.com/lordnordic-debug/StradaOS/releases/latest"><span class="mi" style="--i:url(ic/download.png);--s:20px"></span><span data-i18n="t176">Descargar gratis</span></a></div>
 <script src="i18n.js"></script>
+<script defer src="demos.js"></script>
 <script>
 (function(){
 var REPO='lordnordic-debug/StradaOS', SITE='https://lordnordic-debug.github.io/StradaOS/';
