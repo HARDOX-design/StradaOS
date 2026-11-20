@@ -5515,7 +5515,8 @@ public class Main extends Activity {
     // ── Desbloqueo con donación (Fase 3, 2.27): ID de la pantalla → donación en Ko-fi → código STRD-XXXX-XXXX ──
 
     private void unlockDialog(final String id) {
-        final String url = Updates.donateUrl(this);
+        String du = Updates.donateUrl(this);
+        final String url = du.startsWith("https://ko-fi.com/") ? du : "https://ko-fi.com/stradaos";
         LinearLayout box = new LinearLayout(this);
         box.setGravity(Gravity.CENTER_VERTICAL);
         int pad = (int) (20 * s);
