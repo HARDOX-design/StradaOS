@@ -42,7 +42,7 @@ adb shell am start -n $ACT --es prueba saltar >/dev/null; sleep 25
 go idioma:es 6; go tema:oscuro 6; go inicio 4; sleep 8
 shot v00-inicio-sin-obd
 go ajustes:1 5; sc; sc; sc; shot v01-tu-vehiculo-apagado
-go obd-demo 3; go ajustes:1 150     # el motor se sobrecalienta (alerta grave) a los ~2 min, con Ajustes abierto
+go obd-demo 3; go ajustes:1 190     # batería baja (alerta grave) a los ~3 min, con Ajustes abierto
 go inicio 6; shot v02-panel-solo-al-volver   # debe abrirse solo
 back; sleep 3; shot v02-inicio-pestana
 go obd-panel 4; shot v03-panel-20s
