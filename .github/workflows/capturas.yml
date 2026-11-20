@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       modo:
-        description: "redes, proyecto, promo / promo-v (2.21) o promo-224 / promo-224-v (temas Aurora y Cobalto, navegación)"
+        description: "redes, proyecto, promo / promo-v (2.21) o promo-224 / promo-224-v (temas Aurora y Cobalto, navegación) o web (página 2.26: temas, navegación y OBD-II en es/en/pt)"
         default: redes
 
 permissions:
