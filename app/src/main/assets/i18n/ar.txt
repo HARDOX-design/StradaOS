@@ -1667,3 +1667,4 @@ Modo 01 · PID {}	الوضع 01 · PID {}
 Sin conexión	لا يوجد اتصال
 Interrumpido	تمت المقاطعة
 Dirección no válida: {}	عنوان غير صالح: {}
+Apps	التطبيقات

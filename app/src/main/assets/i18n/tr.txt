@@ -1667,3 +1667,4 @@ Modo 01 · PID {}	Mod 01 · PID {}
 Sin conexión	Bağlantı yok
 Interrumpido	Kesildi
 Dirección no válida: {}	Geçersiz adres: {}
+Apps	Uygulamalar

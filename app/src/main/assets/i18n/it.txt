@@ -1667,3 +1667,4 @@ Modo 01 · PID {}	Modo 01 · PID {}
 Sin conexión	Nessuna connessione
 Interrumpido	Interrotto
 Dirección no válida: {}	Indirizzo non valido: {}
+Apps	App

@@ -1667,3 +1667,4 @@ Modo 01 · PID {}	Mod 01 · PID {}
 Sin conexión	Tiada sambungan
 Interrumpido	Terganggu
 Dirección no válida: {}	Alamat tidak sah: {}
+Apps	Apl

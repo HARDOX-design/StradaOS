@@ -1667,3 +1667,4 @@ Modo 01 · PID {}	Modus 01 · PID {}
 Sin conexión	Keine Verbindung
 Interrumpido	Unterbrochen
 Dirección no válida: {}	Ungültige Adresse: {}
+Apps	Apps

@@ -472,6 +472,8 @@ class VehiclePanel extends FrameLayout implements Obd.Listener {
         t.setSingleLine(true);              // en alemán «Motorkontrolle» se partía y quedaba cortado
         t.setGravity(Gravity.CENTER);
         t.setPadding(px(14), 0, px(14), 0);
+        // ancho del texto medido más un margen: algunos equipos miden la negrita unos píxeles corta y la cortaban
+        t.setMinWidth((int) Math.ceil(t.getPaint().measureText(s)) + px(28) + px(6));
         t.setBackground(round(bg, 12));
         return t;
     }

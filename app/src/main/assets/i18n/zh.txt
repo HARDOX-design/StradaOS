@@ -1667,3 +1667,4 @@ Modo 01 · PID {}	模式 01 · PID {}
 Sin conexión	未连接
 Interrumpido	已中断
 Dirección no válida: {}	地址无效：{}
+Apps	应用

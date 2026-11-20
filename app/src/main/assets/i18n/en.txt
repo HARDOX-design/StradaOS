@@ -1759,3 +1759,4 @@ Modo 01 · PID {}	Mode 01 · PID {}
 Sin conexión	Not connected
 Interrumpido	Interrupted
 Dirección no válida: {}	Invalid address: {}
+Apps	Apps

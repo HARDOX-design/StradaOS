@@ -1705,3 +1705,4 @@ Modo 01 · PID {}	Modo 01 · PID {}
 Sin conexión	Sem conexão
 Interrumpido	Interrompido
 Dirección no válida: {}	Endereço inválido: {}
+Apps	Apps
