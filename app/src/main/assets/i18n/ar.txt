@@ -1676,7 +1676,7 @@ Se desbloquea con una donación. Todas las funciones de StradaOS siguen siendo g
 Desbloqueado en esta pantalla. ¡Gracias por tu donación!	مفتوح على هذه الشاشة. شكرًا على تبرعك!
 Prueba: volver a aplicar sin código	تجربة: التطبيق دون رمز مرة أخرى
 Prueba: desbloquear como en la versión normal	تجربة: الفتح كما في النسخة العادية
-1. Dona 4 USD en Ko-fi: escanea el código con tu celular o entra a {}.	1. تبرّع بـ 4 دولارات على Ko-fi: امسح الرمز بهاتفك أو ادخل إلى {}.
+1. Dona 5 USD en Ko-fi: escanea el código con tu celular o entra a {}.	1. تبرّع بـ 5 دولارات على Ko-fi: امسح الرمز بهاتفك أو ادخل إلى {}.
 2. En el mensaje de la donación escribe el ID de esta pantalla:	2. في رسالة التبرع اكتب معرّف هذه الشاشة:
 3. Te enviamos un código STRD-XXXX-XXXX, casi siempre el mismo día. Escríbelo en «Tengo un código».	3. نرسل لك رمزًا STRD-XXXX-XXXX، غالبًا في اليوم نفسه. اكتبه في «لدي رمز».
 El tema queda en esta pantalla. Si cambias de radio o la restableces, escríbenos con el ID nuevo y te enviamos otro código sin costo.	تبقى السمة على هذه الشاشة. إن غيّرت الراديو أو أعدت ضبطها، راسلنا بالمعرّف الجديد ونرسل لك رمزًا آخر دون تكلفة.
@@ -1697,6 +1697,6 @@ Copia el archivo que te enviamos (stradaos-licencia.txt) en la raíz de una USB,
 ¡Listo!	تم!
 {} quedó desbloqueado en esta pantalla. Gracias por apoyar StradaOS.	تم فتح {} على هذه الشاشة. شكرًا لدعمك StradaOS.
 Aplicar ahora	تطبيق الآن
-1. Dona en Ko-fi 4 USD por un tema o 6 USD por dos: escanea el código con tu celular o entra a {}.	1. تبرّع على Ko-fi بـ 4 دولارات لسمة واحدة أو 6 دولارات لسمتين: امسح الرمز بهاتفك أو ادخل إلى {}.
+1. Dona en Ko-fi 5 USD por un tema o 8 USD por dos: escanea el código con tu celular o entra a {}.	1. تبرّع على Ko-fi بـ 5 دولارات لسمة واحدة أو 8 دولارات لسمتين: امسح الرمز بهاتفك أو ادخل إلى {}.
 2. En el mensaje de la donación escribe el ID de esta pantalla y qué temas quieres:	2. في رسالة التبرع اكتب معرّف هذه الشاشة والسمات التي تريدها:
-Se desbloquea con una donación de 4 USD, o 6 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	يُفتح بتبرع قدره 4 دولارات، أو 6 دولارات لسمتين. كل ميزات StradaOS تبقى مجانية.
+Se desbloquea con una donación de 5 USD, o 8 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	يُفتح بتبرع قدره 5 دولارات، أو 8 دولارات لسمتين. كل ميزات StradaOS تبقى مجانية.

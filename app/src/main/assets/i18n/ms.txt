@@ -1676,7 +1676,7 @@ Se desbloquea con una donación. Todas las funciones de StradaOS siguen siendo g
 Desbloqueado en esta pantalla. ¡Gracias por tu donación!	Dibuka pada skrin ini. Terima kasih atas derma anda!
 Prueba: volver a aplicar sin código	Ujian: guna semula tanpa kod
 Prueba: desbloquear como en la versión normal	Ujian: buka kunci seperti versi biasa
-1. Dona 4 USD en Ko-fi: escanea el código con tu celular o entra a {}.	1. Derma 4 USD di Ko-fi: imbas kod dengan telefon anda atau pergi ke {}.
+1. Dona 5 USD en Ko-fi: escanea el código con tu celular o entra a {}.	1. Derma 5 USD di Ko-fi: imbas kod dengan telefon anda atau pergi ke {}.
 2. En el mensaje de la donación escribe el ID de esta pantalla:	2. Dalam mesej derma, tulis ID skrin ini:
 3. Te enviamos un código STRD-XXXX-XXXX, casi siempre el mismo día. Escríbelo en «Tengo un código».	3. Kami hantar kod STRD-XXXX-XXXX, biasanya pada hari yang sama. Masukkannya dalam “Saya ada kod”.
 El tema queda en esta pantalla. Si cambias de radio o la restableces, escríbenos con el ID nuevo y te enviamos otro código sin costo.	Tema kekal pada skrin ini. Jika anda tukar radio atau set semula, hubungi kami dengan ID baharu dan kami hantar kod lain tanpa bayaran.
@@ -1697,6 +1697,6 @@ Copia el archivo que te enviamos (stradaos-licencia.txt) en la raíz de una USB,
 ¡Listo!	Siap!
 {} quedó desbloqueado en esta pantalla. Gracias por apoyar StradaOS.	{} kini dibuka pada skrin ini. Terima kasih kerana menyokong StradaOS.
 Aplicar ahora	Guna sekarang
-1. Dona en Ko-fi 4 USD por un tema o 6 USD por dos: escanea el código con tu celular o entra a {}.	1. Derma di Ko-fi 4 USD untuk satu tema atau 6 USD untuk dua: imbas kod dengan telefon anda atau pergi ke {}.
+1. Dona en Ko-fi 5 USD por un tema o 8 USD por dos: escanea el código con tu celular o entra a {}.	1. Derma di Ko-fi 5 USD untuk satu tema atau 8 USD untuk dua: imbas kod dengan telefon anda atau pergi ke {}.
 2. En el mensaje de la donación escribe el ID de esta pantalla y qué temas quieres:	2. Dalam mesej derma, tulis ID skrin ini dan tema yang anda mahu:
-Se desbloquea con una donación de 4 USD, o 6 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	Dibuka dengan derma 4 USD, atau 6 USD untuk dua tema. Semua fungsi StradaOS kekal percuma.
+Se desbloquea con una donación de 5 USD, o 8 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	Dibuka dengan derma 5 USD, atau 8 USD untuk dua tema. Semua fungsi StradaOS kekal percuma.

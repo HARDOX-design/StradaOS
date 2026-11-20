@@ -5495,7 +5495,7 @@ public class Main extends Activity {
             View.OnClickListener open = new View.OnClickListener() { public void onClick(View v) { unlockDialog(id); } };
             btn.setOnClickListener(open);
             cell.setOnClickListener(open);
-            TextView soon = tv(Prem.bundle() ? "Se desbloquea con una donación de 4 USD, o 6 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis."
+            TextView soon = tv(Prem.bundle() ? "Se desbloquea con una donación de 5 USD, o 8 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis."
                 : "Se desbloquea con una donación. Todas las funciones de StradaOS siguen siendo gratis.", 11, MUTED, false);
             multiLine(soon);
             soon.setPadding(0, (int) (8 * s), 0, 0);
@@ -5532,9 +5532,9 @@ public class Main extends Activity {
         LinearLayout col = new LinearLayout(this);
         col.setOrientation(LinearLayout.VERTICAL);
         col.setPadding(narrow ? 0 : (int) (20 * s), narrow ? (int) (14 * s) : 0, 0, 0);
-        final boolean pack = Prem.bundle();   // con dos o más temas de pago: 6 USD por dos
-        TextView m1 = tv(I18n.t(pack ? "1. Dona en Ko-fi 4 USD por un tema o 6 USD por dos: escanea el código con tu celular o entra a {}."
-            : "1. Dona 4 USD en Ko-fi: escanea el código con tu celular o entra a {}.").replace("{}", url.replace("https://", "")), 13, SOFT, false);
+        final boolean pack = Prem.bundle();   // con dos o más temas de pago: 8 USD por dos
+        TextView m1 = tv(I18n.t(pack ? "1. Dona en Ko-fi 5 USD por un tema o 8 USD por dos: escanea el código con tu celular o entra a {}."
+            : "1. Dona 5 USD en Ko-fi: escanea el código con tu celular o entra a {}.").replace("{}", url.replace("https://", "")), 13, SOFT, false);
         multiLine(m1);
         col.addView(m1);
         TextView m2 = tv(pack ? "2. En el mensaje de la donación escribe el ID de esta pantalla y qué temas quieres:"

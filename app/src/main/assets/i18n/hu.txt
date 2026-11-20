@@ -1662,7 +1662,7 @@ Se desbloquea con una donación. Todas las funciones de StradaOS siguen siendo g
 Desbloqueado en esta pantalla. ¡Gracias por tu donación!	Ezen a kijelzőn feloldva. Köszönjük az adományodat!
 Prueba: volver a aplicar sin código	Teszt: újra kód nélkül alkalmaz
 Prueba: desbloquear como en la versión normal	Teszt: feloldás úgy, mint a normál verzióban
-1. Dona 4 USD en Ko-fi: escanea el código con tu celular o entra a {}.	1. Adományozz 4 USD-t a Ko-fin: olvasd be a kódot a telefonoddal, vagy nyisd meg: {}.
+1. Dona 5 USD en Ko-fi: escanea el código con tu celular o entra a {}.	1. Adományozz 5 USD-t a Ko-fin: olvasd be a kódot a telefonoddal, vagy nyisd meg: {}.
 2. En el mensaje de la donación escribe el ID de esta pantalla:	2. Az adomány üzenetébe írd be ennek a kijelzőnek az azonosítóját:
 3. Te enviamos un código STRD-XXXX-XXXX, casi siempre el mismo día. Escríbelo en «Tengo un código».	3. Küldünk egy STRD-XXXX-XXXX kódot, többnyire még aznap. Írd be a „Van kódom” résznél.
 El tema queda en esta pantalla. Si cambias de radio o la restableces, escríbenos con el ID nuevo y te enviamos otro código sin costo.	A téma ezen a kijelzőn marad. Ha fejegységet cserélsz vagy visszaállítod, írj nekünk az új azonosítóval, és ingyen küldünk egy másik kódot.
@@ -1683,6 +1683,6 @@ Copia el archivo que te enviamos (stradaos-licencia.txt) en la raíz de una USB,
 ¡Listo!	Kész!
 {} quedó desbloqueado en esta pantalla. Gracias por apoyar StradaOS.	A(z) {} feloldva ezen a kijelzőn. Köszönjük, hogy támogatod a StradaOS-t.
 Aplicar ahora	Alkalmazás most
-1. Dona en Ko-fi 4 USD por un tema o 6 USD por dos: escanea el código con tu celular o entra a {}.	1. Adományozz a Ko-fin 4 USD-t egy témáért vagy 6 USD-t kettőért: olvasd be a kódot a telefonoddal, vagy nyisd meg: {}.
+1. Dona en Ko-fi 5 USD por un tema o 8 USD por dos: escanea el código con tu celular o entra a {}.	1. Adományozz a Ko-fin 5 USD-t egy témáért vagy 8 USD-t kettőért: olvasd be a kódot a telefonoddal, vagy nyisd meg: {}.
 2. En el mensaje de la donación escribe el ID de esta pantalla y qué temas quieres:	2. Az adomány üzenetébe írd be ennek a kijelzőnek az azonosítóját és azt, hogy mely témákat szeretnéd:
-Se desbloquea con una donación de 4 USD, o 6 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	4 USD-s adománnyal oldható fel, két téma 6 USD. A StradaOS minden funkciója ingyenes marad.
+Se desbloquea con una donación de 5 USD, o 8 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	5 USD-s adománnyal oldható fel, két téma 8 USD. A StradaOS minden funkciója ingyenes marad.

@@ -17,7 +17,7 @@ final class Prem {
 
     /** Temas premium que se regalan a todos (lanzamiento de la 2.24). Los que vengan después se desbloquean con una donación (Fase 3). */
     static boolean free(String id) { return Aurora.ID.equals(id) || Cobalto.ID.equals(id); }
-    /** Cuántos temas se desbloquean con donación. Con dos o más, la app ofrece sola el paquete de 6 USD por dos temas. */
+    /** Cuántos temas se desbloquean con donación. Con dos o más, la app ofrece sola el paquete de 8 USD por dos temas. */
     static int paidCount() {
         int n = 0;
         for (String id : IDS) if (!free(id)) n++;

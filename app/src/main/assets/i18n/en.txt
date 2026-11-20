@@ -1768,7 +1768,7 @@ Se desbloquea con una donación. Todas las funciones de StradaOS siguen siendo g
 Desbloqueado en esta pantalla. ¡Gracias por tu donación!	Unlocked on this screen. Thanks for your donation!
 Prueba: volver a aplicar sin código	Test: apply without a code again
 Prueba: desbloquear como en la versión normal	Test: unlock like the regular version
-1. Dona 4 USD en Ko-fi: escanea el código con tu celular o entra a {}.	1. Donate 4 USD on Ko-fi: scan the code with your phone or go to {}.
+1. Dona 5 USD en Ko-fi: escanea el código con tu celular o entra a {}.	1. Donate 5 USD on Ko-fi: scan the code with your phone or go to {}.
 2. En el mensaje de la donación escribe el ID de esta pantalla:	2. In the donation message, write this screen's ID:
 3. Te enviamos un código STRD-XXXX-XXXX, casi siempre el mismo día. Escríbelo en «Tengo un código».	3. We'll send you a code STRD-XXXX-XXXX, usually the same day. Enter it under “I have a code”.
 El tema queda en esta pantalla. Si cambias de radio o la restableces, escríbenos con el ID nuevo y te enviamos otro código sin costo.	The theme stays on this screen. If you change head units or reset it, write to us with the new ID and we'll send you another code at no cost.
@@ -1789,6 +1789,6 @@ Copia el archivo que te enviamos (stradaos-licencia.txt) en la raíz de una USB,
 ¡Listo!	Done!
 {} quedó desbloqueado en esta pantalla. Gracias por apoyar StradaOS.	{} is now unlocked on this screen. Thanks for supporting StradaOS.
 Aplicar ahora	Apply now
-1. Dona en Ko-fi 4 USD por un tema o 6 USD por dos: escanea el código con tu celular o entra a {}.	1. Donate on Ko-fi, 4 USD for one theme or 6 USD for two: scan the code with your phone or go to {}.
+1. Dona en Ko-fi 5 USD por un tema o 8 USD por dos: escanea el código con tu celular o entra a {}.	1. Donate on Ko-fi, 5 USD for one theme or 8 USD for two: scan the code with your phone or go to {}.
 2. En el mensaje de la donación escribe el ID de esta pantalla y qué temas quieres:	2. In the donation message, write this screen's ID and which themes you want:
-Se desbloquea con una donación de 4 USD, o 6 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	Unlocks with a 4 USD donation, or 6 USD for two themes. Every StradaOS feature stays free.
+Se desbloquea con una donación de 5 USD, o 8 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	Unlocks with a 5 USD donation, or 8 USD for two themes. Every StradaOS feature stays free.

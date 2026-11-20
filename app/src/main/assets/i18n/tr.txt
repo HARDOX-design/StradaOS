@@ -1676,7 +1676,7 @@ Se desbloquea con una donación. Todas las funciones de StradaOS siguen siendo g
 Desbloqueado en esta pantalla. ¡Gracias por tu donación!	Bu ekranda açıldı. Bağışınız için teşekkürler!
 Prueba: volver a aplicar sin código	Test: yeniden kodsuz uygula
 Prueba: desbloquear como en la versión normal	Test: normal sürümdeki gibi kilidi aç
-1. Dona 4 USD en Ko-fi: escanea el código con tu celular o entra a {}.	1. Ko-fi'de 4 USD bağışlayın: kodu telefonunuzla tarayın veya {} adresine gidin.
+1. Dona 5 USD en Ko-fi: escanea el código con tu celular o entra a {}.	1. Ko-fi'de 5 USD bağışlayın: kodu telefonunuzla tarayın veya {} adresine gidin.
 2. En el mensaje de la donación escribe el ID de esta pantalla:	2. Bağış mesajına bu ekranın kimliğini yazın:
 3. Te enviamos un código STRD-XXXX-XXXX, casi siempre el mismo día. Escríbelo en «Tengo un código».	3. Size genellikle aynı gün bir STRD-XXXX-XXXX kodu göndeririz. Bunu «Kodum var» bölümüne yazın.
 El tema queda en esta pantalla. Si cambias de radio o la restableces, escríbenos con el ID nuevo y te enviamos otro código sin costo.	Tema bu ekranda kalır. Radyoyu değiştirir veya sıfırlarsanız, yeni kimlikle bize yazın, size ücretsiz yeni bir kod gönderelim.
@@ -1697,6 +1697,6 @@ Copia el archivo que te enviamos (stradaos-licencia.txt) en la raíz de una USB,
 ¡Listo!	Tamam!
 {} quedó desbloqueado en esta pantalla. Gracias por apoyar StradaOS.	{} bu ekranda açıldı. StradaOS'u desteklediğiniz için teşekkürler.
 Aplicar ahora	Şimdi uygula
-1. Dona en Ko-fi 4 USD por un tema o 6 USD por dos: escanea el código con tu celular o entra a {}.	1. Ko-fi'de bir tema için 4 USD veya iki tema için 6 USD bağışlayın: kodu telefonunuzla tarayın veya {} adresine gidin.
+1. Dona en Ko-fi 5 USD por un tema o 8 USD por dos: escanea el código con tu celular o entra a {}.	1. Ko-fi'de bir tema için 5 USD veya iki tema için 8 USD bağışlayın: kodu telefonunuzla tarayın veya {} adresine gidin.
 2. En el mensaje de la donación escribe el ID de esta pantalla y qué temas quieres:	2. Bağış mesajına bu ekranın kimliğini ve istediğiniz temaları yazın:
-Se desbloquea con una donación de 4 USD, o 6 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	4 USD bağışla açılır, iki tema için 6 USD. StradaOS'un tüm özellikleri ücretsiz kalır.
+Se desbloquea con una donación de 5 USD, o 8 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	5 USD bağışla açılır, iki tema için 8 USD. StradaOS'un tüm özellikleri ücretsiz kalır.
