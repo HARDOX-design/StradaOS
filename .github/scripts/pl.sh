@@ -45,7 +45,7 @@ go idioma:pl 6; go inicio 4; sleep 12
 go pista-demo:Night_Drive 3; shot p01-inicio
 go tema:claro 6; go pista-demo:Night_Drive 3; shot p02-inicio-claro; go tema:oscuro 6
 for c in 0 1 2 3 4 5 6 7 8 9 10 11; do n=$(printf %02d $c); go ajustes:$c 5; shot p1$n-a; sc; shot p1$n-b; sc; sc; shot p1$n-c; done
-go inicio 3; go asistente 5; shot p20-asistente; back; go inicio 3
+go inicio 3
 go clima 5; shot p21-clima; back
 go obd-demo 20; sleep 60
 go obd-panel 4; shot p30-panel-obd

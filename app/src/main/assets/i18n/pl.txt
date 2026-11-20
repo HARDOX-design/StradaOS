@@ -18,7 +18,7 @@ Toca para poner la foto de tu vehículo	Dotknij, aby dodać zdjęcie swojego poj
 Velocidad	Prędkość
 Diagnóstico del mapa	Diagnostyka mapy
 Buscando GPS…	Wyszukiwanie GPS…
-Buscando GPS	Wyszukiwanie  GPS
+Buscando GPS	Szukanie GPS
 En vivo · sin internet	Na żywo · offline
 Última posición · sin internet	Ostatnia pozycja · offline
 Mapa en vivo	Mapa na żywo
@@ -34,7 +34,7 @@ Restablecer ({})	Resetuj ({})
 Botón restablecido	Zresetowane
 Cerrar	Zamknij
 Cerrar  ✕	Zamknij  ✕
-★  Funciones de StradaOS (Música, Navegación, Android Auto…)	★  Funkcje StradaOS  (Muzyka, Nawigacja, Android Auto…)
+★  Funciones de StradaOS (Música, Navegación, Android Auto…)	★  Funkcje StradaOS (Muzyka, Nawigacja, Android Auto…)
 ¿Qué abre el botón {}?	Co otworzyć {} open?
 Función del botón {}	Przycisk {} funkcja
 Nombre del botón {} (vacío = el de la app)	Przycisk {} nazwa (puste pole = nazwa aplikacji)
@@ -82,7 +82,7 @@ Vamos a dejar el launcher a tu gusto: tu nombre, tu vehículo, el color y la fot
 Empezar	Rozpocznij
 ¿Cómo te llamas?	Jak się nazywasz?
 Nombre del vehículo (ej.: Mazda 2, Spark GT)	Nazwa pojazdu (e.g. Mazda 2, Spark GT)
-Etiqueta corta (versión o placa). Déjalo vacío si no quieres	Krótki tag (wersja lub tablica rejestracyjna). Pozostaw puste, jeśli nie chcesz    Krótki tag (wersja lub tablica rejestracyjna). Pozostaw puste, jeśli nie chcesz
+Etiqueta corta (versión o placa). Déjalo vacío si no quieres	Krótka etykieta (wersja lub tablica rejestracyjna). Zostaw puste, jeśli nie chcesz
 Después	Później
 No encontrada	Nie znaleziono
 ¿Qué app abre cada botón?	Która aplikacja otwiera się po naciśnięciu każdego przycisku?
@@ -99,7 +99,7 @@ Memoria / USB	Pamięć / USB
 Galería	Galeria
 Elige la foto	Wybierz zdjęcie
 Buscando fotos…	Wyszukiwanie zdjęć…
-No encontré fotos (.jpg/.png). Cópialas a la memoria USB o a Download.	Nie znaleziono zdjęć (.jpg/.png).. Skopiuj je na pamięć USB lub do folderu  Download.
+No encontré fotos (.jpg/.png). Cópialas a la memoria USB o a Download.	Nie znaleziono zdjęć (.jpg/.png). Skopiuj je na pamięć USB lub do folderu Download.
 Quitando el fondo…	Usuwanie tła…
 No se pudo abrir la imagen	Nie udało się otworzyć obrazu
 No se pudo abrir la imagen: {}	Nie udało się otworzyć obrazu: {}
@@ -172,7 +172,7 @@ Revisar todos los botones	Przejrzyj wszystkie przyciski
 Lista rápida de qué abre cada uno, como en el asistente	Szybka lista tego, co otwiera każdy z nich, tak jak w kreatorze konfiguracji
 Restablecer	Resetuj
 Restablecer accesos	Resetuj skróty
-La barra vuelve a lo de siempre y se buscan las apps de fábrica	Pasek wraca do domyślnego stanu i ponownie wyszukiwane są aplikacje fabryczne    Pasek wraca do domyślnego stanu i ponownie wyszukiwane są aplikacje fabryczne
+La barra vuelve a lo de siempre y se buscan las apps de fábrica	Pasek wraca do ustawień domyślnych i ponownie wyszukiwane są aplikacje fabryczne
 Accesos restablecidos	Skróty zresetowane
 Clima	Pogoda
 Mostrar el clima	Pokaż pogodę
@@ -278,7 +278,7 @@ Instalar actualizaciones desde la app	Zainstaluj aktualizacje z aplikacji
 pide permiso «Instalar apps desconocidas»	prosi o uprawnienie „Instaluj nieznane aplikacje”
 No hay fallos registrados	Brak zarejestrowanych awarii
 Registro de fallos	Dziennik awarii
-Borrar	 Wyczyść
+Borrar	Wyczyść
 Registro borrado	Dziennik wyczyszczony
 Gratis y de código abierto. Una nueva vida para las pantallas Android del carro.	Bezpłatne i open source. Nowe życie dla samochodowych ekranów z systemem Android.
 Versión	Wersja
@@ -295,7 +295,7 @@ Comprobar actualizaciones automáticamente	Sprawdzaj aktualizacje automatycznie
 Opcional: las descargas de GitHub no pasan por la revisión de la tienda	Opcjonalnie: pliki pobierane z GitHub nie przechodzą przez proces weryfikacji sklepu
 Al abrir StradaOS con internet, una vez al día	Po uruchomieniu StradaOS z dostępem do Internetu, raz dziennie
 Actualizaciones desde GitHub	Aktualizacje z GitHub
-Instalaste StradaOS desde {}. Si activas esto, StradaOS revisará una vez al día las versiones publicadas en github.com/{} y te ofrecerá descargarlas desde ahí.\n\nEsas descargas no pasan por la revisión de la tienda. Puede que GitHub tenga una versión un poco antes que la tienda.	Zainstalowałeś StradaOS z {}. Jeśli włączysz tę opcję, StradaOS będzie raz dziennie sprawdzać wersje opublikowane na github.com/{}  i proponować ich pobranie stamtąd.\n\nPliki te nie przechodzą przez proces weryfikacji w sklepie. GitHub może udostępniać wersję nieco wcześniej niż sklep.
+Instalaste StradaOS desde {}. Si activas esto, StradaOS revisará una vez al día las versiones publicadas en github.com/{} y te ofrecerá descargarlas desde ahí.\n\nEsas descargas no pasan por la revisión de la tienda. Puede que GitHub tenga una versión un poco antes que la tienda.	Zainstalowałeś StradaOS z {}. Jeśli włączysz tę opcję, StradaOS będzie raz dziennie sprawdzać wersje opublikowane na github.com/{} i proponować ich pobranie stamtąd.\n\nPliki te nie przechodzą przez proces weryfikacji w sklepie. GitHub może udostępniać wersję nieco wcześniej niż sklep.
 Activar	Włącz
 Canal de actualizaciones	Kanał aktualizacji
 Buscar actualizaciones	Sprawdź aktualizacje
@@ -312,7 +312,7 @@ Apoya el proyecto ☕	Wesprzyj projekt ☕
 StradaOS es gratis. Las donaciones ayudan a mantenerlo y a probarlo en más pantallas.	StradaOS jest darmowy. Darowizny pomagają w jego utrzymaniu i testowaniu na kolejnych ekranach.
 Reportar un problema o sugerir algo	Zgłoś problem lub zaproponuj coś
 Crea un «issue» en GitHub (adjunta el diagnóstico)	Utwórz zgłoszenie na GitHubie (dołącz diagnostykę)
-Reportar un problema	Zgłoś problem 
+Reportar un problema	Zgłoś problem
 Cuenta tu modelo de pantalla y su versión de Android. Puedes adjuntar la carpeta StradaDiag (Sistema → Exportar diagnóstico).	Podaj model ekranu i wersję systemu Android. Możesz dołączyć folder StradaDiag (System → Eksportuj diagnostykę).
 Código fuente	Kod źródłowy
 Licencia GPL-3.0	Licencja GPL-3.0
@@ -364,10 +364,10 @@ No encontré la app de {}. Elígela de la lista.	Nie znaleziono {}aplikacji . Wy
 ↺  Automático (por defecto)	↺  Automatycznie (domyślnie)
 ¿Qué app abre «{}»?	Która aplikacja otwiera “{}”?
 Restablecido	Zresetowano
-Esta pantalla no trae Android Auto integrado.\n\nInstala la app gratuita «Open Headunit» (github.com/andreknieriem/headunit-revived): copia su APK en la memoria USB o en Download y vuelve a tocar el botón. Luego conecta el celular por cable USB.	Ten ekran nie ma wbudowanego Android Auto.\ n\nZainstaluj bezpłatną aplikację „Open Headunit” (github.com/andreknieriem/headunit-revived): skopiuj plik APK na pamięć USB lub do folderu „Pobrane”, a następnie ponownie dotknij przycisku. Następnie podłącz telefon za pomocą kabla USB.
+Esta pantalla no trae Android Auto integrado.\n\nInstala la app gratuita «Open Headunit» (github.com/andreknieriem/headunit-revived): copia su APK en la memoria USB o en Download y vuelve a tocar el botón. Luego conecta el celular por cable USB.	Ten ekran nie ma wbudowanego Android Auto.\n\nZainstaluj bezpłatną aplikację „Open Headunit” (github.com/andreknieriem/headunit-revived): skopiuj plik APK na pamięć USB lub do folderu „Pobrane”, a następnie ponownie dotknij przycisku. Następnie podłącz telefon za pomocą kabla USB.
 Android Auto por cable USB (necesita la app Android Auto en el celular)	Android Auto przez kabel USB (wymaga aplikacji Android Auto na telefonie)
 Espejo de pantalla (necesita la app CarbitLink en el celular)	Kopiowanie ekranu (wymagana jest aplikacja CarbitLink w telefonie)
-Android Auto / CarPlay integrados en la pantalla	Android Auto / CarPlay zintegrowane z ekranem 
+Android Auto / CarPlay integrados en la pantalla	Android Auto / CarPlay wbudowane w ekran
 Otra app…	Inna aplikacja…
 ¿Cómo quieres conectar tu celular?	Jak chcesz podłączyć swój telefon?
 Conexión: {}. Cámbiala dejando presionado el botón.	Połączenie: {}. Zmień je, naciskając i przytrzymując przycisk.
@@ -384,7 +384,7 @@ Parcialmente nublado	Częściowo zachmurzone
 Nublado	Zachmurzone
 Niebla	Mgła
 Llovizna	Mżawka
-Lluvia	 Deszcz
+Lluvia	Deszcz
 Nieve	Śnieg
 Tormenta	Burza
 Mapa en vivo apagado	Mapa na żywo wyłączona
@@ -398,7 +398,7 @@ No volver a preguntar	Nie pytaj więcej
 Elige StradaOS y toca «Siempre»	Wybierz StradaOS i dotknij „Zawsze”
 Listo: StradaOS es tu pantalla de inicio	Gotowe: StradaOS jest Twoim ekranem głównym
 Fijar StradaOS a mano	Ustaw StradaOS ręcznie
-Algunas pantallas no muestran la lista para elegir. Prueba así:\n\n1. Toca el botón Inicio (la casita) de la pantalla. Si pregunta qué app usar, elige StradaOS → Siempre.\n2. Si no pregunta: en los ajustes de la pantalla busca Aplicaciones → Aplicaciones predeterminadas → Pantalla de inicio (o «App de inicio») y elige StradaOS.\n3. Con Android 10 o más nuevo, no lo elijas desde el modo fábrica de la pantalla («Launcher», «Interfaz» o «UI»): en algunas marcas eso deja las demás apps sin poder abrirse. En Android 4 a 9 sí puedes usar esa opción.\n\nSi tu pantalla siempre vuelve a su menú de fábrica al encender, activa «Abrir StradaOS al encender» en Ajustes → Sistema.	Some screens don't show the list to choose from. Try this:\n\n1. Niektóre ekrany nie wyświetlają listy do wyboru. Spróbuj w ten sposób:\n\n1. Dotknij przycisku Ekran głównego (domku) na ekranie. Jeśli pojawi się pytanie, której aplikacji użyć, wybierz StradaOS → Zawsze.\n2. Jeśli pytanie się nie pojawi: w ustawieniach ekranu głównego znajdź Aplikacje → Aplikacje domyślne → Ekran główny (lub „Aplikacja startowa”) i wybierz StradaOS.\n3. W systemie Android 10 lub nowszym nie wybieraj tej opcji w trybie fabrycznym ekranu („Launcher”, „Interfejs” lub „UI”): w przypadku niektórych marek powoduje to, że pozostałe aplikacje nie mogą się otworzyć. W systemach Android 4–9 można korzystać z tej opcji.\ n\nJeśli ekran zawsze powraca do menu fabrycznego po włączeniu, włącz opcję „Otwórz StradaOS po włączeniu” w Ustawieniach → System.
+Algunas pantallas no muestran la lista para elegir. Prueba así:\n\n1. Toca el botón Inicio (la casita) de la pantalla. Si pregunta qué app usar, elige StradaOS → Siempre.\n2. Si no pregunta: en los ajustes de la pantalla busca Aplicaciones → Aplicaciones predeterminadas → Pantalla de inicio (o «App de inicio») y elige StradaOS.\n3. Con Android 10 o más nuevo, no lo elijas desde el modo fábrica de la pantalla («Launcher», «Interfaz» o «UI»): en algunas marcas eso deja las demás apps sin poder abrirse. En Android 4 a 9 sí puedes usar esa opción.\n\nSi tu pantalla siempre vuelve a su menú de fábrica al encender, activa «Abrir StradaOS al encender» en Ajustes → Sistema.	Niektóre ekrany nie wyświetlają listy do wyboru. Spróbuj w ten sposób:\n\n1. Dotknij przycisku Home (domek) na ekranie. Jeśli pojawi się pytanie, której aplikacji użyć, wybierz StradaOS → Zawsze.\n2. Jeśli pytanie się nie pojawi: w ustawieniach ekranu znajdź Aplikacje → Aplikacje domyślne → Ekran główny (lub „Aplikacja startowa”) i wybierz StradaOS.\n3. W systemie Android 10 lub nowszym nie wybieraj tej opcji w trybie fabrycznym ekranu („Launcher”, „Interfejs” lub „UI”): w przypadku niektórych marek powoduje to, że pozostałe aplikacje nie mogą się otworzyć. W systemach Android 4–9 można korzystać z tej opcji.\n\nJeśli ekran zawsze powraca do menu fabrycznego po włączeniu, włącz opcję „Otwórz StradaOS po włączeniu” w Ustawieniach → System.
 Pantalla de inicio	Ekran główny
 La que aparece al encender y al tocar Inicio	Ten, który pojawia się przy starcie i po dotknięciu ekranu głównego
 StradaOS ✓	StradaOS ✓
@@ -518,7 +518,7 @@ Mapa sin conexión quitado	Mapę offline usunięto
 Mapas gratis de OpenStreetMap por país	Darmowe mapy OpenStreetMap według krajów
 Buscando mapas…	Wyszukiwanie map…
 No se encontró ningún mapa	Nie znaleziono żadnej mapy
-No hay archivos .map en la memoria de la pantalla ni en las USB conectadas. Toca «Cómo conseguirlo» para ver de dónde bajarlo.	Brak map.  W pamięci urządzenia ani na podłączonych nośnikach USB nie ma plików .map. Dotknij „Jak to zdobyć”, aby sprawdzić, skąd można ją pobrać.
+No hay archivos .map en la memoria de la pantalla ni en las USB conectadas. Toca «Cómo conseguirlo» para ver de dónde bajarlo.	W pamięci ekranu ani na podłączonych nośnikach USB nie ma plików .map. Dotknij „Jak to zdobyć”, aby zobaczyć, skąd go pobrać.
 Cómo conseguirlo	Jak to zdobyć
 Elige el mapa	Wybierz mapę
 No se pudo usar este archivo	Nie można użyć tego pliku
@@ -663,8 +663,8 @@ Si la ocultas, el mapa gana espacio	Jeśli ją ukryjesz, mapa zyska więcej miej
 Botones de conexión	Przyciski połączeń
 Con uno o ninguno, el clima ocupa el espacio libre del mapa	Jeśli jest tylko jeden przycisk lub nie ma żadnego, pogoda zajmie wolne miejsce na mapie
 Android Auto y CarPlay	Android Auto i CarPlay
-Solo Android Auto	Tylko Android Auto 
-Solo CarPlay	Tylko CarPlay 
+Solo Android Auto	Tylko Android Auto
+Solo CarPlay	Tylko CarPlay
 Botón del navegador	Przycisk nawigacji
 El botón redondo del mapa que abre tu app de navegación	Okrągły przycisk na mapie, który otwiera aplikację do nawigacji
 Grande	Duży
