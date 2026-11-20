@@ -1,4 +1,5 @@
-# StradaOS · traducción pl. Formato: español<TAB>traducción. Ver I18n.java.
+# StradaOS · traducción pl (polski). Formato: español<TAB>traducción. Ver I18n.java.
+# Tłumaczenie: darlo-Pl (PR #49); uzupełnienie brakujących tekstów: StradaOS 2.28.
 Radio	Radio
 Cámara	Aparat
 Archivos	Pliki
@@ -11,7 +12,7 @@ Equipo	Jednostka główna
 Elige primero la app de música Bluetooth	Najpierw wybierz aplikację muzyczną Bluetooth
 Música Bluetooth	Muzyka Bluetooth
 No se pudo abrir la app	Nie udało się otworzyć aplikacji
-Mi app  Moja aplikacja
+Mi app	Moja aplikacja
 Mi vehículo	Mój pojazd
 Toca para poner la foto de tu vehículo	Dotknij, aby dodać zdjęcie swojego pojazdu
 Velocidad	Prędkość
@@ -53,7 +54,7 @@ Activa «Carátula de Android Auto» (StradaOS)	Włącz „Okładka albumu Andro
 No se pudo abrir Accesibilidad	Nie udało się otworzyć
 Activa «Pista actual de AA» en Open Headunit	Włącz „Aktualny utwór AA” w jednosce głównej
 «Ninguna aplic. funciona con este accesorio USB»	„Żadna aplikacja nie działa z tym akcesorium USB”
-Ese aviso lo causa una app de espejo de fábrica (EasyConnection/CarbitLink) que toma el USB antes que la app que elegiste.\n\n1. Desconecta el celular.\n2. Ajustes → Aplicaciones → EasyConnection → «Borrar datos».\n3. Apaga y enciende el carro.\n4. Otwarta jednostka główna → USB, si tu celular aparece como «Ignorado», tócalo para permitirlo.	 Ten komunikat jest spowodowany fabryczną aplikacją do mirroringu (EasyConnection/CarbitLink) która przejmuje kontrolę nad portem USB przed wybraną przez Ciebie aplikacją.\n\n1. Odłącz telefon.\n2. Ustawienia → Aplikacje → EasyConnection → “Usuń dane”.\n3. Wyłącz i włącz samochód.\n4. Otwórz w jednosce głównej → USB, jeśli Twój telefon jest oznaczony jako “Ignorowany”, dotknij go, aby zezwolić na połączenie.
+Ese aviso lo causa una app de espejo de fábrica (EasyConnection/CarbitLink) que toma el USB antes que la app que elegiste.\n\n1. Desconecta el celular.\n2. Ajustes → Aplicaciones → EasyConnection → «Borrar datos».\n3. Apaga y enciende el carro.\n4. En Open Headunit → USB, si tu celular aparece como «Ignorado», tócalo para permitirlo.	Ten komunikat wywołuje fabryczna aplikacja do lustrzanego odbicia ekranu (EasyConnection/CarbitLink), która przejmuje USB przed wybraną przez ciebie aplikacją.\n\n1. Odłącz telefon.\n2. Ustawienia → Aplikacje → EasyConnection → „Wyczyść dane”.\n3. Wyłącz i włącz samochód.\n4. W Open Headunit → USB, jeśli twój telefon jest oznaczony jako „Ignorowany”, dotknij go, aby go zezwolić.
 Abrir EasyConnection	Otwórz EasyConnection
 No hay apps de espejo instaladas	Brak zainstalowanych aplikacji do mirroringu
 Exportando… puede tardar un minuto	Eksportowanie… może potrwać minutę
@@ -93,7 +94,7 @@ Quitar la foto	Usuń zdjęcie
 Elegir foto	Wybierz zdjęcie
 Foto del vehículo	Zdjęcie pojazdu
 ¿De dónde sacamos la foto?	Skąd pobrać zdjęcie?
-Consejo: usa una foto del carro de lado o de frente con fondo liso (blanco, gris o cielo). El fondo se quita solo.	Wskazówka: użyj zdjęcia samochodu z boku lub z przodu na jednolitym tle (białym, szarym lub niebieskim). Tło zostanie usunięte automatycznie.	Wskazówka: użyj zdjęcia samochodu z boku lub z przodu na jednolitym tle (białym, szarym lub w kolorze nieba). Tło zostanie usunięte automatycznie.
+Consejo: usa una foto del carro de lado o de frente con fondo liso (blanco, gris o cielo). El fondo se quita solo.	Wskazówka: użyj zdjęcia samochodu z boku lub z przodu na jednolitym tle (białym, szarym lub niebie). Tło jest usuwane automatycznie.
 Memoria / USB	Pamięć / USB
 Galería	Galeria
 Elige la foto	Wybierz zdjęcie
@@ -103,12 +104,14 @@ Quitando el fondo…	Usuwanie tła…
 No se pudo abrir la imagen	Nie udało się otworzyć obrazu
 No se pudo abrir la imagen: {}	Nie udało się otworzyć obrazu: {}
 La foto ya trae fondo transparente	Zdjęcie ma już przezroczyste tło
-No se detectó un fondo liso (se usará tal cual) Nie wykryto jednolitego tła (zostanie użyte w obecnej postaci)	Vista previa · nivel {} de 4	Podgląd · poziom {} of 4
+No se detectó un fondo liso (se usará tal cual)	Nie wykryto jednolitego tła (zdjęcie zostanie użyte bez zmian)
+Vista previa · nivel {} de 4	Podgląd · poziom {} z 4
 Vista previa · nivel {} de 4 (también quita el reflejo del piso)	Podgląd · poziom {} of 4 (usuwa również odbicie od podłogi)
 Usar esta	Użyj tego
 Foto guardada	Zdjęcie zapisane
 No se pudo guardar la foto	Nie udało się zapisać zdjęcia
-Quitar más fondo	Usuń tła Quitando más fondo…	Usuwanie tła…
+Quitar más fondo	Usuń więcej tła
+Quitando más fondo…	Usuwanie tła…
 No es una imagen válida	To nie jest prawidłowy obraz
 App elegida	Wybrana aplikacja
 CarPlay necesita un chip de autenticación de Apple dentro del equipo, así que no se puede activar solo con una app.\n\n• Si tu pantalla trae CarPlay integrado, deja presionado este botón y elige su app (ZLink, CarLink, TLink…).\n• Si no, puedes usar un adaptador CarPlay USB para pantallas Android (tipo Carlinkit/AutoKit): instala su app y este botón la abrirá.	CarPlay wymaga wbudowanego w urządzenie chipa uwierzytelniającego Apple, więc nie można go aktywować wyłącznie za pomocą aplikacji.\n\n• Jeśli Twój ekran ma wbudowaną funkcję CarPlay, naciśnij i przytrzymaj ten przycisk, a następnie wybierz odpowiednią aplikację (ZLink, CarLink, TLink…).\n• Jeśli nie, możesz użyć adaptera USB CarPlay do ekranów z systemem Android (typu Carlinkit/AutoKit): zainstaluj aplikację, a ten przycisk ją uruchomi.
@@ -190,7 +193,7 @@ Alto	Wysoka
 Fuentes probadas y errores	Wypróbowane źródła i błędy
 Mapa no disponible	Mapa niedostępna
 Fuente del mapa (avanzado)	Źródło mapy (zaawansowane)
-URL propia con {z}/{x}/{y}      Własny adres URL z{z}/{x}/{y}
+URL propia con {z}/{x}/{y}	Własny adres URL z {z}/{x}/{y}
 Personalizada	Niestandardowe
 URL de teselas {z}/{x}/{y} (vacío = automático)	Adres URL kafelków {z}/{x}/{y} (puste = automatycznie)
 © colaboradores de OpenStreetMap	© OpenStreetMap contributors
@@ -207,8 +210,8 @@ Desactivado	Wyłączone
 Música de cualquier app	Muzyka z dowolnej aplikacji
 Android 5+: acceso a notificaciones	Android 5+: dostęp do powiadomień
 No se pudo abrir el ajuste	Nie udało się otworzyć ustawienia
-Fuente activa, lector de notificaciones y Bluetooth
-Aktywne źródło, czytnik powiadomień i Bluetooth
+Fuente activa, lector de notificaciones y Bluetooth	Aktywne źródło, czytnik powiadomień i Bluetooth
+Audio Bluetooth	Dźwięk Bluetooth
 Volver al Bluetooth al desconectar Android Auto	Powrót do Bluetooth po rozłączeniu Android Auto
 Al quitar el cable, abre un instante la app de música Bluetooth para que el sonido siga por Bluetooth	Po odłączeniu kabla na chwilę otwiera się aplikacja muzyczna Bluetooth, aby dźwięk nadal był odtwarzany przez Bluetooth
 Escuchar el Bluetooth	Słuchaj przez Bluetooth
@@ -250,6 +253,7 @@ depende de la marca	zależy od marki
 Botón ▶ del inicio pasa el sonido a Bluetooth	Przycisk ▶ na ekranie głównym przełącza dźwięk na Bluetooth
 Pantallas Clinkway / Autochips	Ekrany Clinkway / Autochips
 funciona aunque vengas de la radio	działa nawet po przejściu z radia
+en otras marcas: «Abrir la app de música Bluetooth al conectar»	w innych markach: „Otwórz aplikację muzyczną Bluetooth po połączeniu telefonu”
 activado	włączone
 activada	włączone
 desactivado; en algunas pantallas no detecta el play del celular	wyłączone; na niektórych ekranach nie wykrywa odtwarzania z telefonu
@@ -257,8 +261,9 @@ Carátula de Android Auto (Open Headunit)	Okładka albumu w Android Auto (Open H
 Android 4.1+ · accesibilidad	Android 4.1+ · dostępność
 falta activar la accesibilidad	trzeba jeszcze włączyć dostępność
 Música de cualquier app (Spotify, YouTube…)	Muzyka z dowolnej aplikacji (Spotify, YouTube…)
-falta dar acceso a notificaciones	 {}	not available on {}
-Android Auto contrzeba jeszcze przyznać dostęp do powiadomień pl Open Headunit	Android Auto with Open Headunit
+falta dar acceso a notificaciones	dostęp do powiadomień nie został jeszcze przyznany
+no disponible en {}	niedostępne w {}
+Android Auto con Open Headunit	Android Auto z Open Headunit
 Android 4.1+ · cable USB	Android 4.1+ · kabel USB
 Open Headunit instalado	Zainstalowano Open Headunit
 falta instalar Open Headunit	Brak instalacji Open Headunit
@@ -291,7 +296,6 @@ Opcional: las descargas de GitHub no pasan por la revisión de la tienda	Opcjona
 Al abrir StradaOS con internet, una vez al día	Po uruchomieniu StradaOS z dostępem do Internetu, raz dziennie
 Actualizaciones desde GitHub	Aktualizacje z GitHub
 Instalaste StradaOS desde {}. Si activas esto, StradaOS revisará una vez al día las versiones publicadas en github.com/{} y te ofrecerá descargarlas desde ahí.\n\nEsas descargas no pasan por la revisión de la tienda. Puede que GitHub tenga una versión un poco antes que la tienda.	Zainstalowałeś StradaOS z {}. Jeśli włączysz tę opcję, StradaOS będzie raz dziennie sprawdzać wersje opublikowane na github.com/{}  i proponować ich pobranie stamtąd.\n\nPliki te nie przechodzą przez proces weryfikacji w sklepie. GitHub może udostępniać wersję nieco wcześniej niż sklep.
-
 Activar	Włącz
 Canal de actualizaciones	Kanał aktualizacji
 Buscar actualizaciones	Sprawdź aktualizacje
@@ -303,8 +307,8 @@ Ayuda a que más personas encuentren StradaOS	Pomóż więcej osobom znaleźć S
 Dar una estrella ⭐	Oznacz gwiazdką ⭐
 Abre el repositorio y toca «Star». ¡Gracias!	Otwórz repozytorium i dotknij „Star”. Dziękujemy!
 Donar	Wpłać darowiznę
-Si StradaOS revivió tu pantalla, invítame un café	
-Apoya el proyecto ☕	Wesprzyj projekt ☕Jeśli StradaOS przywrócił Twój ekran do życia, postaw mi kawę
+Si StradaOS revivió tu pantalla, invítame un café	Jeśli StradaOS przywrócił twój ekran do życia, postaw mi kawę
+Apoya el proyecto ☕	Wesprzyj projekt ☕
 StradaOS es gratis. Las donaciones ayudan a mantenerlo y a probarlo en más pantallas.	StradaOS jest darmowy. Darowizny pomagają w jego utrzymaniu i testowaniu na kolejnych ekranach.
 Reportar un problema o sugerir algo	Zgłoś problem lub zaproponuj coś
 Crea un «issue» en GitHub (adjunta el diagnóstico)	Utwórz zgłoszenie na GitHubie (dołącz diagnostykę)
@@ -334,7 +338,7 @@ tu tienda de apps	Sklep z aplikacjami
 Tienes la {} · nueva: {}	Masz {} · nowość: {}
 Mejoras y correcciones.	Ulepszenia i poprawki.
 Nueva versión de StradaOS	Nowa wersja StradaOS
-Tienes la {} · na GitHubie: {}\nActualiza desde {} cuando llegue. Descargar de GitHub omite la revisión de la tienda.	Masz {} · na GitHubie: {}\nZaktualizuj z {} po udostępnieniu. Pobieranie z GitHubu pomija weryfikację w sklepie.
+Tienes la {} · en GitHub: {}\nActualiza desde {} cuando llegue. Descargar de GitHub omite la revisión de la tienda.	Masz {} · na GitHubie: {}\nZaktualizuj z {}, gdy się pojawi. Pobieranie z GitHuba pomija weryfikację sklepu.
 Ver en GitHub	Zobacz na GitHubie
 Descarga desde GitHub:	Pobierz z GitHubu:
 Descargar e instalar	Pobierz i zainstaluj
@@ -396,7 +400,8 @@ Listo: StradaOS es tu pantalla de inicio	Gotowe: StradaOS jest Twoim ekranem gł
 Fijar StradaOS a mano	Ustaw StradaOS ręcznie
 Algunas pantallas no muestran la lista para elegir. Prueba así:\n\n1. Toca el botón Inicio (la casita) de la pantalla. Si pregunta qué app usar, elige StradaOS → Siempre.\n2. Si no pregunta: en los ajustes de la pantalla busca Aplicaciones → Aplicaciones predeterminadas → Pantalla de inicio (o «App de inicio») y elige StradaOS.\n3. Con Android 10 o más nuevo, no lo elijas desde el modo fábrica de la pantalla («Launcher», «Interfaz» o «UI»): en algunas marcas eso deja las demás apps sin poder abrirse. En Android 4 a 9 sí puedes usar esa opción.\n\nSi tu pantalla siempre vuelve a su menú de fábrica al encender, activa «Abrir StradaOS al encender» en Ajustes → Sistema.	Some screens don't show the list to choose from. Try this:\n\n1. Niektóre ekrany nie wyświetlają listy do wyboru. Spróbuj w ten sposób:\n\n1. Dotknij przycisku Ekran głównego (domku) na ekranie. Jeśli pojawi się pytanie, której aplikacji użyć, wybierz StradaOS → Zawsze.\n2. Jeśli pytanie się nie pojawi: w ustawieniach ekranu głównego znajdź Aplikacje → Aplikacje domyślne → Ekran główny (lub „Aplikacja startowa”) i wybierz StradaOS.\n3. W systemie Android 10 lub nowszym nie wybieraj tej opcji w trybie fabrycznym ekranu („Launcher”, „Interfejs” lub „UI”): w przypadku niektórych marek powoduje to, że pozostałe aplikacje nie mogą się otworzyć. W systemach Android 4–9 można korzystać z tej opcji.\ n\nJeśli ekran zawsze powraca do menu fabrycznego po włączeniu, włącz opcję „Otwórz StradaOS po włączeniu” w Ustawieniach → System.
 Pantalla de inicio	Ekran główny
-La que aparece al encender y al tocar Inicio	Ten, który pojawia się po włączeniu i po dotknięciu przycisku Home    Ten, który wyświetla się przy uruchomieniu i po dotknięciu przycisku HomeStradaOS ✓	StradaOS ✓
+La que aparece al encender y al tocar Inicio	Ten, który pojawia się przy starcie i po dotknięciu ekranu głównego
+StradaOS ✓	StradaOS ✓
 Otra · toca para cambiar	Inna · dotknij, aby zmienić
 Abrir StradaOS al encender	Otwórz StradaOS przy uruchomieniu
 Para pantallas que siempre arrancan en su menú de fábrica (Android 4 a 9)	Dla ekranów, które zawsze uruchamiają się w menu fabrycznym (Android 4–9)
@@ -451,7 +456,6 @@ El mapa apunta	Mapa wskazuje
 Según tu dirección: gira con el carro mientras te mueves	Zgodnie z kierunkiem jazdy: obraca się wraz z samochodem podczas jazdy
 Norte arriba	Północ u góry
 Según tu dirección	godnie z kierunkiem jazdy
-# 2.13: aceite (último cambio, unidad) y apps ocultas del cajón
 Último cambio	Ostatnia wymiana
 Corregir el último cambio	Popraw ostatnią zmianę
 ¿Tu tablero marca kilómetros o millas?	Czy Twoja deska rozdzielcza pokazuje kilometry czy mile?
@@ -473,9 +477,7 @@ Buscar app	Wyszukiwanie aplikacji
 Apps ocultas en el cajón	Ukryte aplikacje w szufladzie
 Se muestran todas las apps	Wyświetlane są wszystkie aplikacje
 Apps ocultas: {}	Ukryte aplikacje: {}
-# 2.14: desinstalar desde el cajón
 Desinstalar	Odinstaluj
-# 2.14: salir de StradaOS (issue #9)
 Salir de StradaOS	Wyjdź ze StradaOS
 Abrir el launcher de fábrica	Otwórz fabryczny launcher
 Sale de StradaOS sin desinstalarlo	Wyjdź ze StradaOS bez odinstalowywania
@@ -490,7 +492,6 @@ No encontré otra pantalla de inicio: StradaOS no se puede desactivar en este eq
 ¿Desactivar StradaOS?	Czy wyłączyć StradaOS?
 StradaOS deja de ser la pantalla de inicio, ya no se abre al encender y vuelve el launcher de fábrica. No pide confirmaciones de Android, así que sirve aunque la pantalla haya quedado atrapada.\n\nPara volver a usarlo después: desinstálalo desde los ajustes de la pantalla e instálalo de nuevo.	StradaOS przestaje być ekranem głównym, nie otwiera się już po włączeniu urządzenia i powraca fabryczny launcher. Nie wymaga potwierdzeń ze strony Androida, więc działa nawet jeśli ekran się zawiesił.\n\nAby ponownie z niego skorzystać później: odinstaluj go z ustawień ekranu i zainstaluj ponownie.
 Desactivar	Wyłącz
-# 2.15: diseño del inicio
 Diseño del inicio	Ekran główny
 Reproductor de música	Odtwarzacz muzyki
 Ponlo del lado del conductor para tenerlo a la mano	Umieść go po stronie kierowcy, aby mieć go pod ręką
@@ -499,7 +500,7 @@ Izquierda	Lewa strona
 Tarjeta del vehículo	Karta pojazdu
 Si la ocultas, la velocidad pasa arriba y el mapa y el reproductor ganan espacio	Jeśli ją ukryjesz, wskaźnik prędkości przesunie się na górę, a mapa i odtwarzacz zyskają więcej miejsca
 Barra de botones	Pasek przycisków
-Lateral: los botones van al costado y todo se ve más grande en pantallas bajas como 1280×480	Boczny: przyciski przesuwają się na bok, a wszystko wygląda na większe na ekranach o niskiej rozdzielczości, np. 1280×480	Boczny: przyciski przesuwają się na bok, a wszystko wygląda na większe na ekranach o niskiej rozdzielczości, takich jak 1280×480
+Lateral: los botones van al costado y todo se ve más grande en pantallas bajas como 1280×480	Boczny: przyciski idą na bok, a wszystko wygląda większe na niskich ekranach, np. 1280×480
 Normal	Normalny
 Compacta	Kompaktowy
 Lateral	Boczny
@@ -574,8 +575,7 @@ se cortó la descarga	pobieranie przerwane
 Sin señal GPS · mapa sin conexión	Brak sygnału GPS · mapa offline
 Sin señal GPS ni internet	Brak sygnału GPS lub połączenia z internetem
 Sin señal GPS · última posición	Brak sygnału GPS · ostatnia znana pozycja
-# 2.17: tema por horario o del sistema, íconos de Wi-Fi y Bluetooth, barra, diagnóstico del mapa   motyw zależny od harmonogramu lub ustawień systemowych, ikony Wi-Fi i Bluetooth, pasek stanu, diagnostyka map
-Auto: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)	Auto: według harmonogramu. System: zgodnie z trybem ciemnym ekranu (niektóre systemy przełączają go po włączeniu świateł)	Auto: według harmonogramu. System: zgodnie z trybem ciemnym ekranu (niektóre systemy przełączają go po włączeniu świateł)
+Auto: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)	Auto: według harmonogramu. System: podąża za trybem ciemnym ekranu (niektóre przełączają go po włączeniu świateł)
 Oscuro desde	Tryb ciemny od
 Claro desde	Tryb jasny od
 Íconos de Wi-Fi y Bluetooth	Ikony Wi-Fi i Bluetooth
@@ -617,7 +617,7 @@ ninguno	brak
 error: {}	błąd: {}
 {} · en uso	{} · w użyciu
 {} · fuera del área del archivo	{} · poza obszarem pliku
-Teselas dibujadas desde el archivo: {} · {} ms cada una Kafelki wczytane z pliku	: {} · {} ms każdy
+Teselas dibujadas desde el archivo: {} · {} ms cada una	Kafelki rysowane z pliku: {} · {} ms każdy
 Proveedor: {}	Dostawca: {}
 {} · ninguna fuente respondió ({} vueltas)	{} · brak odpowiedzi ze źródła ({} prób)
 Teselas descargadas: {} · en caché: {}	Pobrane kafelki: {} · w pamięci podręcznej: {}
@@ -633,15 +633,14 @@ OSM Humanitario	OSM Humanitarian
 Esri gris oscuro	Esri ciemnoszary
 sin iniciar	nierozpoczęto
 TLS listo ({}), {} raíces	TLS gotowe ({}), {} certyfikatów głównych
-TLS listo ({}), {} raíces, {} omitidas	TLS gotowe ({}), {} certyfikatów głównych, {} pominięto	TLS gotowe
+TLS listo ({}), {} raíces, {} omitidas	TLS gotowy ({}), {} certyfikatów głównych, {} pominiętych
 TLS no disponible: {}	TLS niedostępne: {}
 Íconos de Wi-Fi y Bluetooth arriba	Ikony Wi-Fi i Bluetooth na górze
 Bluetooth: estado del celular desde la app de fábrica; toca para abrirla	Bluetooth: stan telefonu według aplikacji systemowej; dotknij, aby ją otworzyć
 Tema según el modo oscuro del sistema	Bluetooth: stan telefonu według aplikacji systemowej; dotknij, aby ją otworzyć
-Pantallas que lo cambian (p. ej. con las luces)Ekrany zmieniające tryb (np. po włączeniu świateł)	
+Pantallas que lo cambian (p. ej. con las luces)	Ekrany, które go przełączają (np. światłami)
 el sistema está en modo oscuro	system jest w trybie ciemnym
 el sistema está en modo claro	system jest w trybie jasnym
-# 2.18: botones de conexión, clima detallado, ocultar velocidad/aceite/reproductor, botón del navegador, foto tal cual
 Cargando…	Ładowanie…
 Esperando la ubicación…	Oczekiwanie na lokalizację…
 Máx {} · Mín {}	Maks {} · Min {}
@@ -684,7 +683,6 @@ Usar la foto original, con fondo	Użyj oryginalnego zdjęcia, z tłem
 Quitar el fondo	Usuń tło
 No se detectó un fondo liso: se usa la foto tal cual	Nie wykryto jednolitego tła: zdjęcie zostanie użyte w oryginalnej formie
 Se usa tal cual; si quieres, le puedes quitar el fondo	Użyto w oryginalnej formie; Możesz usunąć tło, jeśli chcesz
-# 2.19: cantidad y tamaño de los botones, íconos de apps, packs de íconos, barra oculta, tamaño de la letra
 Cantidad de botones	Liczba przycisków
 «Apps» siempre queda al final	„Aplikacje” zawsze pozostają na końcu
 Tamaño de los íconos	Rozmiar ikon
@@ -703,7 +701,6 @@ Lateral: los botones van al costado y todo se ve más grande en pantallas bajas 
 Oculta	Ukryta
 Tamaño de la letra	Rozmiar tekstu
 Para leer mejor de lejos o que quepa más	Aby lepiej czytać z daleka lub zmieścić więcej
-# 2.20: velocímetro analógico, velocímetro sobre el mapa, mantenimientos a medida
 Velocímetro	Prędkościomierz
 En la tarjeta del vehículo. Toma el color de acento	Na karcie pojazdu. Używa koloru akcentującego
 Digital	Cyfrowy
@@ -761,7 +758,6 @@ cada {} semanas	co {} tygodni
 {} meses	{} miesięcy
 {} día	{} dzień
 {} días	{} dni
-# 2.20: Ajustes reordenados, sección Mantenimientos, íconos, velocímetro del mapa
 Mantenimientos	Konserwacja
 Barra de apps	Pasek aplikacji
 Tarjetas	Karty
@@ -776,7 +772,6 @@ En el inicio	Na ekranie głównym
 Mantenimiento en el inicio	Konserwacja na ekranie głównym
 Junto a la velocidad se ve el más próximo (el aceite u otro). Los avisos siguen saliendo aunque lo ocultes	Obok prędkości widzisz najbliższą (olej lub inna). Alerty nadal się wyświetlają, nawet jeśli je ukryjesz
 Se muestra junto a la velocidad: activa «Velocidad y servicio» en Pantalla de inicio	Wyświetlane obok prędkości: włącz „Prędkość i serwis” na ekranie głównym
-
 Aceite, filtros, SOAT y más	Olej, filtry, ubezpieczenia i nie tylko
 Ahora están en su propia sección	Mają teraz własną sekcję
 Al encender	Przy uruchomieniu
@@ -794,17 +789,16 @@ Cambiar el ícono	Zmień ikonę
 Filtro de combustible	Filtr paliwa
 Aire acondicionado	Klimatyzacja
 Lavado	Myjnia samochodowa
-# 2.21: ventanas propias, diagnósticos traducidos, copia de seguridad, app al encender, diseño vertical
 Fuente: {}	Źródło: {}
 Pista: {}	Trak: {}
 Carátula: {}	Okładka albumu: {}
 Lector de notificaciones (accesibilidad): {}	Czytnik powiadomień (dostępność): {}
 ACTIVO	AKTYWNE
 Última notificación de Open Headunit: {}	Ostatnie powiadomienie o otwartej jednostce głównej: {}
-nie ma żadnego
+ninguna	brak
 {} s, carátula {}, textos {}	{} s, okładki albumów {}, teksty {}
-Otwórz radioodtwarzacz corriendo: {} · celular por USB en modo Android Auto: {}	Open Headunit running: {} · telefon na USB w trybie Android Auto: {}
-nie se sabe	nieznane
+Open Headunit corriendo: {} · celular por USB en modo Android Auto: {}	Open Headunit działa: {} · telefon przez USB w trybie Android Auto: {}
+no se sabe	nieznane
 Android Auto conectado (para StradaOS): {}	Połączenie z Android Auto (dla StradaOS): {}
 App Bluetooth conectada: {}	Aplikacja Bluetooth połączona: {}
 Audio Bluetooth automático: {}	Automatyczny dźwięk Bluetooth: {}
@@ -835,8 +829,8 @@ celular conectado por Bluetooth	Telefon Bluetooth podłączony przez Bluetooth
 no se abrió la app BT: cámara de reversa al frente	Aplikacja BT nie została otwarta: kamera cofania z przodu
 no se abrió la app BT: no sé qué app está al frente	Aplikacja BT nie została otwarta: nie można stwierdzić, która aplikacja jest z przodu
 no se abrió la app BT: ajustes abiertos	Aplikacja BT nie została otwarta: ustawienia są otwarte
-abierta {} para tomar el sonido (luego vuelve a {})	 {} otworzył {}, aby przejąć dźwięk (potem z powrotem do {})
-abierta {} para tomar el sonido	opened {} aby przejąć dźwięk
+abierta {} para tomar el sonido (luego vuelve a {})	{} otworzył się, aby przejąć dźwięk (potem powrót do {})
+abierta {} para tomar el sonido	{} otworzył się, aby przejąć dźwięk
 no se volvió: el usuario abrió {}	nie wrócił: użytkownik otworzył {}
 Android Auto se desconectó	Android Auto odłączony
 Registro técnico para enviar al desarrollador (se guarda en español).	Dziennik techniczny do przesłania deweloperowi (prowadzony w języku hiszpańskim).
@@ -886,9 +880,887 @@ Diseño vertical	Portrait layout
 Pantallas en vertical (tipo Tesla)	Ekrany portretowe (w stylu Tesli)
 en uso	w użyciu
 esta pantalla es horizontal	ten ekran jest poziomy
-# 2.21.1: PR #26 (wsx79)
 Pantalla completa	Pełny ekran
 Ocultar la barra del sistema	Ukryj pasek systemowy
 Esconde también la barra de navegación de tu pantalla (abajo o al costado). Desliza desde el borde para verla un momento	Ukrywa również pasek nawigacji na ekranie (dolny lub boczny). Przesuń palcem od krawędzi, aby przez chwilę zobaczyć
 Corrección del velocímetro	Korekta prędkościomierza
 Suma o resta a la velocidad del GPS para que coincida con el tablero de tu carro	Dodaj lub odejmij prędkość GPS, aby dopasować ją do deski rozdzielczej samochodu
+Diseño	Układ
+Diseño de la pantalla	Układ ekranu
+Automático: según la forma de la pantalla. Elige Vertical si tu pantalla es vertical y se ve chica en el medio	Automatyczny: według kształtu ekranu. Wybierz Pionowy, jeśli twój ekran jest pionowy i wszystko wygląda na małe na środku
+Horizontal	Poziomy
+Vertical	Pionowy
+se puede elegir en Ajustes → Pantalla de inicio → Diseño	możesz to wybrać w Ustawienia → Ekran główny → Układ
+Área útil de la pantalla:	Użyteczny obszar ekranu:
+Horario	Harmonogram
+Amanecer y atardecer: se calcula con el GPS, sin internet	Wschód i zachód słońca: obliczane z GPS, bez internetu
+Horas fijas	Stałe godziny
+Amanecer y atardecer	Wschód i zachód słońca
+Amanecer	Wschód słońca
+Atardecer	Zachód słońca
+oscuro desde el atardecer hasta el amanecer	ciemny od zachodu do wschodu słońca
+Esperando la ubicación del GPS	Czekam na lokalizację GPS
+Mientras tanto usa las horas fijas	Do tego czasu używa stałych godzin
+Orden	Kolejność
+Usadas recientemente	Ostatnio używane
+Instaladas recientemente	Ostatnio zainstalowane
+A mano	Ręczna
+Orden de las apps	Kolejność aplikacji
+Deja presionada una app y elige «Mover» para cambiarla de lugar	Przytrzymaj aplikację i wybierz „Przenieś”, aby zmienić jej miejsce
+Mover	Przenieś
+Toca el lugar donde quieres poner «{}»	Dotknij miejsca, w którym chcesz umieścić „{}”
+Pantalla en reposo	Ekran spoczynku
+Si no tocas la pantalla un rato, se pone negra con la hora, la fecha y la velocidad. Un toque la quita	Jeśli przez chwilę nie dotykasz ekranu, robi się czarny z godziną, datą i prędkością. Jedno dotknięcie przywraca widok
+1 minuto	1 minuta
+{} minutos	{} min
+Después de	Po
+Tiempo sin tocar la pantalla	Czas bez dotykania ekranu
+Con el diseño de velocímetro que prefieras	Z wybranym stylem prędkościomierza
+Sin velocidad	Bez prędkości
+Color de la letra	Kolor tekstu
+Blanco	Biały
+Gris suave	Jasnoszary
+Ámbar	Bursztynowy
+Ver ahora	Podgląd teraz
+Toca la pantalla para volver	Dotknij ekranu, aby wrócić
+Ir a…	Jedź do…
+Recalculando…	Ponowne wyznaczanie trasy…
+Llegaste a tu destino	Dotarłeś do celu
+Activa el mapa en vivo en Ajustes → Mapa y clima	Włącz mapę na żywo w Ustawienia → Mapa i pogoda
+Escribe una dirección o lugar	Wpisz adres lub miejsce
+RECIENTES	OSTATNIE
+¿A dónde vamos?	Dokąd?
+Buscar	Szukaj
+Detener	Zatrzymaj
+Buscando…	Szukam…
+No se pudo buscar	Nie udało się wyszukać
+No se encontraron resultados	Brak wyników
+Resultados	Wyniki
+Esperando señal GPS para calcular la ruta	Czekam na sygnał GPS, aby wyznaczyć trasę
+Calculando ruta…	Wyznaczanie trasy…
+No se pudo calcular la ruta	Nie udało się wyznaczyć trasy
+Cambiar destino	Zmień cel
+Silenciar voz de guía	Wycisz wskazówki głosowe
+Activar voz de guía	Włącz wskazówki głosowe
+Vista Norte arriba	Widok z północą u góry
+Vista en dirección de marcha	Widok w kierunku jazdy
+Abrir en otra app	Otwórz w innej aplikacji
+Detener navegación	Zakończ nawigację
+Navegación en el mapa	Nawigacja na mapie
+Voz activada	Głos włączony
+Voz silenciada	Głos wyciszony
+En el mapa de StradaOS	Na mapie StradaOS
+Se abre con el botón del mapa (Waze, Maps, OsmAnd… o integrada en el mapa)	Otwiera się przyciskiem mapy (Waze, Mapy, OsmAnd… lub wbudowana na mapie)
+Voz de navegación	Głos nawigacji
+Indicaciones paso a paso habladas durante el recorrido	Wskazówki głosowe zakręt po zakręcie podczas jazdy
+★  En el mapa de StradaOS (integrada)	★  Na mapie StradaOS (wbudowana)
+Guardado: Navegación en el mapa	Zapisano: nawigacja na mapie
+Coordenadas	Współrzędne
+No se encontró ruta	Nie znaleziono trasy
+Ruta recalculada	Trasa wyznaczona ponownie
+Sal por {}	Ruszaj ulicą {}
+Inicia el recorrido	Ruszaj
+En la rotonda, salida {} hacia {}	Na rondzie zjedź zjazdem nr {} na {}
+En la rotonda, toma la salida {}	Na rondzie zjedź zjazdem nr {}
+En la rotonda, sigue hacia {}	Na rondzie jedź dalej na {}
+En la rotonda, toma la salida	Na rondzie zjedź
+Haz un giro en U en {}	Zawróć na {}
+Haz un giro en U	Zawróć
+Gira levemente a la derecha en {}	Skręć lekko w prawo w {}
+Gira levemente a la derecha	Skręć lekko w prawo
+Gira a la derecha en {}	Skręć w prawo w {}
+Gira a la derecha	Skręć w prawo
+Gira fuerte a la derecha en {}	Skręć ostro w prawo w {}
+Gira fuerte a la derecha	Skręć ostro w prawo
+Gira levemente a la izquierda en {}	Skręć lekko w lewo w {}
+Gira levemente a la izquierda	Skręć lekko w lewo
+Gira a la izquierda en {}	Skręć w lewo w {}
+Gira a la izquierda	Skręć w lewo
+Gira fuerte a la izquierda en {}	Skręć ostro w lewo w {}
+Gira fuerte a la izquierda	Skręć ostro w lewo
+Incorpórate a {}	Włącz się do ruchu na {}
+Toma el desvío	Wjedź na łącznik
+Continúa por {}	Jedź dalej {}
+Sigue recto	Jedź prosto
+En 500 metros	Za 500 metrów
+En 150 metros	Za 150 metrów
+En 500 pies	Za 500 stóp
+En un cuarto de milla	Za ćwierć mili
+En {}	Za {}
+Sin conexión · vuelve a la ruta	Offline · wróć na trasę
+Casa	Dom
+Trabajo	Praca
+Toca para guardar GPS	Dotknij, aby zapisać bieżącą pozycję GPS
+Ir ahora	Jedź teraz
+Actualizar con GPS actual	Zaktualizuj bieżącą pozycją GPS
+Eliminado	Usunięto
+Esperando señal GPS para guardar ubicación	Czekam na sygnał GPS, aby zapisać miejsce
+Guardado en Casa	Zapisano jako Dom
+Guardado en Trabajo	Zapisano jako Praca
+Gasolina	Paliwo
+Salud	Zdrowie
+Parqueo	Parking
+Comida	Jedzenie
+FAVORITOS	ULUBIONE
+Quitar de favoritos	Usuń z ulubionych
+Añadir a favoritos	Dodaj do ulubionych
+Guardar como Casa	Zapisz jako Dom
+Guardar como Trabajo	Zapisz jako Praca
+Añadido a favoritos	Dodano do ulubionych
+Quitado de favoritos	Usunięto z ulubionych
+Ruta aproximada (mapa local sin conexión)	Trasa przybliżona (lokalna mapa offline)
+Ruta guardada (sin conexión)	Zapisana trasa (offline)
+Recalcular ruta	Wyznacz trasę ponownie
+ruta guardada	zapisana trasa
+sin conexión · aproximada	offline · przybliżona
+aproximada	przybliżona
+Para rutas largas o sin mapa local hace falta internet	Do długich tras lub bez lokalnej mapy potrzebny jest internet
+Mapa local	Mapa lokalna
+Pueblo	Miejscowość
+Barrio	Dzielnica
+Calle	Ulica
+Estación de servicio	Stacja paliw
+Hospital	Szpital
+Clínica	Przychodnia
+Farmacia	Apteka
+Parqueadero	Parking
+Restaurante	Restauracja
+Cafetería	Kawiarnia
+Supermercado	Supermarket
+Hotel	Hotel
+Aeropuerto	Lotnisko
+Estación	Stacja
+Lugar	Miejsce
+con tráfico	z ruchem drogowym
+Tráfico en vivo activado	Ruch na żywo włączony
+Tráfico en vivo	Ruch na żywo
+Muestra congestión en el mapa y evita trancones (usa clave gratis de TomTom)	Pokazuje korki na mapie i omija zatory (używa darmowego klucza TomTom)
+Clave gratis de TomTom	Darmowy klucz TomTom
+Para capas de tráfico y rutas con tráfico (regístrate gratis en developer.tomtom.com)	Do warstw ruchu na żywo i tras uwzględniających ruch (darmowa rejestracja na developer.tomtom.com)
+Clave API gratis de TomTom	Darmowy klucz API TomTom
+Capa de tráfico propia (avanzado)	Własna warstwa ruchu (zaawansowane)
+URL transparente de tráfico con {z}/{x}/{y}	Adres przezroczystych kafelków ruchu z {z}/{x}/{y}
+URL capa de tráfico {z}/{x}/{y} (vacío = automático)	Adres warstwy ruchu {z}/{x}/{y} (puste = automatycznie)
+Servidor de rutas OSRM (avanzado)	Serwer tras OSRM (zaawansowane)
+URL propia compatible con OSRM (vacío = automático)	Własny adres zgodny z OSRM (puste = automatycznie)
+URL servidor OSRM (vacío = automático)	Adres serwera OSRM (puste = automatycznie)
+Compatibilidad TLS en rutas	Zgodność TLS dla tras
+Para radios antiguas donde falle el HTTPS de rutas o búsqueda	Dla starszych radioodtwarzaczy, w których wyznaczanie tras lub wyszukiwanie przez HTTPS nie działa
+Mostrando hora de llegada	Pokazuje godzinę przyjazdu
+Mostrando tiempo restante	Pokazuje pozostały czas
+Radar	Fotoradar
+Ir a Casa	Nawiguj do domu
+Ir a Trabajo	Nawiguj do pracy
+Configura «{}» primero en Navegación	Najpierw ustaw „{}” w Nawigacji
+PARADAS	PRZYSTANKI
+Limpiar	Wyczyść
++ Añadir parada intermedia	+ Dodaj przystanek na trasie
+Modo parada activo: elige una parada	Tryb przystanku: wybierz przystanek
+Buscar parada intermedia	Szukaj przystanku na trasie
+Añadir parada en ruta	Dodaj przystanek na trasie
+Elegir destino final	Wybierz cel końcowy
+Añadir como parada	Dodaj jako przystanek
+Parada añadida	Dodano przystanek
+Elegir parada	Wybierz przystanek
+Elegir ruta	Wybierz trasę
+Ruta	Trasa
+Más rápida	Najszybsza
+incidente	utrudnienie
+incidentes	utrudnienia
+incidente en la ruta	utrudnienie na trasie
+incidentes en la ruta	utrudnienia na trasie
+Incidentes en la ruta	Utrudnienia na trasie
+Mostrar tiempo restante	Pokaż pozostały czas
+Mostrar hora de llegada	Pokaż godzinę przyjazdu
+Evitar peajes	Unikaj płatnych dróg
+Intenta evitar vías de peaje al calcular la ruta	Staraj się omijać płatne drogi przy wyznaczaniu trasy
+Evitar autopistas	Unikaj autostrad
+Intenta evitar autopistas o vías rápidas	Staraj się omijać autostrady i drogi ekspresowe
+Rutas alternativas	Trasy alternatywne
+Muestra 2 o 3 opciones de ruta antes de iniciar	Pokaż 2 lub 3 warianty trasy przed startem
+Muestra la hora estimada en lugar del tiempo restante	Pokaż przewidywaną godzinę przyjazdu zamiast pozostałego czasu
+Consulta cierres o accidentes una sola vez al calcular ruta (TomTom)	Sprawdź raz zamknięcia lub wypadki przy wyznaczaniu trasy (TomTom)
+Límite y alerta de velocidad	Ograniczenie prędkości i ostrzeżenie
+Muestra la señal de límite en el mapa y avisa al excederlo	Pokaż znak ograniczenia prędkości na mapie i ostrzegaj po jego przekroczeniu
+Tolerancia de exceso	Próg przekroczenia prędkości
+Margen sobre el límite antes de activar alerta	Margines ponad ograniczenie, po którym włącza się ostrzeżenie
+Sonido al exceder límite	Dźwięk ostrzeżenia o prędkości
+Pitido de alerta cuando superas la tolerancia	Odtwórz sygnał po przekroczeniu progu
+Alertas de radares sin conexión	Ostrzeżenia o fotoradarach offline
+Avisa al acercarse a radares del mapa local .map	Ostrzegaj przy zbliżaniu się do fotoradarów z lokalnego pliku .map
+Vía cerrada	Droga zamknięta
+Carril cerrado	Pas zamknięty
+Accidente	Wypadek
+Obras en la vía	Roboty drogowe
+Tráfico detenido	Ruch wstrzymany
+Incidente en la vía	Utrudnienie na drodze
+Radar de velocidad adelante	Fotoradar przed tobą
+Personalización	Personalizacja
+Cambia el aspecto de la pantalla de inicio con un toque. Puedes seguir ajustando cada detalle en las demás secciones.	Zmień wygląd ekranu głównego jednym dotknięciem. Każdy szczegół możesz nadal dopracować w pozostałych sekcjach.
+Temas gratis	Darmowe motywy
+Temas premium	Motywy premium
+Próximamente	Wkrótce
+Temas exclusivos para quienes apoyan StradaOS con una donación. Todas las funciones siguen siendo gratis.	Ekskluzywne motywy dla tych, którzy wspierają StradaOS darowizną. Wszystkie funkcje pozostają darmowe.
+En uso	W użyciu
+Tema aplicado:	Zastosowano motyw:
+Clásico	Klasyczny
+Música a la izquierda	Muzyka po lewej
+Mapa amplio	Szeroka mapa
+Minimalista	Minimalistyczny
+Vehículo a la izquierda, mapa en el centro y música a la derecha	Pojazd po lewej, mapa na środku i muzyka po prawej
+Mapa arriba; debajo, vehículo a la izquierda y música a la derecha	Mapa u góry; pod nią pojazd po lewej i muzyka po prawej
+Música a la izquierda, mapa en el centro y vehículo a la derecha	Muzyka po lewej, mapa na środku i pojazd po prawej
+Mapa arriba; debajo, música a la izquierda y vehículo a la derecha	Mapa u góry; pod nią muzyka po lewej i pojazd po prawej
+Sin tarjeta del vehículo: mapa más ancho, velocímetro abajo a la izquierda y música a la derecha	Bez karty pojazdu: szersza mapa, prędkościomierz w lewym dolnym rogu i muzyka po prawej
+Sin tarjeta del vehículo: mapa más alto con el velocímetro abajo a la izquierda y la música a lo ancho	Bez karty pojazdu: wyższa mapa z prędkościomierzem w lewym dolnym rogu i muzyka na całą szerokość
+Música a la izquierda, velocímetro abajo a la derecha, panel de conexión plegado y barra compacta	Muzyka po lewej, prędkościomierz w prawym dolnym rogu, złożony panel połączenia i kompaktowy pasek
+Mapa casi completo: velocímetro abajo a la derecha, panel de conexión plegado, música a lo ancho y barra compacta	Prawie pełna mapa: prędkościomierz w prawym dolnym rogu, złożony panel połączenia, muzyka na całą szerokość i kompaktowy pasek
+Cada tema se adapta solo a la orientación de la pantalla.	Każdy motyw sam dopasowuje się do orientacji ekranu.
+Tema premium	Motyw premium
+Aurora en uso	Aurora w użyciu
+El tema arma la pantalla de inicio. Las tarjetas, la barra y el velocímetro de aquí se usan otra vez al quitarlo en Personalización.	Motyw układa ekran główny. Karty, pasek i prędkościomierz z tej sekcji wrócą, gdy usuniesz motyw w Personalizacji.
+Tema premium quitado	Usunięto motyw premium
+Premium	Premium
+Fondo con un arco de color difuminado y granulado, tarjetas translúcidas, la hora en grande con música, vehículo y clima arriba, el mapa a lo ancho y una barra tipo píldora. El botón «Solo mapa» agranda el mapa.	Tło z miękkim, ziarnistym łukiem koloru, przezroczyste karty, duży zegar z muzyką, pojazdem i pogodą u góry, mapa na całą szerokość i pasek w kształcie pigułki. Przycisk „Tylko mapa” powiększa mapę.
+Sigue el modo claro u oscuro de Apariencia.	Podąża za trybem jasnym lub ciemnym z Wyglądu.
+Quitar el tema premium	Usuń motyw premium
+Aplicar	Zastosuj
+Versión de prueba: se puede aplicar sin código.	Wersja testowa: można zastosować bez kodu.
+Disponible pronto con una donación. Todas las funciones siguen siendo gratis.	Wkrótce za darowiznę. Wszystkie funkcje pozostają darmowe.
+Cobalto	Cobalto
+Azul noche en tres columnas: el mapa se difumina hasta el reproductor de carátula redonda, y tu vehículo muestra el velocímetro arriba, su foto en el medio y el mantenimiento abajo. La temperatura va sobre el mapa.	Nocny granat w trzech kolumnach: mapa przechodzi płynnie w odtwarzacz z okrągłą okładką, a twój pojazd pokazuje prędkościomierz u góry, zdjęcie pośrodku i konserwację na dole. Temperatura jest nad mapą.
+Gratis	Darmowy
+Gratis para todos. Los próximos temas premium se desbloquearán con una donación.	Darmowy dla wszystkich. Kolejne motywy premium będzie można odblokować darowizną.
+Brillo de la pantalla	Jasność ekranu
+Amanecer y atardecer: se calcula con el GPS, sin internet. Brillo: para pantallas que bajan el brillo al encender las luces	Wschód i zachód słońca: obliczane z GPS, bez internetu. Jasność: dla ekranów, które przyciemniają się po włączeniu świateł
+Brillo actual	Obecna jasność
+Prende y apaga las luces del carro para ver cuánto cambia	Włącz i wyłącz światła samochodu, aby zobaczyć, jak bardzo się zmienia
+Oscuro con brillo menor a	Ciemny, gdy jasność jest poniżej
+Elige un nivel entre el brillo de día y el de noche	Wybierz poziom między jasnością dzienną a nocną
+Esta pantalla no informa su brillo	Ten ekran nie podaje swojej jasności
+Países del Golfo	Kraje Zatoki Perskiej
+Irlanda del Norte	Irlandia Północna
+Islas Canarias	Wyspy Kanaryjskie
+Tiempo en StradaOS: {}	Czas w StradaOS: {}
+Último tiempo por Bluetooth: {}	Ostatni czas z Bluetooth: {}
+Fondo carbón (o perla en claro) con un haz de luz diagonal. A la izquierda, el velocímetro y un carro visto desde arriba que enciende los faros de noche; en el centro, el mapa integrado al fondo; a la derecha, el clima por horas y tus próximos mantenimientos, con el reproductor y la barra de apps debajo.	Węglowe tło (perłowe w trybie jasnym) z ukośną wiązką światła. Po lewej prędkościomierz i samochód widziany z góry, który nocą włącza reflektory; pośrodku mapa wtopiona w tło; po prawej pogoda godzinowa i najbliższe konserwacje, a pod spodem odtwarzacz i pasek aplikacji.
+Color del carro	Kolor samochodu
+El carro del tema Faro, visto desde arriba. También se cambia con una presión larga sobre el carro.	Samochód w motywie Faro, widziany z góry. Możesz go też zmienić, przytrzymując samochód.
+Intensidad del mapa	Intensywność mapy
+Qué tan visible es el mapa sobre el fondo. Auto lo pone más fuerte en las pantallas sencillas de los radios y suave en las de alta gama. Súbela si al sol no se ve bien.	Jak bardzo mapa jest widoczna na tle. Auto wzmacnia ją na prostych ekranach radioodtwarzaczy i łagodzi na ekranach wysokiej klasy. Zwiększ, jeśli w słońcu słabo ją widać.
+Baja	Niska
+Media	Średnia
+Alta	Wysoka
+Negro	Czarny
+Sin mantenimientos programados	Brak zaplanowanych konserwacji
+Toca para agregar uno	Dotknij, aby dodać
+Navegar	Nawiguj
+Música sonando	Gra muzyka
+Toca para ver la canción	Dotknij, aby zobaczyć utwór
+Ver la canción de tus apps	Zobacz utwór z twoich aplikacji
+Para mostrar la canción, el artista y la carátula de Spotify, YouTube Music y otras apps, StradaOS necesita «Acceso a notificaciones». Solo lo usa para leer lo que suena: no guarda ni envía nada.	Aby pokazać utwór, wykonawcę i okładkę ze Spotify, YouTube Music i innych aplikacji, StradaOS potrzebuje „Dostępu do powiadomień”. Używa go tylko do odczytania, co gra: nic nie jest zapisywane ani wysyłane.
+No volver a mostrar	Nie pokazuj ponownie
+Esta pantalla no tiene el ajuste de «Acceso a notificaciones». Se puede activar una sola vez desde una computadora con ADB:	Ten ekran nie ma ustawienia „Dostęp do powiadomień”. Możesz je włączyć raz z komputera przez ADB:
+Spotify, YouTube Music y otras apps de la pantalla (acceso a notificaciones)	Spotify, YouTube Music i inne aplikacje na ekranie (dostęp do powiadomień)
+Encendidas	Wł.
+Apagadas	Wył.
+Espera para pasar a oscuro	Opóźnienie przed przejściem na ciemny
+Cuánto debe durar el cambio (luces encendidas, poco brillo…) antes de oscurecer	Jak długo zmiana (włączone światła, niska jasność…) musi trwać, zanim ekran zrobi się ciemny
+Espera para pasar a claro	Opóźnienie przed przejściem na jasny
+Útil si al apagar el carro de noche se apagan las luces y la pantalla pasa a claro de golpe	Przydatne, jeśli po wyłączeniu samochodu nocą światła gasną, a ekran nagle robi się jasny
+Sin espera	Bez opóźnienia
+Marca de la pantalla	Marka radioodtwarzacza
+Genérica	Ogólna
+Detectada:	Wykryto:
+No se detectó una marca con funciones propias	Nie wykryto marki z własnymi funkcjami
+Datos del carro	Dane samochodu
+Lectura actual	Bieżący odczyt
+Servicio com.syu.ms:	Usługa com.syu.ms:
+sin caja CAN	brak modułu CAN
+Esperando datos	Czekam na dane
+Luces del carro	Światła samochodu
+Sin datos	Brak danych
+sin conectar	niepołączono
+conectando	łączenie
+conectado	połączono
+desconectado	rozłączono
+no se encontró com.syu.ms	nie znaleziono com.syu.ms
+com.syu.ms no respondió	com.syu.ms nie odpowiedział
+com.syu.ms se reinició	com.syu.ms uruchomiony ponownie
+Tema según las luces, batería y temperatura exterior	Motyw według świateł, akumulator i temperatura na zewnątrz
+Pantallas FYT (com.syu.ms)	Radioodtwarzacze FYT (com.syu.ms)
+luces detectadas	wykryto światła
+Auto: por horario. Sistema: sigue las luces del carro (pantalla FYT)	Auto: według harmonogramu. System: podąża za światłami samochodu (radioodtwarzacz FYT)
+Espera para cambiar de tema	Opóźnij zmiany motywu
+Evita cambios de golpe, p. ej. al apagar el carro de noche	Unika nagłych zmian, np. po wyłączeniu samochodu nocą
+Para seguirlas, elige Apariencia → Tema → Modo → Sistema	Aby za nimi podążać, wybierz Wygląd → Motyw → Tryb → System
+Elige qué datos del carro se ven arriba, junto al Wi-Fi	Wybierz, które dane samochodu pojawiają się u góry, obok Wi-Fi
+Tensión de la batería	Napięcie akumulatora
+Medida por la pantalla; no necesita la caja CAN	Mierzone przez radioodtwarzacz; nie wymaga modułu CAN
+Temperatura exterior	Temperatura na zewnątrz
+Del sensor del carro; necesita la caja CAN	Z czujnika samochodu; wymaga modułu CAN
+pantalla FYT detectada: elígela en Tu vehículo → Equipo	Wykryto ekran FYT: wybierz go w Twój pojazd → Radioodtwarzacz
+esta pantalla no informa las luces	ten ekran nie podaje stanu świateł
+Vehículo	Pojazd
+Monitor del vehículo	Monitor pojazdu
+Batería	Akumulator
+Carga del motor	Obciążenie silnika
+Acelerador	Przepustnica
+Aire de admisión	Powietrze dolotowe
+Combustible	Paliwo
+Mezcla corta	Krótkoterminowa korekta paliwa
+Mezcla larga	Długoterminowa korekta paliwa
+Flujo de aire	Przepływ powietrza
+Presión del múltiple	Ciśnienie w kolektorze
+Consumo del motor	Zużycie paliwa przez silnik
+Consumo por hora	Zużycie paliwa
+Aceite del motor	Olej silnikowy
+Panel de datos	Panel danych
+Datos del panel	Dane panelu
+Datos del motor	Dane silnika
+Cilindrada del motor	Pojemność silnika
+Cilindrada del motor (litros)	Pojemność silnika (litry)
+Protocolo	Protokół
+CAN 11 bits · 500 kbps	CAN 11-bit · 500 kb/s
+CAN 29 bits · 500 kbps	CAN 29-bit · 500 kb/s
+CAN 11 bits · 250 kbps	CAN 11-bit · 250 kb/s
+CAN 29 bits · 250 kbps	CAN 29-bit · 250 kb/s
+Escribe un número entre 0,5 y 8	Wpisz liczbę od 0,5 do 8
+Máximo 6 datos	Maksymalnie 6 wartości
+Hasta 6 datos del escáner, por ejemplo RPM, velocidad, refrigerante y consumo	Do 6 wartości ze skanera, np. obroty, prędkość, płyn chłodzący i zużycie paliwa
+Conectando con el escáner…	Łączenie ze skanerem…
+Conectado	Połączono
+Esperando al auto (¿contacto apagado?)	Czekam na samochód (zapłon wyłączony?)
+Escáner conectado. Vigilando el motor.	Skaner połączony. Obserwuję silnik.
+Se perdió la conexión con el escáner.	Utracono połączenie ze skanerem.
+Códigos borrados.	Kody usunięte.
+El auto no aceptó borrar los códigos.	Samochód nie przyjął usunięcia kodów.
+El escáner no logra hablar con el auto. ¿Está el contacto puesto?	Skaner nie może porozumieć się z samochodem. Czy zapłon jest włączony?
+El escáner no responde	Skaner nie odpowiada
+El escáner cerró la conexión	Skaner zamknął połączenie
+El Bluetooth está apagado	Bluetooth jest wyłączony
+Este equipo no tiene Bluetooth	To urządzenie nie ma Bluetooth
+No se pudo conectar	Nie udało się połączyć
+Motor sobrecalentado: {}	Przegrzanie silnika: {}
+Refrigerante alto: {}	Wysoka temperatura płynu chłodzącego: {}
+El refrigerante sube rápido: {} °C	Płyn chłodzący szybko się nagrzewa: {} °C
+Voltaje alto: {}	Wysokie napięcie: {}
+Voltaje bajo: {}	Niskie napięcie: {}
+RPM muy altas: {}	Bardzo wysokie obroty: {}
+Motor muy exigido: {}	Silnik pracuje bardzo ciężko: {}
+Aire de admisión muy caliente: {}	Bardzo gorące powietrze dolotowe: {}
+Poco combustible: {}	Mało paliwa: {}
+Mezcla pobre ({}): {}	Uboga mieszanka ({}): {}
+Mezcla rica ({}): {}	Bogata mieszanka ({}): {}
+Aceite del motor muy caliente: {}	Bardzo gorący olej silnikowy: {}
+Código de falla {}	Kod usterki {}
+Código pendiente {}	Kod oczekujący {}
+revisa el detalle en la pantalla	sprawdź szczegóły na ekranie
+Detente en un lugar seguro y apaga el motor. No abras la tapa del radiador en caliente. Espera que enfríe y revisa el nivel de refrigerante, el electroventilador y la correa.	Zatrzymaj się w bezpiecznym miejscu i wyłącz silnik. Nie otwieraj korka chłodnicy, gdy jest gorący. Poczekaj, aż ostygnie, potem sprawdź poziom płynu chłodzącego, wentylator chłodnicy i pasek.
+Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y, si sigue subiendo, pon la calefacción al máximo y busca dónde parar.	Zwolnij: użyj niższego biegu, wyłącz klimatyzację, a jeśli temperatura dalej rośnie, ustaw ogrzewanie na maksimum i znajdź miejsce na postój.
+Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y vigila que el electroventilador encienda.	Zwolnij: użyj niższego biegu, wyłącz klimatyzację i sprawdź, czy włącza się wentylator chłodnicy.
+El alternador está cargando de más y puede dañar la batería. Revísalo pronto.	Alternator ładuje za mocno i może uszkodzić akumulator. Wkrótce oddaj go do sprawdzenia.
+El alternador no está cargando bien: apaga lo que no necesites (aire, luces extra) y ve a un taller antes de que se descargue la batería. Revisa la correa.	Alternator nie ładuje prawidłowo: wyłącz to, czego nie potrzebujesz (klimatyzację, dodatkowe światła), i dojedź do warsztatu, zanim akumulator się rozładuje. Sprawdź pasek.
+Baja la velocidad o usa una marcha más alta. En bajadas, frena con motor sin pasar la zona roja.	Zwolnij lub użyj wyższego biegu. Na zjazdach hamuj silnikiem, nie wchodząc w czerwone pole.
+El motor va al máximo hace rato. En cuestas largas usa una marcha más baja y deja descansar el motor y la caja.	Silnik od dłuższego czasu pracuje z pełnym obciążeniem. Na długich podjazdach użyj niższego biegu i daj odpocząć silnikowi i skrzyni.
+El aire que entra al motor está muy caliente: pierde potencia. Si estás detenido, avanza para que circule aire.	Powietrze wpadające do silnika jest bardzo gorące, więc traci on moc. Jeśli stoisz, ruszaj, żeby powietrze mogło przepływać.
+Carga combustible en la próxima estación. En la montaña puede no haber más adelante.	Zatankuj na najbliższej stacji. W górach dalej może nie być żadnej.
+El motor recibe menos combustible del que necesita: puede ser una fuga de vacío, el filtro de combustible o el sensor MAF. Puede perder fuerza en subidas.	Silnik dostaje mniej paliwa, niż potrzebuje: może to być nieszczelność podciśnienia, filtr paliwa lub czujnik MAF. Na podjazdach może tracić moc.
+El motor recibe más combustible del necesario: revisa el filtro de aire, el sensor MAF o un inyector que gotee.	Silnik dostaje więcej paliwa, niż potrzebuje: sprawdź filtr powietrza, czujnik MAF lub cieknący wtryskiwacz.
+Baja la exigencia y revisa el nivel de aceite cuando puedas parar.	Zwolnij i sprawdź poziom oleju, gdy będziesz mógł się zatrzymać.
+código	kod
+códigos	kody
+Carrocería (airbag, cinturones, luces, cierre…)	Nadwozie (poduszki powietrzne, pasy, światła, zamki…)
+Chasis (frenos ABS, dirección, suspensión, 4x4)	Podwozie (hamulce ABS, układ kierowniczy, zawieszenie, 4x4)
+Comunicación entre computadores del auto	Komunikacja między komputerami samochodu
+Motor: mezcla de aire y combustible	Silnik: mieszanka powietrza i paliwa
+Motor: encendido y fallas de encendido	Silnik: zapłon i wypadanie zapłonów
+Control de emisiones	Kontrola emisji spalin
+Velocidad, ralentí y entradas auxiliares	Prędkość, bieg jałowy i wejścia pomocnicze
+Computador del motor y sus salidas	Komputer silnika i jego wyjścia
+Caja de cambios	Skrzynia biegów
+Motor o caja (sistema híbrido u otro)	Silnik lub skrzynia biegów (hybryda lub inne)
+código propio de la marca	kod specyficzny dla producenta
+La API key no es válida	Klucz API jest nieprawidłowy
+La IA está ocupada o sin saldo. Intenta más tarde.	AI jest zajęta lub skończyły się środki. Spróbuj później.
+La IA no quiso responder	AI odmówiła odpowiedzi
+La IA respondió vacío	AI zwróciła pustą odpowiedź
+Luz del motor	Kontrolka silnika
+Conectar	Połącz
+Auto simulado	Symulowany samochód
+Apagado	Wył.
+En vivo	Na żywo
+Conecta tu escáner OBD-II	Podłącz skaner OBD-II
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Si es Bluetooth, emparéjalo primero en los ajustes de Bluetooth del equipo (clave 1234 o 0000).\n3. Toca ⚙ para elegirlo y luego Conectar.\n\nStradaOS vigila la temperatura, el voltaje, la mezcla y los códigos de falla, y te avisa por voz aunque estés en otra app.	1. Podłącz skaner ELM327 do gniazda OBD (pod kierownicą) i włącz zapłon.\n2. Jeśli jest na Bluetooth, najpierw sparuj go w ustawieniach Bluetooth radioodtwarzacza (PIN 1234 lub 0000).\n3. Dotknij ⚙, aby go wybrać, a potem Połącz.\n\nStradaOS obserwuje temperaturę, napięcie, mieszankę paliwa i kody usterek oraz ostrzega głosowo, nawet gdy używasz innej aplikacji.
+Elegir escáner	Wybierz skaner
+Probar con un auto simulado	Wypróbuj z symulowanym samochodem
+Alertas	Alerty
+Todo normal por ahora.	Na razie wszystko w normie.
+Sin monitor activo.	Monitor nie działa.
+Códigos de falla	Kody usterek
+El auto no tiene códigos guardados.	Samochód nie ma zapisanych kodów.
+Se revisan al conectar y cada 30 segundos.	Sprawdzane po połączeniu i co 30 sekund.
+Pendiente	Oczekujący
+Grave	Poważny
+Leve	Drobny
+Revisar	Do sprawdzenia
+Toca para ver qué hacer	Dotknij, aby zobaczyć, co zrobić
+Borrar códigos	Usuń kody
+Hace {} min	{} min temu
+Qué hacer	Co zrobić
+Explicación de la IA	Wyjaśnienie AI
+Este código no está en la tabla sin conexión: suele ser un código propio de la marca. La IA puede explicarlo.	Tego kodu nie ma w tabeli offline: zwykle jest to kod specyficzny dla producenta. AI może go wyjaśnić.
+Ojo: los códigos de airbag, ABS y carrocería normalmente no se leen con OBD-II genérico; si aparece aquí es porque el auto lo reporta al computador del motor.	Uwaga: kodów poduszek powietrznych, ABS i nadwozia zwykle nie da się odczytać ogólnym OBD-II; jeśli pojawia się tutaj, samochód zgłasza go komputerowi silnika.
+Volver a preguntar a la IA	Zapytaj AI ponownie
+Explicar con IA	Wyjaśnij z AI
+Para que una IA explique los códigos, pon tu API key (Claude, Groq, Gemini u otra) en ⚙ → Inteligencia artificial. Las explicaciones se guardan en el equipo y después funcionan sin internet.	Aby AI wyjaśniała kody, dodaj swój klucz API (Claude, Groq, Gemini lub inny) w ⚙ → Sztuczna inteligencja. Wyjaśnienia są zapisywane na urządzeniu i potem działają offline.
+Preguntando a la IA…	Pytam AI…
+No se pudo consultar la IA	Nie udało się połączyć z AI
+Apaga el motor y deja solo el contacto puesto para borrar los códigos.	Wyłącz silnik i zostaw tylko włączony zapłon, aby usunąć kody.
+¿Borrar los códigos de falla?	Usunąć kody usterek?
+Se apaga la luz del motor y se borran los datos que usa el taller para diagnosticar. Si la falla sigue, el código volverá a aparecer. Anota los códigos antes.	Kontrolka silnika zgaśnie, a dane, których warsztat używa do diagnozy, zostaną usunięte. Jeśli usterka nie zniknie, kod wróci. Najpierw zapisz kody.
+Escáner	Skaner
+Mi vehículo (para la IA)	Mój pojazd (dla AI)
+Inteligencia artificial	Sztuczna inteligencja
+Sin configurar	Nie skonfigurowano
+Avisos por voz	Alerty głosowe
+Sí	Tak
+Encender el monitor al iniciar StradaOS	Uruchamiaj monitor razem ze StradaOS
+Registro de la conexión	Dziennik połączenia
+Ajustes del vehículo	Ustawienia pojazdu
+Tu vehículo: marca, modelo, año, motor y caja	Twój pojazd: marka, model, rok, silnik i skrzynia biegów
+Ej.: Kia Sorento 2010 2.4 bencina 4x4 automático	Np.: Kia Sorento 2010 2.4 benzyna 4x4 automat
+Escáner Wi-Fi (escribir IP y puerto)	Skaner Wi-Fi (wpisz IP i port)
+Auto simulado (para probar)	Symulowany samochód (do testów)
+No hay escáneres Bluetooth emparejados: emparéjalo en los ajustes del equipo	Brak sparowanych skanerów Bluetooth: sparuj go w ustawieniach radioodtwarzacza
+Elige tu escáner	Wybierz swój skaner
+IP y puerto del escáner Wi-Fi	IP i port skanera Wi-Fi
+Escribe IP:puerto, por ejemplo 192.168.0.10:35000	Wpisz IP:port, na przykład 192.168.0.10:35000
+Proveedor	Dostawca
+Modelo	Model
+Dirección de la API	Adres API
+Borrar la API key	Usuń klucz API
+La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. Cada consulta la cobra tu proveedor con tu API key.	AI otrzymuje tylko kod, wpisany pojazd i dane silnika; nigdy twojej lokalizacji. Każde zapytanie twój dostawca rozlicza z twojego klucza API.
+Aviso sobre	Ostrzeżenie powyżej
+alerta sobre	alert powyżej
+Aviso bajo	Ostrzeżenie poniżej
+alerta bajo	alert poniżej
+Aviso sobre ±	Ostrzeżenie powyżej ±
+alerta sobre ±	alert powyżej ±
+Con el motor en marcha debe estar entre 13,5 y 14,8 V. Con el motor apagado, 12,4 a 12,8 V es normal.	Przy pracującym silniku powinno być od 13,5 do 14,8 V. Przy wyłączonym silniku normalne jest od 12,4 do 12,8 V.
+Normal en marcha: 85 a 98 °C. También avisa si sube más de 4 °C por minuto sobre 95 °C.	Normalnie podczas jazdy: od 85 do 98 °C. Ostrzega też, jeśli powyżej 95 °C rośnie o ponad 4 °C na minutę.
+Cuánto corrige el computador la mezcla. Positivo = le falta combustible (fuga de aire); negativo = le sobra.	Jak bardzo komputer koryguje mieszankę. Dodatnia = brakuje paliwa (zasysanie powietrza); ujemna = za dużo paliwa.
+Solo informativo: este dato no genera alertas.	Tylko informacyjnie: ta wartość nie wywołuje alertów.
+Otra compatible con OpenAI	Inny zgodny z OpenAI
+elegir…	wybierz…
+Probar la IA	Przetestuj AI
+Primero escribe la API key	Najpierw wpisz klucz API
+Buscando los modelos del proveedor…	Pobieram modele dostawcy…
+recomendado	zalecany
+Escribir otro…	Wpisz inny…
+Preguntando por el código de ejemplo P0711…	Pytam o przykładowy kod P0711…
+La IA funciona · P0711 de ejemplo	AI działa · przykład P0711
+Volver	Wstecz
+Elige el modelo de la IA en los ajustes	Wybierz model AI w ustawieniach
+Escribe la dirección de la API en los ajustes	Wpisz adres API w ustawieniach
+Escaneando	Skanowanie
+Escaneo terminado.	Skanowanie zakończone.
+El escaneo se cortó	Skanowanie zostało przerwane
+Escanear todo lo que entrega el auto	Skanuj wszystko, co podaje samochód
+Conecta el escáner con el contacto puesto (mejor con el motor en marcha) y vuelve a intentarlo.	Podłącz skaner przy włączonym zapłonie (najlepiej przy pracującym silniku) i spróbuj ponownie.
+Pregunta al auto por cada dato estándar y por los datos propios de la marca del motor y la caja. Tarda hasta 2 minutos y mientras tanto las alertas se pausan: hazlo detenido. Solo lee, no cambia nada en el auto.	Pyta samochód o każdą standardową wartość oraz o własne dane producenta dotyczące silnika i skrzyni. Trwa do 2 minut, a alerty są w tym czasie wstrzymane, więc rób to na postoju. Tylko odczytuje; niczego w samochodzie nie zmienia.
+Escanear	Skanuj
+Guardado en	Zapisano w
+Lo que entrega tu auto	Co podaje twój samochód
+Consumo	Zużycie paliwa
+calculado	obliczone
+Panel	Kokpit
+Todos los datos	Wszystkie dane
+Datos en vivo	Dane na żywo
+Monitores de emisiones	Monitory emisji
+✓ listo · ✗ aún no termina su prueba (normal después de borrar códigos o desconectar la batería).	✓ gotowy · ✗ test jeszcze niezakończony (normalne po usunięciu kodów lub odłączeniu akumulatora).
+Fallas de encendido	Wypadanie zapłonów
+Sistema de combustible	Układ paliwowy
+Componentes	Podzespoły
+Catalizador	Katalizator
+Catalizador calefaccionado	Podgrzewany katalizator
+Vapores de combustible (EVAP)	Opary paliwa (EVAP)
+Aire secundario	Powietrze wtórne
+Sensores de oxígeno	Sondy lambda
+Calefactor de sensores de oxígeno	Podgrzewanie sondy lambda
+Recirculación de gases (EGR)	Recyrkulacja spalin (EGR)
+Preguntar a la IA	Zapytaj AI
+Ajustar esta alerta	Dostosuj ten alert
+Alertas a vigilar	Obserwowane alerty
+Subida rápida del refrigerante	Szybki wzrost temperatury płynu
+Códigos de falla nuevos (aviso por voz)	Nowe kody usterek (alert głosowy)
+aviso	ostrzeżenie
+alerta	alert
+bajo	niska
+Vigilar	Obserwuj
+Valores de fábrica	Wartości fabryczne
+Escribe un número	Wpisz liczbę
+Datos del motor cuando se registró la falla	Dane silnika z chwili zapisania usterki
+Buscar escáneres Bluetooth cercanos	Szukaj skanerów Bluetooth w pobliżu
+Emparejado	Sparowane
+emparejado	sparowany
+No se pudo emparejar. Prueba con la clave 1234 o 0000.	Nie udało się sparować. Spróbuj PIN 1234 lub 0000.
+Sin el permiso de ubicación Android no deja buscar equipos Bluetooth	Bez uprawnienia do lokalizacji Android nie pozwala wyszukiwać urządzeń Bluetooth
+No se encontraron equipos. ¿Está el escáner enchufado y el contacto puesto?	Nie znaleziono urządzeń. Czy skaner jest podłączony, a zapłon włączony?
+Buscando… (enchufa el escáner y pon el contacto)	Szukam… (podłącz skaner i włącz zapłon)
+Emparejando… si pide clave, escribe 1234 o 0000	Parowanie… jeśli pojawi się prośba o PIN, wpisz 1234 lub 0000
+Emparéjalo en los ajustes de Bluetooth del equipo	Sparuj go w ustawieniach Bluetooth radioodtwarzacza
+Los escáneres suelen llamarse OBDII, OBD2, V-LINK o Vgate.	Skanery zwykle nazywają się OBDII, OBD2, V-LINK lub Vgate.
+Buscar de nuevo	Szukaj ponownie
+Gráficos en vivo	Wykresy na żywo
+Desliza el dedo sobre un gráfico para ver el valor de cada momento. Toca los datos de arriba para comparar hasta 3.	Przesuń palcem po wykresie, aby zobaczyć wartość w każdej chwili. Dotknij pozycji powyżej, aby porównać do 3.
+mín	min
+máx	maks.
+prom	śr.
+ahora	teraz
+hace	temu
+Esperando datos…	Czekam na dane…
+Monitor apagado · toca para conectar	Monitor wyłączony · dotknij, aby połączyć
+monitor apagado	monitor wyłączony
+VEHÍCULO	POJAZD
+Qué muestra cada tarjeta	Co pokazuje każda karta
+Música, el monitor del vehículo (temperatura, voltaje, RPM y alertas) o un gráfico en vivo	Muzykę, monitor pojazdu (temperatura, napięcie, obroty i alerty) lub wykres na żywo
+Gráfico en vivo	Wykres na żywo
+Gráfico del reproductor	Wykres karty odtwarzacza
+Dato del escáner que se grafica (últimos 5 minutos)	Wartość ze skanera na wykresie (ostatnie 5 minut)
+Tarjeta del centro	Karta środkowa
+El mapa, el monitor del vehículo o un gráfico en vivo. Sin el mapa, Android Auto y CarPlay se abren desde la barra de botones	Mapa, monitor pojazdu lub wykres na żywo. Bez mapy Android Auto i CarPlay otwierają się z paska przycisków
+Gráfico del centro	Wykres karty środkowej
+Velocidad (GPS)	Prędkość (GPS)
+Recuadro de la velocidad	Pole prędkości
+La velocidad del GPS o, en grande, otro dato del escáner (por ejemplo la temperatura del refrigerante)	Prędkość z GPS lub, dużą czcionką, inna wartość ze skanera (np. temperatura płynu chłodzącego)
+Esta tarjeta	Ta karta
+Cambiar esta tarjeta…	Zmień tę kartę…
+¿Qué dato graficar?	Którą wartość pokazać na wykresie?
+Monitor apagado	Monitor wyłączony
+Cambiar qué muestra…	Zmień, co pokazuje…
+◀  Mover a la izquierda	◀  Przesuń w lewo
+Mover a la derecha  ▶	Przesuń w prawo  ▶
+Ancho de la tarjeta…	Szerokość karty…
+Ancho de la tarjeta	Szerokość karty
+Volver al orden y tamaño de siempre	Przywróć domyślną kolejność i rozmiar
+Ya está a la izquierda	Już jest po lewej
+Ya está a la derecha	Już jest po prawej
+Ancha	Szeroka
+Muy ancha	Bardzo szeroka
+✋  Ajustar con el dedo (mover y cambiar tamaño)	✋  Dopasuj dotykiem (przenieś i zmień rozmiar)
+Arrastra la manija entre dos tarjetas para cambiar el ancho · arrastra una tarjeta para moverla	Przeciągnij uchwyt między dwiema kartami, aby zmienić rozmiar · przeciągnij kartę, aby ją przenieść
+Listo	Gotowe
+límite	limit
+se ajusta solo	dopasowuje się sama
+ancho	szerokość
+VIAJE	TRASA
+ALTITUD	WYSOKOŚĆ
+APPS	APLIKACJE
+pendiente —	nachylenie —
+normal	normalnie
+Mantén presionado para reiniciar el viaje o cambiar los widgets	Przytrzymaj, aby wyzerować trasę lub zmienić widżety
+Quitar este acceso	Usuń ten skrót
+Acceso directo {}	Skrót {}
+Altitud, pendiente y rumbo	Wysokość, nachylenie i kierunek
+Viaje (km, tiempo, consumo)	Trasa (km, czas, zużycie)
+Dato del vehículo…	Wartość pojazdu…
+Accesos directos (3 apps)	Skróty (3 aplikacje)
+Dato del vehículo	Wartość pojazdu
+Widget	Widżet
+Reiniciar el viaje	Wyzeruj trasę
+Quitar la franja	Usuń pasek
+Franja de widgets	Pasek widżetów
+¿Qué dato mostrar?	Którą wartość pokazać?
+Viaje reiniciado	Trasa wyzerowana
+Quitar la franja de widgets de abajo	Usuń pasek widżetów na dole
+Franja de widgets debajo (altitud, viaje, apps…)	Pasek widżetów na dole (wysokość, trasa, aplikacje…)
+Arrastra las manijas para cambiar tamaños · arrastra una tarjeta para moverla · toca un widget para cambiarlo	Przeciągnij uchwyty, aby zmienić rozmiar · przeciągnij kartę, aby ją przenieść · dotknij widżetu, aby go zmienić
+Agregar franja de widgets	Dodaj pasek widżetów
+Agregar un widget	Dodaj widżet
+Ajustar tamaños con el dedo	Dopasuj rozmiary dotykiem
+Quitar este widget	Usuń ten widżet
+Accesos directos (apps)	Skróty (aplikacje)
+MÚSICA	MUZYKA
+Música (canción y controles)	Muzyka (utwór i sterowanie)
+Arrastra las manijas para cambiar tamaños · arrastra una tarjeta para moverla · toca un widget para cambiarlo · ✕ oculta una tarjeta	Przeciągnij uchwyty, aby zmienić rozmiar · przeciągnij kartę, aby ją przenieść · dotknij widżetu, aby go zmienić · ✕ ukrywa kartę
+Ocultar la tarjeta del vehículo	Ukryj kartę pojazdu
+Ocultar la tarjeta de música	Ukryj kartę muzyki
+Mostrar la tarjeta del vehículo	Pokaż kartę pojazdu
+Mostrar la tarjeta de música	Pokaż kartę muzyki
+Avance del encendido	Wyprzedzenie zapłonu
+Sonda O2 banco 1	Sonda lambda bank 1
+Sonda O2 banco 1 sensor 2	Sonda lambda bank 1 czujnik 2
+Tiempo de marcha	Czas pracy
+Distancia con la luz del motor	Dystans z zapaloną kontrolką silnika
+EGR comandada	Zadane EGR
+Arranques desde borrar códigos	Rozgrzania od usunięcia kodów
+Distancia desde borrar códigos	Dystans od usunięcia kodów
+Presión barométrica	Ciśnienie atmosferyczne
+Catalizador banco 1	Katalizator bank 1
+Catalizador banco 1 sensor 2	Katalizator bank 1 czujnik 2
+Carga absoluta	Obciążenie bezwzględne
+Mezcla comandada	Zadany współczynnik lambda
+Acelerador relativo	Przepustnica względna
+Acelerador B	Przepustnica B
+Pedal D	Pedał D
+Pedal E	Pedał E
+Acelerador comandado	Zadana przepustnica
+Tiempo con la luz del motor	Czas z zapaloną kontrolką silnika
+Tiempo desde borrar códigos	Czas od usunięcia kodów
+Mezcla O2 banco 1	Korekta sondy lambda bank 1
+Mezcla O2 banco 1 sensor 2	Korekta sondy lambda bank 1 czujnik 2
+API key	Klucz API
+Enviar el VIN a la IA	Wyślij VIN do AI
+La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. El VIN solo se envía si lo activas aquí. Cada consulta la cobra tu proveedor con tu API key.	AI otrzymuje tylko kod, wpisany pojazd i dane silnika; nigdy twojej lokalizacji. VIN jest wysyłany tylko wtedy, gdy włączysz to tutaj. Każde zapytanie twój dostawca rozlicza z twojego klucza API.
+RPM	Obroty
+Escáner OBD-II	Skaner OBD-II
+Enciende el monitor del motor en «Escáner OBD-II»	Włącz monitor silnika w „Skaner OBD-II”
+Conectando…	Łączenie…
+Monitor del motor	Monitor silnika
+Está apagado: enciéndelo para conectar el escáner	Jest wyłączony: włącz go, aby podłączyć skaner
+Estado	Stan
+Abrir el panel del vehículo	Otwórz panel pojazdu
+Medidores, alertas y códigos encima del tema que tengas	Wskaźniki, alerty i kody nad twoim motywem
+Diagnóstico	Diagnostyka
+Qué vigila StradaOS y cuándo avisa por voz	Co obserwuje StradaOS i kiedy się odzywa
+Todo normal	Wszystko w normie
+Qué significan y qué hacer; borrarlos con el motor apagado	Co oznaczają i co zrobić; usuwaj je przy wyłączonym silniku
+Cada dato que entrega tu auto, con gráficos	Każda wartość, którą podaje twój samochód, z wykresami
+Más	Więcej
+Opcional: explica los códigos para tu auto en particular	Opcjonalnie: wyjaśnia kody dla twojego konkretnego samochodu
+Motor, protocolo, panel y escaneo completo	Silnik, protokół, panel i pełne skanowanie
+Bluetooth emparejado, Wi-Fi (IP y puerto) o un auto simulado para probar	Sparowany Bluetooth, Wi-Fi (IP i port) lub symulowany samochód do testów
+Empareja el escáner sin salir de StradaOS (clave 1234 o 0000)	Sparuj skaner bez wychodzenia ze StradaOS (PIN 1234 lub 0000)
+Reconectar	Połącz ponownie
+Conectar al iniciar StradaOS	Łącz przy starcie StradaOS
+Las alertas funcionan aunque estés en otra app (con una notificación fija)	Alerty działają nawet wtedy, gdy jesteś w innej aplikacji (ze stałym powiadomieniem)
+Cómo conectar el escáner	Jak podłączyć skaner
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Bluetooth: emparéjalo con la clave 1234 o 0000. Wi-Fi: conecta la pantalla a la red del escáner y escribe su IP y puerto (casi siempre 192.168.0.10:35000).\n3. Elígelo arriba en «Escáner».	1. Podłącz skaner ELM327 do gniazda OBD (pod kierownicą) i włącz zapłon.\n2. Bluetooth: sparuj go z PIN 1234 lub 0000. Wi-Fi: połącz radioodtwarzacz z siecią skanera i wpisz jego IP i port (prawie zawsze 192.168.0.10:35000).\n3. Wybierz go powyżej w „Skaner”.
+Lo que respondió el escáner (para reportar un problema)	Co odpowiedział skaner (do zgłoszenia problemu)
+Todo normal por ahora	Na razie wszystko w normie
+Alerta	Alert
+Aviso	Ostrzeżenie
+Avisos	Powiadomienia
+Habla aunque estés en Waze o con música	Mówi nawet wtedy, gdy jesteś w Waze lub słuchasz muzyki
+Abrir el panel con una alerta grave	Otwórz panel przy poważnym alercie
+Por ejemplo, el motor muy caliente o la batería que no carga	Na przykład bardzo gorący silnik lub akumulator, który się nie ładuje
+Más de 4 °C por minuto con el motor caliente	Ponad 4 °C na minutę przy rozgrzanym silniku
+Cuándo avisa cada dato	Kiedy alarmuje każda wartość
+Códigos guardados en el auto	Kody zapisane w samochodzie
+El auto no tiene códigos guardados	Samochód nie ma zapisanych kodów
+Se revisan al conectar y cada 30 segundos	Sprawdzane po połączeniu i co 30 sekund
+Luz del motor encendida	Kontrolka silnika włączona
+El computador del motor confirmó una falla	Komputer silnika potwierdził usterkę
+Con el motor apagado y el contacto puesto. Anota los códigos antes: no se puede deshacer	Przy wyłączonym silniku i włączonym zapłonie. Najpierw zapisz kody: tego nie da się cofnąć
+Conecta el escáner para ver los datos	Podłącz skaner, aby zobaczyć dane
+Gráficos	Wykresy
+Hasta 3 datos a la vez, de 1 a 30 minutos	Do 3 wartości naraz, od 1 do 30 minut
+La tuya: cada consulta la cobra tu proveedor	Twój własny: każde zapytanie rozlicza twój dostawca
+Privacidad	Prywatność
+Qué se envía	Co jest wysyłane
+Solo el código, el vehículo que escribas y los datos del motor de ese momento; nunca tu ubicación. Las respuestas se guardan en la pantalla	Tylko kod, wpisany pojazd i dane silnika z tej chwili; nigdy twoja lokalizacja. Odpowiedzi są zapisywane w radioodtwarzaczu
+Tu vehículo (para la IA)	Twój pojazd (dla AI)
+Marca, modelo, año, motor y caja	Marka, model, rok, silnik i skrzynia biegów
+Identifica tu auto de forma única. Apagado por defecto	Jednoznacznie identyfikuje twój samochód. Domyślnie wyłączone
+Probar	Test
+Pregunta por un código de ejemplo	Pyta o przykładowy kod
+Motor	Silnik
+Para calcular el consumo en motores sin sensor MAF	Do obliczania zużycia paliwa w silnikach bez czujnika MAF
+Automático casi siempre; fuerza uno si el escáner no lo detecta	Prawie zawsze automatycznie; wymuś, jeśli skaner go nie wykrywa
+Panel del vehículo	Panel pojazdu
+Lado del panel	Strona panelu
+Pestaña en el borde	Zakładka przy krawędzi
+Toca o desliza la pestaña para abrir el panel. Sin ella, ábrelo con un botón de la barra	Dotknij lub przesuń zakładkę, aby otworzyć panel. Bez niej otwierasz go przyciskiem na pasku
+Informe de cada dato estándar y los propios de la marca. Solo lee	Raport każdej standardowej wartości i własnych wartości producenta. Tylko odczyt
+Ver el último informe	Zobacz ostatni raport
+Con un escáner ELM327 por Wi-Fi o Bluetooth: temperatura, batería, alertas por voz y códigos de falla	Ze skanerem ELM327 przez Wi-Fi lub Bluetooth: temperatura, akumulator, alerty głosowe i kody usterek
+También con la pestaña del borde o con un botón de la barra	Także zakładką przy krawędzi lub przyciskiem na pasku
+Vehículo (OBD-II)	Pojazd (OBD-II)
+Sin elegir	Nie wybrano
+Apagada	Wył.
+Alerta sobre	Alert powyżej
+Alerta bajo	Alert poniżej
+Alerta sobre ±	Alert powyżej ±
+No	Nie
+Para que una IA explique los códigos, pon tu API key (Claude, Groq, Gemini u otra) en Ajustes → Tu vehículo → Escáner OBD-II → Inteligencia artificial. Las explicaciones se guardan en el equipo y después funcionan sin internet.	Aby AI wyjaśniała kody, wpisz swój klucz API (Claude, Groq, Gemini lub inny) w Ustawienia → Twój pojazd → Skaner OBD-II → Sztuczna inteligencja. Wyjaśnienia są zapisywane na urządzeniu i potem działają offline.
+Se apaga la luz del motor y se borran los datos que usa el taller para diagnosticar; también se reinician los monitores de emisiones. No se puede deshacer y, si la falla sigue, el código volverá a aparecer. Anota los códigos antes.	Kontrolka silnika zgaśnie, a dane, których warsztat używa do diagnozy, zostaną usunięte; monitory emisji też się wyzerują. Tego nie da się cofnąć, a jeśli usterka nie zniknie, kod wróci. Najpierw zapisz kody.
+Ej.: Kia Picanto 2019 1.2 gasolina mecánico	Np.: Kia Picanto 2019 1.2 benzyna manual
+Sin poner	Nie ustawiono
+Escaneando… el avance se ve en el estado del escáner	Skanowanie… postęp widać w stanie skanera
+Todavía no hay un informe	Nie ma jeszcze raportu
+Sin monitor activo	Brak aktywnego monitora
+Sin códigos guardados	Brak zapisanych kodów
+Se revisan al conectar	Sprawdzane po połączeniu
+Ver todo	Zobacz wszystko
+1 activa	1 aktywny
+{} activas	Aktywne: {}
+Parada intermedia	Postój
+Árbol de levas de admisión adelantado más de lo esperado (variador CVVT).	Wałek rozrządu dolotowy bardziej wyprzedzony niż oczekiwano (fazownik CVVT).
+Revisa nivel y estado del aceite: el variador funciona con presión de aceite. Si el aceite está bien, revisar la válvula solenoide OCV.	Sprawdź poziom i stan oleju: fazownik działa dzięki ciśnieniu oleju. Jeśli olej jest w porządku, sprawdź zawór elektromagnetyczny OCV.
+Árbol de levas de admisión atrasado más de lo esperado (variador CVVT).	Wałek rozrządu dolotowy bardziej opóźniony niż oczekiwano (fazownik CVVT).
+Revisa nivel y estado del aceite. Si sigue, revisar la válvula OCV y la cadena de distribución.	Sprawdź poziom i stan oleju. Jeśli problem nie ustępuje, sprawdź zawór OCV i łańcuch rozrządu.
+Árbol de levas de escape adelantado más de lo esperado.	Wałek rozrządu wydechowy bardziej wyprzedzony niż oczekiwano.
+Revisa nivel y estado del aceite. Si sigue, revisar la válvula OCV de escape.	Sprawdź poziom i stan oleju. Jeśli problem nie ustępuje, sprawdź zawór OCV wydechu.
+La posición del cigüeñal y del árbol de levas no coinciden.	Położenia wału korbowego i wałka rozrządu się nie zgadzają.
+Puede ser la cadena de distribución estirada o saltada. Evita exigir el motor y llévalo al taller pronto.	Łańcuch rozrządu może być rozciągnięty lub przeskoczył ząb. Nie forsuj silnika i wkrótce oddaj go do warsztatu.
+El sensor de flujo de aire (MAF) marca fuera de lo esperado.	Przepływomierz powietrza (MAF) pokazuje wartości poza zakresem.
+Revisa el filtro de aire y que no haya mangueras sueltas después del sensor. Limpiar el MAF con limpiador especial.	Sprawdź filtr powietrza i poszukaj luźnych węży za czujnikiem. Wyczyść MAF specjalnym środkiem.
+Señal baja del sensor de flujo de aire (MAF).	Niski sygnał przepływomierza powietrza (MAF).
+Revisa el conector y el cableado del MAF.	Sprawdź złącze i przewody MAF.
+Señal alta del sensor de flujo de aire (MAF).	Wysoki sygnał przepływomierza powietrza (MAF).
+El sensor de presión del múltiple (MAP) marca fuera de lo esperado.	Czujnik ciśnienia w kolektorze (MAP) pokazuje wartości poza zakresem.
+Revisa mangueras de vacío y el conector del sensor MAP.	Sprawdź węże podciśnienia i złącze czujnika MAP.
+El sensor de temperatura del aire de admisión marca fuera de lo esperado.	Czujnik temperatury powietrza dolotowego pokazuje wartości poza zakresem.
+Revisa el conector del sensor. No suele dejarte botado.	Sprawdź złącze czujnika. Rzadko unieruchamia samochód.
+Señal baja del sensor de temperatura del aire de admisión.	Niski sygnał czujnika temperatury powietrza dolotowego.
+Revisa el conector y el cableado del sensor.	Sprawdź złącze i przewody czujnika.
+Señal alta del sensor de temperatura del aire de admisión.	Wysoki sygnał czujnika temperatury powietrza dolotowego.
+El sensor de temperatura del refrigerante marca fuera de lo esperado.	Czujnik temperatury płynu chłodzącego pokazuje wartości poza zakresem.
+No confíes en el indicador de temperatura hasta revisarlo. Vigila que el electroventilador encienda.	Nie ufaj wskaźnikowi temperatury, dopóki nie zostanie sprawdzony. Upewnij się, że wentylator chłodnicy się włącza.
+Señal baja del sensor de temperatura del refrigerante.	Niski sygnał czujnika temperatury płynu chłodzącego.
+Sin este dato el motor puede sobrecalentarse sin avisar. Revisa nivel de refrigerante y el conector del sensor.	Bez tego odczytu silnik może się przegrzać bez ostrzeżenia. Sprawdź poziom płynu chłodzącego i złącze czujnika.
+Señal alta del sensor de temperatura del refrigerante.	Wysoki sygnał czujnika temperatury płynu chłodzącego.
+El sensor de posición del acelerador marca fuera de lo esperado.	Czujnik położenia przepustnicy pokazuje wartości poza zakresem.
+El motor puede entrar en modo de emergencia (poca potencia). Revisa el cuerpo de aceleración y su conector.	Silnik może przejść w tryb awaryjny (mała moc). Sprawdź przepustnicę i jej złącze.
+Señal baja del sensor de posición del acelerador.	Niski sygnał czujnika położenia przepustnicy.
+Puede entrar en modo de emergencia. Revisa el conector del cuerpo de aceleración.	Może przejść w tryb awaryjny. Sprawdź złącze przepustnicy.
+Señal alta del sensor de posición del acelerador.	Wysoki sygnał czujnika położenia przepustnicy.
+El motor tarda mucho en llegar a temperatura para el control de mezcla.	Silnik zbyt długo się rozgrzewa do sterowania paliwem.
+Suele ser el termostato abierto o el sensor de temperatura. Revisa en el taller.	Zwykle to termostat zablokowany w pozycji otwartej lub czujnik temperatury. Oddaj samochód do sprawdzenia w warsztacie.
+El refrigerante no llega a la temperatura del termostato.	Płyn chłodzący nie osiąga temperatury termostatu.
+Casi siempre es el termostato pegado abierto. Gasta más combustible y calienta poco la cabina; cámbialo cuando puedas.	Prawie zawsze termostat zablokowany w pozycji otwartej. Zużywa więcej paliwa i słabo grzeje kabinę; wymień go, gdy będziesz mógł.
+Falla en el circuito del sensor de oxígeno delantero (banco 1).	Usterka obwodu przedniej sondy lambda (bank 1).
+Revisa el conector del sensor. Gastarás algo más de combustible.	Sprawdź złącze czujnika. Zużycie paliwa będzie nieco wyższe.
+El sensor de oxígeno delantero responde lento.	Przednia sonda lambda reaguje powoli.
+El sensor está viejo. Cámbialo cuando puedas.	Sonda jest zużyta. Wymień ją, gdy będziesz mógł.
+Falla en el calentador del sensor de oxígeno delantero.	Usterka podgrzewania przedniej sondy lambda.
+Revisa el fusible y el conector del sensor. Se puede seguir.	Sprawdź bezpiecznik i złącze czujnika. Możesz jechać dalej.
+Falla en el calentador del sensor de oxígeno trasero.	Usterka podgrzewania tylnej sondy lambda.
+Mezcla pobre: entra más aire o llega menos combustible de lo que debería.	Uboga mieszanka: dostaje się więcej powietrza lub dociera mniej paliwa, niż powinno.
+Busca fugas de vacío (mangueras, junta de admisión), revisa el MAF, la presión de combustible y el filtro. En subidas largas puede perder fuerza.	Poszukaj nieszczelności podciśnienia (węże, uszczelka dolotu), sprawdź MAF, ciśnienie paliwa i filtr. Na długich podjazdach może tracić moc.
+Mezcla rica: llega más combustible del que debería.	Bogata mieszanka: dociera więcej paliwa, niż powinno.
+Revisa el filtro de aire, el MAF, inyectores que goteen y el regulador de presión.	Sprawdź filtr powietrza, MAF, cieknące wtryskiwacze i regulator ciśnienia.
+Temperatura del motor excesiva.	Za wysoka temperatura silnika.
+Detente en un lugar seguro y apaga el motor. No abras la tapa del radiador en caliente. Revisa refrigerante, ventilador y correa.	Zatrzymaj się w bezpiecznym miejscu i wyłącz silnik. Nie otwieraj korka chłodnicy, gdy jest gorący. Sprawdź płyn chłodzący, wentylator i pasek.
+Falla en el circuito del relé de la bomba de combustible.	Usterka obwodu przekaźnika pompy paliwa.
+El motor puede apagarse sin aviso. Revisa relé y fusible de la bomba.	Silnik może zgasnąć bez ostrzeżenia. Sprawdź przekaźnik i bezpiecznik pompy.
+Falla en el inyector del cilindro {}.	Usterka wtryskiwacza cylindra {}.
+Puede fallar el cilindro {}. Revisa el conector del inyector.	W cylindrze {} mogą wypadać zapłony. Sprawdź złącze wtryskiwacza.
+Fallas de encendido en varios cilindros.	Wypadanie zapłonów w kilku cylindrach.
+Si la luz del motor parpadea, baja la velocidad y no exijas el motor: el catalizador se puede dañar. Revisa bujías, bobinas, combustible y fugas de vacío.	Jeśli kontrolka silnika miga, zwolnij i nie forsuj silnika: katalizator może się uszkodzić. Sprawdź świece, cewki, paliwo i nieszczelności podciśnienia.
+Falla de encendido en el cilindro {}.	Wypadanie zapłonu w cylindrze {}.
+Si la luz parpadea, no exijas el motor. Intercambia la bobina del cilindro {} con otra para ver si la falla se mueve; revisa la bujía.	Jeśli kontrolka miga, nie forsuj silnika. Zamień cewkę cylindra {} z inną, aby sprawdzić, czy wypadanie się przenosi; sprawdź świecę.
+Falla en el circuito del sensor de detonación.	Usterka obwodu czujnika spalania stukowego.
+El motor se protege atrasando el encendido: tendrá menos fuerza. Usa el combustible recomendado y revisa el conector del sensor.	Silnik chroni się, opóźniając zapłon: będzie miał mniej mocy. Używaj zalecanego paliwa i sprawdź złącze czujnika.
+Falla en el sensor de posición del cigüeñal.	Usterka czujnika położenia wału korbowego.
+El motor puede apagarse o no volver a arrancar. Evita lugares aislados y revisa el sensor y su conector.	Silnik może zgasnąć lub nie zapalić ponownie. Unikaj odludnych miejsc i sprawdź czujnik oraz jego złącze.
+El sensor de posición del cigüeñal marca fuera de lo esperado.	Czujnik położenia wału korbowego pokazuje wartości poza zakresem.
+El motor puede apagarse o no volver a arrancar. Revisa el sensor y su conector.	Silnik może zgasnąć lub nie zapalić ponownie. Sprawdź czujnik i jego złącze.
+Falla en el sensor de posición del árbol de levas.	Usterka czujnika położenia wałka rozrządu.
+Puede costar arrancar o apagarse. Revisa el sensor y su conector.	Może trudno odpalać lub gasnąć. Sprawdź czujnik i jego złącze.
+El sensor del árbol de levas marca fuera de lo esperado.	Czujnik wałka rozrządu pokazuje wartości poza zakresem.
+Revisa el sensor, su conector y la distribución.	Sprawdź czujnik, jego złącze i ustawienie rozrządu.
+Falla en el circuito de la bobina del cilindro {}.	Usterka obwodu cewki zapłonowej cylindra {}.
+Puede fallar el cilindro {}. Revisa la bobina y su conector.	W cylindrze {} mogą wypadać zapłony. Sprawdź cewkę i jej złącze.
+El catalizador (banco 1) ya no limpia los gases como debería.	Katalizator (bank 1) nie oczyszcza już spalin tak, jak powinien.
+Se puede seguir manejando. Antes de cambiarlo, descarta fallas de encendido, fugas de escape y sensores de oxígeno.	Możesz jechać dalej. Przed wymianą wyklucz wypadanie zapłonów, nieszczelności wydechu i sondy lambda.
+Flujo incorrecto en el sistema de vapores de combustible (EVAP).	Nieprawidłowy przepływ w układzie oparów paliwa (EVAP).
+No afecta cómo maneja. Revisa la válvula de purga.	Nie wpływa na jazdę. Sprawdź zawór odpowietrzający.
+Pequeña fuga en el sistema de vapores de combustible (EVAP).	Mała nieszczelność w układzie oparów paliwa (EVAP).
+Revisa que la tapa del estanque cierre bien. No afecta cómo maneja.	Upewnij się, że korek wlewu paliwa dobrze się zamyka. Nie wpływa na jazdę.
+Fuga grande en el sistema de vapores de combustible (EVAP).	Duża nieszczelność w układzie oparów paliwa (EVAP).
+Revisa que la tapa del estanque esté puesta y bien cerrada.	Upewnij się, że korek wlewu paliwa jest założony i dobrze zamknięty.
+Fuga muy pequeña en el sistema de vapores de combustible (EVAP).	Bardzo mała nieszczelność w układzie oparów paliwa (EVAP).
+Revisa la tapa del estanque. No afecta cómo maneja.	Sprawdź korek wlewu paliwa. Nie wpływa na jazdę.
+Falla en el sensor de velocidad del vehículo.	Usterka czujnika prędkości pojazdu.
+La caja automática puede cambiar mal y el velocímetro fallar. Revisa el sensor y su conector.	Automatyczna skrzynia może źle zmieniać biegi, a prędkościomierz może nie działać. Sprawdź czujnik i jego złącze.
+Falla en el control de ralentí.	Usterka regulacji biegu jałowego.
+El motor puede quedar acelerado o apagarse en ralentí. Limpia el cuerpo de aceleración.	Silnik może mieć wysokie obroty jałowe lub gasnąć na biegu jałowym. Wyczyść przepustnicę.
+Ralentí más bajo de lo esperado.	Obroty jałowe niższe niż oczekiwano.
+Limpia el cuerpo de aceleración y revisa fugas de vacío.	Wyczyść przepustnicę i sprawdź nieszczelności podciśnienia.
+Ralentí más alto de lo esperado.	Obroty jałowe wyższe niż oczekiwano.
+Suele ser una fuga de vacío o el cuerpo de aceleración sucio.	Zwykle nieszczelność podciśnienia lub brudna przepustnica.
+Voltaje del sistema bajo.	Niskie napięcie instalacji.
+El alternador puede no estar cargando. Revisa la correa, los bornes de la batería y el alternador antes de un viaje largo.	Alternator może nie ładować. Przed długą trasą sprawdź pasek, klemy akumulatora i alternator.
+Voltaje del sistema alto.	Wysokie napięcie instalacji.
+El regulador del alternador puede estar fallando y dañar la batería. Revísalo pronto.	Regulator alternatora może zawodzić i uszkodzić akumulator. Wkrótce oddaj go do sprawdzenia.
+Falla de comunicación interna del computador del motor.	Wewnętrzny błąd komunikacji komputera silnika.
+Revisa masas (tierras) y conectores del computador.	Sprawdź masy i złącza komputera.
+Falla de memoria del computador del motor.	Błąd pamięci komputera silnika.
+Llévalo al taller.	Oddaj samochód do warsztatu.
+La caja automática registró una falla (pide leer el computador de la caja).	Automatyczna skrzynia zapisała usterkę (odczytaj komputer skrzyni).
+Hay otro código guardado en el computador de la caja. Si la caja queda en un solo cambio (modo de emergencia), maneja suave hasta el taller.	W komputerze skrzyni jest zapisany inny kod. Jeśli zostaje na jednym biegu (tryb awaryjny), dojedź spokojnie do warsztatu.
+Falla en el sensor de posición de la palanca de cambios.	Usterka czujnika położenia wybieraka biegów.
+Puede no arrancar en P o N o mostrar mal el cambio. Revisa el interruptor de rango.	Może nie odpalać w P lub N albo pokazywać zły bieg. Sprawdź przełącznik zakresów.
+Falla en el circuito del sensor de temperatura del aceite de la caja automática.	Usterka obwodu czujnika temperatury oleju automatycznej skrzyni.
+La caja puede cambiar brusco. Revisa el nivel y el color del aceite de la caja y el conector del sensor. Evita remolcar o subir pendientes largas exigiendo la caja.	Zmiany biegów mogą być szarpane. Sprawdź poziom i kolor oleju w skrzyni oraz złącze czujnika. Unikaj holowania i długich stromych podjazdów, które obciążają skrzynię.
+El sensor de temperatura del aceite de la caja automática marca fuera de lo esperado.	Czujnik temperatury oleju automatycznej skrzyni pokazuje wartości poza zakresem.
+La caja puede cambiar brusco o quedar en modo de emergencia. Revisa nivel y color del aceite de la caja (oscuro u olor a quemado es mala señal) y el conector del sensor. En subidas largas usa una marcha baja y descansa la caja.	Zmiany biegów mogą być szarpane lub skrzynia może przejść w tryb awaryjny. Sprawdź poziom i kolor oleju w skrzyni (ciemny kolor lub zapach spalenizny to zły znak) oraz złącze czujnika. Na długich podjazdach używaj niskiego biegu i daj skrzyni odpocząć.
+Señal baja del sensor de temperatura del aceite de la caja automática.	Niski sygnał czujnika temperatury oleju automatycznej skrzyni.
+Revisa el conector y el cableado del sensor. La caja puede cambiar brusco.	Sprawdź złącze i przewody czujnika. Zmiany biegów mogą być szarpane.
+Señal alta del sensor de temperatura del aceite de la caja automática.	Wysoki sygnał czujnika temperatury oleju automatycznej skrzyni.
+Falla en el sensor de velocidad de entrada de la caja.	Usterka czujnika prędkości wejściowej skrzyni.
+La caja puede cambiar brusco o quedar en modo de emergencia. Revisa el sensor y su conector.	Zmiany biegów mogą być szarpane lub skrzynia może przejść w tryb awaryjny. Sprawdź czujnik i jego złącze.
+Falla en el sensor de velocidad de salida de la caja.	Usterka czujnika prędkości wyjściowej skrzyni.
+La caja puede cambiar brusco y el velocímetro fallar. Revisa el sensor y su conector.	Zmiany biegów mogą być szarpane, a prędkościomierz może nie działać. Sprawdź czujnik i jego złącze.
+La relación de cambios no es la correcta (la caja patina).	Nieprawidłowe przełożenie (skrzynia się ślizga).
+Revisa el nivel del aceite de la caja de inmediato. Maneja suave: seguir exigiéndola puede dañarla.	Natychmiast sprawdź poziom oleju w skrzyni. Jedź spokojnie: dalsze forsowanie może ją uszkodzić.
+Relación incorrecta en 1ª: la caja patina en primera.	Nieprawidłowe przełożenie na 1. biegu: skrzynia ślizga się na jedynce.
+Revisa el nivel del aceite de la caja. Maneja suave hasta el taller.	Sprawdź poziom oleju w skrzyni. Dojedź spokojnie do warsztatu.
+Relación incorrecta en 2ª: la caja patina en segunda.	Nieprawidłowe przełożenie na 2. biegu: skrzynia ślizga się na dwójce.
+Relación incorrecta en 3ª: la caja patina en tercera.	Nieprawidłowe przełożenie na 3. biegu: skrzynia ślizga się na trójce.
+Relación incorrecta en 4ª: la caja patina en cuarta.	Nieprawidłowe przełożenie na 4. biegu: skrzynia ślizga się na czwórce.
+Falla en el circuito del embrague del convertidor de torque.	Usterka obwodu sprzęgła przemiennika momentu.
+Gastará más combustible y la caja se calentará más. Revisa el aceite de la caja.	Będzie zużywać więcej paliwa, a skrzynia będzie się bardziej grzać. Sprawdź olej w skrzyni.
+El embrague del convertidor de torque no acopla o patina.	Sprzęgło przemiennika momentu nie załącza się lub się ślizga.
+La caja se calienta más: evita subidas largas exigentes y revisa el aceite de la caja.	Skrzynia bardziej się grzeje: unikaj długich, wymagających podjazdów i sprawdź olej w skrzyni.
+Falla eléctrica en el embrague del convertidor de torque.	Usterka elektryczna sprzęgła przemiennika momentu.
+Revisa el conector de la caja. Gastará más combustible.	Sprawdź złącze skrzyni. Będzie zużywać więcej paliwa.
+Falla en el solenoide de cambio {}.	Usterka elektrozaworu zmiany biegów {}.
+La caja puede quedar en un solo cambio. Maneja suave hasta el taller.	Skrzynia może zostać na jednym biegu. Dojedź spokojnie do warsztatu.
+El sensor de oxígeno trasero ve mezcla pobre después del catalizador.	Tylna sonda lambda widzi ubogą mieszankę za katalizatorem.
+Revisa fugas de escape antes del sensor.	Sprawdź nieszczelności wydechu przed czujnikiem.
+El sensor de oxígeno trasero ve mezcla rica después del catalizador.	Tylna sonda lambda widzi bogatą mieszankę za katalizatorem.
+Revisa sensores de oxígeno y el catalizador.	Sprawdź sondy lambda i katalizator.
+Mezcla pobre en ralentí.	Uboga mieszanka na biegu jałowym.
+Suele ser una fuga de vacío. Revisa mangueras y la válvula PCV.	Zwykle nieszczelność podciśnienia. Sprawdź węże i zawór PCV.
+Mezcla rica en ralentí.	Bogata mieszanka na biegu jałowym.
+Revisa inyectores y la válvula de purga del EVAP.	Sprawdź wtryskiwacze i zawór odpowietrzający EVAP.
+Escaneando: {}	Skanowanie: {}
+Datos estándar (modo 01)…	Dane standardowe (tryb 01)…
+Información del vehículo (modo 09)…	Informacje o pojeździe (tryb 09)…
+Modo 01 · PID {}	Tryb 01 · PID {}
+Sin conexión	Niepołączono
+Interrumpido	Przerwano
+Dirección no válida: {}	Nieprawidłowy adres: {}
+Apps	Aplikacje
+Guía del escáner	Przewodnik po skanerze
+Guía	Przewodnik
+Qué comprar, cómo conectarlo y qué significa cada cosa · sin internet	Co kupić, jak podłączyć i co wszystko oznacza · działa offline
+Desbloquear	Odblokuj
+Se desbloquea con una donación. Todas las funciones de StradaOS siguen siendo gratis.	Odblokowuje się darowizną. Wszystkie funkcje StradaOS pozostają darmowe.
+Desbloqueado en esta pantalla. ¡Gracias por tu donación!	Odblokowano na tym ekranie. Dziękujemy za darowiznę!
+Prueba: volver a aplicar sin código	Test: ponownie stosuj bez kodu
+Prueba: desbloquear como en la versión normal	Test: odblokuj jak w zwykłej wersji
+1. Dona 4 USD en Ko-fi: escanea el código con tu celular o entra a {}.	1. Przekaż 4 USD na Ko-fi: zeskanuj kod telefonem lub wejdź na {}.
+2. En el mensaje de la donación escribe el ID de esta pantalla:	2. W wiadomości do darowizny wpisz ID tego ekranu:
+3. Te enviamos un código STRD-XXXX-XXXX, casi siempre el mismo día. Escríbelo en «Tengo un código».	3. Wyślemy ci kod STRD-XXXX-XXXX, zwykle tego samego dnia. Wpisz go w „Mam kod”.
+El tema queda en esta pantalla. Si cambias de radio o la restableces, escríbenos con el ID nuevo y te enviamos otro código sin costo.	Motyw zostaje na tym ekranie. Jeśli zmienisz radioodtwarzacz lub go zresetujesz, napisz do nas z nowym ID, a bezpłatnie wyślemy ci inny kod.
+Desbloquear {}	Odblokuj {}
+Tengo un código	Mam kod
+Archivo por USB	Plik przez USB
+ID de esta pantalla: {}. Necesitas internet solo esta vez.	ID tego ekranu: {}. Internet potrzebny jest tylko ten jeden raz.
+Escribe tu código	Wpisz swój kod
+El código tiene 8 letras o números después de STRD, por ejemplo STRD-7KQ2-M9XA.	Kod ma 8 liter lub cyfr po STRD, na przykład STRD-7KQ2-M9XA.
+Comprobando el código…	Sprawdzanie kodu…
+No hay internet. Conéctate un momento (por ejemplo, con el celular como módem) y vuelve a intentarlo, o pide el archivo de licencia y pásalo por USB.	Brak internetu. Połącz się na chwilę (na przykład przez hotspot w telefonie) i spróbuj ponownie albo poproś o plik licencji i skopiuj go przez USB.
+No encontramos ese código para esta pantalla. Revisa que esté bien escrito y que el ID que enviaste sea {}.	Nie znaleźliśmy tego kodu dla tego ekranu. Sprawdź, czy jest poprawnie wpisany i czy wysłane ID to {}.
+No se pudo desbloquear	Nie udało się odblokować
+Intentar de nuevo	Spróbuj ponownie
+Buscando la licencia en la pantalla y en las USB…	Szukam licencji na ekranie i na dyskach USB…
+No encontramos la licencia	Nie znaleziono licencji
+Copia el archivo que te enviamos (stradaos-licencia.txt) en la raíz de una USB, conéctala y vuelve a intentarlo. Tiene que ser para el ID {}.	Skopiuj wysłany plik (stradaos-licencia.txt) do głównego katalogu dysku USB, podłącz go i spróbuj ponownie. Plik musi być dla ID {}.
+¡Listo!	Gotowe!
+{} quedó desbloqueado en esta pantalla. Gracias por apoyar StradaOS.	{} odblokowano na tym ekranie. Dziękujemy za wspieranie StradaOS.
+Aplicar ahora	Zastosuj teraz

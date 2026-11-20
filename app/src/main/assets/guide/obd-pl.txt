@@ -1,0 +1,95 @@
+# StradaOS · Przewodnik po skanerze OBD-II · polski. Format: zob. ObdGuide.java.
+
+== comprar | Jaki skaner kupić | Te, które działają, i te, których unikać
+StradaOS współpracuje ze skanerami ELM327, najpopularniejszym i najtańszym rodzajem. Łączą się przez Bluetooth lub Wi-Fi.
+### Działają
+- „Klasyczny” Bluetooth (oznaczany też jako SPP, Bluetooth 2.0 lub 3.0) albo dwutrybowy. Polecane: Vgate iCar Pro (wersja Bluetooth 3.0), Veepeak Mini Bluetooth, OBDLink LX i OBDLink MX+.
+- Wi-Fi: też działają, ale dopóki ekran jest połączony z siecią skanera, nie ma internetu (mapa online, pogoda, AI).
+### Unikaj
+- Skanerów tylko BLE (Bluetooth Low Energy, „Bluetooth 4.0” lub „tylko dla iPhone”), np. OBDLink CX: Android nie widzi ich jako skanera i się nie połączą.
+- Bardzo tanich klonów z napisem „v2.1”: wiele odpowiada źle albo tylko częściowo. Jeśli już taki masz, wypróbuj go; czasem działa.
+Wskazówka: na pudełku lub w opisie szukaj „Android” oraz „Bluetooth 3.0” lub „SPP”. Jeśli jest tylko „iOS” lub „BLE”, nie zadziała.
+
+== conector | Gdzie go podłączyć i jak sparować | Gniazdo OBD i pierwsze połączenie
+### Gniazdo
+Ma 16 styków i kształt trapezu. Prawie zawsze jest pod deską rozdzielczą po stronie kierowcy, przy kolanach albo obok skrzynki z bezpiecznikami, czasem za małą klapką. Jeśli nie możesz go znaleźć, zajrzyj do instrukcji samochodu.
+### Parowanie
+- Podłącz skaner i włącz zapłon (lub uruchom silnik). Na skanerze powinna zapalić się lampka.
+- Bluetooth: w Połączeniu dotknij „Szukaj skanerów Bluetooth w pobliżu” i wybierz go. Jeśli pojawi się prośba o PIN, prawie zawsze jest to 1234 lub 0000.
+- Wi-Fi: połącz ekran z siecią Wi-Fi skanera i wpisz jego IP i port (prawie zawsze 192.168.0.10:35000).
+- Gotowe: przy połączeniu powinno być „Na żywo”.
+### Jeśli się nie łączy
+- Niektóre ekrany mają Bluetooth tylko dla telefonu (zestaw głośnomówiący) i Android go nie widzi. W takich użyj skanera Wi-Fi.
+- W Połączenie → „Dziennik połączenia” zobaczysz, co odpowiedział skaner.
+Wskazówka: jeśli samochód będzie stał kilka dni, odłącz skaner: niektóre zużywają akumulator nawet przy wyłączonym samochodzie.
+>> obd_conn | Przejdź do Połączenia
+
+== panel | Panel pojazdu | Co oznacza każdy wskaźnik i każdy kolor
+Panel wysuwa się od strony kierowcy: otwórz go zakładką przy krawędzi, przyciskiem na pasku albo z Ustawień. Działa nad każdym motywem.
+### Trzy wskaźniki
+- Płyn chłodzący: temperatura silnika. Przy rozgrzanym silniku normalnie jest od 80 do 100 °C.
+- Akumulator: przy pracującym silniku powinien pokazywać od 13,5 do 14,8 V (alternator ładuje). Przy wyłączonym silniku około 12,6 V.
+- Obroty: obroty silnika na minutę (RPM).
+### Kolory
+- Zielony: normalnie.
+- Bursztynowy: ostrzeżenie. Coś odbiega od normy; obserwuj to.
+- Czerwony: alert. Zareaguj szybko; jeśli chodzi o płyn chłodzący, zatrzymaj się w bezpiecznym miejscu.
+Pod nimi są trzy małe wartości (np. prędkość, obciążenie silnika lub paliwo): dotknij ich, aby zobaczyć wykres. Niżej pojawiają się aktywne alerty i kody usterek.
+>> panel | Otwórz panel pojazdu
+
+== alertas | Alerty i ich progi | Kiedy StradaOS ostrzega i jak to zmienić
+StradaOS obserwuje dane podczas jazdy i ostrzega na ekranie i głosowo, nawet gdy jesteś w Waze lub słuchasz muzyki.
+- Ostrzeżenie (bursztynowe): coś odbiega od normy, np. płyn chłodzący powyżej 100 °C.
+- Alert (czerwony): trzeba zareagować, np. płyn chłodzący powyżej 106 °C albo akumulator, który się nie ładuje. Jeśli to włączysz, panel otworzy się sam.
+- Ostrzega też, gdy płyn chłodzący bardzo szybko się nagrzewa i gdy pojawi się nowy kod usterki.
+### Zmiana progów
+W Alerty → „Kiedy alarmuje każda wartość” dotknij wartości, aby ją obserwować lub nie i zmienić jej progi ostrzeżenia i alertu. „Wartości fabryczne” przywraca je do stanu początkowego.
+Wartości fabryczne pasują do większości samochodów. Zmieniaj je tylko wtedy, gdy dobrze znasz swój (np. silnik, który normalnie pracuje w wyższej temperaturze).
+>> obd_alerts | Przejdź do Alertów
+
+== codigos | Kody usterek | Co oznaczają i kiedy je usuwać
+Gdy komputer silnika wykryje usterkę, zapisuje kod, np. P0301. Litera wskazuje układ: P silnik i skrzynia biegów, B nadwozie, C podwozie, U komunikacja.
+- Oczekujący: usterka pojawiła się raz; jeśli się powtórzy, zostanie potwierdzona.
+- Potwierdzony: usterka się powtórzyła i może zapalić kontrolkę silnika.
+Dotknij kodu, aby zobaczyć, co oznacza, jak jest poważny i co zrobić.
+### Kiedy je usuwać
+- Tylko po naprawie usterki albo żeby sprawdzić, czy wraca.
+- Najpierw zapisz kody: warsztat używa ich do diagnozy.
+- Przy wyłączonym silniku i włączonym zapłonie.
+- Usunięcie niczego nie naprawia: jeśli usterka nadal jest, kod wróci.
+- Po usunięciu monitory emisji przez kilka dni pozostają „niegotowe”. To normalne, ale nie jedź od razu na badanie spalin.
+>> obd_codes | Przejdź do Kodów usterek
+
+== datos | Dane na żywo i wykresy | Wszystko, co podaje twój samochód
+W Dane na żywo widzisz każdą wartość, którą podaje twój samochód: prędkość, obciążenie silnika, przepustnicę, temperaturę powietrza, paliwo, mieszankę i więcej. Każdy samochód podaje inne dane: jeśli któraś się nie pojawia, twój samochód jej nie udostępnia.
+- Dotknij wartości, aby otworzyć jej wykres.
+- Na wykresach widzisz do 3 wartości naraz, od 1 do 30 minut.
+- Wartości oznaczone jako „obliczone” StradaOS wylicza z innych danych (np. zużycie paliwa). Są przybliżone.
+Wskazówka: jeśli twój silnik nie ma czujnika MAF, wpisz jego pojemność w Zaawansowane, aby zużycie paliwa było dokładniejsze.
+>> obd_live | Przejdź do Danych na żywo
+
+== ia | Włączanie AI krok po kroku | Opcjonalnie: wyjaśnia kody dla twojego samochodu
+AI jest opcjonalna: bez niej StradaOS i tak wyjaśnia najczęstsze kody. Z nią wyjaśnienie dotyczy twojego konkretnego samochodu. Potrzebujesz własnego klucza (API key) i internetu na ekranie.
+### Groq (za darmo)
+- Wejdź na console.groq.com i zaloguj się przez Google lub e-mail. Karta nie jest potrzebna.
+- Przejdź do „API Keys” → „Create API Key”, nadaj nazwę i skopiuj klucz (zaczyna się od gsk_). Pokazuje się tylko raz.
+- W StradaOS: Sztuczna inteligencja → Dostawca: Groq → Klucz API: wklej go.
+Wskazówka: zrób to w przeglądarce na tym samym ekranie, żeby skopiować i wkleić klucz. Jeśli zrobisz to w telefonie, trzeba będzie go starannie przepisać.
+### Claude lub OpenAI (płatne)
+- Claude: platform.claude.com → Settings → API keys. Najpierw kup środki w Billing.
+- OpenAI: platform.openai.com → API keys. Również działa na środki przedpłacone.
+- W StradaOS wybierz dostawcę, wklej klucz i, jeśli trzeba, wybierz model.
+### Na koniec
+- Wypełnij „Twój pojazd (dla AI)”: marka, model, rok, silnik i skrzynia biegów. Dzięki temu odpowiedź będzie dokładniejsza.
+- Dotknij „Przetestuj AI”. Jeśli odpowie, gotowe.
+Wysyłany jest tylko kod, wpisany pojazd i dane silnika z tej chwili; nigdy twoja lokalizacja. Każde zapytanie rozlicza twój dostawca (w Groq za darmo w ramach limitu).
+>> obd_ai | Przejdź do Sztucznej inteligencji
+
+== limites | Czego nie da się odczytać i symulowany samochód | Ograniczenia OBD-II i test bez skanera
+### Czego OBD-II nie podaje
+- Ciśnienia w oponach: prawie żaden samochód nie podaje go przez standardowe OBD-II. Do tego potrzebujesz osobnych czujników ciśnienia (TPMS).
+- Przebiegu z licznika, poziomu oleju i modułów takich jak ABS, poduszki powietrzne czy automatyczna skrzynia biegów prawie nigdy nie ma w standardzie.
+- Bardzo stare samochody i niektóre starsze diesle mogą nie mieć OBD-II.
+### Symulowany samochód
+Nie masz jeszcze skanera? Wybierz „Symulowany samochód” w Połączeniu, aby zobaczyć, jak wszystko działa: wskaźniki, alerty głosowe, przykładowy kod i wykresy. Po kilku minutach zobaczysz testowe przegrzanie i alert akumulatora. Nie łączy się z twoim prawdziwym samochodem.
+>> demo | Wypróbuj z symulowanym samochodem
