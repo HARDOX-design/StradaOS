@@ -1127,7 +1127,7 @@ Quitar el tema premium	Usuń motyw premium
 Aplicar	Zastosuj
 Versión de prueba: se puede aplicar sin código.	Wersja testowa: można zastosować bez kodu.
 Disponible pronto con una donación. Todas las funciones siguen siendo gratis.	Wkrótce za darowiznę. Wszystkie funkcje pozostają darmowe.
-Cobalto	Cobalto
+Cobalto	Kobalt
 Azul noche en tres columnas: el mapa se difumina hasta el reproductor de carátula redonda, y tu vehículo muestra el velocímetro arriba, su foto en el medio y el mantenimiento abajo. La temperatura va sobre el mapa.	Nocny granat w trzech kolumnach: mapa przechodzi płynnie w odtwarzacz z okrągłą okładką, a twój pojazd pokazuje prędkościomierz u góry, zdjęcie pośrodku i konserwację na dole. Temperatura jest nad mapą.
 Gratis	Darmowy
 Gratis para todos. Los próximos temas premium se desbloquearán con una donación.	Darmowy dla wszystkich. Kolejne motywy premium będzie można odblokować darowizną.
