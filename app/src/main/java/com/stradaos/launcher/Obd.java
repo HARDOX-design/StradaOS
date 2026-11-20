@@ -322,7 +322,7 @@ public class Obd {
         String before = statusMsg;
         try {
             report = Scan.run(elm, new Scan.Progress() { public void on(String step) {
-                statusMsg = I18n.t("Escaneando") + ": " + step;
+                statusMsg = "Escaneando: " + step;          // se traduce al mostrarlo (patrón «Escaneando: {}»)
                 changed();
             }});
             reportPath = saveReport(report);

@@ -127,7 +127,8 @@ public class I18n {
 
     /** ¿Hay traducción exacta de este texto en el idioma de ahora? (en español, siempre) */
     static synchronized boolean has(String s) {
-        return "es".equals(lang) || s != null && map.containsKey(s);
+        if ("es".equals(lang) || s != null && map.containsKey(s)) return true;
+        return s != null && !tr(s, 0).equals(s);              // con patrón («… del cilindro {}.»)
     }
 
     /** Texto de varias líneas (diagnósticos): se traduce cada línea por separado. */

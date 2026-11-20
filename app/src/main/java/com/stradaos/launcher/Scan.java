@@ -176,7 +176,7 @@ public class Scan {
     }
 
     private static void probe(Elm elm, Progress p, StringBuilder r, String[] h, String cmd) throws java.io.IOException {
-        p.on(h[0] + " (" + h[1] + ") · " + cmd);
+        p.on(h[0] + " · " + cmd);
         String resp = elm.cmd(cmd, 2000);
         String c = clean(resp);
         if (c.length() == 0 || c.contains("NODATA") || c.contains("ERROR") || c.contains("?") || c.startsWith("7F")) return;   // 7F = no lo soporta

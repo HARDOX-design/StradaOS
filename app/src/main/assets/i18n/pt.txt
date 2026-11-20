@@ -1484,3 +1484,224 @@ Se revisan al conectar	Verificados ao conectar
 Ver todo	Ver tudo
 1 activa	1 ativo
 {} activas	{} ativos
+
+# 2.26: textos del escáner que faltaban
+Conectando con el escáner…	Conectando ao scanner…
+Conectado	Conectado
+Esperando al auto (¿contacto apagado?)	Aguardando o carro (ignição desligada?)
+Códigos borrados.	Códigos apagados.
+El auto no aceptó borrar los códigos.	O carro não aceitou apagar os códigos.
+El escáner no logra hablar con el auto. ¿Está el contacto puesto?	O scanner não consegue falar com o carro. A ignição está ligada?
+El escáner no responde	O scanner não responde
+El escáner cerró la conexión	O scanner fechou a conexão
+No se pudo conectar	Não foi possível conectar
+Motor sobrecalentado: {}	Motor superaquecido: {}
+Refrigerante alto: {}	Motor esquentando: {}
+El refrigerante sube rápido: {} °C	A temperatura sobe rápido: {} °C
+Voltaje alto: {}	Tensão alta: {}
+Voltaje bajo: {}	Tensão baixa: {}
+RPM muy altas: {}	RPM muito altas: {}
+Motor muy exigido: {}	Motor muito exigido: {}
+Aire de admisión muy caliente: {}	Ar de admissão muito quente: {}
+Poco combustible: {}	Pouco combustível: {}
+Aceite del motor muy caliente: {}	Óleo do motor muito quente: {}
+Código de falla {}	Código de falha {}
+Código pendiente {}	Código pendente {}
+Detente en un lugar seguro y apaga el motor. No abras la tapa del radiador en caliente. Espera que enfríe y revisa el nivel de refrigerante, el electroventilador y la correa.	Pare em um lugar seguro e desligue o motor. Não abra a tampa do radiador quente. Espere esfriar e verifique o nível do líquido de arrefecimento, a ventoinha e a correia.
+Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y, si sigue subiendo, pon la calefacción al máximo y busca dónde parar.	Reduza a exigência: use uma marcha mais baixa, desligue o ar-condicionado e, se continuar subindo, ligue o aquecimento no máximo e procure onde parar.
+El alternador está cargando de más y puede dañar la batería. Revísalo pronto.	O alternador está carregando demais e pode danificar a bateria. Verifique logo.
+El alternador no está cargando bien: apaga lo que no necesites (aire, luces extra) y ve a un taller antes de que se descargue la batería. Revisa la correa.	O alternador não está carregando bem: desligue o que não precisar (ar, luzes extras) e vá a uma oficina antes que a bateria descarregue. Verifique a correia.
+El motor recibe menos combustible del que necesita: puede ser una fuga de vacío, el filtro de combustible o el sensor MAF. Puede perder fuerza en subidas.	O motor recebe menos combustível do que precisa: pode ser um vazamento de vácuo, o filtro de combustível ou o sensor MAF. Pode perder força nas subidas.
+El motor recibe más combustible del necesario: revisa el filtro de aire, el sensor MAF o un inyector que gotee.	O motor recebe mais combustível do que o necessário: verifique o filtro de ar, o sensor MAF ou um bico injetor pingando.
+código	código
+códigos	códigos
+Carrocería (airbag, cinturones, luces, cierre…)	Carroceria (airbag, cintos, luzes, travas…)
+Chasis (frenos ABS, dirección, suspensión, 4x4)	Chassi (freios ABS, direção, suspensão, 4x4)
+Comunicación entre computadores del auto	Comunicação entre os computadores do carro
+Motor: mezcla de aire y combustible	Motor: mistura de ar e combustível
+Motor: encendido y fallas de encendido	Motor: ignição e falhas de ignição
+Control de emisiones	Controle de emissões
+Velocidad, ralentí y entradas auxiliares	Velocidade, marcha lenta e entradas auxiliares
+Computador del motor y sus salidas	Computador do motor e suas saídas
+Caja de cambios	Câmbio
+Motor o caja (sistema híbrido u otro)	Motor ou câmbio (sistema híbrido ou outro)
+Conectar	Conectar
+Pendiente	Pendente
+Grave	Grave
+Leve	Leve
+Revisar	Verificar
+Volver a preguntar a la IA	Perguntar de novo à IA
+Explicar con IA	Explicar com IA
+Preguntando a la IA…	Perguntando à IA…
+Apaga el motor y deja solo el contacto puesto para borrar los códigos.	Desligue o motor e deixe só a ignição ligada para apagar os códigos.
+¿Borrar los códigos de falla?	Apagar os códigos de falha?
+Sí	Sim
+No hay escáneres Bluetooth emparejados: emparéjalo en los ajustes del equipo	Não há scanners Bluetooth pareados: pareie-o nas configurações do aparelho
+Elige tu escáner	Escolha seu scanner
+Otra compatible con OpenAI	Outra compatível com OpenAI
+Buscando los modelos del proveedor…	Buscando os modelos do provedor…
+Preguntando por el código de ejemplo P0711…	Perguntando pelo código de exemplo P0711…
+La IA funciona · P0711 de ejemplo	A IA funciona · P0711 de exemplo
+Conecta el escáner con el contacto puesto (mejor con el motor en marcha) y vuelve a intentarlo.	Conecte o scanner com a ignição ligada (melhor com o motor funcionando) e tente de novo.
+Pregunta al auto por cada dato estándar y por los datos propios de la marca del motor y la caja. Tarda hasta 2 minutos y mientras tanto las alertas se pausan: hazlo detenido. Solo lee, no cambia nada en el auto.	Pergunta ao carro por cada dado padrão e pelos dados próprios da marca do motor e do câmbio. Leva até 2 minutos e enquanto isso os alertas ficam pausados: faça com o carro parado. Só lê, não muda nada no carro.
+Escanear	Escanear
+Panel	Painel
+Todos los datos	Todos os dados
+Catalizador	Catalisador
+No se encontraron equipos. ¿Está el escáner enchufado y el contacto puesto?	Nenhum aparelho encontrado. O scanner está conectado e a ignição ligada?
+Buscando… (enchufa el escáner y pon el contacto)	Buscando… (conecte o scanner e ligue a ignição)
+Los escáneres suelen llamarse OBDII, OBD2, V-LINK o Vgate.	Os scanners costumam se chamar OBDII, OBD2, V-LINK ou Vgate.
+Esperando datos…	Aguardando dados…
+
+# 2.26: alertas de mezcla y explicación de los códigos de falla más comunes (assets/obd/dtc_es.tsv)
+Mezcla pobre ({}): {}	Mistura pobre ({}): {}
+Mezcla rica ({}): {}	Mistura rica ({}): {}
+Árbol de levas de admisión adelantado más de lo esperado (variador CVVT).	Comando de admissão mais adiantado que o esperado (variador CVVT).
+Revisa nivel y estado del aceite: el variador funciona con presión de aceite. Si el aceite está bien, revisar la válvula solenoide OCV.	Verifique o nível e o estado do óleo: o variador funciona com a pressão do óleo. Se o óleo estiver bom, verifique a válvula solenoide OCV.
+Árbol de levas de admisión atrasado más de lo esperado (variador CVVT).	Comando de admissão mais atrasado que o esperado (variador CVVT).
+Revisa nivel y estado del aceite. Si sigue, revisar la válvula OCV y la cadena de distribución.	Verifique o nível e o estado do óleo. Se continuar, verifique a válvula OCV e a corrente de distribuição.
+Árbol de levas de escape adelantado más de lo esperado.	Comando de escape mais adiantado que o esperado.
+Revisa nivel y estado del aceite. Si sigue, revisar la válvula OCV de escape.	Verifique o nível e o estado do óleo. Se continuar, verifique a válvula OCV do escape.
+La posición del cigüeñal y del árbol de levas no coinciden.	As posições do virabrequim e do comando de válvulas não coincidem.
+Puede ser la cadena de distribución estirada o saltada. Evita exigir el motor y llévalo al taller pronto.	Pode ser a corrente de distribuição esticada ou que pulou um dente. Evite exigir do motor e leve-o à oficina logo.
+El sensor de flujo de aire (MAF) marca fuera de lo esperado.	O sensor de fluxo de ar (MAF) marca fora do esperado.
+Revisa el filtro de aire y que no haya mangueras sueltas después del sensor. Limpiar el MAF con limpiador especial.	Verifique o filtro de ar e se não há mangueiras soltas depois do sensor. Limpe o MAF com limpador específico.
+Señal baja del sensor de flujo de aire (MAF).	Sinal baixo do sensor de fluxo de ar (MAF).
+Revisa el conector y el cableado del MAF.	Verifique o conector e a fiação do MAF.
+Señal alta del sensor de flujo de aire (MAF).	Sinal alto do sensor de fluxo de ar (MAF).
+El sensor de presión del múltiple (MAP) marca fuera de lo esperado.	O sensor de pressão do coletor (MAP) marca fora do esperado.
+Revisa mangueras de vacío y el conector del sensor MAP.	Verifique as mangueiras de vácuo e o conector do sensor MAP.
+El sensor de temperatura del aire de admisión marca fuera de lo esperado.	O sensor de temperatura do ar de admissão marca fora do esperado.
+Revisa el conector del sensor. No suele dejarte botado.	Verifique o conector do sensor. Raramente deixa você na mão.
+Señal baja del sensor de temperatura del aire de admisión.	Sinal baixo do sensor de temperatura do ar de admissão.
+Revisa el conector y el cableado del sensor.	Verifique o conector e a fiação do sensor.
+Señal alta del sensor de temperatura del aire de admisión.	Sinal alto do sensor de temperatura do ar de admissão.
+El sensor de temperatura del refrigerante marca fuera de lo esperado.	O sensor de temperatura do líquido de arrefecimento marca fora do esperado.
+No confíes en el indicador de temperatura hasta revisarlo. Vigila que el electroventilador encienda.	Não confie no indicador de temperatura até verificá-lo. Observe se a ventoinha liga.
+Señal baja del sensor de temperatura del refrigerante.	Sinal baixo do sensor de temperatura do líquido de arrefecimento.
+Sin este dato el motor puede sobrecalentarse sin avisar. Revisa nivel de refrigerante y el conector del sensor.	Sem esse dado o motor pode superaquecer sem avisar. Verifique o nível do líquido de arrefecimento e o conector do sensor.
+Señal alta del sensor de temperatura del refrigerante.	Sinal alto do sensor de temperatura do líquido de arrefecimento.
+El sensor de posición del acelerador marca fuera de lo esperado.	O sensor de posição do acelerador marca fora do esperado.
+El motor puede entrar en modo de emergencia (poca potencia). Revisa el cuerpo de aceleración y su conector.	O motor pode entrar em modo de emergência (pouca potência). Verifique o corpo de borboleta e seu conector.
+Señal baja del sensor de posición del acelerador.	Sinal baixo do sensor de posição do acelerador.
+Puede entrar en modo de emergencia. Revisa el conector del cuerpo de aceleración.	Pode entrar em modo de emergência. Verifique o conector do corpo de borboleta.
+Señal alta del sensor de posición del acelerador.	Sinal alto do sensor de posição do acelerador.
+El motor tarda mucho en llegar a temperatura para el control de mezcla.	O motor demora muito para chegar à temperatura de controle da mistura.
+Suele ser el termostato abierto o el sensor de temperatura. Revisa en el taller.	Costuma ser a válvula termostática aberta ou o sensor de temperatura. Verifique na oficina.
+El refrigerante no llega a la temperatura del termostato.	O líquido de arrefecimento não chega à temperatura da válvula termostática.
+Casi siempre es el termostato pegado abierto. Gasta más combustible y calienta poco la cabina; cámbialo cuando puedas.	Quase sempre é a válvula termostática travada aberta. Gasta mais combustível e aquece pouco a cabine; troque-a quando puder.
+Falla en el circuito del sensor de oxígeno delantero (banco 1).	Falha no circuito do sensor de oxigênio dianteiro (banco 1).
+Revisa el conector del sensor. Gastarás algo más de combustible.	Verifique o conector do sensor. O consumo de combustível vai aumentar um pouco.
+El sensor de oxígeno delantero responde lento.	O sensor de oxigênio dianteiro responde devagar.
+El sensor está viejo. Cámbialo cuando puedas.	O sensor está velho. Troque-o quando puder.
+Falla en el calentador del sensor de oxígeno delantero.	Falha no aquecedor do sensor de oxigênio dianteiro.
+Revisa el fusible y el conector del sensor. Se puede seguir.	Verifique o fusível e o conector do sensor. Dá para seguir.
+Falla en el calentador del sensor de oxígeno trasero.	Falha no aquecedor do sensor de oxigênio traseiro.
+Mezcla pobre: entra más aire o llega menos combustible de lo que debería.	Mistura pobre: entra mais ar ou chega menos combustível do que deveria.
+Busca fugas de vacío (mangueras, junta de admisión), revisa el MAF, la presión de combustible y el filtro. En subidas largas puede perder fuerza.	Procure vazamentos de vácuo (mangueiras, junta do coletor), verifique o MAF, a pressão de combustível e o filtro. Em subidas longas pode perder força.
+Mezcla rica: llega más combustible del que debería.	Mistura rica: chega mais combustível do que deveria.
+Revisa el filtro de aire, el MAF, inyectores que goteen y el regulador de presión.	Verifique o filtro de ar, o MAF, bicos injetores pingando e o regulador de pressão.
+Temperatura del motor excesiva.	Temperatura do motor excessiva.
+Detente en un lugar seguro y apaga el motor. No abras la tapa del radiador en caliente. Revisa refrigerante, ventilador y correa.	Pare em um lugar seguro e desligue o motor. Não abra a tampa do radiador quente. Verifique o líquido de arrefecimento, a ventoinha e a correia.
+Falla en el circuito del relé de la bomba de combustible.	Falha no circuito do relé da bomba de combustível.
+El motor puede apagarse sin aviso. Revisa relé y fusible de la bomba.	O motor pode desligar sem aviso. Verifique o relé e o fusível da bomba.
+Falla en el inyector del cilindro {}.	Falha no bico injetor do cilindro {}.
+Puede fallar el cilindro {}. Revisa el conector del inyector.	O cilindro {} pode falhar. Verifique o conector do bico injetor.
+Fallas de encendido en varios cilindros.	Falhas de ignição em vários cilindros.
+Si la luz del motor parpadea, baja la velocidad y no exijas el motor: el catalizador se puede dañar. Revisa bujías, bobinas, combustible y fugas de vacío.	Se a luz do motor piscar, reduza a velocidade e não exija do motor: o catalisador pode ser danificado. Verifique velas, bobinas, combustível e vazamentos de vácuo.
+Falla de encendido en el cilindro {}.	Falha de ignição no cilindro {}.
+Si la luz parpadea, no exijas el motor. Intercambia la bobina del cilindro {} con otra para ver si la falla se mueve; revisa la bujía.	Se a luz piscar, não exija do motor. Troque a bobina do cilindro {} com outra para ver se a falha muda de lugar; verifique a vela.
+Falla en el circuito del sensor de detonación.	Falha no circuito do sensor de detonação.
+El motor se protege atrasando el encendido: tendrá menos fuerza. Usa el combustible recomendado y revisa el conector del sensor.	O motor se protege atrasando a ignição: terá menos força. Use o combustível recomendado e verifique o conector do sensor.
+Falla en el sensor de posición del cigüeñal.	Falha no sensor de posição do virabrequim.
+El motor puede apagarse o no volver a arrancar. Evita lugares aislados y revisa el sensor y su conector.	O motor pode desligar ou não voltar a pegar. Evite lugares isolados e verifique o sensor e seu conector.
+El sensor de posición del cigüeñal marca fuera de lo esperado.	O sensor de posição do virabrequim marca fora do esperado.
+El motor puede apagarse o no volver a arrancar. Revisa el sensor y su conector.	O motor pode desligar ou não voltar a pegar. Verifique o sensor e seu conector.
+Falla en el sensor de posición del árbol de levas.	Falha no sensor de posição do comando de válvulas.
+Puede costar arrancar o apagarse. Revisa el sensor y su conector.	Pode custar a pegar ou desligar. Verifique o sensor e seu conector.
+El sensor del árbol de levas marca fuera de lo esperado.	O sensor do comando de válvulas marca fora do esperado.
+Revisa el sensor, su conector y la distribución.	Verifique o sensor, seu conector e a distribuição.
+Falla en el circuito de la bobina del cilindro {}.	Falha no circuito da bobina do cilindro {}.
+Puede fallar el cilindro {}. Revisa la bobina y su conector.	O cilindro {} pode falhar. Verifique a bobina e seu conector.
+El catalizador (banco 1) ya no limpia los gases como debería.	O catalisador (banco 1) já não limpa os gases como deveria.
+Se puede seguir manejando. Antes de cambiarlo, descarta fallas de encendido, fugas de escape y sensores de oxígeno.	Dá para continuar dirigindo. Antes de trocá-lo, descarte falhas de ignição, vazamentos no escape e sensores de oxigênio.
+Flujo incorrecto en el sistema de vapores de combustible (EVAP).	Fluxo incorreto no sistema de vapores de combustível (EVAP).
+No afecta cómo maneja. Revisa la válvula de purga.	Não afeta a dirigibilidade. Verifique a válvula de purga.
+Pequeña fuga en el sistema de vapores de combustible (EVAP).	Pequeno vazamento no sistema de vapores de combustível (EVAP).
+Revisa que la tapa del estanque cierre bien. No afecta cómo maneja.	Verifique se a tampa do tanque fecha bem. Não afeta a dirigibilidade.
+Fuga grande en el sistema de vapores de combustible (EVAP).	Vazamento grande no sistema de vapores de combustível (EVAP).
+Revisa que la tapa del estanque esté puesta y bien cerrada.	Verifique se a tampa do tanque está colocada e bem fechada.
+Fuga muy pequeña en el sistema de vapores de combustible (EVAP).	Vazamento muito pequeno no sistema de vapores de combustível (EVAP).
+Revisa la tapa del estanque. No afecta cómo maneja.	Verifique a tampa do tanque. Não afeta a dirigibilidade.
+Falla en el sensor de velocidad del vehículo.	Falha no sensor de velocidade do veículo.
+La caja automática puede cambiar mal y el velocímetro fallar. Revisa el sensor y su conector.	O câmbio automático pode trocar mal e o velocímetro falhar. Verifique o sensor e seu conector.
+Falla en el control de ralentí.	Falha no controle de marcha lenta.
+El motor puede quedar acelerado o apagarse en ralentí. Limpia el cuerpo de aceleración.	O motor pode ficar acelerado ou desligar em marcha lenta. Limpe o corpo de borboleta.
+Ralentí más bajo de lo esperado.	Marcha lenta mais baixa que o esperado.
+Limpia el cuerpo de aceleración y revisa fugas de vacío.	Limpe o corpo de borboleta e procure vazamentos de vácuo.
+Ralentí más alto de lo esperado.	Marcha lenta mais alta que o esperado.
+Suele ser una fuga de vacío o el cuerpo de aceleración sucio.	Costuma ser um vazamento de vácuo ou o corpo de borboleta sujo.
+Voltaje del sistema bajo.	Tensão do sistema baixa.
+El alternador puede no estar cargando. Revisa la correa, los bornes de la batería y el alternador antes de un viaje largo.	O alternador pode não estar carregando. Verifique a correia, os bornes da bateria e o alternador antes de uma viagem longa.
+Voltaje del sistema alto.	Tensão do sistema alta.
+El regulador del alternador puede estar fallando y dañar la batería. Revísalo pronto.	O regulador do alternador pode estar falhando e danificar a bateria. Verifique logo.
+Falla de comunicación interna del computador del motor.	Falha de comunicação interna do computador do motor.
+Revisa masas (tierras) y conectores del computador.	Verifique os aterramentos e os conectores do computador.
+Falla de memoria del computador del motor.	Falha de memória do computador do motor.
+Llévalo al taller.	Leve-o à oficina.
+La caja automática registró una falla (pide leer el computador de la caja).	O câmbio automático registrou uma falha (leia o computador do câmbio).
+Hay otro código guardado en el computador de la caja. Si la caja queda en un solo cambio (modo de emergencia), maneja suave hasta el taller.	Há outro código guardado no computador do câmbio. Se o câmbio ficar em uma só marcha (modo de emergência), dirija com suavidade até a oficina.
+Falla en el sensor de posición de la palanca de cambios.	Falha no sensor de posição da alavanca de câmbio.
+Puede no arrancar en P o N o mostrar mal el cambio. Revisa el interruptor de rango.	Pode não dar partida em P ou N ou mostrar a marcha errada. Verifique o interruptor de posição.
+Falla en el circuito del sensor de temperatura del aceite de la caja automática.	Falha no circuito do sensor de temperatura do óleo do câmbio automático.
+La caja puede cambiar brusco. Revisa el nivel y el color del aceite de la caja y el conector del sensor. Evita remolcar o subir pendientes largas exigiendo la caja.	O câmbio pode trocar com trancos. Verifique o nível e a cor do óleo do câmbio e o conector do sensor. Evite rebocar ou subir ladeiras longas exigindo do câmbio.
+El sensor de temperatura del aceite de la caja automática marca fuera de lo esperado.	O sensor de temperatura do óleo do câmbio automático marca fora do esperado.
+La caja puede cambiar brusco o quedar en modo de emergencia. Revisa nivel y color del aceite de la caja (oscuro u olor a quemado es mala señal) y el conector del sensor. En subidas largas usa una marcha baja y descansa la caja.	O câmbio pode trocar com trancos ou entrar em modo de emergência. Verifique o nível e a cor do óleo do câmbio (escuro ou com cheiro de queimado é mau sinal) e o conector do sensor. Em subidas longas use uma marcha baixa e deixe o câmbio descansar.
+Señal baja del sensor de temperatura del aceite de la caja automática.	Sinal baixo do sensor de temperatura do óleo do câmbio automático.
+Revisa el conector y el cableado del sensor. La caja puede cambiar brusco.	Verifique o conector e a fiação do sensor. O câmbio pode trocar com trancos.
+Señal alta del sensor de temperatura del aceite de la caja automática.	Sinal alto do sensor de temperatura do óleo do câmbio automático.
+Falla en el sensor de velocidad de entrada de la caja.	Falha no sensor de velocidade de entrada do câmbio.
+La caja puede cambiar brusco o quedar en modo de emergencia. Revisa el sensor y su conector.	O câmbio pode trocar com trancos ou entrar em modo de emergência. Verifique o sensor e seu conector.
+Falla en el sensor de velocidad de salida de la caja.	Falha no sensor de velocidade de saída do câmbio.
+La caja puede cambiar brusco y el velocímetro fallar. Revisa el sensor y su conector.	O câmbio pode trocar com trancos e o velocímetro falhar. Verifique o sensor e seu conector.
+La relación de cambios no es la correcta (la caja patina).	A relação de marchas não é a correta (o câmbio está patinando).
+Revisa el nivel del aceite de la caja de inmediato. Maneja suave: seguir exigiéndola puede dañarla.	Verifique o nível do óleo do câmbio imediatamente. Dirija com suavidade: continuar exigindo pode danificá-lo.
+Relación incorrecta en 1ª: la caja patina en primera.	Relação incorreta em 1ª: o câmbio patina em primeira.
+Revisa el nivel del aceite de la caja. Maneja suave hasta el taller.	Verifique o nível do óleo do câmbio. Dirija com suavidade até a oficina.
+Relación incorrecta en 2ª: la caja patina en segunda.	Relação incorreta em 2ª: o câmbio patina em segunda.
+Relación incorrecta en 3ª: la caja patina en tercera.	Relação incorreta em 3ª: o câmbio patina em terceira.
+Relación incorrecta en 4ª: la caja patina en cuarta.	Relação incorreta em 4ª: o câmbio patina em quarta.
+Falla en el circuito del embrague del convertidor de torque.	Falha no circuito da embreagem do conversor de torque.
+Gastará más combustible y la caja se calentará más. Revisa el aceite de la caja.	Vai gastar mais combustível e o câmbio vai esquentar mais. Verifique o óleo do câmbio.
+El embrague del convertidor de torque no acopla o patina.	A embreagem do conversor de torque não acopla ou patina.
+La caja se calienta más: evita subidas largas exigentes y revisa el aceite de la caja.	O câmbio esquenta mais: evite subidas longas exigentes e verifique o óleo do câmbio.
+Falla eléctrica en el embrague del convertidor de torque.	Falha elétrica na embreagem do conversor de torque.
+Revisa el conector de la caja. Gastará más combustible.	Verifique o conector do câmbio. Vai gastar mais combustível.
+Falla en el solenoide de cambio {}.	Falha no solenoide de troca {}.
+La caja puede quedar en un solo cambio. Maneja suave hasta el taller.	O câmbio pode ficar em uma só marcha. Dirija com suavidade até a oficina.
+El sensor de oxígeno trasero ve mezcla pobre después del catalizador.	O sensor de oxigênio traseiro vê mistura pobre depois do catalisador.
+Revisa fugas de escape antes del sensor.	Procure vazamentos no escape antes do sensor.
+El sensor de oxígeno trasero ve mezcla rica después del catalizador.	O sensor de oxigênio traseiro vê mistura rica depois do catalisador.
+Revisa sensores de oxígeno y el catalizador.	Verifique os sensores de oxigênio e o catalisador.
+Mezcla pobre en ralentí.	Mistura pobre em marcha lenta.
+Suele ser una fuga de vacío. Revisa mangueras y la válvula PCV.	Costuma ser um vazamento de vácuo. Verifique as mangueiras e a válvula PCV.
+Mezcla rica en ralentí.	Mistura rica em marcha lenta.
+Revisa inyectores y la válvula de purga del EVAP.	Verifique os bicos injetores e a válvula de purga do EVAP.
+
+# 2.26: monitores de emisiones y avance del escaneo
+Fallas de encendido	Falhas de ignição
+Sistema de combustible	Sistema de combustível
+Componentes	Componentes
+Catalizador calefaccionado	Catalisador aquecido
+Vapores de combustible (EVAP)	Vapores de combustível (EVAP)
+Aire secundario	Ar secundário
+Sensores de oxígeno	Sensores de oxigênio
+Calefactor de sensores de oxígeno	Aquecedor dos sensores de oxigênio
+Recirculación de gases (EGR)	Recirculação de gases (EGR)
+Escaneando: {}	Escaneando: {}
+Datos estándar (modo 01)…	Dados padrão (modo 01)…
+Información del vehículo (modo 09)…	Informações do veículo (modo 09)…
+Modo 01 · PID {}	Modo 01 · PID {}
+Sin conexión	Sem conexão
+Interrumpido	Interrompido
+Dirección no válida: {}	Endereço inválido: {}
