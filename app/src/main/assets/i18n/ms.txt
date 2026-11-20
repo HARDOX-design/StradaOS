@@ -1218,3 +1218,299 @@ Temperatura exterior	Suhu luar
 Del sensor del carro; necesita la caja CAN	Daripada sensor kereta; perlu kotak CAN
 pantalla FYT detectada: elígela en Tu vehículo → Equipo	skrin FYT dikesan: pilihnya dalam Kenderaan anda → Unit utama
 esta pantalla no informa las luces	skrin ini tidak melaporkan lampu
+# 2.26: escáner OBD-II (panel del vehículo y ajustes)
+Escáner OBD-II	Pengimbas OBD-II
+Enciende el monitor del motor en «Escáner OBD-II»	Hidupkan monitor enjin dalam «Pengimbas OBD-II»
+Conectando…	Menyambung…
+Monitor del motor	Monitor enjin
+Está apagado: enciéndelo para conectar el escáner	Ia dimatikan: hidupkan untuk menyambung pengimbas
+Estado	Status
+Abrir el panel del vehículo	Buka panel kenderaan
+Medidores, alertas y códigos encima del tema que tengas	Meter, amaran dan kod di atas tema anda
+Diagnóstico	Diagnostik
+Qué vigila StradaOS y cuándo avisa por voz	Apa yang StradaOS pantau dan bila ia beri amaran suara
+Todo normal	Semua normal
+Qué significan y qué hacer; borrarlos con el motor apagado	Maksudnya dan apa perlu dibuat; padam dengan enjin dimatikan
+Cada dato que entrega tu auto, con gráficos	Setiap data yang diberi kereta anda, dengan graf
+Más	Lagi
+Opcional: explica los códigos para tu auto en particular	Pilihan: terangkan kod untuk kereta anda
+Motor, protocolo, panel y escaneo completo	Enjin, protokol, panel dan imbasan penuh
+Bluetooth emparejado, Wi-Fi (IP y puerto) o un auto simulado para probar	Bluetooth berpasangan, Wi-Fi (IP dan port) atau kereta simulasi untuk mencuba
+Empareja el escáner sin salir de StradaOS (clave 1234 o 0000)	Pasangkan pengimbas tanpa keluar dari StradaOS (PIN 1234 atau 0000)
+Reconectar	Sambung semula
+Conectar al iniciar StradaOS	Sambung apabila StradaOS bermula
+Las alertas funcionan aunque estés en otra app (con una notificación fija)	Amaran berfungsi walaupun dalam aplikasi lain (dengan pemberitahuan tetap)
+Cómo conectar el escáner	Cara menyambung pengimbas
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Bluetooth: emparéjalo con la clave 1234 o 0000. Wi-Fi: conecta la pantalla a la red del escáner y escribe su IP y puerto (casi siempre 192.168.0.10:35000).\n3. Elígelo arriba en «Escáner».	1. Pasang pengimbas ELM327 pada soket OBD (di bawah stereng) dan hidupkan suis.\n2. Bluetooth: pasangkan dengan PIN 1234 atau 0000. Wi-Fi: sambungkan unit utama ke rangkaian pengimbas dan tulis IP dan port (hampir selalu 192.168.0.10:35000).\n3. Pilih di atas dalam «Pengimbas».
+Lo que respondió el escáner (para reportar un problema)	Apa yang dijawab oleh pengimbas (untuk melaporkan masalah)
+Todo normal por ahora	Semua normal buat masa ini
+Alerta	Amaran
+Aviso	Notis
+Avisos	Notis
+Habla aunque estés en Waze o con música	Bercakap walaupun dalam Waze atau dengan muzik
+Abrir el panel con una alerta grave	Buka panel apabila ada amaran serius
+Por ejemplo, el motor muy caliente o la batería que no carga	Contohnya, enjin sangat panas atau bateri tidak mengecas
+Más de 4 °C por minuto con el motor caliente	Lebih 4 °C seminit dengan enjin panas
+Cuándo avisa cada dato	Bila setiap data memberi amaran
+Códigos guardados en el auto	Kod yang disimpan dalam kereta
+El auto no tiene códigos guardados	Kereta tiada kod yang disimpan
+Se revisan al conectar y cada 30 segundos	Diperiksa semasa menyambung dan setiap 30 saat
+Luz del motor encendida	Lampu enjin menyala
+El computador del motor confirmó una falla	Komputer enjin mengesahkan kerosakan
+Con el motor apagado y el contacto puesto. Anota los códigos antes: no se puede deshacer	Dengan enjin dimatikan dan suis dihidupkan. Catat kod dahulu: tidak boleh dibatalkan
+Conecta el escáner para ver los datos	Sambungkan pengimbas untuk melihat data
+Gráficos	Graf
+Hasta 3 datos a la vez, de 1 a 30 minutos	Sehingga 3 data serentak, dari 1 hingga 30 minit
+La tuya: cada consulta la cobra tu proveedor	Milik anda: setiap pertanyaan dicaj oleh pembekal anda
+Privacidad	Privasi
+Qué se envía	Apa yang dihantar
+Solo el código, el vehículo que escribas y los datos del motor de ese momento; nunca tu ubicación. Las respuestas se guardan en la pantalla	Hanya kod, kenderaan yang anda tulis dan data enjin pada masa itu; tidak pernah lokasi anda. Jawapan disimpan dalam unit utama
+Tu vehículo (para la IA)	Kenderaan anda (untuk AI)
+Marca, modelo, año, motor y caja	Jenama, model, tahun, enjin dan transmisi
+Identifica tu auto de forma única. Apagado por defecto	Mengenal pasti kereta anda secara unik. Dimatikan secara lalai
+Probar	Cuba
+Pregunta por un código de ejemplo	Bertanya tentang kod contoh
+Motor	Enjin
+Para calcular el consumo en motores sin sensor MAF	Untuk mengira penggunaan bahan api bagi enjin tanpa sensor MAF
+Automático casi siempre; fuerza uno si el escáner no lo detecta	Hampir selalu automatik; paksa satu jika pengimbas tidak mengesannya
+Panel del vehículo	Panel kenderaan
+Lado del panel	Sisi panel
+Pestaña en el borde	Tab di tepi
+Toca o desliza la pestaña para abrir el panel. Sin ella, ábrelo con un botón de la barra	Ketik atau leret tab untuk membuka panel. Tanpanya, buka dengan butang bar
+Informe de cada dato estándar y los propios de la marca. Solo lee	Laporan setiap data standard dan data jenama. Baca sahaja
+Ver el último informe	Lihat laporan terakhir
+Con un escáner ELM327 por Wi-Fi o Bluetooth: temperatura, batería, alertas por voz y códigos de falla	Dengan pengimbas ELM327 melalui Wi-Fi atau Bluetooth: suhu, bateri, amaran suara dan kod kerosakan
+También con la pestaña del borde o con un botón de la barra	Juga dengan tab di tepi atau butang bar
+Vehículo (OBD-II)	Kenderaan (OBD-II)
+Sin elegir	Belum dipilih
+Apagada	Mati
+Alerta sobre	Amaran melebihi
+Alerta bajo	Amaran di bawah
+Alerta sobre ±	Amaran melebihi ±
+No	Tidak
+Para que una IA explique los códigos, pon tu API key (Claude, Groq, Gemini u otra) en Ajustes → Tu vehículo → Escáner OBD-II → Inteligencia artificial. Las explicaciones se guardan en el equipo y después funcionan sin internet.	Supaya AI menerangkan kod, masukkan kunci API anda (Claude, Groq, Gemini atau lain) dalam Tetapan → Kenderaan anda → Pengimbas OBD-II → Kecerdasan buatan. Penerangan disimpan dalam peranti dan kemudian berfungsi tanpa internet.
+Se apaga la luz del motor y se borran los datos que usa el taller para diagnosticar; también se reinician los monitores de emisiones. No se puede deshacer y, si la falla sigue, el código volverá a aparecer. Anota los códigos antes.	Lampu enjin padam dan data yang digunakan bengkel untuk diagnosis dipadam; monitor emisi juga ditetapkan semula. Tidak boleh dibatalkan dan, jika kerosakan berterusan, kod akan muncul semula. Catat kod dahulu.
+Ej.: Kia Picanto 2019 1.2 gasolina mecánico	Cth.: Kia Picanto 2019 1.2 petrol manual
+Sin poner	Belum ditetapkan
+Escaneando… el avance se ve en el estado del escáner	Mengimbas… kemajuan dipaparkan dalam status pengimbas
+Todavía no hay un informe	Belum ada laporan
+Sin monitor activo	Tiada monitor aktif
+Sin códigos guardados	Tiada kod disimpan
+Se revisan al conectar	Diperiksa semasa menyambung
+Ver todo	Lihat semua
+1 activa	1 aktif
+{} activas	{} aktif
+Vehículo	Kenderaan
+Monitor del vehículo	Monitor kenderaan
+Batería	Bateri
+Carga del motor	Beban enjin
+Acelerador	Pendikit
+Aire de admisión	Udara masuk
+Combustible	Bahan api
+Mezcla corta	Pembetulan campuran pendek
+Mezcla larga	Pembetulan campuran panjang
+Flujo de aire	Aliran udara
+Presión del múltiple	Tekanan manifold
+Consumo del motor	Penggunaan enjin
+Consumo por hora	Penggunaan sejam
+Aceite del motor	Minyak enjin
+Datos del motor	Data enjin
+Cilindrada del motor	Isipadu enjin
+Cilindrada del motor (litros)	Isipadu enjin (liter)
+Protocolo	Protokol
+CAN 11 bits · 500 kbps	CAN 11 bit · 500 kbps
+CAN 29 bits · 500 kbps	CAN 29 bit · 500 kbps
+CAN 11 bits · 250 kbps	CAN 11 bit · 250 kbps
+CAN 29 bits · 250 kbps	CAN 29 bit · 250 kbps
+Escribe un número entre 0,5 y 8	Tulis nombor antara 0.5 dan 8
+Conectando con el escáner…	Menyambung ke pengimbas…
+Conectado	Disambung
+Esperando al auto (¿contacto apagado?)	Menunggu kereta (suis dimatikan?)
+Escáner conectado. Vigilando el motor.	Pengimbas disambung. Memantau enjin.
+Se perdió la conexión con el escáner.	Sambungan ke pengimbas terputus.
+Códigos borrados.	Kod dipadam.
+El auto no aceptó borrar los códigos.	Kereta tidak menerima pemadaman kod.
+El escáner no logra hablar con el auto. ¿Está el contacto puesto?	Pengimbas tidak dapat berkomunikasi dengan kereta. Adakah suis dihidupkan?
+El escáner no responde	Pengimbas tidak bertindak balas
+El escáner cerró la conexión	Pengimbas menutup sambungan
+El Bluetooth está apagado	Bluetooth dimatikan
+Este equipo no tiene Bluetooth	Peranti ini tiada Bluetooth
+No se pudo conectar	Tidak dapat menyambung
+Motor sobrecalentado: {}	Enjin terlalu panas: {}
+Refrigerante alto: {}	Penyejuk tinggi: {}
+El refrigerante sube rápido: {} °C	Penyejuk naik dengan cepat: {} °C
+Voltaje alto: {}	Voltan tinggi: {}
+Voltaje bajo: {}	Voltan rendah: {}
+RPM muy altas: {}	RPM sangat tinggi: {}
+Motor muy exigido: {}	Enjin bekerja sangat kuat: {}
+Aire de admisión muy caliente: {}	Udara masuk sangat panas: {}
+Poco combustible: {}	Bahan api rendah: {}
+Aceite del motor muy caliente: {}	Minyak enjin sangat panas: {}
+Código de falla {}	Kod kerosakan {}
+Código pendiente {}	Kod tertangguh {}
+revisa el detalle en la pantalla	semak butiran pada skrin
+Detente en un lugar seguro y apaga el motor. No abras la tapa del radiador en caliente. Espera que enfríe y revisa el nivel de refrigerante, el electroventilador y la correa.	Berhenti di tempat selamat dan matikan enjin. Jangan buka penutup radiator semasa panas. Biarkan sejuk, kemudian periksa paras penyejuk, kipas radiator dan tali sawat.
+Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y, si sigue subiendo, pon la calefacción al máximo y busca dónde parar.	Kurangkan beban: guna gear lebih rendah, matikan penghawa dingin dan, jika terus naik, pasang pemanas maksimum dan cari tempat berhenti.
+Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y vigila que el electroventilador encienda.	Kurangkan beban: guna gear lebih rendah, matikan penghawa dingin dan pastikan kipas radiator hidup.
+El alternador está cargando de más y puede dañar la batería. Revísalo pronto.	Alternator mengecas berlebihan dan boleh merosakkan bateri. Periksa segera.
+El alternador no está cargando bien: apaga lo que no necesites (aire, luces extra) y ve a un taller antes de que se descargue la batería. Revisa la correa.	Alternator tidak mengecas dengan baik: matikan yang tidak perlu (penghawa dingin, lampu tambahan) dan pergi ke bengkel sebelum bateri habis. Periksa tali sawat.
+Baja la velocidad o usa una marcha más alta. En bajadas, frena con motor sin pasar la zona roja.	Perlahankan atau guna gear lebih tinggi. Semasa menurun, guna brek enjin tanpa masuk zon merah.
+El motor va al máximo hace rato. En cuestas largas usa una marcha más baja y deja descansar el motor y la caja.	Enjin berada pada beban penuh untuk seketika. Di cerun panjang guna gear lebih rendah dan rehatkan enjin dan transmisi.
+El aire que entra al motor está muy caliente: pierde potencia. Si estás detenido, avanza para que circule aire.	Udara yang masuk ke enjin sangat panas, jadi kuasa berkurang. Jika berhenti, alihkan supaya udara boleh mengalir.
+Carga combustible en la próxima estación. En la montaña puede no haber más adelante.	Isi minyak di stesen seterusnya. Di kawasan bukit mungkin tiada lagi stesen.
+El motor recibe menos combustible del que necesita: puede ser una fuga de vacío, el filtro de combustible o el sensor MAF. Puede perder fuerza en subidas.	Enjin menerima kurang bahan api daripada yang perlu: mungkin kebocoran vakum, penapis bahan api atau sensor MAF. Kuasa boleh berkurang semasa mendaki.
+El motor recibe más combustible del necesario: revisa el filtro de aire, el sensor MAF o un inyector que gotee.	Enjin menerima lebih bahan api daripada yang perlu: periksa penapis udara, sensor MAF atau penyuntik yang bocor.
+Baja la exigencia y revisa el nivel de aceite cuando puedas parar.	Kurangkan beban dan periksa paras minyak apabila dapat berhenti.
+código	kod
+códigos	kod
+Carrocería (airbag, cinturones, luces, cierre…)	Badan (beg udara, tali pinggang, lampu, kunci…)
+Chasis (frenos ABS, dirección, suspensión, 4x4)	Casis (brek ABS, stereng, suspensi, 4x4)
+Comunicación entre computadores del auto	Komunikasi antara komputer kereta
+Motor: mezcla de aire y combustible	Enjin: campuran udara dan bahan api
+Motor: encendido y fallas de encendido	Enjin: pencucuhan dan salah cucuh
+Control de emisiones	Kawalan emisi
+Velocidad, ralentí y entradas auxiliares	Kelajuan, melahu dan input tambahan
+Computador del motor y sus salidas	Komputer enjin dan outputnya
+Caja de cambios	Transmisi
+Motor o caja (sistema híbrido u otro)	Enjin atau transmisi (hibrid atau lain)
+código propio de la marca	kod khusus pengeluar
+La API key no es válida	Kunci API tidak sah
+La IA está ocupada o sin saldo. Intenta más tarde.	AI sibuk atau tiada kredit. Cuba lagi nanti.
+La IA no quiso responder	AI enggan menjawab
+La IA respondió vacío	AI memberi jawapan kosong
+Luz del motor	Lampu enjin
+Conectar	Sambung
+Auto simulado	Kereta simulasi
+Apagado	Mati
+En vivo	Langsung
+Alertas	Amaran
+Códigos de falla	Kod kerosakan
+Pendiente	Tertangguh
+Grave	Serius
+Leve	Ringan
+Revisar	Semak
+Borrar códigos	Padam kod
+Qué hacer	Apa perlu dibuat
+Explicación de la IA	Penerangan AI
+Este código no está en la tabla sin conexión: suele ser un código propio de la marca. La IA puede explicarlo.	Kod ini tiada dalam jadual luar talian: biasanya kod khusus pengeluar. AI boleh menerangkannya.
+Ojo: los códigos de airbag, ABS y carrocería normalmente no se leen con OBD-II genérico; si aparece aquí es porque el auto lo reporta al computador del motor.	Nota: kod beg udara, ABS dan badan biasanya tidak boleh dibaca dengan OBD-II generik; jika muncul di sini, kereta melaporkannya kepada komputer enjin.
+Volver a preguntar a la IA	Tanya AI sekali lagi
+Explicar con IA	Terangkan dengan AI
+Preguntando a la IA…	Bertanya kepada AI…
+No se pudo consultar la IA	Tidak dapat menghubungi AI
+Apaga el motor y deja solo el contacto puesto para borrar los códigos.	Matikan enjin dan biarkan suis sahaja dihidupkan untuk memadam kod.
+¿Borrar los códigos de falla?	Padam kod kerosakan?
+Escáner	Pengimbas
+Inteligencia artificial	Kecerdasan buatan
+Sin configurar	Belum disediakan
+Avisos por voz	Amaran suara
+Sí	Ya
+Registro de la conexión	Log sambungan
+Ajustes del vehículo	Tetapan kenderaan
+Tu vehículo: marca, modelo, año, motor y caja	Kenderaan anda: jenama, model, tahun, enjin dan transmisi
+Escáner Wi-Fi (escribir IP y puerto)	Pengimbas Wi-Fi (tulis IP dan port)
+Auto simulado (para probar)	Kereta simulasi (untuk mencuba)
+No hay escáneres Bluetooth emparejados: emparéjalo en los ajustes del equipo	Tiada pengimbas Bluetooth berpasangan: pasangkan dalam tetapan unit utama
+Elige tu escáner	Pilih pengimbas anda
+IP y puerto del escáner Wi-Fi	IP dan port pengimbas Wi-Fi
+Escribe IP:puerto, por ejemplo 192.168.0.10:35000	Tulis IP:port, contohnya 192.168.0.10:35000
+Proveedor	Pembekal
+Modelo	Model
+Dirección de la API	Alamat API
+Borrar la API key	Padam kunci API
+Aviso sobre	Notis melebihi
+Aviso bajo	Notis di bawah
+Aviso sobre ±	Notis melebihi ±
+Otra compatible con OpenAI	Lain yang serasi dengan OpenAI
+elegir…	pilih…
+Probar la IA	Cuba AI
+Primero escribe la API key	Tulis kunci API dahulu
+Buscando los modelos del proveedor…	Mencari model pembekal…
+recomendado	disyorkan
+Escribir otro…	Tulis yang lain…
+Preguntando por el código de ejemplo P0711…	Bertanya tentang kod contoh P0711…
+La IA funciona · P0711 de ejemplo	AI berfungsi · contoh P0711
+Volver	Kembali
+Elige el modelo de la IA en los ajustes	Pilih model AI dalam tetapan
+Escribe la dirección de la API en los ajustes	Tulis alamat API dalam tetapan
+Escaneando	Mengimbas
+Escaneo terminado.	Imbasan selesai.
+El escaneo se cortó	Imbasan terganggu
+Escanear todo lo que entrega el auto	Imbas semua yang diberi kereta
+Conecta el escáner con el contacto puesto (mejor con el motor en marcha) y vuelve a intentarlo.	Sambungkan pengimbas dengan suis dihidupkan (lebih baik enjin hidup) dan cuba lagi.
+Pregunta al auto por cada dato estándar y por los datos propios de la marca del motor y la caja. Tarda hasta 2 minutos y mientras tanto las alertas se pausan: hazlo detenido. Solo lee, no cambia nada en el auto.	Bertanya kereta setiap data standard dan data jenama untuk enjin dan transmisi. Mengambil masa sehingga 2 minit dan amaran dijeda: lakukan semasa berhenti. Hanya membaca, tidak mengubah apa-apa pada kereta.
+Escanear	Imbas
+Guardado en	Disimpan di
+Lo que entrega tu auto	Apa yang diberi kereta anda
+Consumo	Penggunaan bahan api
+calculado	dikira
+Panel	Papan pemuka
+Todos los datos	Semua data
+Datos en vivo	Data langsung
+Monitores de emisiones	Monitor emisi
+✓ listo · ✗ aún no termina su prueba (normal después de borrar códigos o desconectar la batería).	✓ sedia · ✗ ujian belum selesai (normal selepas memadam kod atau mencabut bateri).
+Catalizador	Pemangkin
+Preguntar a la IA	Tanya AI
+Ajustar esta alerta	Laraskan amaran ini
+Alertas a vigilar	Amaran untuk dipantau
+Subida rápida del refrigerante	Penyejuk naik dengan cepat
+Códigos de falla nuevos (aviso por voz)	Kod kerosakan baharu (amaran suara)
+aviso	notis
+alerta	amaran
+bajo	rendah
+Vigilar	Pantau
+Valores de fábrica	Nilai kilang
+Escribe un número	Tulis nombor
+Datos del motor cuando se registró la falla	Data enjin semasa kerosakan direkodkan
+Buscar escáneres Bluetooth cercanos	Cari pengimbas Bluetooth berdekatan
+Emparejado	Berpasangan
+emparejado	berpasangan
+No se pudo emparejar. Prueba con la clave 1234 o 0000.	Tidak dapat dipasangkan. Cuba PIN 1234 atau 0000.
+Sin el permiso de ubicación Android no deja buscar equipos Bluetooth	Tanpa kebenaran lokasi Android tidak membenarkan carian peranti Bluetooth
+No se encontraron equipos. ¿Está el escáner enchufado y el contacto puesto?	Tiada peranti ditemui. Adakah pengimbas dipasang dan suis dihidupkan?
+Buscando… (enchufa el escáner y pon el contacto)	Mencari… (pasang pengimbas dan hidupkan suis)
+Emparejando… si pide clave, escribe 1234 o 0000	Memasangkan… jika diminta PIN, tulis 1234 atau 0000
+Emparéjalo en los ajustes de Bluetooth del equipo	Pasangkan dalam tetapan Bluetooth unit utama
+Los escáneres suelen llamarse OBDII, OBD2, V-LINK o Vgate.	Pengimbas biasanya bernama OBDII, OBD2, V-LINK atau Vgate.
+Buscar de nuevo	Cari semula
+Gráficos en vivo	Graf langsung
+Desliza el dedo sobre un gráfico para ver el valor de cada momento. Toca los datos de arriba para comparar hasta 3.	Leret jari pada graf untuk melihat nilai setiap saat. Ketik data di atas untuk membandingkan sehingga 3.
+mín	min
+máx	maks
+prom	purata
+ahora	sekarang
+hace	lalu
+Esperando datos…	Menunggu data…
+Monitor apagado · toca para conectar	Monitor mati · ketik untuk menyambung
+monitor apagado	monitor mati
+Monitor apagado	Monitor mati
+Listo	Selesai
+límite	had
+ancho	lebar
+APPS	APL
+normal	normal
+Avance del encendido	Pemasaan pencucuhan
+Sonda O2 banco 1	Sensor O2 bank 1
+Sonda O2 banco 1 sensor 2	Sensor O2 bank 1 sensor 2
+Tiempo de marcha	Masa berjalan
+Distancia con la luz del motor	Jarak dengan lampu enjin
+EGR comandada	EGR diperintah
+Arranques desde borrar códigos	Pemanasan sejak kod dipadam
+Distancia desde borrar códigos	Jarak sejak kod dipadam
+Presión barométrica	Tekanan barometrik
+Catalizador banco 1	Pemangkin bank 1
+Catalizador banco 1 sensor 2	Pemangkin bank 1 sensor 2
+Carga absoluta	Beban mutlak
+Mezcla comandada	Nisbah kesetaraan diperintah
+Acelerador relativo	Pendikit relatif
+Acelerador B	Pendikit B
+Pedal D	Pedal D
+Pedal E	Pedal E
+Acelerador comandado	Pendikit diperintah
+Tiempo con la luz del motor	Masa dengan lampu enjin
+Tiempo desde borrar códigos	Masa sejak kod dipadam
+Mezcla O2 banco 1	Pembetulan O2 bank 1
+Mezcla O2 banco 1 sensor 2	Pembetulan O2 bank 1 sensor 2
+API key	Kunci API
+Enviar el VIN a la IA	Hantar VIN kepada AI
+RPM	RPM

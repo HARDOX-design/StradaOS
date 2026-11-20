@@ -1218,3 +1218,299 @@ Temperatura exterior	Temperatura esterna
 Del sensor del carro; necesita la caja CAN	Dal sensore dell'auto; serve il box CAN
 pantalla FYT detectada: elígela en Tu vehículo → Equipo	schermo FYT rilevato: sceglilo in Il tuo veicolo → Autoradio
 esta pantalla no informa las luces	questo schermo non comunica le luci
+# 2.26: escáner OBD-II (panel del vehículo y ajustes)
+Escáner OBD-II	Scanner OBD-II
+Enciende el monitor del motor en «Escáner OBD-II»	Accendi il monitor del motore in «Scanner OBD-II»
+Conectando…	Connessione…
+Monitor del motor	Monitor del motore
+Está apagado: enciéndelo para conectar el escáner	È spento: accendilo per collegare lo scanner
+Estado	Stato
+Abrir el panel del vehículo	Apri il pannello del veicolo
+Medidores, alertas y códigos encima del tema que tengas	Indicatori, avvisi e codici sopra il tuo tema
+Diagnóstico	Diagnostica
+Qué vigila StradaOS y cuándo avisa por voz	Cosa controlla StradaOS e quando avvisa a voce
+Todo normal	Tutto normale
+Qué significan y qué hacer; borrarlos con el motor apagado	Cosa significano e cosa fare; cancellali a motore spento
+Cada dato que entrega tu auto, con gráficos	Ogni dato fornito dalla tua auto, con grafici
+Más	Altro
+Opcional: explica los códigos para tu auto en particular	Facoltativa: spiega i codici per la tua auto
+Motor, protocolo, panel y escaneo completo	Motore, protocollo, pannello e scansione completa
+Bluetooth emparejado, Wi-Fi (IP y puerto) o un auto simulado para probar	Bluetooth associato, Wi-Fi (IP e porta) o un'auto simulata per provare
+Empareja el escáner sin salir de StradaOS (clave 1234 o 0000)	Associa lo scanner senza uscire da StradaOS (PIN 1234 o 0000)
+Reconectar	Riconnetti
+Conectar al iniciar StradaOS	Connetti all'avvio di StradaOS
+Las alertas funcionan aunque estés en otra app (con una notificación fija)	Gli avvisi funzionano anche in un'altra app (con una notifica fissa)
+Cómo conectar el escáner	Come collegare lo scanner
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Bluetooth: emparéjalo con la clave 1234 o 0000. Wi-Fi: conecta la pantalla a la red del escáner y escribe su IP y puerto (casi siempre 192.168.0.10:35000).\n3. Elígelo arriba en «Escáner».	1. Inserisci lo scanner ELM327 nella presa OBD (sotto il volante) e accendi il quadro.\n2. Bluetooth: associalo con il PIN 1234 o 0000. Wi-Fi: collega l'autoradio alla rete dello scanner e scrivi IP e porta (quasi sempre 192.168.0.10:35000).\n3. Sceglilo sopra in «Scanner».
+Lo que respondió el escáner (para reportar un problema)	Cosa ha risposto lo scanner (per segnalare un problema)
+Todo normal por ahora	Tutto normale per ora
+Alerta	Allarme
+Aviso	Avviso
+Avisos	Avvisi
+Habla aunque estés en Waze o con música	Parla anche con Waze o con la musica
+Abrir el panel con una alerta grave	Apri il pannello con un allarme grave
+Por ejemplo, el motor muy caliente o la batería que no carga	Per esempio, motore molto caldo o batteria che non si ricarica
+Más de 4 °C por minuto con el motor caliente	Più di 4 °C al minuto con il motore caldo
+Cuándo avisa cada dato	Quando avvisa ogni dato
+Códigos guardados en el auto	Codici memorizzati nell'auto
+El auto no tiene códigos guardados	L'auto non ha codici memorizzati
+Se revisan al conectar y cada 30 segundos	Controllati alla connessione e ogni 30 secondi
+Luz del motor encendida	Spia motore accesa
+El computador del motor confirmó una falla	La centralina del motore ha confermato un guasto
+Con el motor apagado y el contacto puesto. Anota los códigos antes: no se puede deshacer	A motore spento e quadro acceso. Annota prima i codici: non si può annullare
+Conecta el escáner para ver los datos	Collega lo scanner per vedere i dati
+Gráficos	Grafici
+Hasta 3 datos a la vez, de 1 a 30 minutos	Fino a 3 dati alla volta, da 1 a 30 minuti
+La tuya: cada consulta la cobra tu proveedor	La tua: ogni richiesta è addebitata dal tuo fornitore
+Privacidad	Privacy
+Qué se envía	Cosa viene inviato
+Solo el código, el vehículo que escribas y los datos del motor de ese momento; nunca tu ubicación. Las respuestas se guardan en la pantalla	Solo il codice, il veicolo che scrivi e i dati del motore in quel momento; mai la tua posizione. Le risposte restano salvate nell'autoradio
+Tu vehículo (para la IA)	Il tuo veicolo (per l'IA)
+Marca, modelo, año, motor y caja	Marca, modello, anno, motore e cambio
+Identifica tu auto de forma única. Apagado por defecto	Identifica la tua auto in modo univoco. Spento di default
+Probar	Prova
+Pregunta por un código de ejemplo	Chiede di un codice di esempio
+Motor	Motore
+Para calcular el consumo en motores sin sensor MAF	Per calcolare il consumo nei motori senza sensore MAF
+Automático casi siempre; fuerza uno si el escáner no lo detecta	Quasi sempre automatico; forzane uno se lo scanner non lo rileva
+Panel del vehículo	Pannello del veicolo
+Lado del panel	Lato del pannello
+Pestaña en el borde	Linguetta sul bordo
+Toca o desliza la pestaña para abrir el panel. Sin ella, ábrelo con un botón de la barra	Tocca o trascina la linguetta per aprire il pannello. Senza, aprilo con un pulsante della barra
+Informe de cada dato estándar y los propios de la marca. Solo lee	Rapporto di ogni dato standard e di quelli della marca. Solo lettura
+Ver el último informe	Vedi l'ultimo rapporto
+Con un escáner ELM327 por Wi-Fi o Bluetooth: temperatura, batería, alertas por voz y códigos de falla	Con uno scanner ELM327 via Wi-Fi o Bluetooth: temperatura, batteria, avvisi vocali e codici di guasto
+También con la pestaña del borde o con un botón de la barra	Anche con la linguetta sul bordo o un pulsante della barra
+Vehículo (OBD-II)	Veicolo (OBD-II)
+Sin elegir	Non scelto
+Apagada	Spento
+Alerta sobre	Allarme sopra
+Alerta bajo	Allarme sotto
+Alerta sobre ±	Allarme sopra ±
+No	No
+Para que una IA explique los códigos, pon tu API key (Claude, Groq, Gemini u otra) en Ajustes → Tu vehículo → Escáner OBD-II → Inteligencia artificial. Las explicaciones se guardan en el equipo y después funcionan sin internet.	Perché un'IA spieghi i codici, inserisci la tua API key (Claude, Groq, Gemini o altra) in Impostazioni → Il tuo veicolo → Scanner OBD-II → Intelligenza artificiale. Le spiegazioni restano salvate nel dispositivo e poi funzionano senza internet.
+Se apaga la luz del motor y se borran los datos que usa el taller para diagnosticar; también se reinician los monitores de emisiones. No se puede deshacer y, si la falla sigue, el código volverá a aparecer. Anota los códigos antes.	La spia motore si spegne e si cancellano i dati che l'officina usa per la diagnosi; si azzerano anche i monitor delle emissioni. Non si può annullare e, se il guasto persiste, il codice tornerà. Annota prima i codici.
+Ej.: Kia Picanto 2019 1.2 gasolina mecánico	Es.: Kia Picanto 2019 1.2 benzina manuale
+Sin poner	Non impostata
+Escaneando… el avance se ve en el estado del escáner	Scansione… l'avanzamento si vede nello stato dello scanner
+Todavía no hay un informe	Non c'è ancora un rapporto
+Sin monitor activo	Nessun monitor attivo
+Sin códigos guardados	Nessun codice memorizzato
+Se revisan al conectar	Controllati alla connessione
+Ver todo	Vedi tutto
+1 activa	1 attivo
+{} activas	{} attivi
+Vehículo	Veicolo
+Monitor del vehículo	Monitor del veicolo
+Batería	Batteria
+Carga del motor	Carico motore
+Acelerador	Acceleratore
+Aire de admisión	Aria aspirata
+Combustible	Carburante
+Mezcla corta	Correzione breve
+Mezcla larga	Correzione lunga
+Flujo de aire	Flusso d'aria
+Presión del múltiple	Pressione collettore
+Consumo del motor	Consumo del motore
+Consumo por hora	Consumo orario
+Aceite del motor	Olio motore
+Datos del motor	Dati del motore
+Cilindrada del motor	Cilindrata del motore
+Cilindrada del motor (litros)	Cilindrata del motore (litri)
+Protocolo	Protocollo
+CAN 11 bits · 500 kbps	CAN 11 bit · 500 kbps
+CAN 29 bits · 500 kbps	CAN 29 bit · 500 kbps
+CAN 11 bits · 250 kbps	CAN 11 bit · 250 kbps
+CAN 29 bits · 250 kbps	CAN 29 bit · 250 kbps
+Escribe un número entre 0,5 y 8	Scrivi un numero tra 0,5 e 8
+Conectando con el escáner…	Connessione allo scanner…
+Conectado	Connesso
+Esperando al auto (¿contacto apagado?)	In attesa dell'auto (quadro spento?)
+Escáner conectado. Vigilando el motor.	Scanner connesso. Controllo il motore.
+Se perdió la conexión con el escáner.	Connessione con lo scanner persa.
+Códigos borrados.	Codici cancellati.
+El auto no aceptó borrar los códigos.	L'auto non ha accettato la cancellazione dei codici.
+El escáner no logra hablar con el auto. ¿Está el contacto puesto?	Lo scanner non riesce a parlare con l'auto. Il quadro è acceso?
+El escáner no responde	Lo scanner non risponde
+El escáner cerró la conexión	Lo scanner ha chiuso la connessione
+El Bluetooth está apagado	Il Bluetooth è spento
+Este equipo no tiene Bluetooth	Questo dispositivo non ha il Bluetooth
+No se pudo conectar	Impossibile connettersi
+Motor sobrecalentado: {}	Motore surriscaldato: {}
+Refrigerante alto: {}	Refrigerante alto: {}
+El refrigerante sube rápido: {} °C	Il refrigerante sale veloce: {} °C
+Voltaje alto: {}	Tensione alta: {}
+Voltaje bajo: {}	Tensione bassa: {}
+RPM muy altas: {}	Giri molto alti: {}
+Motor muy exigido: {}	Motore molto sotto sforzo: {}
+Aire de admisión muy caliente: {}	Aria aspirata molto calda: {}
+Poco combustible: {}	Carburante basso: {}
+Aceite del motor muy caliente: {}	Olio motore molto caldo: {}
+Código de falla {}	Codice di guasto {}
+Código pendiente {}	Codice in sospeso {}
+revisa el detalle en la pantalla	controlla i dettagli sullo schermo
+Detente en un lugar seguro y apaga el motor. No abras la tapa del radiador en caliente. Espera que enfríe y revisa el nivel de refrigerante, el electroventilador y la correa.	Fermati in un posto sicuro e spegni il motore. Non aprire il tappo del radiatore a caldo. Lascia raffreddare e controlla il livello del refrigerante, la ventola e la cinghia.
+Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y, si sigue subiendo, pon la calefacción al máximo y busca dónde parar.	Riduci lo sforzo: usa una marcia più bassa, spegni l'aria condizionata e, se continua a salire, metti il riscaldamento al massimo e cerca dove fermarti.
+Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y vigila que el electroventilador encienda.	Riduci lo sforzo: usa una marcia più bassa, spegni l'aria condizionata e controlla che la ventola si accenda.
+El alternador está cargando de más y puede dañar la batería. Revísalo pronto.	L'alternatore carica troppo e può danneggiare la batteria. Fallo controllare presto.
+El alternador no está cargando bien: apaga lo que no necesites (aire, luces extra) y ve a un taller antes de que se descargue la batería. Revisa la correa.	L'alternatore non carica bene: spegni ciò che non serve (aria condizionata, luci extra) e vai in officina prima che la batteria si scarichi. Controlla la cinghia.
+Baja la velocidad o usa una marcha más alta. En bajadas, frena con motor sin pasar la zona roja.	Rallenta o usa una marcia più alta. In discesa usa il freno motore senza entrare nella zona rossa.
+El motor va al máximo hace rato. En cuestas largas usa una marcha más baja y deja descansar el motor y la caja.	Il motore è a pieno carico da un po'. Nelle salite lunghe usa una marcia più bassa e fai riposare motore e cambio.
+El aire que entra al motor está muy caliente: pierde potencia. Si estás detenido, avanza para que circule aire.	L'aria che entra nel motore è molto calda e perde potenza. Se sei fermo, spostati dove circola aria.
+Carga combustible en la próxima estación. En la montaña puede no haber más adelante.	Fai rifornimento alla prossima stazione. In montagna potrebbe non essercene un'altra.
+El motor recibe menos combustible del que necesita: puede ser una fuga de vacío, el filtro de combustible o el sensor MAF. Puede perder fuerza en subidas.	Il motore riceve meno carburante del necessario: può essere una perdita di vuoto, il filtro del carburante o il sensore MAF. Può perdere potenza in salita.
+El motor recibe más combustible del necesario: revisa el filtro de aire, el sensor MAF o un inyector que gotee.	Il motore riceve più carburante del necessario: controlla il filtro dell'aria, il sensore MAF o un iniettore che perde.
+Baja la exigencia y revisa el nivel de aceite cuando puedas parar.	Riduci lo sforzo e controlla il livello dell'olio appena puoi fermarti.
+código	codice
+códigos	codici
+Carrocería (airbag, cinturones, luces, cierre…)	Carrozzeria (airbag, cinture, luci, serrature…)
+Chasis (frenos ABS, dirección, suspensión, 4x4)	Telaio (freni ABS, sterzo, sospensioni, 4x4)
+Comunicación entre computadores del auto	Comunicazione tra le centraline dell'auto
+Motor: mezcla de aire y combustible	Motore: miscela aria e carburante
+Motor: encendido y fallas de encendido	Motore: accensione e mancate accensioni
+Control de emisiones	Controllo delle emissioni
+Velocidad, ralentí y entradas auxiliares	Velocità, minimo e ingressi ausiliari
+Computador del motor y sus salidas	Centralina del motore e sue uscite
+Caja de cambios	Cambio
+Motor o caja (sistema híbrido u otro)	Motore o cambio (ibrido o altro)
+código propio de la marca	codice specifico della marca
+La API key no es válida	La API key non è valida
+La IA está ocupada o sin saldo. Intenta más tarde.	L'IA è occupata o senza credito. Riprova più tardi.
+La IA no quiso responder	L'IA si è rifiutata di rispondere
+La IA respondió vacío	L'IA ha restituito una risposta vuota
+Luz del motor	Spia motore
+Conectar	Connetti
+Auto simulado	Auto simulata
+Apagado	Spento
+En vivo	In diretta
+Alertas	Avvisi
+Códigos de falla	Codici di guasto
+Pendiente	In sospeso
+Grave	Grave
+Leve	Lieve
+Revisar	Controllare
+Borrar códigos	Cancella codici
+Qué hacer	Cosa fare
+Explicación de la IA	Spiegazione dell'IA
+Este código no está en la tabla sin conexión: suele ser un código propio de la marca. La IA puede explicarlo.	Questo codice non è nella tabella offline: di solito è un codice specifico della marca. L'IA può spiegarlo.
+Ojo: los códigos de airbag, ABS y carrocería normalmente no se leen con OBD-II genérico; si aparece aquí es porque el auto lo reporta al computador del motor.	Nota: i codici di airbag, ABS e carrozzeria di solito non si leggono con l'OBD-II generico; se appare qui, l'auto lo segnala alla centralina del motore.
+Volver a preguntar a la IA	Chiedi di nuovo all'IA
+Explicar con IA	Spiega con l'IA
+Preguntando a la IA…	Chiedo all'IA…
+No se pudo consultar la IA	Impossibile contattare l'IA
+Apaga el motor y deja solo el contacto puesto para borrar los códigos.	Spegni il motore e lascia solo il quadro acceso per cancellare i codici.
+¿Borrar los códigos de falla?	Cancellare i codici di guasto?
+Escáner	Scanner
+Inteligencia artificial	Intelligenza artificiale
+Sin configurar	Non configurata
+Avisos por voz	Avvisi vocali
+Sí	Sì
+Registro de la conexión	Registro della connessione
+Ajustes del vehículo	Impostazioni del veicolo
+Tu vehículo: marca, modelo, año, motor y caja	Il tuo veicolo: marca, modello, anno, motore e cambio
+Escáner Wi-Fi (escribir IP y puerto)	Scanner Wi-Fi (scrivi IP e porta)
+Auto simulado (para probar)	Auto simulata (per provare)
+No hay escáneres Bluetooth emparejados: emparéjalo en los ajustes del equipo	Nessuno scanner Bluetooth associato: associalo nelle impostazioni dell'autoradio
+Elige tu escáner	Scegli il tuo scanner
+IP y puerto del escáner Wi-Fi	IP e porta dello scanner Wi-Fi
+Escribe IP:puerto, por ejemplo 192.168.0.10:35000	Scrivi IP:porta, per esempio 192.168.0.10:35000
+Proveedor	Fornitore
+Modelo	Modello
+Dirección de la API	Indirizzo dell'API
+Borrar la API key	Elimina la API key
+Aviso sobre	Avviso sopra
+Aviso bajo	Avviso sotto
+Aviso sobre ±	Avviso sopra ±
+Otra compatible con OpenAI	Altro compatibile con OpenAI
+elegir…	scegli…
+Probar la IA	Prova l'IA
+Primero escribe la API key	Prima scrivi la API key
+Buscando los modelos del proveedor…	Cerco i modelli del fornitore…
+recomendado	consigliato
+Escribir otro…	Scrivine un altro…
+Preguntando por el código de ejemplo P0711…	Chiedo del codice di esempio P0711…
+La IA funciona · P0711 de ejemplo	L'IA funziona · P0711 di esempio
+Volver	Indietro
+Elige el modelo de la IA en los ajustes	Scegli il modello dell'IA nelle impostazioni
+Escribe la dirección de la API en los ajustes	Scrivi l'indirizzo dell'API nelle impostazioni
+Escaneando	Scansione
+Escaneo terminado.	Scansione completata.
+El escaneo se cortó	La scansione è stata interrotta
+Escanear todo lo que entrega el auto	Scansiona tutto ciò che fornisce l'auto
+Conecta el escáner con el contacto puesto (mejor con el motor en marcha) y vuelve a intentarlo.	Collega lo scanner con il quadro acceso (meglio a motore acceso) e riprova.
+Pregunta al auto por cada dato estándar y por los datos propios de la marca del motor y la caja. Tarda hasta 2 minutos y mientras tanto las alertas se pausan: hazlo detenido. Solo lee, no cambia nada en el auto.	Chiede all'auto ogni dato standard e i dati della marca su motore e cambio. Richiede fino a 2 minuti e intanto gli avvisi sono in pausa: fallo da fermo. Legge soltanto, non cambia nulla nell'auto.
+Escanear	Scansiona
+Guardado en	Salvato in
+Lo que entrega tu auto	Cosa fornisce la tua auto
+Consumo	Consumo
+calculado	calcolato
+Panel	Pannello
+Todos los datos	Tutti i dati
+Datos en vivo	Dati in diretta
+Monitores de emisiones	Monitor delle emissioni
+✓ listo · ✗ aún no termina su prueba (normal después de borrar códigos o desconectar la batería).	✓ pronto · ✗ test non ancora finito (normale dopo aver cancellato i codici o scollegato la batteria).
+Catalizador	Catalizzatore
+Preguntar a la IA	Chiedi all'IA
+Ajustar esta alerta	Regola questo avviso
+Alertas a vigilar	Avvisi da controllare
+Subida rápida del refrigerante	Aumento rapido del refrigerante
+Códigos de falla nuevos (aviso por voz)	Nuovi codici di guasto (avviso vocale)
+aviso	avviso
+alerta	allarme
+bajo	basso
+Vigilar	Controlla
+Valores de fábrica	Valori di fabbrica
+Escribe un número	Scrivi un numero
+Datos del motor cuando se registró la falla	Dati del motore quando è stato registrato il guasto
+Buscar escáneres Bluetooth cercanos	Cerca scanner Bluetooth vicini
+Emparejado	Associato
+emparejado	associato
+No se pudo emparejar. Prueba con la clave 1234 o 0000.	Impossibile associare. Prova il PIN 1234 o 0000.
+Sin el permiso de ubicación Android no deja buscar equipos Bluetooth	Senza il permesso di posizione Android non permette di cercare dispositivi Bluetooth
+No se encontraron equipos. ¿Está el escáner enchufado y el contacto puesto?	Nessun dispositivo trovato. Lo scanner è inserito e il quadro acceso?
+Buscando… (enchufa el escáner y pon el contacto)	Ricerca… (inserisci lo scanner e accendi il quadro)
+Emparejando… si pide clave, escribe 1234 o 0000	Associazione… se chiede un PIN, scrivi 1234 o 0000
+Emparéjalo en los ajustes de Bluetooth del equipo	Associalo nelle impostazioni Bluetooth dell'autoradio
+Los escáneres suelen llamarse OBDII, OBD2, V-LINK o Vgate.	Gli scanner di solito si chiamano OBDII, OBD2, V-LINK o Vgate.
+Buscar de nuevo	Cerca di nuovo
+Gráficos en vivo	Grafici in diretta
+Desliza el dedo sobre un gráfico para ver el valor de cada momento. Toca los datos de arriba para comparar hasta 3.	Scorri il dito su un grafico per vedere il valore di ogni momento. Tocca i dati in alto per confrontarne fino a 3.
+mín	min
+máx	max
+prom	media
+ahora	adesso
+hace	fa
+Esperando datos…	In attesa di dati…
+Monitor apagado · toca para conectar	Monitor spento · tocca per connettere
+monitor apagado	monitor spento
+Monitor apagado	Monitor spento
+Listo	Fatto
+límite	limite
+ancho	larghezza
+APPS	APP
+normal	normale
+Avance del encendido	Anticipo di accensione
+Sonda O2 banco 1	Sonda O2 bancata 1
+Sonda O2 banco 1 sensor 2	Sonda O2 bancata 1 sensore 2
+Tiempo de marcha	Tempo di funzionamento
+Distancia con la luz del motor	Distanza con spia motore
+EGR comandada	EGR comandato
+Arranques desde borrar códigos	Riscaldamenti dalla cancellazione
+Distancia desde borrar códigos	Distanza dalla cancellazione
+Presión barométrica	Pressione barometrica
+Catalizador banco 1	Catalizzatore bancata 1
+Catalizador banco 1 sensor 2	Catalizzatore bancata 1 sensore 2
+Carga absoluta	Carico assoluto
+Mezcla comandada	Rapporto di equivalenza comandato
+Acelerador relativo	Acceleratore relativo
+Acelerador B	Acceleratore B
+Pedal D	Pedale D
+Pedal E	Pedale E
+Acelerador comandado	Acceleratore comandato
+Tiempo con la luz del motor	Tempo con spia motore
+Tiempo desde borrar códigos	Tempo dalla cancellazione
+Mezcla O2 banco 1	Correzione O2 bancata 1
+Mezcla O2 banco 1 sensor 2	Correzione O2 bancata 1 sensore 2
+API key	API key
+Enviar el VIN a la IA	Invia il VIN all'IA
+RPM	Giri

@@ -56,6 +56,10 @@ go tema:claro 6; go inicio 3; go obd-panel 4; shot v24-faro-claro-panel; back
 go tema-gratis:1 6; go inicio 3; go obd-panel 4; shot v25-clasico-claro-panel; back
 go pref:obd_panel_side=left 4; go inicio 3; go obd-panel 4; shot v26-panel-izquierda; back
 go pref:obd_panel_side=auto 3; go tema:oscuro 5
+go idioma:en 6; go inicio 3; go obd-panel 4; shot v40-en-panel; back; go obd-ajustes:obd 5; shot v41-en-ajustes
+go idioma:ar 6; go inicio 3; go obd-panel 4; shot v42-ar-panel; back; go obd-ajustes:obd_alerts 5; shot v43-ar-alertas
+go idioma:hu 6; go inicio 3; go obd-panel 4; shot v44-hu-panel; back
+go idioma:es 6
 go obd-off 4; go inicio 3; shot v30-apagado-de-nuevo
 kill $GEO 2>/dev/null
 adb logcat -d | grep -E "FATAL EXCEPTION|AndroidRuntime: (java|Caused|\tat com.stradaos)" | tail -60 > $OUT/logcat.txt

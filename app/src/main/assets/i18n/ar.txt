@@ -1218,3 +1218,299 @@ Temperatura exterior	درجة الحرارة الخارجية
 Del sensor del carro; necesita la caja CAN	من حساس السيارة؛ يحتاج إلى صندوق CAN
 pantalla FYT detectada: elígela en Tu vehículo → Equipo	تم الكشف عن شاشة FYT: اخترها في مركبتك ← جهاز السيارة
 esta pantalla no informa las luces	هذه الشاشة لا تُبلغ عن الأضواء
+# 2.26: escáner OBD-II (panel del vehículo y ajustes)
+Escáner OBD-II	ماسح OBD-II
+Enciende el monitor del motor en «Escáner OBD-II»	شغّل مراقب المحرك في «ماسح OBD-II»
+Conectando…	جارٍ الاتصال…
+Monitor del motor	مراقب المحرك
+Está apagado: enciéndelo para conectar el escáner	إنه متوقف: شغّله لتوصيل الماسح
+Estado	الحالة
+Abrir el panel del vehículo	فتح لوحة المركبة
+Medidores, alertas y códigos encima del tema que tengas	مؤشرات وتنبيهات ورموز فوق السمة التي تستخدمها
+Diagnóstico	التشخيص
+Qué vigila StradaOS y cuándo avisa por voz	ما يراقبه StradaOS ومتى ينبّه بالصوت
+Todo normal	كل شيء طبيعي
+Qué significan y qué hacer; borrarlos con el motor apagado	ما معناها وما العمل؛ امسحها والمحرك مطفأ
+Cada dato que entrega tu auto, con gráficos	كل قيمة تقدمها سيارتك، مع الرسوم البيانية
+Más	المزيد
+Opcional: explica los códigos para tu auto en particular	اختياري: يشرح الرموز لسيارتك تحديدًا
+Motor, protocolo, panel y escaneo completo	المحرك والبروتوكول واللوحة والفحص الكامل
+Bluetooth emparejado, Wi-Fi (IP y puerto) o un auto simulado para probar	بلوتوث مقترن أو Wi-Fi (IP والمنفذ) أو سيارة محاكاة للتجربة
+Empareja el escáner sin salir de StradaOS (clave 1234 o 0000)	اقرن الماسح دون مغادرة StradaOS (الرمز 1234 أو 0000)
+Reconectar	إعادة الاتصال
+Conectar al iniciar StradaOS	الاتصال عند بدء StradaOS
+Las alertas funcionan aunque estés en otra app (con una notificación fija)	تعمل التنبيهات حتى وأنت في تطبيق آخر (مع إشعار دائم)
+Cómo conectar el escáner	كيفية توصيل الماسح
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Bluetooth: emparéjalo con la clave 1234 o 0000. Wi-Fi: conecta la pantalla a la red del escáner y escribe su IP y puerto (casi siempre 192.168.0.10:35000).\n3. Elígelo arriba en «Escáner».	1. صِل ماسح ELM327 بمنفذ OBD (تحت المقود) وشغّل الإشعال.\n2. بلوتوث: اقرنه بالرمز 1234 أو 0000. Wi-Fi: صِل جهاز السيارة بشبكة الماسح واكتب عنوان IP والمنفذ (غالبًا 192.168.0.10:35000).\n3. اختره أعلاه في «الماسح».
+Lo que respondió el escáner (para reportar un problema)	ما ردّ به الماسح (للإبلاغ عن مشكلة)
+Todo normal por ahora	كل شيء طبيعي حتى الآن
+Alerta	تنبيه
+Aviso	تحذير
+Avisos	تحذيرات
+Habla aunque estés en Waze o con música	يتحدث حتى وأنت في Waze أو تستمع إلى الموسيقى
+Abrir el panel con una alerta grave	فتح اللوحة عند تنبيه خطير
+Por ejemplo, el motor muy caliente o la batería que no carga	مثلًا، المحرك ساخن جدًا أو البطارية لا تشحن
+Más de 4 °C por minuto con el motor caliente	أكثر من 4 °م في الدقيقة والمحرك ساخن
+Cuándo avisa cada dato	متى تنبّه كل قيمة
+Códigos guardados en el auto	الرموز المخزنة في السيارة
+El auto no tiene códigos guardados	لا توجد رموز مخزنة في السيارة
+Se revisan al conectar y cada 30 segundos	تُفحص عند الاتصال وكل 30 ثانية
+Luz del motor encendida	لمبة المحرك مضاءة
+El computador del motor confirmó una falla	أكد حاسوب المحرك وجود عطل
+Con el motor apagado y el contacto puesto. Anota los códigos antes: no se puede deshacer	والمحرك مطفأ والإشعال مشغّل. دوّن الرموز أولًا: لا يمكن التراجع
+Conecta el escáner para ver los datos	صِل الماسح لرؤية البيانات
+Gráficos	الرسوم البيانية
+Hasta 3 datos a la vez, de 1 a 30 minutos	حتى 3 قيم في آن واحد، من 1 إلى 30 دقيقة
+La tuya: cada consulta la cobra tu proveedor	مفتاحك الخاص: يحاسبك مزودك على كل استعلام
+Privacidad	الخصوصية
+Qué se envía	ما الذي يُرسل
+Solo el código, el vehículo que escribas y los datos del motor de ese momento; nunca tu ubicación. Las respuestas se guardan en la pantalla	الرمز والمركبة التي تكتبها وبيانات المحرك في تلك اللحظة فقط؛ لا يُرسل موقعك أبدًا. تُحفظ الإجابات في جهاز السيارة
+Tu vehículo (para la IA)	مركبتك (للذكاء الاصطناعي)
+Marca, modelo, año, motor y caja	العلامة والطراز والسنة والمحرك وناقل الحركة
+Identifica tu auto de forma única. Apagado por defecto	يحدد سيارتك بشكل فريد. متوقف افتراضيًا
+Probar	تجربة
+Pregunta por un código de ejemplo	يسأل عن رمز مثال
+Motor	المحرك
+Para calcular el consumo en motores sin sensor MAF	لحساب الاستهلاك في المحركات التي لا تحتوي على حساس MAF
+Automático casi siempre; fuerza uno si el escáner no lo detecta	تلقائي في الغالب؛ اختر واحدًا إذا لم يكتشفه الماسح
+Panel del vehículo	لوحة المركبة
+Lado del panel	جهة اللوحة
+Pestaña en el borde	لسان على الحافة
+Toca o desliza la pestaña para abrir el panel. Sin ella, ábrelo con un botón de la barra	المس اللسان أو اسحبه لفتح اللوحة. بدونه، افتحها بزر في الشريط
+Informe de cada dato estándar y los propios de la marca. Solo lee	تقرير بكل قيمة قياسية وبقيم العلامة الخاصة. قراءة فقط
+Ver el último informe	عرض آخر تقرير
+Con un escáner ELM327 por Wi-Fi o Bluetooth: temperatura, batería, alertas por voz y códigos de falla	بماسح ELM327 عبر Wi-Fi أو بلوتوث: الحرارة والبطارية والتنبيهات الصوتية ورموز الأعطال
+También con la pestaña del borde o con un botón de la barra	وأيضًا باللسان على الحافة أو بزر في الشريط
+Vehículo (OBD-II)	المركبة (OBD-II)
+Sin elegir	غير محدد
+Apagada	متوقف
+Alerta sobre	تنبيه فوق
+Alerta bajo	تنبيه تحت
+Alerta sobre ±	تنبيه فوق ±
+No	لا
+Para que una IA explique los códigos, pon tu API key (Claude, Groq, Gemini u otra) en Ajustes → Tu vehículo → Escáner OBD-II → Inteligencia artificial. Las explicaciones se guardan en el equipo y después funcionan sin internet.	لكي يشرح الذكاء الاصطناعي الرموز، أدخل مفتاح API الخاص بك (Claude أو Groq أو Gemini أو غيرها) في الإعدادات ← مركبتك ← ماسح OBD-II ← الذكاء الاصطناعي. تُحفظ الشروح في الجهاز وتعمل بعدها دون إنترنت.
+Se apaga la luz del motor y se borran los datos que usa el taller para diagnosticar; también se reinician los monitores de emisiones. No se puede deshacer y, si la falla sigue, el código volverá a aparecer. Anota los códigos antes.	تنطفئ لمبة المحرك وتُمحى البيانات التي يستخدمها الورشة للتشخيص؛ كما يُعاد ضبط مراقبات الانبعاثات. لا يمكن التراجع، وإذا استمر العطل سيعود الرمز. دوّن الرموز أولًا.
+Ej.: Kia Picanto 2019 1.2 gasolina mecánico	مثال: Kia Picanto 2019 1.2 بنزين يدوي
+Sin poner	غير محدد
+Escaneando… el avance se ve en el estado del escáner	جارٍ الفحص… يظهر التقدم في حالة الماسح
+Todavía no hay un informe	لا يوجد تقرير بعد
+Sin monitor activo	لا يوجد مراقب نشط
+Sin códigos guardados	لا توجد رموز مخزنة
+Se revisan al conectar	تُفحص عند الاتصال
+Ver todo	عرض الكل
+1 activa	1 نشط
+{} activas	{} نشطة
+Vehículo	المركبة
+Monitor del vehículo	مراقب المركبة
+Batería	البطارية
+Carga del motor	حمل المحرك
+Acelerador	دواسة الوقود
+Aire de admisión	هواء السحب
+Combustible	الوقود
+Mezcla corta	تصحيح الخليط القصير
+Mezcla larga	تصحيح الخليط الطويل
+Flujo de aire	تدفق الهواء
+Presión del múltiple	ضغط مجمع السحب
+Consumo del motor	استهلاك المحرك
+Consumo por hora	الاستهلاك في الساعة
+Aceite del motor	زيت المحرك
+Datos del motor	بيانات المحرك
+Cilindrada del motor	سعة المحرك
+Cilindrada del motor (litros)	سعة المحرك (لتر)
+Protocolo	البروتوكول
+CAN 11 bits · 500 kbps	CAN 11 بت · 500 كيلوبت/ث
+CAN 29 bits · 500 kbps	CAN 29 بت · 500 كيلوبت/ث
+CAN 11 bits · 250 kbps	CAN 11 بت · 250 كيلوبت/ث
+CAN 29 bits · 250 kbps	CAN 29 بت · 250 كيلوبت/ث
+Escribe un número entre 0,5 y 8	اكتب رقمًا بين 0.5 و8
+Conectando con el escáner…	جارٍ الاتصال بالماسح…
+Conectado	متصل
+Esperando al auto (¿contacto apagado?)	في انتظار السيارة (هل الإشعال مطفأ؟)
+Escáner conectado. Vigilando el motor.	الماسح متصل. جارٍ مراقبة المحرك.
+Se perdió la conexión con el escáner.	انقطع الاتصال بالماسح.
+Códigos borrados.	تم مسح الرموز.
+El auto no aceptó borrar los códigos.	لم تقبل السيارة مسح الرموز.
+El escáner no logra hablar con el auto. ¿Está el contacto puesto?	لا يستطيع الماسح التواصل مع السيارة. هل الإشعال مشغّل؟
+El escáner no responde	الماسح لا يستجيب
+El escáner cerró la conexión	أغلق الماسح الاتصال
+El Bluetooth está apagado	البلوتوث متوقف
+Este equipo no tiene Bluetooth	هذا الجهاز لا يحتوي على بلوتوث
+No se pudo conectar	تعذر الاتصال
+Motor sobrecalentado: {}	ارتفاع حرارة المحرك: {}
+Refrigerante alto: {}	سائل التبريد مرتفع: {}
+El refrigerante sube rápido: {} °C	سائل التبريد يرتفع بسرعة: {} °م
+Voltaje alto: {}	الجهد مرتفع: {}
+Voltaje bajo: {}	الجهد منخفض: {}
+RPM muy altas: {}	دورات المحرك مرتفعة جدًا: {}
+Motor muy exigido: {}	المحرك يعمل بجهد كبير: {}
+Aire de admisión muy caliente: {}	هواء السحب ساخن جدًا: {}
+Poco combustible: {}	الوقود منخفض: {}
+Aceite del motor muy caliente: {}	زيت المحرك ساخن جدًا: {}
+Código de falla {}	رمز عطل {}
+Código pendiente {}	رمز معلّق {}
+revisa el detalle en la pantalla	راجع التفاصيل على الشاشة
+Detente en un lugar seguro y apaga el motor. No abras la tapa del radiador en caliente. Espera que enfríe y revisa el nivel de refrigerante, el electroventilador y la correa.	توقف في مكان آمن وأطفئ المحرك. لا تفتح غطاء الرادياتير وهو ساخن. انتظر حتى يبرد ثم افحص مستوى سائل التبريد والمروحة والسير.
+Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y, si sigue subiendo, pon la calefacción al máximo y busca dónde parar.	خفف الحمل: استخدم ترسًا أدنى وأطفئ المكيف، وإذا استمر الارتفاع شغّل التدفئة على الأقصى وابحث عن مكان للتوقف.
+Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y vigila que el electroventilador encienda.	خفف الحمل: استخدم ترسًا أدنى وأطفئ المكيف وتأكد من تشغيل مروحة الرادياتير.
+El alternador está cargando de más y puede dañar la batería. Revísalo pronto.	الدينامو يشحن أكثر من اللازم وقد يتلف البطارية. افحصه قريبًا.
+El alternador no está cargando bien: apaga lo que no necesites (aire, luces extra) y ve a un taller antes de que se descargue la batería. Revisa la correa.	الدينامو لا يشحن جيدًا: أطفئ ما لا تحتاجه (المكيف، الأضواء الإضافية) وتوجّه إلى ورشة قبل أن تفرغ البطارية. افحص السير.
+Baja la velocidad o usa una marcha más alta. En bajadas, frena con motor sin pasar la zona roja.	خفف السرعة أو استخدم ترسًا أعلى. في المنحدرات استخدم فرامل المحرك دون دخول المنطقة الحمراء.
+El motor va al máximo hace rato. En cuestas largas usa una marcha más baja y deja descansar el motor y la caja.	المحرك تحت حمل كامل منذ مدة. في الصعود الطويل استخدم ترسًا أدنى وأرح المحرك وناقل الحركة.
+El aire que entra al motor está muy caliente: pierde potencia. Si estás detenido, avanza para que circule aire.	الهواء الداخل إلى المحرك ساخن جدًا فيفقد قوته. إذا كنت متوقفًا، انتقل إلى مكان يجري فيه الهواء.
+Carga combustible en la próxima estación. En la montaña puede no haber más adelante.	املأ الوقود في المحطة التالية. في الجبال قد لا توجد محطة أخرى.
+El motor recibe menos combustible del que necesita: puede ser una fuga de vacío, el filtro de combustible o el sensor MAF. Puede perder fuerza en subidas.	يحصل المحرك على وقود أقل من حاجته: قد يكون تسرب فراغ أو فلتر الوقود أو حساس MAF. قد يفقد قوته في الصعود.
+El motor recibe más combustible del necesario: revisa el filtro de aire, el sensor MAF o un inyector que gotee.	يحصل المحرك على وقود أكثر من حاجته: افحص فلتر الهواء أو حساس MAF أو بخاخًا يسرّب.
+Baja la exigencia y revisa el nivel de aceite cuando puedas parar.	خفف الحمل وافحص مستوى الزيت عندما تستطيع التوقف.
+código	رمز
+códigos	رموز
+Carrocería (airbag, cinturones, luces, cierre…)	الهيكل (الوسائد الهوائية، الأحزمة، الأضواء، الأقفال…)
+Chasis (frenos ABS, dirección, suspensión, 4x4)	الشاسيه (فرامل ABS، التوجيه، التعليق، 4x4)
+Comunicación entre computadores del auto	الاتصال بين حواسيب السيارة
+Motor: mezcla de aire y combustible	المحرك: خليط الهواء والوقود
+Motor: encendido y fallas de encendido	المحرك: الإشعال وتخطي الاشتعال
+Control de emisiones	التحكم في الانبعاثات
+Velocidad, ralentí y entradas auxiliares	السرعة والدوران الحر والمدخلات المساعدة
+Computador del motor y sus salidas	حاسوب المحرك ومخرجاته
+Caja de cambios	ناقل الحركة
+Motor o caja (sistema híbrido u otro)	المحرك أو ناقل الحركة (هجين أو غيره)
+código propio de la marca	رمز خاص بالشركة المصنعة
+La API key no es válida	مفتاح API غير صالح
+La IA está ocupada o sin saldo. Intenta más tarde.	الذكاء الاصطناعي مشغول أو بلا رصيد. حاول لاحقًا.
+La IA no quiso responder	رفض الذكاء الاصطناعي الإجابة
+La IA respondió vacío	أعاد الذكاء الاصطناعي إجابة فارغة
+Luz del motor	لمبة المحرك
+Conectar	اتصال
+Auto simulado	سيارة محاكاة
+Apagado	متوقف
+En vivo	مباشر
+Alertas	التنبيهات
+Códigos de falla	رموز الأعطال
+Pendiente	معلّق
+Grave	خطير
+Leve	بسيط
+Revisar	للفحص
+Borrar códigos	مسح الرموز
+Qué hacer	ما العمل
+Explicación de la IA	شرح الذكاء الاصطناعي
+Este código no está en la tabla sin conexión: suele ser un código propio de la marca. La IA puede explicarlo.	هذا الرمز غير موجود في الجدول دون اتصال: عادةً يكون رمزًا خاصًا بالشركة المصنعة. يمكن للذكاء الاصطناعي شرحه.
+Ojo: los códigos de airbag, ABS y carrocería normalmente no se leen con OBD-II genérico; si aparece aquí es porque el auto lo reporta al computador del motor.	ملاحظة: رموز الوسائد الهوائية وABS والهيكل لا تُقرأ عادةً عبر OBD-II العام؛ إذا ظهر هنا فالسيارة تبلّغ به حاسوب المحرك.
+Volver a preguntar a la IA	اسأل الذكاء الاصطناعي مجددًا
+Explicar con IA	اشرح بالذكاء الاصطناعي
+Preguntando a la IA…	جارٍ سؤال الذكاء الاصطناعي…
+No se pudo consultar la IA	تعذر الوصول إلى الذكاء الاصطناعي
+Apaga el motor y deja solo el contacto puesto para borrar los códigos.	أطفئ المحرك واترك الإشعال فقط مشغّلًا لمسح الرموز.
+¿Borrar los códigos de falla?	مسح رموز الأعطال؟
+Escáner	الماسح
+Inteligencia artificial	الذكاء الاصطناعي
+Sin configurar	غير مُعد
+Avisos por voz	التنبيهات الصوتية
+Sí	نعم
+Registro de la conexión	سجل الاتصال
+Ajustes del vehículo	إعدادات المركبة
+Tu vehículo: marca, modelo, año, motor y caja	مركبتك: العلامة والطراز والسنة والمحرك وناقل الحركة
+Escáner Wi-Fi (escribir IP y puerto)	ماسح Wi-Fi (اكتب IP والمنفذ)
+Auto simulado (para probar)	سيارة محاكاة (للتجربة)
+No hay escáneres Bluetooth emparejados: emparéjalo en los ajustes del equipo	لا توجد ماسحات بلوتوث مقترنة: اقرنه من إعدادات جهاز السيارة
+Elige tu escáner	اختر الماسح
+IP y puerto del escáner Wi-Fi	IP ومنفذ ماسح Wi-Fi
+Escribe IP:puerto, por ejemplo 192.168.0.10:35000	اكتب IP:المنفذ، مثلًا 192.168.0.10:35000
+Proveedor	المزود
+Modelo	النموذج
+Dirección de la API	عنوان API
+Borrar la API key	حذف مفتاح API
+Aviso sobre	تحذير فوق
+Aviso bajo	تحذير تحت
+Aviso sobre ±	تحذير فوق ±
+Otra compatible con OpenAI	آخر متوافق مع OpenAI
+elegir…	اختر…
+Probar la IA	تجربة الذكاء الاصطناعي
+Primero escribe la API key	اكتب مفتاح API أولًا
+Buscando los modelos del proveedor…	جارٍ البحث عن نماذج المزود…
+recomendado	موصى به
+Escribir otro…	اكتب غيره…
+Preguntando por el código de ejemplo P0711…	جارٍ السؤال عن الرمز المثال P0711…
+La IA funciona · P0711 de ejemplo	الذكاء الاصطناعي يعمل · مثال P0711
+Volver	رجوع
+Elige el modelo de la IA en los ajustes	اختر نموذج الذكاء الاصطناعي في الإعدادات
+Escribe la dirección de la API en los ajustes	اكتب عنوان API في الإعدادات
+Escaneando	جارٍ الفحص
+Escaneo terminado.	انتهى الفحص.
+El escaneo se cortó	توقف الفحص
+Escanear todo lo que entrega el auto	افحص كل ما تقدمه السيارة
+Conecta el escáner con el contacto puesto (mejor con el motor en marcha) y vuelve a intentarlo.	صِل الماسح والإشعال مشغّل (ويفضل والمحرك يعمل) وحاول مجددًا.
+Pregunta al auto por cada dato estándar y por los datos propios de la marca del motor y la caja. Tarda hasta 2 minutos y mientras tanto las alertas se pausan: hazlo detenido. Solo lee, no cambia nada en el auto.	يسأل السيارة عن كل قيمة قياسية وعن بيانات العلامة الخاصة بالمحرك وناقل الحركة. يستغرق حتى دقيقتين وتتوقف التنبيهات خلاله: افعله وأنت متوقف. يقرأ فقط ولا يغيّر شيئًا في السيارة.
+Escanear	فحص
+Guardado en	حُفظ في
+Lo que entrega tu auto	ما تقدمه سيارتك
+Consumo	استهلاك الوقود
+calculado	محسوب
+Panel	لوحة القيادة
+Todos los datos	كل البيانات
+Datos en vivo	بيانات مباشرة
+Monitores de emisiones	مراقبات الانبعاثات
+✓ listo · ✗ aún no termina su prueba (normal después de borrar códigos o desconectar la batería).	✓ جاهز · ✗ الاختبار لم ينته بعد (طبيعي بعد مسح الرموز أو فصل البطارية).
+Catalizador	المحوّل الحفاز
+Preguntar a la IA	اسأل الذكاء الاصطناعي
+Ajustar esta alerta	ضبط هذا التنبيه
+Alertas a vigilar	تنبيهات للمراقبة
+Subida rápida del refrigerante	ارتفاع سريع لسائل التبريد
+Códigos de falla nuevos (aviso por voz)	رموز أعطال جديدة (تنبيه صوتي)
+aviso	تحذير
+alerta	تنبيه
+bajo	منخفض
+Vigilar	مراقبة
+Valores de fábrica	قيم المصنع
+Escribe un número	اكتب رقمًا
+Datos del motor cuando se registró la falla	بيانات المحرك عند تسجيل العطل
+Buscar escáneres Bluetooth cercanos	البحث عن ماسحات بلوتوث قريبة
+Emparejado	تم الإقران
+emparejado	مقترن
+No se pudo emparejar. Prueba con la clave 1234 o 0000.	تعذر الإقران. جرّب الرمز 1234 أو 0000.
+Sin el permiso de ubicación Android no deja buscar equipos Bluetooth	بدون إذن الموقع لا يسمح Android بالبحث عن أجهزة بلوتوث
+No se encontraron equipos. ¿Está el escáner enchufado y el contacto puesto?	لم يُعثر على أجهزة. هل الماسح موصول والإشعال مشغّل؟
+Buscando… (enchufa el escáner y pon el contacto)	جارٍ البحث… (صِل الماسح وشغّل الإشعال)
+Emparejando… si pide clave, escribe 1234 o 0000	جارٍ الإقران… إذا طُلب رمز فاكتب 1234 أو 0000
+Emparéjalo en los ajustes de Bluetooth del equipo	اقرنه من إعدادات بلوتوث جهاز السيارة
+Los escáneres suelen llamarse OBDII, OBD2, V-LINK o Vgate.	عادةً تُسمى الماسحات OBDII أو OBD2 أو V-LINK أو Vgate.
+Buscar de nuevo	ابحث مجددًا
+Gráficos en vivo	رسوم بيانية مباشرة
+Desliza el dedo sobre un gráfico para ver el valor de cada momento. Toca los datos de arriba para comparar hasta 3.	مرّر إصبعك على الرسم لرؤية القيمة في كل لحظة. المس القيم بالأعلى لمقارنة حتى 3.
+mín	أدنى
+máx	أقصى
+prom	متوسط
+ahora	الآن
+hace	منذ
+Esperando datos…	في انتظار البيانات…
+Monitor apagado · toca para conectar	المراقب متوقف · المس للاتصال
+monitor apagado	المراقب متوقف
+Monitor apagado	المراقب متوقف
+Listo	تم
+límite	الحد
+ancho	العرض
+APPS	التطبيقات
+normal	طبيعي
+Avance del encendido	توقيت الإشعال
+Sonda O2 banco 1	حساس O2 الصف 1
+Sonda O2 banco 1 sensor 2	حساس O2 الصف 1 الحساس 2
+Tiempo de marcha	مدة التشغيل
+Distancia con la luz del motor	المسافة مع لمبة المحرك
+EGR comandada	EGR المطلوب
+Arranques desde borrar códigos	مرات الإحماء منذ المسح
+Distancia desde borrar códigos	المسافة منذ المسح
+Presión barométrica	الضغط الجوي
+Catalizador banco 1	المحوّل الحفاز الصف 1
+Catalizador banco 1 sensor 2	المحوّل الحفاز الصف 1 الحساس 2
+Carga absoluta	الحمل المطلق
+Mezcla comandada	نسبة التكافؤ المطلوبة
+Acelerador relativo	دواسة الوقود النسبية
+Acelerador B	دواسة الوقود B
+Pedal D	الدواسة D
+Pedal E	الدواسة E
+Acelerador comandado	دواسة الوقود المطلوبة
+Tiempo con la luz del motor	الوقت مع لمبة المحرك
+Tiempo desde borrar códigos	الوقت منذ المسح
+Mezcla O2 banco 1	تصحيح O2 الصف 1
+Mezcla O2 banco 1 sensor 2	تصحيح O2 الصف 1 الحساس 2
+API key	مفتاح API
+Enviar el VIN a la IA	إرسال VIN إلى الذكاء الاصطناعي
+RPM	الدورات

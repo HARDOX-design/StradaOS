@@ -72,7 +72,7 @@ class VehiclePanel extends FrameLayout implements Obd.Listener {
         blur.setScaleType(ImageView.ScaleType.FIT_XY);
         addView(blur, new LayoutParams(-1, -1));
         dim = new View(c);
-        dim.setBackgroundColor(Main.LIGHT ? 0x33FFFFFF : 0x55000000);
+        dim.setBackgroundColor(Main.LIGHT ? 0x66FFFFFF : 0x77000000);
         addView(dim, new LayoutParams(-1, -1));
         dim.setOnClickListener(new OnClickListener() { public void onClick(View v) { close(); } });
 
@@ -180,16 +180,22 @@ class VehiclePanel extends FrameLayout implements Obd.Listener {
     void open() {
         if (open) return;
         open = true;
-        takeShot();
+        // Primero el panel (con la capa de la GPU mientras se mueve) y el fondo oscurecido; el difuminado se calcula
+        // cuando el panel ya llegó y aparece suave: así la animación no espera a dibujar el inicio en pantallas lentas.
+        blur.setImageDrawable(null);
+        blur.setAlpha(0f); dim.setAlpha(0f);
         setVisibility(VISIBLE);
         Obd.addListener(this);
         listKey = ""; miniKey = "";
         onObd();
         float from = (left ? -1 : 1) * (px(sheetW) + px(30));
         sheet.setTranslationX(from);
-        sheet.animate().translationX(0).setDuration(240).setInterpolator(new DecelerateInterpolator(1.6f)).start();
-        blur.setAlpha(0f); dim.setAlpha(0f);
-        blur.animate().alpha(1f).setDuration(240).start();
+        sheet.animate().translationX(0).setDuration(240).setInterpolator(new DecelerateInterpolator(1.6f)).withLayer()
+            .withEndAction(new Runnable() { public void run() { post(new Runnable() { public void run() {
+                if (!open) return;
+                takeShot();
+                blur.animate().alpha(1f).setDuration(200).start();
+            }}); }}).start();
         dim.animate().alpha(1f).setDuration(240).start();
     }
 
@@ -198,7 +204,7 @@ class VehiclePanel extends FrameLayout implements Obd.Listener {
         open = false;
         Obd.removeListener(this);
         float to = (left ? -1 : 1) * (px(sheetW) + px(30));
-        sheet.animate().translationX(to).setDuration(200).setInterpolator(new DecelerateInterpolator()).start();
+        sheet.animate().translationX(to).setDuration(200).setInterpolator(new DecelerateInterpolator()).withLayer().start();
         dim.animate().alpha(0f).setDuration(200).start();
         blur.animate().alpha(0f).setDuration(200).withEndAction(new Runnable() { public void run() { finishClose(); } }).start();
     }
@@ -229,7 +235,10 @@ class VehiclePanel extends FrameLayout implements Obd.Listener {
             Canvas cv = new Canvas(bm);
             cv.drawColor(Main.BG);
             cv.scale(1f / f, 1f / f);
-            b.draw(cv);
+            // el panel ya está a la vista: se oculta solo mientras se dibuja el fondo (en el mismo instante, sin parpadeo)
+            int vis = getVisibility();
+            if (b != this) setVisibility(INVISIBLE);
+            try { b.draw(cv); } finally { setVisibility(vis); }
             boxBlur(bm, 3);
             boxBlur(bm, 3);
             boxBlur(bm, 3);

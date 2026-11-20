@@ -1201,3 +1201,299 @@ Del sensor del carro; necesita la caja CAN	Az autó érzékelőjéből; CAN-dobo
 pantalla FYT detectada: elígela en Tu vehículo → Equipo	FYT kijelző észlelve: válaszd ki a Járműved → Fejegység menüben
 esta pantalla no informa las luces	ez a kijelző nem jelzi a lámpák állapotát
 Apps	Appok
+# 2.26: escáner OBD-II (panel del vehículo y ajustes)
+Escáner OBD-II	OBD-II szkenner
+Enciende el monitor del motor en «Escáner OBD-II»	Kapcsold be a motorfigyelőt az „OBD-II szkenner” menüben
+Conectando…	Csatlakozás…
+Monitor del motor	Motorfigyelő
+Está apagado: enciéndelo para conectar el escáner	Ki van kapcsolva: kapcsold be a szkenner csatlakoztatásához
+Estado	Állapot
+Abrir el panel del vehículo	A járműpanel megnyitása
+Medidores, alertas y códigos encima del tema que tengas	Műszerek, riasztások és kódok a témád felett
+Diagnóstico	Diagnosztika
+Qué vigila StradaOS y cuándo avisa por voz	Mit figyel a StradaOS, és mikor szól hangosan
+Todo normal	Minden rendben
+Qué significan y qué hacer; borrarlos con el motor apagado	Mit jelentenek és mit tegyél; leállított motornál töröld őket
+Cada dato que entrega tu auto, con gráficos	Minden adat, amit az autód ad, grafikonokkal
+Más	Továbbiak
+Opcional: explica los códigos para tu auto en particular	Opcionális: a kódokat a te autódra szabva magyarázza
+Motor, protocolo, panel y escaneo completo	Motor, protokoll, panel és teljes vizsgálat
+Bluetooth emparejado, Wi-Fi (IP y puerto) o un auto simulado para probar	Párosított Bluetooth, Wi-Fi (IP és port) vagy egy szimulált autó kipróbáláshoz
+Empareja el escáner sin salir de StradaOS (clave 1234 o 0000)	Párosítsd a szkennert a StradaOS elhagyása nélkül (PIN: 1234 vagy 0000)
+Reconectar	Újracsatlakozás
+Conectar al iniciar StradaOS	Csatlakozás a StradaOS indulásakor
+Las alertas funcionan aunque estés en otra app (con una notificación fija)	A riasztások más alkalmazásban is működnek (állandó értesítéssel)
+Cómo conectar el escáner	A szkenner csatlakoztatása
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Bluetooth: emparéjalo con la clave 1234 o 0000. Wi-Fi: conecta la pantalla a la red del escáner y escribe su IP y puerto (casi siempre 192.168.0.10:35000).\n3. Elígelo arriba en «Escáner».	1. Dugd a ELM327 szkennert az OBD-aljzatba (a kormány alatt), és kapcsold rá a gyújtást.\n2. Bluetooth: párosítsd 1234 vagy 0000 PIN-nel. Wi-Fi: csatlakoztasd a fejegységet a szkenner hálózatához, és add meg az IP-t és a portot (szinte mindig 192.168.0.10:35000).\n3. Válaszd ki fent a „Szkenner” menüben.
+Lo que respondió el escáner (para reportar un problema)	Mit válaszolt a szkenner (hiba bejelentéséhez)
+Todo normal por ahora	Egyelőre minden rendben
+Alerta	Riasztás
+Aviso	Figyelmeztetés
+Avisos	Figyelmeztetések
+Habla aunque estés en Waze o con música	Akkor is beszél, ha Waze-t használsz vagy zenét hallgatsz
+Abrir el panel con una alerta grave	A panel megnyitása súlyos riasztáskor
+Por ejemplo, el motor muy caliente o la batería que no carga	Például nagyon forró motor vagy nem töltő akkumulátor
+Más de 4 °C por minuto con el motor caliente	Meleg motornál percenként több mint 4 °C
+Cuándo avisa cada dato	Mikor riaszt az egyes adat
+Códigos guardados en el auto	Az autóban tárolt kódok
+El auto no tiene códigos guardados	Az autóban nincs tárolt kód
+Se revisan al conectar y cada 30 segundos	Csatlakozáskor és 30 másodpercenként ellenőrizve
+Luz del motor encendida	Motorhiba-jelzőlámpa ég
+El computador del motor confirmó una falla	A motorvezérlő hibát erősített meg
+Con el motor apagado y el contacto puesto. Anota los códigos antes: no se puede deshacer	Leállított motornál, ráadott gyújtással. Előbb írd fel a kódokat: nem vonható vissza
+Conecta el escáner para ver los datos	Csatlakoztasd a szkennert az adatok megtekintéséhez
+Gráficos	Grafikonok
+Hasta 3 datos a la vez, de 1 a 30 minutos	Egyszerre legfeljebb 3 adat, 1–30 perc
+La tuya: cada consulta la cobra tu proveedor	A sajátod: minden lekérdezést a szolgáltatód számláz
+Privacidad	Adatvédelem
+Qué se envía	Mit küld el
+Solo el código, el vehículo que escribas y los datos del motor de ese momento; nunca tu ubicación. Las respuestas se guardan en la pantalla	Csak a kódot, az általad megadott járművet és a motor akkori adatait; a helyzetedet soha. A válaszok a fejegységen tárolódnak
+Tu vehículo (para la IA)	Járműved (az MI-nek)
+Marca, modelo, año, motor y caja	Márka, típus, évjárat, motor és váltó
+Identifica tu auto de forma única. Apagado por defecto	Egyedileg azonosítja az autódat. Alapból kikapcsolva
+Probar	Kipróbálás
+Pregunta por un código de ejemplo	Egy példakódról kérdez
+Motor	Motor
+Para calcular el consumo en motores sin sensor MAF	MAF-szenzor nélküli motoroknál a fogyasztás kiszámításához
+Automático casi siempre; fuerza uno si el escáner no lo detecta	Szinte mindig automatikus; kényszeríts egyet, ha a szkenner nem ismeri fel
+Panel del vehículo	Járműpanel
+Lado del panel	A panel oldala
+Pestaña en el borde	Fül a szélén
+Toca o desliza la pestaña para abrir el panel. Sin ella, ábrelo con un botón de la barra	Koppints vagy húzd a fület a panel megnyitásához. Nélküle egy sávgombbal nyithatod meg
+Informe de cada dato estándar y los propios de la marca. Solo lee	Jelentés minden szabványos és márkaspecifikus adatról. Csak olvas
+Ver el último informe	Az utolsó jelentés megtekintése
+Con un escáner ELM327 por Wi-Fi o Bluetooth: temperatura, batería, alertas por voz y códigos de falla	Wi-Fi-s vagy Bluetooth-os ELM327 szkennerrel: hőmérséklet, akkumulátor, hangos riasztások és hibakódok
+También con la pestaña del borde o con un botón de la barra	A szélén lévő füllel vagy egy sávgombbal is
+Vehículo (OBD-II)	Jármű (OBD-II)
+Sin elegir	Nincs kiválasztva
+Apagada	Kikapcsolva
+Alerta sobre	Riasztás e felett
+Alerta bajo	Riasztás e alatt
+Alerta sobre ±	Riasztás e felett ±
+No	Nem
+Para que una IA explique los códigos, pon tu API key (Claude, Groq, Gemini u otra) en Ajustes → Tu vehículo → Escáner OBD-II → Inteligencia artificial. Las explicaciones se guardan en el equipo y después funcionan sin internet.	Ahhoz, hogy egy MI elmagyarázza a kódokat, add meg az API-kulcsodat (Claude, Groq, Gemini vagy más) a Beállítások → Járműved → OBD-II szkenner → Mesterséges intelligencia menüben. A magyarázatok az eszközön tárolódnak, és utána internet nélkül is működnek.
+Se apaga la luz del motor y se borran los datos que usa el taller para diagnosticar; también se reinician los monitores de emisiones. No se puede deshacer y, si la falla sigue, el código volverá a aparecer. Anota los códigos antes.	Kialszik a motorhiba-jelzőlámpa, és törlődnek a szerviz által a diagnózishoz használt adatok; a kibocsátásfigyelők is nullázódnak. Nem vonható vissza, és ha a hiba megmarad, a kód visszajön. Előbb írd fel a kódokat.
+Ej.: Kia Picanto 2019 1.2 gasolina mecánico	Pl.: Kia Picanto 2019 1.2 benzines kézi váltós
+Sin poner	Nincs megadva
+Escaneando… el avance se ve en el estado del escáner	Vizsgálat… az előrehaladás a szkenner állapotában látszik
+Todavía no hay un informe	Még nincs jelentés
+Sin monitor activo	Nincs aktív figyelő
+Sin códigos guardados	Nincs tárolt kód
+Se revisan al conectar	Csatlakozáskor ellenőrizve
+Ver todo	Összes
+1 activa	1 aktív
+{} activas	{} aktív
+Vehículo	Jármű
+Monitor del vehículo	Járműfigyelő
+Batería	Akkumulátor
+Carga del motor	Motorterhelés
+Acelerador	Fojtószelep
+Aire de admisión	Beszívott levegő
+Combustible	Üzemanyag
+Mezcla corta	Rövid távú keverékkorrekció
+Mezcla larga	Hosszú távú keverékkorrekció
+Flujo de aire	Légtömegáram
+Presión del múltiple	Szívócsőnyomás
+Consumo del motor	Motor fogyasztása
+Consumo por hora	Óránkénti fogyasztás
+Aceite del motor	Motorolaj
+Datos del motor	Motoradatok
+Cilindrada del motor	Hengerűrtartalom
+Cilindrada del motor (litros)	Hengerűrtartalom (liter)
+Protocolo	Protokoll
+CAN 11 bits · 500 kbps	CAN 11 bit · 500 kbps
+CAN 29 bits · 500 kbps	CAN 29 bit · 500 kbps
+CAN 11 bits · 250 kbps	CAN 11 bit · 250 kbps
+CAN 29 bits · 250 kbps	CAN 29 bit · 250 kbps
+Escribe un número entre 0,5 y 8	Adj meg egy számot 0,5 és 8 között
+Conectando con el escáner…	Csatlakozás a szkennerhez…
+Conectado	Csatlakoztatva
+Esperando al auto (¿contacto apagado?)	Várakozás az autóra (le van véve a gyújtás?)
+Escáner conectado. Vigilando el motor.	A szkenner csatlakoztatva. A motor figyelése folyamatban.
+Se perdió la conexión con el escáner.	Megszakadt a kapcsolat a szkennerrel.
+Códigos borrados.	Kódok törölve.
+El auto no aceptó borrar los códigos.	Az autó nem fogadta el a kódok törlését.
+El escáner no logra hablar con el auto. ¿Está el contacto puesto?	A szkenner nem tud kommunikálni az autóval. Rá van adva a gyújtás?
+El escáner no responde	A szkenner nem válaszol
+El escáner cerró la conexión	A szkenner bontotta a kapcsolatot
+El Bluetooth está apagado	A Bluetooth ki van kapcsolva
+Este equipo no tiene Bluetooth	Ennek az eszköznek nincs Bluetooth-a
+No se pudo conectar	Nem sikerült csatlakozni
+Motor sobrecalentado: {}	A motor túlmelegedett: {}
+Refrigerante alto: {}	Magas hűtőfolyadék-hőmérséklet: {}
+El refrigerante sube rápido: {} °C	A hűtőfolyadék gyorsan melegszik: {} °C
+Voltaje alto: {}	Magas feszültség: {}
+Voltaje bajo: {}	Alacsony feszültség: {}
+RPM muy altas: {}	Nagyon magas fordulatszám: {}
+Motor muy exigido: {}	A motor nagyon meg van terhelve: {}
+Aire de admisión muy caliente: {}	Nagyon forró beszívott levegő: {}
+Poco combustible: {}	Kevés üzemanyag: {}
+Aceite del motor muy caliente: {}	Nagyon forró motorolaj: {}
+Código de falla {}	Hibakód: {}
+Código pendiente {}	Függő kód: {}
+revisa el detalle en la pantalla	nézd meg a részleteket a képernyőn
+Detente en un lugar seguro y apaga el motor. No abras la tapa del radiador en caliente. Espera que enfríe y revisa el nivel de refrigerante, el electroventilador y la correa.	Állj meg biztonságos helyen, és állítsd le a motort. Forrón ne nyisd ki a hűtősapkát. Hagyd lehűlni, majd ellenőrizd a hűtőfolyadék szintjét, a ventilátort és a szíjat.
+Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y, si sigue subiendo, pon la calefacción al máximo y busca dónde parar.	Csökkentsd a terhelést: kapcsolj vissza, kapcsold ki a klímát, és ha tovább emelkedik, tedd maximumra a fűtést, és keress helyet a megálláshoz.
+Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y vigila que el electroventilador encienda.	Csökkentsd a terhelést: kapcsolj vissza, kapcsold ki a klímát, és ellenőrizd, hogy bekapcsol-e a hűtőventilátor.
+El alternador está cargando de más y puede dañar la batería. Revísalo pronto.	A generátor túltölt, és károsíthatja az akkumulátort. Hamarosan ellenőriztesd.
+El alternador no está cargando bien: apaga lo que no necesites (aire, luces extra) y ve a un taller antes de que se descargue la batería. Revisa la correa.	A generátor nem tölt rendesen: kapcsold ki, ami nem kell (klíma, extra lámpák), és menj szervizbe, mielőtt lemerül az akkumulátor. Ellenőrizd a szíjat.
+Baja la velocidad o usa una marcha más alta. En bajadas, frena con motor sin pasar la zona roja.	Lassíts vagy kapcsolj feljebb. Lejtőn motorféket használj a piros tartomány elérése nélkül.
+El motor va al máximo hace rato. En cuestas largas usa una marcha más baja y deja descansar el motor y la caja.	A motor egy ideje teljes terhelésen jár. Hosszú emelkedőn kapcsolj vissza, és pihentesd a motort és a váltót.
+El aire que entra al motor está muy caliente: pierde potencia. Si estás detenido, avanza para que circule aire.	A motorba jutó levegő nagyon forró, ezért veszít a teljesítményéből. Ha állsz, állj olyan helyre, ahol jár a levegő.
+Carga combustible en la próxima estación. En la montaña puede no haber más adelante.	Tankolj a következő kútnál. Hegyekben lehet, hogy nem lesz több.
+El motor recibe menos combustible del que necesita: puede ser una fuga de vacío, el filtro de combustible o el sensor MAF. Puede perder fuerza en subidas.	A motor kevesebb üzemanyagot kap a szükségesnél: vákuumszivárgás, üzemanyagszűrő vagy MAF-szenzor lehet. Emelkedőn veszíthet a teljesítményéből.
+El motor recibe más combustible del necesario: revisa el filtro de aire, el sensor MAF o un inyector que gotee.	A motor több üzemanyagot kap a szükségesnél: ellenőrizd a légszűrőt, a MAF-szenzort vagy egy szivárgó befecskendezőt.
+Baja la exigencia y revisa el nivel de aceite cuando puedas parar.	Csökkentsd a terhelést, és amint megállhatsz, ellenőrizd az olajszintet.
+código	kód
+códigos	kód
+Carrocería (airbag, cinturones, luces, cierre…)	Karosszéria (légzsák, biztonsági öv, lámpák, zárak…)
+Chasis (frenos ABS, dirección, suspensión, 4x4)	Futómű (ABS-fék, kormány, felfüggesztés, 4x4)
+Comunicación entre computadores del auto	Kommunikáció az autó vezérlőegységei között
+Motor: mezcla de aire y combustible	Motor: levegő–üzemanyag keverék
+Motor: encendido y fallas de encendido	Motor: gyújtás és gyújtáskimaradás
+Control de emisiones	Kibocsátás-szabályozás
+Velocidad, ralentí y entradas auxiliares	Sebesség, alapjárat és segédbemenetek
+Computador del motor y sus salidas	A motorvezérlő és kimenetei
+Caja de cambios	Sebességváltó
+Motor o caja (sistema híbrido u otro)	Motor vagy váltó (hibrid vagy egyéb)
+código propio de la marca	gyártóspecifikus kód
+La API key no es válida	Az API-kulcs érvénytelen
+La IA está ocupada o sin saldo. Intenta más tarde.	Az MI foglalt vagy elfogyott a kreditje. Próbáld újra később.
+La IA no quiso responder	Az MI megtagadta a választ
+La IA respondió vacío	Az MI üres választ adott
+Luz del motor	Motorhiba-jelzés
+Conectar	Csatlakozás
+Auto simulado	Szimulált autó
+Apagado	Ki
+En vivo	Élő
+Alertas	Riasztások
+Códigos de falla	Hibakódok
+Pendiente	Függő
+Grave	Súlyos
+Leve	Enyhe
+Revisar	Ellenőrizendő
+Borrar códigos	Kódok törlése
+Qué hacer	Mit tegyél
+Explicación de la IA	Az MI magyarázata
+Este código no está en la tabla sin conexión: suele ser un código propio de la marca. La IA puede explicarlo.	Ez a kód nincs az offline táblázatban: általában gyártóspecifikus kód. Az MI el tudja magyarázni.
+Ojo: los códigos de airbag, ABS y carrocería normalmente no se leen con OBD-II genérico; si aparece aquí es porque el auto lo reporta al computador del motor.	Figyelem: a légzsák-, ABS- és karosszériakódok általános OBD-II-vel többnyire nem olvashatók; ha itt megjelenik, az autó a motorvezérlőnek jelenti.
+Volver a preguntar a la IA	Kérdezd újra az MI-t
+Explicar con IA	Magyarázat MI-vel
+Preguntando a la IA…	Kérdés az MI-nek…
+No se pudo consultar la IA	Nem sikerült elérni az MI-t
+Apaga el motor y deja solo el contacto puesto para borrar los códigos.	A kódok törléséhez állítsd le a motort, és csak a gyújtást hagyd ráadva.
+¿Borrar los códigos de falla?	Törlöd a hibakódokat?
+Escáner	Szkenner
+Inteligencia artificial	Mesterséges intelligencia
+Sin configurar	Nincs beállítva
+Avisos por voz	Hangos riasztások
+Sí	Igen
+Registro de la conexión	Kapcsolatnapló
+Ajustes del vehículo	Jármű beállításai
+Tu vehículo: marca, modelo, año, motor y caja	Járműved: márka, típus, évjárat, motor és váltó
+Escáner Wi-Fi (escribir IP y puerto)	Wi-Fi-s szkenner (IP és port megadása)
+Auto simulado (para probar)	Szimulált autó (kipróbáláshoz)
+No hay escáneres Bluetooth emparejados: emparéjalo en los ajustes del equipo	Nincs párosított Bluetooth-szkenner: párosítsd a fejegység beállításaiban
+Elige tu escáner	Válaszd ki a szkennered
+IP y puerto del escáner Wi-Fi	A Wi-Fi-s szkenner IP-címe és portja
+Escribe IP:puerto, por ejemplo 192.168.0.10:35000	Add meg IP:port formában, például 192.168.0.10:35000
+Proveedor	Szolgáltató
+Modelo	Modell
+Dirección de la API	API-cím
+Borrar la API key	Az API-kulcs törlése
+Aviso sobre	Figyelmeztetés e felett
+Aviso bajo	Figyelmeztetés e alatt
+Aviso sobre ±	Figyelmeztetés e felett ±
+Otra compatible con OpenAI	Más OpenAI-kompatibilis
+elegir…	válassz…
+Probar la IA	Az MI kipróbálása
+Primero escribe la API key	Előbb add meg az API-kulcsot
+Buscando los modelos del proveedor…	A szolgáltató modelljeinek lekérése…
+recomendado	ajánlott
+Escribir otro…	Másik megadása…
+Preguntando por el código de ejemplo P0711…	Kérdés a P0711 példakódról…
+La IA funciona · P0711 de ejemplo	Az MI működik · P0711 példa
+Volver	Vissza
+Elige el modelo de la IA en los ajustes	Válaszd ki az MI-modellt a beállításokban
+Escribe la dirección de la API en los ajustes	Add meg az API-címet a beállításokban
+Escaneando	Vizsgálat
+Escaneo terminado.	A vizsgálat kész.
+El escaneo se cortó	A vizsgálat megszakadt
+Escanear todo lo que entrega el auto	Minden adat vizsgálata, amit az autó ad
+Conecta el escáner con el contacto puesto (mejor con el motor en marcha) y vuelve a intentarlo.	Csatlakoztasd a szkennert ráadott gyújtással (inkább járó motornál), és próbáld újra.
+Pregunta al auto por cada dato estándar y por los datos propios de la marca del motor y la caja. Tarda hasta 2 minutos y mientras tanto las alertas se pausan: hazlo detenido. Solo lee, no cambia nada en el auto.	Megkérdezi az autótól az összes szabványos adatot, valamint a motor és a váltó márkaspecifikus adatait. Legfeljebb 2 percig tart, közben a riasztások szünetelnek: állva csináld. Csak olvas, semmit nem változtat az autón.
+Escanear	Vizsgálat
+Guardado en	Mentve ide
+Lo que entrega tu auto	Amit az autód ad
+Consumo	Fogyasztás
+calculado	számított
+Panel	Műszerfal
+Todos los datos	Összes adat
+Datos en vivo	Élő adatok
+Monitores de emisiones	Kibocsátásfigyelők
+✓ listo · ✗ aún no termina su prueba (normal después de borrar códigos o desconectar la batería).	✓ kész · ✗ a teszt még nem fejeződött be (normális a kódok törlése vagy az akkumulátor lekötése után).
+Catalizador	Katalizátor
+Preguntar a la IA	Kérdezd az MI-t
+Ajustar esta alerta	A riasztás beállítása
+Alertas a vigilar	Figyelendő riasztások
+Subida rápida del refrigerante	A hűtőfolyadék gyors melegedése
+Códigos de falla nuevos (aviso por voz)	Új hibakódok (hangos figyelmeztetés)
+aviso	figyelmeztetés
+alerta	riasztás
+bajo	alacsony
+Vigilar	Figyelés
+Valores de fábrica	Gyári értékek
+Escribe un número	Adj meg egy számot
+Datos del motor cuando se registró la falla	Motoradatok a hiba rögzítésekor
+Buscar escáneres Bluetooth cercanos	Közeli Bluetooth-szkennerek keresése
+Emparejado	Párosítva
+emparejado	párosítva
+No se pudo emparejar. Prueba con la clave 1234 o 0000.	Nem sikerült párosítani. Próbáld az 1234 vagy 0000 PIN-t.
+Sin el permiso de ubicación Android no deja buscar equipos Bluetooth	Helyhozzáférési engedély nélkül az Android nem engedi a Bluetooth-eszközök keresését
+No se encontraron equipos. ¿Está el escáner enchufado y el contacto puesto?	Nem található eszköz. Be van dugva a szkenner, és rá van adva a gyújtás?
+Buscando… (enchufa el escáner y pon el contacto)	Keresés… (dugd be a szkennert, és add rá a gyújtást)
+Emparejando… si pide clave, escribe 1234 o 0000	Párosítás… ha PIN-t kér, írd be: 1234 vagy 0000
+Emparéjalo en los ajustes de Bluetooth del equipo	Párosítsd a fejegység Bluetooth-beállításaiban
+Los escáneres suelen llamarse OBDII, OBD2, V-LINK o Vgate.	A szkennerek neve általában OBDII, OBD2, V-LINK vagy Vgate.
+Buscar de nuevo	Keresés újra
+Gráficos en vivo	Élő grafikonok
+Desliza el dedo sobre un gráfico para ver el valor de cada momento. Toca los datos de arriba para comparar hasta 3.	Húzd az ujjad a grafikonon, hogy lásd az egyes pillanatok értékét. Fent koppints az adatokra, és legfeljebb 3-at összehasonlíthatsz.
+mín	min.
+máx	max.
+prom	átl.
+ahora	most
+hace	ezelőtt
+Esperando datos…	Várakozás az adatokra…
+Monitor apagado · toca para conectar	Figyelő kikapcsolva · koppints a csatlakozáshoz
+monitor apagado	figyelő kikapcsolva
+Monitor apagado	Figyelő kikapcsolva
+Listo	Kész
+límite	határ
+ancho	szélesség
+APPS	APPOK
+normal	normál
+Avance del encendido	Gyújtási előgyújtás
+Sonda O2 banco 1	O2-szenzor 1. hengersor
+Sonda O2 banco 1 sensor 2	O2-szenzor 1. hengersor 2. szenzor
+Tiempo de marcha	Üzemidő
+Distancia con la luz del motor	Megtett út égő hibalámpával
+EGR comandada	EGR-parancs
+Arranques desde borrar códigos	Bemelegedések a törlés óta
+Distancia desde borrar códigos	Megtett út a törlés óta
+Presión barométrica	Légköri nyomás
+Catalizador banco 1	Katalizátor 1. hengersor
+Catalizador banco 1 sensor 2	Katalizátor 1. hengersor 2. szenzor
+Carga absoluta	Abszolút terhelés
+Mezcla comandada	Parancsolt légviszony
+Acelerador relativo	Relatív fojtószelep
+Acelerador B	Fojtószelep B
+Pedal D	Pedál D
+Pedal E	Pedál E
+Acelerador comandado	Parancsolt fojtószelep
+Tiempo con la luz del motor	Idő égő hibalámpával
+Tiempo desde borrar códigos	Idő a törlés óta
+Mezcla O2 banco 1	O2-korrekció 1. hengersor
+Mezcla O2 banco 1 sensor 2	O2-korrekció 1. hengersor 2. szenzor
+API key	API-kulcs
+Enviar el VIN a la IA	A VIN elküldése az MI-nek
+RPM	Fordulatszám

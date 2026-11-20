@@ -1218,3 +1218,299 @@ Temperatura exterior	车外温度
 Del sensor del carro; necesita la caja CAN	来自车辆传感器；需要 CAN 盒
 pantalla FYT detectada: elígela en Tu vehículo → Equipo	检测到 FYT 屏幕：请在 你的车辆 → 车机 中选择
 esta pantalla no informa las luces	此屏幕不提供车灯信息
+# 2.26: escáner OBD-II (panel del vehículo y ajustes)
+Escáner OBD-II	OBD-II 诊断仪
+Enciende el monitor del motor en «Escáner OBD-II»	请在“OBD-II 诊断仪”中打开发动机监测
+Conectando…	正在连接…
+Monitor del motor	发动机监测
+Está apagado: enciéndelo para conectar el escáner	已关闭：打开后即可连接诊断仪
+Estado	状态
+Abrir el panel del vehículo	打开车辆面板
+Medidores, alertas y códigos encima del tema que tengas	在当前主题之上显示仪表、警报和故障码
+Diagnóstico	诊断
+Qué vigila StradaOS y cuándo avisa por voz	StradaOS 监测哪些数据以及何时语音提醒
+Todo normal	一切正常
+Qué significan y qué hacer; borrarlos con el motor apagado	含义与处理方法；请在发动机熄火时清除
+Cada dato que entrega tu auto, con gráficos	车辆提供的每项数据，附图表
+Más	更多
+Opcional: explica los códigos para tu auto en particular	可选：针对你的车辆解释故障码
+Motor, protocolo, panel y escaneo completo	发动机、协议、面板和完整扫描
+Bluetooth emparejado, Wi-Fi (IP y puerto) o un auto simulado para probar	已配对的蓝牙、Wi-Fi（IP 和端口）或用于测试的模拟车辆
+Empareja el escáner sin salir de StradaOS (clave 1234 o 0000)	无需离开 StradaOS 即可配对诊断仪（PIN 1234 或 0000）
+Reconectar	重新连接
+Conectar al iniciar StradaOS	StradaOS 启动时连接
+Las alertas funcionan aunque estés en otra app (con una notificación fija)	即使在其他应用中警报也能工作（带常驻通知）
+Cómo conectar el escáner	如何连接诊断仪
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Bluetooth: emparéjalo con la clave 1234 o 0000. Wi-Fi: conecta la pantalla a la red del escáner y escribe su IP y puerto (casi siempre 192.168.0.10:35000).\n3. Elígelo arriba en «Escáner».	1. 将 ELM327 诊断仪插入 OBD 接口（方向盘下方）并打开点火开关。\n2. 蓝牙：用 PIN 1234 或 0000 配对。Wi-Fi：将车机连接到诊断仪的网络并输入其 IP 和端口（几乎总是 192.168.0.10:35000）。\n3. 在上方“诊断仪”中选择它。
+Lo que respondió el escáner (para reportar un problema)	诊断仪的回复（用于报告问题）
+Todo normal por ahora	目前一切正常
+Alerta	警报
+Aviso	提醒
+Avisos	提醒
+Habla aunque estés en Waze o con música	使用 Waze 或播放音乐时也会播报
+Abrir el panel con una alerta grave	出现严重警报时打开面板
+Por ejemplo, el motor muy caliente o la batería que no carga	例如发动机过热或电瓶不充电
+Más de 4 °C por minuto con el motor caliente	发动机热车时每分钟上升超过 4 °C
+Cuándo avisa cada dato	各项数据何时报警
+Códigos guardados en el auto	车辆中保存的故障码
+El auto no tiene códigos guardados	车辆没有保存的故障码
+Se revisan al conectar y cada 30 segundos	连接时及每 30 秒检查一次
+Luz del motor encendida	发动机故障灯亮
+El computador del motor confirmó una falla	发动机电脑已确认故障
+Con el motor apagado y el contacto puesto. Anota los códigos antes: no se puede deshacer	发动机熄火、点火开关打开时进行。请先记下故障码：此操作无法撤销
+Conecta el escáner para ver los datos	连接诊断仪以查看数据
+Gráficos	图表
+Hasta 3 datos a la vez, de 1 a 30 minutos	最多同时 3 项数据，1 至 30 分钟
+La tuya: cada consulta la cobra tu proveedor	使用你自己的密钥：每次请求由服务商计费
+Privacidad	隐私
+Qué se envía	发送哪些内容
+Solo el código, el vehículo que escribas y los datos del motor de ese momento; nunca tu ubicación. Las respuestas se guardan en la pantalla	仅发送故障码、你填写的车辆信息及当时的发动机数据；绝不发送你的位置。回答保存在车机上
+Tu vehículo (para la IA)	你的车辆（供 AI 使用）
+Marca, modelo, año, motor y caja	品牌、型号、年份、发动机和变速箱
+Identifica tu auto de forma única. Apagado por defecto	可唯一识别你的车辆。默认关闭
+Probar	测试
+Pregunta por un código de ejemplo	询问一个示例故障码
+Motor	发动机
+Para calcular el consumo en motores sin sensor MAF	用于计算没有 MAF 传感器的发动机油耗
+Automático casi siempre; fuerza uno si el escáner no lo detecta	几乎总是自动；若诊断仪检测不到可强制指定
+Panel del vehículo	车辆面板
+Lado del panel	面板位置
+Pestaña en el borde	边缘拉手
+Toca o desliza la pestaña para abrir el panel. Sin ella, ábrelo con un botón de la barra	点按或滑动拉手打开面板。没有拉手时，可用快捷栏按钮打开
+Informe de cada dato estándar y los propios de la marca. Solo lee	报告每项标准数据及品牌专有数据。只读
+Ver el último informe	查看最近的报告
+Con un escáner ELM327 por Wi-Fi o Bluetooth: temperatura, batería, alertas por voz y códigos de falla	使用 Wi-Fi 或蓝牙 ELM327 诊断仪：温度、电瓶、语音警报和故障码
+También con la pestaña del borde o con un botón de la barra	也可通过边缘拉手或快捷栏按钮打开
+Vehículo (OBD-II)	车辆 (OBD-II)
+Sin elegir	未选择
+Apagada	关闭
+Alerta sobre	高于时警报
+Alerta bajo	低于时警报
+Alerta sobre ±	高于 ± 时警报
+No	否
+Para que una IA explique los códigos, pon tu API key (Claude, Groq, Gemini u otra) en Ajustes → Tu vehículo → Escáner OBD-II → Inteligencia artificial. Las explicaciones se guardan en el equipo y después funcionan sin internet.	要让 AI 解释故障码，请在 设置 → 你的车辆 → OBD-II 诊断仪 → 人工智能 中填写你的 API 密钥（Claude、Groq、Gemini 或其他）。解释会保存在设备上，之后无需联网即可查看。
+Se apaga la luz del motor y se borran los datos que usa el taller para diagnosticar; también se reinician los monitores de emisiones. No se puede deshacer y, si la falla sigue, el código volverá a aparecer. Anota los códigos antes.	发动机故障灯会熄灭，维修厂用于诊断的数据会被清除，排放监测也会重置。此操作无法撤销，若故障仍在，故障码会再次出现。请先记下故障码。
+Ej.: Kia Picanto 2019 1.2 gasolina mecánico	例如：Kia Picanto 2019 1.2 汽油 手动挡
+Sin poner	未设置
+Escaneando… el avance se ve en el estado del escáner	正在扫描… 进度显示在诊断仪状态中
+Todavía no hay un informe	还没有报告
+Sin monitor activo	没有运行中的监测
+Sin códigos guardados	没有保存的故障码
+Se revisan al conectar	连接时检查
+Ver todo	查看全部
+1 activa	1 个
+{} activas	{} 个
+Vehículo	车辆
+Monitor del vehículo	车辆监测
+Batería	电瓶
+Carga del motor	发动机负荷
+Acelerador	节气门
+Aire de admisión	进气温度
+Combustible	燃油
+Mezcla corta	短期燃油修正
+Mezcla larga	长期燃油修正
+Flujo de aire	空气流量
+Presión del múltiple	进气歧管压力
+Consumo del motor	发动机油耗
+Consumo por hora	每小时油耗
+Aceite del motor	机油
+Datos del motor	发动机数据
+Cilindrada del motor	发动机排量
+Cilindrada del motor (litros)	发动机排量（升）
+Protocolo	协议
+CAN 11 bits · 500 kbps	CAN 11 位 · 500 kbps
+CAN 29 bits · 500 kbps	CAN 29 位 · 500 kbps
+CAN 11 bits · 250 kbps	CAN 11 位 · 250 kbps
+CAN 29 bits · 250 kbps	CAN 29 位 · 250 kbps
+Escribe un número entre 0,5 y 8	请输入 0.5 到 8 之间的数字
+Conectando con el escáner…	正在连接诊断仪…
+Conectado	已连接
+Esperando al auto (¿contacto apagado?)	等待车辆（点火开关关闭？）
+Escáner conectado. Vigilando el motor.	诊断仪已连接。正在监测发动机。
+Se perdió la conexión con el escáner.	与诊断仪的连接已断开。
+Códigos borrados.	故障码已清除。
+El auto no aceptó borrar los códigos.	车辆不接受清除故障码。
+El escáner no logra hablar con el auto. ¿Está el contacto puesto?	诊断仪无法与车辆通信。点火开关打开了吗？
+El escáner no responde	诊断仪无响应
+El escáner cerró la conexión	诊断仪关闭了连接
+El Bluetooth está apagado	蓝牙已关闭
+Este equipo no tiene Bluetooth	此设备没有蓝牙
+No se pudo conectar	无法连接
+Motor sobrecalentado: {}	发动机过热：{}
+Refrigerante alto: {}	冷却液温度高：{}
+El refrigerante sube rápido: {} °C	冷却液温度快速上升：{} °C
+Voltaje alto: {}	电压过高：{}
+Voltaje bajo: {}	电压过低：{}
+RPM muy altas: {}	转速过高：{}
+Motor muy exigido: {}	发动机负荷过大：{}
+Aire de admisión muy caliente: {}	进气温度过高：{}
+Poco combustible: {}	燃油不足：{}
+Aceite del motor muy caliente: {}	机油温度过高：{}
+Código de falla {}	故障码 {}
+Código pendiente {}	待定故障码 {}
+revisa el detalle en la pantalla	请查看屏幕上的详情
+Detente en un lugar seguro y apaga el motor. No abras la tapa del radiador en caliente. Espera que enfríe y revisa el nivel de refrigerante, el electroventilador y la correa.	请在安全处停车并熄火。发动机热时不要打开水箱盖。待冷却后检查冷却液液位、电子风扇和皮带。
+Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y, si sigue subiendo, pon la calefacción al máximo y busca dónde parar.	降低负荷：换低挡、关闭空调；若仍在上升，把暖风开到最大并寻找停车地点。
+Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y vigila que el electroventilador encienda.	降低负荷：换低挡、关闭空调，并确认电子风扇已启动。
+El alternador está cargando de más y puede dañar la batería. Revísalo pronto.	发电机充电过度，可能损坏电瓶。请尽快检查。
+El alternador no está cargando bien: apaga lo que no necesites (aire, luces extra) y ve a un taller antes de que se descargue la batería. Revisa la correa.	发电机充电不正常：关闭不需要的设备（空调、额外灯光），在电瓶耗尽前前往维修厂。检查皮带。
+Baja la velocidad o usa una marcha más alta. En bajadas, frena con motor sin pasar la zona roja.	减速或换高挡。下坡时用发动机制动，不要进入红区。
+El motor va al máximo hace rato. En cuestas largas usa una marcha más baja y deja descansar el motor y la caja.	发动机已满负荷运转一段时间。长上坡时换低挡，让发动机和变速箱休息。
+El aire que entra al motor está muy caliente: pierde potencia. Si estás detenido, avanza para que circule aire.	进入发动机的空气很热，因此动力下降。如果停着，请移到通风处。
+Carga combustible en la próxima estación. En la montaña puede no haber más adelante.	请在下一个加油站加油。山区可能再没有加油站。
+El motor recibe menos combustible del que necesita: puede ser una fuga de vacío, el filtro de combustible o el sensor MAF. Puede perder fuerza en subidas.	发动机得到的燃油少于所需：可能是真空泄漏、燃油滤清器或 MAF 传感器问题。上坡时可能无力。
+El motor recibe más combustible del necesario: revisa el filtro de aire, el sensor MAF o un inyector que gotee.	发动机得到的燃油多于所需：检查空气滤清器、MAF 传感器或是否有喷油嘴泄漏。
+Baja la exigencia y revisa el nivel de aceite cuando puedas parar.	降低负荷，能停车时检查机油液位。
+código	个故障码
+códigos	个故障码
+Carrocería (airbag, cinturones, luces, cierre…)	车身（安全气囊、安全带、灯光、门锁…）
+Chasis (frenos ABS, dirección, suspensión, 4x4)	底盘（ABS 制动、转向、悬挂、四驱）
+Comunicación entre computadores del auto	车辆各电脑之间的通信
+Motor: mezcla de aire y combustible	发动机：空燃混合
+Motor: encendido y fallas de encendido	发动机：点火与失火
+Control de emisiones	排放控制
+Velocidad, ralentí y entradas auxiliares	车速、怠速和辅助输入
+Computador del motor y sus salidas	发动机电脑及其输出
+Caja de cambios	变速箱
+Motor o caja (sistema híbrido u otro)	发动机或变速箱（混动或其他）
+código propio de la marca	厂商专用故障码
+La API key no es válida	API 密钥无效
+La IA está ocupada o sin saldo. Intenta más tarde.	AI 繁忙或余额不足。请稍后再试。
+La IA no quiso responder	AI 拒绝回答
+La IA respondió vacío	AI 返回了空回答
+Luz del motor	发动机故障灯
+Conectar	连接
+Auto simulado	模拟车辆
+Apagado	关闭
+En vivo	实时
+Alertas	警报
+Códigos de falla	故障码
+Pendiente	待定
+Grave	严重
+Leve	轻微
+Revisar	需检查
+Borrar códigos	清除故障码
+Qué hacer	处理方法
+Explicación de la IA	AI 解释
+Este código no está en la tabla sin conexión: suele ser un código propio de la marca. La IA puede explicarlo.	此故障码不在离线表中：通常是厂商专用故障码。AI 可以解释它。
+Ojo: los códigos de airbag, ABS y carrocería normalmente no se leen con OBD-II genérico; si aparece aquí es porque el auto lo reporta al computador del motor.	注意：安全气囊、ABS 和车身故障码通常无法通过通用 OBD-II 读取；若出现在这里，说明车辆将其上报给了发动机电脑。
+Volver a preguntar a la IA	再次询问 AI
+Explicar con IA	用 AI 解释
+Preguntando a la IA…	正在询问 AI…
+No se pudo consultar la IA	无法连接 AI
+Apaga el motor y deja solo el contacto puesto para borrar los códigos.	请熄火并只保持点火开关打开以清除故障码。
+¿Borrar los códigos de falla?	清除故障码？
+Escáner	诊断仪
+Inteligencia artificial	人工智能
+Sin configurar	未设置
+Avisos por voz	语音警报
+Sí	是
+Registro de la conexión	连接日志
+Ajustes del vehículo	车辆设置
+Tu vehículo: marca, modelo, año, motor y caja	你的车辆：品牌、型号、年份、发动机和变速箱
+Escáner Wi-Fi (escribir IP y puerto)	Wi-Fi 诊断仪（输入 IP 和端口）
+Auto simulado (para probar)	模拟车辆（用于测试）
+No hay escáneres Bluetooth emparejados: emparéjalo en los ajustes del equipo	没有已配对的蓝牙诊断仪：请在车机设置中配对
+Elige tu escáner	选择你的诊断仪
+IP y puerto del escáner Wi-Fi	Wi-Fi 诊断仪的 IP 和端口
+Escribe IP:puerto, por ejemplo 192.168.0.10:35000	请输入 IP:端口，例如 192.168.0.10:35000
+Proveedor	服务商
+Modelo	模型
+Dirección de la API	API 地址
+Borrar la API key	删除 API 密钥
+Aviso sobre	高于时提醒
+Aviso bajo	低于时提醒
+Aviso sobre ±	高于 ± 时提醒
+Otra compatible con OpenAI	其他兼容 OpenAI 的服务
+elegir…	选择…
+Probar la IA	测试 AI
+Primero escribe la API key	请先输入 API 密钥
+Buscando los modelos del proveedor…	正在获取服务商的模型…
+recomendado	推荐
+Escribir otro…	输入其他…
+Preguntando por el código de ejemplo P0711…	正在询问示例故障码 P0711…
+La IA funciona · P0711 de ejemplo	AI 工作正常 · 示例 P0711
+Volver	返回
+Elige el modelo de la IA en los ajustes	请在设置中选择 AI 模型
+Escribe la dirección de la API en los ajustes	请在设置中填写 API 地址
+Escaneando	正在扫描
+Escaneo terminado.	扫描完成。
+El escaneo se cortó	扫描已中断
+Escanear todo lo que entrega el auto	扫描车辆提供的全部数据
+Conecta el escáner con el contacto puesto (mejor con el motor en marcha) y vuelve a intentarlo.	请在点火开关打开（最好发动机运转）时连接诊断仪，然后重试。
+Pregunta al auto por cada dato estándar y por los datos propios de la marca del motor y la caja. Tarda hasta 2 minutos y mientras tanto las alertas se pausan: hazlo detenido. Solo lee, no cambia nada en el auto.	向车辆询问每项标准数据以及品牌专有的发动机和变速箱数据。最多需要 2 分钟，期间警报暂停：请在停车时进行。只读取，不会更改车辆任何设置。
+Escanear	扫描
+Guardado en	已保存到
+Lo que entrega tu auto	你的车辆提供的数据
+Consumo	油耗
+calculado	计算值
+Panel	仪表盘
+Todos los datos	全部数据
+Datos en vivo	实时数据
+Monitores de emisiones	排放监测
+✓ listo · ✗ aún no termina su prueba (normal después de borrar códigos o desconectar la batería).	✓ 就绪 · ✗ 测试尚未完成（清除故障码或断开电瓶后属正常）。
+Catalizador	三元催化器
+Preguntar a la IA	询问 AI
+Ajustar esta alerta	调整此警报
+Alertas a vigilar	要监测的警报
+Subida rápida del refrigerante	冷却液温度快速上升
+Códigos de falla nuevos (aviso por voz)	新故障码（语音提醒）
+aviso	提醒
+alerta	警报
+bajo	低
+Vigilar	监测
+Valores de fábrica	出厂值
+Escribe un número	请输入数字
+Datos del motor cuando se registró la falla	记录故障时的发动机数据
+Buscar escáneres Bluetooth cercanos	搜索附近的蓝牙诊断仪
+Emparejado	已配对
+emparejado	已配对
+No se pudo emparejar. Prueba con la clave 1234 o 0000.	无法配对。请尝试 PIN 1234 或 0000。
+Sin el permiso de ubicación Android no deja buscar equipos Bluetooth	没有位置权限时，Android 不允许搜索蓝牙设备
+No se encontraron equipos. ¿Está el escáner enchufado y el contacto puesto?	未找到设备。诊断仪已插好且点火开关已打开吗？
+Buscando… (enchufa el escáner y pon el contacto)	正在搜索…（插好诊断仪并打开点火开关）
+Emparejando… si pide clave, escribe 1234 o 0000	正在配对… 若要求 PIN，请输入 1234 或 0000
+Emparéjalo en los ajustes de Bluetooth del equipo	请在车机的蓝牙设置中配对
+Los escáneres suelen llamarse OBDII, OBD2, V-LINK o Vgate.	诊断仪通常名为 OBDII、OBD2、V-LINK 或 Vgate。
+Buscar de nuevo	重新搜索
+Gráficos en vivo	实时图表
+Desliza el dedo sobre un gráfico para ver el valor de cada momento. Toca los datos de arriba para comparar hasta 3.	在图表上滑动手指可查看每一时刻的数值。点按上方数据最多可比较 3 项。
+mín	最小
+máx	最大
+prom	平均
+ahora	现在
+hace	前
+Esperando datos…	等待数据…
+Monitor apagado · toca para conectar	监测已关闭 · 点按连接
+monitor apagado	监测已关闭
+Monitor apagado	监测已关闭
+Listo	完成
+límite	限值
+ancho	宽度
+APPS	应用
+normal	正常
+Avance del encendido	点火提前角
+Sonda O2 banco 1	氧传感器 第1列
+Sonda O2 banco 1 sensor 2	氧传感器 第1列 传感器2
+Tiempo de marcha	运行时间
+Distancia con la luz del motor	故障灯亮后的行驶距离
+EGR comandada	EGR 指令值
+Arranques desde borrar códigos	清码后的暖机次数
+Distancia desde borrar códigos	清码后的行驶距离
+Presión barométrica	大气压力
+Catalizador banco 1	催化器 第1列
+Catalizador banco 1 sensor 2	催化器 第1列 传感器2
+Carga absoluta	绝对负荷
+Mezcla comandada	指令当量比
+Acelerador relativo	相对节气门
+Acelerador B	节气门 B
+Pedal D	踏板 D
+Pedal E	踏板 E
+Acelerador comandado	指令节气门
+Tiempo con la luz del motor	故障灯亮的时间
+Tiempo desde borrar códigos	清码后的时间
+Mezcla O2 banco 1	氧修正 第1列
+Mezcla O2 banco 1 sensor 2	氧修正 第1列 传感器2
+API key	API 密钥
+Enviar el VIN a la IA	将 VIN 发送给 AI
+RPM	转速

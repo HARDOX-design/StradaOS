@@ -1402,3 +1402,85 @@ recomendado	recomendado
 revisa el detalle en la pantalla	veja o detalhe na tela
 se ajusta solo	ajusta-se sozinho
 ✓ listo · ✗ aún no termina su prueba (normal después de borrar códigos o desconectar la batería).	✓ pronto · ✗ ainda não terminou seu teste (normal após apagar códigos ou desconectar a bateria).
+# 2.26: escáner OBD-II (panel del vehículo y ajustes)
+Escáner OBD-II	Scanner OBD-II
+Enciende el monitor del motor en «Escáner OBD-II»	Ligue o monitor do motor em «Scanner OBD-II»
+Conectando…	Conectando…
+Monitor del motor	Monitor do motor
+Está apagado: enciéndelo para conectar el escáner	Está desligado: ligue-o para conectar o scanner
+Estado	Estado
+Abrir el panel del vehículo	Abrir o painel do veículo
+Medidores, alertas y códigos encima del tema que tengas	Medidores, alertas e códigos por cima do seu tema
+Diagnóstico	Diagnóstico
+Qué vigila StradaOS y cuándo avisa por voz	O que o StradaOS vigia e quando avisa por voz
+Todo normal	Tudo normal
+Qué significan y qué hacer; borrarlos con el motor apagado	O que significam e o que fazer; apague-os com o motor desligado
+Cada dato que entrega tu auto, con gráficos	Cada dado que o seu carro fornece, com gráficos
+Más	Mais
+Opcional: explica los códigos para tu auto en particular	Opcional: explica os códigos para o seu carro em particular
+Motor, protocolo, panel y escaneo completo	Motor, protocolo, painel e varredura completa
+Bluetooth emparejado, Wi-Fi (IP y puerto) o un auto simulado para probar	Bluetooth pareado, Wi-Fi (IP e porta) ou um carro simulado para testar
+Empareja el escáner sin salir de StradaOS (clave 1234 o 0000)	Pareie o scanner sem sair do StradaOS (senha 1234 ou 0000)
+Reconectar	Reconectar
+Conectar al iniciar StradaOS	Conectar ao iniciar o StradaOS
+Las alertas funcionan aunque estés en otra app (con una notificación fija)	Os alertas funcionam mesmo em outro app (com uma notificação fixa)
+Cómo conectar el escáner	Como conectar o scanner
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Bluetooth: emparéjalo con la clave 1234 o 0000. Wi-Fi: conecta la pantalla a la red del escáner y escribe su IP y puerto (casi siempre 192.168.0.10:35000).\n3. Elígelo arriba en «Escáner».	1. Ligue o scanner ELM327 no conector OBD (embaixo do volante) e ligue a ignição.\n2. Bluetooth: pareie com a senha 1234 ou 0000. Wi-Fi: conecte a central à rede do scanner e escreva o IP e a porta (quase sempre 192.168.0.10:35000).\n3. Escolha-o acima em «Scanner».
+Lo que respondió el escáner (para reportar un problema)	O que o scanner respondeu (para relatar um problema)
+Todo normal por ahora	Tudo normal por enquanto
+Alerta	Alerta
+Aviso	Aviso
+Avisos	Avisos
+Habla aunque estés en Waze o con música	Fala mesmo no Waze ou com música
+Abrir el panel con una alerta grave	Abrir o painel com um alerta grave
+Por ejemplo, el motor muy caliente o la batería que no carga	Por exemplo, o motor muito quente ou a bateria que não carrega
+Más de 4 °C por minuto con el motor caliente	Mais de 4 °C por minuto com o motor quente
+Cuándo avisa cada dato	Quando cada dado avisa
+Códigos guardados en el auto	Códigos guardados no carro
+El auto no tiene códigos guardados	O carro não tem códigos guardados
+Se revisan al conectar y cada 30 segundos	Verificados ao conectar e a cada 30 segundos
+Luz del motor encendida	Luz do motor acesa
+El computador del motor confirmó una falla	O computador do motor confirmou uma falha
+Con el motor apagado y el contacto puesto. Anota los códigos antes: no se puede deshacer	Com o motor desligado e a ignição ligada. Anote os códigos antes: não dá para desfazer
+Conecta el escáner para ver los datos	Conecte o scanner para ver os dados
+Gráficos	Gráficos
+Hasta 3 datos a la vez, de 1 a 30 minutos	Até 3 dados por vez, de 1 a 30 minutos
+La tuya: cada consulta la cobra tu proveedor	A sua: cada consulta é cobrada pelo seu provedor
+Privacidad	Privacidade
+Qué se envía	O que é enviado
+Solo el código, el vehículo que escribas y los datos del motor de ese momento; nunca tu ubicación. Las respuestas se guardan en la pantalla	Só o código, o veículo que você escrever e os dados do motor naquele momento; nunca a sua localização. As respostas ficam salvas na central
+Tu vehículo (para la IA)	Seu veículo (para a IA)
+Marca, modelo, año, motor y caja	Marca, modelo, ano, motor e câmbio
+Identifica tu auto de forma única. Apagado por defecto	Identifica o seu carro de forma única. Desligado por padrão
+Probar	Testar
+Pregunta por un código de ejemplo	Pergunta sobre um código de exemplo
+Motor	Motor
+Para calcular el consumo en motores sin sensor MAF	Para calcular o consumo em motores sem sensor MAF
+Automático casi siempre; fuerza uno si el escáner no lo detecta	Automático quase sempre; force um se o scanner não o detectar
+Panel del vehículo	Painel do veículo
+Lado del panel	Lado do painel
+Pestaña en el borde	Aba na borda
+Toca o desliza la pestaña para abrir el panel. Sin ella, ábrelo con un botón de la barra	Toque ou deslize a aba para abrir o painel. Sem ela, abra com um botão da barra
+Informe de cada dato estándar y los propios de la marca. Solo lee	Relatório de cada dado padrão e dos próprios da marca. Só leitura
+Ver el último informe	Ver o último relatório
+Con un escáner ELM327 por Wi-Fi o Bluetooth: temperatura, batería, alertas por voz y códigos de falla	Com um scanner ELM327 por Wi-Fi ou Bluetooth: temperatura, bateria, alertas por voz e códigos de falha
+También con la pestaña del borde o con un botón de la barra	Também com a aba da borda ou com um botão da barra
+Vehículo (OBD-II)	Veículo (OBD-II)
+Sin elegir	Não escolhido
+Apagada	Desligado
+Alerta sobre	Alerta acima de
+Alerta bajo	Alerta abaixo de
+Alerta sobre ±	Alerta acima de ±
+No	Não
+Para que una IA explique los códigos, pon tu API key (Claude, Groq, Gemini u otra) en Ajustes → Tu vehículo → Escáner OBD-II → Inteligencia artificial. Las explicaciones se guardan en el equipo y después funcionan sin internet.	Para que uma IA explique os códigos, coloque a sua API key (Claude, Groq, Gemini ou outra) em Ajustes → Seu veículo → Scanner OBD-II → Inteligência artificial. As explicações ficam salvas no aparelho e depois funcionam sem internet.
+Se apaga la luz del motor y se borran los datos que usa el taller para diagnosticar; también se reinician los monitores de emisiones. No se puede deshacer y, si la falla sigue, el código volverá a aparecer. Anota los códigos antes.	A luz do motor se apaga e os dados que a oficina usa para diagnosticar são apagados; os monitores de emissões também são reiniciados. Não dá para desfazer e, se a falha continuar, o código voltará. Anote os códigos antes.
+Ej.: Kia Picanto 2019 1.2 gasolina mecánico	Ex.: Kia Picanto 2019 1.2 gasolina manual
+Sin poner	Não definida
+Escaneando… el avance se ve en el estado del escáner	Escaneando… o progresso aparece no estado do scanner
+Todavía no hay un informe	Ainda não há relatório
+Sin monitor activo	Sem monitor ativo
+Sin códigos guardados	Sem códigos guardados
+Se revisan al conectar	Verificados ao conectar
+Ver todo	Ver tudo
+1 activa	1 ativo
+{} activas	{} ativos

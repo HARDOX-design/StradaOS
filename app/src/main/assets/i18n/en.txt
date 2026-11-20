@@ -1532,3 +1532,85 @@ API key	API key
 Enviar el VIN a la IA	Send the VIN to the AI
 La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. El VIN solo se envía si lo activas aquí. Cada consulta la cobra tu proveedor con tu API key.	The AI receives only the code, the vehicle you typed and the engine data; never your location. The VIN is sent only if you enable it here. Each query is charged by your provider with your API key.
 RPM	RPM
+# 2.26: escáner OBD-II (panel del vehículo y ajustes)
+Escáner OBD-II	OBD-II scanner
+Enciende el monitor del motor en «Escáner OBD-II»	Turn on the engine monitor in “OBD-II scanner”
+Conectando…	Connecting…
+Monitor del motor	Engine monitor
+Está apagado: enciéndelo para conectar el escáner	It's off: turn it on to connect the scanner
+Estado	Status
+Abrir el panel del vehículo	Open the vehicle panel
+Medidores, alertas y códigos encima del tema que tengas	Gauges, alerts and codes on top of your theme
+Diagnóstico	Diagnostics
+Qué vigila StradaOS y cuándo avisa por voz	What StradaOS watches and when it speaks up
+Todo normal	All normal
+Qué significan y qué hacer; borrarlos con el motor apagado	What they mean and what to do; clear them with the engine off
+Cada dato que entrega tu auto, con gráficos	Every value your car provides, with charts
+Más	More
+Opcional: explica los códigos para tu auto en particular	Optional: explains codes for your specific car
+Motor, protocolo, panel y escaneo completo	Engine, protocol, panel and full scan
+Bluetooth emparejado, Wi-Fi (IP y puerto) o un auto simulado para probar	Paired Bluetooth, Wi-Fi (IP and port) or a simulated car for testing
+Empareja el escáner sin salir de StradaOS (clave 1234 o 0000)	Pair the scanner without leaving StradaOS (PIN 1234 or 0000)
+Reconectar	Reconnect
+Conectar al iniciar StradaOS	Connect when StradaOS starts
+Las alertas funcionan aunque estés en otra app (con una notificación fija)	Alerts work even while you're in another app (with a persistent notification)
+Cómo conectar el escáner	How to connect the scanner
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Bluetooth: emparéjalo con la clave 1234 o 0000. Wi-Fi: conecta la pantalla a la red del escáner y escribe su IP y puerto (casi siempre 192.168.0.10:35000).\n3. Elígelo arriba en «Escáner».	1. Plug the ELM327 scanner into the OBD port (under the steering wheel) and turn the ignition on.\n2. Bluetooth: pair it with PIN 1234 or 0000. Wi-Fi: connect the head unit to the scanner's network and enter its IP and port (almost always 192.168.0.10:35000).\n3. Choose it above in “Scanner”.
+Lo que respondió el escáner (para reportar un problema)	What the scanner replied (to report a problem)
+Todo normal por ahora	All normal for now
+Alerta	Alert
+Aviso	Warning
+Avisos	Notices
+Habla aunque estés en Waze o con música	Speaks even while you're in Waze or playing music
+Abrir el panel con una alerta grave	Open the panel on a serious alert
+Por ejemplo, el motor muy caliente o la batería que no carga	For example, the engine very hot or the battery not charging
+Más de 4 °C por minuto con el motor caliente	More than 4 °C per minute with the engine warm
+Cuándo avisa cada dato	When each value alerts
+Códigos guardados en el auto	Codes stored in the car
+El auto no tiene códigos guardados	The car has no stored codes
+Se revisan al conectar y cada 30 segundos	Checked when connecting and every 30 seconds
+Luz del motor encendida	Check engine light on
+El computador del motor confirmó una falla	The engine computer confirmed a fault
+Con el motor apagado y el contacto puesto. Anota los códigos antes: no se puede deshacer	With the engine off and the ignition on. Write the codes down first: it can't be undone
+Conecta el escáner para ver los datos	Connect the scanner to see the data
+Gráficos	Charts
+Hasta 3 datos a la vez, de 1 a 30 minutos	Up to 3 values at a time, from 1 to 30 minutes
+La tuya: cada consulta la cobra tu proveedor	Your own: each request is billed by your provider
+Privacidad	Privacy
+Qué se envía	What is sent
+Solo el código, el vehículo que escribas y los datos del motor de ese momento; nunca tu ubicación. Las respuestas se guardan en la pantalla	Only the code, the vehicle you enter and the engine data at that moment; never your location. Answers are saved on the head unit
+Tu vehículo (para la IA)	Your vehicle (for the AI)
+Marca, modelo, año, motor y caja	Make, model, year, engine and transmission
+Identifica tu auto de forma única. Apagado por defecto	Uniquely identifies your car. Off by default
+Probar	Test
+Pregunta por un código de ejemplo	Asks about a sample code
+Motor	Engine
+Para calcular el consumo en motores sin sensor MAF	To calculate fuel consumption on engines without a MAF sensor
+Automático casi siempre; fuerza uno si el escáner no lo detecta	Automatic almost always; force one if the scanner doesn't detect it
+Panel del vehículo	Vehicle panel
+Lado del panel	Panel side
+Pestaña en el borde	Edge tab
+Toca o desliza la pestaña para abrir el panel. Sin ella, ábrelo con un botón de la barra	Tap or swipe the tab to open the panel. Without it, open it with a bar button
+Informe de cada dato estándar y los propios de la marca. Solo lee	Report of every standard value and the manufacturer's own. Read-only
+Ver el último informe	View the last report
+Con un escáner ELM327 por Wi-Fi o Bluetooth: temperatura, batería, alertas por voz y códigos de falla	With an ELM327 scanner over Wi-Fi or Bluetooth: temperature, battery, voice alerts and trouble codes
+También con la pestaña del borde o con un botón de la barra	Also with the edge tab or a bar button
+Vehículo (OBD-II)	Vehicle (OBD-II)
+Sin elegir	Not chosen
+Apagada	Off
+Alerta sobre	Alert above
+Alerta bajo	Alert below
+Alerta sobre ±	Alert above ±
+No	No
+Para que una IA explique los códigos, pon tu API key (Claude, Groq, Gemini u otra) en Ajustes → Tu vehículo → Escáner OBD-II → Inteligencia artificial. Las explicaciones se guardan en el equipo y después funcionan sin internet.	For an AI to explain the codes, enter your API key (Claude, Groq, Gemini or another) in Settings → Your vehicle → OBD-II scanner → Artificial intelligence. Explanations are saved on the device and then work offline.
+Se apaga la luz del motor y se borran los datos que usa el taller para diagnosticar; también se reinician los monitores de emisiones. No se puede deshacer y, si la falla sigue, el código volverá a aparecer. Anota los códigos antes.	The check engine light turns off and the data the garage uses for diagnosis is erased; emission monitors are reset too. It can't be undone and, if the fault persists, the code will come back. Write the codes down first.
+Ej.: Kia Picanto 2019 1.2 gasolina mecánico	E.g.: Kia Picanto 2019 1.2 petrol manual
+Sin poner	Not set
+Escaneando… el avance se ve en el estado del escáner	Scanning… progress shows in the scanner status
+Todavía no hay un informe	There's no report yet
+Sin monitor activo	No active monitor
+Sin códigos guardados	No stored codes
+Se revisan al conectar	Checked when connecting
+Ver todo	See all
+1 activa	1 active
+{} activas	{} active

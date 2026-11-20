@@ -1,8 +1,30 @@
-# Vehículo (OBD-II)
+# Escáner OBD-II
 
-Pantalla con los datos del motor en vivo, alertas por voz y códigos de falla explicados. Se abre desde un botón de
-la barra: déjalo presionado → *Cambiar app o función* → *Funciones de StradaOS* → **Vehículo**. Ningún botón la trae
-por defecto (regla del proyecto: lo nuevo arranca apagado).
+Motor del módulo (conexión ELM327, lectura, alertas, códigos e IA): PR #42 de Jaacern. Desde la 2.26 no cambia ninguna
+pantalla de inicio: el vehículo se ve en un **panel que se despliega encima de cualquier tema** y se configura en
+**Ajustes → Tu vehículo → Escáner OBD-II**. Viene apagado (regla del proyecto: lo nuevo arranca apagado).
+
+## Cómo se ve
+
+- **Ajustes → Tu vehículo → Escáner OBD-II:** interruptor «Monitor del motor» (`obd_on`). Al encenderlo por primera vez
+  pide elegir el escáner. La fila «Escáner OBD-II» abre sus subpáginas (`Main.settingsSub`): Estado, **Conexión**,
+  **Alertas**, **Códigos de falla**, **Datos en vivo**, **Inteligencia artificial** y **Avanzado**. Los valores cambian en
+  su sitio mientras se miran (`obdSettingsL`); si cambia lo que hay (aparece un código, se conecta), la página se redibuja.
+- **Panel del vehículo** (`VehiclePanel`): sale desde el lado del conductor (lado del reproductor, o el que se elija en
+  Avanzado), ocupa ~75 % del ancho (92 % en pantallas verticales) y deja ver el tema difuminado detrás. Muestra tres
+  medidores (refrigerante, batería, RPM: verde normal, ámbar aviso, rojo alerta), tres datos chicos (los primeros que el
+  auto entregue entre velocidad, carga, consumo, combustible, admisión y aceite), la luz del motor, las alertas y los
+  códigos con «Ver todo». Tocar un medidor abre los gráficos grandes. Se abre con la **pestaña del borde** (toque o
+  deslizar; `obd_handle`), con el botón de barra **Vehículo (OBD-II)** (función `obd`), al tocar la notificación del
+  monitor, o solo cuando aparece una **alerta grave** (`obd_panel_auto`, una vez por alerta). Se cierra con ✕, Atrás,
+  tocando fuera o deslizándolo hacia su borde.
+- **Difuminado sin GPU especial (Android 4.1+):** al terminar de entrar el panel se dibuja el inicio en 1/6 de
+  resolución (ocultando el panel en ese instante) y se difumina con tres pasadas de caja; aparece en 200 ms. El panel
+  se mueve con capa de hardware (`withLayer`), así que la animación no espera al dibujo en pantallas lentas.
+- **Gráficos grandes** (`ObdActivity`, solo gráficos): escala con grilla, zonas de aviso y alerta, mín/máx/promedio,
+  1/5/15/30 min y hasta 3 datos apilados.
+- **Ventanas** (`ObdDialogs`): elegir y emparejar el escáner, umbrales de cada alerta, detalle de un código, IA,
+  protocolo, cilindrada, escaneo completo y registro de la conexión.
 
 ## Qué hace
 
@@ -34,57 +56,25 @@ por defecto (regla del proyecto: lo nuevo arranca apagado).
      (`files/obd_ai_cache.json`) y la próxima vez sale sin señal.
 - **Borrar códigos** (modo 04), solo con el motor apagado y con confirmación.
 - **VIN** (modo 09) si el auto lo entrega.
-- **Alertas a vigilar** (⚙): cada alerta se puede apagar y sus umbrales se pueden cambiar (o volver a los de fábrica).
+- **Alertas a vigilar** (Ajustes → … → Alertas → «Cuándo avisa cada dato»): cada alerta se puede apagar y sus umbrales se pueden cambiar (o volver a los de fábrica).
 - **IA en las alertas:** al tocar una alerta, «Preguntar a la IA» la explica con todos los datos del motor de ese momento.
-- **Todos los datos:** botón del encabezado que muestra, en vivo, cada dato que el auto entrega (se leen de a dos por
-  vuelta para no frenar las alertas), el consumo calculado (L/100 km desde el MAF y la velocidad) y los monitores de
-  emisiones (listos / incompletos).
 - **Freeze frame** (modo 02): con un código nuevo se leen los datos del motor guardados en el momento de la falla, y
   aparecen en el detalle del código.
-- **Vinculación:** *⚙ → Escáner → Buscar escáneres Bluetooth cercanos* busca y empareja desde la app (pide la clave
+- **Vinculación:** *Conexión → Buscar escáneres Bluetooth cercanos* busca y empareja desde la app (pide la clave
   1234 o 0000 si hace falta).
-- **Tarjetas a medida** (*Ajustes → Pantalla de inicio → Qué muestra cada tarjeta*): la tarjeta del reproductor y la del
-  centro pueden mostrar Música/Mapa (lo de siempre), el monitor del vehículo, un **panel de datos** (hasta 6 valores
-  en vivo, por defecto RPM, velocidad, refrigerante, batería, carga y consumo) o un gráfico en vivo (últimos 5 min) de
-  cualquier dato; el recuadro de la velocidad puede mostrar otro dato en grande. Con el mapa tapado, el mapa no se
-  dibuja. Presión larga sobre una tarjeta cambiada abre esos ajustes; un toque abre la pantalla Vehículo.
-- **Mover y ajustar tarjetas** (presión larga en una tarjeta): mover cada columna (vehículo, centro, reproductor) a la
-  izquierda o a la derecha, cambiar el ancho del reproductor (Normal / Ancha / Muy ancha; el centro nunca baja de 300) y
-  volver al orden de siempre. El diseño sigue siendo responsivo: el lienzo de 1024×600 se escala a la pantalla, el
-  ancho extra lo gana el centro y en pantallas verticales cambia al diseño vertical.
 - **Editor táctil del inicio** (presión larga → «Ajustar con el dedo»): bloques con manijas; arrastrar una manija cambia el
   ancho y los vecinos se ajustan en vivo; arrastrar un bloque lo cambia de lugar. Límites en unidades del lienzo
   (vehículo 300–440, reproductor 248–460, centro mínimo 300); al llegar a uno la manija se pone gris y dice «límite».
   Solo dibuja rectángulos mientras se arrastra; el inicio se rearma una vez al tocar «Listo» (también «Restablecer» y
   «Cancelar»). Se guarda en `card_order`, `car_w` y `player_w`.
-- **Franja de widgets** (presión larga en el mapa → «Franja de widgets debajo», apagada por defecto): el centro pierde
-  124 de alto y abajo quedan 1 a 3 mini tarjetas según el ancho (~150 cada una): altitud, pendiente y rumbo (GPS; el
-  número se pone ámbar en cuestas de 8 % o más), viaje (km, tiempo en movimiento, velocidad promedio y consumo promedio
-  con el escáner), un dato del escáner o 3 accesos directos. Presión larga en la franja: cambiar widgets, reiniciar el
-  viaje o quitarla. `Trip.java` calcula todo; `HomeStrip.java` lo muestra y se refresca cada 2 s.
-- **Todo ajustable con el dedo** (editor táctil): además de las columnas, la manija horizontal entre el centro y la franja
-  cambia el alto de la franja (90–200; el mapa queda con al menos 180), las manijas entre widgets cambian sus anchos
-  (cada uno al menos 120; `HomeStrip.widths` reparte respetando el mínimo), tocar un widget elige qué muestra o lo
-  quita y «+» agrega uno si cabe (hasta 4). Con la franja apagada, «+ Agregar franja de widgets». El texto de los
-  widgets crece con el alto de la franja y se achica solo si no cabe en el ancho. Se guarda en `home_strip`,
-  `strip_h`, `strip_list` y `strip_wr`.
-- **Ocultar y mostrar tarjetas:** en el editor, ✕ oculta la de música o la del vehículo (el centro gana el espacio) y
-  «+ Música» / «+ Vehículo» las devuelven; también desde la presión larga. Widget «Música» para la franja (canción,
-  artista y anterior / reproducir / siguiente, con los mismos comandos que la tarjeta grande): la tarjeta grande necesita
-  su alto completo, así que la música «en chico» va como widget, que sí se ajusta en alto y ancho.
-- **Gráficos grandes:** al tocar una tarjeta de la pantalla Vehículo (o una fila de «Todos los datos»): escala con grilla,
-  eje de tiempo, zonas de aviso y alerta, mín/máx/promedio, períodos de 1, 5, 15 o 30 min, hasta 3 datos apilados y
-  lectura de cada momento deslizando el dedo. Presión larga sobre la tarjeta: umbrales.
-- **En el inicio:** con el monitor encendido, la tarjeta «Mi vehículo» muestra temperatura, voltaje, RPM y las alertas
-  más graves; al tocarla se abre esta pantalla.
-- **Escanear todo lo que entrega el auto** (⚙): informe con cada PID estándar que el auto tiene (nombre, valor y bytes),
+- **Escanear todo lo que entrega el auto** (Avanzado): informe con cada PID estándar que el auto tiene (nombre, valor y bytes),
   el modo 09 y lecturas crudas propias de la marca (servicio 21 01–0F y algunos 22) a los computadores 7E0 (motor) y
   7E1 (caja). Solo lectura. Se guarda en `Android/data/<paquete>/files/obd/informe-*.txt` para sacarlo por USB o con
   `adb pull`, y compararlo con Torque para encontrar datos como la temperatura del aceite de la caja.
 
 ## IA (opcional)
 
-*Vehículo → ⚙ → Inteligencia artificial*. Dos proveedores:
+*Ajustes → Tu vehículo → Escáner OBD-II → Inteligencia artificial*. Dos proveedores:
 
 - **Claude (Anthropic):** solo la API key. El modelo por defecto es `claude-opus-5-5`; se puede cambiar en *Modelo*.
 - **Groq, OpenAI, Gemini, OpenRouter** u otra API compatible con OpenAI. La lista de modelos se pide al proveedor (*Modelo*),
@@ -99,18 +89,21 @@ en Android 4.1 y pesaría más que todo StradaOS.
 
 ## Escáneres
 
-Cualquier ELM327 sirve:
+- **Compatibles:** ELM327 por **Bluetooth clásico (SPP)** o **Wi-Fi**. Los que son **solo BLE / Bluetooth 4.0** (varios hechos para iPhone: algunos Vgate iCar Pro 4.0, OBDLink CX, Veepeak BLE) **no** funcionan todavía: no se usa BluetoothGatt.
+- **Presión de llantas (TPMS): no** se lee con OBD-II genérico (cada marca la guarda en su propio módulo). Si se agrega, sería con un kit TPMS aparte (receptor USB o sensores Bluetooth), no con el escáner.
+
+Cualquier ELM327 por Bluetooth clásico o Wi-Fi sirve:
 
 - **Bluetooth clásico:** primero se empareja en los ajustes del equipo (clave 1234 o 0000) y después se elige en
-  *⚙ → Escáner*. Se prueban tres formas de conectar, porque cada clon acepta una distinta.
+  *Conexión → Escáner*. Se prueban tres formas de conectar, porque cada clon acepta una distinta.
 - **Wi-Fi:** IP y puerto, normalmente `192.168.0.10:35000`.
 - **Clones baratos:** los «v2.1» suelen fallar. Responden mejor un OBDLink, un Vgate iCar Pro o un Veepeak.
 
 ### Kia Sorento 2010 (CAN)
 
 El Sorento 2010 usa **ISO 15765-4 CAN, 11 bits, 500 kbps**. Lo normal es que el ELM327 lo detecte solo con
-`ATSP0`; si el clon no lo logra, en *⚙ → Protocolo* elige **CAN 11 bits · 500 kbps** (`ATSP6`). Si el auto es
-diésel o de otra motorización, la cilindrada se cambia en *⚙ → Cilindrada del motor*.
+`ATSP0`; si el clon no lo logra, en *Avanzado → Protocolo* elige **CAN 11 bits · 500 kbps** (`ATSP6`). Si el auto es
+diésel o de otra motorización, la cilindrada se cambia en *Avanzado → Cilindrada del motor*.
 
 - **Comprobado en un Sorento 2010 2.4 bencina (computador del motor `7E8`):** el auto responde a `01 00`, `01 20`
   y `01 40` con estos PIDs:
@@ -120,13 +113,9 @@ diésel o de otra motorización, la cilindrada se cambia en *⚙ → Cilindrada 
 - **Consumo:** como este motor no trae MAF ni PID 5E, se calcula con la presión del múltiple (0B), las RPM, la
   temperatura del aire de admisión (0F) y la cilindrada (2,4 L por defecto). Es una estimación: el rendimiento
   volumétrico se toma en 0,85. Si el auto sí trae MAF o 5E, se usan esos primero.
-- **Panel en el inicio:** elige «Panel de datos» en la tarjeta del centro o del reproductor y toca «Datos del panel»
-  para escoger hasta 6 valores entre todos los sensores (los nuevos: avance, sondas O2, catalizador, carga absoluta,
-  mezcla comandada, pedal, EGR, barométrica, tiempos y distancias desde que se borraron los códigos…). También puedes
-  poner un dato en el recuadro de la velocidad o graficarlo. «Todos los datos» muestra además los PIDs crudos.
 - **Dos Wi-Fi a la vez:** si el equipo tiene internet por una Wi-Fi y el ELM327 por otra (interna o USB), la app
   intenta primero la conexión normal y, si falla, ata el socket TCP a la dirección local de la red del escáner.
-  En *⚙ → Escáner → Wi-Fi* usa la IP del ELM327 (normalmente `192.168.0.10:35000`).
+  En *Conexión → Escáner → Wi-Fi* usa la IP del ELM327 (normalmente `192.168.0.10:35000`).
 - **Lectura real verificada (motor al ralentí, 2026-11-18):** refrigerante 92 °C, RPM 680, MAP 29 kPa, avance 6°,
   aire de admisión 66 °C, carga 29,4 %, carga absoluta 16,5 %, lambda 1,000, voltaje 14,3 V, catalizador 600,7 °C,
   exterior 16 °C, EGR 2,7 %, pedal 14,9 %, tiempos 0/531 min, mezclas O2 1,6/0,0 %, MIL apagada y 0 códigos.
@@ -150,7 +139,7 @@ diésel o de otra motorización, la cilindrada se cambia en *⚙ → Cilindrada 
    pip install ELM327-emulator      # pide Python 3.12 o anterior
    python -m elm -n 35000 -s car    # escenario «car»
    ```
-   En la app: *⚙ → Escáner → Wi-Fi* con `10.0.2.2:35000` desde el emulador de Android, o con la IP del PC desde un
+   En la app: *Conexión → Escáner → Wi-Fi* con `10.0.2.2:35000` desde el emulador de Android, o con la IP del PC desde un
    celular en la misma red.
 
 ## Sensores y PIDs en vivo
@@ -226,14 +215,19 @@ Nombre del archivo de preferencias: `launcher` (modo `MODE_PRIVATE`).
 
 | Clave | Tipo | Valor por defecto | Descripción |
 |-------|------|------------------|-------------|
-| `obd_addr` | String | `"demo"` | Dirección del adaptador: `"demo"`, `"tcp:IP:PUERTO"` o `"bt:MAC"` |
+| `obd_on` | boolean | `false` | Monitor del motor encendido (sin esto no se conecta ni aparece nada) |
+| `obd_addr` | String | — | Dirección del adaptador: `"demo"`, `"tcp:IP:PUERTO"` o `"bt:MAC"` |
 | `obd_name` | String | — | Nombre legible del dispositivo (solo informativo) |
 | `obd_protocol` | String | `"auto"` | Protocolo CAN: `"auto"`, `"6"`, `"7"`, `"8"`, `"9"` |
 | `obd_displacement` | float | `2.4` | Cilindrada del motor en litros (para el cálculo del consumo por MAP) |
 | `obd_voice` | boolean | `true` | Avisos por voz (TTS) activados |
-| `obd_autostart` | boolean | `false` | Iniciar el monitor automáticamente al abrir StradaOS |
+| `obd_autostart` | boolean | `true` | Iniciar el monitor automáticamente al abrir StradaOS |
 | `obd_vehicle` | String | `""` | Descripción del vehículo para la IA (ej: `"Kia Sorento 2010 2.4"`) |
-| `obd_all_view` | boolean | `false` | Vista "Todos los datos" vs panel de tarjetas |
+| `obd_panel_side` | String | `"auto"` | Lado del panel: `auto` (el del reproductor), `left`, `right` |
+| `obd_handle` | boolean | `true` | Pestaña en el borde para abrir el panel |
+| `obd_panel_auto` | boolean | `true` | Una alerta grave abre el panel |
+| `obd_ai_vin` | boolean | `false` | Enviar el VIN a la IA |
+| `ai_key` | String | — | API key de la IA (no entra en la copia de seguridad) |
 | `obd_chart_win` | long | `300000` | Ventana del gráfico en ms (60000/300000/900000/1800000) |
 | `obd_alert_<key>` | boolean | `true` | Alerta del sensor `<key>` activada |
 | `obd_thr_<key>_hi1` | float | (fábrica) | Umbral de aviso alto del sensor `<key>` |

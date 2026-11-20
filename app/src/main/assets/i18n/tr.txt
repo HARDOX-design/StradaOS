@@ -1218,3 +1218,299 @@ Temperatura exterior	Dış sıcaklık
 Del sensor del carro; necesita la caja CAN	Araç sensöründen; CAN kutusu gerekir
 pantalla FYT detectada: elígela en Tu vehículo → Equipo	FYT ekran algılandı: Aracınız → Ünite bölümünden seçin
 esta pantalla no informa las luces	bu ekran far bilgisini vermiyor
+# 2.26: escáner OBD-II (panel del vehículo y ajustes)
+Escáner OBD-II	OBD-II tarayıcı
+Enciende el monitor del motor en «Escáner OBD-II»	«OBD-II tarayıcı» bölümünde motor monitörünü açın
+Conectando…	Bağlanıyor…
+Monitor del motor	Motor monitörü
+Está apagado: enciéndelo para conectar el escáner	Kapalı: tarayıcıyı bağlamak için açın
+Estado	Durum
+Abrir el panel del vehículo	Araç panelini aç
+Medidores, alertas y códigos encima del tema que tengas	Temanızın üzerinde göstergeler, uyarılar ve kodlar
+Diagnóstico	Teşhis
+Qué vigila StradaOS y cuándo avisa por voz	StradaOS neyi izler ve ne zaman sesli uyarır
+Todo normal	Her şey normal
+Qué significan y qué hacer; borrarlos con el motor apagado	Anlamları ve yapılacaklar; motor kapalıyken silin
+Cada dato que entrega tu auto, con gráficos	Aracınızın verdiği her veri, grafiklerle
+Más	Daha fazla
+Opcional: explica los códigos para tu auto en particular	İsteğe bağlı: kodları aracınıza göre açıklar
+Motor, protocolo, panel y escaneo completo	Motor, protokol, panel ve tam tarama
+Bluetooth emparejado, Wi-Fi (IP y puerto) o un auto simulado para probar	Eşleşmiş Bluetooth, Wi-Fi (IP ve port) veya denemek için sanal araç
+Empareja el escáner sin salir de StradaOS (clave 1234 o 0000)	Tarayıcıyı StradaOS'tan çıkmadan eşleştirin (PIN 1234 veya 0000)
+Reconectar	Yeniden bağlan
+Conectar al iniciar StradaOS	StradaOS başlarken bağlan
+Las alertas funcionan aunque estés en otra app (con una notificación fija)	Uyarılar başka bir uygulamadayken de çalışır (kalıcı bildirimle)
+Cómo conectar el escáner	Tarayıcı nasıl bağlanır
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Bluetooth: emparéjalo con la clave 1234 o 0000. Wi-Fi: conecta la pantalla a la red del escáner y escribe su IP y puerto (casi siempre 192.168.0.10:35000).\n3. Elígelo arriba en «Escáner».	1. ELM327 tarayıcıyı OBD soketine (direksiyonun altında) takın ve kontağı açın.\n2. Bluetooth: 1234 veya 0000 PIN ile eşleştirin. Wi-Fi: üniteyi tarayıcının ağına bağlayın ve IP ile portu yazın (neredeyse her zaman 192.168.0.10:35000).\n3. Yukarıda «Tarayıcı» bölümünden seçin.
+Lo que respondió el escáner (para reportar un problema)	Tarayıcının verdiği yanıt (sorun bildirmek için)
+Todo normal por ahora	Şimdilik her şey normal
+Alerta	Alarm
+Aviso	Uyarı
+Avisos	Uyarılar
+Habla aunque estés en Waze o con música	Waze'deyken veya müzik çalarken de konuşur
+Abrir el panel con una alerta grave	Ciddi bir alarmda paneli aç
+Por ejemplo, el motor muy caliente o la batería que no carga	Örneğin motor çok sıcak veya akü şarj olmuyor
+Más de 4 °C por minuto con el motor caliente	Motor sıcakken dakikada 4 °C'den fazla
+Cuándo avisa cada dato	Her veri ne zaman uyarır
+Códigos guardados en el auto	Araçta kayıtlı kodlar
+El auto no tiene códigos guardados	Araçta kayıtlı kod yok
+Se revisan al conectar y cada 30 segundos	Bağlanırken ve her 30 saniyede bir kontrol edilir
+Luz del motor encendida	Motor arıza lambası yanıyor
+El computador del motor confirmó una falla	Motor beyni bir arızayı doğruladı
+Con el motor apagado y el contacto puesto. Anota los códigos antes: no se puede deshacer	Motor kapalı ve kontak açıkken. Önce kodları not edin: geri alınamaz
+Conecta el escáner para ver los datos	Verileri görmek için tarayıcıyı bağlayın
+Gráficos	Grafikler
+Hasta 3 datos a la vez, de 1 a 30 minutos	Aynı anda en fazla 3 veri, 1 ile 30 dakika arası
+La tuya: cada consulta la cobra tu proveedor	Sizin anahtarınız: her sorgu sağlayıcınız tarafından ücretlendirilir
+Privacidad	Gizlilik
+Qué se envía	Ne gönderilir
+Solo el código, el vehículo que escribas y los datos del motor de ese momento; nunca tu ubicación. Las respuestas se guardan en la pantalla	Yalnızca kod, yazdığınız araç ve o andaki motor verileri; asla konumunuz değil. Yanıtlar ünitede saklanır
+Tu vehículo (para la IA)	Aracınız (yapay zekâ için)
+Marca, modelo, año, motor y caja	Marka, model, yıl, motor ve şanzıman
+Identifica tu auto de forma única. Apagado por defecto	Aracınızı benzersiz şekilde tanımlar. Varsayılan olarak kapalı
+Probar	Dene
+Pregunta por un código de ejemplo	Örnek bir kodu sorar
+Motor	Motor
+Para calcular el consumo en motores sin sensor MAF	MAF sensörü olmayan motorlarda tüketimi hesaplamak için
+Automático casi siempre; fuerza uno si el escáner no lo detecta	Neredeyse her zaman otomatik; tarayıcı algılamazsa birini zorlayın
+Panel del vehículo	Araç paneli
+Lado del panel	Panelin tarafı
+Pestaña en el borde	Kenardaki sekme
+Toca o desliza la pestaña para abrir el panel. Sin ella, ábrelo con un botón de la barra	Paneli açmak için sekmeye dokunun veya kaydırın. Sekme olmadan çubuktaki bir düğmeyle açın
+Informe de cada dato estándar y los propios de la marca. Solo lee	Her standart verinin ve markaya özel verilerin raporu. Yalnızca okur
+Ver el último informe	Son raporu gör
+Con un escáner ELM327 por Wi-Fi o Bluetooth: temperatura, batería, alertas por voz y códigos de falla	Wi-Fi veya Bluetooth ELM327 tarayıcıyla: sıcaklık, akü, sesli uyarılar ve arıza kodları
+También con la pestaña del borde o con un botón de la barra	Kenardaki sekmeyle veya çubuktaki bir düğmeyle de
+Vehículo (OBD-II)	Araç (OBD-II)
+Sin elegir	Seçilmedi
+Apagada	Kapalı
+Alerta sobre	Şunun üstünde alarm
+Alerta bajo	Şunun altında alarm
+Alerta sobre ±	Şunun üstünde alarm ±
+No	Hayır
+Para que una IA explique los códigos, pon tu API key (Claude, Groq, Gemini u otra) en Ajustes → Tu vehículo → Escáner OBD-II → Inteligencia artificial. Las explicaciones se guardan en el equipo y después funcionan sin internet.	Yapay zekânın kodları açıklaması için API anahtarınızı (Claude, Groq, Gemini veya başka) Ayarlar → Aracınız → OBD-II tarayıcı → Yapay zekâ bölümüne girin. Açıklamalar cihazda saklanır ve sonra internetsiz çalışır.
+Se apaga la luz del motor y se borran los datos que usa el taller para diagnosticar; también se reinician los monitores de emisiones. No se puede deshacer y, si la falla sigue, el código volverá a aparecer. Anota los códigos antes.	Motor arıza lambası söner ve servisin teşhis için kullandığı veriler silinir; emisyon monitörleri de sıfırlanır. Geri alınamaz ve arıza sürerse kod yeniden çıkar. Önce kodları not edin.
+Ej.: Kia Picanto 2019 1.2 gasolina mecánico	Örn.: Kia Picanto 2019 1.2 benzinli manuel
+Sin poner	Ayarlanmadı
+Escaneando… el avance se ve en el estado del escáner	Taranıyor… ilerleme tarayıcı durumunda görünür
+Todavía no hay un informe	Henüz rapor yok
+Sin monitor activo	Etkin monitör yok
+Sin códigos guardados	Kayıtlı kod yok
+Se revisan al conectar	Bağlanırken kontrol edilir
+Ver todo	Tümünü gör
+1 activa	1 etkin
+{} activas	{} etkin
+Vehículo	Araç
+Monitor del vehículo	Araç monitörü
+Batería	Akü
+Carga del motor	Motor yükü
+Acelerador	Gaz kelebeği
+Aire de admisión	Emme havası
+Combustible	Yakıt
+Mezcla corta	Kısa yakıt düzeltmesi
+Mezcla larga	Uzun yakıt düzeltmesi
+Flujo de aire	Hava akışı
+Presión del múltiple	Manifold basıncı
+Consumo del motor	Motor tüketimi
+Consumo por hora	Saatlik tüketim
+Aceite del motor	Motor yağı
+Datos del motor	Motor verileri
+Cilindrada del motor	Motor hacmi
+Cilindrada del motor (litros)	Motor hacmi (litre)
+Protocolo	Protokol
+CAN 11 bits · 500 kbps	CAN 11 bit · 500 kbps
+CAN 29 bits · 500 kbps	CAN 29 bit · 500 kbps
+CAN 11 bits · 250 kbps	CAN 11 bit · 250 kbps
+CAN 29 bits · 250 kbps	CAN 29 bit · 250 kbps
+Escribe un número entre 0,5 y 8	0,5 ile 8 arasında bir sayı yazın
+Conectando con el escáner…	Tarayıcıya bağlanıyor…
+Conectado	Bağlandı
+Esperando al auto (¿contacto apagado?)	Araç bekleniyor (kontak kapalı mı?)
+Escáner conectado. Vigilando el motor.	Tarayıcı bağlandı. Motor izleniyor.
+Se perdió la conexión con el escáner.	Tarayıcıyla bağlantı kesildi.
+Códigos borrados.	Kodlar silindi.
+El auto no aceptó borrar los códigos.	Araç kodların silinmesini kabul etmedi.
+El escáner no logra hablar con el auto. ¿Está el contacto puesto?	Tarayıcı araçla konuşamıyor. Kontak açık mı?
+El escáner no responde	Tarayıcı yanıt vermiyor
+El escáner cerró la conexión	Tarayıcı bağlantıyı kapattı
+El Bluetooth está apagado	Bluetooth kapalı
+Este equipo no tiene Bluetooth	Bu cihazda Bluetooth yok
+No se pudo conectar	Bağlanılamadı
+Motor sobrecalentado: {}	Motor aşırı ısındı: {}
+Refrigerante alto: {}	Soğutma suyu yüksek: {}
+El refrigerante sube rápido: {} °C	Soğutma suyu hızla yükseliyor: {} °C
+Voltaje alto: {}	Voltaj yüksek: {}
+Voltaje bajo: {}	Voltaj düşük: {}
+RPM muy altas: {}	Devir çok yüksek: {}
+Motor muy exigido: {}	Motor çok zorlanıyor: {}
+Aire de admisión muy caliente: {}	Emme havası çok sıcak: {}
+Poco combustible: {}	Yakıt az: {}
+Aceite del motor muy caliente: {}	Motor yağı çok sıcak: {}
+Código de falla {}	Arıza kodu {}
+Código pendiente {}	Bekleyen kod {}
+revisa el detalle en la pantalla	ekrandaki ayrıntılara bakın
+Detente en un lugar seguro y apaga el motor. No abras la tapa del radiador en caliente. Espera que enfríe y revisa el nivel de refrigerante, el electroventilador y la correa.	Güvenli bir yerde durun ve motoru kapatın. Sıcakken radyatör kapağını açmayın. Soğumasını bekleyin, sonra soğutma suyu seviyesini, fanı ve kayışı kontrol edin.
+Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y, si sigue subiendo, pon la calefacción al máximo y busca dónde parar.	Yükü azaltın: daha düşük vites kullanın, klimayı kapatın ve yükselmeye devam ederse kaloriferi sonuna açıp duracak yer arayın.
+Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y vigila que el electroventilador encienda.	Yükü azaltın: daha düşük vites kullanın, klimayı kapatın ve radyatör fanının çalıştığını kontrol edin.
+El alternador está cargando de más y puede dañar la batería. Revísalo pronto.	Alternatör fazla şarj ediyor ve aküye zarar verebilir. Yakında kontrol ettirin.
+El alternador no está cargando bien: apaga lo que no necesites (aire, luces extra) y ve a un taller antes de que se descargue la batería. Revisa la correa.	Alternatör düzgün şarj etmiyor: gereksiz olanları kapatın (klima, ek farlar) ve akü bitmeden servise gidin. Kayışı kontrol edin.
+Baja la velocidad o usa una marcha más alta. En bajadas, frena con motor sin pasar la zona roja.	Yavaşlayın veya daha yüksek vites kullanın. Yokuş aşağı kırmızı bölgeye girmeden motor freni yapın.
+El motor va al máximo hace rato. En cuestas largas usa una marcha más baja y deja descansar el motor y la caja.	Motor bir süredir tam yükte. Uzun yokuşlarda daha düşük vites kullanın ve motorla şanzımanı dinlendirin.
+El aire que entra al motor está muy caliente: pierde potencia. Si estás detenido, avanza para que circule aire.	Motora giren hava çok sıcak, bu yüzden güç kaybediyor. Duruyorsanız havanın dolaştığı bir yere geçin.
+Carga combustible en la próxima estación. En la montaña puede no haber más adelante.	Bir sonraki istasyonda yakıt alın. Dağlık bölgede başka istasyon olmayabilir.
+El motor recibe menos combustible del que necesita: puede ser una fuga de vacío, el filtro de combustible o el sensor MAF. Puede perder fuerza en subidas.	Motor gerekenden az yakıt alıyor: vakum kaçağı, yakıt filtresi veya MAF sensörü olabilir. Yokuşlarda güç kaybedebilir.
+El motor recibe más combustible del necesario: revisa el filtro de aire, el sensor MAF o un inyector que gotee.	Motor gerekenden fazla yakıt alıyor: hava filtresini, MAF sensörünü veya kaçıran bir enjektörü kontrol edin.
+Baja la exigencia y revisa el nivel de aceite cuando puedas parar.	Yükü azaltın ve durabildiğinizde yağ seviyesini kontrol edin.
+código	kod
+códigos	kod
+Carrocería (airbag, cinturones, luces, cierre…)	Gövde (hava yastığı, emniyet kemerleri, farlar, kilitler…)
+Chasis (frenos ABS, dirección, suspensión, 4x4)	Şasi (ABS frenler, direksiyon, süspansiyon, 4x4)
+Comunicación entre computadores del auto	Araç beyinleri arasındaki iletişim
+Motor: mezcla de aire y combustible	Motor: hava ve yakıt karışımı
+Motor: encendido y fallas de encendido	Motor: ateşleme ve tekleme
+Control de emisiones	Emisyon kontrolü
+Velocidad, ralentí y entradas auxiliares	Hız, rölanti ve yardımcı girişler
+Computador del motor y sus salidas	Motor beyni ve çıkışları
+Caja de cambios	Şanzıman
+Motor o caja (sistema híbrido u otro)	Motor veya şanzıman (hibrit veya diğer)
+código propio de la marca	üreticiye özel kod
+La API key no es válida	API anahtarı geçerli değil
+La IA está ocupada o sin saldo. Intenta más tarde.	Yapay zekâ meşgul veya kredisi yok. Daha sonra tekrar deneyin.
+La IA no quiso responder	Yapay zekâ yanıt vermeyi reddetti
+La IA respondió vacío	Yapay zekâ boş yanıt döndürdü
+Luz del motor	Motor arıza lambası
+Conectar	Bağlan
+Auto simulado	Sanal araç
+Apagado	Kapalı
+En vivo	Canlı
+Alertas	Uyarılar
+Códigos de falla	Arıza kodları
+Pendiente	Bekleyen
+Grave	Ciddi
+Leve	Hafif
+Revisar	Kontrol et
+Borrar códigos	Kodları sil
+Qué hacer	Ne yapmalı
+Explicación de la IA	Yapay zekâ açıklaması
+Este código no está en la tabla sin conexión: suele ser un código propio de la marca. La IA puede explicarlo.	Bu kod çevrimdışı tabloda yok: genellikle üreticiye özel bir koddur. Yapay zekâ açıklayabilir.
+Ojo: los códigos de airbag, ABS y carrocería normalmente no se leen con OBD-II genérico; si aparece aquí es porque el auto lo reporta al computador del motor.	Not: hava yastığı, ABS ve gövde kodları genel OBD-II ile genellikle okunamaz; burada görünüyorsa araç bunu motor beynine bildiriyordur.
+Volver a preguntar a la IA	Yapay zekâya tekrar sor
+Explicar con IA	Yapay zekâ ile açıkla
+Preguntando a la IA…	Yapay zekâya soruluyor…
+No se pudo consultar la IA	Yapay zekâya ulaşılamadı
+Apaga el motor y deja solo el contacto puesto para borrar los códigos.	Kodları silmek için motoru kapatın ve yalnızca kontağı açık bırakın.
+¿Borrar los códigos de falla?	Arıza kodları silinsin mi?
+Escáner	Tarayıcı
+Inteligencia artificial	Yapay zekâ
+Sin configurar	Ayarlanmadı
+Avisos por voz	Sesli uyarılar
+Sí	Evet
+Registro de la conexión	Bağlantı günlüğü
+Ajustes del vehículo	Araç ayarları
+Tu vehículo: marca, modelo, año, motor y caja	Aracınız: marka, model, yıl, motor ve şanzıman
+Escáner Wi-Fi (escribir IP y puerto)	Wi-Fi tarayıcı (IP ve port yazın)
+Auto simulado (para probar)	Sanal araç (denemek için)
+No hay escáneres Bluetooth emparejados: emparéjalo en los ajustes del equipo	Eşleşmiş Bluetooth tarayıcı yok: ünitenin ayarlarından eşleştirin
+Elige tu escáner	Tarayıcınızı seçin
+IP y puerto del escáner Wi-Fi	Wi-Fi tarayıcının IP ve portu
+Escribe IP:puerto, por ejemplo 192.168.0.10:35000	IP:port yazın, örneğin 192.168.0.10:35000
+Proveedor	Sağlayıcı
+Modelo	Model
+Dirección de la API	API adresi
+Borrar la API key	API anahtarını sil
+Aviso sobre	Şunun üstünde uyarı
+Aviso bajo	Şunun altında uyarı
+Aviso sobre ±	Şunun üstünde uyarı ±
+Otra compatible con OpenAI	OpenAI uyumlu başka
+elegir…	seç…
+Probar la IA	Yapay zekâyı dene
+Primero escribe la API key	Önce API anahtarını yazın
+Buscando los modelos del proveedor…	Sağlayıcının modelleri aranıyor…
+recomendado	önerilen
+Escribir otro…	Başka yaz…
+Preguntando por el código de ejemplo P0711…	Örnek kod P0711 soruluyor…
+La IA funciona · P0711 de ejemplo	Yapay zekâ çalışıyor · örnek P0711
+Volver	Geri
+Elige el modelo de la IA en los ajustes	Yapay zekâ modelini ayarlardan seçin
+Escribe la dirección de la API en los ajustes	API adresini ayarlara yazın
+Escaneando	Taranıyor
+Escaneo terminado.	Tarama bitti.
+El escaneo se cortó	Tarama yarıda kesildi
+Escanear todo lo que entrega el auto	Aracın verdiği her şeyi tara
+Conecta el escáner con el contacto puesto (mejor con el motor en marcha) y vuelve a intentarlo.	Tarayıcıyı kontak açıkken bağlayın (tercihen motor çalışırken) ve tekrar deneyin.
+Pregunta al auto por cada dato estándar y por los datos propios de la marca del motor y la caja. Tarda hasta 2 minutos y mientras tanto las alertas se pausan: hazlo detenido. Solo lee, no cambia nada en el auto.	Araca her standart veriyi ve markaya özel motor ve şanzıman verilerini sorar. 2 dakikaya kadar sürer ve bu sırada uyarılar duraklar: dururken yapın. Yalnızca okur, araçta hiçbir şeyi değiştirmez.
+Escanear	Tara
+Guardado en	Kaydedildiği yer
+Lo que entrega tu auto	Aracınızın verdikleri
+Consumo	Yakıt tüketimi
+calculado	hesaplanan
+Panel	Gösterge paneli
+Todos los datos	Tüm veriler
+Datos en vivo	Canlı veriler
+Monitores de emisiones	Emisyon monitörleri
+✓ listo · ✗ aún no termina su prueba (normal después de borrar códigos o desconectar la batería).	✓ hazır · ✗ test henüz bitmedi (kodları sildikten veya aküyü söktükten sonra normaldir).
+Catalizador	Katalizör
+Preguntar a la IA	Yapay zekâya sor
+Ajustar esta alerta	Bu uyarıyı ayarla
+Alertas a vigilar	İzlenecek uyarılar
+Subida rápida del refrigerante	Soğutma suyunun hızlı yükselmesi
+Códigos de falla nuevos (aviso por voz)	Yeni arıza kodları (sesli uyarı)
+aviso	uyarı
+alerta	alarm
+bajo	düşük
+Vigilar	İzle
+Valores de fábrica	Fabrika değerleri
+Escribe un número	Bir sayı yazın
+Datos del motor cuando se registró la falla	Arıza kaydedildiğindeki motor verileri
+Buscar escáneres Bluetooth cercanos	Yakındaki Bluetooth tarayıcıları ara
+Emparejado	Eşleşti
+emparejado	eşleşmiş
+No se pudo emparejar. Prueba con la clave 1234 o 0000.	Eşleştirilemedi. 1234 veya 0000 PIN'ini deneyin.
+Sin el permiso de ubicación Android no deja buscar equipos Bluetooth	Konum izni olmadan Android Bluetooth cihazı aramaya izin vermez
+No se encontraron equipos. ¿Está el escáner enchufado y el contacto puesto?	Cihaz bulunamadı. Tarayıcı takılı ve kontak açık mı?
+Buscando… (enchufa el escáner y pon el contacto)	Aranıyor… (tarayıcıyı takın ve kontağı açın)
+Emparejando… si pide clave, escribe 1234 o 0000	Eşleştiriliyor… PIN isterse 1234 veya 0000 yazın
+Emparéjalo en los ajustes de Bluetooth del equipo	Ünitenin Bluetooth ayarlarından eşleştirin
+Los escáneres suelen llamarse OBDII, OBD2, V-LINK o Vgate.	Tarayıcıların adı genellikle OBDII, OBD2, V-LINK veya Vgate'tir.
+Buscar de nuevo	Tekrar ara
+Gráficos en vivo	Canlı grafikler
+Desliza el dedo sobre un gráfico para ver el valor de cada momento. Toca los datos de arriba para comparar hasta 3.	Her anın değerini görmek için parmağınızı grafiğin üzerinde kaydırın. 3'e kadar karşılaştırmak için yukarıdaki verilere dokunun.
+mín	min
+máx	maks
+prom	ort
+ahora	şimdi
+hace	önce
+Esperando datos…	Veri bekleniyor…
+Monitor apagado · toca para conectar	Monitör kapalı · bağlanmak için dokunun
+monitor apagado	monitör kapalı
+Monitor apagado	Monitör kapalı
+Listo	Tamam
+límite	sınır
+ancho	genişlik
+APPS	UYGULAMALAR
+normal	normal
+Avance del encendido	Ateşleme avansı
+Sonda O2 banco 1	O2 sensörü sıra 1
+Sonda O2 banco 1 sensor 2	O2 sensörü sıra 1 sensör 2
+Tiempo de marcha	Çalışma süresi
+Distancia con la luz del motor	Arıza lambasıyla mesafe
+EGR comandada	Komut edilen EGR
+Arranques desde borrar códigos	Silmeden beri ısınma sayısı
+Distancia desde borrar códigos	Silmeden beri mesafe
+Presión barométrica	Barometrik basınç
+Catalizador banco 1	Katalizör sıra 1
+Catalizador banco 1 sensor 2	Katalizör sıra 1 sensör 2
+Carga absoluta	Mutlak yük
+Mezcla comandada	Komut edilen eşdeğerlik oranı
+Acelerador relativo	Bağıl gaz kelebeği
+Acelerador B	Gaz kelebeği B
+Pedal D	Pedal D
+Pedal E	Pedal E
+Acelerador comandado	Komut edilen gaz kelebeği
+Tiempo con la luz del motor	Arıza lambasıyla süre
+Tiempo desde borrar códigos	Silmeden beri süre
+Mezcla O2 banco 1	O2 düzeltmesi sıra 1
+Mezcla O2 banco 1 sensor 2	O2 düzeltmesi sıra 1 sensör 2
+API key	API anahtarı
+Enviar el VIN a la IA	VIN'i yapay zekâya gönder
+RPM	Devir
