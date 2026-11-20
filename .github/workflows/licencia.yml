@@ -1,0 +1,127 @@
+# Licencia de un tema de pago (Fase 3, 2.27).
+#
+# Andrés la corre a mano (Actions → «Licencia» → Run workflow) con el ID que la persona escribió en su donación
+# de Ko-fi. Crea un código STRD-XXXX-XXXX y una licencia firmada con la llave de publicación de StradaOS
+# (la misma del APK, en los secretos) y la sube a la rama «licencias», de donde la baja la app con ese código.
+# El resumen de la ejecución muestra el código para enviárselo a la persona y el archivo para pasarlo por USB.
+#
+# No escribas nombres, correos ni datos de la persona: los registros de las Actions son públicos.
+# El código solo sirve en la pantalla de ese ID.
+name: Licencia
+
+on:
+  workflow_dispatch:
+    inputs:
+      id:
+        description: 'ID de la pantalla (XXXX-XXXX), tal como sale en StradaOS'
+        required: true
+      temas:
+        description: 'Temas separados por comas'
+        required: true
+        default: 'faro'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: licencias
+  cancel-in-progress: false
+
+jobs:
+  licencia:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Revisar los datos
+        id: datos
+        env:
+          RAW_ID: ${{ inputs.id }}
+          RAW_TEMAS: ${{ inputs.temas }}
+        run: |
+          ID=$(printf '%s' "$RAW_ID" | tr 'a-z' 'A-Z' | tr -cd '0-9A-Z' | tr 'OIL' '011')
+          if ! printf '%s' "$ID" | grep -Eq '^[0-9ABCDEFGHJKMNPQRSTVWXYZ]{8}$'; then
+            echo "::error::El ID debe tener 8 letras o números (por ejemplo 7KQ2-M9XA)."; exit 1
+          fi
+          TEMAS=$(printf '%s' "$RAW_TEMAS" | tr 'A-Z' 'a-z' | tr -d ' ')
+          for t in $(printf '%s' "$TEMAS" | tr ',' ' '); do
+            case "$t" in faro) ;; *) echo "::error::Tema desconocido: $t (temas de pago: faro)"; exit 1;; esac
+          done
+          echo "id=$ID" >> "$GITHUB_OUTPUT"
+          echo "temas=$TEMAS" >> "$GITHUB_OUTPUT"
+
+      - name: Firmar la licencia
+        id: firma
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          ID: ${{ steps.datos.outputs.id }}
+          TEMAS: ${{ steps.datos.outputs.temas }}
+        run: |
+          set -e
+          umask 077
+          D="$RUNNER_TEMP/k"; mkdir -p "$D"
+          echo "$KEYSTORE_BASE64" | base64 -d > "$D/ks"
+          TMP=$(openssl rand -hex 16)
+          keytool -importkeystore -noprompt -srckeystore "$D/ks" -srcstorepass "$KEYSTORE_PASSWORD" \
+            -srcalias "$KEY_ALIAS" -srckeypass "${KEY_PASSWORD:-$KEYSTORE_PASSWORD}" \
+            -destkeystore "$D/ks.p12" -deststoretype PKCS12 -deststorepass "$TMP" -destkeypass "$TMP" >/dev/null 2>&1
+          openssl pkcs12 -in "$D/ks.p12" -nocerts -nodes -passin "pass:$TMP" -out "$D/key.pem" 2>/dev/null
+          # código al azar: 8 caracteres en base32 de Crockford
+          A=0123456789ABCDEFGHJKMNPQRSTVWXYZ
+          CODE=""
+          for b in $(openssl rand 8 | od -An -tu1); do CODE="$CODE${A:$((b % 32)):1}"; done
+          FECHA=$(date -u +%F)
+          MSG="STRADAOS-LIC-1|$ID|$TEMAS|$FECHA"
+          FIRMA=$(printf '%s' "$MSG" | openssl dgst -sha256 -sign "$D/key.pem" | base64 -w0)
+          # comprobación con la llave pública del certificado (la misma que trae la app)
+          keytool -exportcert -rfc -keystore "$D/ks" -storepass "$KEYSTORE_PASSWORD" -alias "$KEY_ALIAS" 2>/dev/null \
+            | openssl x509 -pubkey -noout > "$D/pub.pem"
+          printf '%s' "$FIRMA" | base64 -d > "$D/sig"
+          printf '%s' "$MSG" | openssl dgst -sha256 -verify "$D/pub.pem" -signature "$D/sig" >/dev/null
+          NOMBRE=$(printf '%s' "strd-lic|$ID|$CODE" | sha256sum | cut -c1-32).txt
+          printf 'STRADAOS-LIC-1\nid=%s\ntemas=%s\nfecha=%s\nfirma=%s\n' "$ID" "$TEMAS" "$FECHA" "$FIRMA" > "$RUNNER_TEMP/$NOMBRE"
+          rm -rf "$D"
+          echo "code=$CODE" >> "$GITHUB_OUTPUT"
+          echo "nombre=$NOMBRE" >> "$GITHUB_OUTPUT"
+
+      - name: Subir a la rama «licencias»
+        env:
+          NOMBRE: ${{ steps.firma.outputs.nombre }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -e
+          git init -q lic && cd lic
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add origin "https://x-access-token:${{ github.token }}@github.com/$GH_REPO.git"
+          if git fetch -q --depth 1 origin licencias 2>/dev/null; then
+            git checkout -q -b licencias FETCH_HEAD
+          else
+            git checkout -q --orphan licencias
+            printf '# Licencias de StradaOS\n\nLicencias firmadas de los temas de pago. Cada una sirve solo en la pantalla de su ID.\n' > README.md
+            git add README.md
+          fi
+          mkdir -p l
+          cp "$RUNNER_TEMP/$NOMBRE" "l/$NOMBRE"
+          git add "l/$NOMBRE"
+          git commit -q -m "Licencia $NOMBRE"
+          git push -q origin licencias
+
+      - name: Resumen
+        env:
+          ID: ${{ steps.datos.outputs.id }}
+          TEMAS: ${{ steps.datos.outputs.temas }}
+          CODE: ${{ steps.firma.outputs.code }}
+          NOMBRE: ${{ steps.firma.outputs.nombre }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          C="STRD-${CODE:0:4}-${CODE:4:4}"
+          echo "Código $C para la pantalla ${ID:0:4}-${ID:4:4} ($TEMAS)"
+          {
+            echo "## Código: \`$C\`"
+            echo ""
+            echo "- Pantalla: **${ID:0:4}-${ID:4:4}** · Temas: **$TEMAS**"
+            echo "- Envíale el código; lo escribe en Ajustes → Personalización → Desbloquear → «Tengo un código» (necesita internet una vez)."
+            echo "- Sin internet: descarga [este archivo](https://github.com/$GH_REPO/raw/licencias/l/$NOMBRE), renómbralo \`stradaos-licencia.txt\` y envíaselo para que lo pase por USB («Archivo por USB»)."
+          } >> "$GITHUB_STEP_SUMMARY"
