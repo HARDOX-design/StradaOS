@@ -11408,7 +11408,8 @@ public class Main extends Activity {
 
     private TextView guideText(String text, float size, int color, boolean medium) {
         TextView v = tv("", size, color, medium);
-        v.setText(text);
+        // en árabe cada párrafo va de derecha a izquierda aunque empiece con una palabra latina (Groq, Claude…)
+        v.setText("ar".equals(I18n.lang) ? "\u200F" + text : text);
         v.setSingleLine(false);
         v.setEllipsize(null);
         v.setLineSpacing(4 * s, 1f);
@@ -11441,11 +11442,15 @@ public class Main extends Activity {
                 card.addView(h);
             } else if (it.type == ObdGuide.BULLET) {
                 LinearLayout r = new LinearLayout(this);
+                boolean rtl = "ar".equals(I18n.lang);
                 TextView dot = guideText("•", 14, RED, true);
-                dot.setPadding(0, 0, (int) (10 * s), 0);
-                r.addView(dot);
-                r.addView(guideText(it.text, 14, SOFT, false), new LinearLayout.LayoutParams(0, -2, 1f));
-                r.setPadding((int) (4 * s), 0, 0, (int) (8 * s));
+                dot.setPadding(rtl ? (int) (10 * s) : 0, 0, rtl ? 0 : (int) (10 * s), 0);
+                TextView bt = guideText(it.text, 14, SOFT, false);
+                if (rtl) bt.setGravity(Gravity.RIGHT);
+                if (!rtl) r.addView(dot);
+                r.addView(bt, new LinearLayout.LayoutParams(0, -2, 1f));
+                if (rtl) r.addView(dot);                       // la viñeta, a la derecha
+                r.setPadding(rtl ? 0 : (int) (4 * s), 0, rtl ? (int) (4 * s) : 0, (int) (8 * s));
                 card.addView(r);
             } else {
                 TextView pt = guideText(it.text, 14, SOFT, false);
@@ -11454,7 +11459,9 @@ public class Main extends Activity {
             }
         }
         if (!acts.isEmpty()) {
+            int h = body.getChildCount();
             LinearLayout a = section(body, "");
+            body.removeViewAt(h);                              // sin encabezado: los botones van justo debajo del texto
             for (final ObdGuide.Item it : acts) rowRaw(a, it.text, null, guideAction(it.action));
         }
         final ObdGuide.Section nx = ObdGuide.next(this, id);
