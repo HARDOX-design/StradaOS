@@ -1668,3 +1668,6 @@ Sin conexión	未连接
 Interrumpido	已中断
 Dirección no válida: {}	地址无效：{}
 Apps	应用
+Guía del escáner	诊断仪指南
+Guía	指南
+Qué comprar, cómo conectarlo y qué significa cada cosa · sin internet	买什么、怎么连接、每项是什么意思 · 无需联网

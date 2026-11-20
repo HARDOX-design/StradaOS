@@ -1,0 +1,95 @@
+# StradaOS · Panduan pengimbas OBD-II · Melayu. Format: lihat ObdGuide.java.
+
+== comprar | Pengimbas mana yang patut dibeli | Yang berfungsi dan yang perlu dielakkan
+StradaOS berhubung dengan pengimbas ELM327, jenis yang paling biasa dan murah. Ia bersambung melalui Bluetooth atau Wi-Fi.
+### Berfungsi
+- Bluetooth "klasik" (juga ditulis SPP, Bluetooth 2.0 atau 3.0) atau dwi-mod. Disyorkan: Vgate iCar Pro (versi Bluetooth 3.0), Veepeak Mini Bluetooth, OBDLink LX dan OBDLink MX+.
+- Wi-Fi: juga berfungsi, tetapi selagi skrin bersambung ke rangkaian pengimbas, skrin tiada internet (peta dalam talian, cuaca, AI).
+### Elakkan
+- Pengimbas BLE sahaja (Bluetooth Low Energy, "Bluetooth 4.0" atau "untuk iPhone sahaja"), seperti OBDLink CX: Android tidak mengenalinya sebagai pengimbas dan ia tidak akan bersambung.
+- Klon yang sangat murah bertanda "v2.1": banyak yang menjawab dengan buruk atau separuh sahaja. Jika anda sudah ada satu, cubalah; kadang-kadang ia berfungsi.
+Petua: pada kotak atau penerangan, cari "Android" dan "Bluetooth 3.0" atau "SPP". Jika hanya tertulis "iOS" atau "BLE", ia tidak sesuai.
+
+== conector | Di mana dipasang dan cara memadankan | Soket OBD dan sambungan pertama
+### Soket
+Ia mempunyai 16 pin dan berbentuk trapezium. Hampir selalu di bawah papan pemuka di sebelah pemandu, dekat lutut atau di sebelah kotak fius; kadang-kadang di sebalik penutup kecil. Jika tidak jumpa, rujuk manual kereta.
+### Memadankan
+- Pasang pengimbas dan hidupkan suis kunci (atau enjin). Lampu pada pengimbas sepatutnya menyala.
+- Bluetooth: dalam Sambungan, ketik "Cari pengimbas Bluetooth berdekatan" dan pilih pengimbas anda. Jika diminta PIN, biasanya 1234 atau 0000.
+- Wi-Fi: sambungkan skrin ke rangkaian Wi-Fi pengimbas dan taip IP serta port (biasanya 192.168.0.10:35000).
+- Siap: sambungan sepatutnya menunjukkan "Langsung".
+### Jika tidak bersambung
+- Sesetengah skrin mempunyai Bluetooth hanya untuk telefon (bebas tangan) dan Android tidak nampak. Untuk skrin begini, gunakan pengimbas Wi-Fi.
+- Dalam Sambungan → "Log sambungan" anda boleh lihat jawapan pengimbas.
+Petua: jika kereta akan diletakkan beberapa hari, cabut pengimbas: sesetengahnya menghabiskan bateri walaupun kereta dimatikan.
+>> obd_conn | Pergi ke Sambungan
+
+== panel | Panel kenderaan | Maksud setiap meter dan setiap warna
+Panel keluar dari sebelah pemandu: bukanya dengan tab di tepi, dengan butang pada bar atau dari Tetapan. Ia berfungsi di atas mana-mana tema.
+### Tiga meter
+- Penyejuk: suhu enjin. Apabila enjin panas, 80 hingga 100 °C adalah normal.
+- Bateri: semasa enjin hidup, bacaan patut 13.5 hingga 14.8 V (alternator sedang mengecas). Semasa enjin mati, kira-kira 12.6 V.
+- RPM: putaran enjin.
+### Warna
+- Hijau: normal.
+- Ambar: notis. Ada sesuatu yang luar biasa; perhatikan.
+- Merah: amaran. Bertindak segera; jika penyejuk, berhenti di tempat selamat.
+Di bawahnya ada tiga data kecil (contohnya kelajuan, beban enjin atau bahan api): ketik untuk melihat grafnya. Lebih ke bawah ada amaran aktif dan kod kerosakan.
+>> panel | Buka panel kenderaan
+
+== alertas | Amaran dan hadnya | Bila StradaOS memberi amaran dan cara mengubahnya
+StradaOS memantau data semasa anda memandu dan memberi amaran pada skrin dan melalui suara, walaupun anda sedang guna Waze atau mendengar muzik.
+- Notis (ambar): ada sesuatu yang luar biasa; contohnya, penyejuk melebihi 100 °C.
+- Amaran (merah): anda perlu bertindak; contohnya, penyejuk melebihi 106 °C atau bateri yang tidak dicas. Jika diaktifkan, panel akan terbuka sendiri.
+- Ia juga memberi amaran jika penyejuk naik terlalu cepat dan apabila kod kerosakan baharu muncul.
+### Mengubah had
+Dalam Amaran → "Bila setiap data memberi amaran", ketik satu data untuk memantaunya atau tidak dan mengubah nilai notis dan amaran. "Nilai kilang" mengembalikannya seperti asal.
+Nilai kilang sesuai untuk kebanyakan kereta. Ubah hanya jika anda kenal kereta anda dengan baik (contohnya, enjin yang biasanya lebih panas).
+>> obd_alerts | Pergi ke Amaran
+
+== codigos | Kod kerosakan | Maksudnya dan bila perlu dipadam
+Apabila komputer enjin mengesan kerosakan, ia menyimpan kod seperti P0301. Hurufnya menunjukkan sistem: P enjin dan transmisi, B badan, C casis, U komunikasi.
+- Tertangguh: kerosakan muncul sekali; jika berulang, ia disahkan.
+- Disahkan: kerosakan berulang dan boleh menyalakan lampu enjin.
+Ketik satu kod untuk melihat maksudnya, tahap keseriusan dan apa yang perlu dibuat.
+### Bila perlu dipadam
+- Hanya selepas kerosakan dibaiki, atau untuk melihat sama ada ia kembali.
+- Catat kod dahulu: bengkel menggunakannya untuk diagnosis.
+- Dengan enjin dimatikan dan suis kunci dihidupkan.
+- Memadam tidak membaiki apa-apa: jika kerosakan masih ada, kod akan kembali.
+- Selepas dipadam, monitor pelepasan kekal "belum siap" selama beberapa hari. Itu normal, tetapi jangan bawa kereta untuk ujian pelepasan sejurus selepas itu.
+>> obd_codes | Pergi ke Kod kerosakan
+
+== datos | Data langsung dan graf | Semua yang dihantar oleh kereta anda
+Dalam Data langsung anda melihat setiap data yang dihantar kereta: kelajuan, beban enjin, pendikit, suhu udara, bahan api, campuran dan lain-lain. Setiap kereta menghantar data berbeza: jika satu tidak muncul, kereta anda tidak memberikannya.
+- Ketik satu data untuk membuka grafnya.
+- Graf memaparkan sehingga 3 data serentak, dari 1 hingga 30 minit.
+- Data bertanda "dikira" dihasilkan oleh StradaOS daripada data lain (contohnya, penggunaan bahan api). Ia anggaran sahaja.
+Petua: jika enjin anda tiada sensor MAF, masukkan kapasiti enjin dalam Lanjutan supaya penggunaan bahan api lebih tepat.
+>> obd_live | Pergi ke Data langsung
+
+== ia | Mengaktifkan AI, langkah demi langkah | Pilihan: menerangkan kod untuk kereta anda
+AI adalah pilihan: tanpanya, StradaOS sudah menerangkan kod yang paling biasa. Dengan AI, penerangan dibuat untuk kereta anda khususnya. Anda perlukan kunci (API key) sendiri dan internet pada skrin.
+### Groq (percuma)
+- Pergi ke console.groq.com dan log masuk dengan Google atau e-mel anda. Tiada kad diperlukan.
+- Pergi ke "API Keys" → "Create API Key", beri nama dan salin kunci (bermula dengan gsk_). Ia dipaparkan sekali sahaja.
+- Dalam StradaOS: Kecerdasan buatan → Pembekal: Groq → API key: tampalkan.
+Petua: buat dalam pelayar pada skrin yang sama supaya boleh salin dan tampal kunci. Jika buat di telefon, anda perlu menaipnya dengan teliti.
+### Claude atau OpenAI (berbayar)
+- Claude: platform.claude.com → Settings → API keys. Beli kredit dalam Billing dahulu.
+- OpenAI: platform.openai.com → API keys. Juga menggunakan kredit prabayar.
+- Dalam StradaOS pilih pembekal, tampal kunci dan, jika diminta, pilih model.
+### Akhir sekali
+- Isi "Kenderaan anda (untuk AI)": jenama, model, tahun, enjin dan transmisi. Jawapan jadi lebih tepat.
+- Ketik "Cuba AI". Jika ia menjawab, semuanya siap.
+Hanya kod, kenderaan yang anda tulis dan data enjin pada saat itu dihantar; lokasi anda tidak pernah dihantar. Setiap pertanyaan dicaj oleh pembekal anda (dengan Groq, percuma dalam hadnya).
+>> obd_ai | Pergi ke Kecerdasan buatan
+
+== limites | Apa yang tidak boleh dibaca dan kereta simulasi | Had OBD-II dan cara mencuba tanpa pengimbas
+### Apa yang OBD-II tidak berikan
+- Tekanan tayar: hampir tiada kereta yang memberikannya melalui OBD-II standard. Untuk itu anda perlukan sensor tayar (TPMS) berasingan.
+- Odometer papan pemuka, paras minyak enjin dan modul seperti ABS, beg udara atau transmisi automatik hampir tidak pernah ada dalam standard.
+- Kereta yang sangat lama dan sesetengah diesel lama mungkin tiada OBD-II.
+### Kereta simulasi
+Belum ada pengimbas? Pilih "Kereta simulasi" dalam Sambungan untuk melihat cara semuanya berfungsi: meter, amaran suara, kod contoh dan graf. Dalam beberapa minit anda akan melihat ujian enjin terlalu panas dan amaran bateri. Ia tidak bersambung dengan kereta sebenar anda.
+>> demo | Cuba dengan kereta simulasi

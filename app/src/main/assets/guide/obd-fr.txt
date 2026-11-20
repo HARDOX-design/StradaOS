@@ -1,0 +1,95 @@
+# StradaOS · Guide du scanner OBD-II · français. Format : voir ObdGuide.java.
+
+== comprar | Quel scanner acheter | Ceux qui fonctionnent et ceux à éviter
+StradaOS communique avec les scanners ELM327, le type le plus courant et le moins cher. Ils se connectent en Bluetooth ou en Wi-Fi.
+### Ils fonctionnent
+- Bluetooth « classique » (aussi indiqué SPP, Bluetooth 2.0 ou 3.0) ou double mode. Recommandés : Vgate iCar Pro (version Bluetooth 3.0), Veepeak Mini Bluetooth, OBDLink LX et OBDLink MX+.
+- Wi-Fi : ils fonctionnent aussi, mais tant que l'écran est connecté au réseau du scanner, il n'a plus internet (carte en ligne, météo, IA).
+### À éviter
+- Les modèles BLE uniquement (Bluetooth Low Energy, « Bluetooth 4.0 » ou « pour iPhone uniquement »), comme l'OBDLink CX : Android ne les voit pas comme scanner et ils ne se connectent pas.
+- Les clones très bon marché marqués « v2.1 » : beaucoup répondent mal ou à moitié. Si vous en avez déjà un, essayez-le ; parfois il fonctionne.
+Astuce : sur la boîte ou dans la description, cherchez « Android » et « Bluetooth 3.0 » ou « SPP ». S'il n'est écrit que « iOS » ou « BLE », il ne conviendra pas.
+
+== conector | Où le brancher et comment l'appairer | La prise OBD et la première connexion
+### La prise
+Elle a 16 broches et une forme de trapèze. Elle se trouve presque toujours sous le tableau de bord côté conducteur, près des genoux ou à côté de la boîte à fusibles, parfois derrière un petit cache. Si vous ne la trouvez pas, consultez le manuel de la voiture.
+### Appairer
+- Branchez le scanner et mettez le contact (ou démarrez le moteur). Un voyant doit s'allumer sur le scanner.
+- Bluetooth : dans Connexion, touchez « Rechercher des scanners Bluetooth à proximité » et choisissez-le. S'il demande un code, c'est presque toujours 1234 ou 0000.
+- Wi-Fi : connectez l'écran au réseau Wi-Fi du scanner et saisissez son IP et son port (presque toujours 192.168.0.10:35000).
+- C'est prêt : la connexion doit indiquer « En direct ».
+### S'il ne se connecte pas
+- Certains écrans n'ont du Bluetooth que pour le téléphone (mains libres) et Android ne le voit pas. Sur ceux-là, utilisez un scanner Wi-Fi.
+- Dans Connexion → « Journal de connexion », vous voyez ce que le scanner a répondu.
+Astuce : si la voiture reste immobile plusieurs jours, débranchez le scanner : certains vident la batterie même voiture éteinte.
+>> obd_conn | Aller à Connexion
+
+== panel | Le panneau du véhicule | Ce que signifie chaque jauge et chaque couleur
+Le panneau sort du côté conducteur : ouvrez-le avec l'onglet sur le bord, avec un bouton de la barre ou depuis les Réglages. Il fonctionne par-dessus n'importe quel thème.
+### Les trois jauges
+- Liquide de refroidissement : la température du moteur. Moteur chaud, entre 80 et 100 °C c'est normal.
+- Batterie : moteur allumé, elle doit indiquer entre 13,5 et 14,8 V (l'alternateur charge). Moteur éteint, environ 12,6 V.
+- Régime : les tours du moteur.
+### Les couleurs
+- Vert : normal.
+- Ambre : avertissement. Quelque chose sort de l'ordinaire ; surveillez-le.
+- Rouge : alerte. Agissez vite ; s'il s'agit du liquide de refroidissement, arrêtez-vous dans un endroit sûr.
+En dessous, trois petites données (par exemple vitesse, charge moteur ou carburant) : touchez-les pour voir leur graphique. Plus bas apparaissent les alertes actives et les codes défaut.
+>> panel | Ouvrir le panneau du véhicule
+
+== alertas | Les alertes et leurs seuils | Quand StradaOS prévient et comment le modifier
+StradaOS surveille les données pendant que vous conduisez et prévient à l'écran et à voix haute, même dans Waze ou avec de la musique.
+- Avertissement (ambre) : quelque chose sort de l'ordinaire ; par exemple, le liquide de refroidissement au-dessus de 100 °C.
+- Alerte (rouge) : il faut agir ; par exemple, le liquide de refroidissement au-dessus de 106 °C ou une batterie qui ne charge pas. Si l'option est activée, le panneau s'ouvre tout seul.
+- Il prévient aussi si le liquide de refroidissement monte très vite et quand un nouveau code défaut apparaît.
+### Modifier les seuils
+Dans Alertes → « Quand chaque donnée alerte », touchez une donnée pour la surveiller ou non et changer ses valeurs d'avertissement et d'alerte. « Valeurs d'usine » les remet comme avant.
+Les valeurs d'usine conviennent à la plupart des voitures. Ne les changez que si vous connaissez bien la vôtre (par exemple, un moteur qui tourne normalement plus chaud).
+>> obd_alerts | Aller à Alertes
+
+== codigos | Les codes défaut | Ce qu'ils signifient et quand les effacer
+Quand le calculateur moteur détecte un défaut, il enregistre un code comme P0301. La lettre indique le système : P moteur et boîte, B carrosserie, C châssis, U communication.
+- En attente : le défaut est apparu une fois ; s'il se répète, il est confirmé.
+- Confirmé : le défaut s'est répété et peut allumer le voyant moteur.
+Touchez un code pour voir ce qu'il signifie, sa gravité et quoi faire.
+### Quand les effacer
+- Seulement après avoir réparé le défaut, ou pour voir s'il revient.
+- Notez les codes avant : le garage s'en sert pour le diagnostic.
+- Moteur éteint et contact mis.
+- Effacer ne répare rien : si le défaut persiste, le code revient.
+- Après l'effacement, les moniteurs d'émissions restent « non prêts » quelques jours. C'est normal, mais ne passez pas le contrôle technique juste après.
+>> obd_codes | Aller à Codes défaut
+
+== datos | Les données en direct et les graphiques | Tout ce que transmet votre voiture
+Dans Données en direct, vous voyez chaque donnée que transmet votre voiture : vitesse, charge moteur, accélérateur, température de l'air, carburant, richesse et plus. Chaque voiture transmet des données différentes : si l'une n'apparaît pas, votre voiture ne la fournit pas.
+- Touchez une donnée pour ouvrir son graphique.
+- Les graphiques affichent jusqu'à 3 données à la fois, de 1 à 30 minutes.
+- Celles marquées « calculé » sont déduites par StradaOS d'autres données (par exemple, la consommation). Elles sont approximatives.
+Astuce : si votre moteur n'a pas de capteur MAF, indiquez sa cylindrée dans Avancé pour une consommation plus juste.
+>> obd_live | Aller à Données en direct
+
+== ia | Activer l'IA, étape par étape | Facultatif : explique les codes pour votre voiture
+L'IA est facultative : sans elle, StradaOS explique déjà les codes les plus courants. Avec elle, l'explication concerne votre voiture en particulier. Il vous faut votre propre clé (API key) et internet sur l'écran.
+### Groq (gratuit)
+- Allez sur console.groq.com et connectez-vous avec Google ou votre e-mail. Aucune carte demandée.
+- Allez dans « API Keys » → « Create API Key », donnez-lui un nom et copiez la clé (elle commence par gsk_). Elle n'est affichée qu'une fois.
+- Dans StradaOS : Intelligence artificielle → Fournisseur : Groq → API key : collez-la.
+Astuce : faites-le dans le navigateur du même écran pour copier-coller la clé. Sur le téléphone, il faudra la saisir avec soin.
+### Claude ou OpenAI (payants)
+- Claude : platform.claude.com → Settings → API keys. Achetez d'abord des crédits dans Billing.
+- OpenAI : platform.openai.com → API keys. Fonctionne aussi avec des crédits prépayés.
+- Dans StradaOS, choisissez le fournisseur, collez la clé et, si on vous le demande, choisissez le modèle.
+### Pour finir
+- Remplissez « Votre véhicule (pour l'IA) » : marque, modèle, année, moteur et boîte. La réponse sera plus précise.
+- Touchez « Tester l'IA ». Si elle répond, c'est bon.
+Seuls le code, le véhicule que vous saisissez et les données moteur du moment sont envoyés ; jamais votre position. Chaque requête est facturée par votre fournisseur (avec Groq, gratuite dans sa limite).
+>> obd_ai | Aller à Intelligence artificielle
+
+== limites | Ce qui ne se lit pas et la voiture simulée | Les limites de l'OBD-II et comment essayer sans scanner
+### Ce que l'OBD-II ne fournit pas
+- La pression des pneus : presque aucune voiture ne la transmet par l'OBD-II standard. Pour cela, il faut des capteurs de pneus (TPMS) à part.
+- Le kilométrage du tableau de bord, le niveau d'huile et des modules comme l'ABS, les airbags ou la boîte automatique ne font presque jamais partie du standard.
+- Les voitures très anciennes et certains vieux diesels peuvent ne pas avoir d'OBD-II.
+### La voiture simulée
+Pas encore de scanner ? Choisissez « Voiture simulée » dans Connexion pour voir comment tout fonctionne : jauges, alertes vocales, un code d'exemple et graphiques. En quelques minutes, vous verrez une surchauffe et une alerte batterie de test. Elle ne se connecte pas à votre vraie voiture.
+>> demo | Essayer avec la voiture simulée

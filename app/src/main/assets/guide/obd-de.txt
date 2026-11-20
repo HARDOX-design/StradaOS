@@ -1,0 +1,95 @@
+# StradaOS · Anleitung zum OBD-II-Scanner · Deutsch. Format: siehe ObdGuide.java.
+
+== comprar | Welchen Scanner kaufen | Welche funktionieren und welche du meiden solltest
+StradaOS arbeitet mit ELM327-Scannern, der häufigsten und günstigsten Art. Sie verbinden sich per Bluetooth oder WLAN.
+### Funktionieren
+- „Klassisches“ Bluetooth (auch als SPP, Bluetooth 2.0 oder 3.0 angegeben) oder Dual-Mode. Empfohlen: Vgate iCar Pro (Bluetooth-3.0-Version), Veepeak Mini Bluetooth, OBDLink LX und OBDLink MX+.
+- WLAN: funktionieren auch, aber solange der Bildschirm mit dem Netz des Scanners verbunden ist, hat er kein Internet (Online-Karte, Wetter, KI).
+### Meiden
+- Reine BLE-Scanner (Bluetooth Low Energy, „Bluetooth 4.0“ oder „nur für iPhone“), etwa der OBDLink CX: Android erkennt sie nicht als Scanner, sie verbinden sich nicht.
+- Sehr billige Klone mit der Aufschrift „v2.1“: Viele antworten schlecht oder nur teilweise. Wenn du schon einen hast, probier ihn aus; manchmal klappt es.
+Tipp: Achte auf der Verpackung oder in der Beschreibung auf „Android“ und „Bluetooth 3.0“ oder „SPP“. Steht nur „iOS“ oder „BLE“ da, passt er nicht.
+
+== conector | Wo er hinkommt und wie du ihn koppelst | Die OBD-Buchse und die erste Verbindung
+### Die Buchse
+Sie hat 16 Pins und eine Trapezform. Fast immer sitzt sie unter dem Armaturenbrett auf der Fahrerseite, in Kniehöhe oder neben dem Sicherungskasten, manchmal hinter einer kleinen Abdeckung. Findest du sie nicht, schau ins Handbuch des Autos.
+### Koppeln
+- Steck den Scanner ein und schalte die Zündung ein (oder starte den Motor). Am Scanner sollte ein Licht angehen.
+- Bluetooth: Tippe in Verbindung auf „Bluetooth-Scanner in der Nähe suchen“ und wähle ihn aus. Fragt er nach einem PIN, ist es fast immer 1234 oder 0000.
+- WLAN: Verbinde den Bildschirm mit dem WLAN des Scanners und gib IP und Port ein (fast immer 192.168.0.10:35000).
+- Fertig: Bei der Verbindung sollte „Live“ stehen.
+### Wenn er sich nicht verbindet
+- Manche Bildschirme haben Bluetooth nur fürs Handy (Freisprechen), und Android sieht es nicht. Nimm dort einen WLAN-Scanner.
+- Unter Verbindung → „Verbindungsprotokoll“ siehst du, was der Scanner geantwortet hat.
+Tipp: Steht das Auto mehrere Tage, zieh den Scanner ab: Manche ziehen Strom, auch wenn das Auto aus ist.
+>> obd_conn | Zu Verbindung
+
+== panel | Das Fahrzeugpanel | Was jede Anzeige und jede Farbe bedeutet
+Das Panel kommt von der Fahrerseite: Öffne es mit der Lasche am Rand, mit einer Taste in der Leiste oder in den Einstellungen. Es funktioniert über jedem Design.
+### Die drei Anzeigen
+- Kühlmittel: die Motortemperatur. Bei warmem Motor sind 80 bis 100 °C normal.
+- Batterie: Bei laufendem Motor sollte sie 13,5 bis 14,8 V zeigen (die Lichtmaschine lädt). Bei ausgeschaltetem Motor etwa 12,6 V.
+- Drehzahl (RPM): die Umdrehungen des Motors.
+### Die Farben
+- Grün: normal.
+- Gelb: Warnung. Etwas ist nicht normal; behalte es im Auge.
+- Rot: Alarm. Handle bald; beim Kühlmittel halte an einem sicheren Ort an.
+Darunter stehen drei kleine Werte (zum Beispiel Geschwindigkeit, Motorlast oder Kraftstoff): Tippe darauf, um ihr Diagramm zu sehen. Weiter unten stehen die aktiven Warnungen und die Fehlercodes.
+>> panel | Fahrzeugpanel öffnen
+
+== alertas | Warnungen und ihre Grenzwerte | Wann StradaOS warnt und wie du das änderst
+StradaOS überwacht die Daten während der Fahrt und warnt auf dem Bildschirm und per Sprache, auch wenn du gerade Waze nutzt oder Musik hörst.
+- Warnung (gelb): Etwas ist nicht normal, zum Beispiel Kühlmittel über 100 °C.
+- Alarm (rot): Du musst handeln, zum Beispiel Kühlmittel über 106 °C oder eine Batterie, die nicht lädt. Wenn eingeschaltet, öffnet sich das Panel von selbst.
+- Es warnt auch, wenn das Kühlmittel sehr schnell steigt und wenn ein neuer Fehlercode auftaucht.
+### Grenzwerte ändern
+Tippe unter Warnungen → „Wann jeder Wert warnt“ auf einen Wert, um ihn zu überwachen oder nicht und seine Warn- und Alarmwerte zu ändern. „Werkswerte“ stellt alles wieder her.
+Die Werkswerte passen für die meisten Autos. Ändere sie nur, wenn du deines gut kennst (zum Beispiel einen Motor, der normalerweise wärmer läuft).
+>> obd_alerts | Zu Warnungen
+
+== codigos | Fehlercodes | Was sie bedeuten und wann du sie löschst
+Erkennt das Motorsteuergerät einen Fehler, speichert es einen Code wie P0301. Der Buchstabe nennt das System: P Motor und Getriebe, B Karosserie, C Fahrwerk, U Kommunikation.
+- Ausstehend: Der Fehler trat einmal auf; wiederholt er sich, wird er bestätigt.
+- Bestätigt: Der Fehler hat sich wiederholt und kann die Motorkontrollleuchte einschalten.
+Tippe auf einen Code, um zu sehen, was er bedeutet, wie ernst er ist und was zu tun ist.
+### Wann löschen
+- Nur nach der Reparatur oder um zu sehen, ob er wiederkommt.
+- Schreib die Codes vorher auf: Die Werkstatt braucht sie für die Diagnose.
+- Bei ausgeschaltetem Motor und eingeschalteter Zündung.
+- Löschen repariert nichts: Besteht der Fehler weiter, kommt der Code zurück.
+- Nach dem Löschen bleiben die Abgasmonitore einige Tage „nicht bereit“. Das ist normal, aber fahr nicht direkt danach zur Abgasuntersuchung.
+>> obd_codes | Zu Fehlercodes
+
+== datos | Live-Daten und Diagramme | Alles, was dein Auto liefert
+Unter Live-Daten siehst du jeden Wert, den dein Auto liefert: Geschwindigkeit, Motorlast, Gaspedal, Lufttemperatur, Kraftstoff, Gemisch und mehr. Jedes Auto liefert andere Daten: Fehlt einer, gibt dein Auto ihn nicht aus.
+- Tippe auf einen Wert, um sein Diagramm zu öffnen.
+- In den Diagrammen siehst du bis zu 3 Werte gleichzeitig, von 1 bis 30 Minuten.
+- Werte mit „berechnet“ ermittelt StradaOS aus anderen Daten (zum Beispiel den Verbrauch). Sie sind ungefähr.
+Tipp: Hat dein Motor keinen MAF-Sensor, trag unter Erweitert den Hubraum ein, damit der Verbrauch genauer wird.
+>> obd_live | Zu Live-Daten
+
+== ia | KI einschalten, Schritt für Schritt | Optional: erklärt die Codes für dein Auto
+Die KI ist optional: Ohne sie erklärt StradaOS schon die häufigsten Codes. Mit ihr gilt die Erklärung für dein Auto. Du brauchst einen eigenen Schlüssel (API key) und Internet auf dem Bildschirm.
+### Groq (kostenlos)
+- Geh auf console.groq.com und melde dich mit Google oder deiner E-Mail an. Keine Karte nötig.
+- Geh zu „API Keys“ → „Create API Key“, gib einen Namen ein und kopiere den Schlüssel (beginnt mit gsk_). Er wird nur einmal angezeigt.
+- In StradaOS: Künstliche Intelligenz → Anbieter: Groq → API key: einfügen.
+Tipp: Mach das im Browser desselben Bildschirms, dann kannst du den Schlüssel kopieren und einfügen. Am Handy musst du ihn sorgfältig abtippen.
+### Claude oder OpenAI (kostenpflichtig)
+- Claude: platform.claude.com → Settings → API keys. Vorher unter Billing Guthaben kaufen.
+- OpenAI: platform.openai.com → API keys. Funktioniert ebenfalls mit Prepaid-Guthaben.
+- Wähle in StradaOS den Anbieter, füge den Schlüssel ein und wähle, falls gefragt, das Modell.
+### Zum Schluss
+- Füll „Dein Fahrzeug (für die KI)“ aus: Marke, Modell, Baujahr, Motor und Getriebe. So wird die Antwort genauer.
+- Tippe auf „KI testen“. Antwortet sie, bist du fertig.
+Gesendet werden nur der Code, das Fahrzeug, das du einträgst, und die Motordaten dieses Moments, nie dein Standort. Jede Anfrage berechnet dein Anbieter (bei Groq kostenlos im Rahmen des Limits).
+>> obd_ai | Zu Künstliche Intelligenz
+
+== limites | Was nicht lesbar ist und das simulierte Auto | Grenzen von OBD-II und Testen ohne Scanner
+### Was OBD-II nicht liefert
+- Den Reifendruck: Kaum ein Auto gibt ihn über Standard-OBD-II aus. Dafür brauchst du separate Reifensensoren (TPMS).
+- Den Kilometerstand des Tachos, den Ölstand und Module wie ABS, Airbags oder Automatikgetriebe gibt es fast nie im Standard.
+- Sehr alte Autos und manche ältere Diesel haben eventuell kein OBD-II.
+### Das simulierte Auto
+Noch keinen Scanner? Wähle „Simuliertes Auto“ unter Verbindung und sieh, wie alles funktioniert: Anzeigen, Sprachwarnungen, ein Beispielcode und Diagramme. Nach ein paar Minuten siehst du eine Test-Überhitzung und einen Batteriealarm. Es verbindet sich nicht mit deinem echten Auto.
+>> demo | Mit dem simulierten Auto testen

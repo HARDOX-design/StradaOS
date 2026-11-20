@@ -1760,3 +1760,6 @@ Sin conexión	Not connected
 Interrumpido	Interrupted
 Dirección no válida: {}	Invalid address: {}
 Apps	Apps
+Guía del escáner	Scanner guide
+Guía	Guide
+Qué comprar, cómo conectarlo y qué significa cada cosa · sin internet	What to buy, how to connect it and what everything means · works offline

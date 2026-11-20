@@ -1668,3 +1668,6 @@ Sin conexión	Bağlantı yok
 Interrumpido	Kesildi
 Dirección no válida: {}	Geçersiz adres: {}
 Apps	Uygulamalar
+Guía del escáner	Tarayıcı rehberi
+Guía	Rehber
+Qué comprar, cómo conectarlo y qué significa cada cosa · sin internet	Ne alınmalı, nasıl bağlanır ve her şey ne anlama gelir · internetsiz

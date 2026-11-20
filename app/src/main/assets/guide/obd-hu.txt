@@ -1,0 +1,95 @@
+# StradaOS · OBD-II szkenner útmutató · magyar. Formátum: lásd ObdGuide.java.
+
+== comprar | Milyen szkennert vegyél | Amelyek működnek, és amelyeket kerülj
+A StradaOS ELM327 szkennerekkel működik, ez a legelterjedtebb és legolcsóbb fajta. Bluetooth-on vagy Wi-Fi-n csatlakoznak.
+### Működnek
+- „Klasszikus” Bluetooth (SPP, Bluetooth 2.0 vagy 3.0 jelöléssel is) vagy kétmódú. Ajánlott: Vgate iCar Pro (Bluetooth 3.0 változat), Veepeak Mini Bluetooth, OBDLink LX és OBDLink MX+.
+- Wi-Fi: ezek is működnek, de amíg a kijelző a szkenner hálózatára csatlakozik, nincs internet (online térkép, időjárás, MI).
+### Kerüld
+- A csak BLE-s szkennereket (Bluetooth Low Energy, „Bluetooth 4.0” vagy „csak iPhone-hoz”), például az OBDLink CX-et: az Android nem ismeri fel őket szkennerként, és nem csatlakoznak.
+- A nagyon olcsó, „v2.1” feliratú klónokat: sok közülük rosszul vagy csak részben válaszol. Ha már van ilyened, próbáld ki; néha működik.
+Tipp: a dobozon vagy a leírásban keresd az „Android” és a „Bluetooth 3.0” vagy „SPP” jelölést. Ha csak „iOS” vagy „BLE” szerepel, nem fog működni.
+
+== conector | Hová kell dugni és hogyan párosítsd | Az OBD-csatlakozó és az első kapcsolat
+### A csatlakozó
+16 tűs, trapéz alakú. Szinte mindig a műszerfal alatt van a vezető oldalán, a térd közelében vagy a biztosítékdoboz mellett, néha egy kis fedél mögött. Ha nem találod, nézd meg az autó kézikönyvében.
+### Párosítás
+- Dugd be a szkennert, és kapcsold rá a gyújtást (vagy indítsd be a motort). A szkenneren ki kell gyulladnia egy lámpának.
+- Bluetooth: a Kapcsolat részben koppints a „Közeli Bluetooth-szkennerek keresése” lehetőségre, és válaszd ki. Ha PIN-kódot kér, szinte mindig 1234 vagy 0000.
+- Wi-Fi: csatlakoztasd a kijelzőt a szkenner Wi-Fi-hálózatára, és írd be az IP-címét és portját (szinte mindig 192.168.0.10:35000).
+- Kész: a kapcsolatnál az „Élő” felirat jelenik meg.
+### Ha nem csatlakozik
+- Egyes kijelzőkön a Bluetooth csak a telefonhoz (kihangosítás) való, és az Android nem látja. Ezeken Wi-Fi-s szkennert használj.
+- A Kapcsolat → „Kapcsolatnapló” részben láthatod, mit válaszolt a szkenner.
+Tipp: ha az autó több napig áll, húzd ki a szkennert: egyesek kikapcsolt autónál is merítik az akkumulátort.
+>> obd_conn | Ugrás a Kapcsolathoz
+
+== panel | A járműpanel | Mit jelent az egyes mérők és színek
+A panel a vezető oldaláról csúszik be: nyisd meg a szélén lévő füllel, a sáv egyik gombjával vagy a Beállításokból. Bármelyik téma fölött működik.
+### A három mérő
+- Hűtőfolyadék: a motor hőmérséklete. Meleg motornál 80 és 100 °C között normális.
+- Akkumulátor: járó motornál 13,5 és 14,8 V között kell lennie (a generátor tölt). Álló motornál nagyjából 12,6 V.
+- Fordulatszám: a motor percenkénti fordulata (RPM).
+### A színek
+- Zöld: normális.
+- Borostyán: figyelmeztetés. Valami eltér a megszokottól; figyeld.
+- Piros: riasztás. Cselekedj hamar; ha a hűtőfolyadékról van szó, állj meg biztonságos helyen.
+Alatta három kis adat látható (például sebesség, motorterhelés vagy üzemanyag): koppints rájuk a grafikonjukért. Lejjebb az aktív riasztások és a hibakódok jelennek meg.
+>> panel | A járműpanel megnyitása
+
+== alertas | A riasztások és határértékeik | Mikor figyelmeztet a StradaOS, és hogyan módosítsd
+A StradaOS vezetés közben figyeli az adatokat, és a kijelzőn és hanggal is szól, akkor is, ha épp a Waze-t használod vagy zenét hallgatsz.
+- Figyelmeztetés (borostyán): valami eltér a megszokottól; például a hűtőfolyadék 100 °C fölött van.
+- Riasztás (piros): cselekedni kell; például a hűtőfolyadék 106 °C fölött van, vagy az akkumulátor nem töltődik. Ha be van kapcsolva, a panel magától kinyílik.
+- Akkor is szól, ha a hűtőfolyadék nagyon gyorsan melegszik, és ha új hibakód jelenik meg.
+### A határértékek módosítása
+A Riasztások → „Mikor riaszt az egyes adat” részben koppints egy adatra, hogy figyelje-e, és hogy módosítsd a figyelmeztetési és riasztási értékeit. A „Gyári értékek” visszaállítja az eredetit.
+A gyári értékek a legtöbb autóhoz megfelelnek. Csak akkor módosítsd őket, ha jól ismered az autódat (például ha a motorja általában melegebben jár).
+>> obd_alerts | Ugrás a Riasztásokhoz
+
+== codigos | A hibakódok | Mit jelentenek, és mikor töröld őket
+Ha a motorvezérlő hibát észlel, elment egy kódot, például P0301-et. A betű a rendszert jelzi: P motor és váltó, B karosszéria, C futómű, U kommunikáció.
+- Függő: a hiba egyszer jelentkezett; ha megismétlődik, megerősítést nyer.
+- Megerősített: a hiba megismétlődött, és felkapcsolhatja a motorhiba-lámpát.
+Koppints egy kódra, hogy lásd, mit jelent, mennyire súlyos, és mit kell tenni.
+### Mikor töröld
+- Csak a hiba javítása után, vagy hogy lásd, visszatér-e.
+- Előtte írd fel a kódokat: a szerviz ezekből diagnosztizál.
+- Álló motornál, ráadott gyújtással.
+- A törlés semmit sem javít meg: ha a hiba megmarad, a kód visszatér.
+- Törlés után a kibocsátási monitorok néhány napig „nem kész” állapotban maradnak. Ez normális, de ne vidd az autót közvetlenül utána zöldkártya-vizsgára.
+>> obd_codes | Ugrás a Hibakódokhoz
+
+== datos | Az élő adatok és a grafikonok | Minden, amit az autód küld
+Az Élő adatok részben minden adatot látsz, amit az autód küld: sebesség, motorterhelés, gázpedál, levegő-hőmérséklet, üzemanyag, keverék és még sok más. Minden autó más adatokat küld: ha valamelyik nem jelenik meg, az autód nem adja ki.
+- Koppints egy adatra a grafikonja megnyitásához.
+- A grafikonokon egyszerre legfeljebb 3 adat látható, 1 és 30 perc között.
+- A „számított” jelölésűeket a StradaOS más adatokból vezeti le (például a fogyasztást). Ezek közelítő értékek.
+Tipp: ha a motorodban nincs MAF-szenzor, add meg a hengerűrtartalmat a Haladó részben, hogy pontosabb legyen a fogyasztás.
+>> obd_live | Ugrás az Élő adatokhoz
+
+== ia | Az MI bekapcsolása lépésről lépésre | Nem kötelező: az autódra szabva magyarázza a kódokat
+Az MI nem kötelező: nélküle is elmagyarázza a StradaOS a leggyakoribb kódokat. Vele a magyarázat kifejezetten a te autódra szól. Kell hozzá saját kulcs (API key), és internet a kijelzőn.
+### Groq (ingyenes)
+- Nyisd meg a console.groq.com oldalt, és lépj be Google-fiókkal vagy e-mail-címmel. Nem kér bankkártyát.
+- Menj az „API Keys” → „Create API Key” részhez, adj nevet, és másold ki a kulcsot (gsk_ kezdetű). Csak egyszer jelenik meg.
+- A StradaOS-ben: Mesterséges intelligencia → Szolgáltató: Groq → API key: illeszd be.
+Tipp: ugyanannak a kijelzőnek a böngészőjében csináld, így ki tudod másolni és be tudod illeszteni a kulcsot. Telefonon gondosan kell begépelned.
+### Claude vagy OpenAI (fizetős)
+- Claude: platform.claude.com → Settings → API keys. Előbb vásárolj kreditet a Billing részben.
+- OpenAI: platform.openai.com → API keys. Ez is előre fizetett kredittel működik.
+- A StradaOS-ben válaszd ki a szolgáltatót, illeszd be a kulcsot, és ha kéri, válassz modellt.
+### Végül
+- Töltsd ki a „Járműved (az MI-nek)” mezőt: márka, modell, évjárat, motor és váltó. Így pontosabb lesz a válasz.
+- Koppints „Az MI kipróbálása” lehetőségre. Ha válaszol, kész vagy.
+Csak a kód, a beírt jármű és az adott pillanat motoradatai kerülnek elküldésre; a helyzeted soha. Minden lekérdezést a szolgáltatód számláz (a Groq a kereten belül ingyenes).
+>> obd_ai | Ugrás a Mesterséges intelligenciához
+
+== limites | Ami nem olvasható, és a szimulált autó | Az OBD-II korlátai, és kipróbálás szkenner nélkül
+### Amit az OBD-II nem ad
+- A guminyomást: szinte egyetlen autó sem adja ki a szabványos OBD-II-n. Ehhez külön keréknyomás-érzékelő (TPMS) kell.
+- A műszerfal kilométer-számlálója, az olajszint és az olyan modulok, mint az ABS, a légzsákok vagy az automata váltó, szinte soha nincsenek benne a szabványban.
+- A nagyon régi autókon és néhány régebbi dízelen lehet, hogy nincs OBD-II.
+### A szimulált autó
+Még nincs szkennered? Válaszd a Kapcsolat részben a „Szimulált autó” lehetőséget, és nézd meg, hogyan működik minden: mérők, hangos riasztások, egy mintakód és grafikonok. Néhány percen belül egy próba-túlmelegedést és egy akkumulátor-riasztást is látsz. Nem csatlakozik a valódi autódhoz.
+>> demo | Kipróbálás a szimulált autóval

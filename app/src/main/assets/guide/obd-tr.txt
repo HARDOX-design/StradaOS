@@ -1,0 +1,95 @@
+# StradaOS · OBD-II tarayıcı rehberi · Türkçe. Biçim: ObdGuide.java'ya bakın.
+
+== comprar | Hangi tarayıcıyı almalı | Çalışanlar ve kaçınılması gerekenler
+StradaOS, en yaygın ve en ucuz tür olan ELM327 tarayıcılarla çalışır. Bluetooth veya Wi-Fi ile bağlanırlar.
+### Çalışanlar
+- "Klasik" Bluetooth (SPP, Bluetooth 2.0 veya 3.0 olarak da yazılır) ya da çift mod. Önerilenler: Vgate iCar Pro (Bluetooth 3.0 sürümü), Veepeak Mini Bluetooth, OBDLink LX ve OBDLink MX+.
+- Wi-Fi: bunlar da çalışır, ancak ekran tarayıcının ağına bağlıyken internet olmaz (çevrimiçi harita, hava durumu, yapay zekâ).
+### Kaçının
+- Yalnızca BLE olanlar (Bluetooth Low Energy, "Bluetooth 4.0" veya "yalnızca iPhone için"), örneğin OBDLink CX: Android bunları tarayıcı olarak görmez ve bağlanmazlar.
+- Üzerinde "v2.1" yazan çok ucuz klonlar: çoğu kötü ya da eksik yanıt verir. Elinizde varsa deneyin; bazen çalışır.
+İpucu: kutuda veya açıklamada "Android" ve "Bluetooth 3.0" ya da "SPP" arayın. Yalnızca "iOS" veya "BLE" yazıyorsa işe yaramaz.
+
+== conector | Nereye takılır ve nasıl eşleştirilir | OBD soketi ve ilk bağlantı
+### Soket
+16 pimli ve yamuk biçimlidir. Neredeyse her zaman sürücü tarafında, gösterge panelinin altında, dizlerin yakınında veya sigorta kutusunun yanındadır; bazen küçük bir kapağın arkasındadır. Bulamazsanız aracın kılavuzuna bakın.
+### Eşleştirme
+- Tarayıcıyı takın ve kontağı açın (veya motoru çalıştırın). Tarayıcıda bir ışık yanmalıdır.
+- Bluetooth: Bağlantı bölümünde "Yakındaki Bluetooth tarayıcıları ara"ya dokunun ve onu seçin. PIN isterse neredeyse her zaman 1234 veya 0000'dır.
+- Wi-Fi: ekranı tarayıcının Wi-Fi ağına bağlayın ve IP ile portu yazın (genellikle 192.168.0.10:35000).
+- Hazır: bağlantıda "Canlı" yazmalıdır.
+### Bağlanmazsa
+- Bazı ekranlarda Bluetooth yalnızca telefon (eller serbest) içindir ve Android onu görmez. Bu ekranlarda Wi-Fi tarayıcı kullanın.
+- Bağlantı → "Bağlantı günlüğü" bölümünde tarayıcının ne yanıt verdiğini görebilirsiniz.
+İpucu: araç birkaç gün duracaksa tarayıcıyı çıkarın: bazıları araç kapalıyken bile aküyü tüketir.
+>> obd_conn | Bağlantı'ya git
+
+== panel | Araç paneli | Her göstergenin ve rengin anlamı
+Panel sürücü tarafından açılır: kenardaki sekmeyle, çubuktaki bir düğmeyle veya Ayarlar'dan açın. Her temanın üzerinde çalışır.
+### Üç gösterge
+- Antifriz: motor sıcaklığı. Motor ısınmışken 80 ile 100 °C arası normaldir.
+- Akü: motor çalışırken 13,5 ile 14,8 V arasında olmalıdır (alternatör şarj ediyor). Motor kapalıyken yaklaşık 12,6 V.
+- RPM: motor devri.
+### Renkler
+- Yeşil: normal.
+- Kehribar: uyarı. Bir şey normalin dışında; takip edin.
+- Kırmızı: alarm. Kısa sürede harekete geçin; antifrizse güvenli bir yerde durun.
+Altında üç küçük veri vardır (örneğin hız, motor yükü veya yakıt): grafiğini görmek için dokunun. Daha aşağıda etkin uyarılar ve arıza kodları yer alır.
+>> panel | Araç panelini aç
+
+== alertas | Uyarılar ve sınırları | StradaOS ne zaman uyarır ve nasıl değiştirilir
+StradaOS siz sürerken verileri izler; Waze'deyken veya müzik dinlerken bile ekranda ve sesli olarak uyarır.
+- Uyarı (kehribar): bir şey normalin dışında; örneğin antifriz 100 °C'nin üzerinde.
+- Alarm (kırmızı): harekete geçmeniz gerekir; örneğin antifriz 106 °C'nin üzerinde ya da akü şarj olmuyor. Açıksa panel kendiliğinden açılır.
+- Antifriz çok hızlı yükselirse ve yeni bir arıza kodu çıkarsa da uyarır.
+### Sınırları değiştirme
+Uyarılar → "Her veri ne zaman uyarır" bölümünde bir veriye dokunarak izlemeyi açıp kapatabilir, uyarı ve alarm değerlerini değiştirebilirsiniz. "Fabrika değerleri" eski hâline getirir.
+Fabrika değerleri çoğu araca uygundur. Yalnızca aracınızı iyi tanıyorsanız değiştirin (örneğin normalde daha sıcak çalışan bir motor).
+>> obd_alerts | Uyarılar'a git
+
+== codigos | Arıza kodları | Ne anlama gelirler ve ne zaman silinmeli
+Motor beyni bir arıza algıladığında P0301 gibi bir kod kaydeder. Harf sistemi gösterir: P motor ve şanzıman, B kaporta, C şasi, U iletişim.
+- Bekleyen: arıza bir kez görüldü; tekrarlarsa onaylanır.
+- Onaylanmış: arıza tekrarladı ve motor arıza lambasını yakabilir.
+Ne anlama geldiğini, ne kadar ciddi olduğunu ve ne yapılacağını görmek için bir koda dokunun.
+### Ne zaman silinmeli
+- Yalnızca arıza giderildikten sonra veya tekrar gelip gelmediğini görmek için.
+- Önce kodları not edin: servis bunları teşhis için kullanır.
+- Motor kapalı ve kontak açıkken.
+- Silmek hiçbir şeyi onarmaz: arıza sürüyorsa kod geri gelir.
+- Sildikten sonra emisyon monitörleri birkaç gün "hazır değil" kalır. Bu normaldir, ancak aracı hemen ardından egzoz muayenesine götürmeyin.
+>> obd_codes | Arıza kodları'na git
+
+== datos | Canlı veriler ve grafikler | Aracınızın verdiği her şey
+Canlı veriler bölümünde aracınızın verdiği her değeri görürsünüz: hız, motor yükü, gaz kelebeği, hava sıcaklığı, yakıt, karışım ve daha fazlası. Her araç farklı veri verir: biri görünmüyorsa aracınız onu sağlamıyordur.
+- Grafiğini açmak için bir veriye dokunun.
+- Grafiklerde aynı anda en fazla 3 veri, 1 ile 30 dakika arasında görüntülenir.
+- "hesaplanan" yazanları StradaOS başka verilerden çıkarır (örneğin yakıt tüketimi). Yaklaşık değerlerdir.
+İpucu: motorunuzda MAF sensörü yoksa tüketimin daha doğru çıkması için Gelişmiş bölümüne motor hacmini yazın.
+>> obd_live | Canlı veriler'e git
+
+== ia | Yapay zekâyı adım adım açma | İsteğe bağlı: kodları aracınıza göre açıklar
+Yapay zekâ isteğe bağlıdır: o olmadan da StradaOS en yaygın kodları açıklar. Onunla açıklama sizin aracınıza özel olur. Kendinize ait bir anahtar (API key) ve ekranda internet gerekir.
+### Groq (ücretsiz)
+- console.groq.com adresine gidin ve Google ya da e-postanızla giriş yapın. Kart istemez.
+- "API Keys" → "Create API Key" yolunu izleyin, bir ad verin ve anahtarı kopyalayın (gsk_ ile başlar). Yalnızca bir kez gösterilir.
+- StradaOS'ta: Yapay zekâ → Sağlayıcı: Groq → API key: yapıştırın.
+İpucu: anahtarı kopyalayıp yapıştırabilmek için bunu aynı ekranın tarayıcısında yapın. Telefonda yaparsanız dikkatle yazmanız gerekir.
+### Claude veya OpenAI (ücretli)
+- Claude: platform.claude.com → Settings → API keys. Önce Billing'den kredi satın alın.
+- OpenAI: platform.openai.com → API keys. Ön ödemeli krediyle çalışır.
+- StradaOS'ta sağlayıcıyı seçin, anahtarı yapıştırın ve istenirse modeli seçin.
+### Son olarak
+- "Aracınız (yapay zekâ için)" alanını doldurun: marka, model, yıl, motor ve şanzıman. Böylece yanıt daha isabetli olur.
+- "Yapay zekâyı dene"ye dokunun. Yanıt verirse hazırsınız.
+Yalnızca kod, yazdığınız araç ve o anki motor verileri gönderilir; konumunuz asla gönderilmez. Her sorguyu sağlayıcınız ücretlendirir (Groq'ta sınırı içinde ücretsiz).
+>> obd_ai | Yapay zekâ'ya git
+
+== limites | Okunamayanlar ve sanal araç | OBD-II'nin sınırları ve tarayıcısız deneme
+### OBD-II'nin vermedikleri
+- Lastik basıncı: neredeyse hiçbir araç bunu standart OBD-II üzerinden vermez. Bunun için ayrı lastik sensörleri (TPMS) gerekir.
+- Göstergedeki kilometre, yağ seviyesi ve ABS, hava yastıkları veya otomatik şanzıman gibi modüller neredeyse hiç standartta yer almaz.
+- Çok eski araçlarda ve bazı eski dizellerde OBD-II olmayabilir.
+### Sanal araç
+Henüz tarayıcınız yok mu? Her şeyin nasıl çalıştığını görmek için Bağlantı'da "Sanal araç"ı seçin: göstergeler, sesli uyarılar, örnek bir kod ve grafikler. Birkaç dakika içinde deneme amaçlı bir aşırı ısınma ve akü alarmı göreceksiniz. Gerçek aracınıza bağlanmaz.
+>> demo | Sanal araçla dene

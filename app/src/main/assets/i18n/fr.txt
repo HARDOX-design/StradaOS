@@ -1668,3 +1668,6 @@ Sin conexión	Pas de connexion
 Interrumpido	Interrompu
 Dirección no válida: {}	Adresse non valide : {}
 Apps	Applis
+Guía del escáner	Guide du scanner
+Guía	Guide
+Qué comprar, cómo conectarlo y qué significa cada cosa · sin internet	Quoi acheter, comment le connecter et ce que signifie chaque chose · sans internet

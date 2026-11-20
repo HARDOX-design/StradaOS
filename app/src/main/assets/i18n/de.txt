@@ -1668,3 +1668,6 @@ Sin conexión	Keine Verbindung
 Interrumpido	Unterbrochen
 Dirección no válida: {}	Ungültige Adresse: {}
 Apps	Apps
+Guía del escáner	Scanner-Anleitung
+Guía	Anleitung
+Qué comprar, cómo conectarlo y qué significa cada cosa · sin internet	Was du kaufen solltest, wie du ihn verbindest und was alles bedeutet · ohne Internet

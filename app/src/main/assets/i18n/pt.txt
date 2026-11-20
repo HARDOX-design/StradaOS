@@ -1706,3 +1706,6 @@ Sin conexión	Sem conexão
 Interrumpido	Interrompido
 Dirección no válida: {}	Endereço inválido: {}
 Apps	Apps
+Guía del escáner	Guia do scanner
+Guía	Guia
+Qué comprar, cómo conectarlo y qué significa cada cosa · sin internet	O que comprar, como conectar e o que significa cada coisa · sem internet

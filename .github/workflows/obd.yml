@@ -44,6 +44,8 @@ jobs:
           - { api: 23, arch: x86, script: obd }
           - { api: 34, arch: x86_64, script: obd }
           - { api: 34, arch: x86_64, script: obd-i18n }
+          - { api: 16, arch: x86, script: obd-guia }
+          - { api: 34, arch: x86_64, script: obd-guia }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4

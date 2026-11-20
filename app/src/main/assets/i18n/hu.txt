@@ -1653,3 +1653,6 @@ Modo 01 · PID {}	01-es mód · PID {}
 Sin conexión	Nincs kapcsolat
 Interrumpido	Megszakítva
 Dirección no válida: {}	Érvénytelen cím: {}
+Guía del escáner	Szkenner útmutató
+Guía	Útmutató
+Qué comprar, cómo conectarlo y qué significa cada cosa · sin internet	Mit vegyél, hogyan csatlakoztasd, és mit jelent minden · internet nélkül

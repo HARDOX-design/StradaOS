@@ -1668,3 +1668,6 @@ Sin conexión	Nessuna connessione
 Interrumpido	Interrotto
 Dirección no válida: {}	Indirizzo non valido: {}
 Apps	App
+Guía del escáner	Guida allo scanner
+Guía	Guida
+Qué comprar, cómo conectarlo y qué significa cada cosa · sin internet	Cosa comprare, come collegarlo e cosa significa ogni cosa · senza internet

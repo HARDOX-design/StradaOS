@@ -1,1 +1,1 @@
-Nuevo: escáner OBD-II (ELM327 por Bluetooth o Wi-Fi) con panel del vehículo sobre cualquier tema, alertas por voz, códigos de falla explicados y gráficos. Viene apagado: Ajustes → Tu vehículo.
+Nuevo: escáner OBD-II (ELM327 por Bluetooth o Wi-Fi) con panel del vehículo sobre cualquier tema, alertas por voz, códigos de falla explicados y gráficos, y una guía sin internet. Viene apagado: Ajustes → Tu vehículo.

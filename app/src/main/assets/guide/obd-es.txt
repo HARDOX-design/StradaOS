@@ -1,0 +1,95 @@
+# StradaOS · Guía del escáner OBD-II · español. Formato: ver ObdGuide.java.
+
+== comprar | Qué escáner comprar | Los que sirven y los que debes evitar
+StradaOS habla con escáneres ELM327, el tipo más común y económico. Se conectan por Bluetooth o por Wi-Fi.
+### Sirven
+- Bluetooth «clásico» (también dice SPP, Bluetooth 2.0 o 3.0) o de doble modo. Recomendados: Vgate iCar Pro (versión Bluetooth 3.0), Veepeak Mini Bluetooth, OBDLink LX y OBDLink MX+.
+- Wi-Fi: también sirven, pero mientras la pantalla esté conectada a la red del escáner se queda sin internet (mapa en línea, clima, IA).
+### Evita
+- Los que son solo BLE (Bluetooth Low Energy, «Bluetooth 4.0» o «solo para iPhone»), como el OBDLink CX: Android no los ve como escáner y no conectan.
+- Los clones muy baratos que dicen «v2.1»: muchos responden mal o a medias. Si ya tienes uno, pruébalo; a veces funciona.
+Consejo: en la caja o en la descripción busca «Android» y «Bluetooth 3.0» o «SPP». Si dice solo «iOS» o «BLE», no sirve.
+
+== conector | Dónde va y cómo emparejarlo | El conector OBD y la primera conexión
+### El conector
+Tiene 16 pines y forma de trapecio. Casi siempre está debajo del tablero, del lado del conductor, cerca de las rodillas o junto a la caja de fusibles; a veces detrás de una tapita. Si no lo encuentras, búscalo en el manual del auto.
+### Emparejar
+- Enchufa el escáner y pon el contacto (o enciende el motor). Debe prender una luz en el escáner.
+- Bluetooth: en Conexión toca «Buscar escáneres Bluetooth cercanos» y elígelo. Si pide clave, casi siempre es 1234 o 0000.
+- Wi-Fi: conecta la pantalla a la red Wi-Fi del escáner y escribe su IP y puerto (casi siempre 192.168.0.10:35000).
+- Listo: la conexión debe decir «En vivo».
+### Si no conecta
+- Algunas pantallas tienen Bluetooth solo para el celular (manos libres) y Android no lo ve. En esas, usa un escáner Wi-Fi.
+- En Conexión → «Registro de la conexión» ves qué respondió el escáner.
+Consejo: si vas a dejar el auto quieto varios días, desenchufa el escáner: algunos gastan batería aunque el auto esté apagado.
+>> obd_conn | Ir a Conexión
+
+== panel | El panel del vehículo | Qué significa cada medidor y cada color
+El panel sale del lado del conductor: ábrelo con la pestaña del borde, con un botón de la barra o desde Ajustes. Funciona encima de cualquier tema.
+### Los tres medidores
+- Refrigerante: la temperatura del motor. Con el motor caliente lo normal es entre 80 y 100 °C.
+- Batería: con el motor encendido debe marcar entre 13,5 y 14,8 V (el alternador está cargando). Con el motor apagado, unos 12,6 V.
+- RPM: las revoluciones del motor.
+### Los colores
+- Verde: normal.
+- Ámbar: aviso. Algo se sale de lo normal; vigílalo.
+- Rojo: alerta. Actúa pronto; si es el refrigerante, detente en un lugar seguro.
+Debajo hay tres datos chicos (por ejemplo velocidad, carga del motor o combustible): tócalos para ver su gráfico. Más abajo salen las alertas activas y los códigos de falla.
+>> panel | Abrir el panel del vehículo
+
+== alertas | Las alertas y sus límites | Cuándo avisa StradaOS y cómo cambiarlo
+StradaOS vigila los datos mientras conduces y avisa en pantalla y por voz, aunque estés en Waze o con música.
+- Aviso (ámbar): algo se sale de lo normal; por ejemplo, el refrigerante sobre 100 °C.
+- Alerta (rojo): hay que actuar; por ejemplo, el refrigerante sobre 106 °C o la batería que no carga. Si lo tienes activado, el panel se abre solo.
+- También avisa si el refrigerante sube muy rápido y cuando aparece un código de falla nuevo.
+### Cambiar los límites
+En Alertas → «Cuándo avisa cada dato», toca un dato para vigilarlo o no y para cambiar sus valores de aviso y de alerta. «Valores de fábrica» los deja como estaban.
+Los valores de fábrica sirven para la mayoría de los autos. Cámbialos solo si conoces bien el tuyo (por ejemplo, un motor que trabaja normalmente más caliente).
+>> obd_alerts | Ir a Alertas
+
+== codigos | Los códigos de falla | Qué significan y cuándo borrarlos
+Cuando el computador del motor detecta una falla, guarda un código como P0301. La letra dice el sistema: P motor y caja, B carrocería, C chasis, U comunicación.
+- Pendiente: la falla apareció una vez; si se repite, se confirma.
+- Confirmado: la falla se repitió y puede encender la luz del motor.
+Toca un código para ver qué significa, qué tan grave es y qué hacer.
+### Cuándo borrarlos
+- Solo después de reparar la falla, o para ver si vuelve.
+- Antes, anota los códigos: el taller los usa para diagnosticar.
+- Con el motor apagado y el contacto puesto.
+- Borrar no repara nada: si la falla sigue, el código vuelve.
+- Después de borrar, los monitores de emisiones quedan «sin terminar» unos días. Es normal, pero no lleves el auto a la revisión de gases justo después.
+>> obd_codes | Ir a Códigos de falla
+
+== datos | Los datos en vivo y los gráficos | Todo lo que entrega tu auto
+En Datos en vivo ves cada dato que entrega tu auto: velocidad, carga del motor, acelerador, temperatura del aire, combustible, mezcla y más. Cada auto entrega datos distintos: si uno no aparece, tu auto no lo da.
+- Toca un dato para abrir su gráfico.
+- En los gráficos ves hasta 3 datos a la vez, de 1 a 30 minutos.
+- Los que dicen «calculado» los saca StradaOS de otros datos (por ejemplo, el consumo). Son aproximados.
+Consejo: si tu motor no tiene sensor MAF, escribe su cilindrada en Avanzado para que el consumo salga mejor.
+>> obd_live | Ir a Datos en vivo
+
+== ia | Activar la IA, paso a paso | Opcional: explica los códigos para tu auto
+La IA es opcional: sin ella, StradaOS ya explica los códigos más comunes. Con ella, la explicación es para tu auto en particular. Necesitas una clave (API key) propia y que la pantalla tenga internet.
+### Groq (gratis)
+- Entra a console.groq.com e inicia sesión con Google o con tu correo. No pide tarjeta.
+- Ve a «API Keys» → «Create API Key», ponle un nombre y copia la clave (empieza por gsk_). Solo se muestra una vez.
+- En StradaOS: Inteligencia artificial → Proveedor: Groq → API key: pégala.
+Consejo: hazlo en el navegador de la misma pantalla para copiar y pegar la clave. Si lo haces en el celular, tendrás que escribirla con cuidado.
+### Claude u OpenAI (de pago)
+- Claude: platform.claude.com → Settings → API keys. Antes compra créditos en Billing.
+- OpenAI: platform.openai.com → API keys. También funciona con créditos prepagados.
+- En StradaOS elige el proveedor, pega la clave y, si te lo pide, elige el modelo.
+### Para terminar
+- Escribe «Tu vehículo (para la IA)»: marca, modelo, año, motor y caja. Así la respuesta es más precisa.
+- Toca «Probar la IA». Si responde, ya está.
+Solo se envía el código, el vehículo que escribas y los datos del motor de ese momento; nunca tu ubicación. Cada consulta la cobra tu proveedor (con Groq, gratis dentro de su límite).
+>> obd_ai | Ir a Inteligencia artificial
+
+== limites | Qué no se lee y el auto simulado | Los límites del OBD-II y cómo probar sin escáner
+### Lo que el OBD-II no entrega
+- La presión de las llantas: casi ningún auto la da por el OBD-II estándar. Para eso necesitas un sensor de llantas (TPMS) aparte.
+- El kilometraje del tablero, el nivel de aceite y módulos como el ABS, los airbags o la caja automática casi nunca están en el estándar.
+- Los autos muy viejos y algunos diésel antiguos pueden no tener OBD-II.
+### El auto simulado
+¿Todavía no tienes escáner? Elige «Auto simulado» en Conexión para ver cómo funciona todo: medidores, alertas por voz, un código de ejemplo y gráficos. En pocos minutos verás un sobrecalentamiento y una alerta de batería de prueba. No se conecta con tu auto real.
+>> demo | Probar con el auto simulado

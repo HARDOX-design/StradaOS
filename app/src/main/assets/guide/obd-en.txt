@@ -1,0 +1,95 @@
+# StradaOS · OBD-II scanner guide · English. Format: see ObdGuide.java.
+
+== comprar | Which scanner to buy | The ones that work and the ones to avoid
+StradaOS talks to ELM327 scanners, the most common and affordable kind. They connect over Bluetooth or Wi-Fi.
+### These work
+- "Classic" Bluetooth (also labeled SPP, Bluetooth 2.0 or 3.0) or dual mode. Recommended: Vgate iCar Pro (Bluetooth 3.0 version), Veepeak Mini Bluetooth, OBDLink LX and OBDLink MX+.
+- Wi-Fi: these work too, but while the screen is connected to the scanner's network it has no internet (online map, weather, AI).
+### Avoid
+- BLE-only scanners (Bluetooth Low Energy, "Bluetooth 4.0" or "iPhone only"), such as the OBDLink CX: Android doesn't see them as a scanner and they won't connect.
+- Very cheap clones labeled "v2.1": many answer badly or only partly. If you already have one, try it; sometimes it works.
+Tip: on the box or in the listing look for "Android" and "Bluetooth 3.0" or "SPP". If it only says "iOS" or "BLE", it won't work.
+
+== conector | Where it plugs in and how to pair it | The OBD port and the first connection
+### The port
+It has 16 pins and a trapezoid shape. It is almost always under the dashboard on the driver's side, near your knees or next to the fuse box; sometimes behind a small cover. If you can't find it, check the car's manual.
+### Pairing
+- Plug in the scanner and turn the ignition on (or start the engine). A light on the scanner should come on.
+- Bluetooth: in Connection tap "Search for nearby Bluetooth scanners" and pick it. If it asks for a PIN, it is almost always 1234 or 0000.
+- Wi-Fi: connect the screen to the scanner's Wi-Fi network and type its IP and port (usually 192.168.0.10:35000).
+- Done: the connection should say "Live".
+### If it won't connect
+- Some screens have Bluetooth only for the phone (hands-free) and Android can't see it. On those, use a Wi-Fi scanner.
+- In Connection → "Connection log" you can see what the scanner answered.
+Tip: if the car will sit for several days, unplug the scanner: some drain the battery even with the car off.
+>> obd_conn | Go to Connection
+
+== panel | The vehicle panel | What each gauge and color means
+The panel slides in from the driver's side: open it with the tab on the edge, with a bar button or from Settings. It works on top of any theme.
+### The three gauges
+- Coolant: the engine temperature. With a warm engine, 80 to 100 °C (176 to 212 °F) is normal.
+- Battery: with the engine running it should read 13.5 to 14.8 V (the alternator is charging). With the engine off, about 12.6 V.
+- RPM: engine speed.
+### The colors
+- Green: normal.
+- Amber: warning. Something is out of the ordinary; keep an eye on it.
+- Red: alert. Act soon; if it's the coolant, stop somewhere safe.
+Below are three small values (for example speed, engine load or fuel): tap them to see their chart. Further down are the active alerts and the trouble codes.
+>> panel | Open the vehicle panel
+
+== alertas | Alerts and their limits | When StradaOS warns you and how to change it
+StradaOS watches the data while you drive and warns you on screen and by voice, even while you're in Waze or playing music.
+- Warning (amber): something is out of the ordinary; for example, coolant above 100 °C.
+- Alert (red): you need to act; for example, coolant above 106 °C or a battery that isn't charging. If enabled, the panel opens by itself.
+- It also warns you if the coolant rises very fast and when a new trouble code appears.
+### Changing the limits
+In Alerts → "When each value alerts", tap a value to watch it or not and to change its warning and alert levels. "Factory values" puts them back the way they were.
+The factory values suit most cars. Change them only if you know yours well (for example, an engine that normally runs hotter).
+>> obd_alerts | Go to Alerts
+
+== codigos | Trouble codes | What they mean and when to clear them
+When the engine computer detects a fault, it stores a code like P0301. The letter tells the system: P engine and transmission, B body, C chassis, U network.
+- Pending: the fault showed up once; if it happens again, it becomes confirmed.
+- Confirmed: the fault happened again and may turn on the check engine light.
+Tap a code to see what it means, how serious it is and what to do.
+### When to clear them
+- Only after fixing the fault, or to see whether it comes back.
+- Write the codes down first: the mechanic uses them to diagnose.
+- With the engine off and the ignition on.
+- Clearing doesn't fix anything: if the fault is still there, the code comes back.
+- After clearing, the emission monitors stay "not ready" for a few days. That's normal, but don't take the car to an emissions test right after.
+>> obd_codes | Go to Trouble codes
+
+== datos | Live data and charts | Everything your car reports
+In Live data you see every value your car reports: speed, engine load, throttle, air temperature, fuel, fuel trims and more. Every car reports different data: if one doesn't show up, your car doesn't provide it.
+- Tap a value to open its chart.
+- Charts show up to 3 values at once, from 1 to 30 minutes.
+- Values marked "calculated" are worked out by StradaOS from other data (for example, fuel consumption). They are approximate.
+Tip: if your engine has no MAF sensor, enter its displacement in Advanced so fuel consumption comes out better.
+>> obd_live | Go to Live data
+
+== ia | Turning on the AI, step by step | Optional: explains codes for your car
+The AI is optional: without it, StradaOS already explains the most common codes. With it, the explanation is for your specific car. You need your own key (API key) and internet on the screen.
+### Groq (free)
+- Go to console.groq.com and sign in with Google or your email. No card needed.
+- Go to "API Keys" → "Create API Key", give it a name and copy the key (it starts with gsk_). It is shown only once.
+- In StradaOS: Artificial intelligence → Provider: Groq → API key: paste it.
+Tip: do it in the browser on the same screen so you can copy and paste the key. If you do it on your phone, you'll have to type it carefully.
+### Claude or OpenAI (paid)
+- Claude: platform.claude.com → Settings → API keys. Buy credits in Billing first.
+- OpenAI: platform.openai.com → API keys. It also works with prepaid credits.
+- In StradaOS pick the provider, paste the key and, if asked, choose the model.
+### To finish
+- Fill in "Your vehicle (for the AI)": make, model, year, engine and transmission. That makes the answer more accurate.
+- Tap "Test the AI". If it answers, you're done.
+Only the code, the vehicle you type and the engine data of that moment are sent; never your location. Each query is billed by your provider (with Groq, free within its limit).
+>> obd_ai | Go to Artificial intelligence
+
+== limites | What can't be read and the simulated car | OBD-II limits and how to try it without a scanner
+### What OBD-II doesn't provide
+- Tire pressure: almost no car reports it over standard OBD-II. For that you need a separate tire sensor kit (TPMS).
+- The dashboard odometer, the oil level and modules such as ABS, airbags or the automatic transmission are almost never in the standard.
+- Very old cars and some older diesels may not have OBD-II.
+### The simulated car
+No scanner yet? Choose "Simulated car" in Connection to see how everything works: gauges, voice alerts, a sample code and charts. Within a few minutes you'll see a test overheating and a battery alert. It doesn't connect to your real car.
+>> demo | Try the simulated car

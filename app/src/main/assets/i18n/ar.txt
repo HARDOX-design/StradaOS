@@ -1668,3 +1668,6 @@ Sin conexión	لا يوجد اتصال
 Interrumpido	تمت المقاطعة
 Dirección no válida: {}	عنوان غير صالح: {}
 Apps	التطبيقات
+Guía del escáner	دليل الماسح
+Guía	الدليل
+Qué comprar, cómo conectarlo y qué significa cada cosa · sin internet	ماذا تشتري وكيف توصله وماذا يعني كل شيء · دون إنترنت

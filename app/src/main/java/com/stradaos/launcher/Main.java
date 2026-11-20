@@ -8606,6 +8606,7 @@ public class Main extends Activity {
         }
         // 2.26: escáner OBD-II (motor del PR #42 de Jaacern). Apagado por defecto: sin él, nada cambia en el inicio
         LinearLayout ob = section(body, "Escáner OBD-II");
+        row(ob, "Guía del escáner", "Qué comprar, cómo conectarlo y qué significa cada cosa · sin internet", null, obdGo("obd_guide"));
         toggle(ob, "Monitor del motor", "Con un escáner ELM327 por Wi-Fi o Bluetooth: temperatura, batería, alertas por voz y códigos de falla",
             obdOn(), new IntCb() { public void on(int i) { if (i == 1) obdDialogs().turnOn(); else obdDialogs().turnOff(); }});
         if (obdOn()) {
@@ -11158,7 +11159,8 @@ public class Main extends Activity {
         if (!fresh || vpanel == null) return;
         // Se da por vista solo cuando el usuario la ve: con el panel abierto o en las páginas del escáner. Si llega
         // mientras está en otros ajustes, el panel se abre al volver al inicio (antes se perdía y nunca se abría).
-        boolean seen = vpanel.isOpen() || (settingsView != null && settingsSub != null && settingsSub.startsWith("obd"));
+        boolean seen = vpanel.isOpen() || (settingsView != null && settingsSub != null && settingsSub.startsWith("obd")
+            && !settingsSub.startsWith("obd_guide"));
         if (!seen && obdOn() && prefs.getBoolean("obd_panel_auto", true) && settingsView == null && !isFinishing()) {
             vpanel.open();
             seen = true;
@@ -11203,7 +11205,9 @@ public class Main extends Activity {
     }
 
     private void settingsBack() {
-        settingsSub = "obd".equals(settingsSub) ? null : "obd";
+        if (settingsSub != null && settingsSub.startsWith("obd_guide:")) settingsSub = "obd_guide";
+        else if ("obd_guide".equals(settingsSub)) settingsSub = obdOn() ? "obd" : null;
+        else settingsSub = "obd".equals(settingsSub) ? null : "obd";
         showSettings(C_VEHICLE);
     }
 
@@ -11212,17 +11216,27 @@ public class Main extends Activity {
         String title = "", back = "Tu vehículo";
         for (String[] pg : OBD_PAGES) if (pg[0].equals(settingsSub)) title = pg[1];
         if (!"obd".equals(settingsSub)) back = "Escáner OBD-II";
+        boolean raw = false;
+        if ("obd_guide".equals(settingsSub)) { title = "Guía del escáner"; back = obdOn() ? "Escáner OBD-II" : "Tu vehículo"; }
+        else if (settingsSub != null && settingsSub.startsWith("obd_guide:")) {
+            ObdGuide.Section g = ObdGuide.get(this, settingsSub.substring(10));
+            title = g != null ? g.title : "";
+            raw = true;                                    // el título de la guía ya viene en el idioma elegido
+            back = "Guía del escáner";
+        }
         TextView b = tv("‹  " + I18n.t(back), 14, RED, true);
         b.setPadding((int) (4 * s), (int) (2 * s), (int) (12 * s), (int) (6 * s));
         b.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { settingsBack(); } });
         body.addView(b, new LinearLayout.LayoutParams(-2, -2));
-        TextView t = tv(title, 24, TEXT, true);
+        TextView t = tv(raw ? "" : title, 24, TEXT, true);
+        if (raw) { t.setText(title); t.setSingleLine(false); }
         t.setPadding((int) (4 * s), 0, 0, (int) (14 * s));
         body.addView(t);
     }
 
     private void obdPage(LinearLayout body, String sub) {
         final ObdDialogs d = obdDialogs();
+        if (sub.startsWith("obd_guide")) { guidePage(body, sub); return; }   // se lee también con el monitor apagado
         obdPageKey = obdStructure();
         Obd.addListener(obdSettingsL);
         if (!obdOn() && !"obd_ai".equals(sub) && !"obd_adv".equals(sub)) {
@@ -11232,6 +11246,8 @@ public class Main extends Activity {
             return;
         }
         if ("obd".equals(sub)) {
+            LinearLayout gu = section(body, "Guía");
+            row(gu, "Guía del escáner", "Qué comprar, cómo conectarlo y qué significa cada cosa · sin internet", null, obdGo("obd_guide"));
             LinearLayout st = section(body, "Estado");
             row(st, "Escáner", null, ObdDialogs.deviceName(this), obdGo("obd_conn"));
             liveRow(st, "Conexión", null, "status", obdGo("obd_conn"));
@@ -11366,5 +11382,97 @@ public class Main extends Activity {
                 new Runnable() { public void run() { d.scanAll(); } });
             if (Obd.report != null) row(sc, "Ver el último informe", null, null, new Runnable() { public void run() { d.showReport(); } });
         }
+    }
+
+    // ── Guía del escáner (2.26): textos ya traducidos en assets/guide (ObdGuide), sin internet ──
+
+    /** Fila con textos que ya vienen en el idioma elegido (no pasan por I18n.t). */
+    private void rowRaw(LinearLayout card, String title, String sub, final Runnable onClick) {
+        LinearLayout r = rowBase(card, "", null);
+        LinearLayout col = (LinearLayout) r.getChildAt(0);
+        ((TextView) col.getChildAt(0)).setText(title);
+        if (sub != null && sub.length() > 0) {
+            TextView st = tv("", 12, MUTED, false);
+            st.setText(sub);
+            st.setSingleLine(false);
+            st.setPadding(0, (int) (3 * s), 0, 0);
+            col.addView(st);
+        }
+        if (onClick != null) {
+            ImageView ch = icon("chevron_right", 20);
+            ch.setAlpha(0.6f);
+            r.addView(ch, new LinearLayout.LayoutParams((int) (20 * s), (int) (20 * s)));
+            r.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { onClick.run(); } });
+        }
+    }
+
+    private TextView guideText(String text, float size, int color, boolean medium) {
+        TextView v = tv("", size, color, medium);
+        v.setText(text);
+        v.setSingleLine(false);
+        v.setEllipsize(null);
+        v.setLineSpacing(4 * s, 1f);
+        return v;
+    }
+
+    private void guidePage(LinearLayout body, String sub) {
+        if ("obd_guide".equals(sub)) {
+            LinearLayout c = section(body, "Guía");
+            for (final ObdGuide.Section g : ObdGuide.load(this))
+                rowRaw(c, g.title, g.sub, obdGo("obd_guide:" + g.id));
+            return;
+        }
+        String id = sub.substring(10);
+        ObdGuide.Section g = ObdGuide.get(this, id);
+        if (g == null) { settingsSub = "obd_guide"; showSettings(C_VEHICLE); return; }
+        LinearLayout card = new LinearLayout(this);
+        card.setOrientation(LinearLayout.VERTICAL);
+        card.setBackground(round(CARD, 16));
+        card.setPadding((int) (20 * s), (int) (16 * s), (int) (20 * s), (int) (8 * s));
+        LinearLayout.LayoutParams clp = new LinearLayout.LayoutParams(-1, -2);
+        clp.bottomMargin = (int) (10 * s);
+        body.addView(card, clp);
+        List<ObdGuide.Item> acts = new ArrayList<ObdGuide.Item>();
+        for (ObdGuide.Item it : g.items) {
+            if (it.type == ObdGuide.ACTION) { acts.add(it); continue; }
+            if (it.type == ObdGuide.SUBHEAD) {
+                TextView h = guideText(it.text, 15, TEXT, true);
+                h.setPadding(0, (int) ((card.getChildCount() > 0 ? 10 : 0) * s), 0, (int) (8 * s));
+                card.addView(h);
+            } else if (it.type == ObdGuide.BULLET) {
+                LinearLayout r = new LinearLayout(this);
+                TextView dot = guideText("•", 14, RED, true);
+                dot.setPadding(0, 0, (int) (10 * s), 0);
+                r.addView(dot);
+                r.addView(guideText(it.text, 14, SOFT, false), new LinearLayout.LayoutParams(0, -2, 1f));
+                r.setPadding((int) (4 * s), 0, 0, (int) (8 * s));
+                card.addView(r);
+            } else {
+                TextView pt = guideText(it.text, 14, SOFT, false);
+                pt.setPadding(0, 0, 0, (int) (10 * s));
+                card.addView(pt);
+            }
+        }
+        if (!acts.isEmpty()) {
+            LinearLayout a = section(body, "");
+            for (final ObdGuide.Item it : acts) rowRaw(a, it.text, null, guideAction(it.action));
+        }
+        final ObdGuide.Section nx = ObdGuide.next(this, id);
+        if (nx != null) {
+            LinearLayout n = section(body, "Siguiente");
+            rowRaw(n, nx.title, nx.sub, obdGo("obd_guide:" + nx.id));
+        }
+    }
+
+    private Runnable guideAction(final String action) {
+        if ("demo".equals(action)) return new Runnable() { public void run() {
+            String cur = prefs.getString("obd_addr", "");
+            // con un escáner real ya elegido no se cambia sin preguntar: se lleva a Conexión, donde se elige a propósito
+            if (cur.length() > 0 && !"demo".equals(cur)) { settingsSub = "obd_conn"; showSettings(C_VEHICLE); return; }
+            obdDialogs().choose("demo", I18n.t("Auto simulado"));
+            settingsSub = "obd"; showSettings(C_VEHICLE); }};
+        if ("panel".equals(action)) return new Runnable() { public void run() { openVehiclePanel(); } };
+        if (action.startsWith("obd")) return obdGo(action);
+        return null;
     }
 }
