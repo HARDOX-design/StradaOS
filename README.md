@@ -37,7 +37,7 @@
 - 🔧 **Escáner OBD-II (opcional):** con un ELM327 por Bluetooth clásico o Wi-Fi, un panel encima de cualquier tema con temperatura, batería y RPM, alertas por voz, códigos de falla explicados sin internet, gráficos en vivo, IA opcional con tu propia clave y una guía dentro de la app. Viene apagado.
 
 **Diseña tu inicio**
-- **Temas:** Clásico (con 10 colores), **Aurora** y **Cobalto** gratis, y **Faro** (tu carro visto desde arriba con los faros encendidos), que llega pronto con una donación. Cada uno en versión oscura y clara.
+- **Temas:** Clásico (con 10 colores), **Aurora** y **Cobalto** gratis, y **Faro** (tu carro visto desde arriba con los faros encendidos), que se desbloquea con una donación de 4 USD en Ko-fi. Cada uno en versión oscura y clara.
 - Reproductor a la izquierda o a la derecha, tarjeta del vehículo visible u oculta, Android Auto y CarPlay plegables.
 - Barra de botones **normal, compacta o lateral** (con reproductor vertical para pantallas anchas como 1280×480).
 - Modo **claro, oscuro o automático** (por horario, con el amanecer y el atardecer o siguiendo al sistema).
