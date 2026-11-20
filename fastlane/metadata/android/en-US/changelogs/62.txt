@@ -1,0 +1,1 @@
+New: OBD-II scanner (ELM327 over Bluetooth or Wi-Fi) with a vehicle panel over any theme, voice alerts, explained trouble codes and charts. Off by default: Settings → Your vehicle.
