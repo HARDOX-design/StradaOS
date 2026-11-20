@@ -11155,9 +11155,15 @@ public class Main extends Activity {
             for (Obd.Alert a : Obd.alerts) if (a.level == Obd.CRIT) { now.add(a.key); if (!critShown.contains(a.key)) fresh = true; }
         }
         critShown.retainAll(now);
-        critShown.addAll(now);
-        if (fresh && obdOn() && prefs.getBoolean("obd_panel_auto", true) && settingsView == null && !isFinishing()
-                && vpanel != null && !vpanel.isOpen()) vpanel.open();
+        if (!fresh || vpanel == null) return;
+        // Se da por vista solo cuando el usuario la ve: con el panel abierto o en las páginas del escáner. Si llega
+        // mientras está en otros ajustes, el panel se abre al volver al inicio (antes se perdía y nunca se abría).
+        boolean seen = vpanel.isOpen() || (settingsView != null && settingsSub != null && settingsSub.startsWith("obd"));
+        if (!seen && obdOn() && prefs.getBoolean("obd_panel_auto", true) && settingsView == null && !isFinishing()) {
+            vpanel.open();
+            seen = true;
+        }
+        if (seen || !prefs.getBoolean("obd_panel_auto", true)) critShown.addAll(now);
     }};
 
     /** Mientras se ve una página del escáner en Ajustes: los valores cambian en su sitio; si cambia lo que hay, se redibuja. */

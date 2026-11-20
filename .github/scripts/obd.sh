@@ -42,7 +42,9 @@ adb shell am start -n $ACT --es prueba saltar >/dev/null; sleep 25
 go idioma:es 6; go tema:oscuro 6; go inicio 4; sleep 8
 shot v00-inicio-sin-obd
 go ajustes:1 5; sc; sc; sc; shot v01-tu-vehiculo-apagado
-go obd-demo 20; go inicio 3; shot v02-inicio-pestana
+go obd-demo 3; go ajustes:1 60      # la alerta grave llega con Ajustes abierto (como al activarlo a mano)
+go inicio 6; shot v02-panel-solo-al-volver   # debe abrirse solo
+back; sleep 3; shot v02-inicio-pestana
 go obd-panel 4; shot v03-panel-20s
 back; sleep 50
 go obd-panel 4; shot v04-panel-75s-codigos

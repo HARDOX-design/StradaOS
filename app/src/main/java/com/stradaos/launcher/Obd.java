@@ -241,6 +241,7 @@ public class Obd {
     private static Elm elm;
     private static TextToSpeech tts;
     private static boolean ttsReady;
+    private static java.util.Locale ttsLoc;
     private static ToneGenerator tone;
     private static final HashMap<String, Long> lastSaid = new HashMap<String, Long>();
     private static Context app;
@@ -644,7 +645,7 @@ public class Obd {
         try {
             tts = new TextToSpeech(app, new TextToSpeech.OnInitListener() { public void onInit(int st) {
                 ttsReady = st == TextToSpeech.SUCCESS;
-                if (ttsReady) try { tts.setLanguage(I18n.loc); } catch (Throwable ignored) { }
+                if (ttsReady) try { tts.setLanguage(I18n.loc); ttsLoc = I18n.loc; } catch (Throwable ignored) { }
             }});
         } catch (Throwable t) { log("sin voz: " + t); }
     }
@@ -662,6 +663,8 @@ public class Obd {
         } catch (Throwable ignored) { }
         if (app == null || !prefs(app).getBoolean("obd_voice", true) || tts == null || !ttsReady) return;
         try {
+            // la voz toma el idioma de StradaOS de ahora: si el usuario cambió de idioma, leía los números en el anterior
+            if (!I18n.loc.equals(ttsLoc)) { ttsLoc = I18n.loc; tts.setLanguage(I18n.loc); }
             HashMap<String, String> p = new HashMap<String, String>();
             p.put(TextToSpeech.Engine.KEY_PARAM_STREAM, String.valueOf(AudioManager.STREAM_MUSIC));
             sleepQuiet(level > OK ? 700 : 0);
