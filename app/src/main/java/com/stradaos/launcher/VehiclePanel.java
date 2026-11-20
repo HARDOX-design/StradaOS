@@ -469,6 +469,7 @@ class VehiclePanel extends FrameLayout implements Obd.Listener {
 
     private TextView pill(String s, int bg, int fg) {
         TextView t = tv(s, 14, fg, true);
+        t.setSingleLine(true);              // en alemán «Motorkontrolle» se partía y quedaba cortado
         t.setGravity(Gravity.CENTER);
         t.setPadding(px(14), 0, px(14), 0);
         t.setBackground(round(bg, 12));
