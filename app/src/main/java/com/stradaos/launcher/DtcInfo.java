@@ -75,8 +75,11 @@ public class DtcInfo {
         String[] s = es.get(code);
         if (s != null) {
             e.severity = Integer.parseInt(s[0]);
-            e.es = s[1];
-            e.advice = s[2];
+            // la tabla propia está en español: en otros idiomas se usa la descripción SAE en inglés (y la IA, si hay)
+            if ("es".equals(I18n.lang)) {
+                e.es = s[1];
+                e.advice = s[2];
+            }
         }
         e.en = en.get(code);
         e.ai = cached(c, code);
