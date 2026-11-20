@@ -786,6 +786,10 @@ public class Main extends Activity {
                     // tema-premium:aurora lo aplica; «tema-premium:» lo quita
                     applyPremium(v.length() > 13 ? v.substring(13) : null);
                 }
+                else if (v.startsWith("lic-prueba:")) prefs.edit().putBoolean("lic_test", v.endsWith("1")).apply();
+                else if (v.startsWith("desbloquear:")) unlockDialog(v.substring(12));
+                else if (v.startsWith("lic-codigo:")) checkCode(Faro.ID, v.substring(11));
+                else if ("lic-usb".equals(v)) importLicense(Faro.ID);
                 else if ("solo-mapa-anim".equals(v)) toggleMapOnly();
                 else if (v.startsWith("foto-demo:")) {
                     // foto-demo:recorte (fondo transparente), foto-demo:normal (con fondo), «foto-demo:» la quita
@@ -4029,7 +4033,12 @@ public class Main extends Activity {
     /** Aurora y Cobalto son gratis para todos desde la 2.24. Los temas siguientes: en StradaOS Prueba sin código
      *  y, en la versión normal, con el código atado al ID de la pantalla (Fase 3). */
     private boolean premiumUnlocked(String id) {
-        return Prem.known(id) && (Prem.free(id) || getPackageName().endsWith(".debug"));
+        return Prem.known(id) && (Prem.free(id) || debugUnlock() || Lic.has(this, id));
+    }
+
+    /** StradaOS Prueba aplica los temas sin código, salvo que se quiera probar el desbloqueo como en la versión normal. */
+    private boolean debugUnlock() {
+        return getPackageName().endsWith(".debug") && !prefs.getBoolean("lic_test", false);
     }
 
     /** Tarjeta translúcida con un borde fino de luz. */
@@ -5467,16 +5476,162 @@ public class Main extends Activity {
             info.addView(btn, blp);
             btn.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { applyPremium(inUse ? null : id); } });
             if (!inUse) cell.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { applyPremium(id); } });
-            TextView test = tv(free ? "Gratis para todos. Los próximos temas premium se desbloquearán con una donación." : "Versión de prueba: se puede aplicar sin código.", 11, MUTED, false);
+            TextView test = tv(free ? "Gratis para todos. Los próximos temas premium se desbloquearán con una donación."
+                : debugUnlock() ? "Versión de prueba: se puede aplicar sin código." : "Desbloqueado en esta pantalla. ¡Gracias por tu donación!", 11, MUTED, false);
             multiLine(test);
             test.setPadding(0, (int) (8 * s), 0, 0);
             info.addView(test);
         } else {
-            TextView soon = tv("Disponible pronto con una donación. Todas las funciones siguen siendo gratis.", 12, SOFT, true);
+            TextView btn = tv("Desbloquear", 14, 0xFFFFFFFF, true);
+            btn.setText(btn.getText() + " ");
+            btn.setEllipsize(null);
+            btn.setGravity(Gravity.CENTER);
+            btn.setBackground(round(RED, 18));
+            btn.setPadding((int) (18 * s), (int) (9 * s), (int) (18 * s), (int) (9 * s));
+            LinearLayout.LayoutParams blp = new LinearLayout.LayoutParams(-2, -2);
+            blp.topMargin = (int) (10 * s);
+            info.addView(btn, blp);
+            View.OnClickListener open = new View.OnClickListener() { public void onClick(View v) { unlockDialog(id); } };
+            btn.setOnClickListener(open);
+            cell.setOnClickListener(open);
+            TextView soon = tv("Se desbloquea con una donación. Todas las funciones de StradaOS siguen siendo gratis.", 11, MUTED, false);
             multiLine(soon);
             soon.setPadding(0, (int) (8 * s), 0, 0);
             info.addView(soon);
         }
+        if (getPackageName().endsWith(".debug") && !free && Faro.ID.equals(id)) {
+            // solo en StradaOS Prueba: probar el desbloqueo de verdad (con el ID y el código de esta pantalla)
+            final boolean t = prefs.getBoolean("lic_test", false);
+            TextView tt = tv(t ? "Prueba: volver a aplicar sin código" : "Prueba: desbloquear como en la versión normal", 11, RED, true);
+            multiLine(tt);
+            tt.setPadding(0, (int) (10 * s), 0, 0);
+            info.addView(tt);
+            tt.setOnClickListener(new View.OnClickListener() { public void onClick(View v) {
+                prefs.edit().putBoolean("lic_test", !t).apply();
+                showSettings(C_STYLE); }});
+        }
+    }
+
+    // ── Desbloqueo con donación (Fase 3, 2.27): ID de la pantalla → donación en Ko-fi → código STRD-XXXX-XXXX ──
+
+    private void unlockDialog(final String id) {
+        final String url = Updates.donateUrl(this);
+        LinearLayout box = new LinearLayout(this);
+        box.setGravity(Gravity.CENTER_VERTICAL);
+        int pad = (int) (20 * s);
+        box.setPadding(pad, pad, pad, (int) (6 * s));
+        android.util.DisplayMetrics dm = getResources().getDisplayMetrics();
+        boolean narrow = dm.widthPixels < dm.heightPixels;
+        box.setOrientation(narrow ? LinearLayout.VERTICAL : LinearLayout.HORIZONTAL);
+        ImageView qr = new ImageView(this);
+        qr.setImageBitmap(qrBitmap(url, (int) (170 * s)));
+        box.addView(qr, new LinearLayout.LayoutParams((int) (170 * s), (int) (170 * s)));
+        LinearLayout col = new LinearLayout(this);
+        col.setOrientation(LinearLayout.VERTICAL);
+        col.setPadding(narrow ? 0 : (int) (20 * s), narrow ? (int) (14 * s) : 0, 0, 0);
+        TextView m1 = tv(I18n.t("1. Dona 4 USD en Ko-fi: escanea el código con tu celular o entra a {}.").replace("{}", url.replace("https://", "")), 13, SOFT, false);
+        multiLine(m1);
+        col.addView(m1);
+        TextView m2 = tv("2. En el mensaje de la donación escribe el ID de esta pantalla:", 13, SOFT, false);
+        multiLine(m2);
+        m2.setPadding(0, (int) (10 * s), 0, (int) (4 * s));
+        col.addView(m2);
+        TextView idv = tv("", 24, RED, true);
+        idv.setText(Lic.shown(this));
+        idv.setPadding(0, 0, 0, (int) (4 * s));
+        col.addView(idv);
+        TextView m3 = tv("3. Te enviamos un código STRD-XXXX-XXXX, casi siempre el mismo día. Escríbelo en «Tengo un código».", 13, SOFT, false);
+        multiLine(m3);
+        m3.setPadding(0, (int) (6 * s), 0, 0);
+        col.addView(m3);
+        TextView m4 = tv("El tema queda en esta pantalla. Si cambias de radio o la restableces, escríbenos con el ID nuevo y te enviamos otro código sin costo.", 11, MUTED, false);
+        multiLine(m4);
+        m4.setPadding(0, (int) (10 * s), 0, 0);
+        col.addView(m4);
+        box.addView(col, narrow ? new LinearLayout.LayoutParams(-1, -2) : new LinearLayout.LayoutParams(0, -2, 1f));
+        android.widget.ScrollView sv = new android.widget.ScrollView(this);
+        sv.addView(box);
+        new TB(this, dlg()).wide()
+            .setTitle(I18n.t("Desbloquear {}").replace("{}", Prem.name(id)))
+            .setView(sv)
+            .setPositiveButton("Tengo un código", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface d, int w) { codeDialog(id); } })
+            .setNeutralButton("Archivo por USB", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface d, int w) { importLicense(id); } })
+            .setNegativeButton("Cerrar", null)
+            .show();
+    }
+
+    private void codeDialog(final String id) {
+        final android.widget.EditText et = field();
+        et.setSingleLine(true);
+        et.setHint("STRD-XXXX-XXXX");
+        et.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
+            | android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        LinearLayout box = new LinearLayout(this);
+        box.setOrientation(LinearLayout.VERTICAL);
+        int pad = (int) (20 * s);
+        box.setPadding(pad, (int) (10 * s), pad, 0);
+        box.addView(et, new LinearLayout.LayoutParams(-1, -2));
+        TextView hint = tv(I18n.t("ID de esta pantalla: {}. Necesitas internet solo esta vez.").replace("{}", Lic.shown(this)), 12, MUTED, false);
+        multiLine(hint);
+        hint.setPadding(0, (int) (8 * s), 0, 0);
+        box.addView(hint);
+        new TB(this, dlg())
+            .setTitle("Escribe tu código")
+            .setView(box)
+            .setPositiveButton("Desbloquear", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface d, int w) { checkCode(id, et.getText().toString()); } })
+            .setNegativeButton("Cancelar", null)
+            .show();
+    }
+
+    private void checkCode(final String id, String typed) {
+        final String code = Lic.normCode(typed);
+        if (code == null) { toast("El código tiene 8 letras o números después de STRD, por ejemplo STRD-7KQ2-M9XA."); return; }
+        toast("Comprobando el código…");
+        new Thread(new Runnable() { public void run() {
+            final int r = Lic.fetch(Main.this, code);
+            h.post(new Runnable() { public void run() { codeResult(id, r, Lic.lastThemes); } });
+        }}).start();
+    }
+
+    private void codeResult(final String id, int r, java.util.List<String> themes) {
+        if (r == Lic.OK) { unlocked(id, themes); return; }
+        String msg = r == Lic.NO_NET
+            ? "No hay internet. Conéctate un momento (por ejemplo, con el celular como módem) y vuelve a intentarlo, o pide el archivo de licencia y pásalo por USB."
+            : I18n.t("No encontramos ese código para esta pantalla. Revisa que esté bien escrito y que el ID que enviaste sea {}.").replace("{}", Lic.shown(this));
+        new TB(this, dlg()).setTitle("No se pudo desbloquear").setMessage(msg)
+            .setPositiveButton("Intentar de nuevo", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface d, int w) { codeDialog(id); } })
+            .setNegativeButton("Cerrar", null).show();
+    }
+
+    private void importLicense(final String id) {
+        toast("Buscando la licencia en la pantalla y en las USB…");
+        new Thread(new Runnable() { public void run() {
+            final java.util.List<String> got = Lic.importUsb(Main.this);
+            h.post(new Runnable() { public void run() {
+                if (!got.isEmpty()) { unlocked(id, got); return; }
+                new TB(Main.this, dlg()).setTitle("No encontramos la licencia")
+                    .setMessage(I18n.t("Copia el archivo que te enviamos (stradaos-licencia.txt) en la raíz de una USB, conéctala y vuelve a intentarlo. Tiene que ser para el ID {}.").replace("{}", Lic.shown(Main.this)))
+                    .setPositiveButton("Intentar de nuevo", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface d, int w) { importLicense(id); } })
+                    .setNegativeButton("Cerrar", null).show();
+            }});
+        }}).start();
+    }
+
+    private void unlocked(final String id, java.util.List<String> themes) {
+        final String th = themes != null && themes.contains(id) ? id : themes != null && !themes.isEmpty() ? themes.get(0) : id;
+        if (settingsView != null && settingsCat == C_STYLE) showSettings(C_STYLE);
+        new TB(this, dlg())
+            .setTitle("¡Listo!")
+            .setMessage(I18n.t("{} quedó desbloqueado en esta pantalla. Gracias por apoyar StradaOS.").replace("{}", Prem.known(th) ? Prem.name(th) : th))
+            .setPositiveButton("Aplicar ahora", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface d, int w) { if (Prem.known(th)) applyPremium(th); } })
+            .setNegativeButton("Después", null)
+            .show();
     }
 
     private void runDock(int i) {

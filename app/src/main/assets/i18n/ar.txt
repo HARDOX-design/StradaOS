@@ -1671,3 +1671,29 @@ Apps	التطبيقات
 Guía del escáner	دليل الماسح
 Guía	الدليل
 Qué comprar, cómo conectarlo y qué significa cada cosa · sin internet	ماذا تشتري وكيف توصله وماذا يعني كل شيء · دون إنترنت
+Desbloquear	فتح
+Se desbloquea con una donación. Todas las funciones de StradaOS siguen siendo gratis.	يُفتح بتبرع. كل ميزات StradaOS تبقى مجانية.
+Desbloqueado en esta pantalla. ¡Gracias por tu donación!	مفتوح على هذه الشاشة. شكرًا على تبرعك!
+Prueba: volver a aplicar sin código	تجربة: التطبيق دون رمز مرة أخرى
+Prueba: desbloquear como en la versión normal	تجربة: الفتح كما في النسخة العادية
+1. Dona 4 USD en Ko-fi: escanea el código con tu celular o entra a {}.	1. تبرّع بـ 4 دولارات على Ko-fi: امسح الرمز بهاتفك أو ادخل إلى {}.
+2. En el mensaje de la donación escribe el ID de esta pantalla:	2. في رسالة التبرع اكتب معرّف هذه الشاشة:
+3. Te enviamos un código STRD-XXXX-XXXX, casi siempre el mismo día. Escríbelo en «Tengo un código».	3. نرسل لك رمزًا STRD-XXXX-XXXX، غالبًا في اليوم نفسه. اكتبه في «لدي رمز».
+El tema queda en esta pantalla. Si cambias de radio o la restableces, escríbenos con el ID nuevo y te enviamos otro código sin costo.	تبقى السمة على هذه الشاشة. إن غيّرت الراديو أو أعدت ضبطها، راسلنا بالمعرّف الجديد ونرسل لك رمزًا آخر دون تكلفة.
+Desbloquear {}	فتح {}
+Tengo un código	لدي رمز
+Archivo por USB	ملف عبر USB
+ID de esta pantalla: {}. Necesitas internet solo esta vez.	معرّف هذه الشاشة: {}. تحتاج إلى الإنترنت هذه المرة فقط.
+Escribe tu código	اكتب رمزك
+El código tiene 8 letras o números después de STRD, por ejemplo STRD-7KQ2-M9XA.	الرمز فيه 8 حروف أو أرقام بعد STRD، مثل STRD-7KQ2-M9XA.
+Comprobando el código…	جارٍ التحقق من الرمز…
+No hay internet. Conéctate un momento (por ejemplo, con el celular como módem) y vuelve a intentarlo, o pide el archivo de licencia y pásalo por USB.	لا يوجد إنترنت. اتصل لحظة (مثلًا عبر نقطة اتصال هاتفك) وحاول مجددًا، أو اطلب ملف الترخيص وانسخه عبر USB.
+No encontramos ese código para esta pantalla. Revisa que esté bien escrito y que el ID que enviaste sea {}.	لم نجد هذا الرمز لهذه الشاشة. تأكد من كتابته بشكل صحيح وأن المعرّف الذي أرسلته هو {}.
+No se pudo desbloquear	تعذّر الفتح
+Intentar de nuevo	حاول مجددًا
+Buscando la licencia en la pantalla y en las USB…	جارٍ البحث عن الترخيص في الشاشة ووحدات USB…
+No encontramos la licencia	لم يُعثر على الترخيص
+Copia el archivo que te enviamos (stradaos-licencia.txt) en la raíz de una USB, conéctala y vuelve a intentarlo. Tiene que ser para el ID {}.	انسخ الملف الذي أرسلناه (stradaos-licencia.txt) إلى جذر وحدة USB، وصلها وحاول مجددًا. يجب أن يكون للمعرّف {}.
+¡Listo!	تم!
+{} quedó desbloqueado en esta pantalla. Gracias por apoyar StradaOS.	تم فتح {} على هذه الشاشة. شكرًا لدعمك StradaOS.
+Aplicar ahora	تطبيق الآن

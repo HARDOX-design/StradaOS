@@ -1671,3 +1671,29 @@ Apps	Apl
 Guía del escáner	Panduan pengimbas
 Guía	Panduan
 Qué comprar, cómo conectarlo y qué significa cada cosa · sin internet	Apa yang perlu dibeli, cara menyambung dan maksud setiap perkara · tanpa internet
+Desbloquear	Buka kunci
+Se desbloquea con una donación. Todas las funciones de StradaOS siguen siendo gratis.	Dibuka dengan derma. Semua fungsi StradaOS kekal percuma.
+Desbloqueado en esta pantalla. ¡Gracias por tu donación!	Dibuka pada skrin ini. Terima kasih atas derma anda!
+Prueba: volver a aplicar sin código	Ujian: guna semula tanpa kod
+Prueba: desbloquear como en la versión normal	Ujian: buka kunci seperti versi biasa
+1. Dona 4 USD en Ko-fi: escanea el código con tu celular o entra a {}.	1. Derma 4 USD di Ko-fi: imbas kod dengan telefon anda atau pergi ke {}.
+2. En el mensaje de la donación escribe el ID de esta pantalla:	2. Dalam mesej derma, tulis ID skrin ini:
+3. Te enviamos un código STRD-XXXX-XXXX, casi siempre el mismo día. Escríbelo en «Tengo un código».	3. Kami hantar kod STRD-XXXX-XXXX, biasanya pada hari yang sama. Masukkannya dalam “Saya ada kod”.
+El tema queda en esta pantalla. Si cambias de radio o la restableces, escríbenos con el ID nuevo y te enviamos otro código sin costo.	Tema kekal pada skrin ini. Jika anda tukar radio atau set semula, hubungi kami dengan ID baharu dan kami hantar kod lain tanpa bayaran.
+Desbloquear {}	Buka kunci {}
+Tengo un código	Saya ada kod
+Archivo por USB	Fail melalui USB
+ID de esta pantalla: {}. Necesitas internet solo esta vez.	ID skrin ini: {}. Anda perlukan internet kali ini sahaja.
+Escribe tu código	Masukkan kod anda
+El código tiene 8 letras o números después de STRD, por ejemplo STRD-7KQ2-M9XA.	Kod mempunyai 8 huruf atau nombor selepas STRD, contohnya STRD-7KQ2-M9XA.
+Comprobando el código…	Menyemak kod…
+No hay internet. Conéctate un momento (por ejemplo, con el celular como módem) y vuelve a intentarlo, o pide el archivo de licencia y pásalo por USB.	Tiada internet. Sambung sebentar (contohnya guna telefon sebagai hotspot) dan cuba lagi, atau minta fail lesen dan salin melalui USB.
+No encontramos ese código para esta pantalla. Revisa que esté bien escrito y que el ID que enviaste sea {}.	Kami tidak jumpa kod itu untuk skrin ini. Semak sama ada ditaip betul dan ID yang anda hantar ialah {}.
+No se pudo desbloquear	Tidak dapat membuka kunci
+Intentar de nuevo	Cuba lagi
+Buscando la licencia en la pantalla y en las USB…	Mencari lesen pada skrin dan pemacu USB…
+No encontramos la licencia	Lesen tidak dijumpai
+Copia el archivo que te enviamos (stradaos-licencia.txt) en la raíz de una USB, conéctala y vuelve a intentarlo. Tiene que ser para el ID {}.	Salin fail yang kami hantar (stradaos-licencia.txt) ke akar pemacu USB, sambungkannya dan cuba lagi. Ia mesti untuk ID {}.
+¡Listo!	Siap!
+{} quedó desbloqueado en esta pantalla. Gracias por apoyar StradaOS.	{} kini dibuka pada skrin ini. Terima kasih kerana menyokong StradaOS.
+Aplicar ahora	Guna sekarang

@@ -1671,3 +1671,29 @@ Apps	应用
 Guía del escáner	诊断仪指南
 Guía	指南
 Qué comprar, cómo conectarlo y qué significa cada cosa · sin internet	买什么、怎么连接、每项是什么意思 · 无需联网
+Desbloquear	解锁
+Se desbloquea con una donación. Todas las funciones de StradaOS siguen siendo gratis.	通过捐赠解锁。StradaOS 的所有功能仍然免费。
+Desbloqueado en esta pantalla. ¡Gracias por tu donación!	已在此屏幕解锁。感谢你的捐赠！
+Prueba: volver a aplicar sin código	测试：再次无需代码直接应用
+Prueba: desbloquear como en la versión normal	测试：像正式版一样解锁
+1. Dona 4 USD en Ko-fi: escanea el código con tu celular o entra a {}.	1. 在 Ko-fi 捐赠 4 美元：用手机扫描二维码，或访问 {}。
+2. En el mensaje de la donación escribe el ID de esta pantalla:	2. 在捐赠留言中写下这块屏幕的 ID：
+3. Te enviamos un código STRD-XXXX-XXXX, casi siempre el mismo día. Escríbelo en «Tengo un código».	3. 我们会发给你一个 STRD-XXXX-XXXX 代码，通常当天就到。在“我有代码”中输入。
+El tema queda en esta pantalla. Si cambias de radio o la restableces, escríbenos con el ID nuevo y te enviamos otro código sin costo.	主题只在这块屏幕上有效。如果你更换车机或恢复出厂设置，请把新的 ID 发给我们，我们会免费再发一个代码。
+Desbloquear {}	解锁{}
+Tengo un código	我有代码
+Archivo por USB	通过 USB 导入文件
+ID de esta pantalla: {}. Necesitas internet solo esta vez.	这块屏幕的 ID：{}。只有这一次需要联网。
+Escribe tu código	输入你的代码
+El código tiene 8 letras o números después de STRD, por ejemplo STRD-7KQ2-M9XA.	代码在 STRD 后面有 8 个字母或数字，例如 STRD-7KQ2-M9XA。
+Comprobando el código…	正在验证代码…
+No hay internet. Conéctate un momento (por ejemplo, con el celular como módem) y vuelve a intentarlo, o pide el archivo de licencia y pásalo por USB.	没有网络。请暂时联网（例如用手机热点）后重试，或索取许可证文件并通过 USB 导入。
+No encontramos ese código para esta pantalla. Revisa que esté bien escrito y que el ID que enviaste sea {}.	没有找到这块屏幕对应的代码。请检查是否输入正确，以及你发送的 ID 是否为 {}。
+No se pudo desbloquear	无法解锁
+Intentar de nuevo	重试
+Buscando la licencia en la pantalla y en las USB…	正在屏幕和 U 盘中查找许可证…
+No encontramos la licencia	未找到许可证
+Copia el archivo que te enviamos (stradaos-licencia.txt) en la raíz de una USB, conéctala y vuelve a intentarlo. Tiene que ser para el ID {}.	把我们发给你的文件（stradaos-licencia.txt）复制到 U 盘根目录，插上后重试。文件必须对应 ID {}。
+¡Listo!	完成！
+{} quedó desbloqueado en esta pantalla. Gracias por apoyar StradaOS.	{}已在此屏幕解锁。感谢支持 StradaOS。
+Aplicar ahora	立即应用

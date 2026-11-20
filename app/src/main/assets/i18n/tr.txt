@@ -1671,3 +1671,29 @@ Apps	Uygulamalar
 Guía del escáner	Tarayıcı rehberi
 Guía	Rehber
 Qué comprar, cómo conectarlo y qué significa cada cosa · sin internet	Ne alınmalı, nasıl bağlanır ve her şey ne anlama gelir · internetsiz
+Desbloquear	Kilidi aç
+Se desbloquea con una donación. Todas las funciones de StradaOS siguen siendo gratis.	Bağışla açılır. StradaOS'un tüm özellikleri ücretsiz kalır.
+Desbloqueado en esta pantalla. ¡Gracias por tu donación!	Bu ekranda açıldı. Bağışınız için teşekkürler!
+Prueba: volver a aplicar sin código	Test: yeniden kodsuz uygula
+Prueba: desbloquear como en la versión normal	Test: normal sürümdeki gibi kilidi aç
+1. Dona 4 USD en Ko-fi: escanea el código con tu celular o entra a {}.	1. Ko-fi'de 4 USD bağışlayın: kodu telefonunuzla tarayın veya {} adresine gidin.
+2. En el mensaje de la donación escribe el ID de esta pantalla:	2. Bağış mesajına bu ekranın kimliğini yazın:
+3. Te enviamos un código STRD-XXXX-XXXX, casi siempre el mismo día. Escríbelo en «Tengo un código».	3. Size genellikle aynı gün bir STRD-XXXX-XXXX kodu göndeririz. Bunu «Kodum var» bölümüne yazın.
+El tema queda en esta pantalla. Si cambias de radio o la restableces, escríbenos con el ID nuevo y te enviamos otro código sin costo.	Tema bu ekranda kalır. Radyoyu değiştirir veya sıfırlarsanız, yeni kimlikle bize yazın, size ücretsiz yeni bir kod gönderelim.
+Desbloquear {}	{} kilidini aç
+Tengo un código	Kodum var
+Archivo por USB	USB ile dosya
+ID de esta pantalla: {}. Necesitas internet solo esta vez.	Bu ekranın kimliği: {}. İnternet yalnızca bu seferlik gerekir.
+Escribe tu código	Kodunuzu yazın
+El código tiene 8 letras o números después de STRD, por ejemplo STRD-7KQ2-M9XA.	Kodda STRD'den sonra 8 harf veya rakam vardır, örneğin STRD-7KQ2-M9XA.
+Comprobando el código…	Kod kontrol ediliyor…
+No hay internet. Conéctate un momento (por ejemplo, con el celular como módem) y vuelve a intentarlo, o pide el archivo de licencia y pásalo por USB.	İnternet yok. Kısa bir süre bağlanın (örneğin telefonunuzu erişim noktası yaparak) ve yeniden deneyin ya da lisans dosyasını isteyip USB ile kopyalayın.
+No encontramos ese código para esta pantalla. Revisa que esté bien escrito y que el ID que enviaste sea {}.	Bu ekran için bu kodu bulamadık. Doğru yazıldığını ve gönderdiğiniz kimliğin {} olduğunu kontrol edin.
+No se pudo desbloquear	Kilit açılamadı
+Intentar de nuevo	Yeniden dene
+Buscando la licencia en la pantalla y en las USB…	Lisans ekranda ve USB belleklerde aranıyor…
+No encontramos la licencia	Lisans bulunamadı
+Copia el archivo que te enviamos (stradaos-licencia.txt) en la raíz de una USB, conéctala y vuelve a intentarlo. Tiene que ser para el ID {}.	Gönderdiğimiz dosyayı (stradaos-licencia.txt) bir USB belleğin kök dizinine kopyalayın, takın ve yeniden deneyin. Dosya {} kimliği için olmalıdır.
+¡Listo!	Tamam!
+{} quedó desbloqueado en esta pantalla. Gracias por apoyar StradaOS.	{} bu ekranda açıldı. StradaOS'u desteklediğiniz için teşekkürler.
+Aplicar ahora	Şimdi uygula

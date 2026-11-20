@@ -1656,3 +1656,29 @@ Dirección no válida: {}	Érvénytelen cím: {}
 Guía del escáner	Szkenner útmutató
 Guía	Útmutató
 Qué comprar, cómo conectarlo y qué significa cada cosa · sin internet	Mit vegyél, hogyan csatlakoztasd, és mit jelent minden · internet nélkül
+Desbloquear	Feloldás
+Se desbloquea con una donación. Todas las funciones de StradaOS siguen siendo gratis.	Adománnyal oldható fel. A StradaOS minden funkciója ingyenes marad.
+Desbloqueado en esta pantalla. ¡Gracias por tu donación!	Ezen a kijelzőn feloldva. Köszönjük az adományodat!
+Prueba: volver a aplicar sin código	Teszt: újra kód nélkül alkalmaz
+Prueba: desbloquear como en la versión normal	Teszt: feloldás úgy, mint a normál verzióban
+1. Dona 4 USD en Ko-fi: escanea el código con tu celular o entra a {}.	1. Adományozz 4 USD-t a Ko-fin: olvasd be a kódot a telefonoddal, vagy nyisd meg: {}.
+2. En el mensaje de la donación escribe el ID de esta pantalla:	2. Az adomány üzenetébe írd be ennek a kijelzőnek az azonosítóját:
+3. Te enviamos un código STRD-XXXX-XXXX, casi siempre el mismo día. Escríbelo en «Tengo un código».	3. Küldünk egy STRD-XXXX-XXXX kódot, többnyire még aznap. Írd be a „Van kódom” résznél.
+El tema queda en esta pantalla. Si cambias de radio o la restableces, escríbenos con el ID nuevo y te enviamos otro código sin costo.	A téma ezen a kijelzőn marad. Ha fejegységet cserélsz vagy visszaállítod, írj nekünk az új azonosítóval, és ingyen küldünk egy másik kódot.
+Desbloquear {}	{} feloldása
+Tengo un código	Van kódom
+Archivo por USB	Fájl USB-ről
+ID de esta pantalla: {}. Necesitas internet solo esta vez.	A kijelző azonosítója: {}. Csak most az egyszer kell internet.
+Escribe tu código	Írd be a kódodat
+El código tiene 8 letras o números después de STRD, por ejemplo STRD-7KQ2-M9XA.	A kódban az STRD után 8 betű vagy szám van, például STRD-7KQ2-M9XA.
+Comprobando el código…	A kód ellenőrzése…
+No hay internet. Conéctate un momento (por ejemplo, con el celular como módem) y vuelve a intentarlo, o pide el archivo de licencia y pásalo por USB.	Nincs internet. Csatlakozz egy pillanatra (például a telefonod hotspotjával), és próbáld újra, vagy kérd el a licencfájlt, és másold át USB-ről.
+No encontramos ese código para esta pantalla. Revisa que esté bien escrito y que el ID que enviaste sea {}.	Ehhez a kijelzőhöz nem találjuk ezt a kódot. Ellenőrizd, hogy jól írtad-e be, és hogy a küldött azonosító {}.
+No se pudo desbloquear	Nem sikerült a feloldás
+Intentar de nuevo	Újrapróbálás
+Buscando la licencia en la pantalla y en las USB…	A licenc keresése a kijelzőn és az USB-meghajtókon…
+No encontramos la licencia	A licenc nem található
+Copia el archivo que te enviamos (stradaos-licencia.txt) en la raíz de una USB, conéctala y vuelve a intentarlo. Tiene que ser para el ID {}.	Másold a küldött fájlt (stradaos-licencia.txt) egy USB-meghajtó gyökerébe, csatlakoztasd, és próbáld újra. A(z) {} azonosítóhoz kell tartoznia.
+¡Listo!	Kész!
+{} quedó desbloqueado en esta pantalla. Gracias por apoyar StradaOS.	A(z) {} feloldva ezen a kijelzőn. Köszönjük, hogy támogatod a StradaOS-t.
+Aplicar ahora	Alkalmazás most

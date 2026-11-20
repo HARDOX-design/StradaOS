@@ -1671,3 +1671,29 @@ Apps	Apps
 Guía del escáner	Scanner-Anleitung
 Guía	Anleitung
 Qué comprar, cómo conectarlo y qué significa cada cosa · sin internet	Was du kaufen solltest, wie du ihn verbindest und was alles bedeutet · ohne Internet
+Desbloquear	Freischalten
+Se desbloquea con una donación. Todas las funciones de StradaOS siguen siendo gratis.	Wird mit einer Spende freigeschaltet. Alle Funktionen von StradaOS bleiben kostenlos.
+Desbloqueado en esta pantalla. ¡Gracias por tu donación!	Auf diesem Bildschirm freigeschaltet. Danke für deine Spende!
+Prueba: volver a aplicar sin código	Test: wieder ohne Code anwenden
+Prueba: desbloquear como en la versión normal	Test: freischalten wie in der normalen Version
+1. Dona 4 USD en Ko-fi: escanea el código con tu celular o entra a {}.	1. Spende 4 USD auf Ko-fi: Scanne den Code mit dem Handy oder geh auf {}.
+2. En el mensaje de la donación escribe el ID de esta pantalla:	2. Schreib in die Nachricht zur Spende die ID dieses Bildschirms:
+3. Te enviamos un código STRD-XXXX-XXXX, casi siempre el mismo día. Escríbelo en «Tengo un código».	3. Wir schicken dir einen Code STRD-XXXX-XXXX, meist am selben Tag. Gib ihn unter „Ich habe einen Code“ ein.
+El tema queda en esta pantalla. Si cambias de radio o la restableces, escríbenos con el ID nuevo y te enviamos otro código sin costo.	Das Design bleibt auf diesem Bildschirm. Wenn du das Radio wechselst oder es zurücksetzt, schreib uns mit der neuen ID und du bekommst kostenlos einen neuen Code.
+Desbloquear {}	{} freischalten
+Tengo un código	Ich habe einen Code
+Archivo por USB	Datei per USB
+ID de esta pantalla: {}. Necesitas internet solo esta vez.	ID dieses Bildschirms: {}. Internet brauchst du nur dieses eine Mal.
+Escribe tu código	Gib deinen Code ein
+El código tiene 8 letras o números después de STRD, por ejemplo STRD-7KQ2-M9XA.	Der Code hat 8 Buchstaben oder Ziffern nach STRD, zum Beispiel STRD-7KQ2-M9XA.
+Comprobando el código…	Code wird geprüft…
+No hay internet. Conéctate un momento (por ejemplo, con el celular como módem) y vuelve a intentarlo, o pide el archivo de licencia y pásalo por USB.	Kein Internet. Verbinde dich kurz (zum Beispiel über den Hotspot deines Handys) und versuch es noch einmal, oder lass dir die Lizenzdatei schicken und kopiere sie per USB.
+No encontramos ese código para esta pantalla. Revisa que esté bien escrito y que el ID que enviaste sea {}.	Diesen Code finden wir für diesen Bildschirm nicht. Prüfe, ob er richtig geschrieben ist und ob die gesendete ID {} ist.
+No se pudo desbloquear	Freischalten nicht möglich
+Intentar de nuevo	Noch einmal versuchen
+Buscando la licencia en la pantalla y en las USB…	Lizenz wird auf dem Bildschirm und auf USB-Sticks gesucht…
+No encontramos la licencia	Lizenz nicht gefunden
+Copia el archivo que te enviamos (stradaos-licencia.txt) en la raíz de una USB, conéctala y vuelve a intentarlo. Tiene que ser para el ID {}.	Kopiere die Datei, die wir dir geschickt haben (stradaos-licencia.txt), ins Hauptverzeichnis eines USB-Sticks, steck ihn ein und versuch es noch einmal. Sie muss für die ID {} sein.
+¡Listo!	Fertig!
+{} quedó desbloqueado en esta pantalla. Gracias por apoyar StradaOS.	{} ist auf diesem Bildschirm freigeschaltet. Danke, dass du StradaOS unterstützt.
+Aplicar ahora	Jetzt anwenden

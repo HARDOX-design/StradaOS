@@ -1763,3 +1763,29 @@ Apps	Apps
 Guía del escáner	Scanner guide
 Guía	Guide
 Qué comprar, cómo conectarlo y qué significa cada cosa · sin internet	What to buy, how to connect it and what everything means · works offline
+Desbloquear	Unlock
+Se desbloquea con una donación. Todas las funciones de StradaOS siguen siendo gratis.	Unlocks with a donation. Every StradaOS feature stays free.
+Desbloqueado en esta pantalla. ¡Gracias por tu donación!	Unlocked on this screen. Thanks for your donation!
+Prueba: volver a aplicar sin código	Test: apply without a code again
+Prueba: desbloquear como en la versión normal	Test: unlock like the regular version
+1. Dona 4 USD en Ko-fi: escanea el código con tu celular o entra a {}.	1. Donate 4 USD on Ko-fi: scan the code with your phone or go to {}.
+2. En el mensaje de la donación escribe el ID de esta pantalla:	2. In the donation message, write this screen's ID:
+3. Te enviamos un código STRD-XXXX-XXXX, casi siempre el mismo día. Escríbelo en «Tengo un código».	3. We'll send you a code STRD-XXXX-XXXX, usually the same day. Enter it under “I have a code”.
+El tema queda en esta pantalla. Si cambias de radio o la restableces, escríbenos con el ID nuevo y te enviamos otro código sin costo.	The theme stays on this screen. If you change head units or reset it, write to us with the new ID and we'll send you another code at no cost.
+Desbloquear {}	Unlock {}
+Tengo un código	I have a code
+Archivo por USB	File via USB
+ID de esta pantalla: {}. Necesitas internet solo esta vez.	This screen's ID: {}. You only need internet this once.
+Escribe tu código	Enter your code
+El código tiene 8 letras o números después de STRD, por ejemplo STRD-7KQ2-M9XA.	The code has 8 letters or numbers after STRD, for example STRD-7KQ2-M9XA.
+Comprobando el código…	Checking the code…
+No hay internet. Conéctate un momento (por ejemplo, con el celular como módem) y vuelve a intentarlo, o pide el archivo de licencia y pásalo por USB.	No internet. Connect for a moment (for example, using your phone as a hotspot) and try again, or ask for the license file and copy it via USB.
+No encontramos ese código para esta pantalla. Revisa que esté bien escrito y que el ID que enviaste sea {}.	We couldn't find that code for this screen. Check that it's typed correctly and that the ID you sent is {}.
+No se pudo desbloquear	Couldn't unlock
+Intentar de nuevo	Try again
+Buscando la licencia en la pantalla y en las USB…	Looking for the license on the screen and on USB drives…
+No encontramos la licencia	License not found
+Copia el archivo que te enviamos (stradaos-licencia.txt) en la raíz de una USB, conéctala y vuelve a intentarlo. Tiene que ser para el ID {}.	Copy the file we sent you (stradaos-licencia.txt) to the root of a USB drive, plug it in and try again. It has to be for the ID {}.
+¡Listo!	Done!
+{} quedó desbloqueado en esta pantalla. Gracias por apoyar StradaOS.	{} is now unlocked on this screen. Thanks for supporting StradaOS.
+Aplicar ahora	Apply now

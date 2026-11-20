@@ -1671,3 +1671,29 @@ Apps	App
 Guía del escáner	Guida allo scanner
 Guía	Guida
 Qué comprar, cómo conectarlo y qué significa cada cosa · sin internet	Cosa comprare, come collegarlo e cosa significa ogni cosa · senza internet
+Desbloquear	Sblocca
+Se desbloquea con una donación. Todas las funciones de StradaOS siguen siendo gratis.	Si sblocca con una donazione. Tutte le funzioni di StradaOS restano gratuite.
+Desbloqueado en esta pantalla. ¡Gracias por tu donación!	Sbloccato su questo schermo. Grazie per la tua donazione!
+Prueba: volver a aplicar sin código	Prova: applica di nuovo senza codice
+Prueba: desbloquear como en la versión normal	Prova: sblocca come nella versione normale
+1. Dona 4 USD en Ko-fi: escanea el código con tu celular o entra a {}.	1. Dona 4 USD su Ko-fi: scansiona il codice con il telefono o vai su {}.
+2. En el mensaje de la donación escribe el ID de esta pantalla:	2. Nel messaggio della donazione scrivi l'ID di questo schermo:
+3. Te enviamos un código STRD-XXXX-XXXX, casi siempre el mismo día. Escríbelo en «Tengo un código».	3. Ti inviamo un codice STRD-XXXX-XXXX, di solito lo stesso giorno. Inseriscilo in «Ho un codice».
+El tema queda en esta pantalla. Si cambias de radio o la restableces, escríbenos con el ID nuevo y te enviamos otro código sin costo.	Il tema resta su questo schermo. Se cambi autoradio o lo ripristini, scrivici con il nuovo ID e ti inviamo un altro codice gratis.
+Desbloquear {}	Sblocca {}
+Tengo un código	Ho un codice
+Archivo por USB	File da USB
+ID de esta pantalla: {}. Necesitas internet solo esta vez.	ID di questo schermo: {}. Ti serve internet solo questa volta.
+Escribe tu código	Inserisci il tuo codice
+El código tiene 8 letras o números después de STRD, por ejemplo STRD-7KQ2-M9XA.	Il codice ha 8 lettere o numeri dopo STRD, per esempio STRD-7KQ2-M9XA.
+Comprobando el código…	Controllo del codice…
+No hay internet. Conéctate un momento (por ejemplo, con el celular como módem) y vuelve a intentarlo, o pide el archivo de licencia y pásalo por USB.	Niente internet. Collegati un momento (per esempio con il telefono come hotspot) e riprova, oppure chiedi il file di licenza e copialo da USB.
+No encontramos ese código para esta pantalla. Revisa que esté bien escrito y que el ID que enviaste sea {}.	Non troviamo quel codice per questo schermo. Controlla che sia scritto bene e che l'ID che hai inviato sia {}.
+No se pudo desbloquear	Impossibile sbloccare
+Intentar de nuevo	Riprova
+Buscando la licencia en la pantalla y en las USB…	Cerco la licenza sullo schermo e sulle chiavette USB…
+No encontramos la licencia	Licenza non trovata
+Copia el archivo que te enviamos (stradaos-licencia.txt) en la raíz de una USB, conéctala y vuelve a intentarlo. Tiene que ser para el ID {}.	Copia il file che ti abbiamo inviato (stradaos-licencia.txt) nella radice di una chiavetta USB, collegala e riprova. Deve essere per l'ID {}.
+¡Listo!	Fatto!
+{} quedó desbloqueado en esta pantalla. Gracias por apoyar StradaOS.	{} è sbloccato su questo schermo. Grazie per sostenere StradaOS.
+Aplicar ahora	Applica ora
