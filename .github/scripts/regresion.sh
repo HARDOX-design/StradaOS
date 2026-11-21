@@ -17,7 +17,12 @@ adb logcat -v brief AndroidRuntime:E '*:S' > $OUT/cierres-raw.txt 2>&1 &
 CR=$!
 ( while true; do adb emu geo fix -74.0836 4.6533 >/dev/null 2>&1; sleep 2; done ) &
 GEO=$!
-pid() { adb shell "ps -A 2>/dev/null | grep -q . && ps -A || ps" 2>/dev/null | tr -d '\r' | awk -v p=$PKG '$NF==p {print $2}' | head -1; }
+# número del proceso de StradaOS Prueba: «ps» lista todo en Android 4–7; desde Android 8 hace falta «ps -A»
+pid() {
+  local p=$(adb shell ps 2>/dev/null | tr -d '\r' | awk -v p=$PKG '$NF==p {print $2}' | head -1)
+  [ -z "$p" ] && p=$(adb shell ps -A 2>/dev/null | tr -d '\r' | awk -v p=$PKG '$NF==p {print $2}' | head -1)
+  echo "$p"
+}
 shot() {
   rm -f /tmp/shot.png
   adb shell screencap -p /data/local/tmp/s.png >/dev/null 2>&1 && adb pull /data/local/tmp/s.png /tmp/shot.png >/dev/null 2>&1
@@ -29,7 +34,7 @@ step() {
   local name=$1 hook=$2 wait=${3:-4} back=${4:-0}
   local before=$(pid)
   adb shell am start -n $ACT --es prueba "$hook" >/dev/null 2>&1; sleep $wait
-  N=$((N+1)); local tag=$(printf %03d $N)-$name
+  N=$((N+1)); local tag=$(printf %03d $N)-$(echo "$name" | tr ':' '_')
   shot $tag
   [ "$back" = "1" ] && { adb shell input keyevent 4; sleep 2; }
   local after=$(pid)
