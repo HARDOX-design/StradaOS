@@ -1,12 +1,11 @@
 name: Regresión (todas las pantallas)
 
-# Antes de publicar: recorre todas las pantallas, subpáginas y diálogos en Android 4.1, 4.2, 6 y 14 y falla si la app se cierra.
+# Antes de entregar una Prueba y antes de publicar: recorre todas las pantallas, subpáginas y diálogos en Android 4.1,
+# 4.2, 6 y 14 y falla si la app se cierra. Se lanza a mano (gh api …/regresion.yml/dispatches -f ref=<rama>); cada
+# Android va partido en 3 trabajos en paralelo (unos 12 minutos en total).
 # Capturas y pasos en la rama «regresion-capturas-<rama>».
 on:
   workflow_dispatch:
-  push:
-    branches: [ 'wip-*' ]
-    paths-ignore: [ 'docs/**', '**.md' ]
 
 permissions:
   contents: write
@@ -35,15 +34,23 @@ jobs:
   emulador:
     needs: build
     runs-on: ubuntu-latest
-    timeout-minutes: 75
+    timeout-minutes: 35
     strategy:
       fail-fast: false
       matrix:
         include:
-          - { api: 16, arch: x86, script: regresion }
-          - { api: 17, arch: x86, script: regresion }
-          - { api: 23, arch: x86, script: regresion }
-          - { api: 34, arch: x86_64, script: regresion }
+          - { api: 16, arch: x86, script: regresion, part: 1 }
+          - { api: 16, arch: x86, script: regresion, part: 2 }
+          - { api: 16, arch: x86, script: regresion, part: 3 }
+          - { api: 17, arch: x86, script: regresion, part: 1 }
+          - { api: 17, arch: x86, script: regresion, part: 2 }
+          - { api: 17, arch: x86, script: regresion, part: 3 }
+          - { api: 23, arch: x86, script: regresion, part: 1 }
+          - { api: 23, arch: x86, script: regresion, part: 2 }
+          - { api: 23, arch: x86, script: regresion, part: 3 }
+          - { api: 34, arch: x86_64, script: regresion, part: 1 }
+          - { api: 34, arch: x86_64, script: regresion, part: 2 }
+          - { api: 34, arch: x86_64, script: regresion, part: 3 }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
@@ -63,11 +70,11 @@ jobs:
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -skin 1024x600
           emulator-boot-timeout: 900
-          script: bash .github/scripts/${{ matrix.script }}.sh ${{ matrix.api }} app-prueba.apk capturas/${{ matrix.script }}-api${{ matrix.api }}
+          script: bash .github/scripts/${{ matrix.script }}.sh ${{ matrix.api }} app-prueba.apk capturas/${{ matrix.script }}-api${{ matrix.api }}-p${{ matrix.part }} ${{ matrix.part }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: regresion-${{ matrix.script }}-api${{ matrix.api }}
+          name: regresion-${{ matrix.script }}-api${{ matrix.api }}-p${{ matrix.part }}
           path: capturas/
 
   publicar:

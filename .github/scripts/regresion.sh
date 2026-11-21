@@ -1,8 +1,10 @@
 #!/bin/bash
 # Prueba de regresión: recorre TODAS las pantallas, subpáginas y diálogos que tienen gancho de prueba, en orden,
 # y anota en qué paso se cierra la app (el proceso cambia de número) además del registro de cierres de Android.
-# Corre en cada push a una rama wip-* (regresion.yml). Uso: regresion.sh API APK CARPETA
-API=$1; APK=$2; OUT=$3; mkdir -p $OUT
+# Se lanza a mano antes de entregar una Prueba y antes de publicar (regresion.yml), partida en 3 trabajos por Android
+# que corren en paralelo. Uso: regresion.sh API APK CARPETA [PARTE: 1, 2, 3 o all]
+API=$1; APK=$2; OUT=$3; PART=${4:-all}; mkdir -p $OUT
+part() { [ "$PART" = all ] || [ "$PART" = "$1" ]; }
 PKG=com.stradaos.launcher.debug
 ACT=$PKG/com.stradaos.launcher.Main
 adb wait-for-device
@@ -56,60 +58,69 @@ step() {
 scroll() { adb shell input swipe 600 520 600 120 400; sleep 1; }
 adb shell am start -n $ACT --es prueba saltar >/dev/null; sleep 30
 step inicio idioma:es 6
-# ── temas y apariencias ──
-for t in tema:oscuro tema:claro tema:sistema tema:oscuro; do step tema "$t" 5; done
-for t in faro aurora cobalto; do step "premium-$t" "tema-premium:$t" 6; step "premium-$t-pista" pista-demo:Night_Drive 3; done
-for i in 0 1 2 3 4 5; do step "gratis-$i" "tema-gratis:$i" 5; done
-step gratis-1 tema-gratis:1 5
-# ── ajustes: las 12 secciones, arriba, en medio y abajo ──
-for c in 0 1 2 3 4 5 6 7 8 9 10 11; do
-  step "ajustes-$c" "ajustes:$c" 4
-  scroll; scroll; shot "$(printf %03d $N)-ajustes-$c-medio"
-  scroll; scroll; scroll; shot "$(printf %03d $N)-ajustes-$c-fin"
-done
-step inicio inicio 3
-# ── diálogos y pantallas sueltas ──
-for d in diag-reproductor diag-mapa clima cajon ocultas musica demo-aceite reposo; do step "$d" "$d" 5 1; done
-step inicio inicio 3
-# ── música: fuentes simuladas y diagnóstico con cada una ──
-MUS="aa-simular:1 aa-notif:Cancion_de_prueba,30,200 aa-rcc:Cancion_de_prueba,200 hcn-sim:/sdcard/Music/prueba.mp3,start,10,200"
-# el aviso del Bluetooth del sistema solo se puede simular hasta Android 7 (después Android lo protege)
-[ "$API" -ge 21 ] && [ "$API" -lt 26 ] && MUS="$MUS avrcp-sim:Cancion_de_prueba,StradaOS,3,10,200"
-for m in $MUS; do step "musica-${m%%:*}" "$m" 4; step "diag-${m%%:*}" diag-reproductor 5 1; done
-step musica-hcn-off "hcn-sim:,stop,0,0" 3
-step musica-aa-off aa-simular:0 3
-step diag-final diag-reproductor 5 1
-# ── escáner OBD-II: panel, subpáginas y guía ──
-step obd-demo obd-demo 20
-step obd-panel obd-panel 4 1
-for p in obd obd_conn obd_alerts obd_codes obd_live obd_ai obd_adv obd_guide; do step "obd-$p" "obd-ajustes:$p" 4; scroll; scroll; done
-for s in comprar conector panel alertas codigos datos ia limites; do step "guia-$s" "obd-ajustes:obd_guide:$s" 4; done
-# 2.31: escáner por cable USB (en el emulador no hay cable: se prueban la lista, el aviso y el error sin cable)
-step obd-elegir obd-elegir 4 1
-step obd-usb obd-usb 4 1
-step obd-usb-sin-cable obd-addr:usb:1A86:7523 12
-step obd-usb-estado obd-ajustes:obd_conn 4
-step obd-demo-otra-vez obd-addr:demo 15
-step obd-vel obd-vel-demo:1 4
-step obd-vel-off obd-vel-demo:0 3
-step obd-off obd-off 4
-# ── temas de pago: desbloqueo, código y paquete ──
-step lic-prueba lic-prueba:1 3
-step desbloquear desbloquear:faro 5 1
-step paquete paquete:1 2
-step desbloquear-paquete desbloquear:faro 5 1
-step paquete-off paquete:0 2
-step lic-prueba-off lic-prueba:0 3
-# ── navegación ──
-step nav-buscar nav-buscar 6 1
-step solo-mapa solo-mapa:1 6
-step solo-mapa-off solo-mapa:0 4
-step nav-salir nav-salir 4
-# ── idiomas: inicio y ajustes en cada uno ──
-for l in en pt it de ms ar tr fr zh hu pl es; do step "idioma-$l" "idioma:$l" 6; step "ajustes-$l" "ajustes:9" 4; done
-step final inicio 4
+# ════ Parte 1: temas, ajustes y navegación ════
+if part 1; then
+  # ── temas y apariencias ──
+  for t in tema:oscuro tema:claro tema:sistema tema:oscuro; do step tema "$t" 5; done
+  for t in faro aurora cobalto; do step "premium-$t" "tema-premium:$t" 6; step "premium-$t-pista" pista-demo:Night_Drive 3; done
+  for i in 0 1 2 3 4 5; do step "gratis-$i" "tema-gratis:$i" 5; done
+  step gratis-1 tema-gratis:1 5
+  # ── ajustes: las 12 secciones, arriba, en medio y abajo ──
+  for c in 0 1 2 3 4 5 6 7 8 9 10 11; do
+    step "ajustes-$c" "ajustes:$c" 4
+    scroll; scroll; shot "$(printf %03d $N)-ajustes-$c-medio"
+    scroll; scroll; scroll; shot "$(printf %03d $N)-ajustes-$c-fin"
+  done
+  step inicio inicio 3
+  # ── navegación ──
+  step nav-buscar nav-buscar 6 1
+  step solo-mapa solo-mapa:1 6
+  step solo-mapa-off solo-mapa:0 4
+  step nav-salir nav-salir 4
+fi
+# ════ Parte 2: diálogos, música, idiomas y asistente ════
+if part 2; then
+  # ── diálogos y pantallas sueltas ──
+  for d in diag-reproductor diag-mapa clima cajon ocultas musica demo-aceite reposo; do step "$d" "$d" 5 1; done
+  step inicio inicio 3
+  # ── música: fuentes simuladas y diagnóstico con cada una ──
+  MUS="aa-simular:1 aa-notif:Cancion_de_prueba,30,200 aa-rcc:Cancion_de_prueba,200 hcn-sim:/sdcard/Music/prueba.mp3,start,10,200"
+  # el aviso del Bluetooth del sistema solo se puede simular hasta Android 7 (después Android lo protege)
+  [ "$API" -ge 21 ] && [ "$API" -lt 26 ] && MUS="$MUS avrcp-sim:Cancion_de_prueba,StradaOS,3,10,200"
+  for m in $MUS; do step "musica-${m%%:*}" "$m" 4; step "diag-${m%%:*}" diag-reproductor 5 1; done
+  step musica-hcn-off "hcn-sim:,stop,0,0" 3
+  step musica-aa-off aa-simular:0 3
+  step diag-final diag-reproductor 5 1
+  # ── idiomas: inicio y ajustes en cada uno ──
+  for l in en pt it de ms ar tr fr zh hu pl es; do step "idioma-$l" "idioma:$l" 6; step "ajustes-$l" "ajustes:9" 4; done
+  step final inicio 4
+fi
+# ════ Parte 3: escáner OBD y temas de pago ════
+if part 3; then
+  # ── escáner OBD-II: panel, subpáginas y guía ──
+  step obd-demo obd-demo 20
+  step obd-panel obd-panel 4 1
+  for p in obd obd_conn obd_alerts obd_codes obd_live obd_ai obd_adv obd_guide; do step "obd-$p" "obd-ajustes:$p" 4; scroll; scroll; done
+  for s in comprar conector panel alertas codigos datos ia limites; do step "guia-$s" "obd-ajustes:obd_guide:$s" 4; done
+  # 2.31: escáner por cable USB (en el emulador no hay cable: se prueban la lista, el aviso y el error sin cable)
+  step obd-elegir obd-elegir 4 1
+  step obd-usb obd-usb 4 1
+  step obd-usb-sin-cable obd-addr:usb:1A86:7523 12
+  step obd-usb-estado obd-ajustes:obd_conn 4
+  step obd-demo-otra-vez obd-addr:demo 15
+  step obd-vel obd-vel-demo:1 4
+  step obd-vel-off obd-vel-demo:0 3
+  step obd-off obd-off 4
+  # ── temas de pago: desbloqueo, código y paquete ──
+  step lic-prueba lic-prueba:1 3
+  step desbloquear desbloquear:faro 5 1
+  step paquete paquete:1 2
+  step desbloquear-paquete desbloquear:faro 5 1
+  step paquete-off paquete:0 2
+  step lic-prueba-off lic-prueba:0 3
+fi
 # el asistente va al final: su primer paso (idioma) no se cierra con «atrás» y taparía los pasos siguientes
-step asistente asistente 5
+if part 2; then step asistente asistente 5; fi
 sleep 3; kill $GEO $CR 2>/dev/null
 grep -E -A30 "FATAL EXCEPTION|VM aborting|Fatal signal|overflow of stack" $OUT/cierres-raw.txt | head -300 > $OUT/logcat.txt
 grep -qE "VM aborting|overflow of stack" $OUT/cierres-raw.txt && echo "CIERRE de la máquina virtual (ver logcat.txt)" >> $OUT/CIERRES.txt

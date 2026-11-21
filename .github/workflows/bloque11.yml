@@ -4,9 +4,6 @@ name: Bloque 11 (capturas)
 # Quedan en la rama «bloque11-capturas».
 on:
   workflow_dispatch:
-  push:
-    branches: [ 'wip-**' ]
-    paths: [ 'app/**', '.github/workflows/bloque11.yml', '.github/scripts/bloque11.sh' ]
 
 permissions:
   contents: write
