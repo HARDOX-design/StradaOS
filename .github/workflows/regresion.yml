@@ -1,7 +1,7 @@
 name: Regresión (todas las pantallas)
 
 # Antes de publicar: recorre todas las pantallas, subpáginas y diálogos en Android 4.1, 4.2, 6 y 14 y falla si la app se cierra.
-# Capturas y pasos en la rama «regresion-capturas».
+# Capturas y pasos en la rama «regresion-capturas-<rama>».
 on:
   workflow_dispatch:
   push:
@@ -86,12 +86,12 @@ jobs:
         run: |
           cd out
           echo "# Regresión · ${GITHUB_SHA::7}" > README.md
-          git init -q -b regresion-capturas
+          git init -q -b "regresion-capturas-${GITHUB_REF_NAME}"
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
           git add -A
           git commit -q -m "Capturas de regresión (${GITHUB_SHA::7})"
-          git push -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" regresion-capturas
+          git push -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "regresion-capturas-${GITHUB_REF_NAME}"
       - name: ¿Se cerró la app?
         run: |
           cd out

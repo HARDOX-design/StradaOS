@@ -13,7 +13,7 @@ if [ "$API" -ge 18 ]; then adb shell wm size 1024x600; adb shell wm density 160
 else adb shell am display-size 1024x600; adb shell am display-density 160; fi
 sleep 6
 if [ "$API" -ge 23 ]; then adb install -r -g "$APK" | tail -1; else adb install -r "$APK" | tail -1; fi
-adb logcat -v brief AndroidRuntime:E '*:S' > $OUT/cierres-raw.txt 2>&1 &
+adb logcat -v brief '*:E' > $OUT/cierres-raw.txt 2>&1 &
 CR=$!
 ( while true; do adb emu geo fix -74.0836 4.6533 >/dev/null 2>&1; sleep 2; done ) &
 GEO=$!
@@ -24,8 +24,14 @@ pid() {
   echo "$p"
 }
 shot() {
-  rm -f /tmp/shot.png
+  rm -f /tmp/shot.png; rm -rf /tmp/emushot; mkdir -p /tmp/emushot
   adb shell screencap -p /data/local/tmp/s.png >/dev/null 2>&1 && adb pull /data/local/tmp/s.png /tmp/shot.png >/dev/null 2>&1
+  # en Android 4.2 «screencap» da una imagen en blanco: se usa la captura del emulador
+  if [ ! -s /tmp/shot.png ] || [ "$(stat -c %s /tmp/shot.png)" -lt 15000 ]; then
+    adb emu screenrecord screenshot /tmp/emushot >/dev/null 2>&1; sleep 1
+    f=$(ls -t /tmp/emushot/*.png 2>/dev/null | head -1)
+    [ -n "$f" ] && cp "$f" /tmp/shot.png
+  fi
   [ -s /tmp/shot.png ] && cp /tmp/shot.png "$OUT/$1.png"
 }
 N=0
@@ -90,6 +96,9 @@ step nav-salir nav-salir 4
 for l in en pt it de ms ar tr fr zh hu pl es; do step "idioma-$l" "idioma:$l" 6; step "ajustes-$l" "ajustes:9" 4; done
 step final inicio 4
 sleep 3; kill $GEO $CR 2>/dev/null
-grep -E "FATAL|Exception|Error|at com\.stradaos" $OUT/cierres-raw.txt | head -100 > $OUT/logcat.txt
+grep -E -A30 "FATAL EXCEPTION" $OUT/cierres-raw.txt | head -200 > $OUT/logcat.txt
 if grep -q "com.stradaos" $OUT/logcat.txt; then echo "CIERRE en el registro de Android (ver logcat.txt)" >> $OUT/CIERRES.txt; fi
+# el registro de fallos de la propia app (Guard) también cuenta
+adb shell run-as $PKG cat files/fallos.txt > $OUT/fallos.txt 2>/dev/null
+if grep -q "CIERRE INESPERADO" $OUT/fallos.txt 2>/dev/null; then echo "CIERRE en el registro de fallos de StradaOS (ver fallos.txt)" >> $OUT/CIERRES.txt; fi
 echo "pasos: $N"; [ -f $OUT/CIERRES.txt ] && cat $OUT/CIERRES.txt || echo "sin cierres"
