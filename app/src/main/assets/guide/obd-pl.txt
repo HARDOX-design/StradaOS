@@ -5,6 +5,7 @@ StradaOS współpracuje ze skanerami ELM327, najpopularniejszym i najtańszym ro
 ### Działają
 - „Klasyczny” Bluetooth (oznaczany też jako SPP, Bluetooth 2.0 lub 3.0) albo dwutrybowy. Polecane: Vgate iCar Pro (wersja Bluetooth 3.0), Veepeak Mini Bluetooth, OBDLink LX i OBDLink MX+.
 - Wi-Fi: też działają, ale dopóki ekran jest połączony z siecią skanera, nie ma internetu (mapa online, pogoda, AI).
+- Kabel USB (ELM327 USB z układem CH340, FTDI, PL2303 lub CP2102): najlepszy wybór, jeśli Bluetooth twojego ekranu nie widzi skanera. Niektóre ekrany wymagają przejściówki OTG.
 ### Unikaj
 - Skanerów tylko BLE (Bluetooth Low Energy, „Bluetooth 4.0” lub „tylko dla iPhone”), np. OBDLink CX: Android nie widzi ich jako skanera i się nie połączą.
 - Bardzo tanich klonów z napisem „v2.1”: wiele odpowiada źle albo tylko częściowo. Jeśli już taki masz, wypróbuj go; czasem działa.
@@ -17,9 +18,11 @@ Ma 16 styków i kształt trapezu. Prawie zawsze jest pod deską rozdzielczą po 
 - Podłącz skaner i włącz zapłon (lub uruchom silnik). Na skanerze powinna zapalić się lampka.
 - Bluetooth: w Połączeniu dotknij „Szukaj skanerów Bluetooth w pobliżu” i wybierz go. Jeśli pojawi się prośba o PIN, prawie zawsze jest to 1234 lub 0000.
 - Wi-Fi: połącz ekran z siecią Wi-Fi skanera i wpisz jego IP i port (prawie zawsze 192.168.0.10:35000).
+- Kabel USB: podłącz go do ekranu, wybierz „Skaner na kabel USB” w Połączeniu i zaakceptuj uprawnienie, o które prosi Android.
 - Gotowe: przy połączeniu powinno być „Na żywo”.
 ### Jeśli się nie łączy
 - Niektóre ekrany mają Bluetooth tylko dla telefonu (zestaw głośnomówiący) i Android go nie widzi. W takich użyj skanera Wi-Fi.
+- Na ekranach FYT i innych, w których Bluetooth nie należy do Androida, najlepszym wyborem jest skaner na kabel USB.
 - W Połączenie → „Dziennik połączenia” zobaczysz, co odpowiedział skaner.
 Wskazówka: jeśli samochód będzie stał kilka dni, odłącz skaner: niektóre zużywają akumulator nawet przy wyłączonym samochodzie.
 >> obd_conn | Przejdź do Połączenia

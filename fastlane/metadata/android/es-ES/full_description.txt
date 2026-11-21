@@ -4,7 +4,7 @@
 <ul>
 <li>Mapa en vivo y sin conexión: descarga el mapa de tu país desde la app y úsalo sin internet.</li>
 <li>Navegación guiada opcional: busca un destino y StradaOS te guía con voz, con rutas alternas y recálculo; sin internet, con una ruta aproximada sobre el mapa descargado.</li>
-<li>Escáner OBD-II opcional (ELM327 por Bluetooth clásico o Wi-Fi): panel con temperatura, batería y RPM encima de cualquier tema, alertas por voz, códigos de falla explicados, gráficos en vivo y una guía dentro de la app.</li>
+<li>Escáner OBD-II opcional (ELM327 por Bluetooth clásico, Wi-Fi o cable USB): panel con temperatura, batería y RPM encima de cualquier tema, alertas por voz, códigos de falla explicados, gráficos en vivo y una guía dentro de la app.</li>
 <li>Botones de Android Auto y CarPlay: abre la app de proyección de tu pantalla o Open Headunit.</li>
 <li>Tu música en el inicio: título, artista y tiempo de lo que suena por Bluetooth; con Android Auto, también la carátula.</li>
 <li>Velocímetro por GPS, clima, reloj, recordatorio de cambio de aceite y la foto de tu vehículo.</li>

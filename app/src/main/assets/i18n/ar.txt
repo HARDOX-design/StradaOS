@@ -1702,3 +1702,19 @@ Aplicar ahora	تطبيق الآن
 Se desbloquea con una donación de 5 USD, o 8 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	يُفتح بتبرع قدره 5 دولارات، أو 8 دولارات لسمتين. كل ميزات StradaOS تبقى مجانية.
 Usar la velocidad del escáner	استخدام سرعة الماسح
 Con el escáner conectado, el inicio muestra la velocidad del carro en vez de la del GPS: más exacta y sin retraso	عند توصيل الماسح، تعرض الشاشة الرئيسية سرعة السيارة بدل سرعة GPS: أدق وبلا تأخير
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Bluetooth: emparéjalo con la clave 1234 o 0000. Wi-Fi: conecta la pantalla a la red del escáner y escribe su IP y puerto (casi siempre 192.168.0.10:35000). Cable USB: conéctalo a la pantalla y acepta el permiso que pide Android.\n3. Elígelo arriba en «Escáner».	1. صِل ماسح ELM327 بمنفذ OBD (تحت المقود) وشغّل الإشعال.\n2. بلوتوث: اقرنه بالرمز 1234 أو 0000. Wi-Fi: صِل جهاز السيارة بشبكة الماسح واكتب عنوان IP والمنفذ (غالبًا 192.168.0.10:35000). كابل USB: صِله بالشاشة ووافق على الإذن الذي يطلبه أندرويد.\n3. اختره أعلاه في «الماسح».
+Escáner por cable USB	ماسح بكابل USB
+Cable ELM327 USB (chips CH340, FTDI, PL2303 o CP2102)	كابل ELM327 USB (شرائح CH340 أو FTDI أو PL2303 أو CP2102)
+Bluetooth emparejado, Wi-Fi (IP y puerto), cable USB o un auto simulado para probar	بلوتوث مقترن أو Wi-Fi (IP والمنفذ) أو كابل USB أو سيارة محاكاة للتجربة
+No veo ningún escáner USB conectado. Conecta el cable ELM327 USB a la pantalla (si hace falta, con un adaptador OTG), enchúfalo en el conector OBD con el contacto puesto y vuelve a intentar. Sirven los cables con chip CH340, FTDI, PL2303 o CP2102.	لا أرى أي ماسح USB متصل. صِل كابل ELM327 USB بالشاشة (بمحوّل OTG إذا لزم)، وركّبه في منفذ OBD مع تشغيل المفتاح، ثم حاول مرة أخرى. تعمل الكابلات ذات شرائح CH340 أو FTDI أو PL2303 أو CP2102.
+No veo el cable USB del escáner: revisa que esté conectado	لا أرى كابل USB الخاص بالماسح: تأكد من توصيله
+Falta el permiso para usar el cable USB: acéptalo en la pantalla	إذن استخدام كابل USB غير موجود: وافق عليه على الشاشة
+El cable USB no responde como un escáner ELM327	كابل USB لا يستجيب كماسح ELM327
+Este cable USB no parece un escáner	لا يبدو كابل USB هذا ماسحًا
+Android no dejó abrir el cable USB	لم يسمح أندرويد بفتح كابل USB
+Este equipo no tiene USB para accesorios	هذا الجهاز لا يدعم USB للملحقات
+No se pudo preparar el cable USB	تعذّر تجهيز كابل USB
+El cable USB no tiene canal de datos	كابل USB ليس له قناة بيانات
+Otra app está usando el cable USB	تطبيق آخر يستخدم كابل USB
+El cable USB no aceptó la velocidad	لم يقبل كابل USB السرعة
+Se desconectó el cable USB	انفصل كابل USB

@@ -248,6 +248,8 @@ public class Obd {
     private static ToneGenerator tone;
     private static final HashMap<String, Long> lastSaid = new HashMap<String, Long>();
     private static Context app;
+    /** Contexto de la app para Elm (cable USB, 2.31). */
+    static Context ctx() { return app; }
 
     static void addListener(Listener l) { synchronized (listeners) { if (!listeners.contains(l)) listeners.add(l); } }
     static void removeListener(Listener l) { synchronized (listeners) { listeners.remove(l); } }

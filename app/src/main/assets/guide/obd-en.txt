@@ -5,6 +5,7 @@ StradaOS talks to ELM327 scanners, the most common and affordable kind. They con
 ### These work
 - "Classic" Bluetooth (also labeled SPP, Bluetooth 2.0 or 3.0) or dual mode. Recommended: Vgate iCar Pro (Bluetooth 3.0 version), Veepeak Mini Bluetooth, OBDLink LX and OBDLink MX+.
 - Wi-Fi: these work too, but while the screen is connected to the scanner's network it has no internet (online map, weather, AI).
+- USB cable (ELM327 USB with a CH340, FTDI, PL2303 or CP2102 chip): the best choice if your screen's Bluetooth can't see the scanner. Some screens need an OTG adapter.
 ### Avoid
 - BLE-only scanners (Bluetooth Low Energy, "Bluetooth 4.0" or "iPhone only"), such as the OBDLink CX: Android doesn't see them as a scanner and they won't connect.
 - Very cheap clones labeled "v2.1": many answer badly or only partly. If you already have one, try it; sometimes it works.
@@ -17,9 +18,11 @@ It has 16 pins and a trapezoid shape. It is almost always under the dashboard on
 - Plug in the scanner and turn the ignition on (or start the engine). A light on the scanner should come on.
 - Bluetooth: in Connection tap "Search for nearby Bluetooth scanners" and pick it. If it asks for a PIN, it is almost always 1234 or 0000.
 - Wi-Fi: connect the screen to the scanner's Wi-Fi network and type its IP and port (usually 192.168.0.10:35000).
+- USB cable: plug it into the screen, choose "USB cable scanner" in Connection and accept the permission Android asks for.
 - Done: the connection should say "Live".
 ### If it won't connect
 - Some screens have Bluetooth only for the phone (hands-free) and Android can't see it. On those, use a Wi-Fi scanner.
+- On FYT screens and others whose Bluetooth isn't Android's, a USB cable scanner is the best choice.
 - In Connection → "Connection log" you can see what the scanner answered.
 Tip: if the car will sit for several days, unplug the scanner: some drain the battery even with the car off.
 >> obd_conn | Go to Connection

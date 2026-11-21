@@ -5,6 +5,7 @@ StradaOS, en yaygın ve en ucuz tür olan ELM327 tarayıcılarla çalışır. Bl
 ### Çalışanlar
 - "Klasik" Bluetooth (SPP, Bluetooth 2.0 veya 3.0 olarak da yazılır) ya da çift mod. Önerilenler: Vgate iCar Pro (Bluetooth 3.0 sürümü), Veepeak Mini Bluetooth, OBDLink LX ve OBDLink MX+.
 - Wi-Fi: bunlar da çalışır, ancak ekran tarayıcının ağına bağlıyken internet olmaz (çevrimiçi harita, hava durumu, yapay zekâ).
+- USB kablo (CH340, FTDI, PL2303 veya CP2102 çipli ELM327 USB): ekranınızın Bluetooth'u tarayıcıyı görmüyorsa en iyi seçenek. Bazı ekranlar OTG adaptörü gerektirir.
 ### Kaçının
 - Yalnızca BLE olanlar (Bluetooth Low Energy, "Bluetooth 4.0" veya "yalnızca iPhone için"), örneğin OBDLink CX: Android bunları tarayıcı olarak görmez ve bağlanmazlar.
 - Üzerinde "v2.1" yazan çok ucuz klonlar: çoğu kötü ya da eksik yanıt verir. Elinizde varsa deneyin; bazen çalışır.
@@ -17,9 +18,11 @@ StradaOS, en yaygın ve en ucuz tür olan ELM327 tarayıcılarla çalışır. Bl
 - Tarayıcıyı takın ve kontağı açın (veya motoru çalıştırın). Tarayıcıda bir ışık yanmalıdır.
 - Bluetooth: Bağlantı bölümünde "Yakındaki Bluetooth tarayıcıları ara"ya dokunun ve onu seçin. PIN isterse neredeyse her zaman 1234 veya 0000'dır.
 - Wi-Fi: ekranı tarayıcının Wi-Fi ağına bağlayın ve IP ile portu yazın (genellikle 192.168.0.10:35000).
+- USB kablo: ekrana takın, Bağlantı bölümünde "USB kablolu tarayıcı"yı seçin ve Android'in istediği izni onaylayın.
 - Hazır: bağlantıda "Canlı" yazmalıdır.
 ### Bağlanmazsa
 - Bazı ekranlarda Bluetooth yalnızca telefon (eller serbest) içindir ve Android onu görmez. Bu ekranlarda Wi-Fi tarayıcı kullanın.
+- FYT ve Bluetooth'u Android'in olmayan diğer ekranlarda en iyi seçenek USB kablolu bir tarayıcıdır.
 - Bağlantı → "Bağlantı günlüğü" bölümünde tarayıcının ne yanıt verdiğini görebilirsiniz.
 İpucu: araç birkaç gün duracaksa tarayıcıyı çıkarın: bazıları araç kapalıyken bile aküyü tüketir.
 >> obd_conn | Bağlantı'ya git

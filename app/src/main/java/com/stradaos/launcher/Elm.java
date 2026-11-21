@@ -27,7 +27,7 @@ import java.util.UUID;
  *
  * Dirección: "bt:AA:BB:CC:DD:EE:FF" (Bluetooth clásico SPP, emparejado antes en los ajustes del equipo),
  * "tcp:192.168.0.10:35000" (adaptadores Wi-Fi, o el emulador ELM327 del PC: 10.0.2.2 desde el emulador de Android)
- * o "demo" (un auto simulado, para probar sin el auto).
+ * "usb:VVVV:PPPP" (cable ELM327 USB, 2.31: ver {@link UsbSerial}) o "demo" (un auto simulado, para probar sin el auto).
  *
  * Todo es bloqueante: se usa desde el hilo de {@link Obd}.
  */
@@ -36,6 +36,7 @@ public class Elm {
 
     private BluetoothSocket bt;
     private Socket tcp;
+    private UsbSerial usb;
     private InputStream in;
     private OutputStream out;
     private Demo demo;
@@ -80,10 +81,54 @@ public class Elm {
             if (bt == null) throw last != null ? last : new IOException("No se pudo conectar");
             in = bt.getInputStream();
             out = bt.getOutputStream();
+        } else if (addr.startsWith("usb:")) {
+            openUsb(addr);
         } else {
             throw new IOException("Dirección no válida: " + addr);
         }
         init();
+    }
+
+    /** Velocidades que usan los cables ELM327 USB; 38400 es la más común. La que funcionó se recuerda. */
+    private static final int[] BAUDS = {38400, 115200, 9600, 57600, 230400, 500000};
+
+    /**
+     * 2.31 (#51): cable USB. Busca el cable, espera el permiso de Android (una ventana en la pantalla) y prueba las
+     * velocidades hasta que el ELM327 conteste. Sin el cable conectado falla como un escáner Bluetooth apagado.
+     */
+    private void openUsb(String addr) throws IOException {
+        android.content.Context c = Obd.ctx();
+        if (c == null) throw new IOException("Sin conexión");
+        android.hardware.usb.UsbDevice d = UsbSerial.byAddr(c, addr);
+        if (d == null) throw new IOException("No veo el cable USB del escáner: revisa que esté conectado");
+        if (!UsbSerial.waitPermission(c, d)) throw new IOException("Falta el permiso para usar el cable USB: acéptalo en la pantalla");
+        usb = UsbSerial.open(c, d);
+        android.content.SharedPreferences p = Obd.prefs(c);
+        int saved = p.getInt("obd_usb_baud", 0);
+        List<Integer> order = new ArrayList<Integer>();
+        if (saved > 0) order.add(saved);
+        for (int b : BAUDS) if (b != saved) order.add(b);
+        for (int b : order) {
+            try {
+                usb.setBaud(b);
+                usb.drain();
+                usb.out.write("\rATI\r".getBytes("US-ASCII"));
+                String r = usb.readFor(1500).toUpperCase(Locale.US);
+                if (r.contains("ELM") || r.contains("OBD") || r.contains(">")) {
+                    if (b != saved) p.edit().putInt("obd_usb_baud", b).apply();
+                    in = usb.in;
+                    out = usb.out;
+                    return;
+                }
+            } catch (IOException e) {
+                usb.close();
+                usb = null;
+                throw e;
+            }
+        }
+        usb.close();
+        usb = null;
+        throw new IOException("El cable USB no responde como un escáner ELM327");
     }
 
     /**
@@ -339,7 +384,8 @@ public class Elm {
     void close() {
         try { if (bt != null) bt.close(); } catch (Throwable ignored) { }
         try { if (tcp != null) tcp.close(); } catch (Throwable ignored) { }
-        bt = null; tcp = null; in = null; out = null; demo = null;
+        try { if (usb != null) usb.close(); } catch (Throwable ignored) { }
+        bt = null; tcp = null; usb = null; in = null; out = null; demo = null;
     }
 
     /**

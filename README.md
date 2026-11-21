@@ -34,7 +34,7 @@
 - 🎵 **Tu música:** título, artista y tiempo de lo que suena por Bluetooth, con controles grandes. Con Android Auto, también la carátula.
 - ⏱️ **Velocímetro**, clima, reloj y **recordatorio de cambio de aceite**.
 - 🚗 **Foto de tu vehículo** en su recuadro (si quieres, le quitas el fondo).
-- 🔧 **Escáner OBD-II (opcional):** con un ELM327 por Bluetooth clásico o Wi-Fi, un panel encima de cualquier tema con temperatura, batería y RPM, alertas por voz, códigos de falla explicados sin internet, gráficos en vivo, IA opcional con tu propia clave y una guía dentro de la app. Viene apagado.
+- 🔧 **Escáner OBD-II (opcional):** con un ELM327 por Bluetooth clásico, Wi-Fi o cable USB, un panel encima de cualquier tema con temperatura, batería y RPM, alertas por voz, códigos de falla explicados sin internet, gráficos en vivo, IA opcional con tu propia clave y una guía dentro de la app. Viene apagado.
 
 **Diseña tu inicio**
 - **Temas:** Clásico (con 10 colores), **Aurora** y **Cobalto** gratis, y **Faro** (tu carro visto desde arriba con los faros encendidos), que se desbloquea con una donación de 5 USD en Ko-fi. Cada uno en versión oscura y clara.

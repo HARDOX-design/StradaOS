@@ -5,6 +5,7 @@ StradaOS berhubung dengan pengimbas ELM327, jenis yang paling biasa dan murah. I
 ### Berfungsi
 - Bluetooth "klasik" (juga ditulis SPP, Bluetooth 2.0 atau 3.0) atau dwi-mod. Disyorkan: Vgate iCar Pro (versi Bluetooth 3.0), Veepeak Mini Bluetooth, OBDLink LX dan OBDLink MX+.
 - Wi-Fi: juga berfungsi, tetapi selagi skrin bersambung ke rangkaian pengimbas, skrin tiada internet (peta dalam talian, cuaca, AI).
+- Kabel USB (ELM327 USB dengan cip CH340, FTDI, PL2303 atau CP2102): pilihan terbaik jika Bluetooth skrin anda tidak nampak pengimbas. Sesetengah skrin memerlukan penyesuai OTG.
 ### Elakkan
 - Pengimbas BLE sahaja (Bluetooth Low Energy, "Bluetooth 4.0" atau "untuk iPhone sahaja"), seperti OBDLink CX: Android tidak mengenalinya sebagai pengimbas dan ia tidak akan bersambung.
 - Klon yang sangat murah bertanda "v2.1": banyak yang menjawab dengan buruk atau separuh sahaja. Jika anda sudah ada satu, cubalah; kadang-kadang ia berfungsi.
@@ -17,9 +18,11 @@ Ia mempunyai 16 pin dan berbentuk trapezium. Hampir selalu di bawah papan pemuka
 - Pasang pengimbas dan hidupkan suis kunci (atau enjin). Lampu pada pengimbas sepatutnya menyala.
 - Bluetooth: dalam Sambungan, ketik "Cari pengimbas Bluetooth berdekatan" dan pilih pengimbas anda. Jika diminta PIN, biasanya 1234 atau 0000.
 - Wi-Fi: sambungkan skrin ke rangkaian Wi-Fi pengimbas dan taip IP serta port (biasanya 192.168.0.10:35000).
+- Kabel USB: sambungkan ke skrin, pilih "Pengimbas kabel USB" dalam Sambungan dan terima kebenaran yang diminta Android.
 - Siap: sambungan sepatutnya menunjukkan "Langsung".
 ### Jika tidak bersambung
 - Sesetengah skrin mempunyai Bluetooth hanya untuk telefon (bebas tangan) dan Android tidak nampak. Untuk skrin begini, gunakan pengimbas Wi-Fi.
+- Pada skrin FYT dan lain-lain yang Bluetoothnya bukan Bluetooth Android, pengimbas kabel USB ialah pilihan terbaik.
 - Dalam Sambungan → "Log sambungan" anda boleh lihat jawapan pengimbas.
 Petua: jika kereta akan diletakkan beberapa hari, cabut pengimbas: sesetengahnya menghabiskan bateri walaupun kereta dimatikan.
 >> obd_conn | Pergi ke Sambungan

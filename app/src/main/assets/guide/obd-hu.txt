@@ -5,6 +5,7 @@ A StradaOS ELM327 szkennerekkel működik, ez a legelterjedtebb és legolcsóbb 
 ### Működnek
 - „Klasszikus” Bluetooth (SPP, Bluetooth 2.0 vagy 3.0 jelöléssel is) vagy kétmódú. Ajánlott: Vgate iCar Pro (Bluetooth 3.0 változat), Veepeak Mini Bluetooth, OBDLink LX és OBDLink MX+.
 - Wi-Fi: ezek is működnek, de amíg a kijelző a szkenner hálózatára csatlakozik, nincs internet (online térkép, időjárás, MI).
+- USB-kábel (ELM327 USB CH340, FTDI, PL2303 vagy CP2102 chippel): a legjobb választás, ha a kijelződ Bluetooth-a nem látja a szkennert. Egyes kijelzőkhöz OTG-adapter kell.
 ### Kerüld
 - A csak BLE-s szkennereket (Bluetooth Low Energy, „Bluetooth 4.0” vagy „csak iPhone-hoz”), például az OBDLink CX-et: az Android nem ismeri fel őket szkennerként, és nem csatlakoznak.
 - A nagyon olcsó, „v2.1” feliratú klónokat: sok közülük rosszul vagy csak részben válaszol. Ha már van ilyened, próbáld ki; néha működik.
@@ -17,9 +18,11 @@ Tipp: a dobozon vagy a leírásban keresd az „Android” és a „Bluetooth 3.
 - Dugd be a szkennert, és kapcsold rá a gyújtást (vagy indítsd be a motort). A szkenneren ki kell gyulladnia egy lámpának.
 - Bluetooth: a Kapcsolat részben koppints a „Közeli Bluetooth-szkennerek keresése” lehetőségre, és válaszd ki. Ha PIN-kódot kér, szinte mindig 1234 vagy 0000.
 - Wi-Fi: csatlakoztasd a kijelzőt a szkenner Wi-Fi-hálózatára, és írd be az IP-címét és portját (szinte mindig 192.168.0.10:35000).
+- USB-kábel: csatlakoztasd a kijelzőhöz, a Kapcsolat részben válaszd a „Szkenner USB-kábellel” lehetőséget, és engedélyezd, amit az Android kér.
 - Kész: a kapcsolatnál az „Élő” felirat jelenik meg.
 ### Ha nem csatlakozik
 - Egyes kijelzőkön a Bluetooth csak a telefonhoz (kihangosítás) való, és az Android nem látja. Ezeken Wi-Fi-s szkennert használj.
+- FYT-kijelzőkön és másokon, ahol a Bluetooth nem az Androidé, a legjobb választás egy USB-kábeles szkenner.
 - A Kapcsolat → „Kapcsolatnapló” részben láthatod, mit válaszolt a szkenner.
 Tipp: ha az autó több napig áll, húzd ki a szkennert: egyesek kikapcsolt autónál is merítik az akkumulátort.
 >> obd_conn | Ugrás a Kapcsolathoz

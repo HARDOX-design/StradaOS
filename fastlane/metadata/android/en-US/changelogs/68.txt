@@ -1,0 +1,1 @@
+OBD-II scanner over USB cable (CH340, FTDI, PL2303 and CP2102 chips): the fix for screens whose Bluetooth cannot see the scanner, like many FYT units. The guide explains which cable to buy.

@@ -1794,3 +1794,19 @@ Aplicar ahora	Apply now
 Se desbloquea con una donación de 5 USD, o 8 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	Unlocks with a 5 USD donation, or 8 USD for two themes. Every StradaOS feature stays free.
 Usar la velocidad del escáner	Use the scanner's speed
 Con el escáner conectado, el inicio muestra la velocidad del carro en vez de la del GPS: más exacta y sin retraso	With the scanner connected, the home screen shows the car's speed instead of GPS speed: more accurate, no lag
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Bluetooth: emparéjalo con la clave 1234 o 0000. Wi-Fi: conecta la pantalla a la red del escáner y escribe su IP y puerto (casi siempre 192.168.0.10:35000). Cable USB: conéctalo a la pantalla y acepta el permiso que pide Android.\n3. Elígelo arriba en «Escáner».	1. Plug the ELM327 scanner into the OBD port (under the steering wheel) and turn the ignition on.\n2. Bluetooth: pair it with PIN 1234 or 0000. Wi-Fi: connect the head unit to the scanner's network and enter its IP and port (almost always 192.168.0.10:35000). USB cable: plug it into the screen and accept the permission Android asks for.\n3. Choose it above in “Scanner”.
+Escáner por cable USB	USB cable scanner
+Cable ELM327 USB (chips CH340, FTDI, PL2303 o CP2102)	ELM327 USB cable (CH340, FTDI, PL2303 or CP2102 chips)
+Bluetooth emparejado, Wi-Fi (IP y puerto), cable USB o un auto simulado para probar	Paired Bluetooth, Wi-Fi (IP and port), USB cable or a simulated car for testing
+No veo ningún escáner USB conectado. Conecta el cable ELM327 USB a la pantalla (si hace falta, con un adaptador OTG), enchúfalo en el conector OBD con el contacto puesto y vuelve a intentar. Sirven los cables con chip CH340, FTDI, PL2303 o CP2102.	I can't see any USB scanner connected. Plug the ELM327 USB cable into the screen (with an OTG adapter if needed), plug it into the OBD port with the ignition on and try again. Cables with a CH340, FTDI, PL2303 or CP2102 chip work.
+No veo el cable USB del escáner: revisa que esté conectado	I can't see the scanner's USB cable: check that it's plugged in
+Falta el permiso para usar el cable USB: acéptalo en la pantalla	Permission to use the USB cable is missing: accept it on the screen
+El cable USB no responde como un escáner ELM327	The USB cable doesn't respond like an ELM327 scanner
+Este cable USB no parece un escáner	This USB cable doesn't look like a scanner
+Android no dejó abrir el cable USB	Android didn't allow opening the USB cable
+Este equipo no tiene USB para accesorios	This device has no USB for accessories
+No se pudo preparar el cable USB	Couldn't set up the USB cable
+El cable USB no tiene canal de datos	The USB cable has no data channel
+Otra app está usando el cable USB	Another app is using the USB cable
+El cable USB no aceptó la velocidad	The USB cable didn't accept the speed
+Se desconectó el cable USB	The USB cable was disconnected

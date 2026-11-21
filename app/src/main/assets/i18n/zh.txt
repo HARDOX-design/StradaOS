@@ -1702,3 +1702,19 @@ Aplicar ahora	立即应用
 Se desbloquea con una donación de 5 USD, o 8 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	捐赠 5 美元解锁，两个主题 8 美元。StradaOS 的所有功能仍然免费。
 Usar la velocidad del escáner	使用扫描仪的车速
 Con el escáner conectado, el inicio muestra la velocidad del carro en vez de la del GPS: más exacta y sin retraso	连接扫描仪后，主屏幕显示汽车的车速而不是 GPS 车速：更准确，无延迟
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Bluetooth: emparéjalo con la clave 1234 o 0000. Wi-Fi: conecta la pantalla a la red del escáner y escribe su IP y puerto (casi siempre 192.168.0.10:35000). Cable USB: conéctalo a la pantalla y acepta el permiso que pide Android.\n3. Elígelo arriba en «Escáner».	1. 将 ELM327 诊断仪插入 OBD 接口（方向盘下方）并打开点火开关。\n2. 蓝牙：用 PIN 1234 或 0000 配对。Wi-Fi：将车机连接到诊断仪的网络并输入其 IP 和端口（几乎总是 192.168.0.10:35000）。USB 线：插到屏幕上，并允许 Android 请求的权限。\n3. 在上方“诊断仪”中选择它。
+Escáner por cable USB	USB 线诊断仪
+Cable ELM327 USB (chips CH340, FTDI, PL2303 o CP2102)	ELM327 USB 线（CH340、FTDI、PL2303 或 CP2102 芯片）
+Bluetooth emparejado, Wi-Fi (IP y puerto), cable USB o un auto simulado para probar	已配对的蓝牙、Wi-Fi（IP 和端口）、USB 线或用于测试的模拟车辆
+No veo ningún escáner USB conectado. Conecta el cable ELM327 USB a la pantalla (si hace falta, con un adaptador OTG), enchúfalo en el conector OBD con el contacto puesto y vuelve a intentar. Sirven los cables con chip CH340, FTDI, PL2303 o CP2102.	没有看到已连接的 USB 诊断仪。把 ELM327 USB 线插到屏幕上（需要时用 OTG 转接头），在打开点火的情况下插入 OBD 接口，然后重试。带 CH340、FTDI、PL2303 或 CP2102 芯片的线都可以。
+No veo el cable USB del escáner: revisa que esté conectado	看不到诊断仪的 USB 线：请检查是否已连接
+Falta el permiso para usar el cable USB: acéptalo en la pantalla	缺少使用 USB 线的权限：请在屏幕上允许
+El cable USB no responde como un escáner ELM327	USB 线没有像 ELM327 诊断仪那样响应
+Este cable USB no parece un escáner	这条 USB 线看起来不是诊断仪
+Android no dejó abrir el cable USB	Android 不允许打开 USB 线
+Este equipo no tiene USB para accesorios	此设备没有用于配件的 USB
+No se pudo preparar el cable USB	无法设置 USB 线
+El cable USB no tiene canal de datos	USB 线没有数据通道
+Otra app está usando el cable USB	另一个应用正在使用 USB 线
+El cable USB no aceptó la velocidad	USB 线不接受该速率
+Se desconectó el cable USB	USB 线已断开

@@ -5,6 +5,7 @@ StradaOS communique avec les scanners ELM327, le type le plus courant et le moin
 ### Ils fonctionnent
 - Bluetooth « classique » (aussi indiqué SPP, Bluetooth 2.0 ou 3.0) ou double mode. Recommandés : Vgate iCar Pro (version Bluetooth 3.0), Veepeak Mini Bluetooth, OBDLink LX et OBDLink MX+.
 - Wi-Fi : ils fonctionnent aussi, mais tant que l'écran est connecté au réseau du scanner, il n'a plus internet (carte en ligne, météo, IA).
+- Câble USB (ELM327 USB avec puce CH340, FTDI, PL2303 ou CP2102) : le meilleur choix si le Bluetooth de votre écran ne voit pas le scanner. Certains écrans ont besoin d'un adaptateur OTG.
 ### À éviter
 - Les modèles BLE uniquement (Bluetooth Low Energy, « Bluetooth 4.0 » ou « pour iPhone uniquement »), comme l'OBDLink CX : Android ne les voit pas comme scanner et ils ne se connectent pas.
 - Les clones très bon marché marqués « v2.1 » : beaucoup répondent mal ou à moitié. Si vous en avez déjà un, essayez-le ; parfois il fonctionne.
@@ -17,9 +18,11 @@ Elle a 16 broches et une forme de trapèze. Elle se trouve presque toujours sous
 - Branchez le scanner et mettez le contact (ou démarrez le moteur). Un voyant doit s'allumer sur le scanner.
 - Bluetooth : dans Connexion, touchez « Rechercher des scanners Bluetooth à proximité » et choisissez-le. S'il demande un code, c'est presque toujours 1234 ou 0000.
 - Wi-Fi : connectez l'écran au réseau Wi-Fi du scanner et saisissez son IP et son port (presque toujours 192.168.0.10:35000).
+- Câble USB : branchez-le à l'écran, choisissez « Scanner par câble USB » dans Connexion et acceptez l'autorisation demandée par Android.
 - C'est prêt : la connexion doit indiquer « En direct ».
 ### S'il ne se connecte pas
 - Certains écrans n'ont du Bluetooth que pour le téléphone (mains libres) et Android ne le voit pas. Sur ceux-là, utilisez un scanner Wi-Fi.
+- Sur les écrans FYT et les autres dont le Bluetooth n'est pas celui d'Android, le meilleur choix est un scanner par câble USB.
 - Dans Connexion → « Journal de connexion », vous voyez ce que le scanner a répondu.
 Astuce : si la voiture reste immobile plusieurs jours, débranchez le scanner : certains vident la batterie même voiture éteinte.
 >> obd_conn | Aller à Connexion

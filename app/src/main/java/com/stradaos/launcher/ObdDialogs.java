@@ -84,17 +84,25 @@ class ObdDialogs {
             }
         } catch (Throwable ignored) { }
         final int nBt = opts.size();
-        String[] labels = new String[nBt + 3];
+        // 2.31 (#51): escáneres por cable USB conectados ahora mismo
+        final List<android.hardware.usb.UsbDevice> usbs = UsbSerial.find(a);
+        final int nUsb = usbs.size();
+        String[] labels = new String[nBt + nUsb + 4];
         for (int i = 0; i < nBt; i++) labels[i] = "Bluetooth · " + opts.get(i)[1];
-        labels[nBt] = I18n.t("Buscar escáneres Bluetooth cercanos");
-        labels[nBt + 1] = I18n.t("Escáner Wi-Fi (escribir IP y puerto)");
-        labels[nBt + 2] = I18n.t("Auto simulado (para probar)");
+        for (int i = 0; i < nUsb; i++) labels[nBt + i] = "USB · " + UsbSerial.label(usbs.get(i));
+        final int base = nBt + nUsb;
+        labels[base] = I18n.t("Buscar escáneres Bluetooth cercanos");
+        labels[base + 1] = I18n.t("Escáner por cable USB");
+        labels[base + 2] = I18n.t("Escáner Wi-Fi (escribir IP y puerto)");
+        labels[base + 3] = I18n.t("Auto simulado (para probar)");
         tb().raw().wide()
-            .setTitle(I18n.t(nBt == 0 ? "No hay escáneres Bluetooth emparejados: emparéjalo en los ajustes del equipo" : "Elige tu escáner"))
+            .setTitle(I18n.t(nBt == 0 && nUsb == 0 ? "No hay escáneres Bluetooth emparejados: emparéjalo en los ajustes del equipo" : "Elige tu escáner"))
             .setItems(labels, new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) {
                 if (w < nBt) choose(opts.get(w)[0], opts.get(w)[1]);
-                else if (w == nBt) discover();
-                else if (w == nBt + 1) {
+                else if (w < base) chooseUsb(usbs.get(w - nBt));
+                else if (w == base + 1) pickUsb();
+                else if (w == base) discover();
+                else if (w == base + 2) {
                     String cur = prefs.getString("obd_addr", "");
                     askText(I18n.t("IP y puerto del escáner Wi-Fi"), cur.startsWith("tcp:") ? cur.substring(4) : "192.168.0.10:35000",
                         "192.168.0.10:35000", new TextCb() { public void on(String v) {
@@ -105,6 +113,25 @@ class ObdDialogs {
                 } else choose("demo", I18n.t("Auto simulado"));
             }})
             .setNegativeButton(I18n.t("Cancelar"), null).show();
+    }
+
+    /** 2.31 (#51): cable USB elegido. Android pide permiso para usarlo (una ventana); StradaOS espera la respuesta. */
+    void chooseUsb(android.hardware.usb.UsbDevice dev) {
+        UsbSerial.askPermission(a, dev);
+        choose(UsbSerial.addr(dev), "USB · " + UsbSerial.chipName(UsbSerial.chip(dev)));
+    }
+
+    /** «Escáner por cable USB»: el que esté conectado, o cómo conectarlo. */
+    void pickUsb() {
+        List<android.hardware.usb.UsbDevice> usbs = UsbSerial.find(a);
+        if (usbs.size() == 1) { chooseUsb(usbs.get(0)); return; }
+        if (usbs.isEmpty()) {
+            tb().setTitle(I18n.t("Escáner por cable USB"))
+                .setMessage(I18n.t("No veo ningún escáner USB conectado. Conecta el cable ELM327 USB a la pantalla (si hace falta, con un adaptador OTG), enchúfalo en el conector OBD con el contacto puesto y vuelve a intentar. Sirven los cables con chip CH340, FTDI, PL2303 o CP2102."))
+                .setNegativeButton(I18n.t("Cerrar"), null).show();
+            return;
+        }
+        pickAdapter();
     }
 
     private static boolean looksObd(String n) {

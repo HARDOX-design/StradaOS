@@ -1702,3 +1702,19 @@ Aplicar ahora	Şimdi uygula
 Se desbloquea con una donación de 5 USD, o 8 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	5 USD bağışla açılır, iki tema için 8 USD. StradaOS'un tüm özellikleri ücretsiz kalır.
 Usar la velocidad del escáner	Tarayıcının hızını kullan
 Con el escáner conectado, el inicio muestra la velocidad del carro en vez de la del GPS: más exacta y sin retraso	Tarayıcı bağlıyken ana ekran GPS hızı yerine aracın hızını gösterir: daha doğru, gecikmesiz
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Bluetooth: emparéjalo con la clave 1234 o 0000. Wi-Fi: conecta la pantalla a la red del escáner y escribe su IP y puerto (casi siempre 192.168.0.10:35000). Cable USB: conéctalo a la pantalla y acepta el permiso que pide Android.\n3. Elígelo arriba en «Escáner».	1. ELM327 tarayıcıyı OBD soketine (direksiyonun altında) takın ve kontağı açın.\n2. Bluetooth: 1234 veya 0000 PIN ile eşleştirin. Wi-Fi: üniteyi tarayıcının ağına bağlayın ve IP ile portu yazın (neredeyse her zaman 192.168.0.10:35000). USB kablo: ekrana takın ve Android'in istediği izni onaylayın.\n3. Yukarıda «Tarayıcı» bölümünden seçin.
+Escáner por cable USB	USB kablolu tarayıcı
+Cable ELM327 USB (chips CH340, FTDI, PL2303 o CP2102)	ELM327 USB kablo (CH340, FTDI, PL2303 veya CP2102 çipli)
+Bluetooth emparejado, Wi-Fi (IP y puerto), cable USB o un auto simulado para probar	Eşleşmiş Bluetooth, Wi-Fi (IP ve port), USB kablo veya denemek için sanal araç
+No veo ningún escáner USB conectado. Conecta el cable ELM327 USB a la pantalla (si hace falta, con un adaptador OTG), enchúfalo en el conector OBD con el contacto puesto y vuelve a intentar. Sirven los cables con chip CH340, FTDI, PL2303 o CP2102.	Bağlı bir USB tarayıcı göremiyorum. ELM327 USB kabloyu ekrana takın (gerekirse OTG adaptörüyle), kontak açıkken OBD soketine takın ve tekrar deneyin. CH340, FTDI, PL2303 veya CP2102 çipli kablolar çalışır.
+No veo el cable USB del escáner: revisa que esté conectado	Tarayıcının USB kablosunu göremiyorum: takılı olduğunu kontrol edin
+Falta el permiso para usar el cable USB: acéptalo en la pantalla	USB kabloyu kullanma izni yok: ekranda onaylayın
+El cable USB no responde como un escáner ELM327	USB kablo bir ELM327 tarayıcı gibi yanıt vermiyor
+Este cable USB no parece un escáner	Bu USB kablo bir tarayıcıya benzemiyor
+Android no dejó abrir el cable USB	Android USB kablonun açılmasına izin vermedi
+Este equipo no tiene USB para accesorios	Bu cihazda aksesuarlar için USB yok
+No se pudo preparar el cable USB	USB kablo hazırlanamadı
+El cable USB no tiene canal de datos	USB kablonun veri kanalı yok
+Otra app está usando el cable USB	Başka bir uygulama USB kabloyu kullanıyor
+El cable USB no aceptó la velocidad	USB kablo hızı kabul etmedi
+Se desconectó el cable USB	USB kablonun bağlantısı kesildi

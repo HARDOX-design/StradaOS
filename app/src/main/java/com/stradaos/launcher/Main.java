@@ -709,6 +709,9 @@ public class Main extends Activity {
                 else if ("cajon".equals(v)) openDrawer();
                 else if ("obd-demo".equals(v)) obdDialogs().choose("demo", I18n.t("Auto simulado"));
                 else if ("obd-off".equals(v)) obdDialogs().turnOff();
+                else if ("obd-elegir".equals(v)) obdDialogs().pickAdapter();
+                else if ("obd-usb".equals(v)) obdDialogs().pickUsb();
+                else if (v.startsWith("obd-addr:")) obdDialogs().choose(v.substring(9), "Prueba " + v.substring(9));
                 else if (v.startsWith("obd-vel-demo:")) { obdSpeedDemo = v.endsWith("1"); showSpeed(); }
                 else if ("obd-panel".equals(v)) openVehiclePanel();
                 else if (v.startsWith("obd-ajustes:")) { settingsSub = v.substring(12); showSettings(C_VEHICLE); }
@@ -11492,10 +11495,13 @@ public class Main extends Activity {
             row(mo, "Avanzado", "Motor, protocolo, panel y escaneo completo", null, obdGo("obd_adv"));
         } else if ("obd_conn".equals(sub)) {
             LinearLayout c = section(body, "Escáner");
-            row(c, "Escáner", "Bluetooth emparejado, Wi-Fi (IP y puerto) o un auto simulado para probar", ObdDialogs.deviceName(this),
+            row(c, "Escáner", "Bluetooth emparejado, Wi-Fi (IP y puerto), cable USB o un auto simulado para probar", ObdDialogs.deviceName(this),
                 new Runnable() { public void run() { d.pickAdapter(); } });
             row(c, "Buscar escáneres Bluetooth cercanos", "Empareja el escáner sin salir de StradaOS (clave 1234 o 0000)", null,
                 new Runnable() { public void run() { d.discover(); } });
+            // 2.31 (#51): escáner por cable USB (pantallas cuyo Bluetooth no ve el escáner, como muchas FYT)
+            row(c, "Escáner por cable USB", "Cable ELM327 USB (chips CH340, FTDI, PL2303 o CP2102)", null,
+                new Runnable() { public void run() { d.pickUsb(); } });
             liveRow(c, "Conexión", null, "status", new Runnable() { public void run() { d.reconnect(); } });
             row(c, "Reconectar", null, null, new Runnable() { public void run() { d.reconnect(); } });
             LinearLayout o = section(body, "Al encender");
@@ -11505,7 +11511,7 @@ public class Main extends Activity {
             LinearLayout h2 = section(body, "Ayuda");
             row(h2, "Cómo conectar el escáner", null, null, new Runnable() { public void run() {
                 new TB(Main.this, dlg()).setTitle("Cómo conectar el escáner")
-                    .setMessage("1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Bluetooth: emparéjalo con la clave 1234 o 0000. Wi-Fi: conecta la pantalla a la red del escáner y escribe su IP y puerto (casi siempre 192.168.0.10:35000).\n3. Elígelo arriba en «Escáner».")
+                    .setMessage("1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Bluetooth: emparéjalo con la clave 1234 o 0000. Wi-Fi: conecta la pantalla a la red del escáner y escribe su IP y puerto (casi siempre 192.168.0.10:35000). Cable USB: conéctalo a la pantalla y acepta el permiso que pide Android.\n3. Elígelo arriba en «Escáner».")
                     .setNegativeButton("Cerrar", null).show(); }});
             row(h2, "Registro de la conexión", "Lo que respondió el escáner (para reportar un problema)", null,
                 new Runnable() { public void run() { d.showLog(); } });

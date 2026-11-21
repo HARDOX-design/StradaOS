@@ -1702,3 +1702,19 @@ Aplicar ahora	Appliquer maintenant
 Se desbloquea con una donación de 5 USD, o 8 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	Se débloque avec un don de 5 USD, ou 8 USD pour deux thèmes. Toutes les fonctions de StradaOS restent gratuites.
 Usar la velocidad del escáner	Utiliser la vitesse du scanner
 Con el escáner conectado, el inicio muestra la velocidad del carro en vez de la del GPS: más exacta y sin retraso	Avec le scanner connecté, l'accueil affiche la vitesse de la voiture au lieu de celle du GPS : plus précise et sans retard
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Bluetooth: emparéjalo con la clave 1234 o 0000. Wi-Fi: conecta la pantalla a la red del escáner y escribe su IP y puerto (casi siempre 192.168.0.10:35000). Cable USB: conéctalo a la pantalla y acepta el permiso que pide Android.\n3. Elígelo arriba en «Escáner».	1. Branchez le scanner ELM327 sur la prise OBD (sous le volant) et mettez le contact.\n2. Bluetooth : appairez-le avec le code 1234 ou 0000. Wi-Fi : connectez l'autoradio au réseau du scanner et saisissez son IP et son port (presque toujours 192.168.0.10:35000). Câble USB : branchez-le à l'écran et acceptez l'autorisation demandée par Android.\n3. Choisissez-le ci-dessus dans « Scanner ».
+Escáner por cable USB	Scanner par câble USB
+Cable ELM327 USB (chips CH340, FTDI, PL2303 o CP2102)	Câble ELM327 USB (puces CH340, FTDI, PL2303 ou CP2102)
+Bluetooth emparejado, Wi-Fi (IP y puerto), cable USB o un auto simulado para probar	Bluetooth appairé, Wi-Fi (IP et port), câble USB ou une voiture simulée pour essayer
+No veo ningún escáner USB conectado. Conecta el cable ELM327 USB a la pantalla (si hace falta, con un adaptador OTG), enchúfalo en el conector OBD con el contacto puesto y vuelve a intentar. Sirven los cables con chip CH340, FTDI, PL2303 o CP2102.	Je ne vois aucun scanner USB branché. Branchez le câble ELM327 USB à l'écran (avec un adaptateur OTG si besoin), branchez-le sur la prise OBD contact mis et réessayez. Les câbles avec puce CH340, FTDI, PL2303 ou CP2102 fonctionnent.
+No veo el cable USB del escáner: revisa que esté conectado	Je ne vois pas le câble USB du scanner : vérifiez qu'il est branché
+Falta el permiso para usar el cable USB: acéptalo en la pantalla	L'autorisation d'utiliser le câble USB manque : acceptez-la à l'écran
+El cable USB no responde como un escáner ELM327	Le câble USB ne répond pas comme un scanner ELM327
+Este cable USB no parece un escáner	Ce câble USB ne ressemble pas à un scanner
+Android no dejó abrir el cable USB	Android n'a pas permis d'ouvrir le câble USB
+Este equipo no tiene USB para accesorios	Cet appareil n'a pas d'USB pour accessoires
+No se pudo preparar el cable USB	Impossible de préparer le câble USB
+El cable USB no tiene canal de datos	Le câble USB n'a pas de canal de données
+Otra app está usando el cable USB	Une autre app utilise le câble USB
+El cable USB no aceptó la velocidad	Le câble USB n'a pas accepté la vitesse
+Se desconectó el cable USB	Le câble USB a été débranché

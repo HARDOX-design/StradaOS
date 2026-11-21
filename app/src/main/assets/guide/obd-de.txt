@@ -5,6 +5,7 @@ StradaOS arbeitet mit ELM327-Scannern, der häufigsten und günstigsten Art. Sie
 ### Funktionieren
 - „Klassisches“ Bluetooth (auch als SPP, Bluetooth 2.0 oder 3.0 angegeben) oder Dual-Mode. Empfohlen: Vgate iCar Pro (Bluetooth-3.0-Version), Veepeak Mini Bluetooth, OBDLink LX und OBDLink MX+.
 - WLAN: funktionieren auch, aber solange der Bildschirm mit dem Netz des Scanners verbunden ist, hat er kein Internet (Online-Karte, Wetter, KI).
+- USB-Kabel (ELM327 USB mit Chip CH340, FTDI, PL2303 oder CP2102): die beste Wahl, wenn das Bluetooth deines Bildschirms den Scanner nicht sieht. Manche Bildschirme brauchen einen OTG-Adapter.
 ### Meiden
 - Reine BLE-Scanner (Bluetooth Low Energy, „Bluetooth 4.0“ oder „nur für iPhone“), etwa der OBDLink CX: Android erkennt sie nicht als Scanner, sie verbinden sich nicht.
 - Sehr billige Klone mit der Aufschrift „v2.1“: Viele antworten schlecht oder nur teilweise. Wenn du schon einen hast, probier ihn aus; manchmal klappt es.
@@ -17,9 +18,11 @@ Sie hat 16 Pins und eine Trapezform. Fast immer sitzt sie unter dem Armaturenbre
 - Steck den Scanner ein und schalte die Zündung ein (oder starte den Motor). Am Scanner sollte ein Licht angehen.
 - Bluetooth: Tippe in Verbindung auf „Bluetooth-Scanner in der Nähe suchen“ und wähle ihn aus. Fragt er nach einem PIN, ist es fast immer 1234 oder 0000.
 - WLAN: Verbinde den Bildschirm mit dem WLAN des Scanners und gib IP und Port ein (fast immer 192.168.0.10:35000).
+- USB-Kabel: Schließe es am Bildschirm an, wähle in Verbindung „Scanner per USB-Kabel“ und erlaube den Zugriff, den Android anfragt.
 - Fertig: Bei der Verbindung sollte „Live“ stehen.
 ### Wenn er sich nicht verbindet
 - Manche Bildschirme haben Bluetooth nur fürs Handy (Freisprechen), und Android sieht es nicht. Nimm dort einen WLAN-Scanner.
+- Bei FYT-Bildschirmen und anderen, deren Bluetooth nicht das von Android ist, ist ein Scanner per USB-Kabel die beste Wahl.
 - Unter Verbindung → „Verbindungsprotokoll“ siehst du, was der Scanner geantwortet hat.
 Tipp: Steht das Auto mehrere Tage, zieh den Scanner ab: Manche ziehen Strom, auch wenn das Auto aus ist.
 >> obd_conn | Zu Verbindung

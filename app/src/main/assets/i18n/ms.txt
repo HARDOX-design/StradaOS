@@ -1702,3 +1702,19 @@ Aplicar ahora	Guna sekarang
 Se desbloquea con una donación de 5 USD, o 8 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	Dibuka dengan derma 5 USD, atau 8 USD untuk dua tema. Semua fungsi StradaOS kekal percuma.
 Usar la velocidad del escáner	Guna kelajuan pengimbas
 Con el escáner conectado, el inicio muestra la velocidad del carro en vez de la del GPS: más exacta y sin retraso	Dengan pengimbas disambung, skrin utama menunjukkan kelajuan kereta dan bukan kelajuan GPS: lebih tepat, tanpa lengah
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Bluetooth: emparéjalo con la clave 1234 o 0000. Wi-Fi: conecta la pantalla a la red del escáner y escribe su IP y puerto (casi siempre 192.168.0.10:35000). Cable USB: conéctalo a la pantalla y acepta el permiso que pide Android.\n3. Elígelo arriba en «Escáner».	1. Pasang pengimbas ELM327 pada soket OBD (di bawah stereng) dan hidupkan suis.\n2. Bluetooth: pasangkan dengan PIN 1234 atau 0000. Wi-Fi: sambungkan unit utama ke rangkaian pengimbas dan tulis IP dan port (hampir selalu 192.168.0.10:35000). Kabel USB: sambungkan ke skrin dan terima kebenaran yang diminta Android.\n3. Pilih di atas dalam «Pengimbas».
+Escáner por cable USB	Pengimbas kabel USB
+Cable ELM327 USB (chips CH340, FTDI, PL2303 o CP2102)	Kabel ELM327 USB (cip CH340, FTDI, PL2303 atau CP2102)
+Bluetooth emparejado, Wi-Fi (IP y puerto), cable USB o un auto simulado para probar	Bluetooth berpasangan, Wi-Fi (IP dan port), kabel USB atau kereta simulasi untuk mencuba
+No veo ningún escáner USB conectado. Conecta el cable ELM327 USB a la pantalla (si hace falta, con un adaptador OTG), enchúfalo en el conector OBD con el contacto puesto y vuelve a intentar. Sirven los cables con chip CH340, FTDI, PL2303 o CP2102.	Saya tidak nampak sebarang pengimbas USB disambung. Sambungkan kabel ELM327 USB ke skrin (dengan penyesuai OTG jika perlu), pasangkan pada penyambung OBD dengan suis kunci dihidupkan dan cuba lagi. Kabel dengan cip CH340, FTDI, PL2303 atau CP2102 boleh digunakan.
+No veo el cable USB del escáner: revisa que esté conectado	Saya tidak nampak kabel USB pengimbas: pastikan ia disambung
+Falta el permiso para usar el cable USB: acéptalo en la pantalla	Kebenaran untuk menggunakan kabel USB belum diberi: terima pada skrin
+El cable USB no responde como un escáner ELM327	Kabel USB tidak membalas seperti pengimbas ELM327
+Este cable USB no parece un escáner	Kabel USB ini tidak kelihatan seperti pengimbas
+Android no dejó abrir el cable USB	Android tidak membenarkan kabel USB dibuka
+Este equipo no tiene USB para accesorios	Peranti ini tiada USB untuk aksesori
+No se pudo preparar el cable USB	Tidak dapat menyediakan kabel USB
+El cable USB no tiene canal de datos	Kabel USB tiada saluran data
+Otra app está usando el cable USB	Aplikasi lain sedang menggunakan kabel USB
+El cable USB no aceptó la velocidad	Kabel USB tidak menerima kelajuan itu
+Se desconectó el cable USB	Kabel USB telah terputus

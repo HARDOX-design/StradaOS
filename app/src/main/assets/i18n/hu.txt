@@ -1688,3 +1688,19 @@ Aplicar ahora	Alkalmazás most
 Se desbloquea con una donación de 5 USD, o 8 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	5 USD-s adománnyal oldható fel, két téma 8 USD. A StradaOS minden funkciója ingyenes marad.
 Usar la velocidad del escáner	A szkenner sebességének használata
 Con el escáner conectado, el inicio muestra la velocidad del carro en vez de la del GPS: más exacta y sin retraso	Csatlakoztatott szkennerrel a kezdőképernyő az autó sebességét mutatja a GPS-sebesség helyett: pontosabb, késés nélkül
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Bluetooth: emparéjalo con la clave 1234 o 0000. Wi-Fi: conecta la pantalla a la red del escáner y escribe su IP y puerto (casi siempre 192.168.0.10:35000). Cable USB: conéctalo a la pantalla y acepta el permiso que pide Android.\n3. Elígelo arriba en «Escáner».	1. Dugd a ELM327 szkennert az OBD-aljzatba (a kormány alatt), és kapcsold rá a gyújtást.\n2. Bluetooth: párosítsd 1234 vagy 0000 PIN-nel. Wi-Fi: csatlakoztasd a fejegységet a szkenner hálózatához, és add meg az IP-t és a portot (szinte mindig 192.168.0.10:35000). USB-kábel: csatlakoztasd a kijelzőhöz, és engedélyezd, amit az Android kér.\n3. Válaszd ki fent a „Szkenner” menüben.
+Escáner por cable USB	Szkenner USB-kábellel
+Cable ELM327 USB (chips CH340, FTDI, PL2303 o CP2102)	ELM327 USB-kábel (CH340, FTDI, PL2303 vagy CP2102 chip)
+Bluetooth emparejado, Wi-Fi (IP y puerto), cable USB o un auto simulado para probar	Párosított Bluetooth, Wi-Fi (IP és port), USB-kábel vagy egy szimulált autó kipróbáláshoz
+No veo ningún escáner USB conectado. Conecta el cable ELM327 USB a la pantalla (si hace falta, con un adaptador OTG), enchúfalo en el conector OBD con el contacto puesto y vuelve a intentar. Sirven los cables con chip CH340, FTDI, PL2303 o CP2102.	Nem látok csatlakoztatott USB-szkennert. Csatlakoztasd az ELM327 USB-kábelt a kijelzőhöz (ha kell, OTG-adapterrel), dugd be az OBD-csatlakozóba bekapcsolt gyújtásnál, és próbáld újra. A CH340, FTDI, PL2303 vagy CP2102 chipes kábelek működnek.
+No veo el cable USB del escáner: revisa que esté conectado	Nem látom a szkenner USB-kábelét: ellenőrizd, hogy csatlakoztatva van-e
+Falta el permiso para usar el cable USB: acéptalo en la pantalla	Hiányzik az USB-kábel használatának engedélye: fogadd el a képernyőn
+El cable USB no responde como un escáner ELM327	Az USB-kábel nem úgy válaszol, mint egy ELM327-szkenner
+Este cable USB no parece un escáner	Ez az USB-kábel nem tűnik szkennernek
+Android no dejó abrir el cable USB	Az Android nem engedte megnyitni az USB-kábelt
+Este equipo no tiene USB para accesorios	Ennek az eszköznek nincs USB-je kiegészítőkhöz
+No se pudo preparar el cable USB	Nem sikerült előkészíteni az USB-kábelt
+El cable USB no tiene canal de datos	Az USB-kábelnek nincs adatcsatornája
+Otra app está usando el cable USB	Egy másik alkalmazás használja az USB-kábelt
+El cable USB no aceptó la velocidad	Az USB-kábel nem fogadta el a sebességet
+Se desconectó el cable USB	Az USB-kábel lecsatlakozott

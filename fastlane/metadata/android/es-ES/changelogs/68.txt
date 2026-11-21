@@ -1,0 +1,1 @@
+Escáner OBD-II por cable USB (chips CH340, FTDI, PL2303 y CP2102): la solución para pantallas cuyo Bluetooth no ve el escáner, como muchas FYT. La guía explica qué cable comprar.

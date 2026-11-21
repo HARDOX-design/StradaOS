@@ -79,6 +79,12 @@ step obd-demo obd-demo 20
 step obd-panel obd-panel 4 1
 for p in obd obd_conn obd_alerts obd_codes obd_live obd_ai obd_adv obd_guide; do step "obd-$p" "obd-ajustes:$p" 4; scroll; scroll; done
 for s in comprar conector panel alertas codigos datos ia limites; do step "guia-$s" "obd-ajustes:obd_guide:$s" 4; done
+# 2.31: escáner por cable USB (en el emulador no hay cable: se prueban la lista, el aviso y el error sin cable)
+step obd-elegir obd-elegir 4 1
+step obd-usb obd-usb 4 1
+step obd-usb-sin-cable obd-addr:usb:1A86:7523 12
+step obd-usb-estado obd-ajustes:obd_conn 4
+step obd-demo-otra-vez obd-addr:demo 15
 step obd-vel obd-vel-demo:1 4
 step obd-vel-off obd-vel-demo:0 3
 step obd-off obd-off 4
