@@ -1,6 +1,6 @@
 {
-  "version": "2.29.0",
-  "notes": "# StradaOS 2.29.0\n\n- **Velocímetro con la velocidad del escáner OBD-II.** Con el escáner conectado, el inicio muestra la velocidad real del carro en vez de la del GPS: más exacta, sin retraso y también en túneles. Junto a la velocidad se ve «OBD». Si el escáner deja de responder, vuelve solo al GPS. Se puede apagar en Ajustes → Tu vehículo → Escáner OBD-II → Avanzado → Velocímetro.\n",
-  "url": "https://github.com/lordnordic-debug/StradaOS/releases/tag/v2.29.0",
-  "apk": "https://github.com/lordnordic-debug/StradaOS/releases/download/v2.29.0/StradaOS-2.29.0.apk"
+  "version": "2.30.0",
+  "notes": "# StradaOS 2.30.0\n\n- **Clima sin internet:** StradaOS guarda el último pronóstico (5 días, hora por hora) y, si arranca sin conexión, muestra el de la hora que toca en vez de quedar vacío. Cuando vuelve internet se actualiza solo (#46).\n- **Música con Android Auto o CarPlay:** si Android Auto o CarPlay está reproduciendo, ▶ ya no arranca la app de música de la pantalla (antes podían sonar dos canciones a la vez) (#50).\n- **Audio Bluetooth al conectar el celular:** en Android 5 y más nuevos, después de abrir un momento la app de música Bluetooth, StradaOS vuelve solo al inicio como debía (#47).\n- El diagnóstico del reproductor muestra las apps de Android Auto / CarPlay que detecta.\n",
+  "url": "https://github.com/lordnordic-debug/StradaOS/releases/tag/v2.30.0",
+  "apk": "https://github.com/lordnordic-debug/StradaOS/releases/download/v2.30.0/StradaOS-2.30.0.apk"
 }
