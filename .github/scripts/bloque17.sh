@@ -48,13 +48,18 @@ go clima 5; shot c03-detalle-sin-internet; back
 adb shell svc data enable; adb shell svc wifi enable
 sleep 10
 # ── #47: abre la «app de música Bluetooth» (aquí Ajustes de Android) y debe volver solo al inicio ──
+# en una pantalla real StradaOS es el inicio (Android 10+ solo deja traer al frente desde atrás a la app de inicio)
+[ "$API" -ge 24 ] && adb shell cmd package set-home-activity $PKG/com.stradaos.launcher.Main
 go inicio 3
+adb logcat -c
 adb shell am start -n $ACT --es prueba "bt-probar:com.android.settings/.Settings" >/dev/null
 sleep 2; shot b01-app-bt-abierta
 sleep 6; shot b02-volvio-al-inicio
+sleep 6; shot b03-despues
+adb logcat -d -s StradaBt:I > $OUT/bt-log.txt
 adb shell dumpsys activity activities 2>/dev/null | grep -E "mResumedActivity|ResumedActivity" | head -3 > $OUT/al-frente.txt
 # ── #50: con Android Auto simulado, ▶ ya no abre la app de música ──
-go aa-simular:1 4; go diag-reproductor 4; shot m01-diag-aa; back
+go inicio 4; go aa-simular:1 4; go diag-reproductor 6; shot m01-diag-aa; back
 go aa-simular:0 4; go diag-reproductor 4; shot m02-diag-sin-aa; back
 # ── recorrido por todo para ver que nada se rompió ──
 for c in 0 1 2 3 4 5 6 7 8 9 10 11; do n=$(printf %02d $c); go ajustes:$c 4; shot r$n; done

@@ -49,6 +49,7 @@ public class BtBridge {
     static volatile long activations;
 
     static void log(String m) {
+        try { android.util.Log.i("StradaBt", m); } catch (Throwable ignored) { }
         synchronized (LOG) {
             LOG.addLast(new java.text.SimpleDateFormat("HH:mm:ss", java.util.Locale.US).format(new java.util.Date()) + " " + m);
             while (LOG.size() > 30) LOG.removeFirst();
