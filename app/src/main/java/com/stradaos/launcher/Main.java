@@ -425,6 +425,7 @@ public class Main extends Activity {
         h.postDelayed(new Runnable() { public void run() {
             // si el usuario ya cambió de app, no lo movemos
             String now = topPackage();
+            BtBridge.log("revisando la vuelta: al frente " + now + (hasWindowFocus() ? " (inicio con foco)" : ""));
             // 2.30 (#47): en Android 5+ el sistema solo deja ver las tareas propias y topPackage() responde StradaOS aunque
             // la app de música esté al frente; antes eso se leía como «el usuario abrió otra app» y nunca se volvía.
             boolean self = getPackageName().equals(now);
@@ -435,13 +436,18 @@ public class Main extends Activity {
             try {
                 if (back >= 0) {
                     ((android.app.ActivityManager) getSystemService(ACTIVITY_SERVICE)).moveTaskToFront(back, 0);
+                    BtBridge.log("vuelta a " + top);
                     return;
                 }
             } catch (Throwable ignored) { }
+            BtBridge.log("vuelta al inicio");
+            // 2.30: primero se trae al frente la tarea de StradaOS (permiso REORDER_TASKS); el startActivity queda de respaldo
+            try { ((android.app.ActivityManager) getSystemService(ACTIVITY_SERVICE)).moveTaskToFront(getTaskId(), 0); }
+            catch (Throwable e) { BtBridge.log("moveTaskToFront: " + e); }
             try {
                 startActivity(new Intent(Main.this, Main.class)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
-            } catch (Throwable ignored) { }
+            } catch (Throwable e) { BtBridge.log("no se pudo volver: " + e); }
         }}, prefs.getInt("bt_return_ms", clwBt ? 2000 : 2500));
     }
 
