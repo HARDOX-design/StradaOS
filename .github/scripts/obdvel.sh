@@ -36,7 +36,7 @@ go tema-premium:faro 6; go inicio 4; shot v05-faro-obd
 go tema-gratis:1 6
 go tema-premium:aurora 6; go inicio 4; shot v06-aurora-obd
 go tema-gratis:1 6; go inicio 3
-go obd-ajustes:obd_adv 4; shot v07-ajuste
+go obd-ajustes:obd_adv 4; adb shell input swipe 600 400 600 250 300; sleep 2; shot v07-ajuste
 go obd-off 6; go inicio 4; shot v08-sin-escaner
 go obd-vel-demo:0 2
 kill $GEO 2>/dev/null

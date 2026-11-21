@@ -6710,7 +6710,8 @@ public class Main extends Activity {
     private float obdKmh() {
         if (!obdOn() || !prefs.getBoolean("obd_speed", true) || Obd.status != Obd.LIVE || !Obd.SPEED.has()) return Float.NaN;
         if (SystemClock.elapsedRealtime() - Obd.SPEED.at > 3000) return Float.NaN;
-        if ("demo".equals(prefs.getString("obd_addr", "demo")) && !obdSpeedDemo) return Float.NaN;
+        if ("demo".equals(prefs.getString("obd_addr", "demo")) && !obdSpeedDemo
+            && !(getPackageName().endsWith(".debug") && prefs.getBoolean("obd_speed_demo", false))) return Float.NaN;
         return Obd.SPEED.value;
     }
     private boolean obdSpeedDemo;
@@ -11562,6 +11563,11 @@ public class Main extends Activity {
             toggle(ve, "Usar la velocidad del escáner", "Con el escáner conectado, el inicio muestra la velocidad del carro en vez de la del GPS: más exacta y sin retraso",
                 prefs.getBoolean("obd_speed", true), new IntCb() { public void on(int i) {
                     prefs.edit().putBoolean("obd_speed", i == 1).apply(); showSpeed(); showSettings(C_VEHICLE); }});
+            // Solo en StradaOS Prueba: ver el velocímetro con el auto simulado, para probar sin escáner
+            if (getPackageName().endsWith(".debug"))
+                toggle(ve, "Prueba: usar también el auto simulado", "Solo en StradaOS Prueba. Elige «Auto simulado» en Conexión y mira el inicio",
+                    prefs.getBoolean("obd_speed_demo", false), new IntCb() { public void on(int i) {
+                        prefs.edit().putBoolean("obd_speed_demo", i == 1).apply(); showSpeed(); showSettings(C_VEHICLE); }});
             LinearLayout pn = section(body, "Panel del vehículo");
             final String[] sides = {"auto", "left", "right"};
             segmented(pn, "Lado del panel", "Automático: del lado del reproductor (el del conductor)", new String[]{"Automático", "Izquierda", "Derecha"},
