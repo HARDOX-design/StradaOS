@@ -69,8 +69,12 @@ step inicio inicio 3
 step asistente asistente 5 1
 step inicio inicio 3
 # ── música: fuentes simuladas y diagnóstico con cada una ──
-for m in aa-simular:1 aa-notif:1 aa-rcc:1 avrcp-sim:1 hcn-sim:1; do step "musica-$m" "$m" 4; step "diag-$m" diag-reproductor 5 1; done
-for m in aa-simular:0 aa-notif:0 aa-rcc:0 avrcp-sim:0 hcn-sim:0; do step "musica-$m" "$m" 3; done
+MUS="aa-simular:1 aa-notif:Cancion_de_prueba,30,200 aa-rcc:Cancion_de_prueba,200 hcn-sim:/sdcard/Music/prueba.mp3,start,10,200"
+# el aviso del Bluetooth del sistema solo se puede simular hasta Android 7 (después Android lo protege)
+[ "$API" -ge 21 ] && [ "$API" -lt 26 ] && MUS="$MUS avrcp-sim:Cancion_de_prueba,StradaOS,3,10,200"
+for m in $MUS; do step "musica-${m%%:*}" "$m" 4; step "diag-${m%%:*}" diag-reproductor 5 1; done
+step musica-hcn-off "hcn-sim:,stop,0,0" 3
+step musica-aa-off aa-simular:0 3
 step diag-final diag-reproductor 5 1
 # ── escáner OBD-II: panel, subpáginas y guía ──
 step obd-demo obd-demo 20
@@ -101,4 +105,7 @@ if grep -q "com.stradaos" $OUT/logcat.txt; then echo "CIERRE en el registro de A
 # el registro de fallos de la propia app (Guard) también cuenta
 adb shell run-as $PKG cat files/fallos.txt > $OUT/fallos.txt 2>/dev/null
 if grep -q "CIERRE INESPERADO" $OUT/fallos.txt 2>/dev/null; then echo "CIERRE en el registro de fallos de StradaOS (ver fallos.txt)" >> $OUT/CIERRES.txt; fi
+# los ganchos de prueba atrapan el error para seguir (en la pantalla real la app se cerraría): también es un fallo
+grep "Prueba «.*» falló" $OUT/fallos.txt 2>/dev/null | sed 's/^/FALLO (en la pantalla real se cerraría): /' >> $OUT/CIERRES.txt
+[ -s $OUT/CIERRES.txt ] || rm -f $OUT/CIERRES.txt
 echo "pasos: $N"; [ -f $OUT/CIERRES.txt ] && cat $OUT/CIERRES.txt || echo "sin cierres"
