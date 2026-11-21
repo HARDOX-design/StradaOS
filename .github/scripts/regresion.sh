@@ -12,7 +12,12 @@ adb shell input keyevent 82 || true
 if [ "$API" -ge 18 ]; then adb shell wm size 1024x600; adb shell wm density 160
 else adb shell am display-size 1024x600; adb shell am display-density 160; fi
 sleep 6
-if [ "$API" -ge 23 ]; then adb install -r -g "$APK" | tail -1; else adb install -r "$APK" | tail -1; fi
+# a veces el emulador de Android 4.1 se queda trabado instalando: se reintenta con límite de tiempo
+for t in 1 2 3; do
+  if [ "$API" -ge 23 ]; then r=$(timeout 180 adb install -r -g "$APK" 2>&1 | tail -1); else r=$(timeout 180 adb install -r "$APK" 2>&1 | tail -1); fi
+  echo "instalación $t: $r"; echo "$r" | grep -q Success && break
+  adb kill-server; sleep 5; adb wait-for-device; sleep 20
+done
 adb logcat -v brief '*:E' 'dalvikvm:I' 'DEBUG:I' 'AndroidRuntime:I' > $OUT/cierres-raw.txt 2>&1 &
 CR=$!
 ( while true; do adb emu geo fix -74.0836 4.6533 >/dev/null 2>&1; sleep 2; done ) &

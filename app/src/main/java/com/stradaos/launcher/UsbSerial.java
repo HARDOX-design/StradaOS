@@ -55,7 +55,7 @@ final class UsbSerial {
         if (v == 0x1A86 && (p == 0x7523 || p == 0x5523 || p == 0x7522 || p == 0x5512 || p == 0x55D4)) return CH34X;
         if (v == 0x4348 && p == 0x5523) return CH34X;
         if (v == 0x0403) return FTDI;                                  // FT232R, FT231X, FT230X…
-        if (v == 0x067B && (p == 0x2303 || p == 0x23A3 || p == 0x23B3 || p == 0x23C3 || p == 0x23D3 || p == 0x23E3 || p == 0x23F3)) return PL2303;
+        if (v == 0x067B && p == 0x2303) return PL2303;                // PL2303 clásico y HX (los HXN nuevos usan otro arranque)
         if (v == 0x10C4 && (p == 0xEA60 || p == 0xEA70 || p == 0xEA71 || p == 0xEA80)) return CP210X;
         // puerto serie estándar: una interfaz de datos (clase 10) con dos extremos «bulk»
         for (int i = 0; i < d.getInterfaceCount(); i++) {
@@ -120,7 +120,9 @@ final class UsbSerial {
         UsbManager m = (UsbManager) c.getSystemService(Context.USB_SERVICE);
         if (m == null) return false;
         if (m.hasPermission(d)) return true;
-        if (SystemClock.elapsedRealtime() - askedAt > 30000) askPermission(c, d);
+        // la ventana de permiso se abre como mucho una vez cada 10 minutos (si el usuario dijo que no, no insistir en
+        // cada reintento); elegir el cable de nuevo en Conexión la vuelve a abrir al momento
+        if (askedAt == 0 || SystemClock.elapsedRealtime() - askedAt > 600000) askPermission(c, d);
         long end = SystemClock.elapsedRealtime() + 30000;
         while (SystemClock.elapsedRealtime() < end) {
             try { Thread.sleep(300); } catch (InterruptedException e) { return false; }
