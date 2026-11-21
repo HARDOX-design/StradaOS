@@ -32,6 +32,9 @@ go() { adb shell am start -n $ACT --es prueba "$1" >/dev/null; sleep "${2:-5}"; 
 back() { adb shell input keyevent 4; sleep 3; }
 ( while true; do adb emu geo fix -74.0836 4.6533 >/dev/null 2>&1; sleep 2; done ) &
 GEO=$!
+# los cierres se anotan desde el principio: en Android 4.1 el registro es chico y se pierde si se lee solo al final
+adb logcat -v brief AndroidRuntime:E '*:S' > $OUT/cierres-raw.txt 2>&1 &
+CR=$!
 adb shell am start -n $ACT --es prueba saltar >/dev/null; sleep 30
 go idioma:es 6; go inicio 20
 shot c01-clima-con-internet
@@ -51,12 +54,11 @@ sleep 10
 # en una pantalla real StradaOS es el inicio (Android 10+ solo deja traer al frente desde atrás a la app de inicio)
 [ "$API" -ge 24 ] && adb shell cmd package set-home-activity $PKG/com.stradaos.launcher.Main
 go inicio 3
-adb logcat -c
 adb shell am start -n $ACT --es prueba "bt-probar:com.android.settings/.Settings" >/dev/null
 sleep 2; shot b01-app-bt-abierta
 sleep 6; shot b02-volvio-al-inicio
 sleep 6; shot b03-despues
-adb logcat -d -s StradaBt:I > $OUT/bt-log.txt
+adb logcat -d -s StradaBt:I | tail -20 > $OUT/bt-log.txt
 adb shell dumpsys activity activities 2>/dev/null | grep -E "mResumedActivity|ResumedActivity" | head -3 > $OUT/al-frente.txt
 # ── #50: con Android Auto simulado, ▶ ya no abre la app de música ──
 go inicio 4; go aa-simular:1 4; go diag-reproductor 6; shot m01-diag-aa; back
@@ -66,7 +68,7 @@ for c in 0 1 2 3 4 5 6 7 8 9 10 11; do n=$(printf %02d $c); go ajustes:$c 4; sho
 go inicio 3; go tema-premium:faro 6; go inicio 4; shot r20-faro
 go tema-premium:aurora 6; go inicio 4; shot r21-aurora
 go tema-gratis:1 6; go inicio 4; shot r22-clasico
-kill $GEO 2>/dev/null
-adb logcat -d | grep -E "FATAL EXCEPTION|AndroidRuntime: (java|Caused|\tat com.stradaos)" | tail -60 > $OUT/logcat.txt
+sleep 3; kill $GEO $CR 2>/dev/null
+grep -E "FATAL|Exception|Error|at com\.stradaos" $OUT/cierres-raw.txt | head -80 > $OUT/logcat.txt
 if grep -q "com.stradaos" $OUT/logcat.txt; then echo "CIERRE" > $OUT/CIERRES.txt; fi
 ls $OUT

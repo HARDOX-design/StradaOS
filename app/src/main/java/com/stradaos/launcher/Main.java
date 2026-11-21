@@ -6814,7 +6814,7 @@ public class Main extends Activity {
         try {
             if (aaRunning()) return true;
             if (aaUsbState() == 1) return true;
-            return !MediaListener.projectionMedia.isEmpty();
+            return !Projection.media.isEmpty();
         } catch (Throwable e) {
             return false;
         }
@@ -7164,8 +7164,8 @@ public class Main extends Activity {
                 + "\nOpen Headunit corriendo: " + (processRunning(PKG_HUR) ? "sí" : "no")
                 + " · celular por USB en modo Android Auto: " + (aaUsbState() == 1 ? "sí" : aaUsbState() == 0 ? "no" : "no se sabe")
                 + "\nAndroid Auto conectado (para StradaOS): " + (aaRunning() ? "sí" : "no")
-                + "\nApps de Android Auto / CarPlay con notificación: " + (MediaListener.projection.isEmpty() ? "ninguna" : MediaListener.projection.toString())
-                + " · multimedia: " + (MediaListener.projectionMedia.isEmpty() ? "ninguna" : MediaListener.projectionMedia.toString())
+                + "\nApps de Android Auto / CarPlay con notificación: " + Projection.describe(Projection.any)
+                + " · multimedia: " + Projection.describe(Projection.media)
                 + "\n▶ sin nada sonando abre tu app de música: " + (projectionActive() ? "no (Android Auto / CarPlay conectado)" : "sí")
                 + "\n\nMúsica de cualquier app (Android 5+): " + (SDK < 21 ? "no aplica en este Android"
                     : "acceso a notificaciones " + (Modern.notificationAccess(this) ? "SÍ" : "NO") + " · lector conectado " + (MediaListener.connected ? "sí" : "no")
