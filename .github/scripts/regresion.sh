@@ -66,8 +66,6 @@ step inicio inicio 3
 # ── diálogos y pantallas sueltas ──
 for d in diag-reproductor diag-mapa clima cajon ocultas musica demo-aceite reposo; do step "$d" "$d" 5 1; done
 step inicio inicio 3
-step asistente asistente 5 1
-step inicio inicio 3
 # ── música: fuentes simuladas y diagnóstico con cada una ──
 MUS="aa-simular:1 aa-notif:Cancion_de_prueba,30,200 aa-rcc:Cancion_de_prueba,200 hcn-sim:/sdcard/Music/prueba.mp3,start,10,200"
 # el aviso del Bluetooth del sistema solo se puede simular hasta Android 7 (después Android lo protege)
@@ -99,6 +97,8 @@ step nav-salir nav-salir 4
 # ── idiomas: inicio y ajustes en cada uno ──
 for l in en pt it de ms ar tr fr zh hu pl es; do step "idioma-$l" "idioma:$l" 6; step "ajustes-$l" "ajustes:9" 4; done
 step final inicio 4
+# el asistente va al final: su primer paso (idioma) no se cierra con «atrás» y taparía los pasos siguientes
+step asistente asistente 5
 sleep 3; kill $GEO $CR 2>/dev/null
 grep -E -A30 "FATAL EXCEPTION" $OUT/cierres-raw.txt | head -200 > $OUT/logcat.txt
 if grep -q "com.stradaos" $OUT/logcat.txt; then echo "CIERRE en el registro de Android (ver logcat.txt)" >> $OUT/CIERRES.txt; fi
