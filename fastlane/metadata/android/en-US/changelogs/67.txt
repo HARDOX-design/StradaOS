@@ -1,0 +1,1 @@
+Weather without internet using the last saved forecast. With Android Auto or CarPlay playing, ▶ no longer starts other music on top. When the phone connects over Bluetooth, it returns to home on Android 5+.

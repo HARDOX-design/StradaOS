@@ -425,7 +425,11 @@ public class Main extends Activity {
         h.postDelayed(new Runnable() { public void run() {
             // si el usuario ya cambió de app, no lo movemos
             String now = topPackage();
-            if (now != null && !now.equals(BtBridge.PKG) && !now.equals(btMusicApp() != null ? btMusicApp().getPackageName() : "")) {
+            // 2.30 (#47): en Android 5+ el sistema solo deja ver las tareas propias y topPackage() responde StradaOS aunque
+            // la app de música esté al frente; antes eso se leía como «el usuario abrió otra app» y nunca se volvía.
+            boolean self = getPackageName().equals(now);
+            if (self && hasWindowFocus()) { BtBridge.log("no se volvió: ya estás en el inicio"); return; }
+            if (now != null && !(self && SDK >= 21) && !now.equals(BtBridge.PKG) && !now.equals(btMusicApp() != null ? btMusicApp().getPackageName() : "")) {
                 BtBridge.log("no se volvió: el usuario abrió " + now); return;
             }
             try {
@@ -894,6 +898,7 @@ public class Main extends Activity {
                 else if ("fijar-inicio".equals(v)) makeDefaultHome();
                 else if (v.startsWith("sim:")) { prefs.edit().putInt("sim_screen", Integer.parseInt(v.substring(4))).apply(); rebuild(); }
                 else if ("diag-mapa".equals(v)) showMapDiag();
+                else if (v.startsWith("bt-probar:")) { prefs.edit().putString("btaudio", v.substring(10)).apply(); openBtAudioApp(true); }
                 else if ("clima".equals(v)) showWeatherDetail();
                 else if (v.startsWith("vel:")) { float kv = Float.parseFloat(v.substring(4)); setGps(true, kv); }
                 else if (v.startsWith("pack:")) { prefs.edit().putString("icon_pack", v.substring(5)).putString("dock_style", "apps").apply(); rebuild(); }
@@ -6774,6 +6779,9 @@ public class Main extends Activity {
         if (mediaWatcher != null && mediaWatcher.hasSession()) return false;
         final AudioManager am = (AudioManager) getSystemService(AUDIO_SERVICE);
         if (am.isMusicActive()) return false;
+        // 2.30 (#50): con Android Auto o CarPlay conectado la música viene del celular; arrancar la app de la pantalla
+        // hacía sonar dos canciones a la vez. ▶ queda como tecla multimedia normal.
+        if (projectionActive()) { BtBridge.log("▶ no abre la app de música: Android Auto / CarPlay conectado"); return false; }
         String saved = prefs.getString("music_app", null);
         ComponentName cn = saved != null ? ComponentName.unflattenFromString(saved) : null;
         final String pkg = cn != null ? cn.getPackageName() : firstInstalled(MUSIC_PKGS);
@@ -6790,6 +6798,20 @@ public class Main extends Activity {
             if (!launchSaved("music_app")) launchPkg(pkg);
         }}, 2500);
         return true;
+    }
+
+    /**
+     * Android Auto o CarPlay sonando: Open Headunit vivo, celular por USB en modo Android Auto, o una app de proyección
+     * (ZLink, AutoKit…) con notificación multimedia. Una app de proyección solo abierta, esperando el celular, no cuenta.
+     */
+    private boolean projectionActive() {
+        try {
+            if (aaRunning()) return true;
+            if (aaUsbState() == 1) return true;
+            return !MediaListener.projectionMedia.isEmpty();
+        } catch (Throwable e) {
+            return false;
+        }
     }
 
     /** Si suena Bluetooth, controla directamente la app Bluetooth de fábrica (com.clw.btmusic). */
@@ -7136,6 +7158,9 @@ public class Main extends Activity {
                 + "\nOpen Headunit corriendo: " + (processRunning(PKG_HUR) ? "sí" : "no")
                 + " · celular por USB en modo Android Auto: " + (aaUsbState() == 1 ? "sí" : aaUsbState() == 0 ? "no" : "no se sabe")
                 + "\nAndroid Auto conectado (para StradaOS): " + (aaRunning() ? "sí" : "no")
+                + "\nApps de Android Auto / CarPlay con notificación: " + (MediaListener.projection.isEmpty() ? "ninguna" : MediaListener.projection.toString())
+                + " · multimedia: " + (MediaListener.projectionMedia.isEmpty() ? "ninguna" : MediaListener.projectionMedia.toString())
+                + "\n▶ sin nada sonando abre tu app de música: " + (projectionActive() ? "no (Android Auto / CarPlay conectado)" : "sí")
                 + "\n\nMúsica de cualquier app (Android 5+): " + (SDK < 21 ? "no aplica en este Android"
                     : "acceso a notificaciones " + (Modern.notificationAccess(this) ? "SÍ" : "NO") + " · lector conectado " + (MediaListener.connected ? "sí" : "no")
                     + "\nSonido de música en el sistema: " + (((AudioManager) getSystemService(AUDIO_SERVICE)).isMusicActive() ? "sí" : "no")
@@ -8210,7 +8235,9 @@ public class Main extends Activity {
         Weather.fetch(this, wLat, wLon, new Weather.Listener() {
             public void onWeather(final Weather.Now n, String err) {
                 h.post(new Runnable() { public void run() {
-                    if (n != null) weatherNow = n; else weatherAt = SystemClock.elapsedRealtime() - 25 * 60 * 1000L; // reintenta en 5 min
+                    if (n != null) weatherNow = n;
+                    // sin datos, o con el pronóstico guardado (#46): reintenta en 5 min para traer el de internet
+                    if (n == null || n.cachedAt > 0) weatherAt = SystemClock.elapsedRealtime() - 25 * 60 * 1000L;
                     showWeather();
                 }});
             }

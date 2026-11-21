@@ -1,0 +1,1 @@
+Clima sin internet con el último pronóstico guardado. Con Android Auto o CarPlay sonando, ▶ ya no arranca otra música encima. Al conectar el celular por Bluetooth, vuelve solo al inicio en Android 5+.

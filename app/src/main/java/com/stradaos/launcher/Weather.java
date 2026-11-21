@@ -28,6 +28,8 @@ public class Weather {
         public String windUnit = "km/h";
         public final List<Hour> hours = new ArrayList<Hour>();   // próximas 12 horas desde la actual
         public final List<Day> days = new ArrayList<Day>();      // hoy y los 4 días siguientes
+        /** 2.30 (#46): si viene del pronóstico guardado (sin internet), cuándo se descargó (ms); 0 = recién descargado. */
+        public long cachedAt;
         public Day today() { return days.isEmpty() ? null : days.get(0); }
     }
 
@@ -54,7 +56,8 @@ public class Weather {
                             + "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&forecast_days=5&timezone=auto%s",
                             coord(lat, plain), coord(lon, plain), f ? "&temperature_unit=fahrenheit&wind_speed_unit=mph" : "");
                     try {
-                        JSONObject root = new JSONObject(new String(Net.get(scheme + q, 10000), "UTF-8"));
+                        String body = new String(Net.get(scheme + q, 10000), "UTF-8");
+                        JSONObject root = new JSONObject(body);
                         JSONObject cur = root.getJSONObject("current");
                         n = new Now();
                         n.temp = cur.getDouble("temperature_2m");
@@ -63,16 +66,78 @@ public class Weather {
                         n.unit = f ? "F" : "C";
                         n.windUnit = f ? "mph" : "km/h";
                         try { parseDetail(root, cur, n); } catch (Throwable ignored) { }
+                        save(c, root, lat, lon, f);
                         break;
                     } catch (Throwable e) {
                         lastError = e.toString();
                     }
                 }
+                if (n == null) n = fromCache(c, lat, lon, f);   // sin internet: el último pronóstico guardado
                 if (n == null) { l.onWeather(null, lastError); return; }
                 n.city = city(c, lat, lon);
                 l.onWeather(n, null);
             }
         }).start();
+    }
+
+    // ── 2.30 (#46): pronóstico guardado para cuando no hay internet ──
+    static final String CACHE = "weather_cache.json";
+    static final long CACHE_MAX_MS = 5L * 24 * 3600 * 1000;   // el pronóstico cubre 5 días
+
+    /** Guarda la respuesta completa de Open-Meteo (5 días, hora por hora). Si falla, no pasa nada. */
+    static void save(Context c, JSONObject root, double lat, double lon, boolean f) {
+        try {
+            JSONObject w = new JSONObject();
+            w.put("at", System.currentTimeMillis());
+            w.put("lat", lat);
+            w.put("lon", lon);
+            w.put("f", f);
+            w.put("data", root);
+            java.io.FileOutputStream o = c.openFileOutput(CACHE, 0);
+            try { o.write(w.toString().getBytes("UTF-8")); } finally { o.close(); }
+        } catch (Throwable ignored) { }
+    }
+
+    /**
+     * Sin internet: arma el clima de esta hora con el pronóstico guardado, si es de los últimos 5 días, de la misma unidad
+     * y de menos de ~100 km de aquí. La hora se toma del reloj con el huso del pronóstico. null si no sirve.
+     */
+    static Now fromCache(Context c, double lat, double lon, boolean f) {
+        try {
+            java.io.FileInputStream in = c.openFileInput(CACHE);
+            java.io.ByteArrayOutputStream bo = new java.io.ByteArrayOutputStream();
+            try { byte[] b = new byte[8192]; int r; while ((r = in.read(b)) > 0) bo.write(b, 0, r); } finally { in.close(); }
+            JSONObject w = new JSONObject(new String(bo.toByteArray(), "UTF-8"));
+            long at = w.getLong("at"), now = System.currentTimeMillis();
+            if (now < at || now - at > CACHE_MAX_MS) return null;
+            if (w.optBoolean("f", false) != f) return null;
+            if (Math.abs(w.getDouble("lat") - lat) > 1 || Math.abs(w.getDouble("lon") - lon) > 1) return null;
+            JSONObject root = w.getJSONObject("data");
+            long off = root.optLong("utc_offset_seconds", 0) * 1000L;
+            java.text.SimpleDateFormat fmt = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH", Locale.US);
+            fmt.setTimeZone(java.util.TimeZone.getTimeZone("UTC"));
+            String key = fmt.format(new java.util.Date(now + off));   // «2026-11-21T14», hora local del pronóstico
+            JSONObject hr = root.getJSONObject("hourly");
+            JSONArray t = hr.getJSONArray("time"), te = hr.getJSONArray("temperature_2m");
+            JSONArray wc = hr.optJSONArray("weather_code"), dy = hr.optJSONArray("is_day");
+            int i = -1;
+            for (int k = 0; k < t.length(); k++) if (t.getString(k).startsWith(key)) { i = k; break; }
+            if (i < 0 || te.isNull(i)) return null;
+            JSONObject cur = new JSONObject();
+            cur.put("time", key + ":00");
+            cur.put("temperature_2m", te.getDouble(i));
+            Now n = new Now();
+            n.temp = te.getDouble(i);
+            n.code = wc != null ? wc.optInt(i, 0) : 0;
+            n.day = dy == null || dy.optInt(i, 1) == 1;
+            n.unit = f ? "F" : "C";
+            n.windUnit = f ? "mph" : "km/h";
+            n.cachedAt = at;
+            parseDetail(root, cur, n);   // sensación, humedad y viento quedan vacíos: no vienen por hora
+            return n;
+        } catch (Throwable e) {
+            return null;
+        }
     }
 
     /** Sensación, humedad, viento, próximas horas y días. Cualquier dato que falte se deja vacío. */
@@ -106,6 +171,7 @@ public class Weather {
             JSONArray wc = d.optJSONArray("weather_code"), pr = d.optJSONArray("precipitation_probability_max");
             for (int i = 0; i < t.length() && n.days.size() < 5; i++) {
                 if (hi.isNull(i) || lo.isNull(i)) continue;
+                if (now.length() >= 10 && t.getString(i).compareTo(now.substring(0, 10)) < 0) continue;   // días ya pasados (pronóstico guardado)
                 Day x = new Day();
                 x.date = t.getString(i);
                 x.hi = hi.getDouble(i);
