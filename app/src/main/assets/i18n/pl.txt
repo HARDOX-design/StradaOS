@@ -710,7 +710,7 @@ Velocímetro sobre el mapa	Mieszane
 Redondo, en una esquina del mapa (en vez de la velocidad de arriba)	Okrągły, w rogu mapy (zamiast prędkości na górze)
 Mantenimiento	Konserwacja
 Otros mantenimientos	Pozostała konserwacja
-Agregar mantenimiento	Dodaj pezegląd
+Agregar mantenimiento	Dodaj przegląd
 Filtros, bujías, frenos, correa, SOAT… Avisa por kilómetros, por tiempo o lo que llegue primero	Filtry, świece zapłonowe, hamulce, pasek, ubezpieczenie… Przypomina Ci o odległości, czasie lub cokolwiek nastąpi wcześniej
 Filtro de aire	Filtr powietrza
 Bujías	Świece zapłonowe
