@@ -13,7 +13,7 @@ if [ "$API" -ge 18 ]; then adb shell wm size 1024x600; adb shell wm density 160
 else adb shell am display-size 1024x600; adb shell am display-density 160; fi
 sleep 6
 if [ "$API" -ge 23 ]; then adb install -r -g "$APK" | tail -1; else adb install -r "$APK" | tail -1; fi
-adb logcat -v brief '*:E' > $OUT/cierres-raw.txt 2>&1 &
+adb logcat -v brief '*:E' 'dalvikvm:I' 'DEBUG:I' 'AndroidRuntime:I' > $OUT/cierres-raw.txt 2>&1 &
 CR=$!
 ( while true; do adb emu geo fix -74.0836 4.6533 >/dev/null 2>&1; sleep 2; done ) &
 GEO=$!
@@ -100,7 +100,8 @@ step final inicio 4
 # el asistente va al final: su primer paso (idioma) no se cierra con «atrás» y taparía los pasos siguientes
 step asistente asistente 5
 sleep 3; kill $GEO $CR 2>/dev/null
-grep -E -A30 "FATAL EXCEPTION" $OUT/cierres-raw.txt | head -200 > $OUT/logcat.txt
+grep -E -A30 "FATAL EXCEPTION|VM aborting|Fatal signal|overflow of stack" $OUT/cierres-raw.txt | head -300 > $OUT/logcat.txt
+grep -qE "VM aborting|overflow of stack" $OUT/cierres-raw.txt && echo "CIERRE de la máquina virtual (ver logcat.txt)" >> $OUT/CIERRES.txt
 if grep -q "com.stradaos" $OUT/logcat.txt; then echo "CIERRE en el registro de Android (ver logcat.txt)" >> $OUT/CIERRES.txt; fi
 # el registro de fallos de la propia app (Guard) también cuenta
 adb shell run-as $PKG cat files/fallos.txt > $OUT/fallos.txt 2>/dev/null
