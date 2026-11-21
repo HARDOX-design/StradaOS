@@ -3719,7 +3719,14 @@ public class Main extends Activity {
                 if (d != null) return d;
             }
         } catch (Throwable ignored) { }
-        return r.loadIcon(getPackageManager());
+        try {
+            return r.loadIcon(getPackageManager());
+        } catch (OutOfMemoryError e) {
+            // 2.31: pantallas con poca memoria y muchas apps (la regresión lo vio en Android 4.1): un ícono genérico
+            // en vez de cerrar StradaOS
+            System.gc();
+            try { return getResources().getDrawable(android.R.drawable.sym_def_app_icon); } catch (Throwable t) { return null; }
+        }
     }
 
     /**
