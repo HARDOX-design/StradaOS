@@ -49,6 +49,8 @@ public class Obd {
         int histN;
         /** Cuántas lecturas van: la pantalla redibuja la tarjeta solo cuando cambia. */
         volatile long pushes;
+        /** Hora (SystemClock.elapsedRealtime) de la última lectura: para no mostrar un dato viejo si el escáner se calla. */
+        volatile long at;
         /** Historial largo con la hora de cada lectura (~30 min con una lectura cada 0,7 s), para los gráficos grandes. */
         static final int LONG = 2700;
         private final float[] lv = new float[LONG];
@@ -80,6 +82,7 @@ public class Obd {
 
         void push(float v) {
             value = v;
+            at = android.os.SystemClock.elapsedRealtime();
             System.arraycopy(hist, 1, hist, 0, hist.length - 1);
             hist[hist.length - 1] = v;
             if (histN < hist.length) histN++;

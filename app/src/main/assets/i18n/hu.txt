@@ -1686,3 +1686,5 @@ Aplicar ahora	Alkalmazás most
 1. Dona en Ko-fi 5 USD por un tema o 8 USD por dos: escanea el código con tu celular o entra a {}.	1. Adományozz a Ko-fin 5 USD-t egy témáért vagy 8 USD-t kettőért: olvasd be a kódot a telefonoddal, vagy nyisd meg: {}.
 2. En el mensaje de la donación escribe el ID de esta pantalla y qué temas quieres:	2. Az adomány üzenetébe írd be ennek a kijelzőnek az azonosítóját és azt, hogy mely témákat szeretnéd:
 Se desbloquea con una donación de 5 USD, o 8 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	5 USD-s adománnyal oldható fel, két téma 8 USD. A StradaOS minden funkciója ingyenes marad.
+Usar la velocidad del escáner	A szkenner sebességének használata
+Con el escáner conectado, el inicio muestra la velocidad del carro en vez de la del GPS: más exacta y sin retraso	Csatlakoztatott szkennerrel a kezdőképernyő az autó sebességét mutatja a GPS-sebesség helyett: pontosabb, késés nélkül

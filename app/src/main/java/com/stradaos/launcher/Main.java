@@ -699,6 +699,7 @@ public class Main extends Activity {
                 else if ("cajon".equals(v)) openDrawer();
                 else if ("obd-demo".equals(v)) obdDialogs().choose("demo", I18n.t("Auto simulado"));
                 else if ("obd-off".equals(v)) obdDialogs().turnOff();
+                else if (v.startsWith("obd-vel-demo:")) { obdSpeedDemo = v.endsWith("1"); showSpeed(); }
                 else if ("obd-panel".equals(v)) openVehiclePanel();
                 else if (v.startsWith("obd-ajustes:")) { settingsSub = v.substring(12); showSettings(C_VEHICLE); }
                 else if ("ocultas".equals(v)) manageHidden(null);
@@ -6696,14 +6697,40 @@ public class Main extends Activity {
     private void setGps(boolean ok, float kmh) {
         lastKmh = kmh;
         lastOk = ok;
+        if (!ok && speedTv != null) lastFix = 0;
+        showSpeed();
+    }
+
+    /**
+     * 2.29: con el escáner OBD-II conectado, el velocímetro del inicio usa la velocidad del carro (más exacta y sin el
+     * retraso del GPS, también en túneles). Sin datos frescos del escáner (menos de 3 s) vuelve solo al GPS.
+     * El auto simulado no cuenta, para no mostrar una velocidad falsa (salvo en StradaOS Prueba con «obd-vel-demo:1»).
+     * Devuelve km/h o NaN.
+     */
+    private float obdKmh() {
+        if (!obdOn() || !prefs.getBoolean("obd_speed", true) || Obd.status != Obd.LIVE || !Obd.SPEED.has()) return Float.NaN;
+        if (SystemClock.elapsedRealtime() - Obd.SPEED.at > 3000) return Float.NaN;
+        if ("demo".equals(prefs.getString("obd_addr", "demo")) && !obdSpeedDemo) return Float.NaN;
+        return Obd.SPEED.value;
+    }
+    private boolean obdSpeedDemo;
+    private boolean speedFromObd;
+
+    private void showSpeed() {
+        float ob = obdKmh();
+        boolean fromObd = !Float.isNaN(ob);
+        speedFromObd = fromObd;
+        boolean ok = fromObd || lastOk;
+        float kmh = fromObd ? ob : lastKmh;
+        float conv = useMph() ? kmh * 0.621371f : kmh;
+        if (!fromObd) conv = speedFix(conv);      // la corrección del velocímetro es para el GPS
         if (idleView != null) {
-            float iv = speedFix(useMph() ? kmh * 0.621371f : kmh);
+            float iv = conv;
             if (idleSpeedTv != null) idleSpeedTv.setText(ok ? String.valueOf(Math.round(kmh < 2 ? 0 : iv)) : "--");
             if (idleGauge != null) idleGauge.setSpeed(kmh < 2 ? 0 : iv, ok);
         }
         if (speedTv == null) return;
-        if (!ok) lastFix = 0;
-        float v = speedFix(useMph() ? kmh * 0.621371f : kmh);
+        float v = conv;
         speedTv.setText(ok ? String.valueOf(Math.round(kmh < 2 ? 0 : v)) : "--");
         if (carGauge != null) carGauge.setSpeed(kmh < 2 ? 0 : v, ok);
         if (mapGauge != null) mapGauge.setSpeed(kmh < 2 ? 0 : v, ok);
@@ -6715,7 +6742,7 @@ public class Main extends Activity {
         }
         if (topSpeedTv != null) topSpeedTv.setText((ok ? String.valueOf(Math.round(kmh < 2 ? 0 : v)) : "--") + " " + (useMph() ? "mph" : "km/h"));
         int gs = ok ? 0 : gpsState();
-        gpsTv.setText(ok ? "GPS" : I18n.t(gs == 1 ? "Sin permiso" : gs == 2 ? "GPS apagado" : "Buscando GPS"));
+        gpsTv.setText(fromObd ? "OBD" : ok ? "GPS" : I18n.t(gs == 1 ? "Sin permiso" : gs == 2 ? "GPS apagado" : "Buscando GPS"));
         gpsDot.setBackground(round(ok ? 0xFF3DDC84 : MUTED, 4));
         updateMapTag();
     }
@@ -11311,6 +11338,7 @@ public class Main extends Activity {
     /** Alertas graves: abren el panel aunque se esté en otra cosa (una vez por alerta); también avisa a las ventanas. */
     private final Obd.Listener obdWatch = new Obd.Listener() { public void onObd() {
         if (obdDlg != null) obdDlg.onObd();
+        if (speedFromObd || !Float.isNaN(obdKmh())) showSpeed();   // velocímetro del inicio con la velocidad del escáner
         java.util.HashSet<String> now = new java.util.HashSet<String>();
         boolean fresh = false;
         synchronized (Obd.alerts) {
@@ -11530,6 +11558,10 @@ public class Main extends Activity {
                 String.format(java.util.Locale.US, "%.1f L", prefs.getFloat("obd_displacement", 2.4f)), new Runnable() { public void run() { d.askDisplacement(); } });
             row(m, "Protocolo", "Automático casi siempre; fuerza uno si el escáner no lo detecta", ObdDialogs.protocolName(prefs.getString("obd_protocol", "auto")),
                 new Runnable() { public void run() { d.pickProtocol(); } });
+            LinearLayout ve = section(body, "Velocímetro");
+            toggle(ve, "Usar la velocidad del escáner", "Con el escáner conectado, el inicio muestra la velocidad del carro en vez de la del GPS: más exacta y sin retraso",
+                prefs.getBoolean("obd_speed", true), new IntCb() { public void on(int i) {
+                    prefs.edit().putBoolean("obd_speed", i == 1).apply(); showSpeed(); showSettings(C_VEHICLE); }});
             LinearLayout pn = section(body, "Panel del vehículo");
             final String[] sides = {"auto", "left", "right"};
             segmented(pn, "Lado del panel", "Automático: del lado del reproductor (el del conductor)", new String[]{"Automático", "Izquierda", "Derecha"},

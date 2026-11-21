@@ -1767,3 +1767,5 @@ Aplicar ahora	Zastosuj teraz
 1. Dona en Ko-fi 5 USD por un tema o 8 USD por dos: escanea el código con tu celular o entra a {}.	1. Przekaż na Ko-fi 5 USD za jeden motyw lub 8 USD za dwa: zeskanuj kod telefonem lub wejdź na {}.
 2. En el mensaje de la donación escribe el ID de esta pantalla y qué temas quieres:	2. W wiadomości do darowizny wpisz ID tego ekranu i motywy, które chcesz:
 Se desbloquea con una donación de 5 USD, o 8 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	Odblokowuje się darowizną 5 USD albo 8 USD za dwa motywy. Wszystkie funkcje StradaOS pozostają darmowe.
+Usar la velocidad del escáner	Używaj prędkości ze skanera
+Con el escáner conectado, el inicio muestra la velocidad del carro en vez de la del GPS: más exacta y sin retraso	Gdy skaner jest podłączony, ekran główny pokazuje prędkość samochodu zamiast prędkości z GPS: dokładniej i bez opóźnienia

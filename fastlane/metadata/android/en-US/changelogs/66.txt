@@ -1,0 +1,1 @@
+Speedometer with the OBD-II scanner speed: with the scanner connected, the home screen shows the car's real speed (more accurate, no lag). If the scanner disconnects, it goes back to GPS automatically.

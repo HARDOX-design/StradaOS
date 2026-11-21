@@ -1,0 +1,1 @@
+Velocímetro con la velocidad del escáner OBD-II: con el escáner conectado, el inicio muestra la velocidad real del carro (más exacta y sin retraso). Si el escáner se desconecta, vuelve solo al GPS.

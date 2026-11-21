@@ -1738,3 +1738,5 @@ Aplicar ahora	Aplicar agora
 1. Dona en Ko-fi 5 USD por un tema o 8 USD por dos: escanea el código con tu celular o entra a {}.	1. Doe no Ko-fi 5 USD por um tema ou 8 USD por dois: escaneie o código com o celular ou entre em {}.
 2. En el mensaje de la donación escribe el ID de esta pantalla y qué temas quieres:	2. Na mensagem da doação, escreva o ID desta tela e quais temas você quer:
 Se desbloquea con una donación de 5 USD, o 8 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	Desbloqueia com uma doação de 5 USD, ou 8 USD por dois temas. Todas as funções do StradaOS continuam grátis.
+Usar la velocidad del escáner	Usar a velocidade do scanner
+Con el escáner conectado, el inicio muestra la velocidad del carro en vez de la del GPS: más exacta y sin retraso	Com o scanner conectado, o início mostra a velocidade do carro em vez da do GPS: mais exata e sem atraso

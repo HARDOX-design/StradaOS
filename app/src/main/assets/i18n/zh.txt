@@ -1700,3 +1700,5 @@ Aplicar ahora	立即应用
 1. Dona en Ko-fi 5 USD por un tema o 8 USD por dos: escanea el código con tu celular o entra a {}.	1. 在 Ko-fi 捐赠：一个主题 5 美元，两个 8 美元。用手机扫描二维码，或访问 {}。
 2. En el mensaje de la donación escribe el ID de esta pantalla y qué temas quieres:	2. 在捐赠留言中写下这块屏幕的 ID 和你想要的主题：
 Se desbloquea con una donación de 5 USD, o 8 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	捐赠 5 美元解锁，两个主题 8 美元。StradaOS 的所有功能仍然免费。
+Usar la velocidad del escáner	使用扫描仪的车速
+Con el escáner conectado, el inicio muestra la velocidad del carro en vez de la del GPS: más exacta y sin retraso	连接扫描仪后，主屏幕显示汽车的车速而不是 GPS 车速：更准确，无延迟

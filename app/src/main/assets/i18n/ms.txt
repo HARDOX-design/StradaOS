@@ -1700,3 +1700,5 @@ Aplicar ahora	Guna sekarang
 1. Dona en Ko-fi 5 USD por un tema o 8 USD por dos: escanea el código con tu celular o entra a {}.	1. Derma di Ko-fi 5 USD untuk satu tema atau 8 USD untuk dua: imbas kod dengan telefon anda atau pergi ke {}.
 2. En el mensaje de la donación escribe el ID de esta pantalla y qué temas quieres:	2. Dalam mesej derma, tulis ID skrin ini dan tema yang anda mahu:
 Se desbloquea con una donación de 5 USD, o 8 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	Dibuka dengan derma 5 USD, atau 8 USD untuk dua tema. Semua fungsi StradaOS kekal percuma.
+Usar la velocidad del escáner	Guna kelajuan pengimbas
+Con el escáner conectado, el inicio muestra la velocidad del carro en vez de la del GPS: más exacta y sin retraso	Dengan pengimbas disambung, skrin utama menunjukkan kelajuan kereta dan bukan kelajuan GPS: lebih tepat, tanpa lengah
