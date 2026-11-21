@@ -1,6 +1,6 @@
 {
-  "version": "2.28.1",
-  "notes": "# StradaOS 2.28.1\n\n- Pequeños ajustes en el desbloqueo de temas y mejoras menores.\n",
-  "url": "https://github.com/lordnordic-debug/StradaOS/releases/tag/v2.28.1",
-  "apk": "https://github.com/lordnordic-debug/StradaOS/releases/download/v2.28.1/StradaOS-2.28.1.apk"
+  "version": "2.29.0",
+  "notes": "# StradaOS 2.29.0\n\n- **Velocímetro con la velocidad del escáner OBD-II.** Con el escáner conectado, el inicio muestra la velocidad real del carro en vez de la del GPS: más exacta, sin retraso y también en túneles. Junto a la velocidad se ve «OBD». Si el escáner deja de responder, vuelve solo al GPS. Se puede apagar en Ajustes → Tu vehículo → Escáner OBD-II → Avanzado → Velocímetro.\n",
+  "url": "https://github.com/lordnordic-debug/StradaOS/releases/tag/v2.29.0",
+  "apk": "https://github.com/lordnordic-debug/StradaOS/releases/download/v2.29.0/StradaOS-2.29.0.apk"
 }
