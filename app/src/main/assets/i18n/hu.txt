@@ -1704,3 +1704,90 @@ El cable USB no tiene canal de datos	Az USB-kábelnek nincs adatcsatornája
 Otra app está usando el cable USB	Egy másik alkalmazás használja az USB-kábelt
 El cable USB no aceptó la velocidad	Az USB-kábel nem fogadta el a sebességet
 Se desconectó el cable USB	Az USB-kábel lecsatlakozott
+Panel de datos	Adatpanel
+Datos del panel	A panel adatai
+Máximo 6 datos	Legfeljebb 6 adat
+Hasta 6 datos del escáner, por ejemplo RPM, velocidad, refrigerante y consumo	Legfeljebb 6 szkenneradat, például fordulatszám, sebesség, hűtőfolyadék és fogyasztás
+Conecta tu escáner OBD-II	Csatlakoztasd az OBD-II szkennert
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Si es Bluetooth, emparéjalo primero en los ajustes de Bluetooth del equipo (clave 1234 o 0000).\n3. Toca ⚙ para elegirlo y luego Conectar.\n\nStradaOS vigila la temperatura, el voltaje, la mezcla y los códigos de falla, y te avisa por voz aunque estés en otra app.	1. Dugd be az ELM327 szkennert az OBD-csatlakozóba (a kormány alatt), és kapcsold rá a gyújtást.\n2. Ha Bluetoothos, előbb párosítsd a készülék Bluetooth-beállításaiban (PIN: 1234 vagy 0000).\n3. Koppints a ⚙ ikonra a kiválasztásához, majd a Csatlakozásra.\n\nA StradaOS figyeli a hőmérsékletet, a feszültséget, a keveréket és a hibakódokat, és hanggal figyelmeztet akkor is, ha másik alkalmazásban vagy.
+Elegir escáner	Szkenner választása
+Probar con un auto simulado	Kipróbálás szimulált autóval
+Todo normal por ahora.	Egyelőre minden rendben.
+Sin monitor activo.	Nincs aktív figyelő.
+El auto no tiene códigos guardados.	Az autóban nincs tárolt hibakód.
+Se revisan al conectar y cada 30 segundos.	Csatlakozáskor és 30 másodpercenként ellenőrzi.
+Toca para ver qué hacer	Koppints, hogy lásd, mi a teendő
+Para que una IA explique los códigos, pon tu API key (Claude, Groq, Gemini u otra) en ⚙ → Inteligencia artificial. Las explicaciones se guardan en el equipo y después funcionan sin internet.	Ha azt szeretnéd, hogy egy MI elmagyarázza a kódokat, add meg az API-kulcsodat (Claude, Groq, Gemini vagy más) itt: ⚙ → Mesterséges intelligencia. A magyarázatok a készüléken tárolódnak, és utána internet nélkül is működnek.
+Se apaga la luz del motor y se borran los datos que usa el taller para diagnosticar. Si la falla sigue, el código volverá a aparecer. Anota los códigos antes.	Kialszik a motorhiba-jelző, és törlődnek az adatok, amelyeket a szerviz a diagnózishoz használ. Ha a hiba megmarad, a kód újra megjelenik. Előtte jegyezd fel a kódokat.
+Mi vehículo (para la IA)	Járművem (az MI-nek)
+Encender el monitor al iniciar StradaOS	Figyelő bekapcsolása a StradaOS indulásakor
+Ej.: Kia Sorento 2010 2.4 bencina 4x4 automático	Pl.: Kia Sorento 2010 2.4 benzines 4x4 automata
+La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. Cada consulta la cobra tu proveedor con tu API key.	Az MI csak a kódot, a megadott járművet és a motoradatokat kapja meg, a helyzetedet soha. Minden lekérdezést a szolgáltatód számláz az API-kulcsodra.
+alerta sobre	riasztás felett
+alerta bajo	riasztás alatt
+alerta sobre ±	riasztás ± felett
+Con el motor en marcha debe estar entre 13,5 y 14,8 V. Con el motor apagado, 12,4 a 12,8 V es normal.	Járó motornál 13,5 és 14,8 V között kell lennie. Álló motornál 12,4–12,8 V a normális.
+Normal en marcha: 85 a 98 °C. También avisa si sube más de 4 °C por minuto sobre 95 °C.	Normális menet közben: 85–98 °C. Akkor is figyelmeztet, ha 95 °C felett percenként több mint 4 °C-ot emelkedik.
+Cuánto corrige el computador la mezcla. Positivo = le falta combustible (fuga de aire); negativo = le sobra.	Mennyit korrigál a motorvezérlő a keveréken. Pozitív = kevés az üzemanyag (fals levegő); negatív = túl sok.
+Solo informativo: este dato no genera alertas.	Csak tájékoztató: ez az adat nem ad riasztást.
+VEHÍCULO	JÁRMŰ
+Qué muestra cada tarjeta	Mit mutatnak a kártyák
+Música, el monitor del vehículo (temperatura, voltaje, RPM y alertas) o un gráfico en vivo	Zene, a járműfigyelő (hőmérséklet, feszültség, fordulatszám és riasztások) vagy élő grafikon
+Gráfico en vivo	Élő grafikon
+Gráfico del reproductor	A lejátszókártya grafikonja
+Dato del escáner que se grafica (últimos 5 minutos)	A grafikonon mutatott szkenneradat (utolsó 5 perc)
+Tarjeta del centro	Középső kártya
+El mapa, el monitor del vehículo o un gráfico en vivo. Sin el mapa, Android Auto y CarPlay se abren desde la barra de botones	A térkép, a járműfigyelő vagy élő grafikon. Térkép nélkül az Android Auto és a CarPlay a gombsorról nyílik
+Gráfico del centro	A középső kártya grafikonja
+Velocidad (GPS)	Sebesség (GPS)
+Recuadro de la velocidad	Sebességmező
+La velocidad del GPS o, en grande, otro dato del escáner (por ejemplo la temperatura del refrigerante)	A GPS-sebesség vagy nagyban egy másik szkenneradat (például a hűtőfolyadék hőmérséklete)
+Esta tarjeta	Ez a kártya
+Cambiar esta tarjeta…	Kártya cseréje…
+¿Qué dato graficar?	Melyik adat legyen a grafikonon?
+Cambiar qué muestra…	Mit mutasson…
+◀  Mover a la izquierda	◀  Mozgatás balra
+Mover a la derecha  ▶	Mozgatás jobbra  ▶
+Ancho de la tarjeta…	Kártya szélessége…
+Ancho de la tarjeta	Kártya szélessége
+Volver al orden y tamaño de siempre	Vissza a szokásos sorrendhez és mérethez
+Ya está a la izquierda	Már a bal szélen van
+Ya está a la derecha	Már a jobb szélen van
+Ancha	Széles
+Muy ancha	Nagyon széles
+✋  Ajustar con el dedo (mover y cambiar tamaño)	✋  Igazítás ujjal (mozgatás és átméretezés)
+Arrastra la manija entre dos tarjetas para cambiar el ancho · arrastra una tarjeta para moverla	Húzd a két kártya közötti fogantyút a szélesség módosításához · húzz egy kártyát az áthelyezéséhez
+se ajusta solo	magától igazodik
+VIAJE	ÚT
+ALTITUD	MAGASSÁG
+pendiente —	emelkedő —
+Mantén presionado para reiniciar el viaje o cambiar los widgets	Tartsd lenyomva az út nullázásához vagy a widgetek cseréjéhez
+Quitar este acceso	Parancsikon eltávolítása
+Acceso directo {}	{}. parancsikon
+Altitud, pendiente y rumbo	Magasság, emelkedő és irány
+Viaje (km, tiempo, consumo)	Út (km, idő, fogyasztás)
+Dato del vehículo…	Járműadat…
+Accesos directos (3 apps)	Parancsikonok (3 alkalmazás)
+Dato del vehículo	Járműadat
+Widget	Widget
+Reiniciar el viaje	Út nullázása
+Quitar la franja	Sáv eltávolítása
+Franja de widgets	Widgetsáv
+¿Qué dato mostrar?	Melyik adat jelenjen meg?
+Viaje reiniciado	Út nullázva
+Quitar la franja de widgets de abajo	Az alsó widgetsáv eltávolítása
+Franja de widgets debajo (altitud, viaje, apps…)	Widgetsáv alul (magasság, út, alkalmazások…)
+Arrastra las manijas para cambiar tamaños · arrastra una tarjeta para moverla · toca un widget para cambiarlo	Húzd a fogantyúkat a méretek módosításához · húzz egy kártyát az áthelyezéséhez · koppints egy widgetre a cseréjéhez
+Agregar franja de widgets	Widgetsáv hozzáadása
+Agregar un widget	Widget hozzáadása
+Ajustar tamaños con el dedo	Méretek igazítása ujjal
+Quitar este widget	Widget eltávolítása
+Accesos directos (apps)	Parancsikonok (alkalmazások)
+MÚSICA	ZENE
+Música (canción y controles)	Zene (dal és vezérlők)
+Arrastra las manijas para cambiar tamaños · arrastra una tarjeta para moverla · toca un widget para cambiarlo · ✕ oculta una tarjeta	Húzd a fogantyúkat a méretek módosításához · húzz egy kártyát az áthelyezéséhez · koppints egy widgetre a cseréjéhez · a ✕ elrejt egy kártyát
+Ocultar la tarjeta del vehículo	Járműkártya elrejtése
+Ocultar la tarjeta de música	Zenekártya elrejtése
+Mostrar la tarjeta del vehículo	Járműkártya megjelenítése
+Mostrar la tarjeta de música	Zenekártya megjelenítése
+La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. El VIN solo se envía si lo activas aquí. Cada consulta la cobra tu proveedor con tu API key.	Az MI csak a kódot, a megadott járművet és a motoradatokat kapja meg, a helyzetedet soha. Az alvázszám csak akkor kerül elküldésre, ha itt bekapcsolod. Minden lekérdezést a szolgáltatód számláz az API-kulcsodra.

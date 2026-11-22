@@ -1718,3 +1718,91 @@ El cable USB no tiene canal de datos	USB 线没有数据通道
 Otra app está usando el cable USB	另一个应用正在使用 USB 线
 El cable USB no aceptó la velocidad	USB 线不接受该速率
 Se desconectó el cable USB	USB 线已断开
+Panel de datos	数据面板
+Datos del panel	面板数据
+Máximo 6 datos	最多 6 项
+Hasta 6 datos del escáner, por ejemplo RPM, velocidad, refrigerante y consumo	最多 6 项诊断仪数据，例如转速、车速、冷却液和油耗
+Conecta tu escáner OBD-II	连接你的 OBD-II 诊断仪
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Si es Bluetooth, emparéjalo primero en los ajustes de Bluetooth del equipo (clave 1234 o 0000).\n3. Toca ⚙ para elegirlo y luego Conectar.\n\nStradaOS vigila la temperatura, el voltaje, la mezcla y los códigos de falla, y te avisa por voz aunque estés en otra app.	1. 把 ELM327 诊断仪插入 OBD 接口（方向盘下方），打开点火开关。\n2. 如果是蓝牙的，先在车机的蓝牙设置里配对（密码 1234 或 0000）。\n3. 点 ⚙ 选择它，然后点连接。\n\nStradaOS 会监测温度、电压、混合气和故障码，即使你在别的应用里也会语音提醒。
+Elegir escáner	选择诊断仪
+Probar con un auto simulado	用模拟车辆试试
+Todo normal por ahora.	目前一切正常。
+Sin monitor activo.	监测未开启。
+El auto no tiene códigos guardados.	车辆没有存储的故障码。
+Se revisan al conectar y cada 30 segundos.	连接时及每 30 秒检查一次。
+Toca para ver qué hacer	点击查看怎么做
+Hace {} min	{} 分钟前
+Para que una IA explique los códigos, pon tu API key (Claude, Groq, Gemini u otra) en ⚙ → Inteligencia artificial. Las explicaciones se guardan en el equipo y después funcionan sin internet.	要让 AI 解释故障码，请在 ⚙ → 人工智能 中填写你的 API 密钥（Claude、Groq、Gemini 或其他）。解释会保存在车机上，之后无需联网也能查看。
+Se apaga la luz del motor y se borran los datos que usa el taller para diagnosticar. Si la falla sigue, el código volverá a aparecer. Anota los códigos antes.	发动机故障灯会熄灭，维修店用于诊断的数据会被清除。如果故障仍在，故障码会再次出现。请先记下故障码。
+Mi vehículo (para la IA)	我的车辆（供 AI 使用）
+Encender el monitor al iniciar StradaOS	启动 StradaOS 时开启监测
+Ej.: Kia Sorento 2010 2.4 bencina 4x4 automático	例如：Kia Sorento 2010 2.4 汽油 四驱 自动挡
+La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. Cada consulta la cobra tu proveedor con tu API key.	AI 只会收到故障码、你填写的车辆和发动机数据，绝不会收到你的位置。每次查询由你的服务商按你的 API 密钥计费。
+alerta sobre	高于报警
+alerta bajo	低于报警
+alerta sobre ±	超出 ± 报警
+Con el motor en marcha debe estar entre 13,5 y 14,8 V. Con el motor apagado, 12,4 a 12,8 V es normal.	发动机运转时应在 13.5 到 14.8 V 之间。熄火时 12.4 到 12.8 V 属正常。
+Normal en marcha: 85 a 98 °C. También avisa si sube más de 4 °C por minuto sobre 95 °C.	行驶中正常：85 到 98 °C。超过 95 °C 后每分钟升高超过 4 °C 也会提醒。
+Cuánto corrige el computador la mezcla. Positivo = le falta combustible (fuga de aire); negativo = le sobra.	电脑对混合气的修正量。正值 = 燃油不足（漏气）；负值 = 燃油过多。
+Solo informativo: este dato no genera alertas.	仅供参考：此数据不会触发报警。
+VEHÍCULO	车辆
+Qué muestra cada tarjeta	各卡片显示什么
+Música, el monitor del vehículo (temperatura, voltaje, RPM y alertas) o un gráfico en vivo	音乐、车辆监测（温度、电压、转速和报警）或实时图表
+Gráfico en vivo	实时图表
+Gráfico del reproductor	播放器卡片图表
+Dato del escáner que se grafica (últimos 5 minutos)	要绘制的诊断仪数据（最近 5 分钟）
+Tarjeta del centro	中间卡片
+El mapa, el monitor del vehículo o un gráfico en vivo. Sin el mapa, Android Auto y CarPlay se abren desde la barra de botones	地图、车辆监测或实时图表。没有地图时，Android Auto 和 CarPlay 从按钮栏打开
+Gráfico del centro	中间卡片图表
+Velocidad (GPS)	车速（GPS）
+Recuadro de la velocidad	车速框
+La velocidad del GPS o, en grande, otro dato del escáner (por ejemplo la temperatura del refrigerante)	GPS 车速，或以大字显示其他诊断仪数据（例如冷却液温度）
+Esta tarjeta	此卡片
+Cambiar esta tarjeta…	更换此卡片…
+¿Qué dato graficar?	绘制哪项数据？
+Cambiar qué muestra…	更改显示内容…
+◀  Mover a la izquierda	◀  向左移动
+Mover a la derecha  ▶	向右移动  ▶
+Ancho de la tarjeta…	卡片宽度…
+Ancho de la tarjeta	卡片宽度
+Volver al orden y tamaño de siempre	恢复默认顺序和大小
+Ya está a la izquierda	已经在最左边
+Ya está a la derecha	已经在最右边
+Ancha	宽
+Muy ancha	很宽
+✋  Ajustar con el dedo (mover y cambiar tamaño)	✋  用手指调整（移动和改变大小）
+Arrastra la manija entre dos tarjetas para cambiar el ancho · arrastra una tarjeta para moverla	拖动两张卡片之间的手柄可改变宽度 · 拖动卡片可移动它
+se ajusta solo	自动调整
+VIAJE	行程
+ALTITUD	海拔
+pendiente —	坡度 —
+Mantén presionado para reiniciar el viaje o cambiar los widgets	长按可重置行程或更换小组件
+Quitar este acceso	移除此快捷方式
+Acceso directo {}	快捷方式 {}
+Altitud, pendiente y rumbo	海拔、坡度和方向
+Viaje (km, tiempo, consumo)	行程（公里、时间、油耗）
+Dato del vehículo…	车辆数据…
+Accesos directos (3 apps)	快捷方式（3 个应用）
+Dato del vehículo	车辆数据
+Widget	小组件
+Reiniciar el viaje	重置行程
+Quitar la franja	移除横条
+Franja de widgets	小组件横条
+¿Qué dato mostrar?	显示哪项数据？
+Viaje reiniciado	行程已重置
+Quitar la franja de widgets de abajo	移除下方的小组件横条
+Franja de widgets debajo (altitud, viaje, apps…)	下方小组件横条（海拔、行程、应用…）
+Arrastra las manijas para cambiar tamaños · arrastra una tarjeta para moverla · toca un widget para cambiarlo	拖动手柄可改变大小 · 拖动卡片可移动它 · 点击小组件可更换
+Agregar franja de widgets	添加小组件横条
+Agregar un widget	添加小组件
+Ajustar tamaños con el dedo	用手指调整大小
+Quitar este widget	移除此小组件
+Accesos directos (apps)	快捷方式（应用）
+MÚSICA	音乐
+Música (canción y controles)	音乐（歌曲和控制）
+Arrastra las manijas para cambiar tamaños · arrastra una tarjeta para moverla · toca un widget para cambiarlo · ✕ oculta una tarjeta	拖动手柄可改变大小 · 拖动卡片可移动它 · 点击小组件可更换 · ✕ 隐藏卡片
+Ocultar la tarjeta del vehículo	隐藏车辆卡片
+Ocultar la tarjeta de música	隐藏音乐卡片
+Mostrar la tarjeta del vehículo	显示车辆卡片
+Mostrar la tarjeta de música	显示音乐卡片
+La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. El VIN solo se envía si lo activas aquí. Cada consulta la cobra tu proveedor con tu API key.	AI 只会收到故障码、你填写的车辆和发动机数据，绝不会收到你的位置。只有在这里开启后才会发送 VIN。每次查询由你的服务商按你的 API 密钥计费。

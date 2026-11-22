@@ -1718,3 +1718,91 @@ El cable USB no tiene canal de datos	Das USB-Kabel hat keinen Datenkanal
 Otra app está usando el cable USB	Eine andere App nutzt das USB-Kabel
 El cable USB no aceptó la velocidad	Das USB-Kabel hat die Geschwindigkeit nicht akzeptiert
 Se desconectó el cable USB	Das USB-Kabel wurde getrennt
+Panel de datos	Datenpanel
+Datos del panel	Paneldaten
+Máximo 6 datos	Maximal 6 Werte
+Hasta 6 datos del escáner, por ejemplo RPM, velocidad, refrigerante y consumo	Bis zu 6 Scannerwerte, zum Beispiel Drehzahl, Geschwindigkeit, Kühlmittel und Verbrauch
+Conecta tu escáner OBD-II	Verbinde deinen OBD-II-Scanner
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Si es Bluetooth, emparéjalo primero en los ajustes de Bluetooth del equipo (clave 1234 o 0000).\n3. Toca ⚙ para elegirlo y luego Conectar.\n\nStradaOS vigila la temperatura, el voltaje, la mezcla y los códigos de falla, y te avisa por voz aunque estés en otra app.	1. Stecke den ELM327-Scanner in die OBD-Buchse (unter dem Lenkrad) und schalte die Zündung ein.\n2. Bei Bluetooth koppelst du ihn zuerst in den Bluetooth-Einstellungen des Geräts (PIN 1234 oder 0000).\n3. Tippe auf ⚙, um ihn auszuwählen, und dann auf Verbinden.\n\nStradaOS überwacht Temperatur, Spannung, Gemisch und Fehlercodes und warnt dich per Sprache, auch wenn du in einer anderen App bist.
+Elegir escáner	Scanner wählen
+Probar con un auto simulado	Mit einem simulierten Auto testen
+Todo normal por ahora.	Alles normal bis jetzt.
+Sin monitor activo.	Kein Monitor aktiv.
+El auto no tiene códigos guardados.	Das Auto hat keine gespeicherten Codes.
+Se revisan al conectar y cada 30 segundos.	Sie werden beim Verbinden und alle 30 Sekunden geprüft.
+Toca para ver qué hacer	Tippen, um zu sehen, was zu tun ist
+Hace {} min	vor {} Min.
+Para que una IA explique los códigos, pon tu API key (Claude, Groq, Gemini u otra) en ⚙ → Inteligencia artificial. Las explicaciones se guardan en el equipo y después funcionan sin internet.	Damit eine KI die Codes erklärt, trage deinen API-Schlüssel (Claude, Groq, Gemini oder einen anderen) unter ⚙ → Künstliche Intelligenz ein. Die Erklärungen werden auf dem Gerät gespeichert und funktionieren danach ohne Internet.
+Se apaga la luz del motor y se borran los datos que usa el taller para diagnosticar. Si la falla sigue, el código volverá a aparecer. Anota los códigos antes.	Die Motorkontrollleuchte erlischt und die Daten, die die Werkstatt zur Diagnose nutzt, werden gelöscht. Besteht der Fehler weiter, erscheint der Code wieder. Notiere die Codes vorher.
+Mi vehículo (para la IA)	Mein Fahrzeug (für die KI)
+Encender el monitor al iniciar StradaOS	Monitor beim Start von StradaOS einschalten
+Ej.: Kia Sorento 2010 2.4 bencina 4x4 automático	Z. B.: Kia Sorento 2010 2.4 Benzin 4x4 Automatik
+La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. Cada consulta la cobra tu proveedor con tu API key.	Die KI erhält nur den Code, das eingegebene Fahrzeug und die Motordaten, nie deinen Standort. Jede Anfrage berechnet dir dein Anbieter über deinen API-Schlüssel.
+alerta sobre	Warnung über
+alerta bajo	Warnung unter
+alerta sobre ±	Warnung über ±
+Con el motor en marcha debe estar entre 13,5 y 14,8 V. Con el motor apagado, 12,4 a 12,8 V es normal.	Bei laufendem Motor sollte sie zwischen 13,5 und 14,8 V liegen. Bei ausgeschaltetem Motor sind 12,4 bis 12,8 V normal.
+Normal en marcha: 85 a 98 °C. También avisa si sube más de 4 °C por minuto sobre 95 °C.	Normal im Betrieb: 85 bis 98 °C. Warnt auch, wenn sie über 95 °C um mehr als 4 °C pro Minute steigt.
+Cuánto corrige el computador la mezcla. Positivo = le falta combustible (fuga de aire); negativo = le sobra.	Wie stark das Steuergerät das Gemisch korrigiert. Positiv = zu wenig Kraftstoff (Falschluft); negativ = zu viel.
+Solo informativo: este dato no genera alertas.	Nur zur Information: Dieser Wert löst keine Warnungen aus.
+VEHÍCULO	FAHRZEUG
+Qué muestra cada tarjeta	Was jede Karte zeigt
+Música, el monitor del vehículo (temperatura, voltaje, RPM y alertas) o un gráfico en vivo	Musik, der Fahrzeugmonitor (Temperatur, Spannung, Drehzahl und Warnungen) oder ein Live-Diagramm
+Gráfico en vivo	Live-Diagramm
+Gráfico del reproductor	Diagramm der Player-Karte
+Dato del escáner que se grafica (últimos 5 minutos)	Scannerwert für das Diagramm (letzte 5 Minuten)
+Tarjeta del centro	Mittlere Karte
+El mapa, el monitor del vehículo o un gráfico en vivo. Sin el mapa, Android Auto y CarPlay se abren desde la barra de botones	Die Karte, der Fahrzeugmonitor oder ein Live-Diagramm. Ohne Karte öffnen sich Android Auto und CarPlay über die Tastenleiste
+Gráfico del centro	Diagramm der mittleren Karte
+Velocidad (GPS)	Geschwindigkeit (GPS)
+Recuadro de la velocidad	Geschwindigkeitsfeld
+La velocidad del GPS o, en grande, otro dato del escáner (por ejemplo la temperatura del refrigerante)	Die GPS-Geschwindigkeit oder groß ein anderer Scannerwert (zum Beispiel die Kühlmitteltemperatur)
+Esta tarjeta	Diese Karte
+Cambiar esta tarjeta…	Diese Karte ändern…
+¿Qué dato graficar?	Welchen Wert darstellen?
+Cambiar qué muestra…	Ändern, was sie zeigt…
+◀  Mover a la izquierda	◀  Nach links verschieben
+Mover a la derecha  ▶	Nach rechts verschieben  ▶
+Ancho de la tarjeta…	Kartenbreite…
+Ancho de la tarjeta	Kartenbreite
+Volver al orden y tamaño de siempre	Zur üblichen Reihenfolge und Größe zurück
+Ya está a la izquierda	Sie ist schon links
+Ya está a la derecha	Sie ist schon rechts
+Ancha	Breit
+Muy ancha	Sehr breit
+✋  Ajustar con el dedo (mover y cambiar tamaño)	✋  Mit dem Finger anpassen (verschieben und Größe ändern)
+Arrastra la manija entre dos tarjetas para cambiar el ancho · arrastra una tarjeta para moverla	Ziehe den Griff zwischen zwei Karten, um die Breite zu ändern · ziehe eine Karte, um sie zu verschieben
+se ajusta solo	passt sich selbst an
+VIAJE	FAHRT
+ALTITUD	HÖHE
+pendiente —	Steigung —
+Mantén presionado para reiniciar el viaje o cambiar los widgets	Lange drücken, um die Fahrt zurückzusetzen oder die Widgets zu ändern
+Quitar este acceso	Diese Verknüpfung entfernen
+Acceso directo {}	Verknüpfung {}
+Altitud, pendiente y rumbo	Höhe, Steigung und Richtung
+Viaje (km, tiempo, consumo)	Fahrt (km, Zeit, Verbrauch)
+Dato del vehículo…	Fahrzeugwert…
+Accesos directos (3 apps)	Verknüpfungen (3 Apps)
+Dato del vehículo	Fahrzeugwert
+Widget	Widget
+Reiniciar el viaje	Fahrt zurücksetzen
+Quitar la franja	Leiste entfernen
+Franja de widgets	Widget-Leiste
+¿Qué dato mostrar?	Welchen Wert anzeigen?
+Viaje reiniciado	Fahrt zurückgesetzt
+Quitar la franja de widgets de abajo	Untere Widget-Leiste entfernen
+Franja de widgets debajo (altitud, viaje, apps…)	Widget-Leiste unten (Höhe, Fahrt, Apps…)
+Arrastra las manijas para cambiar tamaños · arrastra una tarjeta para moverla · toca un widget para cambiarlo	Ziehe die Griffe, um Größen zu ändern · ziehe eine Karte, um sie zu verschieben · tippe auf ein Widget, um es zu ändern
+Agregar franja de widgets	Widget-Leiste hinzufügen
+Agregar un widget	Ein Widget hinzufügen
+Ajustar tamaños con el dedo	Größen mit dem Finger anpassen
+Quitar este widget	Dieses Widget entfernen
+Accesos directos (apps)	Verknüpfungen (Apps)
+MÚSICA	MUSIK
+Música (canción y controles)	Musik (Titel und Steuerung)
+Arrastra las manijas para cambiar tamaños · arrastra una tarjeta para moverla · toca un widget para cambiarlo · ✕ oculta una tarjeta	Ziehe die Griffe, um Größen zu ändern · ziehe eine Karte, um sie zu verschieben · tippe auf ein Widget, um es zu ändern · ✕ blendet eine Karte aus
+Ocultar la tarjeta del vehículo	Fahrzeugkarte ausblenden
+Ocultar la tarjeta de música	Musikkarte ausblenden
+Mostrar la tarjeta del vehículo	Fahrzeugkarte einblenden
+Mostrar la tarjeta de música	Musikkarte einblenden
+La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. El VIN solo se envía si lo activas aquí. Cada consulta la cobra tu proveedor con tu API key.	Die KI erhält nur den Code, das eingegebene Fahrzeug und die Motordaten, nie deinen Standort. Die FIN wird nur gesendet, wenn du es hier aktivierst. Jede Anfrage berechnet dir dein Anbieter über deinen API-Schlüssel.

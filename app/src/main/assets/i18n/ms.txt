@@ -1718,3 +1718,91 @@ El cable USB no tiene canal de datos	Kabel USB tiada saluran data
 Otra app está usando el cable USB	Aplikasi lain sedang menggunakan kabel USB
 El cable USB no aceptó la velocidad	Kabel USB tidak menerima kelajuan itu
 Se desconectó el cable USB	Kabel USB telah terputus
+Panel de datos	Panel data
+Datos del panel	Data panel
+Máximo 6 datos	Maksimum 6 data
+Hasta 6 datos del escáner, por ejemplo RPM, velocidad, refrigerante y consumo	Sehingga 6 data pengimbas, contohnya RPM, kelajuan, penyejuk dan penggunaan bahan api
+Conecta tu escáner OBD-II	Sambungkan pengimbas OBD-II anda
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Si es Bluetooth, emparéjalo primero en los ajustes de Bluetooth del equipo (clave 1234 o 0000).\n3. Toca ⚙ para elegirlo y luego Conectar.\n\nStradaOS vigila la temperatura, el voltaje, la mezcla y los códigos de falla, y te avisa por voz aunque estés en otra app.	1. Pasang pengimbas ELM327 pada soket OBD (di bawah stereng) dan hidupkan suis kunci.\n2. Jika Bluetooth, pasangkannya dahulu dalam tetapan Bluetooth peranti (PIN 1234 atau 0000).\n3. Ketik ⚙ untuk memilihnya, kemudian Sambung.\n\nStradaOS memantau suhu, voltan, campuran bahan api dan kod kerosakan, dan memberi amaran suara walaupun anda dalam aplikasi lain.
+Elegir escáner	Pilih pengimbas
+Probar con un auto simulado	Cuba dengan kereta simulasi
+Todo normal por ahora.	Semua normal setakat ini.
+Sin monitor activo.	Tiada monitor aktif.
+El auto no tiene códigos guardados.	Kereta tiada kod yang disimpan.
+Se revisan al conectar y cada 30 segundos.	Disemak semasa menyambung dan setiap 30 saat.
+Toca para ver qué hacer	Ketik untuk lihat apa perlu dibuat
+Hace {} min	{} min lalu
+Para que una IA explique los códigos, pon tu API key (Claude, Groq, Gemini u otra) en ⚙ → Inteligencia artificial. Las explicaciones se guardan en el equipo y después funcionan sin internet.	Untuk AI menerangkan kod, masukkan kunci API anda (Claude, Groq, Gemini atau lain) di ⚙ → Kecerdasan buatan. Penerangan disimpan dalam peranti dan selepas itu berfungsi tanpa internet.
+Se apaga la luz del motor y se borran los datos que usa el taller para diagnosticar. Si la falla sigue, el código volverá a aparecer. Anota los códigos antes.	Lampu enjin padam dan data yang digunakan bengkel untuk diagnosis dipadam. Jika kerosakan berterusan, kod akan muncul semula. Catat kod-kod itu dahulu.
+Mi vehículo (para la IA)	Kenderaan saya (untuk AI)
+Encender el monitor al iniciar StradaOS	Hidupkan monitor apabila StradaOS bermula
+Ej.: Kia Sorento 2010 2.4 bencina 4x4 automático	Cth.: Kia Sorento 2010 2.4 petrol 4x4 automatik
+La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. Cada consulta la cobra tu proveedor con tu API key.	AI hanya menerima kod, kenderaan yang anda tulis dan data enjin; tidak sekali-kali lokasi anda. Setiap pertanyaan dicaj oleh pembekal anda melalui kunci API anda.
+alerta sobre	amaran atas
+alerta bajo	amaran bawah
+alerta sobre ±	amaran atas ±
+Con el motor en marcha debe estar entre 13,5 y 14,8 V. Con el motor apagado, 12,4 a 12,8 V es normal.	Semasa enjin hidup ia patut antara 13,5 dan 14,8 V. Semasa enjin mati, 12,4 hingga 12,8 V adalah normal.
+Normal en marcha: 85 a 98 °C. También avisa si sube más de 4 °C por minuto sobre 95 °C.	Normal semasa berjalan: 85 hingga 98 °C. Juga memberi amaran jika naik lebih 4 °C seminit melebihi 95 °C.
+Cuánto corrige el computador la mezcla. Positivo = le falta combustible (fuga de aire); negativo = le sobra.	Berapa banyak komputer membetulkan campuran. Positif = kurang bahan api (kebocoran udara); negatif = terlebih.
+Solo informativo: este dato no genera alertas.	Maklumat sahaja: data ini tidak mencetuskan amaran.
+VEHÍCULO	KENDERAAN
+Qué muestra cada tarjeta	Apa yang ditunjukkan setiap kad
+Música, el monitor del vehículo (temperatura, voltaje, RPM y alertas) o un gráfico en vivo	Muzik, monitor kenderaan (suhu, voltan, RPM dan amaran) atau graf langsung
+Gráfico en vivo	Graf langsung
+Gráfico del reproductor	Graf kad pemain
+Dato del escáner que se grafica (últimos 5 minutos)	Data pengimbas untuk graf (5 minit terakhir)
+Tarjeta del centro	Kad tengah
+El mapa, el monitor del vehículo o un gráfico en vivo. Sin el mapa, Android Auto y CarPlay se abren desde la barra de botones	Peta, monitor kenderaan atau graf langsung. Tanpa peta, Android Auto dan CarPlay dibuka dari bar butang
+Gráfico del centro	Graf kad tengah
+Velocidad (GPS)	Kelajuan (GPS)
+Recuadro de la velocidad	Kotak kelajuan
+La velocidad del GPS o, en grande, otro dato del escáner (por ejemplo la temperatura del refrigerante)	Kelajuan GPS atau, dalam saiz besar, data pengimbas lain (contohnya suhu penyejuk)
+Esta tarjeta	Kad ini
+Cambiar esta tarjeta…	Tukar kad ini…
+¿Qué dato graficar?	Data apa untuk graf?
+Cambiar qué muestra…	Tukar apa yang ditunjukkan…
+◀  Mover a la izquierda	◀  Alih ke kiri
+Mover a la derecha  ▶	Alih ke kanan  ▶
+Ancho de la tarjeta…	Lebar kad…
+Ancho de la tarjeta	Lebar kad
+Volver al orden y tamaño de siempre	Kembali ke susunan dan saiz asal
+Ya está a la izquierda	Sudah di sebelah kiri
+Ya está a la derecha	Sudah di sebelah kanan
+Ancha	Lebar
+Muy ancha	Sangat lebar
+✋  Ajustar con el dedo (mover y cambiar tamaño)	✋  Laraskan dengan jari (alih dan ubah saiz)
+Arrastra la manija entre dos tarjetas para cambiar el ancho · arrastra una tarjeta para moverla	Seret pemegang di antara dua kad untuk mengubah lebar · seret kad untuk mengalihkannya
+se ajusta solo	laras sendiri
+VIAJE	PERJALANAN
+ALTITUD	ALTITUD
+pendiente —	kecerunan —
+Mantén presionado para reiniciar el viaje o cambiar los widgets	Tekan lama untuk set semula perjalanan atau menukar widget
+Quitar este acceso	Buang pintasan ini
+Acceso directo {}	Pintasan {}
+Altitud, pendiente y rumbo	Altitud, kecerunan dan arah
+Viaje (km, tiempo, consumo)	Perjalanan (km, masa, penggunaan)
+Dato del vehículo…	Data kenderaan…
+Accesos directos (3 apps)	Pintasan (3 aplikasi)
+Dato del vehículo	Data kenderaan
+Widget	Widget
+Reiniciar el viaje	Set semula perjalanan
+Quitar la franja	Buang jalur
+Franja de widgets	Jalur widget
+¿Qué dato mostrar?	Data apa untuk ditunjukkan?
+Viaje reiniciado	Perjalanan diset semula
+Quitar la franja de widgets de abajo	Buang jalur widget di bawah
+Franja de widgets debajo (altitud, viaje, apps…)	Jalur widget di bawah (altitud, perjalanan, aplikasi…)
+Arrastra las manijas para cambiar tamaños · arrastra una tarjeta para moverla · toca un widget para cambiarlo	Seret pemegang untuk mengubah saiz · seret kad untuk mengalihkannya · ketik widget untuk menukarnya
+Agregar franja de widgets	Tambah jalur widget
+Agregar un widget	Tambah widget
+Ajustar tamaños con el dedo	Laraskan saiz dengan jari
+Quitar este widget	Buang widget ini
+Accesos directos (apps)	Pintasan (aplikasi)
+MÚSICA	MUZIK
+Música (canción y controles)	Muzik (lagu dan kawalan)
+Arrastra las manijas para cambiar tamaños · arrastra una tarjeta para moverla · toca un widget para cambiarlo · ✕ oculta una tarjeta	Seret pemegang untuk mengubah saiz · seret kad untuk mengalihkannya · ketik widget untuk menukarnya · ✕ menyembunyikan kad
+Ocultar la tarjeta del vehículo	Sembunyikan kad kenderaan
+Ocultar la tarjeta de música	Sembunyikan kad muzik
+Mostrar la tarjeta del vehículo	Tunjukkan kad kenderaan
+Mostrar la tarjeta de música	Tunjukkan kad muzik
+La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. El VIN solo se envía si lo activas aquí. Cada consulta la cobra tu proveedor con tu API key.	AI hanya menerima kod, kenderaan yang anda tulis dan data enjin; tidak sekali-kali lokasi anda. VIN hanya dihantar jika anda mengaktifkannya di sini. Setiap pertanyaan dicaj oleh pembekal anda melalui kunci API anda.

@@ -1396,7 +1396,7 @@ monitor apagado	monitor desligado
 máx	máx
 mín	mín
 normal	normal
-pendiente —	pendente —
+pendiente —	inclinação —
 prom	méd
 recomendado	recomendado
 revisa el detalle en la pantalla	veja o detalhe na tela
@@ -1756,3 +1756,56 @@ El cable USB no tiene canal de datos	O cabo USB não tem canal de dados
 Otra app está usando el cable USB	Outro app está usando o cabo USB
 El cable USB no aceptó la velocidad	O cabo USB não aceitou a velocidade
 Se desconectó el cable USB	O cabo USB foi desconectado
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Si es Bluetooth, emparéjalo primero en los ajustes de Bluetooth del equipo (clave 1234 o 0000).\n3. Toca ⚙ para elegirlo y luego Conectar.\n\nStradaOS vigila la temperatura, el voltaje, la mezcla y los códigos de falla, y te avisa por voz aunque estés en otra app.	1. Ligue o scanner ELM327 no conector OBD (embaixo do volante) e ligue a ignição.\n2. Se for Bluetooth, pareie-o primeiro nas configurações de Bluetooth do aparelho (senha 1234 ou 0000).\n3. Toque em ⚙ para escolhê-lo e depois em Conectar.\n\nO StradaOS vigia a temperatura, a tensão, a mistura e os códigos de falha, e avisa você por voz mesmo se estiver em outro app.
+Hace {} min	Há {} min
+Para que una IA explique los códigos, pon tu API key (Claude, Groq, Gemini u otra) en ⚙ → Inteligencia artificial. Las explicaciones se guardan en el equipo y después funcionan sin internet.	Para que uma IA explique os códigos, coloque sua chave de API (Claude, Groq, Gemini ou outra) em ⚙ → Inteligência artificial. As explicações ficam guardadas no aparelho e depois funcionam sem internet.
+Se apaga la luz del motor y se borran los datos que usa el taller para diagnosticar. Si la falla sigue, el código volverá a aparecer. Anota los códigos antes.	A luz do motor se apaga e os dados que a oficina usa para diagnosticar são apagados. Se a falha continuar, o código voltará a aparecer. Anote os códigos antes.
+Ej.: Kia Sorento 2010 2.4 bencina 4x4 automático	Ex.: Kia Sorento 2010 2.4 gasolina 4x4 automático
+La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. Cada consulta la cobra tu proveedor con tu API key.	A IA recebe apenas o código, o veículo que você digitou e os dados do motor; nunca sua localização. Cada consulta é cobrada pelo seu provedor com sua chave de API.
+VEHÍCULO	VEÍCULO
+Qué muestra cada tarjeta	O que cada cartão mostra
+Música, el monitor del vehículo (temperatura, voltaje, RPM y alertas) o un gráfico en vivo	Música, o monitor do veículo (temperatura, tensão, RPM e alertas) ou um gráfico ao vivo
+Gráfico en vivo	Gráfico ao vivo
+Gráfico del reproductor	Gráfico do cartão do player
+Dato del escáner que se grafica (últimos 5 minutos)	Dado do scanner que é exibido no gráfico (últimos 5 minutos)
+Tarjeta del centro	Cartão do centro
+El mapa, el monitor del vehículo o un gráfico en vivo. Sin el mapa, Android Auto y CarPlay se abren desde la barra de botones	O mapa, o monitor do veículo ou um gráfico ao vivo. Sem o mapa, Android Auto e CarPlay abrem pela barra de botões
+Gráfico del centro	Gráfico do cartão do centro
+Velocidad (GPS)	Velocidade (GPS)
+Recuadro de la velocidad	Quadro da velocidade
+La velocidad del GPS o, en grande, otro dato del escáner (por ejemplo la temperatura del refrigerante)	A velocidade do GPS ou, em tamanho grande, outro dado do scanner (por exemplo a temperatura do líquido de arrefecimento)
+Esta tarjeta	Este cartão
+Cambiar esta tarjeta…	Trocar este cartão…
+¿Qué dato graficar?	Qual dado exibir no gráfico?
+Cambiar qué muestra…	Trocar o que mostra…
+◀  Mover a la izquierda	◀  Mover para a esquerda
+Mover a la derecha  ▶	Mover para a direita  ▶
+Ancho de la tarjeta…	Largura do cartão…
+Ancho de la tarjeta	Largura do cartão
+Volver al orden y tamaño de siempre	Voltar à ordem e ao tamanho de sempre
+Ya está a la izquierda	Já está à esquerda
+Ya está a la derecha	Já está à direita
+Ancha	Largo
+Muy ancha	Muito largo
+✋  Ajustar con el dedo (mover y cambiar tamaño)	✋  Ajustar com o dedo (mover e mudar o tamanho)
+Arrastra la manija entre dos tarjetas para cambiar el ancho · arrastra una tarjeta para moverla	Arraste a alça entre dois cartões para mudar a largura · arraste um cartão para movê-lo
+Quitar este acceso	Remover este atalho
+Acceso directo {}	Atalho {}
+Accesos directos (3 apps)	Atalhos (3 apps)
+Dato del vehículo	Dado do veículo
+Widget	Widget
+Reiniciar el viaje	Reiniciar a viagem
+Quitar la franja	Remover a faixa
+Franja de widgets	Faixa de widgets
+¿Qué dato mostrar?	Qual dado mostrar?
+Viaje reiniciado	Viagem reiniciada
+Quitar la franja de widgets de abajo	Remover a faixa de widgets de baixo
+Franja de widgets debajo (altitud, viaje, apps…)	Faixa de widgets embaixo (altitude, viagem, apps…)
+Arrastra las manijas para cambiar tamaños · arrastra una tarjeta para moverla · toca un widget para cambiarlo	Arraste as alças para mudar tamanhos · arraste um cartão para movê-lo · toque em um widget para alterá-lo
+Agregar un widget	Adicionar um widget
+Ajustar tamaños con el dedo	Ajustar tamanhos com o dedo
+Quitar este widget	Remover este widget
+Ocultar la tarjeta del vehículo	Ocultar o cartão do veículo
+Ocultar la tarjeta de música	Ocultar o cartão de música
+Mostrar la tarjeta del vehículo	Mostrar o cartão do veículo
+Mostrar la tarjeta de música	Mostrar o cartão de música

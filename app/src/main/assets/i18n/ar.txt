@@ -1718,3 +1718,91 @@ El cable USB no tiene canal de datos	كابل USB ليس له قناة بيان�
 Otra app está usando el cable USB	تطبيق آخر يستخدم كابل USB
 El cable USB no aceptó la velocidad	لم يقبل كابل USB السرعة
 Se desconectó el cable USB	انفصل كابل USB
+Panel de datos	لوحة البيانات
+Datos del panel	بيانات اللوحة
+Máximo 6 datos	6 بيانات كحد أقصى
+Hasta 6 datos del escáner, por ejemplo RPM, velocidad, refrigerante y consumo	حتى 6 بيانات من الماسح، مثل الدورات والسرعة وسائل التبريد واستهلاك الوقود
+Conecta tu escáner OBD-II	وصّل ماسح OBD-II
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Si es Bluetooth, emparéjalo primero en los ajustes de Bluetooth del equipo (clave 1234 o 0000).\n3. Toca ⚙ para elegirlo y luego Conectar.\n\nStradaOS vigila la temperatura, el voltaje, la mezcla y los códigos de falla, y te avisa por voz aunque estés en otra app.	1. أدخل ماسح ELM327 في منفذ OBD (أسفل المقود) وشغّل الإشعال.\n2. إذا كان بلوتوث، اقرنه أولاً من إعدادات البلوتوث في الجهاز (الرمز 1234 أو 0000).\n3. اضغط ⚙ لاختياره ثم اتصال.\n\nيراقب StradaOS الحرارة والجهد وخليط الوقود وأكواد الأعطال، وينبّهك بالصوت حتى لو كنت في تطبيق آخر.
+Elegir escáner	اختر الماسح
+Probar con un auto simulado	جرّب بسيارة محاكاة
+Todo normal por ahora.	كل شيء طبيعي حتى الآن.
+Sin monitor activo.	لا يوجد مراقب نشط.
+El auto no tiene códigos guardados.	لا توجد أكواد محفوظة في السيارة.
+Se revisan al conectar y cada 30 segundos.	تُفحص عند الاتصال وكل 30 ثانية.
+Toca para ver qué hacer	اضغط لمعرفة ما يجب فعله
+Hace {} min	منذ {} دقيقة
+Para que una IA explique los códigos, pon tu API key (Claude, Groq, Gemini u otra) en ⚙ → Inteligencia artificial. Las explicaciones se guardan en el equipo y después funcionan sin internet.	لكي يشرح الذكاء الاصطناعي الأكواد، أضف مفتاح API الخاص بك (Claude أو Groq أو Gemini أو غيرها) في ⚙ ← الذكاء الاصطناعي. تُحفظ الشروح في الجهاز وتعمل بعدها دون إنترنت.
+Se apaga la luz del motor y se borran los datos que usa el taller para diagnosticar. Si la falla sigue, el código volverá a aparecer. Anota los códigos antes.	ينطفئ ضوء المحرك وتُمسح البيانات التي تستخدمها الورشة للتشخيص. إذا استمر العطل سيعود الكود. دوّن الأكواد قبل ذلك.
+Mi vehículo (para la IA)	مركبتي (للذكاء الاصطناعي)
+Encender el monitor al iniciar StradaOS	تشغيل المراقب عند بدء StradaOS
+Ej.: Kia Sorento 2010 2.4 bencina 4x4 automático	مثال: Kia Sorento 2010 2.4 بنزين 4x4 أوتوماتيك
+La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. Cada consulta la cobra tu proveedor con tu API key.	يستلم الذكاء الاصطناعي الكود والمركبة التي كتبتها وبيانات المحرك فقط، ولا يستلم موقعك أبداً. كل استعلام يحاسبك عليه مزوّدك عبر مفتاح API الخاص بك.
+alerta sobre	تنبيه فوق
+alerta bajo	تنبيه تحت
+alerta sobre ±	تنبيه فوق ±
+Con el motor en marcha debe estar entre 13,5 y 14,8 V. Con el motor apagado, 12,4 a 12,8 V es normal.	والمحرك يعمل يجب أن يكون بين 13,5 و14,8 فولت. والمحرك متوقف، من 12,4 إلى 12,8 فولت طبيعي.
+Normal en marcha: 85 a 98 °C. También avisa si sube más de 4 °C por minuto sobre 95 °C.	الطبيعي أثناء التشغيل: من 85 إلى 98 °C. وينبّه أيضاً إذا ارتفعت أكثر من 4 °C في الدقيقة فوق 95 °C.
+Cuánto corrige el computador la mezcla. Positivo = le falta combustible (fuga de aire); negativo = le sobra.	مقدار تصحيح الكمبيوتر للخليط. موجب = نقص في الوقود (تسرب هواء)؛ سالب = زيادة في الوقود.
+Solo informativo: este dato no genera alertas.	للمعلومة فقط: هذه القيمة لا تُصدر تنبيهات.
+VEHÍCULO	المركبة
+Qué muestra cada tarjeta	ماذا تعرض كل بطاقة
+Música, el monitor del vehículo (temperatura, voltaje, RPM y alertas) o un gráfico en vivo	الموسيقى أو مراقب المركبة (الحرارة والجهد والدورات والتنبيهات) أو رسم بياني مباشر
+Gráfico en vivo	رسم بياني مباشر
+Gráfico del reproductor	رسم بطاقة المشغّل
+Dato del escáner que se grafica (últimos 5 minutos)	قيمة الماسح المعروضة في الرسم (آخر 5 دقائق)
+Tarjeta del centro	البطاقة الوسطى
+El mapa, el monitor del vehículo o un gráfico en vivo. Sin el mapa, Android Auto y CarPlay se abren desde la barra de botones	الخريطة أو مراقب المركبة أو رسم بياني مباشر. دون الخريطة، يُفتح Android Auto وCarPlay من شريط الأزرار
+Gráfico del centro	رسم البطاقة الوسطى
+Velocidad (GPS)	السرعة (GPS)
+Recuadro de la velocidad	مربع السرعة
+La velocidad del GPS o, en grande, otro dato del escáner (por ejemplo la temperatura del refrigerante)	سرعة GPS أو، بخط كبير، قيمة أخرى من الماسح (مثل حرارة سائل التبريد)
+Esta tarjeta	هذه البطاقة
+Cambiar esta tarjeta…	تغيير هذه البطاقة…
+¿Qué dato graficar?	أي قيمة تُرسم؟
+Cambiar qué muestra…	تغيير ما تعرضه…
+◀  Mover a la izquierda	◀  نقل إلى اليسار
+Mover a la derecha  ▶	نقل إلى اليمين  ▶
+Ancho de la tarjeta…	عرض البطاقة…
+Ancho de la tarjeta	عرض البطاقة
+Volver al orden y tamaño de siempre	العودة إلى الترتيب والحجم المعتادين
+Ya está a la izquierda	هي بالفعل على اليسار
+Ya está a la derecha	هي بالفعل على اليمين
+Ancha	عريضة
+Muy ancha	عريضة جداً
+✋  Ajustar con el dedo (mover y cambiar tamaño)	✋  ضبط بالإصبع (نقل وتغيير الحجم)
+Arrastra la manija entre dos tarjetas para cambiar el ancho · arrastra una tarjeta para moverla	اسحب المقبض بين بطاقتين لتغيير العرض · اسحب بطاقة لنقلها
+se ajusta solo	يتكيّف تلقائياً
+VIAJE	الرحلة
+ALTITUD	الارتفاع
+pendiente —	الميل —
+Mantén presionado para reiniciar el viaje o cambiar los widgets	اضغط مطوّلاً لتصفير الرحلة أو تغيير الأدوات
+Quitar este acceso	إزالة هذا الاختصار
+Acceso directo {}	اختصار {}
+Altitud, pendiente y rumbo	الارتفاع والميل والاتجاه
+Viaje (km, tiempo, consumo)	الرحلة (كم، الوقت، الاستهلاك)
+Dato del vehículo…	قيمة من المركبة…
+Accesos directos (3 apps)	اختصارات (3 تطبيقات)
+Dato del vehículo	قيمة من المركبة
+Widget	أداة
+Reiniciar el viaje	تصفير الرحلة
+Quitar la franja	إزالة الشريط
+Franja de widgets	شريط الأدوات
+¿Qué dato mostrar?	أي قيمة تُعرض؟
+Viaje reiniciado	تم تصفير الرحلة
+Quitar la franja de widgets de abajo	إزالة شريط الأدوات السفلي
+Franja de widgets debajo (altitud, viaje, apps…)	شريط أدوات في الأسفل (الارتفاع، الرحلة، التطبيقات…)
+Arrastra las manijas para cambiar tamaños · arrastra una tarjeta para moverla · toca un widget para cambiarlo	اسحب المقابض لتغيير الأحجام · اسحب بطاقة لنقلها · اضغط على أداة لتغييرها
+Agregar franja de widgets	إضافة شريط أدوات
+Agregar un widget	إضافة أداة
+Ajustar tamaños con el dedo	ضبط الأحجام بالإصبع
+Quitar este widget	إزالة هذه الأداة
+Accesos directos (apps)	اختصارات (تطبيقات)
+MÚSICA	الموسيقى
+Música (canción y controles)	الموسيقى (الأغنية وأزرار التحكم)
+Arrastra las manijas para cambiar tamaños · arrastra una tarjeta para moverla · toca un widget para cambiarlo · ✕ oculta una tarjeta	اسحب المقابض لتغيير الأحجام · اسحب بطاقة لنقلها · اضغط على أداة لتغييرها · ✕ يخفي البطاقة
+Ocultar la tarjeta del vehículo	إخفاء بطاقة المركبة
+Ocultar la tarjeta de música	إخفاء بطاقة الموسيقى
+Mostrar la tarjeta del vehículo	إظهار بطاقة المركبة
+Mostrar la tarjeta de música	إظهار بطاقة الموسيقى
+La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. El VIN solo se envía si lo activas aquí. Cada consulta la cobra tu proveedor con tu API key.	يستلم الذكاء الاصطناعي الكود والمركبة التي كتبتها وبيانات المحرك فقط، ولا يستلم موقعك أبداً. لا يُرسل رقم VIN إلا إذا فعّلته هنا. كل استعلام يحاسبك عليه مزوّدك عبر مفتاح API الخاص بك.

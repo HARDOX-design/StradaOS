@@ -1,0 +1,1 @@
+USB kablo ile OBD-II tarayıcı (CH340, FTDI, PL2303 ve CP2102 yongaları): Bluetooth'u tarayıcıyı göremeyen ekranlar için, örneğin birçok FYT ünitesi. Kılavuz hangi kabloyu alacağınızı anlatır.

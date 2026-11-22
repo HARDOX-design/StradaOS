@@ -1718,3 +1718,91 @@ El cable USB no tiene canal de datos	Il cavo USB non ha un canale dati
 Otra app está usando el cable USB	Un'altra app sta usando il cavo USB
 El cable USB no aceptó la velocidad	Il cavo USB non ha accettato la velocità
 Se desconectó el cable USB	Il cavo USB è stato scollegato
+Panel de datos	Pannello dati
+Datos del panel	Dati del pannello
+Máximo 6 datos	Massimo 6 dati
+Hasta 6 datos del escáner, por ejemplo RPM, velocidad, refrigerante y consumo	Fino a 6 dati dello scanner, per esempio giri, velocità, liquido di raffreddamento e consumo
+Conecta tu escáner OBD-II	Collega il tuo scanner OBD-II
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Si es Bluetooth, emparéjalo primero en los ajustes de Bluetooth del equipo (clave 1234 o 0000).\n3. Toca ⚙ para elegirlo y luego Conectar.\n\nStradaOS vigila la temperatura, el voltaje, la mezcla y los códigos de falla, y te avisa por voz aunque estés en otra app.	1. Inserisci lo scanner ELM327 nella presa OBD (sotto il volante) e accendi il quadro.\n2. Se è Bluetooth, abbinalo prima nelle impostazioni Bluetooth del dispositivo (PIN 1234 o 0000).\n3. Tocca ⚙ per sceglierlo e poi Connetti.\n\nStradaOS controlla temperatura, tensione, miscela e codici di errore e ti avvisa a voce anche se sei in un'altra app.
+Elegir escáner	Scegli scanner
+Probar con un auto simulado	Prova con un'auto simulata
+Todo normal por ahora.	Tutto normale per ora.
+Sin monitor activo.	Nessun monitor attivo.
+El auto no tiene códigos guardados.	L'auto non ha codici memorizzati.
+Se revisan al conectar y cada 30 segundos.	Vengono controllati alla connessione e ogni 30 secondi.
+Toca para ver qué hacer	Tocca per vedere cosa fare
+Hace {} min	{} min fa
+Para que una IA explique los códigos, pon tu API key (Claude, Groq, Gemini u otra) en ⚙ → Inteligencia artificial. Las explicaciones se guardan en el equipo y después funcionan sin internet.	Perché un'IA spieghi i codici, inserisci la tua chiave API (Claude, Groq, Gemini o un'altra) in ⚙ → Intelligenza artificiale. Le spiegazioni vengono salvate sul dispositivo e poi funzionano senza internet.
+Se apaga la luz del motor y se borran los datos que usa el taller para diagnosticar. Si la falla sigue, el código volverá a aparecer. Anota los códigos antes.	La spia motore si spegne e vengono cancellati i dati che l'officina usa per la diagnosi. Se il guasto persiste, il codice tornerà. Annota i codici prima.
+Mi vehículo (para la IA)	Il mio veicolo (per l'IA)
+Encender el monitor al iniciar StradaOS	Attiva il monitor all'avvio di StradaOS
+Ej.: Kia Sorento 2010 2.4 bencina 4x4 automático	Es.: Kia Sorento 2010 2.4 benzina 4x4 automatico
+La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. Cada consulta la cobra tu proveedor con tu API key.	L'IA riceve solo il codice, il veicolo che hai scritto e i dati del motore, mai la tua posizione. Ogni richiesta te la addebita il tuo fornitore sulla tua chiave API.
+alerta sobre	avviso sopra
+alerta bajo	avviso sotto
+alerta sobre ±	avviso oltre ±
+Con el motor en marcha debe estar entre 13,5 y 14,8 V. Con el motor apagado, 12,4 a 12,8 V es normal.	A motore acceso deve stare tra 13,5 e 14,8 V. A motore spento, da 12,4 a 12,8 V è normale.
+Normal en marcha: 85 a 98 °C. También avisa si sube más de 4 °C por minuto sobre 95 °C.	Normale in marcia: da 85 a 98 °C. Avvisa anche se sale più di 4 °C al minuto sopra i 95 °C.
+Cuánto corrige el computador la mezcla. Positivo = le falta combustible (fuga de aire); negativo = le sobra.	Quanto la centralina corregge la miscela. Positivo = manca carburante (presa d'aria); negativo = ce n'è troppo.
+Solo informativo: este dato no genera alertas.	Solo informativo: questo dato non genera avvisi.
+VEHÍCULO	VEICOLO
+Qué muestra cada tarjeta	Cosa mostra ogni scheda
+Música, el monitor del vehículo (temperatura, voltaje, RPM y alertas) o un gráfico en vivo	La musica, il monitor del veicolo (temperatura, tensione, giri e avvisi) o un grafico in tempo reale
+Gráfico en vivo	Grafico in tempo reale
+Gráfico del reproductor	Grafico della scheda musica
+Dato del escáner que se grafica (últimos 5 minutos)	Dato dello scanner da tracciare (ultimi 5 minuti)
+Tarjeta del centro	Scheda centrale
+El mapa, el monitor del vehículo o un gráfico en vivo. Sin el mapa, Android Auto y CarPlay se abren desde la barra de botones	La mappa, il monitor del veicolo o un grafico in tempo reale. Senza la mappa, Android Auto e CarPlay si aprono dalla barra dei pulsanti
+Gráfico del centro	Grafico della scheda centrale
+Velocidad (GPS)	Velocità (GPS)
+Recuadro de la velocidad	Riquadro della velocità
+La velocidad del GPS o, en grande, otro dato del escáner (por ejemplo la temperatura del refrigerante)	La velocità del GPS o, in grande, un altro dato dello scanner (per esempio la temperatura del liquido di raffreddamento)
+Esta tarjeta	Questa scheda
+Cambiar esta tarjeta…	Cambia questa scheda…
+¿Qué dato graficar?	Quale dato tracciare?
+Cambiar qué muestra…	Cambia cosa mostra…
+◀  Mover a la izquierda	◀  Sposta a sinistra
+Mover a la derecha  ▶	Sposta a destra  ▶
+Ancho de la tarjeta…	Larghezza della scheda…
+Ancho de la tarjeta	Larghezza della scheda
+Volver al orden y tamaño de siempre	Torna all'ordine e alle dimensioni di sempre
+Ya está a la izquierda	È già a sinistra
+Ya está a la derecha	È già a destra
+Ancha	Larga
+Muy ancha	Molto larga
+✋  Ajustar con el dedo (mover y cambiar tamaño)	✋  Regola con il dito (sposta e ridimensiona)
+Arrastra la manija entre dos tarjetas para cambiar el ancho · arrastra una tarjeta para moverla	Trascina la maniglia tra due schede per cambiare la larghezza · trascina una scheda per spostarla
+se ajusta solo	si adatta da sé
+VIAJE	VIAGGIO
+ALTITUD	ALTITUDINE
+pendiente —	pendenza —
+Mantén presionado para reiniciar el viaje o cambiar los widgets	Tieni premuto per azzerare il viaggio o cambiare i widget
+Quitar este acceso	Rimuovi questo collegamento
+Acceso directo {}	Collegamento {}
+Altitud, pendiente y rumbo	Altitudine, pendenza e direzione
+Viaje (km, tiempo, consumo)	Viaggio (km, tempo, consumo)
+Dato del vehículo…	Dato del veicolo…
+Accesos directos (3 apps)	Collegamenti (3 app)
+Dato del vehículo	Dato del veicolo
+Widget	Widget
+Reiniciar el viaje	Azzera il viaggio
+Quitar la franja	Rimuovi la striscia
+Franja de widgets	Striscia di widget
+¿Qué dato mostrar?	Quale dato mostrare?
+Viaje reiniciado	Viaggio azzerato
+Quitar la franja de widgets de abajo	Rimuovi la striscia di widget in basso
+Franja de widgets debajo (altitud, viaje, apps…)	Striscia di widget in basso (altitudine, viaggio, app…)
+Arrastra las manijas para cambiar tamaños · arrastra una tarjeta para moverla · toca un widget para cambiarlo	Trascina le maniglie per cambiare le dimensioni · trascina una scheda per spostarla · tocca un widget per cambiarlo
+Agregar franja de widgets	Aggiungi striscia di widget
+Agregar un widget	Aggiungi un widget
+Ajustar tamaños con el dedo	Regola le dimensioni con il dito
+Quitar este widget	Rimuovi questo widget
+Accesos directos (apps)	Collegamenti (app)
+MÚSICA	MUSICA
+Música (canción y controles)	Musica (brano e comandi)
+Arrastra las manijas para cambiar tamaños · arrastra una tarjeta para moverla · toca un widget para cambiarlo · ✕ oculta una tarjeta	Trascina le maniglie per cambiare le dimensioni · trascina una scheda per spostarla · tocca un widget per cambiarlo · ✕ nasconde una scheda
+Ocultar la tarjeta del vehículo	Nascondi la scheda del veicolo
+Ocultar la tarjeta de música	Nascondi la scheda della musica
+Mostrar la tarjeta del vehículo	Mostra la scheda del veicolo
+Mostrar la tarjeta de música	Mostra la scheda della musica
+La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. El VIN solo se envía si lo activas aquí. Cada consulta la cobra tu proveedor con tu API key.	L'IA riceve solo il codice, il veicolo che hai scritto e i dati del motore, mai la tua posizione. Il VIN viene inviato solo se lo attivi qui. Ogni richiesta te la addebita il tuo fornitore sulla tua chiave API.
