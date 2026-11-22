@@ -1806,3 +1806,31 @@ Ocultar la tarjeta de música	Masquer la carte musique
 Mostrar la tarjeta del vehículo	Afficher la carte du véhicule
 Mostrar la tarjeta de música	Afficher la carte musique
 La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. El VIN solo se envía si lo activas aquí. Cada consulta la cobra tu proveedor con tu API key.	L'IA ne reçoit que le code, le véhicule que vous avez saisi et les données du moteur, jamais votre position. Le VIN n'est envoyé que si vous l'activez ici. Chaque requête est facturée par votre fournisseur sur votre clé API.
+Apps de Android Auto / CarPlay con notificación: {} · multimedia: {}	Applis Android Auto / CarPlay avec notification : {} · multimédia : {}
+▶ sin nada sonando abre tu app de música: {}	▶ sans lecture en cours ouvre votre appli de musique : {}
+no (Android Auto / CarPlay conectado)	non (Android Auto / CarPlay connecté)
+Música de cualquier app (Android 5+): {}	Musique de n'importe quelle appli (Android 5+) : {}
+no aplica en este Android	non disponible sur cet Android
+acceso a notificaciones {} · lector conectado {}	accès aux notifications {} · lecteur connecté {}
+SÍ	OUI
+NO	NON
+Sonido de música en el sistema: {}	Son de musique dans le système : {}
+Sesiones multimedia: {}	Sessions multimédia : {}
+ninguna (ninguna app publica lo que suena)	aucune (aucune appli ne publie ce qui joue)
+el lector no arrancó	le lecteur n'a pas démarré
+sin acceso ({})	pas d'accès ({})
+Pantalla HCN (servicio sourceinfo): {}	Écran HCN (service sourceinfo) : {}
+no aplica (esta pantalla no es HCN)	sans objet (cet écran n'est pas HCN)
+no se probó	non testé
+conectado, se consulta cada 2 s (sin avisos)	connecté, interrogé toutes les 2 s (sans événements)
+conectado, con avisos del servicio	connecté, avec événements du service
+Bluetooth del sistema (AVRCP): {}	Bluetooth du système (AVRCP) : {}
+ningún aviso	aucun événement
+{} avisos, el último hace {} s: {}	{} événements, le dernier il y a {} s : {}
+Tráfico en vivo: {}	Trafic en direct : {}
+activo	actif
+inactivo	inactif
+fuente del equipo: {}	source de l'appareil : {}
+última lectura: {}	dernière lecture : {}
+avisos recibidos: {}	événements reçus : {}
+etiquetas del archivo: {}	étiquettes du fichier : {}

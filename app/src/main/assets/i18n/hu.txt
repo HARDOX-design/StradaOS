@@ -1791,3 +1791,31 @@ Ocultar la tarjeta de música	Zenekártya elrejtése
 Mostrar la tarjeta del vehículo	Járműkártya megjelenítése
 Mostrar la tarjeta de música	Zenekártya megjelenítése
 La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. El VIN solo se envía si lo activas aquí. Cada consulta la cobra tu proveedor con tu API key.	Az MI csak a kódot, a megadott járművet és a motoradatokat kapja meg, a helyzetedet soha. Az alvázszám csak akkor kerül elküldésre, ha itt bekapcsolod. Minden lekérdezést a szolgáltatód számláz az API-kulcsodra.
+Apps de Android Auto / CarPlay con notificación: {} · multimedia: {}	Értesítéssel rendelkező Android Auto / CarPlay alkalmazások: {} · média: {}
+▶ sin nada sonando abre tu app de música: {}	▶ ha semmi sem szól, megnyitja a zenealkalmazásodat: {}
+no (Android Auto / CarPlay conectado)	nem (Android Auto / CarPlay csatlakoztatva)
+Música de cualquier app (Android 5+): {}	Zene bármely alkalmazásból (Android 5+): {}
+no aplica en este Android	ezen az Androidon nem érhető el
+acceso a notificaciones {} · lector conectado {}	értesítési hozzáférés {} · olvasó csatlakozva {}
+SÍ	IGEN
+NO	NEM
+Sonido de música en el sistema: {}	Zenei hang a rendszerben: {}
+Sesiones multimedia: {}	Médiamunkamenetek: {}
+ninguna (ninguna app publica lo que suena)	nincs (egy alkalmazás sem teszi közzé, mi szól)
+el lector no arrancó	az olvasó nem indult el
+sin acceso ({})	nincs hozzáférés ({})
+Pantalla HCN (servicio sourceinfo): {}	HCN képernyő (sourceinfo szolgáltatás): {}
+no aplica (esta pantalla no es HCN)	nem alkalmazható (ez a képernyő nem HCN)
+no se probó	nincs kipróbálva
+conectado, se consulta cada 2 s (sin avisos)	csatlakozva, 2 másodpercenként lekérdezve (értesítések nélkül)
+conectado, con avisos del servicio	csatlakozva, a szolgáltatás értesítéseivel
+Bluetooth del sistema (AVRCP): {}	Rendszer-Bluetooth (AVRCP): {}
+ningún aviso	nincs értesítés
+{} avisos, el último hace {} s: {}	{} értesítés, az utolsó {} mp-e: {}
+Tráfico en vivo: {}	Élő forgalom: {}
+activo	aktív
+inactivo	inaktív
+fuente del equipo: {}	a készülék forrása: {}
+última lectura: {}	utolsó olvasás: {}
+avisos recibidos: {}	fogadott értesítések: {}
+etiquetas del archivo: {}	a fájl címkéi: {}

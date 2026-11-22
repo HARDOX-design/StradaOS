@@ -1806,3 +1806,31 @@ Ocultar la tarjeta de música	Sembunyikan kad muzik
 Mostrar la tarjeta del vehículo	Tunjukkan kad kenderaan
 Mostrar la tarjeta de música	Tunjukkan kad muzik
 La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. El VIN solo se envía si lo activas aquí. Cada consulta la cobra tu proveedor con tu API key.	AI hanya menerima kod, kenderaan yang anda tulis dan data enjin; tidak sekali-kali lokasi anda. VIN hanya dihantar jika anda mengaktifkannya di sini. Setiap pertanyaan dicaj oleh pembekal anda melalui kunci API anda.
+Apps de Android Auto / CarPlay con notificación: {} · multimedia: {}	Aplikasi Android Auto / CarPlay dengan pemberitahuan: {} · multimedia: {}
+▶ sin nada sonando abre tu app de música: {}	▶ tanpa apa-apa dimainkan membuka aplikasi muzik anda: {}
+no (Android Auto / CarPlay conectado)	tidak (Android Auto / CarPlay disambung)
+Música de cualquier app (Android 5+): {}	Muzik dari mana-mana aplikasi (Android 5+): {}
+no aplica en este Android	tidak tersedia pada Android ini
+acceso a notificaciones {} · lector conectado {}	akses pemberitahuan {} · pembaca disambung {}
+SÍ	YA
+NO	TIDAK
+Sonido de música en el sistema: {}	Bunyi muzik dalam sistem: {}
+Sesiones multimedia: {}	Sesi multimedia: {}
+ninguna (ninguna app publica lo que suena)	tiada (tiada aplikasi menyiarkan apa yang dimainkan)
+el lector no arrancó	pembaca tidak bermula
+sin acceso ({})	tiada akses ({})
+Pantalla HCN (servicio sourceinfo): {}	Skrin HCN (perkhidmatan sourceinfo): {}
+no aplica (esta pantalla no es HCN)	tidak berkenaan (skrin ini bukan HCN)
+no se probó	belum diuji
+conectado, se consulta cada 2 s (sin avisos)	disambung, disemak setiap 2 s (tanpa notis)
+conectado, con avisos del servicio	disambung, dengan notis perkhidmatan
+Bluetooth del sistema (AVRCP): {}	Bluetooth sistem (AVRCP): {}
+ningún aviso	tiada notis
+{} avisos, el último hace {} s: {}	{} notis, yang terakhir {} s lalu: {}
+Tráfico en vivo: {}	Trafik langsung: {}
+activo	aktif
+inactivo	tidak aktif
+fuente del equipo: {}	sumber peranti: {}
+última lectura: {}	bacaan terakhir: {}
+avisos recibidos: {}	notis diterima: {}
+etiquetas del archivo: {}	tag fail: {}

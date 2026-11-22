@@ -1806,3 +1806,31 @@ Ocultar la tarjeta de música	隐藏音乐卡片
 Mostrar la tarjeta del vehículo	显示车辆卡片
 Mostrar la tarjeta de música	显示音乐卡片
 La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. El VIN solo se envía si lo activas aquí. Cada consulta la cobra tu proveedor con tu API key.	AI 只会收到故障码、你填写的车辆和发动机数据，绝不会收到你的位置。只有在这里开启后才会发送 VIN。每次查询由你的服务商按你的 API 密钥计费。
+Apps de Android Auto / CarPlay con notificación: {} · multimedia: {}	有通知的 Android Auto / CarPlay 应用：{} · 媒体：{}
+▶ sin nada sonando abre tu app de música: {}	▶ 没有播放时打开你的音乐应用：{}
+no (Android Auto / CarPlay conectado)	否（Android Auto / CarPlay 已连接）
+Música de cualquier app (Android 5+): {}	任意应用的音乐（Android 5+）：{}
+no aplica en este Android	此 Android 版本不支持
+acceso a notificaciones {} · lector conectado {}	通知访问权限 {} · 读取器已连接 {}
+SÍ	是
+NO	否
+Sonido de música en el sistema: {}	系统中的音乐声音：{}
+Sesiones multimedia: {}	媒体会话：{}
+ninguna (ninguna app publica lo que suena)	无（没有应用发布正在播放的内容）
+el lector no arrancó	读取器未启动
+sin acceso ({})	无权访问（{}）
+Pantalla HCN (servicio sourceinfo): {}	HCN 屏幕（sourceinfo 服务）：{}
+no aplica (esta pantalla no es HCN)	不适用（此屏幕不是 HCN）
+no se probó	未测试
+conectado, se consulta cada 2 s (sin avisos)	已连接，每 2 秒查询一次（无通知）
+conectado, con avisos del servicio	已连接，有服务通知
+Bluetooth del sistema (AVRCP): {}	系统蓝牙（AVRCP）：{}
+ningún aviso	无通知
+{} avisos, el último hace {} s: {}	{} 条通知，最后一条在 {} 秒前：{}
+Tráfico en vivo: {}	实时路况：{}
+activo	开启
+inactivo	关闭
+fuente del equipo: {}	车机来源：{}
+última lectura: {}	最后读取：{}
+avisos recibidos: {}	收到的通知：{}
+etiquetas del archivo: {}	文件标签：{}

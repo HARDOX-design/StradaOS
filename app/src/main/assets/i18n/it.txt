@@ -1806,3 +1806,31 @@ Ocultar la tarjeta de música	Nascondi la scheda della musica
 Mostrar la tarjeta del vehículo	Mostra la scheda del veicolo
 Mostrar la tarjeta de música	Mostra la scheda della musica
 La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. El VIN solo se envía si lo activas aquí. Cada consulta la cobra tu proveedor con tu API key.	L'IA riceve solo il codice, il veicolo che hai scritto e i dati del motore, mai la tua posizione. Il VIN viene inviato solo se lo attivi qui. Ogni richiesta te la addebita il tuo fornitore sulla tua chiave API.
+Apps de Android Auto / CarPlay con notificación: {} · multimedia: {}	App di Android Auto / CarPlay con notifica: {} · multimediali: {}
+▶ sin nada sonando abre tu app de música: {}	▶ senza niente in riproduzione apre la tua app musicale: {}
+no (Android Auto / CarPlay conectado)	no (Android Auto / CarPlay collegato)
+Música de cualquier app (Android 5+): {}	Musica da qualsiasi app (Android 5+): {}
+no aplica en este Android	non disponibile su questo Android
+acceso a notificaciones {} · lector conectado {}	accesso alle notifiche {} · lettore collegato {}
+SÍ	SÌ
+NO	NO
+Sonido de música en el sistema: {}	Audio musicale nel sistema: {}
+Sesiones multimedia: {}	Sessioni multimediali: {}
+ninguna (ninguna app publica lo que suena)	nessuna (nessuna app pubblica cosa sta suonando)
+el lector no arrancó	il lettore non è partito
+sin acceso ({})	nessun accesso ({})
+Pantalla HCN (servicio sourceinfo): {}	Schermo HCN (servizio sourceinfo): {}
+no aplica (esta pantalla no es HCN)	non applicabile (questo schermo non è HCN)
+no se probó	non provato
+conectado, se consulta cada 2 s (sin avisos)	collegato, interrogato ogni 2 s (senza eventi)
+conectado, con avisos del servicio	collegato, con eventi del servizio
+Bluetooth del sistema (AVRCP): {}	Bluetooth di sistema (AVRCP): {}
+ningún aviso	nessun evento
+{} avisos, el último hace {} s: {}	{} eventi, l'ultimo {} s fa: {}
+Tráfico en vivo: {}	Traffico in tempo reale: {}
+activo	attivo
+inactivo	inattivo
+fuente del equipo: {}	sorgente del dispositivo: {}
+última lectura: {}	ultima lettura: {}
+avisos recibidos: {}	eventi ricevuti: {}
+etiquetas del archivo: {}	tag del file: {}

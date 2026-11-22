@@ -20,7 +20,7 @@ for t in 1 2 3; do
   echo "instalación $t: $r"; echo "$r" | grep -q Success && break
   adb kill-server; sleep 5; adb wait-for-device; sleep 20
 done
-adb logcat -v brief '*:E' 'dalvikvm:I' 'DEBUG:I' 'AndroidRuntime:I' > $OUT/cierres-raw.txt 2>&1 &
+adb logcat -v brief '*:E' 'dalvikvm:I' 'DEBUG:I' 'AndroidRuntime:I' 'StradaI18n:W' > $OUT/cierres-raw.txt 2>&1 &
 CR=$!
 ( while true; do adb emu geo fix -74.0836 4.6533 >/dev/null 2>&1; sleep 2; done ) &
 GEO=$!
@@ -92,7 +92,11 @@ if part 2; then
   step musica-aa-off aa-simular:0 3
   step diag-final diag-reproductor 5 1
   # ── idiomas: inicio y ajustes en cada uno ──
-  for l in en pt it de ms ar tr fr zh hu pl es; do step "idioma-$l" "idioma:$l" 6; step "ajustes-$l" "ajustes:9" 4; done
+  # los diagnósticos también, para que StradaOS Prueba anote las frases sin traducir (sin-traducir.txt)
+  for l in en pt it de ms ar tr fr zh hu pl es; do
+    step "idioma-$l" "idioma:$l" 6; step "ajustes-$l" "ajustes:9" 4
+    [ "$l" != es ] && { step "diagr-$l" diag-reproductor 4 1; step "diagm-$l" diag-mapa 4 1; }
+  done
   step final inicio 4
 fi
 # ════ Parte 3: escáner OBD y temas de pago ════
@@ -122,6 +126,8 @@ fi
 # el asistente va al final: su primer paso (idioma) no se cierra con «atrás» y taparía los pasos siguientes
 if part 2; then step asistente asistente 5; fi
 sleep 3; kill $GEO $CR 2>/dev/null
+# frases que se quedaron en español (solo informa, no hace fallar la prueba)
+grep "StradaI18n" $OUT/cierres-raw.txt | sed -E 's/^[^:]*StradaI18n[^:]*: //' | sort -u > $OUT/sin-traducir.txt
 grep -E -A30 "FATAL EXCEPTION|VM aborting|Fatal signal|overflow of stack" $OUT/cierres-raw.txt | head -300 > $OUT/logcat.txt
 grep -qE "VM aborting|overflow of stack" $OUT/cierres-raw.txt && echo "CIERRE de la máquina virtual (ver logcat.txt)" >> $OUT/CIERRES.txt
 if grep -q "com.stradaos" $OUT/logcat.txt; then echo "CIERRE en el registro de Android (ver logcat.txt)" >> $OUT/CIERRES.txt; fi

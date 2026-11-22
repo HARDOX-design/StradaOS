@@ -1808,3 +1808,31 @@ Ocultar la tarjeta de música	Müzik kartını gizle
 Mostrar la tarjeta del vehículo	Araç kartını göster
 Mostrar la tarjeta de música	Müzik kartını göster
 La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. El VIN solo se envía si lo activas aquí. Cada consulta la cobra tu proveedor con tu API key.	Yapay zeka yalnızca kodu, girdiğiniz aracı ve motor verilerini alır; konumunuzu asla almaz. VIN yalnızca burada etkinleştirirseniz gönderilir. Her sorgu sağlayıcınız tarafından API anahtarınızla ücretlendirilir.
+Apps de Android Auto / CarPlay con notificación: {} · multimedia: {}	Bildirimi olan Android Auto / CarPlay uygulamaları: {} · medya: {}
+▶ sin nada sonando abre tu app de música: {}	▶ hiçbir şey çalmıyorken müzik uygulamanızı açar: {}
+no (Android Auto / CarPlay conectado)	hayır (Android Auto / CarPlay bağlı)
+Música de cualquier app (Android 5+): {}	Herhangi bir uygulamadan müzik (Android 5+): {}
+no aplica en este Android	bu Android sürümünde kullanılamaz
+acceso a notificaciones {} · lector conectado {}	bildirim erişimi {} · okuyucu bağlı {}
+SÍ	EVET
+NO	HAYIR
+Sonido de música en el sistema: {}	Sistemde müzik sesi: {}
+Sesiones multimedia: {}	Medya oturumları: {}
+ninguna (ninguna app publica lo que suena)	yok (çalanı yayınlayan uygulama yok)
+el lector no arrancó	okuyucu başlamadı
+sin acceso ({})	erişim yok ({})
+Pantalla HCN (servicio sourceinfo): {}	HCN ekranı (sourceinfo hizmeti): {}
+no aplica (esta pantalla no es HCN)	geçerli değil (bu ekran HCN değil)
+no se probó	denenmedi
+conectado, se consulta cada 2 s (sin avisos)	bağlı, 2 sn'de bir sorgulanıyor (bildirim yok)
+conectado, con avisos del servicio	bağlı, hizmet bildirimleriyle
+Bluetooth del sistema (AVRCP): {}	Sistem Bluetooth'u (AVRCP): {}
+ningún aviso	bildirim yok
+{} avisos, el último hace {} s: {}	{} bildirim, sonuncusu {} sn önce: {}
+Tráfico en vivo: {}	Canlı trafik: {}
+activo	etkin
+inactivo	etkin değil
+fuente del equipo: {}	cihaz kaynağı: {}
+última lectura: {}	son okuma: {}
+avisos recibidos: {}	alınan bildirimler: {}
+etiquetas del archivo: {}	dosya etiketleri: {}

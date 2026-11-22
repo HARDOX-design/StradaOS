@@ -1810,3 +1810,31 @@ El cable USB no tiene canal de datos	The USB cable has no data channel
 Otra app está usando el cable USB	Another app is using the USB cable
 El cable USB no aceptó la velocidad	The USB cable didn't accept the speed
 Se desconectó el cable USB	The USB cable was disconnected
+Apps de Android Auto / CarPlay con notificación: {} · multimedia: {}	Android Auto / CarPlay apps with a notification: {} · media: {}
+▶ sin nada sonando abre tu app de música: {}	▶ with nothing playing opens your music app: {}
+no (Android Auto / CarPlay conectado)	no (Android Auto / CarPlay connected)
+Música de cualquier app (Android 5+): {}	Music from any app (Android 5+): {}
+no aplica en este Android	not available on this Android
+acceso a notificaciones {} · lector conectado {}	notification access {} · reader connected {}
+SÍ	YES
+NO	NO
+Sonido de música en el sistema: {}	Music audio in the system: {}
+Sesiones multimedia: {}	Media sessions: {}
+ninguna (ninguna app publica lo que suena)	none (no app publishes what's playing)
+el lector no arrancó	the reader didn't start
+sin acceso ({})	no access ({})
+Pantalla HCN (servicio sourceinfo): {}	HCN screen (sourceinfo service): {}
+no aplica (esta pantalla no es HCN)	not applicable (this screen isn't HCN)
+no se probó	not tested
+conectado, se consulta cada 2 s (sin avisos)	connected, polled every 2 s (no events)
+conectado, con avisos del servicio	connected, with service events
+Bluetooth del sistema (AVRCP): {}	System Bluetooth (AVRCP): {}
+ningún aviso	no events
+{} avisos, el último hace {} s: {}	{} events, the last one {} s ago: {}
+Tráfico en vivo: {}	Live traffic: {}
+activo	active
+inactivo	inactive
+fuente del equipo: {}	unit source: {}
+última lectura: {}	last reading: {}
+avisos recibidos: {}	events received: {}
+etiquetas del archivo: {}	file tags: {}

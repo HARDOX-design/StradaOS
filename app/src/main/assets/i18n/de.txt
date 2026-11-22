@@ -1806,3 +1806,31 @@ Ocultar la tarjeta de música	Musikkarte ausblenden
 Mostrar la tarjeta del vehículo	Fahrzeugkarte einblenden
 Mostrar la tarjeta de música	Musikkarte einblenden
 La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. El VIN solo se envía si lo activas aquí. Cada consulta la cobra tu proveedor con tu API key.	Die KI erhält nur den Code, das eingegebene Fahrzeug und die Motordaten, nie deinen Standort. Die FIN wird nur gesendet, wenn du es hier aktivierst. Jede Anfrage berechnet dir dein Anbieter über deinen API-Schlüssel.
+Apps de Android Auto / CarPlay con notificación: {} · multimedia: {}	Android-Auto-/CarPlay-Apps mit Benachrichtigung: {} · Medien: {}
+▶ sin nada sonando abre tu app de música: {}	▶ ohne Wiedergabe öffnet deine Musik-App: {}
+no (Android Auto / CarPlay conectado)	nein (Android Auto / CarPlay verbunden)
+Música de cualquier app (Android 5+): {}	Musik aus jeder App (Android 5+): {}
+no aplica en este Android	auf diesem Android nicht verfügbar
+acceso a notificaciones {} · lector conectado {}	Benachrichtigungszugriff {} · Leser verbunden {}
+SÍ	JA
+NO	NEIN
+Sonido de música en el sistema: {}	Musikton im System: {}
+Sesiones multimedia: {}	Mediensitzungen: {}
+ninguna (ninguna app publica lo que suena)	keine (keine App meldet, was läuft)
+el lector no arrancó	der Leser ist nicht gestartet
+sin acceso ({})	kein Zugriff ({})
+Pantalla HCN (servicio sourceinfo): {}	HCN-Bildschirm (Dienst sourceinfo): {}
+no aplica (esta pantalla no es HCN)	nicht zutreffend (dieser Bildschirm ist kein HCN)
+no se probó	nicht geprüft
+conectado, se consulta cada 2 s (sin avisos)	verbunden, Abfrage alle 2 s (ohne Ereignisse)
+conectado, con avisos del servicio	verbunden, mit Ereignissen des Dienstes
+Bluetooth del sistema (AVRCP): {}	System-Bluetooth (AVRCP): {}
+ningún aviso	keine Ereignisse
+{} avisos, el último hace {} s: {}	{} Ereignisse, das letzte vor {} s: {}
+Tráfico en vivo: {}	Live-Verkehr: {}
+activo	aktiv
+inactivo	inaktiv
+fuente del equipo: {}	Quelle des Geräts: {}
+última lectura: {}	letzte Abfrage: {}
+avisos recibidos: {}	empfangene Ereignisse: {}
+etiquetas del archivo: {}	Tags der Datei: {}

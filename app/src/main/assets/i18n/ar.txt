@@ -1806,3 +1806,31 @@ Ocultar la tarjeta de música	إخفاء بطاقة الموسيقى
 Mostrar la tarjeta del vehículo	إظهار بطاقة المركبة
 Mostrar la tarjeta de música	إظهار بطاقة الموسيقى
 La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. El VIN solo se envía si lo activas aquí. Cada consulta la cobra tu proveedor con tu API key.	يستلم الذكاء الاصطناعي الكود والمركبة التي كتبتها وبيانات المحرك فقط، ولا يستلم موقعك أبداً. لا يُرسل رقم VIN إلا إذا فعّلته هنا. كل استعلام يحاسبك عليه مزوّدك عبر مفتاح API الخاص بك.
+Apps de Android Auto / CarPlay con notificación: {} · multimedia: {}	تطبيقات Android Auto / CarPlay مع إشعار: {} · وسائط: {}
+▶ sin nada sonando abre tu app de música: {}	▶ بدون تشغيل يفتح تطبيق الموسيقى: {}
+no (Android Auto / CarPlay conectado)	لا (Android Auto / CarPlay متصل)
+Música de cualquier app (Android 5+): {}	موسيقى من أي تطبيق (Android 5+): {}
+no aplica en este Android	غير متاح في هذا الإصدار من Android
+acceso a notificaciones {} · lector conectado {}	الوصول إلى الإشعارات {} · القارئ متصل {}
+SÍ	نعم
+NO	لا
+Sonido de música en el sistema: {}	صوت الموسيقى في النظام: {}
+Sesiones multimedia: {}	جلسات الوسائط: {}
+ninguna (ninguna app publica lo que suena)	لا شيء (لا يوجد تطبيق ينشر ما يُشغَّل)
+el lector no arrancó	القارئ لم يبدأ
+sin acceso ({})	لا يوجد وصول ({})
+Pantalla HCN (servicio sourceinfo): {}	شاشة HCN (خدمة sourceinfo): {}
+no aplica (esta pantalla no es HCN)	لا ينطبق (هذه الشاشة ليست HCN)
+no se probó	لم يُختبر
+conectado, se consulta cada 2 s (sin avisos)	متصل، يُستعلم كل 2 ث (بدون إشعارات)
+conectado, con avisos del servicio	متصل، مع إشعارات الخدمة
+Bluetooth del sistema (AVRCP): {}	بلوتوث النظام (AVRCP): {}
+ningún aviso	لا إشعارات
+{} avisos, el último hace {} s: {}	{} إشعارات، آخرها منذ {} ث: {}
+Tráfico en vivo: {}	حركة المرور المباشرة: {}
+activo	نشط
+inactivo	غير نشط
+fuente del equipo: {}	مصدر الجهاز: {}
+última lectura: {}	آخر قراءة: {}
+avisos recibidos: {}	الإشعارات المستلمة: {}
+etiquetas del archivo: {}	وسوم الملف: {}

@@ -1809,3 +1809,31 @@ Ocultar la tarjeta del vehículo	Ocultar o cartão do veículo
 Ocultar la tarjeta de música	Ocultar o cartão de música
 Mostrar la tarjeta del vehículo	Mostrar o cartão do veículo
 Mostrar la tarjeta de música	Mostrar o cartão de música
+Apps de Android Auto / CarPlay con notificación: {} · multimedia: {}	Apps de Android Auto / CarPlay com notificação: {} · mídia: {}
+▶ sin nada sonando abre tu app de música: {}	▶ sem nada tocando abre seu app de música: {}
+no (Android Auto / CarPlay conectado)	não (Android Auto / CarPlay conectado)
+Música de cualquier app (Android 5+): {}	Música de qualquer app (Android 5+): {}
+no aplica en este Android	não disponível neste Android
+acceso a notificaciones {} · lector conectado {}	acesso a notificações {} · leitor conectado {}
+SÍ	SIM
+NO	NÃO
+Sonido de música en el sistema: {}	Som de música no sistema: {}
+Sesiones multimedia: {}	Sessões de mídia: {}
+ninguna (ninguna app publica lo que suena)	nenhuma (nenhum app publica o que está tocando)
+el lector no arrancó	o leitor não iniciou
+sin acceso ({})	sem acesso ({})
+Pantalla HCN (servicio sourceinfo): {}	Tela HCN (serviço sourceinfo): {}
+no aplica (esta pantalla no es HCN)	não se aplica (esta tela não é HCN)
+no se probó	não testado
+conectado, se consulta cada 2 s (sin avisos)	conectado, consulta a cada 2 s (sem avisos)
+conectado, con avisos del servicio	conectado, com avisos do serviço
+Bluetooth del sistema (AVRCP): {}	Bluetooth do sistema (AVRCP): {}
+ningún aviso	nenhum aviso
+{} avisos, el último hace {} s: {}	{} avisos, o último há {} s: {}
+Tráfico en vivo: {}	Trânsito ao vivo: {}
+activo	ativo
+inactivo	inativo
+fuente del equipo: {}	fonte do aparelho: {}
+última lectura: {}	última leitura: {}
+avisos recibidos: {}	avisos recebidos: {}
+etiquetas del archivo: {}	etiquetas do arquivo: {}

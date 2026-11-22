@@ -1785,3 +1785,31 @@ El cable USB no tiene canal de datos	Kabel USB nie ma kanału danych
 Otra app está usando el cable USB	Inna aplikacja używa kabla USB
 El cable USB no aceptó la velocidad	Kabel USB nie przyjął prędkości
 Se desconectó el cable USB	Kabel USB został odłączony
+Apps de Android Auto / CarPlay con notificación: {} · multimedia: {}	Aplikacje Android Auto / CarPlay z powiadomieniem: {} · multimedia: {}
+▶ sin nada sonando abre tu app de música: {}	▶ gdy nic nie gra, otwiera twoją aplikację muzyczną: {}
+no (Android Auto / CarPlay conectado)	nie (Android Auto / CarPlay połączone)
+Música de cualquier app (Android 5+): {}	Muzyka z dowolnej aplikacji (Android 5+): {}
+no aplica en este Android	niedostępne w tym Androidzie
+acceso a notificaciones {} · lector conectado {}	dostęp do powiadomień {} · czytnik połączony {}
+SÍ	TAK
+NO	NIE
+Sonido de música en el sistema: {}	Dźwięk muzyki w systemie: {}
+Sesiones multimedia: {}	Sesje multimedialne: {}
+ninguna (ninguna app publica lo que suena)	brak (żadna aplikacja nie publikuje, co gra)
+el lector no arrancó	czytnik się nie uruchomił
+sin acceso ({})	brak dostępu ({})
+Pantalla HCN (servicio sourceinfo): {}	Ekran HCN (usługa sourceinfo): {}
+no aplica (esta pantalla no es HCN)	nie dotyczy (ten ekran nie jest HCN)
+no se probó	nie sprawdzono
+conectado, se consulta cada 2 s (sin avisos)	połączono, sprawdzane co 2 s (bez powiadomień)
+conectado, con avisos del servicio	połączono, z powiadomieniami usługi
+Bluetooth del sistema (AVRCP): {}	Bluetooth systemu (AVRCP): {}
+ningún aviso	brak powiadomień
+{} avisos, el último hace {} s: {}	{} powiadomień, ostatnie {} s temu: {}
+Tráfico en vivo: {}	Ruch na żywo: {}
+activo	aktywny
+inactivo	nieaktywny
+fuente del equipo: {}	źródło urządzenia: {}
+última lectura: {}	ostatni odczyt: {}
+avisos recibidos: {}	otrzymane powiadomienia: {}
+etiquetas del archivo: {}	tagi pliku: {}
