@@ -1,0 +1,1 @@
+Son kaydedilen tahminle internetsiz hava durumu. Android Auto veya CarPlay çalarken ▶ artık üstüne başka müzik başlatmaz. Telefon Bluetooth ile bağlanınca Android 5+ sürümlerde ana ekrana döner.

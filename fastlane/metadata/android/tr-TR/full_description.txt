@@ -1,0 +1,16 @@
+<p><b>StradaOS</b>, aracınızın Android ekranına yeni bir hayat verir: sisteme ROM yazmadan ve sistem ayarlarına dokunmadan, fabrika menüsünün yerine modern bir ana ekran koyar.</p>
+<p>«Android 6+» yazan ama aslında Android 4.x çalıştıran, Play Store'un artık açılmadığı ve çoğu uygulamanın kurulamadığı ekranlar için tasarlandı. Yeni ekranlarda da çalışır.</p>
+<p><b>Özellikler</b></p>
+<ul>
+<li>Canlı ve çevrimdışı harita: ülkenizin haritasını uygulamadan indirin, internetsiz kullanın.</li>
+<li>İsteğe bağlı adım adım navigasyon: bir yer arayın, StradaOS sesli yönlendirsin; alternatif rotalar ve yeniden rota hesaplama, çevrimdışıyken indirilen haritada yaklaşık rota.</li>
+<li>İsteğe bağlı OBD-II tarayıcı (klasik Bluetooth veya Wi-Fi üzerinden ELM327): her temada soğutma sıvısı, akü ve devir paneli, sesli uyarılar, açıklanan arıza kodları, canlı grafikler ve dahili kılavuz.</li>
+<li>Android Auto ve CarPlay düğmeleri: ekranınızın yansıtma uygulamasını veya Open Headunit'i açar.</li>
+<li>Müziğiniz ana ekranda: Bluetooth'ta çalan şarkının adı, sanatçısı ve süresi; Android Auto ile albüm kapağı da.</li>
+<li>GPS hız göstergesi, hava durumu, saat, yağ değişimi hatırlatıcısı ve aracınızın fotoğrafı.</li>
+<li>Ana ekranı tasarlayın: oynatıcı solda veya sağda, normal, kompakt ya da yan düğme çubuğu, katlanabilir Android Auto ve CarPlay düğmeleri.</li>
+<li>İstediğiniz alt çubuk ve gizlenebilir uygulamalar. Geri vites kamerası çalışmaya devam eder.</li>
+<li>Klasik, Aurora ve Cobalto temaları (ve 5 USD bağışla Faro), koyu, açık veya otomatik mod, 10 renk ve 12 dil.</li>
+<li>QR kodlu güncelleme bildirimleri.</li>
+</ul>
+<p>Android 4.1 ve üzerinde çalışır. Yaklaşık 1,5 MB. Ücretsiz, reklamsız, açık kaynak (GPL-3.0).</p>
