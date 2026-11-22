@@ -1,6 +1,6 @@
 {
-  "version": "2.32.0",
-  "notes": "# StradaOS 2.32.0\n\n- **Traducciones completas.** Las partes nuevas de las últimas versiones (panel del escáner OBD-II, tarjetas y widgets del inicio, viaje e IA) ya están traducidas en los 12 idiomas; antes, en varios idiomas aparecían en español. Los diagnósticos del reproductor y del mapa también salen completos en cada idioma.\n- **Turco:** completo y con su ficha en la tienda. Gracias a **mryusufcan**.\n- **Polaco:** correcciones en mantenimientos (gracias a **darlo-Pl**), en «Velocímetro sobre el mapa» y en el tema automático.\n- Revisión automática de los archivos de idioma en cada cambio, para que no vuelvan a quedar frases sin traducir sin darnos cuenta (gracias a **mryusufcan**).\n",
-  "url": "https://github.com/lordnordic-debug/StradaOS/releases/tag/v2.32.0",
-  "apk": "https://github.com/lordnordic-debug/StradaOS/releases/download/v2.32.0/StradaOS-2.32.0.apk"
+  "version": "2.33.0",
+  "notes": "# StradaOS 2.33.0\n\n- **Nuevo tema premium «Carbono».** Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo (o gris perla en el modo claro). Tu vehículo en grande, visto desde arriba y en 8 colores, con el velocímetro y los dos mantenimientos más cercanos; el mapa con el reproductor y el clima flotando encima; Android Auto y CarPlay siempre a la vista arriba, y una barra de apps tipo píldora que se desliza si no caben todos los botones. Funciona en horizontal y en vertical, y se desbloquea con una donación (con Faro, los dos por 8 USD).\n",
+  "url": "https://github.com/lordnordic-debug/StradaOS/releases/tag/v2.33.0",
+  "apk": "https://github.com/lordnordic-debug/StradaOS/releases/download/v2.33.0/StradaOS-2.33.0.apk"
 }
