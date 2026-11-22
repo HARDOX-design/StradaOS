@@ -4,6 +4,9 @@ name: Bloque 20 (tema Carbono)
 # Quedan en la rama «bloque20-capturas».
 on:
   workflow_dispatch:
+  push:
+    branches: [ 'wip-2.33' ]
+    paths-ignore: [ 'docs/**', '**.md' ]
 
 permissions:
   contents: write
