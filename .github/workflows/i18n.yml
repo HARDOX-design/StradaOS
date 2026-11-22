@@ -1,0 +1,22 @@
+name: Traducciones
+
+# Revisa que los archivos de assets/i18n no rompan nada: claves repetidas,
+# claves viejas y marcadores ({} / %s / \n…) distintos al español. Los textos
+# sin traducir se avisan en el resumen, sin bloquear.
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'app/src/main/assets/i18n/**', '.github/scripts/i18n_check.py', '.github/workflows/i18n.yml' ]
+  pull_request:
+    paths: [ 'app/src/main/assets/i18n/**', '.github/scripts/i18n_check.py', '.github/workflows/i18n.yml' ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  revisar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 .github/scripts/i18n_check.py
