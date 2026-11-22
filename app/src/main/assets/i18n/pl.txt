@@ -637,7 +637,7 @@ TLS listo ({}), {} raíces, {} omitidas	TLS gotowy ({}), {} certyfikatów głów
 TLS no disponible: {}	TLS niedostępne: {}
 Íconos de Wi-Fi y Bluetooth arriba	Ikony Wi-Fi i Bluetooth na górze
 Bluetooth: estado del celular desde la app de fábrica; toca para abrirla	Bluetooth: stan telefonu według aplikacji systemowej; dotknij, aby ją otworzyć
-Tema según el modo oscuro del sistema	Bluetooth: stan telefonu według aplikacji systemowej; dotknij, aby ją otworzyć
+Tema según el modo oscuro del sistema	Motyw zgodny z trybem ciemnym systemu
 Pantallas que lo cambian (p. ej. con las luces)	Ekrany, które go przełączają (np. światłami)
 el sistema está en modo oscuro	system jest w trybie ciemnym
 el sistema está en modo claro	system jest w trybie jasnym
@@ -706,7 +706,7 @@ En la tarjeta del vehículo. Toma el color de acento	Na karcie pojazdu. Używa k
 Digital	Cyfrowy
 Analógico	Analog
 Mixto	Mieszane
-Velocímetro sobre el mapa	Mieszane
+Velocímetro sobre el mapa	Prędkościomierz na mapie
 Redondo, en una esquina del mapa (en vez de la velocidad de arriba)	Okrągły, w rogu mapy (zamiast prędkości na górze)
 Mantenimiento	Konserwacja
 Otros mantenimientos	Pozostała konserwacja

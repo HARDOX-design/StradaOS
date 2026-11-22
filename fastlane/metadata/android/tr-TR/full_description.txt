@@ -4,7 +4,7 @@
 <ul>
 <li>Canlı ve çevrimdışı harita: ülkenizin haritasını uygulamadan indirin, internetsiz kullanın.</li>
 <li>İsteğe bağlı adım adım navigasyon: bir yer arayın, StradaOS sesli yönlendirsin; alternatif rotalar ve yeniden rota hesaplama, çevrimdışıyken indirilen haritada yaklaşık rota.</li>
-<li>İsteğe bağlı OBD-II tarayıcı (klasik Bluetooth veya Wi-Fi üzerinden ELM327): her temada soğutma sıvısı, akü ve devir paneli, sesli uyarılar, açıklanan arıza kodları, canlı grafikler ve dahili kılavuz.</li>
+<li>İsteğe bağlı OBD-II tarayıcı (klasik Bluetooth, Wi-Fi veya USB kablo üzerinden ELM327): her temada soğutma sıvısı, akü ve devir paneli, sesli uyarılar, açıklanan arıza kodları, canlı grafikler ve dahili kılavuz.</li>
 <li>Android Auto ve CarPlay düğmeleri: ekranınızın yansıtma uygulamasını veya Open Headunit'i açar.</li>
 <li>Müziğiniz ana ekranda: Bluetooth'ta çalan şarkının adı, sanatçısı ve süresi; Android Auto ile albüm kapağı da.</li>
 <li>GPS hız göstergesi, hava durumu, saat, yağ değişimi hatırlatıcısı ve aracınızın fotoğrafı.</li>

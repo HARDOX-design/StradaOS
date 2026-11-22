@@ -1729,7 +1729,7 @@ Conecta tu escáner OBD-II	OBD-II tarayıcınızı bağlayın
 Elegir escáner	Tarayıcı seç
 Probar con un auto simulado	Simüle edilmiş araçla dene
 Todo normal por ahora.	Şimdilik her şey normal.
-Sin monitor activo.	İzleyici etkin değil.
+Sin monitor activo.	Etkin monitör yok.
 El auto no tiene códigos guardados.	Araçta kayıtlı arıza kodu yok.
 Se revisan al conectar y cada 30 segundos.	Bağlanınca ve her 30 saniyede kontrol edilir.
 Toca para ver qué hacer	Ne yapılacağını görmek için dokunun
@@ -1737,7 +1737,7 @@ Hace {} min	{} dk önce
 Para que una IA explique los códigos, pon tu API key (Claude, Groq, Gemini u otra) en ⚙ → Inteligencia artificial. Las explicaciones se guardan en el equipo y después funcionan sin internet.	Kodları bir yapay zekanın açıklaması için ⚙ → Yapay zeka bölümüne API anahtarınızı (Claude, Groq, Gemini veya başka) girin. Açıklamalar cihazda saklanır ve sonra internetsiz çalışır.
 Se apaga la luz del motor y se borran los datos que usa el taller para diagnosticar. Si la falla sigue, el código volverá a aparecer. Anota los códigos antes.	Motor arıza lambası söner ve servisin tanı için kullandığı veriler silinir. Arıza devam ederse kod yeniden görünür. Kodları önce not alın.
 Mi vehículo (para la IA)	Aracım (yapay zeka için)
-Encender el monitor al iniciar StradaOS	StradaOS açılınca izleyiciyi başlat
+Encender el monitor al iniciar StradaOS	StradaOS açılınca monitörü başlat
 Ej.: Kia Sorento 2010 2.4 bencina 4x4 automático	Ör.: Kia Sorento 2010 2.4 benzinli 4x4 otomatik
 La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. Cada consulta la cobra tu proveedor con tu API key.	Yapay zeka yalnızca kodu, girdiğiniz aracı ve motor verilerini alır; konumunuzu asla almaz. Her sorgu sağlayıcınız tarafından API anahtarınızla ücretlendirilir.
 alerta sobre	üst sınır uyarısı
@@ -1749,12 +1749,12 @@ Cuánto corrige el computador la mezcla. Positivo = le falta combustible (fuga d
 Solo informativo: este dato no genera alertas.	Yalnızca bilgi amaçlı: bu veri uyarı üretmez.
 VEHÍCULO	ARAÇ
 Qué muestra cada tarjeta	Her kart ne gösterir
-Música, el monitor del vehículo (temperatura, voltaje, RPM y alertas) o un gráfico en vivo	Müzik, araç izleyici (sıcaklık, voltaj, RPM ve uyarılar) veya canlı grafik
+Música, el monitor del vehículo (temperatura, voltaje, RPM y alertas) o un gráfico en vivo	Müzik, araç monitörü (sıcaklık, voltaj, RPM ve uyarılar) veya canlı grafik
 Gráfico en vivo	Canlı grafik
 Gráfico del reproductor	Oynatıcı grafiği
 Dato del escáner que se grafica (últimos 5 minutos)	Grafikte gösterilen tarayıcı verisi (son 5 dakika)
 Tarjeta del centro	Orta kart
-El mapa, el monitor del vehículo o un gráfico en vivo. Sin el mapa, Android Auto y CarPlay se abren desde la barra de botones	Harita, araç izleyici veya canlı grafik. Harita yoksa Android Auto ve CarPlay düğme çubuğundan açılır
+El mapa, el monitor del vehículo o un gráfico en vivo. Sin el mapa, Android Auto y CarPlay se abren desde la barra de botones	Harita, araç monitörü veya canlı grafik. Harita yoksa Android Auto ve CarPlay düğme çubuğundan açılır
 Gráfico del centro	Orta kart grafiği
 Velocidad (GPS)	Hız (GPS)
 Recuadro de la velocidad	Hız kutusu
