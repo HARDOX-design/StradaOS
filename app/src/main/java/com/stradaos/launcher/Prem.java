@@ -75,7 +75,7 @@ final class Prem {
         else if (faro()) Faro.paint(c, bw, bh, light, accent);
         else if (cob()) Cobalto.paint(c, bw, bh, light, accent);
         else Aurora.paint(c, bw, bh, light, accent);
-        if (carb()) Aurora.grain(b, Carbono.grain(light));
+        if (carb()) Carbono.texture(b, light);
         else if (faro()) Aurora.grain(b, Faro.grain(light)); else Aurora.grain(b, light);
         cache = b;
         cacheKey = key;

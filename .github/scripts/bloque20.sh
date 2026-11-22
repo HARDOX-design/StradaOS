@@ -57,6 +57,8 @@ go pref:carb_car=silver 5; go tema:oscuro 6
 go pref:maint= 4; demo; shot c19-solo-aceite
 go pref:oil_on=false 5; demo; shot c19b-sin-mantenimientos
 go demo-aceite 4; go demo-mant 4
+go pref:carb_ov_open=false 5; demo; shot c18-escondidos
+go pref:carb_ov_open=true 5
 go pref:weather_on=false 5; demo; shot c20-sin-clima
 go pref:weather_on=true 5
 go pref:show_player=false 5; shot c21-sin-reproductor
@@ -85,6 +87,7 @@ if [ "$API" -ge 18 ]; then
   size 800x480; demo; shot c52-800x480
   size 1280x720; demo; shot c53-1280x720
   size 1080x1920; demo; shot c60-vertical
+  go pref:carb_ov_open=false 5; demo; shot c60b-vertical-escondidos; go pref:carb_ov_open=true 5
   go tema:claro 7; demo; shot c61-vertical-claro
   go pref:dock_count=10 5; demo; shot c62-vertical-diez
   go pref:dock_count=7 4; go tema:oscuro 6

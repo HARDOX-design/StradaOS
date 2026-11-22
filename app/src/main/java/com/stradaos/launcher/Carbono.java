@@ -62,40 +62,70 @@ final class Carbono {
     // ── fondo ──
 
     /**
-     * Carbón: base casi negra, más oscura arriba a la derecha, y una luz fría y suave que sube desde la esquina de abajo
-     * a la izquierda. Claro: gris perla con la misma luz en blanco. El micro-grano lo pone Prem.background.
+     * Oscuro: casi negro con haces de luz suaves que entran en diagonal desde arriba a la izquierda. Claro: cielo
+     * gris azulado arriba, una franja luminosa y abajo azul marino hasta casi negro. La textura la pone {@link #texture}.
      */
     static void paint(Canvas c, float w, float h, boolean light, int accent) {
         Paint p = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-        p.setShader(new LinearGradient(0, h, w, 0,
-            light ? new int[]{0xFFEEEFF1, 0xFFE6E7EA, 0xFFDDDFE3} : new int[]{0xFF1A1B1F, 0xFF121316, 0xFF0B0C0E},
-            new float[]{0f, 0.5f, 1f}, Shader.TileMode.CLAMP));
+        if (light) {
+            p.setShader(new LinearGradient(0, 0, 0, h,
+                new int[]{0xFFD9E2EF, 0xFFE3EAF4, 0xFFEEF2F8, 0xFFB8C8DE, 0xFF5E7BA6, 0xFF2A3F63, 0xFF111A2B, 0xFF07090E},
+                new float[]{0f, 0.25f, 0.5f, 0.6f, 0.68f, 0.78f, 0.9f, 1f}, Shader.TileMode.CLAMP));
+            c.drawRect(0, 0, w, h, p);
+            p.setShader(null);
+            return;
+        }
+        p.setShader(new LinearGradient(0, 0, w * 0.6f, h, 0xFF141416, 0xFF09090A, Shader.TileMode.CLAMP));
         c.drawRect(0, 0, w, h, p);
+        // haces: franjas anchas y difusas, inclinadas, más fuertes cerca de la esquina de arriba a la izquierda
         float diag = (float) Math.hypot(w, h);
-        // luz desde abajo a la izquierda: un resplandor grande y otro más concentrado en la esquina
-        int glow = light ? 0xFFFFFFFF : 0xFFD9DEE8;
-        p.setShader(new RadialGradient(-w * 0.04f, h * 1.04f, diag * 0.95f,
-            new int[]{Aurora.a(glow, light ? 0.75f : 0.13f), Aurora.a(glow, light ? 0.30f : 0.045f), 0},
-            new float[]{0f, 0.45f, 1f}, Shader.TileMode.CLAMP));
-        c.drawRect(0, 0, w, h, p);
-        p.setShader(new RadialGradient(w * 0.02f, h * 0.98f, diag * 0.38f,
-            new int[]{Aurora.a(glow, light ? 0.55f : 0.10f), 0}, null, Shader.TileMode.CLAMP));
-        c.drawRect(0, 0, w, h, p);
-        // un velo suave arriba a la derecha (donde la luz no llega)
-        p.setShader(new RadialGradient(w * 1.02f, -h * 0.05f, diag * 0.55f,
-            new int[]{Aurora.a(light ? 0xFFC9CDD4 : 0xFF000000, light ? 0.35f : 0.45f), 0}, null, Shader.TileMode.CLAMP));
+        c.save();
+        c.rotate(-52, 0, 0);
+        float[][] beams = {{-0.10f, 0.10f, 0.11f}, {0.06f, 0.05f, 0.08f}, {0.17f, 0.12f, 0.07f}, {0.33f, 0.07f, 0.05f}, {0.46f, 0.16f, 0.035f}};
+        for (float[] b : beams) {
+            float cx = b[0] * diag, half = b[1] * diag;
+            p.setShader(new LinearGradient(cx - half, 0, cx + half, 0,
+                new int[]{0, Aurora.a(0xFFE8EAEE, b[2]), 0}, new float[]{0f, 0.5f, 1f}, Shader.TileMode.CLAMP));
+            c.drawRect(cx - half, -diag, cx + half, diag * 2, p);
+        }
+        c.restore();
+        // los haces se apagan hacia abajo a la derecha
+        p.setShader(new RadialGradient(w * 1.05f, h * 1.1f, diag * 0.8f,
+            new int[]{0xF209090A, 0x8C09090A, 0}, new float[]{0f, 0.5f, 1f}, Shader.TileMode.CLAMP));
         c.drawRect(0, 0, w, h, p);
         p.setShader(null);
     }
 
+    /**
+     * Textura grumosa: ruido a media resolución estirado con filtro (grumos de ~2 px) + el grano fino de siempre.
+     * Se pinta una sola vez con el fondo.
+     */
+    static void texture(Bitmap b, boolean light) {
+        try {
+            int w = b.getWidth(), h = b.getHeight(), nw = Math.max(1, w / 3), nh = Math.max(1, h / 3);
+            int[] px = new int[nw * nh];
+            java.util.Random r = new java.util.Random(7);
+            int amp = light ? 22 : 30;
+            for (int i = 0; i < px.length; i++) {
+                int v = (int) (r.nextGaussian() * amp);
+                v = Math.max(-80, Math.min(80, v));
+                px[i] = v >= 0 ? (v << 24) | 0xFFFFFF : ((-v) << 24);
+            }
+            Bitmap n = Bitmap.createBitmap(px, nw, nh, Bitmap.Config.ARGB_8888);
+            new Canvas(b).drawBitmap(n, null, new RectF(0, 0, w, h), new Paint(Paint.FILTER_BITMAP_FLAG));
+            n.recycle();
+        } catch (Throwable ignored) { }
+        Aurora.grain(b, grain(light));
+    }
+
     /** Micro-grano: un poco más marcado que Faro para la textura del carbón. */
-    static int grain(boolean light) { return light ? 5 : 9; }
+    static int grain(boolean light) { return light ? 6 : 10; }
 
     // ── carro en vista cenital ──
 
-    static final float CAR_ASPECT = 274f / 533f;          // ancho / alto de las imágenes
+    static final float CAR_ASPECT = 520f / 1000f;         // ancho / alto de las imágenes
     /** Margen de la sombra (assets/carbono/shadow.png) respecto al carro, en fracción del ancho y del alto. */
-    private static final float SH_X = 49f / 274f, SH_Y = 49f / 533f;
+    static final float SH_X = 93f / 520f, SH_Y = 93f / 1000f;
 
     /** Recuadro del carro dentro de una vista de vw×vh px: lo más grande posible con la sombra adentro. */
     static RectF carRect(float vw, float vh) {
@@ -255,7 +285,7 @@ final class Carbono {
                 try {
                     bg = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
                     paint(new Canvas(bg), w, h, light, Main.RED);
-                    Aurora.grain(bg, grain(light));
+                    texture(bg, light);
                 } catch (Throwable e) { bg = null; }
             }
             r.set(0, 0, w, h);
@@ -284,11 +314,11 @@ final class Carbono {
                 float vh = h * 0.27f;
                 vehicle(c, pad, top, w - 2 * pad, vh, crad, text, muted);
                 float dockH = u * 0.10f, dockY = h - pad - dockH;
-                float rowH = u * 0.2f, rowY = dockY - gap - rowH;
-                map(c, pad, top + vh + gap, w - pad, rowY - gap, crad, u);
-                float pw = (w - 2 * pad - gap) * 0.58f;
-                player(c, pad, rowY, pw, rowH, crad, text, muted);
-                weather(c, pad + pw + gap, rowY, w - 2 * pad - pw - gap, rowH, crad, text, muted);
+                float rowH = u * 0.2f, rowY = dockY - gap - gap - rowH;
+                map(c, pad, top + vh + gap, w - pad, dockY - gap, crad, u);
+                float pw = (w - 2 * pad - 3 * gap) * 0.58f;
+                player(c, pad + gap, rowY, pw, rowH, crad, text, muted);
+                weather(c, pad + gap + pw + gap, rowY, w - 2 * pad - pw - 3 * gap, rowH, crad, text, muted);
                 dock(c, pad, dockY, w - 2 * pad, dockH, false);
             }
             if (selected) {
@@ -308,8 +338,7 @@ final class Carbono {
             float tsz = Math.min(w, hh) * 0.5f;
             for (int i = 0; i < n; i++) {
                 float cx = vert ? x + w / 2 : x + w * (i + 0.5f) / n, cy = vert ? y + hh * (i + 0.5f) / n : y + hh / 2;
-                rr(c, cx - tsz / 2, cy - tsz / 2, cx + tsz / 2, cy + tsz / 2, tsz * 0.3f, i == 0 ? tile(light) : 0);
-                p.setStyle(Paint.Style.STROKE);
+                                p.setStyle(Paint.Style.STROKE);
                 p.setStrokeWidth(Math.max(1f, tsz * 0.09f));
                 p.setColor(Aurora.a(pillIcon(light), 0.9f));
                 c.drawCircle(cx, cy, tsz * 0.24f, p);
@@ -319,29 +348,26 @@ final class Carbono {
         private void vehicle(Canvas c, float x, float y, float w, float hh, float rad, int text, int muted) {
             card(c, x, y, x + w, y + hh, rad);
             float in = Math.min(w, hh) * 0.06f;
-            float mh = portrait ? hh * 0.32f : hh * 0.22f;
-            float upH = hh - 2 * in - mh - in * 0.8f;
-            float leftW = portrait ? w * 0.58f : w * 0.58f;
-            float gr = Math.min(leftW * 0.42f, (portrait ? upH : upH) * 0.42f), gcx = x + in + gr * 1.08f, gcy = y + in + upH / 2;
-            p.setStyle(Paint.Style.STROKE);
-            p.setStrokeCap(Paint.Cap.ROUND);
-            p.setStrokeWidth(Math.max(1f, gr * 0.05f));
-            p.setColor(track(light));
-            r.set(gcx - gr, gcy - gr, gcx + gr, gcy + gr);
-            c.drawArc(r, 135, 270, false, p);
-            p.setStrokeWidth(Math.max(1.5f, gr * 0.11f));
-            p.setColor(light ? text : SILVER_LIGHT);
-            c.drawArc(r, 135, 80, false, p);
-            p.setStrokeCap(Paint.Cap.BUTT);
-            rr(c, gcx - gr * 0.38f, gcy - gr * 0.2f, gcx + gr * 0.38f, gcy + gr * 0.16f, gr * 0.08f, Aurora.a(text, 0.9f));
-            // carro a la derecha, de arriba a abajo
-            float cx0 = x + leftW, cw = x + w - in * 0.5f - cx0, chh = hh - in;
-            RectF cr = carRect(cw, chh);
-            int bw = Math.max(1, Math.round(cr.width())), bh = Math.max(1, Math.round(cr.height()));
+            c.save();
+            c.clipRect(x, y, x + w, y + hh);
+            float mh, cw, ch, cx, sx, sy;
+            if (!portrait) {
+                mh = hh * 0.2f;
+                sy = y + hh - in - mh - in * 0.6f - hh * 0.14f;
+                ch = (sy - y) / 0.8f; cw = ch * CAR_ASPECT; cx = x + w / 2; sx = x + in;
+            } else {
+                ch = hh / 0.8f; cw = ch * CAR_ASPECT; cx = x + w - cw / 2 - in; sx = x + in; sy = y + in;
+                mh = hh * 0.4f;
+            }
+            int bw = Math.max(1, Math.round(cw)), bh = Math.max(1, Math.round(ch));
             if (car == null || car.getWidth() != bw || car.getHeight() != bh) car = carBitmap(getContext(), "silver", bw, bh);
-            if (car != null) c.drawBitmap(car, cx0 + cr.left, y + in * 0.5f + cr.top, null);
-            // dos mantenimientos abajo a la izquierda
-            float my = y + hh - in - mh, mw = (leftW - 2 * in - in * 0.6f) / 2;
+            if (car != null) c.drawBitmap(car, cx - cw / 2, y - ch * 0.2f, null);
+            c.restore();
+            float th = hh * 0.14f;
+            rr(c, sx, sy, sx + w * 0.16f, sy + th * 0.16f, th * 0.05f, Aurora.a(muted, 0.8f));
+            rr(c, sx, sy + th * 0.3f, sx + w * 0.2f, sy + th * 0.95f, th * 0.1f, Aurora.a(text, 0.9f));
+            float leftW = portrait ? w - cw - 3 * in : w - 2 * in;
+            float my = y + hh - in - mh, mw = (leftW - in * 0.6f) / 2;
             int[] cols = {Faro.urgency(0.1, light), Faro.urgency(0.6, light)};
             for (int i = 0; i < 2; i++) {
                 float mx = x + in + i * (mw + in * 0.6f);

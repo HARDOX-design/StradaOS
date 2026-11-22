@@ -5009,6 +5009,67 @@ public class Main extends Activity {
 
     private float cbTopH, cbDockX, cbDockY, cbDockW, cbDockH, cbVX, cbVY, cbVW, cbVH, cbOvY, cbOvH, cbPlX, cbPlW, cbWxX, cbWxW;
     private FrameLayout carbMaintBox;
+    /** Caja del tamaño del mapa donde flotan el reproductor y el clima de Carbono (solo mientras se arma). */
+    private FrameLayout carbOv;
+    private final List<View> carbOvViews = new ArrayList<View>();
+    /** [0] mostrar, [1] esconder el reproductor y el clima de Carbono. */
+    private Runnable[] carbSetOpen;
+
+    /** Tarjeta de Carbono dentro de la caja flotante del mapa (coordenadas del tablero). */
+    private FrameLayout carbOvCard(float x, float y, float w, float hh) {
+        if (carbOv == null) return faroCard(x, y, w, hh);
+        float m = 8;
+        FrameLayout outer = new FrameLayout(this);
+        outer.setBackground(new Faro.Card(LIGHT, 18 * s, m * s, s));
+        place(carbOv, outer, x - mapX - m, y - mapY - m, w + 2 * m, hh + 2 * m);
+        FrameLayout inner = new FrameLayout(this);
+        place(outer, inner, m, m, w, hh);
+        carbOvViews.add(outer);
+        return inner;
+    }
+
+    /**
+     * Flechita sobre el reproductor y el clima de Carbono: los esconde hacia abajo para ver todo el mapa (como la de
+     * Android Auto y CarPlay en los otros temas). Tocar o deslizar la flechita los muestra o esconde; deslizar el
+     * reproductor hacia abajo también los esconde. Se recuerda («carb_ov_open»).
+     */
+    private void buildCarbOvHandle() {
+        final FrameLayout handle = new FrameLayout(this);
+        handle.setBackground(round(Faro.glass(LIGHT), 11));
+        final ImageView chev = icon("chevron_right", 18);
+        FrameLayout.LayoutParams clp = new FrameLayout.LayoutParams((int) (18 * s), (int) (18 * s));
+        clp.gravity = Gravity.CENTER;
+        handle.addView(chev, clp);
+        place(carbOv, handle, (mapW - 64) / 2, cbOvY - mapY - 32, 64, 24);
+        final float shift = (cbOvH + 14) * s;
+        final List<View> moving = new ArrayList<View>(carbOvViews);
+        moving.add(handle);
+        final boolean open0 = prefs.getBoolean("carb_ov_open", true);
+        for (View v : moving) v.setTranslationY(open0 ? 0 : shift);
+        chev.setRotation(open0 ? 90 : -90);
+        carbSetOpen = new Runnable[2];
+        for (int k = 0; k < 2; k++) {
+            final boolean show = k == 0;
+            carbSetOpen[k] = new Runnable() { public void run() {
+                prefs.edit().putBoolean("carb_ov_open", show).apply();
+                for (View v : moving) v.animate().translationY(show ? 0 : shift).setDuration(220);
+                chev.animate().rotation(show ? 90 : -90).setDuration(220);
+            }};
+        }
+        handle.setOnTouchListener(new View.OnTouchListener() {
+            float y0;
+            public boolean onTouch(View v, MotionEvent e) {
+                if (e.getActionMasked() == MotionEvent.ACTION_DOWN) { y0 = e.getRawY(); return true; }
+                if (e.getActionMasked() != MotionEvent.ACTION_UP) return true;
+                float d = e.getRawY() - y0;
+                boolean isOpen = prefs.getBoolean("carb_ov_open", true);
+                if (d < -12 * s) carbSetOpen[0].run();
+                else if (d > 12 * s) carbSetOpen[1].run();
+                else carbSetOpen[isOpen ? 1 : 0].run();
+                return true;
+            }
+        });
+    }
     private float carbMaintW, carbMaintH;
     /** Íconos de las horas del clima (Faro: 22 y 8 de aire; Carbono: más chicos para caber en la tarjeta flotante). */
     private float faroHrIc = 22, faroHrGap = 8;
@@ -5027,12 +5088,12 @@ public class Main extends Activity {
             cbVX = m; cbVY = top; cbVW = W0 - 2 * m; cbVH = shortVertical ? 268 : 332;
             float bottom = noDock ? H - m : cbDockY - m;
             cbOvH = showPlayer || wx ? (shortVertical ? 126 : 134) : 0;
-            cbOvY = bottom - cbOvH;
             mapX = m; mapY = cbVY + cbVH + m; mapW = W0 - 2 * m;
-            mapH = Math.max(120, (cbOvH > 0 ? cbOvY - m : bottom) - mapY);
-            float gap = 12, rowW = W0 - 2 * m;
-            cbPlX = m; cbPlW = !wx ? rowW : !showPlayer ? 0 : (rowW - gap) * 0.58f;
-            cbWxX = cbPlX + (cbPlW > 0 ? cbPlW + gap : 0); cbWxW = wx ? m + rowW - cbWxX : 0;
+            mapH = Math.max(120, bottom - mapY);
+            cbOvY = mapY + mapH - 12 - cbOvH;
+            float gap = 10, rowW = mapW - 24;
+            cbPlX = mapX + 12; cbPlW = !wx ? rowW : !showPlayer ? 0 : (rowW - gap) * 0.58f;
+            cbWxX = cbPlX + (cbPlW > 0 ? cbPlW + gap : 0); cbWxW = wx ? mapX + 12 + rowW - cbWxX : 0;
         } else {
             premPillH = noDock ? 0 : 62;
             cbDockW = premPillH; cbDockX = m;
@@ -5056,6 +5117,7 @@ public class Main extends Activity {
         premHeadViews.clear();
         faroGauge = null; faroBar = null; faroWxIc = null; faroMaintBox = null; faroPillTv = null; faroPillIc = null;
         carbMaintBox = null;
+        carbSetOpen = null;
         buildCarbTop();
         // en claro, el área del mapa con la misma sombra que las tarjetas (el mapa la tapa por dentro)
         if (LIGHT) {
@@ -5065,10 +5127,17 @@ public class Main extends Activity {
         }
         buildAaCard();
         buildCarbVehicle();
+        // el reproductor y el clima flotan sobre el mapa dentro de una caja del tamaño del mapa: al esconderlos bajan y
+        // quedan recortados por su borde (la caja no toma toques: el mapa sigue respondiendo)
+        carbOv = new FrameLayout(this);
+        place(board, carbOv, mapX, mapY, mapW, mapH);
+        carbOvViews.clear();
         if (cbPlW > 0) buildCarbPlayer(cbPlX, cbOvY, cbPlW, cbOvH);
         else { trackTv = null; artistTv = null; sourceTv = null; timePosTv = null; playerArt = null; playIc = null; }
         if (cbWxW > 0) buildCarbWeather(cbWxX, cbOvY, cbWxW, cbOvH);
         else { faroWxIc = null; panelWx = null; }
+        if (cbOvH > 0) buildCarbOvHandle();
+        carbOv = null;
         if (!noDock) buildCarbDock();
         updateOilBadge();
     }
@@ -5117,7 +5186,10 @@ public class Main extends Activity {
                     else openSettingsPage(Settings.ACTION_BLUETOOTH_SETTINGS, new Runnable() { public void run() { openSlot(1); } });
                 } });
         }
-        // Android Auto y CarPlay: siempre a la vista en la barra (no tapan el mapa ni el reproductor)
+        place(board, left, x, y, w * 0.3f, cbTopH);
+        // Android Auto y CarPlay: siempre a la vista en la barra, centrados sobre la tarjeta del vehículo en horizontal
+        LinearLayout proj = new LinearLayout(this);
+        proj.setGravity(vertical ? Gravity.LEFT | Gravity.CENTER_VERTICAL : Gravity.CENTER);
         String cm = prefs.getString("conn_buttons", "both");
         aaBtnTv = null; aaSubTv = null; cpSubTv = null;
         if ("both".equals(cm) || "aa".equals(cm)) {
@@ -5125,8 +5197,7 @@ public class Main extends Activity {
             aaBtnTv = (TextView) aa.getTag();
             aaSubTv = aaBtnTv;
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(-2, (int) (cbTopH * s));
-            lp.leftMargin = (int) (10 * s);
-            left.addView(aa, lp);
+            proj.addView(aa, lp);
             aa.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { openAndroidAuto(); } });
             aa.setOnLongClickListener(new View.OnLongClickListener() { public boolean onLongClick(View v) { chooseConnection(null); return true; } });
         }
@@ -5135,11 +5206,16 @@ public class Main extends Activity {
             cpSubTv = (TextView) cp.getTag();
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(-2, (int) (cbTopH * s));
             lp.leftMargin = (int) (8 * s);
-            left.addView(cp, lp);
+            proj.addView(cp, lp);
             cp.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { openCarPlay(); } });
             cp.setOnLongClickListener(new View.OnLongClickListener() { public boolean onLongClick(View v) { pickFor("carplay", "CarPlay"); return true; } });
         }
-        place(board, left, x, y, w * 0.64f, cbTopH);
+        float icEnd = x + left.getChildCount() * 36 + 8;
+        if (vertical) place(board, proj, icEnd, y, w * 0.64f - icEnd, cbTopH);
+        else {
+            float px0 = Math.max(cbVX, icEnd), px1 = cbVX + cbVW;
+            place(board, proj, px0, y, px1 - px0, cbTopH);
+        }
 
         LinearLayout right = new LinearLayout(this);
         right.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
@@ -5173,61 +5249,72 @@ public class Main extends Activity {
      * mantenimientos más cercanos abajo a todo el ancho. Vertical: velocímetro, mantenimientos uno sobre otro y el carro.
      */
     private void buildCarbVehicle() {
-        float w = cbVW, hh = cbVH, in = 14;
+        float w = cbVW, hh = cbVH, in = 16;
         FrameLayout card = faroCard(cbVX, cbVY, w, hh);
-        // nombre del vehículo y el GPS
-        LinearLayout lab = new LinearLayout(this);
-        lab.setGravity(Gravity.CENTER_VERTICAL);
-        carTv = tv(prefs.getString("car_name", "Mi vehículo"), 13, MUTED, true);
-        carTv.setMaxWidth((int) ((vertical ? w * 0.34f : w * 0.5f) * s));
-        lab.addView(carTv);
-        gpsDot = new View(this);
-        gpsDot.setBackground(round(MUTED, 4));
-        LinearLayout.LayoutParams dlp = new LinearLayout.LayoutParams((int) (7 * s), (int) (7 * s));
-        dlp.leftMargin = (int) (10 * s);
-        lab.addView(gpsDot, dlp);
-        gpsTv = tv("GPS", 11, MUTED, false);
-        gpsTv.setPadding((int) (5 * s), 0, 0, 0);
-        lab.addView(gpsTv);
-        place(card, lab, in + 2, 12, w * 0.6f, 20);
+        carTv = tv(prefs.getString("car_name", "Mi vehículo"), 13, MUTED, true);   // no se muestra
         chipTv = null;
         oilValTv = null; oilBar = null; oilBarBg = null; oilLblTv = null; oilIc = null;
-        speedTv = tv("0", 12, TEXT, true);   // no se muestra: el número va en el velocímetro
-        carGauge = null; mapGauge = null;
+        carGauge = null; mapGauge = null; faroGauge = null;
         String col = Carbono.car(prefs.getString("carb_car", "silver"));
-        float gx, gy, D, carX0, carY0, carW0, carH0, mx, my, mw, mh;
+        // el carro «sale» de la tarjeta: su parte de atrás queda cortada por el borde de arriba
+        final float CUT = 0.2f;
+        float speedH = carSpeed ? 84 : 0, mh, mx, my, mw, sx, sy, sw, cw, chF, carCx;
         boolean stack;
         if (vertical) {
-            // tres columnas: aro grande, mantenimientos uno sobre otro y el carro
-            float uy = 36, uh = hh - uy - in;
-            D = carSpeed ? Math.min(uh + 8, w * 0.38f) : 0;
-            gx = in - 4; gy = uy + (uh - D) / 2 - 4;
-            float carCol = Math.max(150, w * 0.29f);
-            mx = (carSpeed ? gx + D + 8 : in); mw = w - carCol - mx; my = uy; mh = uh;
-            carX0 = w - carCol - 26; carY0 = 6; carW0 = carCol + 26; carH0 = hh - 12;
-            stack = true;
+            // izquierda: velocidad arriba y los dos mantenimientos abajo; derecha: el carro
+            chF = (hh - 6) / (1 - CUT);
+            cw = chF * Carbono.CAR_ASPECT;
+            float colW = cw + 2 * in;
+            carCx = w - colW / 2;
+            mx = in; mw = w - colW - in; mh = Math.min(124, hh * 0.42f); my = hh - in - mh;
+            sx = in; sy = in; sw = mw;
+            if (!carSpeed) { mh = hh - 2 * in; my = in; }
+            stack = false;
         } else {
-            mh = Math.max(96, Math.min(118, hh * 0.22f));
+            mh = Math.max(98, Math.min(116, hh * 0.21f));
             my = hh - in - mh; mx = in; mw = w - 2 * in;
-            float uy = 36, uh = my - 8 - uy;
-            float leftW = w * 0.52f, carCol = w - leftW;
-            D = carSpeed ? Math.min(leftW - in, uh) : 0;
-            gx = in - 2 + (leftW - in - D) / 2; gy = uy + (uh - D) / 2;
-            // la vista del carro se mete un poco en la columna del aro (es transparente) para que el carro llene su columna
-            carX0 = leftW - 40; carY0 = 26; carW0 = carCol + 40 - 4; carH0 = my - 4 - carY0;
-            if (!carSpeed) { carX0 = in; carW0 = w - 2 * in; }
+            sy = my - 10 - speedH; sx = in + 4; sw = w - 2 * in;
+            float vis = sy - 4;
+            chF = vis / (1 - CUT);
+            cw = Math.min(w * 0.66f, chF * Carbono.CAR_ASPECT);
+            chF = cw / Carbono.CAR_ASPECT;
+            carCx = w / 2;
             stack = false;
         }
         Carbono.Car car = new Carbono.Car(this, col, LIGHT);
-        place(card, car, carX0, carY0, carW0, carH0);
+        float vw = cw * (1 + 2 * Carbono.SH_X * 0.75f), vh = chF * (1 + 2 * Carbono.SH_Y * 0.75f);
+        float top = -chF * CUT;
+        place(card, car, carCx - vw / 2, top - (vh - chF) / 2, vw, vh);
         car.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { showSettings(C_VEHICLE); } });
         car.setOnLongClickListener(new View.OnLongClickListener() { public boolean onLongClick(View v) { chooseCarbCar(); return true; } });
+        // velocímetro digital: «Velocidad» (y el GPS/OBD) y el número grande con su unidad
         if (carSpeed) {
-            faroGauge = new FaroGauge(this, s);
-            faroGauge.setTheme(LIGHT, TEXT, MUTED);
-            faroGauge.setUnit(useMph());
-            faroGauge.setMode(prefs.contains("speedo") ? prefs.getInt("speedo", 2) : 2);
-            place(card, faroGauge, gx, gy, D, D);
+            LinearLayout lab = new LinearLayout(this);
+            lab.setGravity(Gravity.CENTER_VERTICAL);
+            lab.addView(tv("Velocidad", 14, MUTED, false));
+            gpsDot = new View(this);
+            gpsDot.setBackground(round(MUTED, 4));
+            LinearLayout.LayoutParams dlp = new LinearLayout.LayoutParams((int) (7 * s), (int) (7 * s));
+            dlp.leftMargin = (int) (12 * s);
+            lab.addView(gpsDot, dlp);
+            gpsTv = tv("GPS", 11, MUTED, false);
+            gpsTv.setPadding((int) (5 * s), 0, 0, 0);
+            lab.addView(gpsTv);
+            place(card, lab, sx, sy, sw, 20);
+            LinearLayout num = new LinearLayout(this);
+            num.setGravity(Gravity.BOTTOM);
+            speedTv = tv("0", 58, TEXT, false);
+            speedTv.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
+            speedTv.setIncludeFontPadding(false);
+            num.addView(speedTv);
+            TextView unit = tv(useMph() ? "mph" : "km/h", 17, MUTED, false);
+            unit.setPadding((int) (8 * s), 0, 0, (int) (8 * s));
+            num.addView(unit);
+            place(card, num, sx - 3, sy + 22, sw, 62);
+        } else {
+            speedTv = tv("0", 12, TEXT, true);   // no se muestra
+            gpsDot = new View(this);
+            gpsTv = tv("GPS", 11, MUTED, false);
         }
         carbMaintBox = new FrameLayout(this);
         carbMaintW = mw; carbMaintH = mh;
@@ -5346,7 +5433,7 @@ public class Main extends Activity {
      * siguiente con la línea de tiempo abajo. Deslizar a los lados cambia de canción; presión larga = diagnóstico.
      */
     private void buildCarbPlayer(float x, float y, float w, float hh) {
-        final FrameLayout card = faroCard(x, y, w, hh);
+        final FrameLayout card = carbOvCard(x, y, w, hh);
         float p = 12, as = Math.min(56, hh * 0.46f);
         playerArt = new PlayerArt(this, s, asset("ic/music_note.png"));
         playerArt.setTile(LIGHT ? 0x14000000 : 0x1FFFFFFF);
@@ -5390,6 +5477,14 @@ public class Main extends Activity {
                 if (e.getActionMasked() == MotionEvent.ACTION_DOWN) { x0t = e.getX(); y0t = e.getY(); return false; }
                 if (e.getActionMasked() != MotionEvent.ACTION_UP) return false;
                 float dx = e.getX() - x0t, dy = e.getY() - y0t;
+                if (dy > 40 * s && dy > 2 * Math.abs(dx) && carbSetOpen != null) {
+                    MotionEvent c = MotionEvent.obtain(e);
+                    c.setAction(MotionEvent.ACTION_CANCEL);
+                    v.onTouchEvent(c);
+                    c.recycle();
+                    carbSetOpen[1].run();
+                    return true;
+                }
                 if (Math.abs(dx) < 50 * s || Math.abs(dx) < 2 * Math.abs(dy)) return false;
                 MotionEvent c = MotionEvent.obtain(e);
                 c.setAction(MotionEvent.ACTION_CANCEL);
@@ -5406,7 +5501,7 @@ public class Main extends Activity {
 
     /** Clima compacto: ciudad y máx/mín arriba, temperatura con su ícono y estado, y las próximas horas abajo. */
     private void buildCarbWeather(float x, float y, float w, float hh) {
-        FrameLayout card = faroCard(x, y, w, hh);
+        FrameLayout card = carbOvCard(x, y, w, hh);
         float m = 12;
         faroCityTv = tv("Clima", 12, MUTED, true);
         place(card, faroCityTv, m, 10, w * 0.6f - m, 16);
@@ -5478,12 +5573,6 @@ public class Main extends Activity {
             } else {
                 String id = t.startsWith("fn:") ? t.substring(3) : dockDefault(i);
                 FrameLayout tile = new FrameLayout(this);
-                if (i == 0) {
-                    // el primero resaltado, como la referencia
-                    GradientDrawable d = round(Faro.tile(LIGHT), tsz * 0.3f);
-                    d.setStroke(Math.max(1, (int) s), LIGHT ? 0x10000000 : 0x14FFFFFF);
-                    tile.setBackground(d);
-                }
                 View g;
                 float gs;
                 if ("apps".equals(id)) { g = new Faro.Icon(this, Faro.I_APPS, Faro.pillIcon(LIGHT)); gs = tsz * 0.52f; }
