@@ -81,7 +81,7 @@ final class Carbono {
         float diag = (float) Math.hypot(w, h);
         c.save();
         c.rotate(-52, 0, 0);
-        float[][] beams = {{-0.10f, 0.10f, 0.11f}, {0.06f, 0.05f, 0.08f}, {0.17f, 0.12f, 0.07f}, {0.33f, 0.07f, 0.05f}, {0.46f, 0.16f, 0.035f}};
+        float[][] beams = {{-0.10f, 0.10f, 0.15f}, {0.06f, 0.05f, 0.11f}, {0.17f, 0.12f, 0.10f}, {0.33f, 0.07f, 0.07f}, {0.46f, 0.16f, 0.05f}};
         for (float[] b : beams) {
             float cx = b[0] * diag, half = b[1] * diag;
             p.setShader(new LinearGradient(cx - half, 0, cx + half, 0,
@@ -102,13 +102,13 @@ final class Carbono {
      */
     static void texture(Bitmap b, boolean light) {
         try {
-            int w = b.getWidth(), h = b.getHeight(), nw = Math.max(1, w / 3), nh = Math.max(1, h / 3);
+            int w = b.getWidth(), h = b.getHeight(), nw = Math.max(1, w / 2), nh = Math.max(1, h / 2);
             int[] px = new int[nw * nh];
             java.util.Random r = new java.util.Random(7);
-            int amp = light ? 22 : 30;
+            int amp = light ? 6 : 8;
             for (int i = 0; i < px.length; i++) {
                 int v = (int) (r.nextGaussian() * amp);
-                v = Math.max(-80, Math.min(80, v));
+                v = Math.max(-24, Math.min(24, v));
                 px[i] = v >= 0 ? (v << 24) | 0xFFFFFF : ((-v) << 24);
             }
             Bitmap n = Bitmap.createBitmap(px, nw, nh, Bitmap.Config.ARGB_8888);
@@ -119,7 +119,7 @@ final class Carbono {
     }
 
     /** Micro-grano: un poco más marcado que Faro para la textura del carbón. */
-    static int grain(boolean light) { return light ? 6 : 10; }
+    static int grain(boolean light) { return light ? 5 : 8; }
 
     // ── carro en vista cenital ──
 
