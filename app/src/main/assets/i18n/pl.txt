@@ -455,7 +455,7 @@ Orientación del mapa	Orientacja mapy
 El mapa apunta	Mapa wskazuje
 Según tu dirección: gira con el carro mientras te mueves	Zgodnie z kierunkiem jazdy: obraca się wraz z samochodem podczas jazdy
 Norte arriba	Północ u góry
-Según tu dirección	godnie z kierunkiem jazdy
+Según tu dirección	zgodnie z kierunkiem jazdy
 Último cambio	Ostatnia wymiana
 Corregir el último cambio	Popraw ostatnią zmianę
 ¿Tu tablero marca kilómetros o millas?	Czy Twoja deska rozdzielcza pokazuje kilometry czy mile?
