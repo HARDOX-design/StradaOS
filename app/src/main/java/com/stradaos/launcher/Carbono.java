@@ -61,38 +61,93 @@ final class Carbono {
 
     // ── fondo ──
 
+    // Fondos hechos a mano con manchas difusas (sin imágenes, a la resolución exacta de la pantalla):
+    // {x, y (fracción del ancho/alto), radio x, radio y (fracción del lado mayor), ángulo, color RGB, alfa}
+    private static final float[][] DARK_BLOBS = {
+        {0.55f, 0.06f, 0.70f, 0.16f, -8, 0x1E4D6B, 0.85f},
+        {0.15f, 0.04f, 0.38f, 0.09f, -4, 0x3C8C9C, 0.55f},
+        {0.98f, 0.56f, 0.55f, 0.13f, -12, 0x2B6A85, 0.75f},
+        {0.62f, 0.34f, 0.55f, 0.11f, -10, 0x02050B, 0.85f},
+        {0.72f, 0.92f, 0.60f, 0.22f, 0, 0x14344D, 0.65f},
+        {0.06f, 0.56f, 0.46f, 0.40f, 0, 0x2F7F8F, 0.75f},
+        {0.01f, 0.56f, 0.27f, 0.26f, 0, 0x9FD3D8, 0.95f},
+        {-0.02f, 0.55f, 0.14f, 0.15f, 0, 0xDDE8E6, 0.85f},
+        {0.30f, 0.80f, 0.40f, 0.10f, 8, 0x03070E, 0.6f},
+    };
+    /** Bandas curvas: {x0, y0, x1, y1 (control), x2, y2, ancho, color, alfa}. */
+    private static final float[][] DARK_BANDS = {
+        {0.25f, 0.0f, 0.6f, 0.22f, 1.02f, 0.12f, 0.07f, 0x2A6F86, 0.3f},
+    };
+    private static final float[][] LIGHT_BLOBS = {
+        {0.22f, 0.12f, 0.5f, 0.3f, 0, 0x3E6E9C, 0.55f},
+        {0.92f, 0.20f, 0.30f, 0.22f, 0, 0xA9CFE3, 0.6f},
+    };
+    private static final float[][] LIGHT_BANDS = {
+        {0.36f, 1.02f, 0.72f, 0.52f, 1.02f, 0.78f, 0.12f, 0xBFE0EE, 0.35f},
+        {0.64f, -0.02f, 0.42f, 0.58f, -0.02f, 0.45f, 0.16f, 0xF2F8FC, 0.42f},
+        {-0.02f, 0.12f, 0.28f, 0.30f, 0.12f, 0.80f, 0.12f, 0xFFFFFF, 0.36f},
+        {0.97f, 0.04f, 0.58f, 0.30f, 0.46f, 0.72f, 0.045f, 0x2E5C8A, 0.3f},
+    };
+    private static final float[][] LIGHT_BLOBS_TOP = {
+        {0.80f, 0.72f, 0.05f, 0.16f, 15, 0x2E5A85, 0.6f},
+        {0.04f, 0.96f, 0.30f, 0.14f, 0, 0xD9ECF6, 0.7f},
+    };
+
+    /** Mancha difusa: elipse con un degradado radial suave (el mismo perfil en el prototipo). */
+    private static void blob(Canvas c, Paint p, float cx, float cy, float rx, float ry, float deg, int rgb, float al) {
+        if (rx < 1 || ry < 1) return;
+        int col = 0xFF000000 | rgb;
+        p.setShader(new RadialGradient(0, 0, ry,
+            new int[]{Aurora.a(col, al), Aurora.a(col, al * 0.62f), Aurora.a(col, al * 0.22f), Aurora.a(col, 0f)},
+            new float[]{0f, 0.35f, 0.65f, 1f}, Shader.TileMode.CLAMP));
+        c.save();
+        c.translate(cx, cy);
+        c.rotate(deg);
+        c.scale(rx / ry, 1f);
+        c.drawCircle(0, 0, ry, p);
+        c.restore();
+    }
+
+    private static void blobs(Canvas c, Paint p, float[][] list, float w, float h) {
+        float u = Math.max(w, h);
+        for (float[] b : list) blob(c, p, b[0] * w, b[1] * h, b[2] * u, b[3] * u, b[4], (int) b[5], b[6]);
+    }
+
+    /** Banda curva: manchas alargadas a lo largo de una curva cuadrática, orientadas con ella. */
+    private static void bands(Canvas c, Paint p, float[][] list, float w, float h) {
+        float u = Math.max(w, h);
+        int n = 14;
+        for (float[] b : list) {
+            float x0 = b[0] * w, y0 = b[1] * h, x1 = b[2] * w, y1 = b[3] * h, x2 = b[4] * w, y2 = b[5] * h, wd = b[6] * u;
+            for (int i = 0; i <= n; i++) {
+                float t = i / (float) n, mt = 1 - t;
+                float px = mt * mt * x0 + 2 * mt * t * x1 + t * t * x2, py = mt * mt * y0 + 2 * mt * t * y1 + t * t * y2;
+                float tx = 2 * mt * (x1 - x0) + 2 * t * (x2 - x1), ty = 2 * mt * (y1 - y0) + 2 * t * (y2 - y1);
+                float step = (float) Math.hypot(tx, ty) / n;
+                blob(c, p, px, py, Math.max(step * 1.6f, wd), wd, (float) Math.toDegrees(Math.atan2(ty, tx)), (int) b[7], b[8]);
+            }
+        }
+    }
+
     /**
-     * Oscuro: casi negro con haces de luz suaves que entran en diagonal desde arriba a la izquierda. Claro: cielo
-     * gris azulado arriba, una franja luminosa y abajo azul marino hasta casi negro. La textura la pone {@link #texture}.
+     * Oscuro: azul noche casi negro con un resplandor turquesa a la izquierda y bandas azules difusas. Claro: azul
+     * acero con remolinos blancos y celestes, como seda. Se pinta una vez al tamaño exacto de la pantalla.
      */
     static void paint(Canvas c, float w, float h, boolean light, int accent) {
         Paint p = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
+        c.drawColor(light ? 0xFF5F8DB8 : 0xFF050A14);
         if (light) {
-            p.setShader(new LinearGradient(0, 0, 0, h,
-                new int[]{0xFFD9E2EF, 0xFFE3EAF4, 0xFFEEF2F8, 0xFFB8C8DE, 0xFF5E7BA6, 0xFF2A3F63, 0xFF111A2B, 0xFF07090E},
-                new float[]{0f, 0.25f, 0.5f, 0.6f, 0.68f, 0.78f, 0.9f, 1f}, Shader.TileMode.CLAMP));
-            c.drawRect(0, 0, w, h, p);
-            p.setShader(null);
-            return;
+            blobs(c, p, LIGHT_BLOBS, w, h);
+            bands(c, p, LIGHT_BANDS, w, h);
+            blobs(c, p, LIGHT_BLOBS_TOP, w, h);
+        } else {
+            float[][] first = {DARK_BLOBS[0], DARK_BLOBS[1], DARK_BLOBS[2]};
+            blobs(c, p, first, w, h);
+            bands(c, p, DARK_BANDS, w, h);
+            float[][] rest = new float[DARK_BLOBS.length - 3][];
+            System.arraycopy(DARK_BLOBS, 3, rest, 0, rest.length);
+            blobs(c, p, rest, w, h);
         }
-        p.setShader(new LinearGradient(0, 0, w * 0.6f, h, 0xFF141416, 0xFF09090A, Shader.TileMode.CLAMP));
-        c.drawRect(0, 0, w, h, p);
-        // haces: franjas anchas y difusas, inclinadas, más fuertes cerca de la esquina de arriba a la izquierda
-        float diag = (float) Math.hypot(w, h);
-        c.save();
-        c.rotate(-52, 0, 0);
-        float[][] beams = {{-0.10f, 0.10f, 0.15f}, {0.06f, 0.05f, 0.11f}, {0.17f, 0.12f, 0.10f}, {0.33f, 0.07f, 0.07f}, {0.46f, 0.16f, 0.05f}};
-        for (float[] b : beams) {
-            float cx = b[0] * diag, half = b[1] * diag;
-            p.setShader(new LinearGradient(cx - half, 0, cx + half, 0,
-                new int[]{0, Aurora.a(0xFFE8EAEE, b[2]), 0}, new float[]{0f, 0.5f, 1f}, Shader.TileMode.CLAMP));
-            c.drawRect(cx - half, -diag, cx + half, diag * 2, p);
-        }
-        c.restore();
-        // los haces se apagan hacia abajo a la derecha
-        p.setShader(new RadialGradient(w * 1.05f, h * 1.1f, diag * 0.8f,
-            new int[]{0xF209090A, 0x8C09090A, 0}, new float[]{0f, 0.5f, 1f}, Shader.TileMode.CLAMP));
-        c.drawRect(0, 0, w, h, p);
         p.setShader(null);
     }
 
@@ -105,7 +160,7 @@ final class Carbono {
             int w = b.getWidth(), h = b.getHeight(), nw = Math.max(1, w / 2), nh = Math.max(1, h / 2);
             int[] px = new int[nw * nh];
             java.util.Random r = new java.util.Random(7);
-            int amp = light ? 6 : 8;
+            int amp = light ? 3 : 4;
             for (int i = 0; i < px.length; i++) {
                 int v = (int) (r.nextGaussian() * amp);
                 v = Math.max(-24, Math.min(24, v));
@@ -119,7 +174,7 @@ final class Carbono {
     }
 
     /** Micro-grano: un poco más marcado que Faro para la textura del carbón. */
-    static int grain(boolean light) { return light ? 5 : 8; }
+    static int grain(boolean light) { return light ? 5 : 9; }
 
     // ── carro en vista cenital ──
 
