@@ -1841,3 +1841,6 @@ leída: «{}» — {} · {}/{} s · {}	letta: «{}» — {} · {}/{} s · {}
 sonando	in riproduzione
 en pausa	in pausa
 estado ?	stato ?
+# cuentarrevoluciones junto al velocímetro (Tach)
+Revoluciones junto al velocímetro	Giri accanto al tachimetro
+Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)	Un piccolo contagiri accanto, con i giri dello scanner OBD (solo mentre è collegato)

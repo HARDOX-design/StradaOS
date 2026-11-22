@@ -1826,3 +1826,6 @@ leída: «{}» — {} · {}/{} s · {}	beolvasva: «{}» — {} · {}/{} mp · {
 sonando	szól
 en pausa	szünetel
 estado ?	állapot ?
+# cuentarrevoluciones junto al velocímetro (Tach)
+Revoluciones junto al velocímetro	Fordulatszám a sebességmérő mellett
+Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)	Kis fordulatszámmérő mellette, az OBD-szkenner fordulatszámával (csak amíg csatlakoztatva van)

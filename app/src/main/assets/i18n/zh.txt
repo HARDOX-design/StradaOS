@@ -1841,3 +1841,6 @@ leída: «{}» — {} · {}/{} s · {}	已读取：«{}» — {} · {}/{} 秒 ·
 sonando	正在播放
 en pausa	已暂停
 estado ?	状态 ?
+# cuentarrevoluciones junto al velocímetro (Tach)
+Revoluciones junto al velocímetro	车速表旁显示转速
+Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)	在旁边显示一个小转速表，使用 OBD 扫描仪的转速（仅在连接时）

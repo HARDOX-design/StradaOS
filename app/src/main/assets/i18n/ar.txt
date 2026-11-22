@@ -1841,3 +1841,6 @@ leída: «{}» — {} · {}/{} s · {}	مقروءة: «{}» — {} · {}/{} ث �
 sonando	قيد التشغيل
 en pausa	متوقف مؤقتاً
 estado ?	الحالة ؟
+# cuentarrevoluciones junto al velocímetro (Tach)
+Revoluciones junto al velocímetro	عدد الدورات بجانب عداد السرعة
+Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)	عداد دورات صغير بجانبه، بقراءة الدورات من ماسح OBD (فقط أثناء اتصاله)

@@ -1841,3 +1841,6 @@ leída: «{}» — {} · {}/{} s · {}	lue : «{}» — {} · {}/{} s · {}
 sonando	en lecture
 en pausa	en pause
 estado ?	état ?
+# cuentarrevoluciones junto al velocímetro (Tach)
+Revoluciones junto al velocímetro	Régime à côté du compteur
+Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)	Un petit compte-tours à côté, avec le régime du scanner OBD (seulement quand il est connecté)

@@ -1843,3 +1843,6 @@ leída: «{}» — {} · {}/{} s · {}	okunan: «{}» — {} · {}/{} sn · {}
 sonando	çalıyor
 en pausa	duraklatıldı
 estado ?	durum ?
+# cuentarrevoluciones junto al velocímetro (Tach)
+Revoluciones junto al velocímetro	Hız göstergesinin yanında devir
+Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)	Yanında küçük bir devir göstergesi, OBD tarayıcısından gelen devirle (yalnızca bağlıyken)

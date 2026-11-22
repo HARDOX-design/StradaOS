@@ -1841,3 +1841,6 @@ leída: «{}» — {} · {}/{} s · {}	dibaca: «{}» — {} · {}/{} s · {}
 sonando	sedang dimainkan
 en pausa	dijeda
 estado ?	keadaan ?
+# cuentarrevoluciones junto al velocímetro (Tach)
+Revoluciones junto al velocímetro	RPM di sebelah meter laju
+Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)	Meter RPM kecil di sebelahnya, dengan RPM daripada pengimbas OBD (hanya semasa disambungkan)

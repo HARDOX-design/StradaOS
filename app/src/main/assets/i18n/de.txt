@@ -1841,3 +1841,6 @@ leída: «{}» — {} · {}/{} s · {}	gelesen: «{}» — {} · {}/{} s · {}
 sonando	läuft
 en pausa	pausiert
 estado ?	Status ?
+# cuentarrevoluciones junto al velocímetro (Tach)
+Revoluciones junto al velocímetro	Drehzahl neben dem Tacho
+Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)	Ein kleiner Drehzahlmesser daneben, mit der Drehzahl vom OBD-Scanner (nur solange er verbunden ist)

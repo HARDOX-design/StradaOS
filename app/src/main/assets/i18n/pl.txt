@@ -1820,3 +1820,6 @@ leída: «{}» — {} · {}/{} s · {}	odczytano: «{}» — {} · {}/{} s · {}
 sonando	gra
 en pausa	wstrzymane
 estado ?	stan ?
+# cuentarrevoluciones junto al velocímetro (Tach)
+Revoluciones junto al velocímetro	Obroty obok prędkościomierza
+Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)	Mały obrotomierz obok, z obrotami ze skanera OBD (tylko gdy jest połączony)

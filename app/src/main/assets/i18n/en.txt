@@ -1845,3 +1845,6 @@ leída: «{}» — {} · {}/{} s · {}	read: «{}» — {} · {}/{} s · {}
 sonando	playing
 en pausa	paused
 estado ?	state ?
+# cuentarrevoluciones junto al velocímetro (Tach)
+Revoluciones junto al velocímetro	RPM next to the speedometer
+Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)	A small tachometer beside it, with the RPM from the OBD scanner (only while it's connected)
