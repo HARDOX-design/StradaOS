@@ -1,0 +1,1 @@
+Complete translations in all 12 languages: the OBD-II panel, home cards and widgets, trip and AI no longer show up in Spanish. Turkish completed and Polish fixes.
