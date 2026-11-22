@@ -1351,6 +1351,7 @@ public class Main extends Activity {
             root.addView(dockBg, 0, dlp);
         }
 
+        carbMaintBox = null;
         if (premium) buildPremium();
         else {
             buildTop();
@@ -4109,7 +4110,7 @@ public class Main extends Activity {
 
     private void buildPremium() {
         carCard = null; mapGauge = null; mapGaugeBox = null; carGauge = null; chipTv = null; carDataTv = null;
-        faroGauge = null; faroBar = null; faroWxIc = null; faroMaintBox = null; faroPillTv = null;
+        faroGauge = null; faroBar = null; faroWxIc = null; faroMaintBox = null; faroPillTv = null; carbMaintBox = null;
         if (Prem.carb()) { buildCarbono(); setGps(false, 0); return; }
         if (Prem.faro()) { buildFaro(); setGps(false, 0); return; }
         buildPremiumTop();
@@ -5025,7 +5026,7 @@ public class Main extends Activity {
             dockTop = noDock ? H : cbDockY;
             cbVX = m; cbVY = top; cbVW = W0 - 2 * m; cbVH = shortVertical ? 268 : 332;
             float bottom = noDock ? H - m : cbDockY - m;
-            cbOvH = showPlayer || wx ? (shortVertical ? 116 : 128) : 0;
+            cbOvH = showPlayer || wx ? (shortVertical ? 126 : 134) : 0;
             cbOvY = bottom - cbOvH;
             mapX = m; mapY = cbVY + cbVH + m; mapW = W0 - 2 * m;
             mapH = Math.max(120, (cbOvH > 0 ? cbOvY - m : bottom) - mapY);
@@ -5041,7 +5042,7 @@ public class Main extends Activity {
             cbDockY = top + (H - top - m - cbDockH) / 2;
             dockTop = H;
             mapX = cbVX + cbVW + m; mapY = top; mapW = W0 - m - mapX; mapH = H - m - top;
-            cbOvH = showPlayer || wx ? 118 : 0;
+            cbOvH = showPlayer || wx ? 126 : 0;
             cbOvY = mapY + mapH - 12 - cbOvH;
             float gap = 10, rowW = mapW - 24;
             cbPlX = mapX + 12; cbPlW = !wx ? rowW : !showPlayer ? 0 : (rowW - gap) * 0.6f;
@@ -5434,7 +5435,7 @@ public class Main extends Activity {
         hidden.addView(faroRainBox);
         hidden.addView(faroHumBox);
         card.addView(hidden);
-        float hy = 70;
+        float hy = 66;
         faroHours = new LinearLayout(this);
         faroHours.setOrientation(LinearLayout.HORIZONTAL);
         faroHoursW = w - 2 * m + 8;
