@@ -10,7 +10,7 @@
 <li>GPS speedometer, weather, clock, oil change reminder and a photo of your vehicle.</li>
 <li>Design your home screen: player on the left or right, normal, compact or side button bar, and foldable Android Auto and CarPlay buttons.</li>
 <li>A bottom bar your way and hideable apps. The reverse camera keeps working.</li>
-<li>Classic, Aurora and Cobalto themes (and Faro, with a 5 USD donation), dark, light or automatic mode, 10 colors and 12 languages.</li>
+<li>Classic, Aurora and Cobalto themes (plus Faro and Carbono: one for a 5 USD donation, both for 8 USD), dark, light or automatic mode, 10 colors and 12 languages.</li>
 <li>Update notices with a QR code.</li>
 </ul>
 <p>Works on Android 4.1+. About 1.5 MB. Free, no ads, open source (GPL-3.0).</p>

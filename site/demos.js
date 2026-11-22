@@ -13,8 +13,8 @@ function whenVisible(el,on,off){if(!('IntersectionObserver' in window)){on();ret
 /* ===== Temas: cambia solo de tema con una transición circular desde el engranaje ===== */
 (function(){
  var A=$('#tsA'),B=$('#tsB'),scr=$('#tsScreen');if(!A)return;
- var SEQ=[['clasico','oscuro'],['clasico','claro'],['aurora','oscuro'],['aurora','claro'],['cobalto','oscuro'],['cobalto','claro'],['faro','oscuro'],['faro','claro']];
- var NAMES={clasico:'Clásico',aurora:'Aurora',cobalto:'Cobalto',faro:'Faro'},MODES={oscuro:'Oscuro',claro:'Claro'};
+ var SEQ=[['clasico','oscuro'],['clasico','claro'],['aurora','oscuro'],['aurora','claro'],['cobalto','oscuro'],['cobalto','claro'],['faro','oscuro'],['faro','claro'],['carbono','oscuro'],['carbono','claro']];
+ var NAMES={clasico:'Clásico',aurora:'Aurora',cobalto:'Cobalto',faro:'Faro',carbono:'Carbono'},MODES={oscuro:'Oscuro',claro:'Claro'};
  var cur=0,timer=null,busy=false,running=false,hold=0,DWELL=4200,prog=$('#tsProg');
  function src(i){return 'img/tema-'+SEQ[i][0]+'-'+SEQ[i][1]+'-'+L()+'.webp'}
  function ui(i){var th=SEQ[i][0],md=SEQ[i][1];
