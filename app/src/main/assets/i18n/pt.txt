@@ -1837,3 +1837,10 @@ fuente del equipo: {}	fonte do aparelho: {}
 última lectura: {}	última leitura: {}
 avisos recibidos: {}	avisos recebidos: {}
 etiquetas del archivo: {}	etiquetas do arquivo: {}
+{} s, hace {} s	{} s, há {} s
+simulado (gancho de prueba)	simulado (gancho de teste)
+leída: «{}» — {} · {}/{} s · {}	lida: «{}» — {} · {}/{} s · {}
+«{}» — {} · {} · {} s	«{}» — {} · {} · {} s
+sonando	tocando
+en pausa	em pausa
+estado ?	estado ?

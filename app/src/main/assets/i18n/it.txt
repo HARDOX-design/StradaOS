@@ -1834,3 +1834,10 @@ fuente del equipo: {}	sorgente del dispositivo: {}
 última lectura: {}	ultima lettura: {}
 avisos recibidos: {}	eventi ricevuti: {}
 etiquetas del archivo: {}	tag del file: {}
+{} s, hace {} s	{} s, {} s fa
+simulado (gancho de prueba)	simulato (gancio di prova)
+leída: «{}» — {} · {}/{} s · {}	letta: «{}» — {} · {}/{} s · {}
+«{}» — {} · {} · {} s	«{}» — {} · {} · {} s
+sonando	in riproduzione
+en pausa	in pausa
+estado ?	stato ?

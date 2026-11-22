@@ -1834,3 +1834,10 @@ fuente del equipo: {}	sumber peranti: {}
 última lectura: {}	bacaan terakhir: {}
 avisos recibidos: {}	notis diterima: {}
 etiquetas del archivo: {}	tag fail: {}
+{} s, hace {} s	{} s, {} s lalu
+simulado (gancho de prueba)	simulasi (cangkuk ujian)
+leída: «{}» — {} · {}/{} s · {}	dibaca: «{}» — {} · {}/{} s · {}
+«{}» — {} · {} · {} s	«{}» — {} · {} · {} s
+sonando	sedang dimainkan
+en pausa	dijeda
+estado ?	keadaan ?

@@ -1834,3 +1834,10 @@ fuente del equipo: {}	مصدر الجهاز: {}
 última lectura: {}	آخر قراءة: {}
 avisos recibidos: {}	الإشعارات المستلمة: {}
 etiquetas del archivo: {}	وسوم الملف: {}
+{} s, hace {} s	{} ث، منذ {} ث
+simulado (gancho de prueba)	محاكاة (خطاف اختبار)
+leída: «{}» — {} · {}/{} s · {}	مقروءة: «{}» — {} · {}/{} ث · {}
+«{}» — {} · {} · {} s	«{}» — {} · {} · {} ث
+sonando	قيد التشغيل
+en pausa	متوقف مؤقتاً
+estado ?	الحالة ؟

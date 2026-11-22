@@ -1836,3 +1836,10 @@ fuente del equipo: {}	cihaz kaynağı: {}
 última lectura: {}	son okuma: {}
 avisos recibidos: {}	alınan bildirimler: {}
 etiquetas del archivo: {}	dosya etiketleri: {}
+{} s, hace {} s	{} sn, {} sn önce
+simulado (gancho de prueba)	simüle (test kancası)
+leída: «{}» — {} · {}/{} s · {}	okunan: «{}» — {} · {}/{} sn · {}
+«{}» — {} · {} · {} s	«{}» — {} · {} · {} sn
+sonando	çalıyor
+en pausa	duraklatıldı
+estado ?	durum ?

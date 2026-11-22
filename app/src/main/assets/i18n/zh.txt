@@ -1834,3 +1834,10 @@ fuente del equipo: {}	车机来源：{}
 última lectura: {}	最后读取：{}
 avisos recibidos: {}	收到的通知：{}
 etiquetas del archivo: {}	文件标签：{}
+{} s, hace {} s	{} 秒，{} 秒前
+simulado (gancho de prueba)	模拟（测试钩子）
+leída: «{}» — {} · {}/{} s · {}	已读取：«{}» — {} · {}/{} 秒 · {}
+«{}» — {} · {} · {} s	«{}» — {} · {} · {} 秒
+sonando	正在播放
+en pausa	已暂停
+estado ?	状态 ?

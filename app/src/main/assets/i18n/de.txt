@@ -1834,3 +1834,10 @@ fuente del equipo: {}	Quelle des Geräts: {}
 última lectura: {}	letzte Abfrage: {}
 avisos recibidos: {}	empfangene Ereignisse: {}
 etiquetas del archivo: {}	Tags der Datei: {}
+{} s, hace {} s	{} s, vor {} s
+simulado (gancho de prueba)	simuliert (Testhaken)
+leída: «{}» — {} · {}/{} s · {}	gelesen: «{}» — {} · {}/{} s · {}
+«{}» — {} · {} · {} s	«{}» — {} · {} · {} s
+sonando	läuft
+en pausa	pausiert
+estado ?	Status ?

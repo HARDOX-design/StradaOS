@@ -1819,3 +1819,10 @@ fuente del equipo: {}	a készülék forrása: {}
 última lectura: {}	utolsó olvasás: {}
 avisos recibidos: {}	fogadott értesítések: {}
 etiquetas del archivo: {}	a fájl címkéi: {}
+{} s, hace {} s	{} mp, {} mp-e
+simulado (gancho de prueba)	szimulált (teszthorog)
+leída: «{}» — {} · {}/{} s · {}	beolvasva: «{}» — {} · {}/{} mp · {}
+«{}» — {} · {} · {} s	«{}» — {} · {} · {} mp
+sonando	szól
+en pausa	szünetel
+estado ?	állapot ?

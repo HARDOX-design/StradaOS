@@ -1838,3 +1838,10 @@ fuente del equipo: {}	unit source: {}
 última lectura: {}	last reading: {}
 avisos recibidos: {}	events received: {}
 etiquetas del archivo: {}	file tags: {}
+{} s, hace {} s	{} s, {} s ago
+simulado (gancho de prueba)	simulated (test hook)
+leída: «{}» — {} · {}/{} s · {}	read: «{}» — {} · {}/{} s · {}
+«{}» — {} · {} · {} s	«{}» — {} · {} · {} s
+sonando	playing
+en pausa	paused
+estado ?	state ?

@@ -1813,3 +1813,10 @@ fuente del equipo: {}	źródło urządzenia: {}
 última lectura: {}	ostatni odczyt: {}
 avisos recibidos: {}	otrzymane powiadomienia: {}
 etiquetas del archivo: {}	tagi pliku: {}
+{} s, hace {} s	{} s, {} s temu
+simulado (gancho de prueba)	symulowane (hak testowy)
+leída: «{}» — {} · {}/{} s · {}	odczytano: «{}» — {} · {}/{} s · {}
+«{}» — {} · {} · {} s	«{}» — {} · {} · {} s
+sonando	gra
+en pausa	wstrzymane
+estado ?	stan ?
