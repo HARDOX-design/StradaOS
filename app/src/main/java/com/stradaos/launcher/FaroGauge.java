@@ -103,9 +103,9 @@ public class FaroGauge extends View {
         if (d <= 0) return;
         if (tach.step()) postInvalidateOnAnimation();
         if (tach.visible()) {
-            // el aro del velocímetro ocupa el 80 % del lado: la esquina de abajo a la derecha queda libre
-            float tr = d * 0.16f;
-            tach.draw(c, w - tr * 1.05f, h - tr * 1.05f, tr, 0xFFE5332A, text, muted);
+            // el aro del velocímetro ocupa el 80 % del lado: la esquina de abajo a la izquierda queda libre
+            float tr = d * 0.125f;
+            tach.draw(c, tr * 0.95f, h - tr * 0.8f, tr, 0xFFE5332A, text, muted);
         }
         // brillo detrás del velocímetro en el modo claro (como la referencia)
         if (light) {

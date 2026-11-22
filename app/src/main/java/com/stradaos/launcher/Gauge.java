@@ -110,16 +110,17 @@ public class Gauge extends View {
 
         if (tach.step()) postInvalidateOnAnimation();
         float W = getWidth(), h = getHeight(), w = W;
-        // con el cuentarrevoluciones: si sobra ancho va a la derecha y el velocímetro se corre; si no, en la esquina
-        float tr = 0, tchX = 0, tchY = 0;
+        // con el cuentarrevoluciones: va a la izquierda y el velocímetro se corre a la derecha, sin taparse. Si sobra
+        // ancho, al costado; si es cuadrado, el velocímetro se achica y el cuentarrevoluciones queda abajo a la izquierda
+        float tr = 0, tchX = 0, tchY = 0, off = 0;
         boolean side = false;
         if (tach.visible()) {
             side = W > h * 1.3f;
-            if (side) { tr = Math.min(h * 0.34f, W * 0.16f); w = W - tr * 2.3f; }
-            // cuadrado: el velocímetro se achica y se corre un poco para dejar la esquina de abajo a la derecha
-            else { tr = Math.min(W, h) * 0.21f; w = W - tr * 0.9f; tchX = W - tr * 1.02f; tchY = h - tr * 1.02f; }
+            if (side) { tr = Math.min(h * 0.34f, W * 0.16f); off = tr * 2.3f; }
+            else { tr = Math.min(W, h) * 0.19f; off = tr * 1.7f; tchX = tr * 1.02f; tchY = h - tr * 1.02f; }
+            w = W - off;
         }
-        float r, cx = w / 2f, cy;
+        float r, cx = off + w / 2f, cy;
         if (compact) {
             // tarjeta del vehículo: pegado arriba y sin la prolongación del aro, para que quepa lo más grande posible
             r = Math.min(w / 2f * 0.97f, (h - 2) / 1.56f);
@@ -211,7 +212,7 @@ public class Gauge extends View {
             c.drawCircle(cx, cy, r * 0.06f, pBig);
         }
         if (tach.visible()) {
-            if (side) { tchX = W - tr * 1.1f; tchY = Math.min(h - tr * 1.05f, cy + r * 0.2f); }
+            if (side) { tchX = tr * 1.1f; tchY = Math.min(h - tr * 1.05f, cy + r * 0.2f); }
             tach.draw(c, tchX, tchY, tr, accent, ring, soft);
         }
     }
