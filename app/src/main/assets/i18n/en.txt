@@ -1845,3 +1845,25 @@ leída: «{}» — {} · {}/{} s · {}	read: «{}» — {} · {}/{} s · {}
 sonando	playing
 en pausa	paused
 estado ?	state ?
+# video en lugar del mapa (VideoCard)
+En la tarjeta del centro	In the center card
+Video: los de la memoria y las USB, en lugar del mapa	Video: from the memory and USB drives, instead of the map
+Video	Video
+Carpeta de videos	Video folder
+Toca para elegir. Si no eliges una, busca en toda la memoria y en las USB	Tap to choose. If you don't choose one, it searches the whole memory and the USB drives
+Todas	All
+Video en movimiento	Video while moving
+Sobre 5 km/h. La ley prohíbe ver video mientras se conduce	Above 5 km/h. The law forbids watching video while driving
+Tapar la imagen	Cover the picture
+Seguir con un aviso	Keep going with a warning
+Sin permiso de almacenamiento no se pueden buscar videos	Without storage permission videos can't be searched
+Buscando videos…	Searching for videos…
+videos	videos
+No se puede reproducir aquí	Can't play here
+ábrelo en pantalla completa	open it in full screen
+Buscando videos en la memoria y las USB…	Searching for videos in the memory and USB drives…
+No hay videos. Copia videos (MP4 o MKV) a la memoria o a una USB, o elige la carpeta en Ajustes → Mapa y clima.	No videos. Copy videos (MP4 or MKV) to the memory or a USB drive, or choose the folder in Settings → Map & weather.
+Ver en pantalla completa	Watch in full screen
+No hay una app de video para la pantalla completa	No video app for full screen
+No te distraigas mientras conduces	Don't get distracted while driving
+Imagen en pausa mientras manejas · el audio sigue	Picture paused while driving · audio keeps playing

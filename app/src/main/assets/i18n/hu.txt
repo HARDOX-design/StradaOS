@@ -1826,3 +1826,25 @@ leída: «{}» — {} · {}/{} s · {}	beolvasva: «{}» — {} · {}/{} mp · {
 sonando	szól
 en pausa	szünetel
 estado ?	állapot ?
+# video en lugar del mapa (VideoCard)
+En la tarjeta del centro	A középső kártyán
+Video: los de la memoria y las USB, en lugar del mapa	Videó: a térkép helyett a memóriában és a pendrive-okon lévő videók
+Video	Videó
+Carpeta de videos	Videómappa
+Toca para elegir. Si no eliges una, busca en toda la memoria y en las USB	Koppints a választáshoz. Ha nem választasz, a teljes memóriában és a pendrive-okon keres
+Todas	Összes
+Video en movimiento	Videó menet közben
+Sobre 5 km/h. La ley prohíbe ver video mientras se conduce	5 km/h felett. A törvény tiltja a videónézést vezetés közben
+Tapar la imagen	Kép eltakarása
+Seguir con un aviso	Folytatás figyelmeztetéssel
+Sin permiso de almacenamiento no se pueden buscar videos	Tárhely-engedély nélkül nem lehet videókat keresni
+Buscando videos…	Videók keresése…
+videos	videó
+No se puede reproducir aquí	Itt nem játszható le
+ábrelo en pantalla completa	nyisd meg teljes képernyőn
+Buscando videos en la memoria y las USB…	Videók keresése a memóriában és a pendrive-okon…
+No hay videos. Copia videos (MP4 o MKV) a la memoria o a una USB, o elige la carpeta en Ajustes → Mapa y clima.	Nincsenek videók. Másolj videókat (MP4 vagy MKV) a memóriába vagy egy pendrive-ra, vagy válaszd ki a mappát itt: Beállítások → Térkép és időjárás.
+Ver en pantalla completa	Megtekintés teljes képernyőn
+No hay una app de video para la pantalla completa	Nincs videóalkalmazás a teljes képernyőhöz
+No te distraigas mientras conduces	Ne hagyd, hogy vezetés közben elvonja a figyelmed
+Imagen en pausa mientras manejas · el audio sigue	Kép szüneteltetve vezetés közben · a hang szól tovább

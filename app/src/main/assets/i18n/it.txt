@@ -1841,3 +1841,25 @@ leída: «{}» — {} · {}/{} s · {}	letta: «{}» — {} · {}/{} s · {}
 sonando	in riproduzione
 en pausa	in pausa
 estado ?	stato ?
+# video en lugar del mapa (VideoCard)
+En la tarjeta del centro	Nella scheda centrale
+Video: los de la memoria y las USB, en lugar del mapa	Video: quelli della memoria e delle chiavette USB, al posto della mappa
+Video	Video
+Carpeta de videos	Cartella dei video
+Toca para elegir. Si no eliges una, busca en toda la memoria y en las USB	Tocca per scegliere. Se non ne scegli una, cerca in tutta la memoria e nelle chiavette USB
+Todas	Tutte
+Video en movimiento	Video in movimento
+Sobre 5 km/h. La ley prohíbe ver video mientras se conduce	Sopra i 5 km/h. La legge vieta di guardare video mentre si guida
+Tapar la imagen	Coprire l'immagine
+Seguir con un aviso	Continuare con un avviso
+Sin permiso de almacenamiento no se pueden buscar videos	Senza il permesso di archiviazione non si possono cercare i video
+Buscando videos…	Ricerca dei video…
+videos	video
+No se puede reproducir aquí	Impossibile riprodurlo qui
+ábrelo en pantalla completa	aprilo a schermo intero
+Buscando videos en la memoria y las USB…	Ricerca dei video nella memoria e nelle chiavette USB…
+No hay videos. Copia videos (MP4 o MKV) a la memoria o a una USB, o elige la carpeta en Ajustes → Mapa y clima.	Nessun video. Copia dei video (MP4 o MKV) nella memoria o su una chiavetta USB, oppure scegli la cartella in Impostazioni → Mappa e meteo.
+Ver en pantalla completa	Guarda a schermo intero
+No hay una app de video para la pantalla completa	Nessuna app video per lo schermo intero
+No te distraigas mientras conduces	Non distrarti mentre guidi
+Imagen en pausa mientras manejas · el audio sigue	Immagine in pausa durante la guida · l'audio continua

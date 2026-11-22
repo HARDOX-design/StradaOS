@@ -1841,3 +1841,25 @@ leída: «{}» — {} · {}/{} s · {}	gelesen: «{}» — {} · {}/{} s · {}
 sonando	läuft
 en pausa	pausiert
 estado ?	Status ?
+# video en lugar del mapa (VideoCard)
+En la tarjeta del centro	In der mittleren Karte
+Video: los de la memoria y las USB, en lugar del mapa	Video: aus dem Speicher und von USB-Sticks, statt der Karte
+Video	Video
+Carpeta de videos	Videoordner
+Toca para elegir. Si no eliges una, busca en toda la memoria y en las USB	Tippen zum Auswählen. Ohne Auswahl wird der ganze Speicher und alle USB-Sticks durchsucht
+Todas	Alle
+Video en movimiento	Video während der Fahrt
+Sobre 5 km/h. La ley prohíbe ver video mientras se conduce	Über 5 km/h. Video schauen während der Fahrt ist gesetzlich verboten
+Tapar la imagen	Bild abdecken
+Seguir con un aviso	Mit Warnung weiterlaufen
+Sin permiso de almacenamiento no se pueden buscar videos	Ohne Speicherberechtigung können keine Videos gesucht werden
+Buscando videos…	Videos werden gesucht…
+videos	Videos
+No se puede reproducir aquí	Kann hier nicht abgespielt werden
+ábrelo en pantalla completa	im Vollbild öffnen
+Buscando videos en la memoria y las USB…	Videos im Speicher und auf USB-Sticks werden gesucht…
+No hay videos. Copia videos (MP4 o MKV) a la memoria o a una USB, o elige la carpeta en Ajustes → Mapa y clima.	Keine Videos. Kopiere Videos (MP4 oder MKV) in den Speicher oder auf einen USB-Stick, oder wähle den Ordner in Einstellungen → Karte & Wetter.
+Ver en pantalla completa	Im Vollbild ansehen
+No hay una app de video para la pantalla completa	Keine Video-App für das Vollbild
+No te distraigas mientras conduces	Lass dich beim Fahren nicht ablenken
+Imagen en pausa mientras manejas · el audio sigue	Bild angehalten während der Fahrt · der Ton läuft weiter

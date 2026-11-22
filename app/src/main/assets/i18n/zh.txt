@@ -1841,3 +1841,25 @@ leída: «{}» — {} · {}/{} s · {}	已读取：«{}» — {} · {}/{} 秒 ·
 sonando	正在播放
 en pausa	已暂停
 estado ?	状态 ?
+# video en lugar del mapa (VideoCard)
+En la tarjeta del centro	在中间卡片中
+Video: los de la memoria y las USB, en lugar del mapa	视频：用存储和 U 盘里的视频代替地图
+Video	视频
+Carpeta de videos	视频文件夹
+Toca para elegir. Si no eliges una, busca en toda la memoria y en las USB	点按选择。不选择时会在整个存储和 U 盘中搜索
+Todas	全部
+Video en movimiento	行驶中的视频
+Sobre 5 km/h. La ley prohíbe ver video mientras se conduce	超过 5 km/h。法律禁止驾驶时观看视频
+Tapar la imagen	遮住画面
+Seguir con un aviso	显示提醒后继续
+Sin permiso de almacenamiento no se pueden buscar videos	没有存储权限，无法搜索视频
+Buscando videos…	正在搜索视频…
+videos	个视频
+No se puede reproducir aquí	无法在这里播放
+ábrelo en pantalla completa	请全屏打开
+Buscando videos en la memoria y las USB…	正在存储和 U 盘中搜索视频…
+No hay videos. Copia videos (MP4 o MKV) a la memoria o a una USB, o elige la carpeta en Ajustes → Mapa y clima.	没有视频。请把视频（MP4 或 MKV）复制到存储或 U 盘，或在 设置 → 地图和天气 中选择文件夹。
+Ver en pantalla completa	全屏观看
+No hay una app de video para la pantalla completa	没有可全屏播放的视频应用
+No te distraigas mientras conduces	驾驶时请勿分心
+Imagen en pausa mientras manejas · el audio sigue	行驶中画面已暂停 · 声音继续播放
