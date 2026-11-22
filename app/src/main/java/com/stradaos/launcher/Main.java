@@ -8920,6 +8920,7 @@ public class Main extends Activity {
         Obd.removeListener(obdSettingsL);
         settingsScroll = null; settingsScrollCat = -1; settingsPendingY = -1;
         if (settingsView != null) { root.removeView(settingsView); settingsView = null; }
+        if (board != null) board.setVisibility(View.VISIBLE);
     }
 
     private void showSettings(int cat) {
@@ -8946,6 +8947,9 @@ public class Main extends Activity {
         settingsView.setBackgroundColor(BG);
         settingsView.setClickable(true);
         root.addView(settingsView, new FrameLayout.LayoutParams(-1, -1));
+        // la pantalla de inicio no se dibuja detrás de los Ajustes: en algunas pantallas (Picanto, Android 4.2) se
+        // colaba un borde de las tarjetas a través del fondo, y además ahorra trabajo mientras los Ajustes están abiertos
+        if (board != null) board.setVisibility(View.INVISIBLE);
 
         FrameLayout panel = new FrameLayout(this);
         FrameLayout.LayoutParams plp = new FrameLayout.LayoutParams((int) ((vertical ? 720 : 1024) * s), (int) ((vertical ? boardH : 600) * s));
