@@ -338,16 +338,34 @@ public class VideoCard extends FrameLayout {
         try { return mp != null ? mp.getCurrentPosition() : resumeMs; } catch (Throwable t) { return 0; }
     }
 
-    /** Tamaño del video dentro de la tarjeta sin deformarlo (entra completo, centrado). */
+    /**
+     * Tamaño del video sin deformarlo. En su tarjeta y en pantalla completa entra completo y centrado; en «Solo video»
+     * es panorámico: ocupa todo el ancho del área y, si no alcanza el alto, recorta un poco arriba y abajo (el
+     * TextureView se escala con una matriz para no estirar la imagen; el difuminado disimula el recorte).
+     */
     private void fit(int w, int hh) {
         if (w <= 0 || hh <= 0) return;
         vw = w; vh = hh;
         int cw = getWidth(), ch = getHeight();
         if (cw <= 0 || ch <= 0) return;
-        float k = Math.min(cw / (float) w, ch / (float) hh);
+        int bw, bh;
+        if (mode == 1) {
+            bw = cw;
+            bh = Math.min(ch, Math.round(cw * hh / (float) w));
+        } else {
+            float k = Math.min(cw / (float) w, ch / (float) hh);
+            bw = Math.round(w * k);
+            bh = Math.round(hh * k);
+        }
+        // el TextureView estira el video a su tamaño: se corrige para que quede con su proporción, recortado al centro
+        float sx = 1, sy = 1, natH = bw * hh / (float) w;
+        if (natH > bh + 1) sy = natH / bh;
+        android.graphics.Matrix m = new android.graphics.Matrix();
+        m.setScale(sx, sy, bw / 2f, bh / 2f);
+        tex.setTransform(m);
         LayoutParams l = (LayoutParams) videoBox.getLayoutParams();
-        l.width = Math.round(w * k);
-        l.height = Math.round(hh * k);
+        l.width = bw;
+        l.height = bh;
         l.gravity = Gravity.CENTER;
         videoBox.setLayoutParams(l);
         LayoutParams el = (LayoutParams) edge.getLayoutParams();
@@ -379,6 +397,7 @@ public class VideoCard extends FrameLayout {
         bigIcon.inward = m == 1;
         bigIcon.invalidate();
         fullBtn.setText(m == 2 ? "✕" : "⛶");
+        if (vw > 0) post(new Runnable() { public void run() { fit(vw, vh); } });
     }
 
     void next() { if (!list.isEmpty()) { resumeMs = 0; play(at + 1); } }
