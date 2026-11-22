@@ -144,9 +144,41 @@ diésel o de otra motorización, la cilindrada se cambia en *Avanzado → Cilind
 
 ## Sensores y PIDs en vivo
 
-El monitor lee los sensores en un hilo de fondo cada ~700 ms. Los sensores marcados como **rápidos** se leen en cada vuelta; los demás, una de cada cuatro (~2,8 s).
+El monitor lee los sensores en un hilo de fondo. Hay dos formas de leer; la app elige sola:
 
-### Rápidos (cada vuelta, ~700 ms)
+- **Lectura agrupada** (autos CAN): hasta 6 PIDs en una sola consulta (`010C0D0504110B` + número de tramas),
+  que tarda casi lo mismo que un PID suelto. Cada vuelta lee los rápidos, la mezcla corta (`0x06`), la sonda O2
+  delantera (`0x14`) y el pedal (`0x49`), más el siguiente grupo de 6 lentos. Medido en un Kia Sorento 2010 con un
+  ELM327 Wi-Fi clon: 6 PIDs en ~60 ms contra ~85 ms por un PID suelto; en dos viajes reales (47 min), **~5 vueltas por
+  segundo** (los lentos, cada ~1 s) contra una vuelta cada 0,7 s y los lentos cada 2,8 s.
+- **Lectura de a un PID** (la de siempre): si el auto no es CAN, o si el escáner no entiende la consulta agrupada
+  (5 grupos seguidos sin respuesta válida), una vuelta cada ~700 ms con los **rápidos** y, una de cada cuatro, los
+  demás (~2,8 s).
+
+Cómo funciona la lectura agrupada (`Elm.pids()`, `Elm.multiData()`, `Obd.readGrouped()`):
+
+1. `Elm.LEN` tiene el largo de cada PID del modo 01 (SAE J1979): sin él no se puede separar la respuesta. Los mapas
+   de PIDs disponibles (`00`, `20`, `40`…) y los de largo desconocido se piden de a uno.
+2. Si los PIDs del grupo los tiene **un solo computador** (`Elm.responders`, contado al leer los PIDs disponibles),
+   la consulta termina con el **número de tramas CAN** de la respuesta: `bytes = 1 + Σ(1 + largo)`; 1 trama si
+   `bytes ≤ 7`, si no `1 + bytes / 7`. Así el ELM327 corta apenas llega la última trama en vez de esperar su tiempo
+   límite por si contesta otro computador. Si un grupo vuelve incompleto, se deja de indicar (`Elm.counted`).
+3. La respuesta se arma con las tramas ISO-TP (`00E`, `0:…`, `1:…`) o con la línea corta `41…`. Si contestan dos
+   computadores se queda con la que trae más PIDs de los pedidos; si las tramas vienen mezcladas, con ninguna.
+   Solo se aceptan PIDs pedidos y en orden: una respuesta desfasada (la de la consulta anterior) se descarta.
+4. Un grupo sin respuesta se lee de a un PID en esa vuelta. «NO DATA» (contacto apagado) no cuenta como fallo.
+   Si el escáner no manda su «>» (el clon a veces se traga una respuesta: 4 veces en 20 min de viaje), `Elm.cmd` le
+   pregunta `ATI` y sigue con la consulta vacía; recién a la tercera seguida da el escáner por perdido y `Obd` reconecta.
+   La consulta agrupada espera como mucho 1,2 s.
+5. El voltaje va agrupado como PID `0x42` si el auto lo entrega; si no, `ATRV` suelto.
+
+Historial de cada dato (`Obd.Sensor`): uno **corto** con todas las lecturas (1200, ~4 min con la lectura agrupada)
+para los gráficos de 15 s y 1 min, y uno **largo** con como mucho una lectura cada 0,6 s (3000, ~30 min). `since()`
+usa el corto si alcanza a cubrir el período. La subida rápida del refrigerante se calcula con la hora real de la
+lectura de hace ~1 min (`Sensor.ago()`), no contando lecturas. Empieza a avisar desde 99 °C (antes, 95 °C): detenido en ralentí,
+el Sorento sano sube de 90 a 96 °C a ~5 °C/min hasta que entra el electroventilador, y eso daba falsas alarmas.
+
+### Rápidos (cada vuelta)
 
 | Sensor | PID | Fórmula | Unidad | Alertas |
 |--------|-----|---------|--------|---------|
@@ -162,7 +194,9 @@ El monitor lee los sensores en un hilo de fondo cada ~700 ms. Los sensores marca
 
 > **Voltaje:** Se prefiere el PID `0x42` (medido por el computador del motor) sobre `ATRV` (medido por el escáner). Los clones ELM327 suelen medir ~1 V de menos con `ATRV`.
 
-### Lentos (una de cada 4 vueltas, ~2,8 s)
+### Lentos (de a 6 por vuelta con la lectura agrupada, ~1 s; si no, una de cada 4 vueltas, ~2,8 s)
+
+Con la lectura agrupada, `0x06`, `0x14` y `0x49` pasan a leerse en cada vuelta (`Obd.QUICK`): cambian en menos de un segundo.
 
 | Sensor | PID | Fórmula | Unidad | Alertas |
 |--------|-----|---------|--------|---------|
@@ -228,7 +262,7 @@ Nombre del archivo de preferencias: `launcher` (modo `MODE_PRIVATE`).
 | `obd_panel_auto` | boolean | `true` | Una alerta grave abre el panel |
 | `obd_ai_vin` | boolean | `false` | Enviar el VIN a la IA |
 | `ai_key` | String | — | API key de la IA (no entra en la copia de seguridad) |
-| `obd_chart_win` | long | `300000` | Ventana del gráfico en ms (60000/300000/900000/1800000) |
+| `obd_chart_win` | long | `300000` | Ventana del gráfico en ms (15000/60000/300000/900000/1800000; 15 s pensada para la lectura agrupada) |
 | `obd_alert_<key>` | boolean | `true` | Alerta del sensor `<key>` activada |
 | `obd_thr_<key>_hi1` | float | (fábrica) | Umbral de aviso alto del sensor `<key>` |
 | `obd_thr_<key>_hi2` | float | (fábrica) | Umbral crítico alto del sensor `<key>` |

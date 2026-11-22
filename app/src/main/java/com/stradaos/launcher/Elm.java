@@ -48,6 +48,36 @@ public class Elm {
     private String protocolPref = "auto";
     /** PIDs del modo 01 que el auto dice tener (bit i = PID i). */
     private final boolean[] supported = new boolean[0xE1];
+    /** Cuántos computadores dicen tener cada PID (en el Sorento, el 01, 30 y 31 los tienen el motor y la caja). */
+    private final int[] responders = new int[0xE1];
+    /** Se pueden pedir varios PIDs en una consulta (solo CAN); se apaga si el escáner o el auto no lo entienden. */
+    boolean multi;
+    /** Terminar la consulta con el número de tramas de la respuesta; se apaga si el escáner corta antes de tiempo. */
+    boolean counted = true;
+
+    /**
+     * Bytes de datos de cada PID del modo 01 (SAE J1979), para separar una respuesta con varios PIDs. 0 = desconocido
+     * o mapa de PIDs disponibles: esos se piden de a uno.
+     */
+    static final int[] LEN = new int[0x60];
+    static {
+        int[][] t = {{0x01, 4}, {0x02, 2}, {0x03, 2}, {0x04, 1}, {0x05, 1}, {0x06, 1}, {0x07, 1}, {0x08, 1}, {0x09, 1},
+            {0x0A, 1}, {0x0B, 1}, {0x0C, 2}, {0x0D, 1}, {0x0E, 1}, {0x0F, 1}, {0x10, 2}, {0x11, 1}, {0x12, 1}, {0x13, 1},
+            {0x1C, 1}, {0x1D, 1}, {0x1E, 1}, {0x1F, 2}, {0x21, 2}, {0x22, 2}, {0x23, 2}, {0x2C, 1}, {0x2D, 1}, {0x2E, 1},
+            {0x2F, 1}, {0x30, 1}, {0x31, 2}, {0x32, 2}, {0x33, 1}, {0x41, 4}, {0x42, 2}, {0x43, 2}, {0x44, 2}, {0x45, 1},
+            {0x46, 1}, {0x47, 1}, {0x48, 1}, {0x49, 1}, {0x4A, 1}, {0x4B, 1}, {0x4C, 1}, {0x4D, 2}, {0x4E, 2}, {0x4F, 4},
+            {0x50, 4}, {0x51, 1}, {0x52, 1}, {0x53, 2}, {0x54, 2}, {0x59, 2}, {0x5A, 1}, {0x5B, 1}, {0x5C, 1}, {0x5D, 2},
+            {0x5E, 2}, {0x5F, 1}};
+        for (int[] e : t) LEN[e[0]] = e[1];
+        for (int p = 0x14; p <= 0x1B; p++) LEN[p] = 2;      // sondas O2 (voltaje y corrección)
+        for (int p = 0x24; p <= 0x2B; p++) LEN[p] = 4;      // sondas O2 de banda ancha
+        for (int p = 0x34; p <= 0x3B; p++) LEN[p] = 4;
+        for (int p = 0x3C; p <= 0x3F; p++) LEN[p] = 2;      // temperaturas del catalizador
+        for (int p = 0x55; p <= 0x58; p++) LEN[p] = 2;      // correcciones de la sonda 2
+    }
+
+    /** true si el PID se puede pedir junto con otros. */
+    static boolean groupable(int pid) { return pid > 0 && pid < LEN.length && LEN[pid] > 0; }
 
     void open(String addr) throws IOException {
         close();
@@ -220,11 +250,14 @@ public class Elm {
         can = dp.length() > 0 && dp.charAt(0) >= '6' && dp.charAt(0) <= '9';
         protocol = cmd("ATDP", 1500);
         java.util.Arrays.fill(supported, false);
+        java.util.Arrays.fill(responders, 0);
         readSupported(r, 0x00);
         for (int base = 0x20; base <= 0xC0; base += 0x20) {
             if (!supported[base]) break;      // el último PID de cada bloque dice si existe el siguiente bloque
             readSupported(cmd(String.format(Locale.US, "01%02X", base), 3000), base);
         }
+        multi = can;
+        counted = true;
     }
 
     /**
@@ -235,7 +268,7 @@ public class Elm {
         for (byte[] b : allData(resp, 0x41, base)) {
             if (b.length < 4) continue;
             for (int i = 0; i < 32; i++)
-                if ((b[i / 8] & (0x80 >> (i % 8))) != 0) supported[base + i + 1] = true;
+                if ((b[i / 8] & (0x80 >> (i % 8))) != 0) { supported[base + i + 1] = true; responders[base + i + 1]++; }
         }
     }
 
@@ -254,6 +287,112 @@ public class Elm {
             if (score > bestScore) { best = b; bestScore = score; }
         }
         return best;
+    }
+
+    /**
+     * Hasta 6 PIDs del modo 01 en una sola consulta (ISO 15765-4, solo CAN). Tarda casi lo mismo que un PID suelto:
+     * en un Kia Sorento 2010 con un ELM327 Wi-Fi, 6 PIDs en ~60 ms contra ~85 ms por cada PID. Si los PIDs los tiene
+     * un solo computador, la consulta termina con el número de tramas de la respuesta y el ELM327 no se queda
+     * esperando por si contesta otro. Devuelve PID → bytes de datos; vacío si no llegó nada que corresponda.
+     */
+    java.util.Map<Integer, byte[]> pids(int[] list) throws IOException {
+        StringBuilder q = new StringBuilder("01");
+        int bytes = 1;
+        boolean alone = true;
+        for (int p : list) {
+            q.append(String.format(Locale.US, "%02X", p));
+            bytes += 1 + LEN[p];
+            if (responders[p] > 1) alone = false;
+        }
+        // una trama CAN lleva 7 bytes; si no cabe, la primera lleva 6 y las siguientes 7
+        if (alone && counted) q.append(Integer.toHexString(bytes <= 7 ? 1 : 1 + bytes / 7).toUpperCase(Locale.US));
+        // el Sorento contesta en ~60 ms (lo más lento medido: ~600 ms): si en 1,2 s no llegó, se perdió (ver cmd)
+        String r = cmd(q.toString(), 1200);
+        lastSilent = r.length() == 0 || r.contains("NODATA");
+        return multiData(r, list);
+    }
+
+    /** La última consulta agrupada no trajo nada porque el auto no contestó (contacto apagado), no por no entenderla. */
+    boolean lastSilent;
+
+    /**
+     * Separa la respuesta a una consulta de varios PIDs. Larga: «00E», «0:41…», «1:…» (tramas ISO-TP que se juntan
+     * hasta el largo de la primera línea); corta: una sola línea «41…». Si contestan dos computadores se queda con la
+     * respuesta que trae más PIDs de los pedidos; si las tramas vienen mezcladas, con ninguna (se piden de a uno).
+     */
+    static java.util.Map<Integer, byte[]> multiData(String resp, int[] asked) {
+        List<String> candidates = new ArrayList<String>();
+        StringBuilder frames = new StringBuilder();
+        int total = -1, next = 0;
+        boolean mixed = false;
+        for (String line : resp.split("[\r\n]+")) {
+            String l = line.trim();
+            if (l.length() > 2 && l.charAt(1) == ':') {
+                if (Character.digit(l.charAt(0), 16) != (next & 0xF)) mixed = true;
+                next++;
+                frames.append(l.substring(2));
+            } else if (l.matches("[0-9A-F]{3}")) {
+                if (total >= 0) mixed = true;
+                total = Integer.parseInt(l, 16);
+            } else if (l.startsWith("41")) {
+                candidates.add(l);
+            }
+        }
+        if (frames.length() > 0 && !mixed)
+            candidates.add(total > 0 && frames.length() > total * 2 ? frames.substring(0, total * 2) : frames.toString());
+        java.util.Map<Integer, byte[]> best = new java.util.HashMap<Integer, byte[]>();
+        for (String c : candidates) {
+            java.util.Map<Integer, byte[]> m = split(c.replaceAll("[^0-9A-F]", ""), asked);
+            if (m.size() > best.size()) best = m;
+        }
+        return best;
+    }
+
+    /** «41 PID datos PID datos…» → PID → datos, solo con los PIDs pedidos y mientras los largos calcen. */
+    private static java.util.Map<Integer, byte[]> split(String hex, int[] asked) {
+        java.util.Map<Integer, byte[]> out = new java.util.HashMap<Integer, byte[]>();
+        if (!hex.startsWith("41")) return out;
+        int i = 2;
+        while (i + 2 <= hex.length()) {
+            int p = Integer.parseInt(hex.substring(i, i + 2), 16);
+            boolean wanted = false;
+            for (int a : asked) if (a == p) wanted = true;
+            if (!wanted || !groupable(p) || i + 2 + LEN[p] * 2 > hex.length()) break;
+            byte[] b = new byte[LEN[p]];
+            for (int k = 0; k < b.length; k++) b[k] = (byte) Integer.parseInt(hex.substring(i + 2 + k * 2, i + 4 + k * 2), 16);
+            out.put(p, b);
+            i += 2 + LEN[p] * 2;
+        }
+        return out;
+    }
+
+    /**
+     * Valor de un PID del modo 01 a partir de sus bytes de datos; null si no es un dato que se muestre. El PID 03
+     * (sistema de combustible) da el primer byte: 1 lazo abierto en frío, 2 lazo cerrado, 4 lazo abierto por
+     * desaceleración o carga, 8 lazo abierto por falla, 16 lazo cerrado con falla de una sonda.
+     */
+    static Float value(int pid, byte[] b) {
+        if (b == null || b.length == 0) return null;
+        int a = b[0] & 0xFF, c = b.length > 1 ? b[1] & 0xFF : 0;
+        switch (pid) {
+            case 0x04: case 0x11: case 0x2E: case 0x2F: case 0x45: case 0x47: case 0x49: case 0x4A: case 0x4C:
+                return a * 100f / 255f;
+            case 0x43: return (a * 256 + c) * 100f / 255f;
+            case 0x05: case 0x0F: case 0x46: case 0x5C: return a - 40f;
+            case 0x06: case 0x07: case 0x55: case 0x56: return (a - 128) * 100f / 128f;
+            case 0x0B: case 0x30: case 0x33: return (float) a;
+            case 0x0C: return (a * 256 + c) / 4f;
+            case 0x0D: case 0x03: return (float) a;
+            case 0x0E: return a / 2f - 64f;
+            case 0x10: return (a * 256 + c) / 100f;
+            case 0x14: case 0x15: return a / 200f;
+            case 0x1F: case 0x21: case 0x31: case 0x4D: case 0x4E: return (float) (a * 256 + c);
+            case 0x3C: case 0x3E: return (a * 256 + c) / 10f - 40f;
+            case 0x44: return (a * 256 + c) / 32768f;
+            case 0x42: return b.length >= 2 ? (a * 256 + c) / 1000f : null;
+            case 0x5E: return (a * 256 + c) / 20f;
+            default: return null;
+        }
     }
 
     /** Todas las respuestas a un PID (una por computador que contesta). */
@@ -362,23 +501,57 @@ public class Elm {
         while (in.available() > 0) in.read();                      // restos de la respuesta anterior
         out.write((c + "\r").getBytes("US-ASCII"));
         out.flush();
+        String r = readPrompt(timeoutMs);
+        if (r == null) {
+            // No llegó el «>». El ELM327 clon a veces se traga una respuesta (viaje del 21-nov en el Sorento: 4 veces en
+            // 20 min). Antes de darlo por perdido (reconectar tarda ~10 s y avisa por voz) se le pregunta algo
+            // inofensivo: si contesta, esta consulta queda vacía y se sigue. A la tercera seguida, sí se reconecta.
+            if (++lost >= 3 || !resync()) throw new IOException("El escáner no responde");
+            return "";
+        }
+        lost = 0;
+        String s = r.toUpperCase(Locale.US).replace("SEARCHING...", "").replace(" ", "");
+        if (s.contains("STOPPED")) return "";
+        return s.trim();
+    }
+
+    /** Respuestas seguidas que no llegaron. */
+    private int lost;
+
+    /** Lee hasta el «>»; null si no llega a tiempo. */
+    private String readPrompt(int timeoutMs) throws IOException {
         StringBuilder b = new StringBuilder();
         long end = System.currentTimeMillis() + timeoutMs;
+        if (tcp != null) tcp.setSoTimeout(Math.max(200, timeoutMs));
         while (true) {
             if (in.available() > 0 || tcp != null) {
                 int ch;
-                try { ch = in.read(); } catch (java.net.SocketTimeoutException e) { throw new IOException("El escáner no responde"); }
+                try { ch = in.read(); } catch (java.net.SocketTimeoutException e) { return null; }
                 if (ch < 0) throw new IOException("El escáner cerró la conexión");
-                if (ch == '>') break;
+                if (ch == '>') return b.toString();
                 b.append((char) ch);
+                if (System.currentTimeMillis() > end + 2000) return null;     // habla sin terminar nunca
             } else {
-                if (System.currentTimeMillis() > end) throw new IOException("El escáner no responde");
+                if (System.currentTimeMillis() > end) return null;
                 try { Thread.sleep(8); } catch (InterruptedException e) { throw new IOException("Interrumpido"); }
             }
         }
-        String s = b.toString().toUpperCase(Locale.US).replace("SEARCHING...", "").replace(" ", "");
-        if (s.contains("STOPPED")) return "";
-        return s.trim();
+    }
+
+    /** ¿Sigue vivo? Le pide su versión y descarta lo que llegue tarde (la respuesta perdida, si aparece). */
+    private boolean resync() {
+        try {
+            Thread.sleep(150);
+            while (in.available() > 0) in.read();
+            out.write("ATI\r".getBytes("US-ASCII"));
+            out.flush();
+            if (readPrompt(1500) == null) return false;
+            Thread.sleep(100);
+            while (in.available() > 0) in.read();
+            return true;
+        } catch (Throwable t) {
+            return false;
+        }
     }
 
     void close() {
@@ -428,6 +601,15 @@ public class Elm {
                     case 0x42: return "424200" + hex2(14100);
                     default: return "NODATA";
                 }
+            }
+            if (c.startsWith("01") && c.length() > 4) {
+                // varios PIDs en una consulta (el número final de tramas, si viene, se ignora): una línea «41…»
+                StringBuilder all = new StringBuilder("41");
+                for (int i = 2; i + 2 <= c.length(); i += 2) {
+                    String one = answer("01" + c.substring(i, i + 2));
+                    if (one.startsWith("41")) all.append(one.substring(2));
+                }
+                return all.length() > 2 ? all.toString() : "NODATA";
             }
             if (c.length() != 4 || !c.startsWith("01")) return "NODATA";
             int pid = Integer.parseInt(c.substring(2), 16);

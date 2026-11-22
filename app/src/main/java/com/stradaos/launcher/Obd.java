@@ -45,17 +45,24 @@ public class Obd {
         float value = Float.NaN;
         int level = OK;
         long badSince;
-        final float[] hist = new float[120];
-        int histN;
         /** Cuántas lecturas van: la pantalla redibuja la tarjeta solo cuando cambia. */
         volatile long pushes;
         /** Hora (SystemClock.elapsedRealtime) de la última lectura: para no mostrar un dato viejo si el escáner se calla. */
         volatile long at;
-        /** Historial largo con la hora de cada lectura (~30 min con una lectura cada 0,7 s), para los gráficos grandes. */
-        static final int LONG = 2700;
+        /**
+         * Historial largo con la hora de cada lectura, para los gráficos grandes: guarda como mucho una cada 0,6 s
+         * (~30 min) aunque el escáner lea más rápido.
+         */
+        static final int LONG = 3000;
         private final float[] lv = new float[LONG];
         private final long[] lt = new long[LONG];
         private int lHead, lN;
+        private long lLast;
+        /** Historial corto con todas las lecturas (~4 min con la lectura agrupada), para los gráficos de 15 s y 1 min. */
+        static final int SHORT = 1200;
+        private final float[] sv = new float[SHORT];
+        private final long[] st = new long[SHORT];
+        private int sHead, sN;
 
         Sensor(String key, String label, String unit, int pid, boolean fast, float min, float max) {
             this.key = key; this.label = label; this.unit = unit; this.pid = pid; this.fast = fast; this.min = min; this.max = max;
@@ -83,32 +90,56 @@ public class Obd {
         void push(float v) {
             value = v;
             at = android.os.SystemClock.elapsedRealtime();
-            System.arraycopy(hist, 1, hist, 0, hist.length - 1);
-            hist[hist.length - 1] = v;
-            if (histN < hist.length) histN++;
             pushes++;
+            long now = System.currentTimeMillis();
             synchronized (this) {
+                sv[sHead] = v;
+                st[sHead] = now;
+                sHead = (sHead + 1) % SHORT;
+                if (sN < SHORT) sN++;
+                if (now - lLast < 600) return;
+                lLast = now;
                 lv[lHead] = v;
-                lt[lHead] = System.currentTimeMillis();
+                lt[lHead] = now;
                 lHead = (lHead + 1) % LONG;
                 if (lN < LONG) lN++;
             }
         }
 
-        /** Copia las lecturas desde «since» (de la más antigua a la más nueva). Devuelve cuántas copió. */
+        /**
+         * Copia las lecturas desde «since» (de la más antigua a la más nueva). Devuelve cuántas copió. Si el historial
+         * corto alcanza a cubrir todo el período usa ese (todas las lecturas); si no, el largo.
+         */
         synchronized int since(long since, float[] vo, long[] to) {
+            // el corto sirve si todavía no se llenó (tiene todo desde la conexión) o si su lectura más vieja ya alcanza
+            boolean shortOk = sN > 0 && (sN < SHORT || st[sHead] <= since);
+            float[] v = shortOk ? sv : lv;
+            long[] t = shortOk ? st : lt;
+            int size = shortOk ? SHORT : LONG, head = shortOk ? sHead : lHead, count = shortOk ? sN : lN;
             int n = 0;
-            for (int i = 0; i < lN; i++) {
-                int at = (lHead - lN + i + LONG) % LONG;
-                if (lt[at] < since) continue;
-                vo[n] = lv[at];
-                to[n] = lt[at];
+            for (int i = 0; i < count; i++) {
+                int at = (head - count + i + size) % size;
+                if (t[at] < since) continue;
+                vo[n] = v[at];
+                to[n] = t[at];
                 n++;
             }
             return n;
         }
 
-        synchronized void clearHistory() { lN = 0; lHead = 0; histN = 0; }
+        /** Valor de hace unos «ms» (la primera lectura del historial largo desde ese momento); NaN si no hay. */
+        synchronized float ago(long ms, long[] when) {
+            long from = System.currentTimeMillis() - ms;
+            for (int i = 0; i < lN; i++) {
+                int at = (lHead - lN + i + LONG) % LONG;
+                if (lt[at] < from) continue;
+                when[0] = lt[at];
+                return lv[at];
+            }
+            return Float.NaN;
+        }
+
+        synchronized void clearHistory() { lN = 0; lHead = 0; lLast = 0; sN = 0; sHead = 0; }
 
         /** Nivel del valor actual según los umbrales, sin esperar el hold. */
         int rawLevel() {
@@ -410,7 +441,9 @@ public class Obd {
             if (scanRequested) { scanRequested = false; doScan(); }
             if (freezeRequested) { freezeRequested = false; readFreeze(); }
             int got = 0;
-            for (Sensor s : ALL) {
+            boolean grouped = elm.multi;
+            if (grouped) got = readGrouped(round);
+            else for (Sensor s : ALL) {
                 if (!s.fast && round % 4 != 0) continue;
                 Float v = read(s);
                 if (v != null) { s.push(v); got++; }
@@ -422,8 +455,10 @@ public class Obd {
                 if (SPEED.has() && SPEED.value > 3)
                     CONSUMPTION.push(Math.min(99, lph / SPEED.value * 100f));
             }
-            // de a dos por vuelta, el resto de los datos que el auto entrega (para «Todos los datos»)
-            readExtra(round);
+            // de a dos por vuelta, el resto de los datos que el auto entrega (para «Todos los datos»); con la lectura
+            // agrupada, de a seis una de cada cuatro vueltas
+            if (!grouped) readExtra(round);
+            else if (round % 4 == 0) readExtraGrouped();
             round++;
             if (got <= 1) {                       // solo responde el voltaje: contacto apagado
                 if (++empty == 3) { status = WAITING; statusMsg = "Esperando al auto (¿contacto apagado?)"; changed(); }
@@ -442,8 +477,109 @@ public class Obd {
             }
             if (System.currentTimeMillis() - lastDtcCheck > 30000) checkDtcs();
             changed();
-            sleep(Math.max(50, 700 - (System.currentTimeMillis() - t0)));
+            sleep(Math.max(grouped ? 20 : 50, (grouped ? GROUPED_ROUND_MS : 700) - (System.currentTimeMillis() - t0)));
         }
+    }
+
+    /** Vuelta mínima con la lectura agrupada: el escáner da ~5 vueltas por segundo; esto solo evita saturar uno muy rápido. */
+    static final int GROUPED_ROUND_MS = 100;
+    /**
+     * Con la lectura agrupada también van en cada vuelta: la mezcla corta, la sonda O2 delantera y el pedal. Son los que
+     * cambian en menos de un segundo y los que distinguen una falta de combustible de una desaceleración.
+     */
+    private static final Sensor[] QUICK = {STFT, O2_1, PEDAL_D};
+    private static int slowAt, groupFails;
+
+    private static boolean quick(Sensor s) {
+        if (s.fast) return true;
+        for (Sensor q : QUICK) if (q == s) return true;
+        return false;
+    }
+
+    /** PID que se le pide al auto para este dato (el voltaje, el del computador si lo entrega); -1 si no se pide agrupado. */
+    private static int groupPid(Sensor s) {
+        int pid = s.pid == -1 && elm.supports(0x42) ? 0x42 : s.pid;
+        return pid > 0 && elm.supports(pid) && Elm.groupable(pid) ? pid : -1;
+    }
+
+    /**
+     * Una vuelta con la lectura agrupada: los datos rápidos (y los de {@link #QUICK}) en consultas de 6 PIDs y, de los
+     * lentos, el siguiente grupo de 6 (cada uno se lee cada ~4 vueltas, casi 1 s). Si una consulta no trae nada, ese
+     * grupo se lee de a un PID; si fallan 5 seguidas, el escáner no entiende la consulta agrupada y se vuelve a la de
+     * siempre.
+     */
+    private static int readGrouped(int round) throws java.io.IOException {
+        List<Sensor> fast = new ArrayList<Sensor>(), slow = new ArrayList<Sensor>();
+        int got = 0;
+        for (Sensor s : ALL) {
+            if (s.pid == -2 || s.pid == -3) continue;
+            if (groupPid(s) < 0) {
+                // los que no se pueden agrupar (el voltaje del escáner, PIDs sin largo conocido) van sueltos
+                if (quick(s) || round % 4 == 0) { Float v = read(s); if (v != null) { s.push(v); got++; } }
+            } else (quick(s) ? fast : slow).add(s);
+        }
+        for (int i = 0; i < fast.size(); i += 6) got += readGroup(fast.subList(i, Math.min(fast.size(), i + 6)));
+        if (!slow.isEmpty()) {
+            List<Sensor> next = new ArrayList<Sensor>();
+            for (int k = 0; k < Math.min(6, slow.size()); k++) next.add(slow.get((slowAt + k) % slow.size()));
+            slowAt = (slowAt + next.size()) % slow.size();
+            got += readGroup(next);
+        }
+        return got;
+    }
+
+    private static int readGroup(List<Sensor> group) throws java.io.IOException {
+        int[] pids = new int[group.size()];
+        for (int i = 0; i < pids.length; i++) pids[i] = groupPid(group.get(i));
+        java.util.Map<Integer, byte[]> r = elm.pids(pids);
+        if (r.isEmpty() && elm.lastSilent) return 0;      // contacto apagado: no es culpa de la consulta agrupada
+        if (r.isEmpty()) {
+            if (++groupFails >= 5 && elm.multi) {
+                elm.multi = false;
+                log("el escáner no entiende varios datos por consulta: se leen de a uno");
+            }
+            int got = 0;
+            for (Sensor s : group) { Float v = read(s); if (v != null) { s.push(v); got++; } }
+            return got;
+        }
+        groupFails = 0;
+        // si el escáner cortó la respuesta (el número de tramas no le calzó), se deja de indicar
+        if (r.size() < pids.length && elm.counted) {
+            elm.counted = false;
+            log("respuesta incompleta: se deja de indicar el número de tramas");
+        }
+        int got = 0;
+        for (int i = 0; i < pids.length; i++) {
+            byte[] b = r.get(pids[i]);
+            Float v = b != null ? decode(pids[i], b) : null;
+            if (v != null) { group.get(i).push(v); got++; }
+        }
+        return got;
+    }
+
+    /** Los demás datos estándar que el auto entrega (para «Todos los datos»), de a seis. */
+    private static void readExtraGrouped() throws java.io.IOException {
+        List<Integer> todo = new ArrayList<Integer>();
+        for (int pid = 2; pid <= 0xE0; pid++) {
+            if (pid % 0x20 == 0 || !elm.supports(pid)) continue;
+            boolean known = false;
+            for (Sensor s : ALL) if (s.pid == pid) known = true;
+            if (!known) todo.add(pid);
+        }
+        if (todo.isEmpty()) return;
+        List<Integer> group = new ArrayList<Integer>();
+        for (int i = 0; i < todo.size() && group.size() < 6; i++) {
+            int pid = todo.get(extraAt++ % todo.size());
+            if (group.contains(pid)) break;
+            if (Elm.groupable(pid)) group.add(pid);
+            else { byte[] b = elm.pid(pid); if (b != null) synchronized (extra) { extra.put(pid, b); } }
+        }
+        if (group.isEmpty()) return;
+        int[] pids = new int[group.size()];
+        for (int i = 0; i < pids.length; i++) pids[i] = group.get(i);
+        java.util.Map<Integer, byte[]> r = elm.pids(pids);
+        if (r.isEmpty()) for (int pid : pids) { byte[] b = elm.pid(pid); if (b != null) r.put(pid, b); }
+        synchronized (extra) { extra.putAll(r); }
     }
 
     private static int extraAt;
@@ -497,28 +633,11 @@ public class Obd {
             try { return Float.parseFloat(r); } catch (Throwable e) { return null; }
         }
         if (!elm.supports(s.pid)) return null;
-        byte[] b = elm.pid(s.pid);
-        if (b == null || b.length == 0) return null;
-        int a = b[0] & 0xFF, c = b.length > 1 ? b[1] & 0xFF : 0;
-        switch (s.pid) {
-            case 0x04: case 0x11: case 0x2E: case 0x2F: case 0x45: case 0x47: case 0x49: case 0x4A: case 0x4C:
-                return a * 100f / 255f;
-            case 0x43: return (a * 256 + c) * 100f / 255f;
-            case 0x05: case 0x0F: case 0x46: case 0x5C: return a - 40f;
-            case 0x06: case 0x07: case 0x55: case 0x56: return (a - 128) * 100f / 128f;
-            case 0x0B: case 0x30: case 0x33: return (float) a;
-            case 0x0C: return (a * 256 + c) / 4f;
-            case 0x0D: return (float) a;
-            case 0x0E: return a / 2f - 64f;
-            case 0x10: return (a * 256 + c) / 100f;
-            case 0x14: case 0x15: return a / 200f;
-            case 0x1F: case 0x21: case 0x31: case 0x4D: case 0x4E: return (float) (a * 256 + c);
-            case 0x3C: case 0x3E: return (a * 256 + c) / 10f - 40f;
-            case 0x44: return (a * 256 + c) / 32768f;
-            case 0x5E: return (a * 256 + c) / 20f;
-            default: return null;
-        }
+        return decode(s.pid, elm.pid(s.pid));
     }
+
+    /** Valor de un PID del modo 01 a partir de sus bytes de datos (ver {@link Elm#value}). */
+    static Float decode(int pid, byte[] b) { return Elm.value(pid, b); }
 
     /** Decide las alertas con los valores actuales. */
     private static void evaluate() {
@@ -540,10 +659,12 @@ public class Obd {
             if (a != null) synchronized (alerts) { a.label = s.label; }
         }
         // subida rápida del refrigerante: avisa antes de llegar al límite (cuestas largas, ventilador que no prende)
-        if (COOLANT.histN > 80) {
-            float rise = COOLANT.value - COOLANT.hist[COOLANT.hist.length - 80];   // ~1 minuto atrás
-            float perMin = rise * 60f / (80 * 0.7f);
-            if (perMin >= 4 && COOLANT.value >= 95 && COOLANT.level == OK && prefs(app).getBoolean("obd_alert_coolant_rise", true))
+        long[] when = new long[1];
+        float before = COOLANT.ago(60000, when);                  // ~1 minuto atrás, con su hora real
+        if (!Float.isNaN(before) && now - when[0] > 45000) {
+            float perMin = (COOLANT.value - before) * 60000f / (now - when[0]);
+            // desde 99 °C: el Sorento sano, detenido, sube de 90 a 96 °C a ~5 °C/min hasta que entra el ventilador
+            if (perMin >= 4 && COOLANT.value >= 99 && COOLANT.level == OK && prefs(app).getBoolean("obd_alert_coolant_rise", true))
                 raise("coolant_rise", WARN, "El refrigerante sube rápido: " + I18n.integer(Math.round(COOLANT.value)) + " °C",
                     "Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y vigila que el electroventilador encienda.");
         }
