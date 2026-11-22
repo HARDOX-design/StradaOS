@@ -107,7 +107,7 @@ PYX
   exit 0
 fi
 if [ "$MODO" = web ]; then
-  # Imágenes de la página (2.26, nov. 2026) en español, inglés y portugués: los temas (Clásico, Aurora, Cobalto, Faro),
+  # Imágenes de la página (2.26, nov. 2026) en español, inglés y portugués: los temas (Clásico, Aurora, Cobalto, Faro, Carbono),
   # la navegación guiada con el mapa sin conexión (Medellín, ciudad de ejemplo) y el escáner OBD-II con el auto simulado.
   geo() { kill $GEO 2>/dev/null; ( while true; do adb emu geo fix $2 $1 1495 8 ${3:-26} >/dev/null 2>&1; sleep 2; done ) & GEO=$!; sleep 3; }
   geo 6.2442 -75.5680
@@ -154,6 +154,9 @@ PYW
     go tema-premium:faro 8
     go tema:oscuro 7; song; go vel:48 3; sleep 15; shot $L-tema-faro-oscuro
     go tema:claro 7; song; go vel:48 3; sleep 12; shot $L-tema-faro-claro
+    go tema-premium:carbono 8
+    go tema:oscuro 7; song; go vel:48 3; sleep 15; shot $L-tema-carbono-oscuro
+    go tema:claro 7; song; go vel:48 3; sleep 12; shot $L-tema-carbono-claro
     go tema:oscuro 7
     go ajustes:11 6; shot $L-personalizacion
     adb shell input swipe $SW 400; sleep 2; adb shell input swipe $SW 400; sleep 3; shot $L-galeria-temas
