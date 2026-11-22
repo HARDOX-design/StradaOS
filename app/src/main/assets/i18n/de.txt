@@ -1841,3 +1841,14 @@ leída: «{}» — {} · {}/{} s · {}	gelesen: «{}» — {} · {}/{} s · {}
 sonando	läuft
 en pausa	pausiert
 estado ?	Status ?
+Gris magnético	Magnetgrau
+Blanco perla	Perlweiß
+Negro profundo	Tiefschwarz
+Gris platino	Platingrau
+Grafito	Graphit
+Rojo carrera	Rennrot
+Azul ártico	Arktisblau
+Beige moderno	Modernes Beige
+Próximo mantenimiento	Nächste Wartung
+El carro del tema Carbono, visto desde arriba. También se cambia con una presión larga sobre el carro.	Das Auto des Themas Carbono, von oben gesehen. Du kannst es auch mit langem Drücken auf das Auto ändern.
+Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo (o gris perla en claro). Tu vehículo en grande con el velocímetro y los dos mantenimientos más cercanos, el mapa con el reproductor y el clima flotando encima, y una barra de apps tipo píldora.	Klare Karten auf strukturiertem Carbon-Hintergrund mit sanftem Licht von unten (oder Perlgrau im hellen Modus). Dein Fahrzeug groß mit Tacho und den zwei nächsten Wartungen, die Karte mit Player und Wetter darüber und eine App-Leiste in Pillenform.

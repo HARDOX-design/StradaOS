@@ -1845,3 +1845,14 @@ leída: «{}» — {} · {}/{} s · {}	read: «{}» — {} · {}/{} s · {}
 sonando	playing
 en pausa	paused
 estado ?	state ?
+Gris magnético	Magnetic gray
+Blanco perla	Pearl white
+Negro profundo	Deep black
+Gris platino	Platinum gray
+Grafito	Graphite
+Rojo carrera	Racing red
+Azul ártico	Arctic blue
+Beige moderno	Modern beige
+Próximo mantenimiento	Next service
+El carro del tema Carbono, visto desde arriba. También se cambia con una presión larga sobre el carro.	The Carbono theme car, seen from above. You can also change it with a long press on the car.
+Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo (o gris perla en claro). Tu vehículo en grande con el velocímetro y los dos mantenimientos más cercanos, el mapa con el reproductor y el clima flotando encima, y una barra de apps tipo píldora.	Clean cards on a textured carbon background with a soft light from below (or pearl gray in light mode). Your vehicle up large with the speedometer and the two nearest services, the map with the player and weather floating on top, and a pill-shaped app bar.

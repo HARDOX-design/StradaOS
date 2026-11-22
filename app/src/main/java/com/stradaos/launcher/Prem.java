@@ -10,10 +10,10 @@ import android.graphics.Canvas;
 final class Prem {
     private Prem() { }
 
-    static final String[] IDS = {Aurora.ID, Cobalto.ID, Faro.ID};
+    static final String[] IDS = {Aurora.ID, Cobalto.ID, Faro.ID, Carbono.ID};
     static String style = Aurora.ID;
 
-    static boolean known(String id) { return Aurora.ID.equals(id) || Cobalto.ID.equals(id) || Faro.ID.equals(id); }
+    static boolean known(String id) { return Aurora.ID.equals(id) || Cobalto.ID.equals(id) || Faro.ID.equals(id) || Carbono.ID.equals(id); }
 
     /** Temas premium que se regalan a todos (lanzamiento de la 2.24). Los que vengan después se desbloquean con una donación (Fase 3). */
     static boolean free(String id) { return Aurora.ID.equals(id) || Cobalto.ID.equals(id); }
@@ -28,11 +28,16 @@ final class Prem {
     static boolean bundle() { return forceBundle || paidCount() >= 2; }
     static boolean cob() { return Cobalto.ID.equals(style); }
     static boolean faro() { return Faro.ID.equals(style); }
+    static boolean carb() { return Carbono.ID.equals(style); }
+    /** Faro y Carbono comparten el mapa limpio, el buscador de arriba y las piezas de las tarjetas. */
+    static boolean faroFam() { return faro() || carb(); }
     /** Solo Aurora tiene «Solo mapa» (Cobalto y Faro son fijos). */
     static boolean mapOnlyOk() { return Aurora.ID.equals(style); }
 
-    static String name(String id) { return Cobalto.ID.equals(id) ? "Cobalto" : Faro.ID.equals(id) ? "Faro" : "Aurora"; }
+    static String name(String id) { return Cobalto.ID.equals(id) ? "Cobalto" : Faro.ID.equals(id) ? "Faro" : Carbono.ID.equals(id) ? "Carbono" : "Aurora"; }
     static String desc(String id) {
+        if (Carbono.ID.equals(id))
+            return "Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo (o gris perla en claro). Tu vehículo en grande con el velocímetro y los dos mantenimientos más cercanos, el mapa con el reproductor y el clima flotando encima, y una barra de apps tipo píldora.";
         if (Faro.ID.equals(id))
             return "Fondo carbón (o perla en claro) con un haz de luz diagonal. A la izquierda, el velocímetro y un carro visto desde arriba que enciende los faros de noche; en el centro, el mapa integrado al fondo; a la derecha, el clima por horas y tus próximos mantenimientos, con el reproductor y la barra de apps debajo.";
         return Cobalto.ID.equals(id)
@@ -40,14 +45,14 @@ final class Prem {
             : "Fondo con un arco de color difuminado y granulado, tarjetas translúcidas, la hora en grande con música, vehículo y clima arriba, el mapa a lo ancho y una barra tipo píldora. El botón «Solo mapa» agranda el mapa.";
     }
 
-    static int base(boolean l) { return faro() ? Faro.base(l) : cob() ? Cobalto.base(l) : Aurora.base(l); }
-    static int glass(boolean l) { return faro() ? Faro.glass(l) : cob() ? Cobalto.glassTop(l) : Aurora.glass(l); }
-    static int glassEdge(boolean l) { return faro() ? Faro.glassEdge(l) : cob() ? Cobalto.glassEdge(l) : Aurora.glassEdge(l); }
-    static int pill(boolean l) { return faro() ? Faro.pill(l) : cob() ? Cobalto.pill(l) : Aurora.pill(l); }
-    static int pillEdge(boolean l) { return faro() ? Faro.pillEdge(l) : cob() ? Cobalto.pillEdge(l) : Aurora.pillEdge(l); }
-    static int pillIcon(boolean l) { return faro() ? Faro.pillIcon(l) : cob() ? Cobalto.pillIcon(l) : Aurora.pillIcon(l); }
-    static int soft(boolean l) { return faro() ? Faro.soft(l) : cob() ? Cobalto.soft(l) : Aurora.soft(l); }
-    static float mapAlpha(boolean l) { return faro() ? Faro.mapAlpha(l) : cob() ? Cobalto.mapAlpha(l) : Aurora.mapAlpha(l); }
+    static int base(boolean l) { return faroFam() ? Faro.base(l) : cob() ? Cobalto.base(l) : Aurora.base(l); }
+    static int glass(boolean l) { return faroFam() ? Faro.glass(l) : cob() ? Cobalto.glassTop(l) : Aurora.glass(l); }
+    static int glassEdge(boolean l) { return faroFam() ? Faro.glassEdge(l) : cob() ? Cobalto.glassEdge(l) : Aurora.glassEdge(l); }
+    static int pill(boolean l) { return faroFam() ? Faro.pill(l) : cob() ? Cobalto.pill(l) : Aurora.pill(l); }
+    static int pillEdge(boolean l) { return faroFam() ? Faro.pillEdge(l) : cob() ? Cobalto.pillEdge(l) : Aurora.pillEdge(l); }
+    static int pillIcon(boolean l) { return faroFam() ? Faro.pillIcon(l) : cob() ? Cobalto.pillIcon(l) : Aurora.pillIcon(l); }
+    static int soft(boolean l) { return faroFam() ? Faro.soft(l) : cob() ? Cobalto.soft(l) : Aurora.soft(l); }
+    static float mapAlpha(boolean l) { return faroFam() ? Faro.mapAlpha(l) : cob() ? Cobalto.mapAlpha(l) : Aurora.mapAlpha(l); }
 
     private static Bitmap cache;
     private static String cacheKey;
@@ -66,10 +71,12 @@ final class Prem {
             return b;
         }
         Canvas c = new Canvas(b);
-        if (faro()) Faro.paint(c, bw, bh, light, accent);
+        if (carb()) Carbono.paint(c, bw, bh, light, accent);
+        else if (faro()) Faro.paint(c, bw, bh, light, accent);
         else if (cob()) Cobalto.paint(c, bw, bh, light, accent);
         else Aurora.paint(c, bw, bh, light, accent);
-        if (faro()) Aurora.grain(b, Faro.grain(light)); else Aurora.grain(b, light);
+        if (carb()) Aurora.grain(b, Carbono.grain(light));
+        else if (faro()) Aurora.grain(b, Faro.grain(light)); else Aurora.grain(b, light);
         cache = b;
         cacheKey = key;
         return b;

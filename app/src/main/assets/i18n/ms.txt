@@ -1841,3 +1841,14 @@ leída: «{}» — {} · {}/{} s · {}	dibaca: «{}» — {} · {}/{} s · {}
 sonando	sedang dimainkan
 en pausa	dijeda
 estado ?	keadaan ?
+Gris magnético	Kelabu magnetik
+Blanco perla	Putih mutiara
+Negro profundo	Hitam pekat
+Gris platino	Kelabu platinum
+Grafito	Grafit
+Rojo carrera	Merah lumba
+Azul ártico	Biru artik
+Beige moderno	Kuning air moden
+Próximo mantenimiento	Penyelenggaraan seterusnya
+El carro del tema Carbono, visto desde arriba. También se cambia con una presión larga sobre el carro.	Kereta tema Carbono, dilihat dari atas. Juga boleh ditukar dengan tekan lama pada kereta.
+Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo (o gris perla en claro). Tu vehículo en grande con el velocímetro y los dos mantenimientos más cercanos, el mapa con el reproductor y el clima flotando encima, y una barra de apps tipo píldora.	Kad yang kemas di atas latar karbon bertekstur dengan cahaya lembut dari bawah (atau kelabu mutiara dalam mod cerah). Kenderaan anda dalam saiz besar dengan meter laju dan dua penyelenggaraan terdekat, peta dengan pemain muzik dan cuaca terapung di atasnya, dan bar aplikasi berbentuk pil.

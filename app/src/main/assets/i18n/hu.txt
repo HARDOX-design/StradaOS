@@ -1826,3 +1826,14 @@ leída: «{}» — {} · {}/{} s · {}	beolvasva: «{}» — {} · {}/{} mp · {
 sonando	szól
 en pausa	szünetel
 estado ?	állapot ?
+Gris magnético	Mágneses szürke
+Blanco perla	Gyöngyház fehér
+Negro profundo	Mélyfekete
+Gris platino	Platinaszürke
+Grafito	Grafit
+Rojo carrera	Versenypiros
+Azul ártico	Sarkvidéki kék
+Beige moderno	Modern bézs
+Próximo mantenimiento	Következő karbantartás
+El carro del tema Carbono, visto desde arriba. También se cambia con una presión larga sobre el carro.	A Carbono téma autója felülnézetből. Az autón hosszan nyomva is megváltoztathatod.
+Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo (o gris perla en claro). Tu vehículo en grande con el velocímetro y los dos mantenimientos más cercanos, el mapa con el reproductor y el clima flotando encima, y una barra de apps tipo píldora.	Letisztult kártyák texturált karbon háttéren, alulról jövő lágy fénnyel (világos módban gyöngyszürke). A járműved nagyban a sebességmérővel és a két legközelebbi karbantartással, a térkép a lejátszóval és az időjárással felette, és egy kapszula alakú alkalmazássáv.

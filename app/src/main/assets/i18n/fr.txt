@@ -1841,3 +1841,14 @@ leída: «{}» — {} · {}/{} s · {}	lue : «{}» — {} · {}/{} s · {}
 sonando	en lecture
 en pausa	en pause
 estado ?	état ?
+Gris magnético	Gris magnétique
+Blanco perla	Blanc nacré
+Negro profundo	Noir profond
+Gris platino	Gris platine
+Grafito	Graphite
+Rojo carrera	Rouge course
+Azul ártico	Bleu arctique
+Beige moderno	Beige moderne
+Próximo mantenimiento	Prochain entretien
+El carro del tema Carbono, visto desde arriba. También se cambia con una presión larga sobre el carro.	La voiture du thème Carbono, vue de dessus. Vous pouvez aussi la changer par un appui long sur la voiture.
+Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo (o gris perla en claro). Tu vehículo en grande con el velocímetro y los dos mantenimientos más cercanos, el mapa con el reproductor y el clima flotando encima, y una barra de apps tipo píldora.	Des cartes épurées sur un fond carbone texturé avec une lumière douce venant du bas (ou gris perle en clair). Votre véhicule en grand avec le compteur et les deux entretiens les plus proches, la carte avec le lecteur et la météo par-dessus, et une barre d'applis en forme de pilule.

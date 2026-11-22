@@ -40,16 +40,22 @@ final class Faro {
     static final String ID = "faro";
 
     // ── colores (oscuro / claro) ──
-    static int base(boolean l) { return l ? 0xFFECEEF1 : 0xFF0B0C0F; }
-    static int glass(boolean l) { return l ? 0xCCFFFFFF : 0x9E1A1C21; }
-    static int glassEdge(boolean l) { return l ? 0xE6FFFFFF : 0x17FFFFFF; }
-    static int pill(boolean l) { return l ? 0xD9FFFFFF : 0xE6141519; }
-    static int pillEdge(boolean l) { return l ? 0xF2FFFFFF : 0x1AFFFFFF; }
-    static int pillIcon(boolean l) { return l ? 0xFF1C1E23 : 0xFFEDEEF1; }
-    static int soft(boolean l) { return l ? 0x0F000000 : 0x14FFFFFF; }
+    static int base(boolean l) { return Prem.carb() ? Carbono.base(l) : l ? 0xFFECEEF1 : 0xFF0B0C0F; }
+    private static int base0(boolean l) { return l ? 0xFFECEEF1 : 0xFF0B0C0F; }
+    static int glass(boolean l) { return Prem.carb() ? Carbono.glass(l) : l ? 0xCCFFFFFF : 0x9E1A1C21; }
+    private static int glass0(boolean l) { return l ? 0xCCFFFFFF : 0x9E1A1C21; }
+    static int glassEdge(boolean l) { return Prem.carb() ? Carbono.glassEdge(l) : l ? 0xE6FFFFFF : 0x17FFFFFF; }
+    private static int glassEdge0(boolean l) { return l ? 0xE6FFFFFF : 0x17FFFFFF; }
+    static int pill(boolean l) { return Prem.carb() ? Carbono.pill(l) : l ? 0xD9FFFFFF : 0xE6141519; }
+    private static int pill0(boolean l) { return l ? 0xD9FFFFFF : 0xE6141519; }
+    static int pillEdge(boolean l) { return Prem.carb() ? Carbono.pillEdge(l) : l ? 0xF2FFFFFF : 0x1AFFFFFF; }
+    static int pillIcon(boolean l) { return Prem.carb() ? Carbono.pillIcon(l) : l ? 0xFF1C1E23 : 0xFFEDEEF1; }
+    static int soft(boolean l) { return Prem.carb() ? Carbono.soft(l) : l ? 0x0F000000 : 0x14FFFFFF; }
     /** Recuadro de los botones de la barra y de los controles del mapa. */
-    static int tile(boolean l) { return l ? 0xFFFFFFFF : 0xFF202328; }
-    static int track(boolean l) { return l ? 0xFFD8DBE0 : 0xFF2A2D33; }
+    static int tile(boolean l) { return Prem.carb() ? Carbono.tile(l) : l ? 0xFFFFFFFF : 0xFF202328; }
+    private static int tile0(boolean l) { return l ? 0xFFFFFFFF : 0xFF202328; }
+    static int track(boolean l) { return Prem.carb() ? Carbono.track(l) : l ? 0xFFD8DBE0 : 0xFF2A2D33; }
+    private static int track0(boolean l) { return l ? 0xFFD8DBE0 : 0xFF2A2D33; }
     /**
      * Mapa como en Cobalto: las teselas de siempre, translúcidas sobre el fondo y en el tono del tema. Nivel ya resuelto
      * (0 baja, 1 media, 2 alta; «Auto» se resuelve en Main según la pantalla). Baja es el aspecto suave que se ve bien
@@ -107,7 +113,7 @@ final class Faro {
     static void paint(Canvas c, float w, float h, boolean light, int accent) {
         Paint p = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         boolean tall = h > w * 1.05f;
-        int base = base(light);
+        int base = base0(light);
         p.setShader(new LinearGradient(0, 0, w, h,
             light ? new int[]{0xFFF4F5F7, 0xFFECEEF1, 0xFFE1E4E8} : new int[]{0xFF121317, 0xFF0B0C0F, 0xFF060709},
             new float[]{0f, 0.55f, 1f}, Shader.TileMode.CLAMP));
@@ -682,10 +688,10 @@ final class Faro {
 
         private void card(Canvas c, float l, float t, float rt, float b, float rad) {
             if (light) rr(c, l, t + rad * 0.15f, rt, b + rad * 0.25f, rad, 0x0D1C2230);
-            rr(c, l, t, rt, b, rad, glass(light));
+            rr(c, l, t, rt, b, rad, glass0(light));
             p.setStyle(Paint.Style.STROKE);
             p.setStrokeWidth(Math.max(1f, s * 0.6f));
-            p.setColor(glassEdge(light));
+            p.setColor(glassEdge0(light));
             r.set(l, t, rt, b);
             c.drawRoundRect(r, rad, rad, p);
         }
@@ -707,7 +713,7 @@ final class Faro {
                 p.setShader(new android.graphics.BitmapShader(bg, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
                 c.drawRoundRect(r, rad, rad, p);
                 p.setShader(null);
-            } else rr(c, 0, 0, w, h, rad, base(light));
+            } else rr(c, 0, 0, w, h, rad, base0(light));
             int text = light ? 0xFF15171B : 0xFFF2F3F5, muted = light ? 0xFF6C717A : 0xFF8C919A;
             float pad = u * 0.035f, gap = u * 0.025f;
             float pillH = u * (portrait ? 0.075f : 0.10f), pillY = h - pad * 0.8f - pillH;
@@ -733,12 +739,12 @@ final class Faro {
                 player(c, pad, playY, w - 2 * pad, playH, crad, text, muted);
             }
             float pw2 = Math.min(dockW, w * (portrait ? 0.72f : 0.46f)), px2 = dockX + (dockW - pw2) / 2;
-            rr(c, px2, pillY, px2 + pw2, pillY + pillH, pillH * 0.32f, pill(light));
+            rr(c, px2, pillY, px2 + pw2, pillY + pillH, pillH * 0.32f, pill0(light));
             float tsz = pillH * 0.62f;
             for (int i = 0; i < 6; i++) {
                 float cx = px2 + pw2 * (i + 0.5f) / 6f;
                 rr(c, cx - tsz / 2, pillY + (pillH - tsz) / 2, cx + tsz / 2, pillY + (pillH + tsz) / 2, tsz * 0.25f,
-                    i == 5 ? tile(light) : Aurora.a(i % 2 == 0 ? 0xFF3D8BFF : 0xFF34C759, 0.9f));
+                    i == 5 ? tile0(light) : Aurora.a(i % 2 == 0 ? 0xFF3D8BFF : 0xFF34C759, 0.9f));
             }
             if (selected) {
                 p.setShader(null);
@@ -755,7 +761,7 @@ final class Faro {
             p.setStyle(Paint.Style.STROKE);
             p.setStrokeCap(Paint.Cap.ROUND);
             p.setStrokeWidth(Math.max(1f, gr * 0.06f));
-            p.setColor(track(light));
+            p.setColor(track0(light));
             r.set(cx - gr, gy - gr, cx + gr, gy + gr);
             c.drawArc(r, 135, 270, false, p);
             p.setStrokeWidth(Math.max(1.5f, gr * 0.13f));
@@ -798,7 +804,7 @@ final class Faro {
             p.setColor(light ? 0x99F3D9A6 : 0x8C5A5240);
             c.drawLine(l, t + mh * 0.62f, rt, t + mh * 0.40f, p);
             c.restore();
-            rr(c, l + mw * 0.05f, t + mh * 0.04f, l + mw * 0.55f, t + mh * 0.04f + u * 0.045f, u * 0.012f, tile(light));
+            rr(c, l + mw * 0.05f, t + mh * 0.04f, l + mw * 0.55f, t + mh * 0.04f + u * 0.045f, u * 0.012f, tile0(light));
             p.setStyle(Paint.Style.FILL);
             p.setColor(0xFF2F8CFF);
             Path a = new Path();
@@ -839,7 +845,7 @@ final class Faro {
             rr(c, x + w * 0.24f, y + hh * 0.18f, x + w * 0.24f + hh * 0.64f, y + hh * 0.82f, hh * 0.12f, Aurora.a(Main.RED, 0.85f));
             rr(c, x + w * 0.24f + hh * 0.8f, y + hh * 0.32f, x + w * 0.52f, y + hh * 0.44f, hh * 0.05f, Aurora.a(text, 0.9f));
             rr(c, x + w * 0.24f + hh * 0.8f, y + hh * 0.56f, x + w * 0.46f, y + hh * 0.66f, hh * 0.05f, Aurora.a(muted, 0.8f));
-            rr(c, x + w * 0.6f, y + hh * 0.6f, x + w * 0.94f, y + hh * 0.64f, hh * 0.02f, track(light));
+            rr(c, x + w * 0.6f, y + hh * 0.6f, x + w * 0.94f, y + hh * 0.64f, hh * 0.02f, track0(light));
             rr(c, x + w * 0.6f, y + hh * 0.6f, x + w * 0.76f, y + hh * 0.64f, hh * 0.02f, Aurora.a(text, 0.85f));
         }
     }

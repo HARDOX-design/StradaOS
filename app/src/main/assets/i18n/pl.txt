@@ -1820,3 +1820,14 @@ leída: «{}» — {} · {}/{} s · {}	odczytano: «{}» — {} · {}/{} s · {}
 sonando	gra
 en pausa	wstrzymane
 estado ?	stan ?
+Gris magnético	Szary magnetyczny
+Blanco perla	Biel perłowa
+Negro profundo	Głęboka czerń
+Gris platino	Szary platynowy
+Grafito	Grafit
+Rojo carrera	Wyścigowa czerwień
+Azul ártico	Arktyczny błękit
+Beige moderno	Nowoczesny beż
+Próximo mantenimiento	Następny przegląd
+El carro del tema Carbono, visto desde arriba. También se cambia con una presión larga sobre el carro.	Samochód motywu Carbono widziany z góry. Możesz go też zmienić, przytrzymując samochód.
+Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo (o gris perla en claro). Tu vehículo en grande con el velocímetro y los dos mantenimientos más cercanos, el mapa con el reproductor y el clima flotando encima, y una barra de apps tipo píldora.	Czyste karty na teksturowanym tle z włókna węglowego z miękkim światłem od dołu (lub perłowa szarość w trybie jasnym). Twój pojazd w dużym rozmiarze z prędkościomierzem i dwoma najbliższymi przeglądami, mapa z odtwarzaczem i pogodą nad nią oraz pasek aplikacji w kształcie pigułki.

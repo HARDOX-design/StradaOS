@@ -1843,3 +1843,14 @@ leída: «{}» — {} · {}/{} s · {}	okunan: «{}» — {} · {}/{} sn · {}
 sonando	çalıyor
 en pausa	duraklatıldı
 estado ?	durum ?
+Gris magnético	Manyetik gri
+Blanco perla	İnci beyazı
+Negro profundo	Derin siyah
+Gris platino	Platin gri
+Grafito	Grafit
+Rojo carrera	Yarış kırmızısı
+Azul ártico	Arktik mavi
+Beige moderno	Modern bej
+Próximo mantenimiento	Sonraki bakım
+El carro del tema Carbono, visto desde arriba. También se cambia con una presión larga sobre el carro.	Carbono temasının aracı, yukarıdan görünüm. Araca uzun basarak da değiştirebilirsiniz.
+Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo (o gris perla en claro). Tu vehículo en grande con el velocímetro y los dos mantenimientos más cercanos, el mapa con el reproductor y el clima flotando encima, y una barra de apps tipo píldora.	Dokulu karbon zemin üzerinde aşağıdan gelen yumuşak bir ışıkla sade kartlar (açık modda inci grisi). Hız göstergesi ve en yakın iki bakımla büyük araç görünümü, üzerinde müzik çalar ve hava durumu olan harita ve hap şeklinde uygulama çubuğu.

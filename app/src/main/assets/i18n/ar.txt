@@ -1841,3 +1841,14 @@ leída: «{}» — {} · {}/{} s · {}	مقروءة: «{}» — {} · {}/{} ث �
 sonando	قيد التشغيل
 en pausa	متوقف مؤقتاً
 estado ?	الحالة ؟
+Gris magnético	رمادي مغناطيسي
+Blanco perla	أبيض لؤلؤي
+Negro profundo	أسود داكن
+Gris platino	رمادي بلاتيني
+Grafito	غرافيت
+Rojo carrera	أحمر سباق
+Azul ártico	أزرق قطبي
+Beige moderno	بيج عصري
+Próximo mantenimiento	الصيانة التالية
+El carro del tema Carbono, visto desde arriba. También se cambia con una presión larga sobre el carro.	سيارة سمة Carbono من الأعلى. يمكنك تغييرها أيضاً بضغطة طويلة على السيارة.
+Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo (o gris perla en claro). Tu vehículo en grande con el velocímetro y los dos mantenimientos más cercanos, el mapa con el reproductor y el clima flotando encima, y una barra de apps tipo píldora.	بطاقات أنيقة على خلفية كربونية بملمس خفيف وضوء ناعم من الأسفل (أو رمادي لؤلؤي في الوضع الفاتح). مركبتك بحجم كبير مع عداد السرعة وأقرب صيانتين، والخريطة مع المشغّل والطقس فوقها، وشريط تطبيقات على شكل كبسولة.

@@ -1841,3 +1841,14 @@ leída: «{}» — {} · {}/{} s · {}	已读取：«{}» — {} · {}/{} 秒 ·
 sonando	正在播放
 en pausa	已暂停
 estado ?	状态 ?
+Gris magnético	磁灰
+Blanco perla	珍珠白
+Negro profundo	深邃黑
+Gris platino	铂金灰
+Grafito	石墨灰
+Rojo carrera	赛道红
+Azul ártico	极地蓝
+Beige moderno	摩登米色
+Próximo mantenimiento	下次保养
+El carro del tema Carbono, visto desde arriba. También se cambia con una presión larga sobre el carro.	Carbono 主题的车辆俯视图。长按车辆也可以更换。
+Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo (o gris perla en claro). Tu vehículo en grande con el velocímetro y los dos mantenimientos más cercanos, el mapa con el reproductor y el clima flotando encima, y una barra de apps tipo píldora.	质感碳纤维背景上的简洁卡片，光线从左下方柔和照亮（浅色模式为珍珠灰）。大尺寸的车辆、速度表和最近的两项保养，地图上悬浮着播放器和天气，以及胶囊形的应用栏。

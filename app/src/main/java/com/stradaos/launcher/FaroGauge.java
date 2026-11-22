@@ -29,6 +29,8 @@ public class FaroGauge extends View {
     private final float k;
     private int mode = 2;
     private boolean light, mph, ok;
+    /** Carbono: avance plateado en vez de cobre. */
+    private int cDeep = Faro.COPPER_DEEP, cMid = Faro.COPPER, cLight = Faro.COPPER_LIGHT;
     private float max = 200, target, val;
     private long last;
     private int limit;
@@ -61,6 +63,10 @@ public class FaroGauge extends View {
         text = textColor;
         muted = mutedColor;
         track = Faro.track(isLight);
+        boolean carb = Prem.carb();
+        cDeep = carb ? Carbono.SILVER_DEEP : Faro.COPPER_DEEP;
+        cMid = carb ? Carbono.SILVER : Faro.COPPER;
+        cLight = carb ? Carbono.SILVER_LIGHT : Faro.COPPER_LIGHT;
         invalidate();
     }
 
@@ -82,7 +88,7 @@ public class FaroGauge extends View {
         postInvalidateOnAnimation();
     }
 
-    private int progColor() { return light ? text : Faro.COPPER_LIGHT; }
+    private int progColor() { return light ? text : cLight; }
 
     @Override
     protected void onDraw(Canvas c) {
@@ -117,11 +123,11 @@ public class FaroGauge extends View {
             if (!light) {
                 // brillo: el mismo arco ancho y casi transparente
                 pGlow.setShader(null);
-                pGlow.setColor(Aurora.a(Faro.COPPER, 0.16f));
+                pGlow.setColor(Aurora.a(cMid, 0.16f));
                 pGlow.setStrokeWidth(r * 0.17f);
                 c.drawArc(rect, START, sweep, false, pGlow);
                 float f = Math.max(0.02f, sweep / 360f);
-                SweepGradient sg = new SweepGradient(cx, cy, new int[]{Faro.COPPER_DEEP, Faro.COPPER, Faro.COPPER_LIGHT, Faro.COPPER_LIGHT},
+                SweepGradient sg = new SweepGradient(cx, cy, new int[]{cDeep, cMid, cLight, cLight},
                     new float[]{0f, f * 0.5f, f, 1f});
                 rot.setRotate(START, cx, cy);
                 sg.setLocalMatrix(rot);
@@ -189,7 +195,7 @@ public class FaroGauge extends View {
         c.drawLine(x0, y, x1, y, pTrack);
         if (frac > 0.005f) {
             pProg.setShader(null);
-            pProg.setColor(light ? text : Faro.COPPER);
+            pProg.setColor(light ? text : cMid);
             pProg.setStrokeWidth(Math.max(2f, d * 0.024f));
             c.drawLine(x0, y, x0 + lw * frac, y, pProg);
         }
