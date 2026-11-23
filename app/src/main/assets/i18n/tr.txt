@@ -1860,3 +1860,4 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 # kilometraje con el escáner OBD (#52)
 Odómetro	Kilometre sayacı
 Kilometraje del auto (escáner OBD)	Aracın kilometresi (OBD tarayıcı)
+El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	Aracın kilometresi {} ve yağ değişiminin zamanı geldi (her {}).

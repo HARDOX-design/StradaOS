@@ -1861,3 +1861,4 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 # kilometraje con el escáner OBD (#52)
 Odómetro	Hodômetro
 Kilometraje del auto (escáner OBD)	Quilometragem do carro (scanner OBD)
+El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	A quilometragem do carro é {} e já está na hora da troca de óleo (a cada {}).

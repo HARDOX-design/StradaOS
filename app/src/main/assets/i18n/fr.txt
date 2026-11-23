@@ -1858,3 +1858,4 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 # kilometraje con el escáner OBD (#52)
 Odómetro	Compteur kilométrique
 Kilometraje del auto (escáner OBD)	Kilométrage de la voiture (scanner OBD)
+El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	Le kilométrage de la voiture est de {} et la vidange est due (tous les {}).

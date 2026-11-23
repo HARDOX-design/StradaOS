@@ -1858,3 +1858,4 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 # kilometraje con el escáner OBD (#52)
 Odómetro	Odometer
 Kilometraje del auto (escáner OBD)	Perbatuan kereta (pengimbas OBD)
+El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	Odometer kereta ialah {} dan sudah tiba masa tukar minyak (setiap {}).

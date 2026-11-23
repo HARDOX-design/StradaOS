@@ -1858,3 +1858,4 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 # kilometraje con el escáner OBD (#52)
 Odómetro	Kilometerzähler
 Kilometraje del auto (escáner OBD)	Kilometerstand des Autos (OBD-Scanner)
+El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	Der Kilometerstand des Autos ist {}, der Ölwechsel ist fällig (alle {}).

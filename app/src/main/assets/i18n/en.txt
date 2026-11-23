@@ -1862,3 +1862,4 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 # kilometraje con el escáner OBD (#52)
 Odómetro	Odometer
 Kilometraje del auto (escáner OBD)	Car mileage (OBD scanner)
+El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	The car's odometer is {} and the oil change is due (every {}).

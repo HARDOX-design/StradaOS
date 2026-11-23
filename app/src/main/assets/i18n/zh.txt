@@ -1858,3 +1858,4 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 # kilometraje con el escáner OBD (#52)
 Odómetro	里程表
 Kilometraje del auto (escáner OBD)	车辆里程（OBD 扫描仪）
+El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	车辆里程为 {}，已到更换机油的时间（每 {} 更换一次）。

@@ -61,7 +61,7 @@ ADDR=tcp:10.0.2.2:35000
 
 adb shell am start -n $ACT --es prueba saltar >/dev/null; sleep 25
 go idioma:es 6; go tema:oscuro 6; go inicio 4
-go demo-aceite 5                      # recordatorio de aceite con 44.200 km
+go demo-aceite 5                      # recordatorio de aceite con 44.200 km (con el odómetro simulado ya toca el cambio)
 go pref:speedo_rpm=true 5
 
 # 1. lectura agrupada, odómetro del auto (PID A6) y revoluciones en el inicio
@@ -72,7 +72,12 @@ shot b01-clasico-rpm
 B=$(pref odo_base_km); echo "odo_base_km=$B"
 python3 -c "import sys; b=float('$B' or 0); sys.exit(0 if 45678 <= b <= 45700 else 1)" \
   && okk "odómetro del auto: $B km (el simulado arrancó en 45678.9)" || falla "odómetro del auto: odo_base_km=$B (esperado ~45679)"
+shot b01b-aviso-aceite-odometro      # con el odómetro del auto ya toca el cambio: el aviso dice «del auto»
+back; sleep 2                         # «Aún no»
 go menu-aceite 4; shot b02-menu-aceite-odometro; back
+go pref:speedo=1 5; go inicio 4; shot b02b-clasico-analogico-rpm
+go ajustes:3 5; shot b02c-ajustes-inicio; adb shell input swipe 600 520 600 160 400; sleep 2; shot b02d-ajustes-inicio-rpm
+go inicio 3; go pref:speedo=0 4
 go tema-premium:carbono 10; go inicio 4; shot b03-carbono-rpm
 go tema:claro 6; go inicio 4; shot b04-carbono-claro-rpm; go tema:oscuro 6
 go tema-premium:faro 8; go inicio 4; shot b05-faro-rpm

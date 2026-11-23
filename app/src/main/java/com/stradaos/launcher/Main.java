@@ -2220,7 +2220,7 @@ public class Main extends Activity {
         if (now < oilNextKm() || now < prefs.getFloat("oil_snooze_km", 0)) return false;
         oilDlg = new TB(this, dlg())
             .setTitle("Es hora del cambio de aceite")
-            .setMessage(I18n.t("El kilometraje estimado es ≈ " + fmtDist(now) + " y ya toca el cambio de aceite (cada " + fmtDist(prefs.getFloat("oil_interval_km", 5000)) + ").")
+            .setMessage(I18n.t((odoFromCar() ? "El kilometraje del auto es " : "El kilometraje estimado es ≈ ") + fmtDist(now) + " y ya toca el cambio de aceite (cada " + fmtDist(prefs.getFloat("oil_interval_km", 5000)) + ").")
                 + "\n\n" + I18n.t("¿Ya lo hiciste?"))
             .setPositiveButton("Ya lo hice", new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) { oilDone(); } })
             .setNegativeButton("Aún no", new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) {
@@ -9808,7 +9808,9 @@ public class Main extends Activity {
                     prefs.edit().putInt("speedo", i).apply(); rebuild();
                 }});
         }
-        if (carSpeed)
+        // solo donde hay dónde dibujarlas: velocímetro analógico o mixto, Faro y Carbono (el digital de los demás
+        // temas no tiene espacio libre al lado del número)
+        if (carSpeed && (carGauge != null || mapGauge != null || faroGauge != null || carbRpm != null))
             toggle(lay, "Revoluciones junto al velocímetro", "Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)",
                 prefs.getBoolean("speedo_rpm", false), new IntCb() { public void on(int i) {
                     prefs.edit().putBoolean("speedo_rpm", i == 1).apply(); showRpm();

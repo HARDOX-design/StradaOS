@@ -1858,3 +1858,4 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 # kilometraje con el escáner OBD (#52)
 Odómetro	Contachilometri
 Kilometraje del auto (escáner OBD)	Chilometraggio dell'auto (scanner OBD)
+El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	Il chilometraggio dell'auto è {} ed è ora del cambio dell'olio (ogni {}).

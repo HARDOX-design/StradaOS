@@ -1843,3 +1843,4 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 # kilometraje con el escáner OBD (#52)
 Odómetro	Kilométeróra
 Kilometraje del auto (escáner OBD)	Az autó futásteljesítménye (OBD-szkenner)
+El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	Az autó kilométeróra-állása {}, és esedékes az olajcsere ({} gyakorisággal).

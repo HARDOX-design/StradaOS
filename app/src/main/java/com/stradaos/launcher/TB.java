@@ -47,6 +47,9 @@ public class TB extends AlertDialog.Builder {
     }
     @Override public TB setAdapter(ListAdapter a, DialogInterface.OnClickListener l) { adapter = a; itemsL = l; wide = true; return this; }
     @Override public TB setView(View v) { view = v; return this; }
+    /** Encabezado propio (el menú del aceite y de cada mantenimiento: nombre, kilometraje y cuánto falta). */
+    View customTitle;
+    @Override public TB setCustomTitle(View v) { customTitle = v; return this; }
     @Override public TB setCancelable(boolean c) { cancelable = c; return this; }
     @Override public TB setOnCancelListener(DialogInterface.OnCancelListener l) { onCancel = l; return this; }
 

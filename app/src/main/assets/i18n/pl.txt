@@ -1837,3 +1837,4 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 # kilometraje con el escáner OBD (#52)
 Odómetro	Licznik przebiegu
 Kilometraje del auto (escáner OBD)	Przebieg auta (skaner OBD)
+El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	Przebieg auta wynosi {} i nadszedł czas na wymianę oleju (co {}).

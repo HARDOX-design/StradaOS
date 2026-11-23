@@ -120,7 +120,15 @@ class Dlg extends AlertDialog {
         boolean hasTitle = title != null && title.length() > 0;
         boolean hasButtons = p.posT != null || p.negT != null || p.neuT != null;
         boolean hasList = p.items != null || p.adapter != null;
-        card.setPadding(0, px(hasTitle ? 22 : 14), 0, px(hasButtons ? 16 : 14));
+        boolean custom = !hasTitle && p.customTitle != null;
+        card.setPadding(0, px(hasTitle ? 22 : custom ? 0 : 14), 0, px(hasButtons ? 16 : 14));
+
+        if (custom) {
+            // encabezado propio (desde 2.26 se perdía: TB no lo guardaba y el menú salía sin el kilometraje)
+            View ct = p.customTitle;
+            if (ct.getParent() instanceof ViewGroup) ((ViewGroup) ct.getParent()).removeView(ct);
+            card.addView(ct);
+        }
 
         if (hasTitle) {
             TextView t = text(title, 21, Main.TEXT, true);
