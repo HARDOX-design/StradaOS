@@ -79,6 +79,12 @@ public class FaroGauge extends View {
     public void setLimit(int l) { if (l != limit) { limit = l; invalidate(); } }
 
     /** Velocidad ya en la unidad elegida. Sin GPS el avance vuelve a cero y el número muestra «--». */
+    /** Cuentarrevoluciones chico en la esquina de abajo a la derecha (ver {@link Tach}). */
+    private final Tach tach = new Tach();
+
+    /** RPM del escáner para el cuentarrevoluciones chico; NaN lo esconde. */
+    public void setRpm(float rpm) { if (tach.set(rpm)) postInvalidateOnAnimation(); }
+
     public void setSpeed(float v, boolean hasFix) {
         ok = hasFix;
         float t = hasFix ? Math.max(0, Math.min(max * 1.05f, v)) : 0;
@@ -101,6 +107,12 @@ public class FaroGauge extends View {
         }
         float w = getWidth(), h = getHeight(), cx = w / 2f, cy = h / 2f, d = Math.min(w, h);
         if (d <= 0) return;
+        if (tach.step()) postInvalidateOnAnimation();
+        if (tach.visible()) {
+            // el aro del velocímetro ocupa el 80 % del lado: la esquina de abajo a la izquierda queda libre
+            float tr = d * 0.125f;
+            tach.draw(c, tr * 0.95f, h - tr * 0.8f, tr, 0xFFE5332A, text, muted);
+        }
         // brillo detrás del velocímetro en el modo claro (como la referencia)
         if (light) {
             pBg.setShader(new RadialGradient(cx, cy, d / 2f, new int[]{0xD9FFFFFF, 0x66FFFFFF, 0x00FFFFFF},

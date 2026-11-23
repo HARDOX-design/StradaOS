@@ -263,6 +263,7 @@ Nombre del archivo de preferencias: `launcher` (modo `MODE_PRIVATE`).
 | `obd_ai_vin` | boolean | `false` | Enviar el VIN a la IA |
 | `ai_key` | String | — | API key de la IA (no entra en la copia de seguridad) |
 | `obd_chart_win` | long | `300000` | Ventana del gráfico en ms (15000/60000/300000/900000/1800000; 15 s pensada para la lectura agrupada) |
+| `speedo_rpm` | boolean | `false` | Cuentarrevoluciones chico junto al velocímetro del inicio (`Tach.java`, en `Gauge` y `FaroGauge`), con las RPM del escáner mientras está conectado |
 | `obd_alert_<key>` | boolean | `true` | Alerta del sensor `<key>` activada |
 | `obd_thr_<key>_hi1` | float | (fábrica) | Umbral de aviso alto del sensor `<key>` |
 | `obd_thr_<key>_hi2` | float | (fábrica) | Umbral crítico alto del sensor `<key>` |

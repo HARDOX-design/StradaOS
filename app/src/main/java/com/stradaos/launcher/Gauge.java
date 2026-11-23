@@ -41,6 +41,8 @@ public class Gauge extends View {
     private final Paint pGlow = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final RectF rect = new RectF();
     private final Matrix rot = new Matrix();
+    /** Cuentarrevoluciones chico al lado (solo con RPM del escáner y la opción encendida). */
+    private final Tach tach = new Tach();
 
     public Gauge(Context c, float scale) {
         super(c);
@@ -82,6 +84,9 @@ public class Gauge extends View {
     /** Pegado arriba, sin la prolongación del aro (tarjeta del vehículo, 2.20.1). */
     public void setCompact(boolean v) { compact = v; invalidate(); }
 
+    /** RPM del escáner para el cuentarrevoluciones chico; NaN lo esconde. */
+    public void setRpm(float rpm) { if (tach.set(rpm)) postInvalidateOnAnimation(); }
+
     /** Velocidad ya en la unidad elegida. Sin GPS la aguja vuelve a cero y el número muestra «--». */
     public void setSpeed(float v, boolean hasFix) {
         ok = hasFix;
@@ -103,8 +108,19 @@ public class Gauge extends View {
             else { last = now; postInvalidateOnAnimation(); }
         }
 
-        float w = getWidth(), h = getHeight();
-        float r, cx = w / 2f, cy;
+        if (tach.step()) postInvalidateOnAnimation();
+        float W = getWidth(), h = getHeight(), w = W;
+        // con el cuentarrevoluciones: va a la izquierda y el velocímetro se corre a la derecha, sin taparse. Si sobra
+        // ancho, al costado; si es cuadrado, el velocímetro se achica y el cuentarrevoluciones queda abajo a la izquierda
+        float tr = 0, tchX = 0, tchY = 0, off = 0;
+        boolean side = false;
+        if (tach.visible()) {
+            side = W > h * 1.3f;
+            if (side) { tr = Math.min(h * 0.34f, W * 0.16f); off = tr * 2.3f; }
+            else { tr = Math.min(W, h) * 0.19f; off = tr * 1.7f; tchX = tr * 1.02f; tchY = h - tr * 1.02f; }
+            w = W - off;
+        }
+        float r, cx = off + w / 2f, cy;
         if (compact) {
             // tarjeta del vehículo: pegado arriba y sin la prolongación del aro, para que quepa lo más grande posible
             r = Math.min(w / 2f * 0.97f, (h - 2) / 1.56f);
@@ -194,6 +210,10 @@ public class Gauge extends View {
             c.drawText(unit, cx, cy + r * 0.30f, pUnit);
             pBig.setColor(ring);
             c.drawCircle(cx, cy, r * 0.06f, pBig);
+        }
+        if (tach.visible()) {
+            if (side) { tchX = tr * 1.1f; tchY = Math.min(h - tr * 1.05f, cy + r * 0.2f); }
+            tach.draw(c, tchX, tchY, tr, accent, ring, soft);
         }
     }
 }

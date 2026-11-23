@@ -7362,6 +7362,23 @@ public class Main extends Activity {
     private boolean obdSpeedDemo;
     private boolean speedFromObd;
 
+    /** RPM del escáner para el cuentarrevoluciones junto al velocímetro; NaN si está apagado o no hay lectura reciente. */
+    private float obdRpm() {
+        if (!prefs.getBoolean("speedo_rpm", false) || !obdOn() || Obd.status != Obd.LIVE || !Obd.RPM.has()) return Float.NaN;
+        if (SystemClock.elapsedRealtime() - Obd.RPM.at > 3000) return Float.NaN;
+        // el auto simulado no cuenta, igual que la velocidad (salvo el ajuste de prueba)
+        if ("demo".equals(prefs.getString("obd_addr", "demo")) && !obdSpeedDemo
+            && !(getPackageName().endsWith(".debug") && prefs.getBoolean("obd_speed_demo", false))) return Float.NaN;
+        return Obd.RPM.value;
+    }
+
+    private void showRpm() {
+        float r = obdRpm();
+        if (carGauge != null) carGauge.setRpm(r);
+        if (mapGauge != null) mapGauge.setRpm(r);
+        if (faroGauge != null) faroGauge.setRpm(r);
+    }
+
     private void showSpeed() {
         float ob = obdKmh();
         boolean fromObd = !Float.isNaN(ob);
@@ -9735,6 +9752,11 @@ public class Main extends Activity {
                     prefs.edit().putInt("speedo", i).apply(); rebuild();
                 }});
         }
+        if (carSpeed)
+            toggle(lay, "Revoluciones junto al velocímetro", "Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)",
+                prefs.getBoolean("speedo_rpm", false), new IntCb() { public void on(int i) {
+                    prefs.edit().putBoolean("speedo_rpm", i == 1).apply(); showRpm();
+                }});
         LinearLayout mp = section(body, "Mapa");
         final String[] connKeys = {"both", "aa", "cp", "none"};
         choice(mp, "Botones de conexión", "Con uno o ninguno, el clima ocupa el espacio libre del mapa",
@@ -12020,6 +12042,7 @@ public class Main extends Activity {
     private final Obd.Listener obdWatch = new Obd.Listener() { public void onObd() {
         if (obdDlg != null) obdDlg.onObd();
         if (speedFromObd || !Float.isNaN(obdKmh())) showSpeed();   // velocímetro del inicio con la velocidad del escáner
+        showRpm();
         java.util.HashSet<String> now = new java.util.HashSet<String>();
         boolean fresh = false;
         synchronized (Obd.alerts) {

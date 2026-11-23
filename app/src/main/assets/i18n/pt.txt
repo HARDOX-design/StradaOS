@@ -1855,3 +1855,6 @@ Beige moderno	Bege moderno
 Próximo mantenimiento	Próxima manutenção
 El carro del tema Carbono, visto desde arriba. También se cambia con una presión larga sobre el carro.	O carro do tema Carbono, visto de cima. Também muda com um toque longo sobre o carro.
 Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo (o gris perla en claro). Tu vehículo en grande con el velocímetro y los dos mantenimientos más cercanos, el mapa con el reproductor y el clima flotando encima, y una barra de apps tipo píldora.	Cartões limpos sobre um fundo carbono com textura e uma luz suave vinda de baixo (ou cinza pérola no claro). Seu veículo em destaque com o velocímetro e as duas manutenções mais próximas, o mapa com o player e o clima flutuando por cima, e uma barra de apps em forma de pílula.
+# cuentarrevoluciones junto al velocímetro (Tach)
+Revoluciones junto al velocímetro	Rotação ao lado do velocímetro
+Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)	Um conta-giros pequeno ao lado, com as RPM do scanner OBD (só enquanto estiver conectado)
