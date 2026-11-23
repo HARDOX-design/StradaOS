@@ -9813,7 +9813,9 @@ public class Main extends Activity {
         if (carSpeed && (carGauge != null || mapGauge != null || faroGauge != null || carbRpm != null))
             toggle(lay, "Revoluciones junto al velocímetro", "Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)",
                 prefs.getBoolean("speedo_rpm", false), new IntCb() { public void on(int i) {
-                    prefs.edit().putBoolean("speedo_rpm", i == 1).apply(); showRpm();
+                    // rebuild() vuelve a dibujar Ajustes con el interruptor en su nuevo estado (antes solo se guardaba y el
+                    // interruptor no cambiaba hasta salir y volver)
+                    prefs.edit().putBoolean("speedo_rpm", i == 1).apply(); rebuild();
                 }});
         LinearLayout mp = section(body, "Mapa");
         final String[] connKeys = {"both", "aa", "cp", "none"};
