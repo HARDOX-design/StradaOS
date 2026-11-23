@@ -2945,7 +2945,6 @@ public class Main extends Activity {
         final boolean premGauge = premium && mapOnly && carSpeed;
         if (premGauge || (!premium && !showCar && carSpeed && prefs.getBoolean("map_gauge", false))) {
             FrameLayout gb = new FrameLayout(this);
-            gb.setBackground(round((CARD & 0x00FFFFFF) | 0xE0000000, 66));
             mapGauge = new Gauge(this, s);
             mapGauge.setColors(RED, TEXT, SOFT);
             mapGauge.setUnit(useMph());
@@ -2956,7 +2955,8 @@ public class Main extends Activity {
             int gsz = premGauge ? 1 : prefs.getInt("map_gauge_size", 1);
             float gs = gsz == 0 ? 108 : gsz == 2 ? 160 : 132;
             gs = Math.min(gs, Math.min(mapH * 0.45f, mapW * 0.42f));
-            gb.setBackground(round((CARD & 0x00FFFFFF) | 0xE0000000, gs / 2));
+            // sin círculo de fondo (2.34, Andrés): el velocímetro y las revoluciones van directo sobre el mapa
+            gb.setBackground(null);
             if (premGauge) gb.setBackground(round(LIGHT ? 0xD9FFFFFF : 0xD91B1724, gs / 2));
             // esquina: automático = arriba, en el lado contrario al botón del navegador (como antes)
             String corner = premGauge ? "bl" : prefs.getString("map_gauge_corner", "auto");

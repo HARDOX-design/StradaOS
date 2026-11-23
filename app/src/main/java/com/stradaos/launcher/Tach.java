@@ -10,7 +10,7 @@ import android.os.SystemClock;
  * Cuentarrevoluciones chico que acompaña al velocímetro (Ajustes → Tu vehículo → «Revoluciones junto al velocímetro»,
  * apagado de fábrica): aro abierto abajo como el del velocímetro, relleno del color de acento, zona roja desde 6000 rpm
  * y el número al centro. Lo dibujan {@link Gauge} (a la izquierda si sobra ancho, si no en la esquina de abajo a la
- * izquierda) y {@link FaroGauge} (en la esquina). Carbono usa su versión digital ({@link Carbono.Rpm}). Solo aparece
+ * izquierda) y {@link FaroGauge} (centrado debajo de «km/h»). Carbono usa su versión digital ({@link Carbono.Rpm}). Solo aparece
  * mientras el escáner OBD entrega las RPM.
  *
  * La aguja no salta entre lecturas (~5 por segundo con la lectura agrupada): se acerca con la misma curva suave que el

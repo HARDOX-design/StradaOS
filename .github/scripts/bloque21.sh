@@ -82,8 +82,14 @@ go tema-premium:carbono 10; go inicio 4; shot b03-carbono-rpm
 go tema:claro 6; go inicio 4; shot b04-carbono-claro-rpm; go tema:oscuro 6
 go tema-premium:faro 8; go inicio 4; shot b05-faro-rpm
 go tema:claro 6; go inicio 4; shot b06-faro-claro-rpm; go tema:oscuro 6
+go pref:speedo=1 4; go inicio 4; shot b06b-faro-analogico-rpm
+go pref:speedo=0 4; go inicio 4; shot b06c-faro-digital-rpm
 go tema-premium:aurora 8; go inicio 4; shot b07-aurora-rpm
 go tema-gratis:1 6; go inicio 4
+# velocímetro sobre el mapa (tarjeta del vehículo oculta): sin círculo de fondo
+go diseno:sinauto 4; go diseno:velomapa 4; go pref:speedo=2 4; go inicio 4; shot b07b-mapa-velocimetro-rpm
+go diseno:esquina-bl 4; go inicio 4; shot b07c-mapa-velocimetro-abajo
+go diseno:conauto 4; go pref:speedo=0 4; go inicio 4
 go obd-panel 4; shot b08-panel-vivo; back
 go obd-ajustes:obd_live 6; shot b09-todos-los-datos
 go inicio 3
