@@ -1855,3 +1855,6 @@ Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo 
 # cuentarrevoluciones junto al velocímetro (Tach)
 Revoluciones junto al velocímetro	车速表旁显示转速
 Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)	在旁边显示一个小转速表，使用 OBD 扫描仪的转速（仅在连接时）
+# kilometraje con el escáner OBD (#52)
+Odómetro	里程表
+Kilometraje del auto (escáner OBD)	车辆里程（OBD 扫描仪）

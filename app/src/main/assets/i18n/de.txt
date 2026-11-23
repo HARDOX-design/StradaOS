@@ -1855,3 +1855,6 @@ Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo 
 # cuentarrevoluciones junto al velocímetro (Tach)
 Revoluciones junto al velocímetro	Drehzahl neben dem Tacho
 Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)	Ein kleiner Drehzahlmesser daneben, mit der Drehzahl vom OBD-Scanner (nur solange er verbunden ist)
+# kilometraje con el escáner OBD (#52)
+Odómetro	Kilometerzähler
+Kilometraje del auto (escáner OBD)	Kilometerstand des Autos (OBD-Scanner)

@@ -1840,3 +1840,6 @@ Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo 
 # cuentarrevoluciones junto al velocímetro (Tach)
 Revoluciones junto al velocímetro	Fordulatszám a sebességmérő mellett
 Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)	Kis fordulatszámmérő mellette, az OBD-szkenner fordulatszámával (csak amíg csatlakoztatva van)
+# kilometraje con el escáner OBD (#52)
+Odómetro	Kilométeróra
+Kilometraje del auto (escáner OBD)	Az autó futásteljesítménye (OBD-szkenner)

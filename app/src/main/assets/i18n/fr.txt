@@ -1855,3 +1855,6 @@ Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo 
 # cuentarrevoluciones junto al velocímetro (Tach)
 Revoluciones junto al velocímetro	Régime à côté du compteur
 Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)	Un petit compte-tours à côté, avec le régime du scanner OBD (seulement quand il est connecté)
+# kilometraje con el escáner OBD (#52)
+Odómetro	Compteur kilométrique
+Kilometraje del auto (escáner OBD)	Kilométrage de la voiture (scanner OBD)

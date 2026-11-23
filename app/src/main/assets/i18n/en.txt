@@ -1859,3 +1859,6 @@ Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo 
 # cuentarrevoluciones junto al velocímetro (Tach)
 Revoluciones junto al velocímetro	RPM next to the speedometer
 Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)	A small tachometer beside it, with the RPM from the OBD scanner (only while it's connected)
+# kilometraje con el escáner OBD (#52)
+Odómetro	Odometer
+Kilometraje del auto (escáner OBD)	Car mileage (OBD scanner)

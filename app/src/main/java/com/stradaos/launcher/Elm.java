@@ -400,6 +400,8 @@ public class Elm {
             case 0x44: return (a * 256 + c) / 32768f;
             case 0x42: return b.length >= 2 ? (a * 256 + c) / 1000f : null;
             case 0x5E: return (a * 256 + c) / 20f;
+            // odómetro (#52): 4 bytes en décimas de km
+            case 0xA6: return b.length >= 4 ? ((long) a << 24 | (long) c << 16 | (long) (b[2] & 0xFF) << 8 | (b[3] & 0xFF)) / 10f : null;
             default: return null;
         }
     }

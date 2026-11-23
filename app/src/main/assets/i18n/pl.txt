@@ -1834,3 +1834,6 @@ Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo 
 # cuentarrevoluciones junto al velocímetro (Tach)
 Revoluciones junto al velocímetro	Obroty obok prędkościomierza
 Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)	Mały obrotomierz obok, z obrotami ze skanera OBD (tylko gdy jest połączony)
+# kilometraje con el escáner OBD (#52)
+Odómetro	Licznik przebiegu
+Kilometraje del auto (escáner OBD)	Przebieg auta (skaner OBD)

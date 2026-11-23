@@ -1855,3 +1855,6 @@ Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo 
 # cuentarrevoluciones junto al velocímetro (Tach)
 Revoluciones junto al velocímetro	عدد الدورات بجانب عداد السرعة
 Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)	عداد دورات صغير بجانبه، بقراءة الدورات من ماسح OBD (فقط أثناء اتصاله)
+# kilometraje con el escáner OBD (#52)
+Odómetro	عداد المسافات
+Kilometraje del auto (escáner OBD)	المسافة المقطوعة للسيارة (ماسح OBD)

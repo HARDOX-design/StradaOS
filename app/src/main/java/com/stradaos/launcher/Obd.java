@@ -207,9 +207,14 @@ public class Obd {
     static final Sensor CONSUMPTION = new Sensor("consumption", "Consumo", "L/100 km", -2, true, 0, 30);
     /** Calculado en litros por hora; también se usa para el combustible del viaje. */
     static final Sensor FUEL_H = new Sensor("fuel_h", "Consumo por hora", "L/h", -3, true, 0, 40);
+    /**
+     * Odómetro del auto (PID A6, #52). Pocos autos lo entregan (sobre todo desde 2019); si lo hace, StradaOS usa ese
+     * kilometraje exacto para los mantenimientos. Cambia despacio: se lee cada ~15 s.
+     */
+    static final Sensor ODO = new Sensor("odo", "Odómetro", "km", 0xA6, false, 0, 2000000);
     static final Sensor[] ALL = {COOLANT, VOLT, RPM, SPEED, LOAD, THROTTLE, INTAKE, FUEL, STFT, LTFT, MAF, MAP, CONSUMPTION, FUEL_H, OILT, AMBIENT, FUEL_RATE,
         TIMING, O2_1, O2_2, RUN_TIME, MIL_DIST, EGR, WARMUPS, CLEAR_DIST, BARO, CAT1, CAT2, ABS_LOAD, LAMBDA, THROTTLE_REL, THROTTLE_B, PEDAL_D, PEDAL_E,
-        THROTTLE_CMD, MIL_TIME, CLEAR_TIME, O2_TRIM_1, O2_TRIM_2};
+        THROTTLE_CMD, MIL_TIME, CLEAR_TIME, O2_TRIM_1, O2_TRIM_2, ODO};
 
     /** Todos los demás datos estándar que el auto entrega (PID → bytes), leídos de a poco para no frenar las alertas. */
     static final java.util.TreeMap<Integer, byte[]> extra = new java.util.TreeMap<Integer, byte[]>();
@@ -450,6 +455,7 @@ public class Obd {
             if (grouped) got = readGrouped(round);
             else for (Sensor s : ALL) {
                 if (!s.fast && round % 4 != 0) continue;
+                if (s == ODO && round % 20 != 0) continue;
                 Float v = read(s);
                 if (v != null) { s.push(v); got++; }
             }
@@ -464,6 +470,7 @@ public class Obd {
             // agrupada, de a seis una de cada cuatro vueltas
             if (!grouped) readExtra(round);
             else if (round % 4 == 0) readExtraGrouped();
+            trackDistance();
             round++;
             if (got <= 1) {                       // solo responde el voltaje: contacto apagado
                 if (++empty == 3) { status = WAITING; statusMsg = "Esperando al auto (¿contacto apagado?)"; changed(); }
@@ -484,6 +491,33 @@ public class Obd {
             changed();
             sleep(Math.max(grouped ? 20 : 50, (grouped ? GROUPED_ROUND_MS : 700) - (System.currentTimeMillis() - t0)));
         }
+    }
+
+    // ── distancia recorrida con la velocidad del escáner (#52) ──
+    private static long distAt;
+    private static float distV;
+    private static double distPending;
+    private static final Object DIST = new Object();
+
+    /**
+     * Suma lo recorrido entre dos lecturas de velocidad (promedio de las dos por el tiempo). Si pasaron más de 3 s
+     * (escáner callado, reconexión) ese tramo no se cuenta. La pantalla se lo lleva con {@link #takeDistance()}.
+     */
+    private static void trackDistance() {
+        long at = SPEED.at;
+        if (at == 0 || at == distAt) return;
+        float v = SPEED.value;
+        if (distAt != 0) {
+            float dt = (at - distAt) / 1000f;
+            if (dt > 0 && dt <= 3 && v >= 0 && v < 300) synchronized (DIST) { distPending += (distV + v) / 2f * dt / 3.6f; }
+        }
+        distAt = at;
+        distV = v;
+    }
+
+    /** Metros recorridos según el escáner desde la última vez que se pidieron. */
+    static double takeDistance() {
+        synchronized (DIST) { double d = distPending; distPending = 0; return d; }
     }
 
     /** Vuelta mínima con la lectura agrupada: el escáner da ~5 vueltas por segundo; esto solo evita saturar uno muy rápido. */
@@ -518,6 +552,10 @@ public class Obd {
         int got = 0;
         for (Sensor s : ALL) {
             if (s.pid == -2 || s.pid == -3) continue;
+            if (s == ODO) {                       // no se agrupa (PID A6) y cambia despacio: cada ~40 vueltas
+                if (round % 40 == 0) { Float v = read(s); if (v != null) { s.push(v); got++; } }
+                continue;
+            }
             if (groupPid(s) < 0) {
                 // los que no se pueden agrupar (el voltaje del escáner, PIDs sin largo conocido) van sueltos
                 if (quick(s) || round % 4 == 0) { Float v = read(s); if (v != null) { s.push(v); got++; } }

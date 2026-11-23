@@ -1855,3 +1855,6 @@ Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo 
 # cuentarrevoluciones junto al velocímetro (Tach)
 Revoluciones junto al velocímetro	RPM di sebelah meter laju
 Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)	Meter RPM kecil di sebelahnya, dengan RPM daripada pengimbas OBD (hanya semasa disambungkan)
+# kilometraje con el escáner OBD (#52)
+Odómetro	Odometer
+Kilometraje del auto (escáner OBD)	Perbatuan kereta (pengimbas OBD)

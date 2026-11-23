@@ -1857,3 +1857,6 @@ Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo 
 # cuentarrevoluciones junto al velocímetro (Tach)
 Revoluciones junto al velocímetro	Hız göstergesinin yanında devir
 Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)	Yanında küçük bir devir göstergesi, OBD tarayıcısından gelen devirle (yalnızca bağlıyken)
+# kilometraje con el escáner OBD (#52)
+Odómetro	Kilometre sayacı
+Kilometraje del auto (escáner OBD)	Aracın kilometresi (OBD tarayıcı)
