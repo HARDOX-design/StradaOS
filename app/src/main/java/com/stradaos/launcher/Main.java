@@ -1351,7 +1351,7 @@ public class Main extends Activity {
             root.addView(dockBg, 0, dlp);
         }
 
-        carbMaintBox = null;
+        carbMaintBox = null; carbRpm = null;
         if (premium) buildPremium();
         else {
             buildTop();
@@ -4110,7 +4110,7 @@ public class Main extends Activity {
 
     private void buildPremium() {
         carCard = null; mapGauge = null; mapGaugeBox = null; carGauge = null; chipTv = null; carDataTv = null;
-        faroGauge = null; faroBar = null; faroWxIc = null; faroMaintBox = null; faroPillTv = null; carbMaintBox = null;
+        faroGauge = null; faroBar = null; faroWxIc = null; faroMaintBox = null; faroPillTv = null; carbMaintBox = null; carbRpm = null;
         if (Prem.carb()) { buildCarbono(); setGps(false, 0); return; }
         if (Prem.faro()) { buildFaro(); setGps(false, 0); return; }
         buildPremiumTop();
@@ -5311,6 +5311,13 @@ public class Main extends Activity {
             unit.setPadding((int) (8 * s), 0, 0, (int) (8 * s));
             num.addView(unit);
             place(card, num, sx - 3, sy + 22, sw, 62);
+            // revoluciones del escáner a la derecha de la velocidad (Ajustes → «Revoluciones junto al velocímetro»);
+            // solo si queda ancho para no pisar el número (con 3 cifras y la unidad ocupa ~150)
+            if (sw >= 270) {
+                carbRpm = new Carbono.Rpm(this, s, TEXT, MUTED, LIGHT);
+                place(card, carbRpm, sx + sw - 104, sy + 2, 100, 82);
+                showRpm();
+            }
         } else {
             speedTv = tv("0", 12, TEXT, true);   // no se muestra
             gpsDot = new View(this);
@@ -7363,6 +7370,9 @@ public class Main extends Activity {
     private boolean speedFromObd;
 
     /** RPM del escáner para el cuentarrevoluciones junto al velocímetro; NaN si está apagado o no hay lectura reciente. */
+    /** Revoluciones en digital de la tarjeta del vehículo de Carbono (null en los demás temas). */
+    private Carbono.Rpm carbRpm;
+
     private float obdRpm() {
         if (!prefs.getBoolean("speedo_rpm", false) || !obdOn() || Obd.status != Obd.LIVE || !Obd.RPM.has()) return Float.NaN;
         if (SystemClock.elapsedRealtime() - Obd.RPM.at > 3000) return Float.NaN;
@@ -7377,6 +7387,7 @@ public class Main extends Activity {
         if (carGauge != null) carGauge.setRpm(r);
         if (mapGauge != null) mapGauge.setRpm(r);
         if (faroGauge != null) faroGauge.setRpm(r);
+        if (carbRpm != null) carbRpm.set(r);
     }
 
     private void showSpeed() {

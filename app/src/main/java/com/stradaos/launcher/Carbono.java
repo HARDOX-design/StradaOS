@@ -478,4 +478,71 @@ final class Carbono {
             for (int i = 0; i < 3; i++) c.drawCircle(x + w * (0.2f + i * 0.3f), y + hh * 0.8f, hh * 0.06f, p);
         }
     }
+
+    /**
+     * Revoluciones en digital para la tarjeta del vehículo de Carbono (la versión de {@link Tach} para su velocímetro
+     * digital): «rpm», el número (de a 50, para que no tiemble) y una barra que se pone roja desde 6000 rpm. Con NaN
+     * se esconde. La barra se acerca suave entre lecturas, con la misma curva que el cuentarrevoluciones redondo.
+     */
+    static final class Rpm extends View {
+        private final float s;
+        private final int text, muted;
+        private final boolean light;
+        private float target = Float.NaN, val;
+        private long last;
+        private final Paint pLab = new Paint(Paint.ANTI_ALIAS_FLAG), pNum = new Paint(Paint.ANTI_ALIAS_FLAG),
+            pBar = new Paint(Paint.ANTI_ALIAS_FLAG);
+        private final RectF rect = new RectF();
+
+        Rpm(Context c, float s, int text, int muted, boolean light) {
+            super(c);
+            this.s = s; this.text = text; this.muted = muted; this.light = light;
+            pLab.setTextAlign(Paint.Align.RIGHT);
+            pNum.setTextAlign(Paint.Align.RIGHT);
+            pNum.setTypeface(android.graphics.Typeface.create("sans-serif-light", android.graphics.Typeface.NORMAL));
+            setVisibility(INVISIBLE);
+        }
+
+        /** RPM del escáner, o NaN para esconderlo. */
+        void set(float rpm) {
+            if (Float.isNaN(rpm)) {
+                if (!Float.isNaN(target)) { target = Float.NaN; setVisibility(INVISIBLE); }
+                return;
+            }
+            float t = Math.max(0, Math.min(Tach.MAX * 1.05f, rpm));
+            if (Float.isNaN(target)) { val = t; target = t; last = 0; setVisibility(VISIBLE); invalidate(); return; }
+            if (t == target) return;
+            target = t;
+            if (last == 0) last = android.os.SystemClock.uptimeMillis() - 16;
+            postInvalidateOnAnimation();
+        }
+
+        @Override
+        protected void onDraw(Canvas c) {
+            if (Float.isNaN(target)) return;
+            if (last != 0) {
+                long now = android.os.SystemClock.uptimeMillis();
+                float dt = Math.min(0.1f, Math.max(0f, (now - last) / 1000f));
+                val += (target - val) * (1f - (float) Math.exp(-dt / 0.25f));
+                if (Math.abs(target - val) < 5) { val = target; last = 0; }
+                else { last = now; postInvalidateOnAnimation(); }
+            }
+            float w = getWidth(), f = Main.FONT;
+            pLab.setColor(muted);
+            pLab.setTextSize(14 * s * f);
+            c.drawText("rpm", w, 15 * s, pLab);
+            pNum.setColor(text);
+            pNum.setTextSize(38 * s * f);
+            c.drawText(I18n.integer(Math.round(val / 50f) * 50), w, 62 * s, pNum);
+            float by = 74 * s, bh = 4 * s, frac = Math.max(0, Math.min(1, val / Tach.MAX));
+            pBar.setColor(light ? 0x1A000000 : 0x1FFFFFFF);
+            rect.set(0, by, w, by + bh);
+            c.drawRoundRect(rect, bh / 2, bh / 2, pBar);
+            if (frac > 0.005f) {
+                pBar.setColor(val >= Tach.RED ? 0xFFE5332A : light ? SILVER_DEEP : SILVER_LIGHT);
+                rect.set(0, by, Math.max(bh, w * frac), by + bh);
+                c.drawRoundRect(rect, bh / 2, bh / 2, pBar);
+            }
+        }
+    }
 }

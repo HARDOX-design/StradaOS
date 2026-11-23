@@ -305,9 +305,18 @@ public class Elm {
             if (responders[p] > 1) alone = false;
         }
         // una trama CAN lleva 7 bytes; si no cabe, la primera lleva 6 y las siguientes 7
-        if (alone && counted) q.append(Integer.toHexString(bytes <= 7 ? 1 : 1 + bytes / 7).toUpperCase(Locale.US));
+        String plain = q.toString();
+        boolean withCount = alone && counted;
+        if (withCount) q.append(Integer.toHexString(bytes <= 7 ? 1 : 1 + bytes / 7).toUpperCase(Locale.US));
         // el Sorento contesta en ~60 ms (lo más lento medido: ~600 ms): si en 1,2 s no llegó, se perdió (ver cmd)
         String r = cmd(q.toString(), 1200);
+        // un clon que no entiende el número de tramas contesta «?»: se deja de indicar y se repite sin él (sin esto,
+        // cinco «?» seguidos apagarían la lectura agrupada aunque el escáner sí la entienda)
+        if (withCount && r.contains("?")) {
+            counted = false;
+            Obd.log("el escáner no entiende el número de tramas: se deja de indicar");
+            r = cmd(plain, 1200);
+        }
         lastSilent = r.length() == 0 || r.contains("NODATA");
         return multiData(r, list);
     }

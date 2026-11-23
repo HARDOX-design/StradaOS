@@ -285,8 +285,13 @@ public class Obd {
     static void addListener(Listener l) { synchronized (listeners) { if (!listeners.contains(l)) listeners.add(l); } }
     static void removeListener(Listener l) { synchronized (listeners) { listeners.remove(l); } }
 
+    /** Hay un aviso a la pantalla esperando: con la lectura agrupada (~5 vueltas por segundo) no se encolan de más. */
+    private static final java.util.concurrent.atomic.AtomicBoolean posted = new java.util.concurrent.atomic.AtomicBoolean();
+
     private static void changed() {
+        if (!posted.compareAndSet(false, true)) return;     // ya va uno en camino: leerá los valores más nuevos
         ui.post(new Runnable() { public void run() {
+            posted.set(false);
             List<Listener> copy;
             synchronized (listeners) { copy = new ArrayList<Listener>(listeners); }
             for (Listener l : copy) try { l.onObd(); } catch (Throwable ignored) { }
