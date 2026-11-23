@@ -25,7 +25,8 @@ import java.util.List;
 public class ObdActivity extends Activity implements Obd.Listener {
 
     static final int AMBER = ObdDialogs.AMBER, DANGER = ObdDialogs.DANGER, GOOD = ObdDialogs.GOOD;
-    static final long[] WINDOWS = {60000, 300000, 900000, 1800000};
+    /** Ventanas de los gráficos; la de 15 s sirve con la lectura agrupada (varias lecturas por segundo). */
+    static final long[] WINDOWS = {15000, 60000, 300000, 900000, 1800000};
 
     private SharedPreferences prefs;
     private float u = 1f;
@@ -69,7 +70,7 @@ public class ObdActivity extends Activity implements Obd.Listener {
         int w = m.widthPixels, h = m.heightPixels;
         u = Math.min(Math.max(w, h) / 1024f, Math.min(w, h) / 600f);
         charts.clear();
-        final long win = prefs.getLong("obd_chart_win", WINDOWS[1]);
+        final long win = prefs.getLong("obd_chart_win", 300000);
         if (frame == null) { frame = new FrameLayout(this); setContentView(frame); }
         frame.removeAllViews();
 
@@ -86,7 +87,7 @@ public class ObdActivity extends Activity implements Obd.Listener {
         TextView title = tv(I18n.t("Gráficos en vivo"), 20, Main.TEXT, true);
         title.setPadding(px(14), 0, 0, 0);
         head.addView(title, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
-        String[] wl = {"1 min", "5 min", "15 min", "30 min"};
+        String[] wl = {"15 s", "1 min", "5 min", "15 min", "30 min"};
         for (int i = 0; i < WINDOWS.length; i++) {
             final long wv = WINDOWS[i];
             TextView c = pill(wl[i], wv == win ? Main.RED : Main.BTN, wv == win ? 0xFFFFFFFF : Main.TEXT);
