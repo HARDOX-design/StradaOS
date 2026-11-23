@@ -1,0 +1,1 @@
+Faster OBD scanner (up to 5 readings per second), RPM next to the speedometer, and service reminders using the scanner's mileage, with no internet.

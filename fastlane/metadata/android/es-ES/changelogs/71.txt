@@ -1,0 +1,1 @@
+Escáner OBD más rápido (hasta 5 lecturas por segundo), revoluciones junto al velocímetro y mantenimientos con el kilometraje del escáner, sin internet.

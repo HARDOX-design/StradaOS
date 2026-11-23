@@ -141,6 +141,10 @@ diésel o de otra motorización, la cilindrada se cambia en *Avanzado → Cilind
    ```
    En la app: *Conexión → Escáner → Wi-Fi* con `10.0.2.2:35000` desde el emulador de Android, o con la IP del PC desde un
    celular en la misma red.
+4. **ELM327 simulado de la prueba automática** (`.github/scripts/elm327sim.py`, 2.34): un clon v1.5 con un auto CAN que
+   entiende la consulta agrupada y el número de tramas. Su comportamiento se cambia escribiendo en `/tmp/elm-mode`
+   (`multi`, `lose`, `nocount`, `nomulti`, `noodo`) y la velocidad en `/tmp/elm-speed`. `bloque21.yml` lo usa en Android
+   4.1, 4.2 y 14 y `elmcheck.py` revisa lo que pidió StradaOS en cada fase.
 
 ## Sensores y PIDs en vivo
 
@@ -230,6 +234,16 @@ Con la lectura agrupada, `0x06`, `0x14` y `0x49` pasan a leerse en cada vuelta (
 | Tiempo desde borrar códigos | `0x4E` | A×256+B | min | — |
 | Corrección O2 banco 1 | `0x55` | (A−128) × 100/128 | % | — |
 | Corrección O2 banco 1 s2 | `0x56` | (A−128) × 100/128 | % | — |
+| Odómetro (2.34, #52) | `0xA6` | (A·2²⁴ + B·2¹⁶ + C·2⁸ + D) / 10 | km | — (se lee cada ~15 s, suelto) |
+
+### Kilometraje de los mantenimientos (2.34, #52)
+
+- Si el auto entrega el odómetro (`0xA6`), `odo_base_km` toma ese valor y `odo_gps_m` vuelve a 0 (se escribe solo si
+  cambió 0,1 km o más). El menú del aceite dice «Kilometraje del auto (escáner OBD)».
+- Si no, `Obd.trackDistance()` suma en el hilo del escáner lo recorrido entre dos lecturas de velocidad (promedio × tiempo;
+  un tramo de más de 3 s no cuenta) y `Main.odoFromObd()` se lo lleva con cada lectura y al volver a StradaOS.
+- Mientras el escáner entrega la velocidad (lectura de hace menos de 3 s), el GPS no suma: así nada se cuenta dos veces.
+- El auto simulado no cuenta (igual que para la velocidad del inicio).
 
 ### Cálculo del consumo
 
