@@ -1863,3 +1863,27 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 Odómetro	Odometer
 Kilometraje del auto (escáner OBD)	Car mileage (OBD scanner)
 El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	The car's odometer is {} and the oil change is due (every {}).
+# video en lugar del mapa (VideoCard)
+En la tarjeta del centro	In the center card
+Mapa y video: desliza la tarjeta para pasar del mapa a los videos de la memoria y las USB	Map and video: swipe the card to go from the map to the videos on the memory and USB drives
+Mapa y video	Map and video
+Carpeta de videos	Video folder
+Toca para elegir. Si no eliges una, busca en toda la memoria y en las USB	Tap to choose. If you don't choose one, it searches the whole memory and the USB drives
+Todas	All
+Video en movimiento	Video while moving
+Sobre 5 km/h. La ley prohíbe ver video mientras se conduce	Above 5 km/h. The law forbids watching video while driving
+Tapar la imagen	Cover the picture
+Seguir con un aviso	Keep going with a warning
+Sin permiso de almacenamiento no se pueden buscar videos	Without storage permission videos can't be searched
+Buscando videos…	Searching for videos…
+videos	videos
+No se puede reproducir aquí	Can't play here
+ábrelo en pantalla completa	open it in full screen
+Buscando videos en la memoria y las USB…	Searching for videos in the memory and USB drives…
+No hay videos. Copia videos (MP4 o MKV) a la memoria o a una USB, o elige la carpeta en Ajustes → Mapa y clima.	No videos. Copy videos (MP4 or MKV) to the memory or a USB drive, or choose the folder in Settings → Map & weather.
+Ver en pantalla completa	Watch in full screen
+No hay una app de video para la pantalla completa	No video app for full screen
+No te distraigas mientras conduces	Don't get distracted while driving
+Imagen en pausa mientras manejas · el audio sigue	Picture paused while driving · audio keeps playing
+Solo se muestra con el carro detenido	Only shown when the car is stopped
+Sin GPS ni escáner no se sabe si el carro va andando	Without GPS or scanner, it's unknown whether the car is moving

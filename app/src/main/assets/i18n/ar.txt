@@ -1859,3 +1859,27 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 Odómetro	عداد المسافات
 Kilometraje del auto (escáner OBD)	المسافة المقطوعة للسيارة (ماسح OBD)
 El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	عدّاد المسافة في السيارة {} وقد حان وقت تغيير الزيت (كل {}).
+# video en lugar del mapa (VideoCard)
+En la tarjeta del centro	في البطاقة الوسطى
+Mapa y video: desliza la tarjeta para pasar del mapa a los videos de la memoria y las USB	الخريطة والفيديو: اسحب البطاقة للانتقال من الخريطة إلى مقاطع الفيديو في الذاكرة ووحدات USB
+Mapa y video	الخريطة والفيديو
+Carpeta de videos	مجلد الفيديوهات
+Toca para elegir. Si no eliges una, busca en toda la memoria y en las USB	اضغط للاختيار. إن لم تختر مجلدًا فسيبحث في الذاكرة كلها ووحدات USB
+Todas	الكل
+Video en movimiento	الفيديو أثناء الحركة
+Sobre 5 km/h. La ley prohíbe ver video mientras se conduce	فوق 5 كم/س. القانون يمنع مشاهدة الفيديو أثناء القيادة
+Tapar la imagen	تغطية الصورة
+Seguir con un aviso	المتابعة مع تنبيه
+Sin permiso de almacenamiento no se pueden buscar videos	لا يمكن البحث عن الفيديوهات بدون إذن التخزين
+Buscando videos…	جارٍ البحث عن الفيديوهات…
+videos	فيديوهات
+No se puede reproducir aquí	لا يمكن التشغيل هنا
+ábrelo en pantalla completa	افتحه في وضع ملء الشاشة
+Buscando videos en la memoria y las USB…	جارٍ البحث عن الفيديوهات في الذاكرة ووحدات USB…
+No hay videos. Copia videos (MP4 o MKV) a la memoria o a una USB, o elige la carpeta en Ajustes → Mapa y clima.	لا توجد فيديوهات. انسخ فيديوهات (MP4 أو MKV) إلى الذاكرة أو إلى وحدة USB، أو اختر المجلد من الإعدادات ← الخريطة والطقس.
+Ver en pantalla completa	المشاهدة بملء الشاشة
+No hay una app de video para la pantalla completa	لا يوجد تطبيق فيديو لملء الشاشة
+No te distraigas mientras conduces	لا تنشغل أثناء القيادة
+Imagen en pausa mientras manejas · el audio sigue	الصورة متوقفة أثناء القيادة · الصوت مستمر
+Solo se muestra con el carro detenido	يظهر فقط عندما تكون السيارة متوقفة
+Sin GPS ni escáner no se sabe si el carro va andando	بدون GPS أو ماسح لا يمكن معرفة ما إذا كانت السيارة تتحرك

@@ -1861,3 +1861,27 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 Odómetro	Kilometre sayacı
 Kilometraje del auto (escáner OBD)	Aracın kilometresi (OBD tarayıcı)
 El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	Aracın kilometresi {} ve yağ değişiminin zamanı geldi (her {}).
+# video en lugar del mapa (VideoCard)
+En la tarjeta del centro	Ortadaki kartta
+Mapa y video: desliza la tarjeta para pasar del mapa a los videos de la memoria y las USB	Harita ve video: haritadan bellek ve USB belleklerdeki videolara geçmek için kartı kaydırın
+Mapa y video	Harita ve video
+Carpeta de videos	Video klasörü
+Toca para elegir. Si no eliges una, busca en toda la memoria y en las USB	Seçmek için dokun. Seçmezsen tüm bellekte ve USB belleklerde arar
+Todas	Tümü
+Video en movimiento	Hareket halinde video
+Sobre 5 km/h. La ley prohíbe ver video mientras se conduce	5 km/s üzerinde. Sürüş sırasında video izlemek yasaktır
+Tapar la imagen	Görüntüyü kapat
+Seguir con un aviso	Uyarıyla devam et
+Sin permiso de almacenamiento no se pueden buscar videos	Depolama izni olmadan videolar aranamaz
+Buscando videos…	Videolar aranıyor…
+videos	video
+No se puede reproducir aquí	Burada oynatılamıyor
+ábrelo en pantalla completa	tam ekranda aç
+Buscando videos en la memoria y las USB…	Bellekte ve USB belleklerde videolar aranıyor…
+No hay videos. Copia videos (MP4 o MKV) a la memoria o a una USB, o elige la carpeta en Ajustes → Mapa y clima.	Video yok. Videoları (MP4 veya MKV) belleğe ya da bir USB belleğe kopyala veya klasörü Ayarlar → Harita ve hava durumu'ndan seç.
+Ver en pantalla completa	Tam ekranda izle
+No hay una app de video para la pantalla completa	Tam ekran için video uygulaması yok
+No te distraigas mientras conduces	Sürerken dikkatin dağılmasın
+Imagen en pausa mientras manejas · el audio sigue	Sürüş sırasında görüntü duraklatıldı · ses devam ediyor
+Solo se muestra con el carro detenido	Yalnızca araç dururken gösterilir
+Sin GPS ni escáner no se sabe si el carro va andando	GPS veya tarayıcı olmadan aracın hareket edip etmediği bilinmez

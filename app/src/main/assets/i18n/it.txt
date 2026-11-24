@@ -1859,3 +1859,27 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 Odómetro	Contachilometri
 Kilometraje del auto (escáner OBD)	Chilometraggio dell'auto (scanner OBD)
 El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	Il chilometraggio dell'auto è {} ed è ora del cambio dell'olio (ogni {}).
+# video en lugar del mapa (VideoCard)
+En la tarjeta del centro	Nella scheda centrale
+Mapa y video: desliza la tarjeta para pasar del mapa a los videos de la memoria y las USB	Mappa e video: scorri la scheda per passare dalla mappa ai video della memoria e delle chiavette USB
+Mapa y video	Mappa e video
+Carpeta de videos	Cartella dei video
+Toca para elegir. Si no eliges una, busca en toda la memoria y en las USB	Tocca per scegliere. Se non ne scegli una, cerca in tutta la memoria e nelle chiavette USB
+Todas	Tutte
+Video en movimiento	Video in movimento
+Sobre 5 km/h. La ley prohíbe ver video mientras se conduce	Sopra i 5 km/h. La legge vieta di guardare video mentre si guida
+Tapar la imagen	Coprire l'immagine
+Seguir con un aviso	Continuare con un avviso
+Sin permiso de almacenamiento no se pueden buscar videos	Senza il permesso di archiviazione non si possono cercare i video
+Buscando videos…	Ricerca dei video…
+videos	video
+No se puede reproducir aquí	Impossibile riprodurlo qui
+ábrelo en pantalla completa	aprilo a schermo intero
+Buscando videos en la memoria y las USB…	Ricerca dei video nella memoria e nelle chiavette USB…
+No hay videos. Copia videos (MP4 o MKV) a la memoria o a una USB, o elige la carpeta en Ajustes → Mapa y clima.	Nessun video. Copia dei video (MP4 o MKV) nella memoria o su una chiavetta USB, oppure scegli la cartella in Impostazioni → Mappa e meteo.
+Ver en pantalla completa	Guarda a schermo intero
+No hay una app de video para la pantalla completa	Nessuna app video per lo schermo intero
+No te distraigas mientras conduces	Non distrarti mentre guidi
+Imagen en pausa mientras manejas · el audio sigue	Immagine in pausa durante la guida · l'audio continua
+Solo se muestra con el carro detenido	Si vede solo con l'auto ferma
+Sin GPS ni escáner no se sabe si el carro va andando	Senza GPS né scanner non si sa se l'auto è in movimento

@@ -15,8 +15,11 @@ public class ApkProvider extends ContentProvider {
     static String AUTH = "com.stradaos.launcher.apk";
     private static final HashMap<String, File> files = new HashMap<String, File>();
 
-    static Uri share(File f) {
-        String token = Long.toHexString(System.nanoTime()) + ".apk";
+    static Uri share(File f) { return share(f, ".apk"); }
+
+    /** Igual, para otros archivos (un video para abrirlo en VLC); el tipo sale de la extensión. */
+    static Uri share(File f, String ext) {
+        String token = Long.toHexString(System.nanoTime()) + ext;
         synchronized (files) { files.put(token, f); }
         return Uri.parse("content://" + AUTH + "/" + token);
     }
@@ -31,7 +34,13 @@ public class ApkProvider extends ContentProvider {
         return ParcelFileDescriptor.open(f, ParcelFileDescriptor.MODE_READ_ONLY);
     }
 
-    @Override public String getType(Uri uri) { return "application/vnd.android.package-archive"; }
+    @Override public String getType(Uri uri) {
+        String s = uri.getLastPathSegment();
+        if (s != null && (s.endsWith(".mp4") || s.endsWith(".m4v"))) return "video/mp4";
+        if (s != null && s.endsWith(".mkv")) return "video/x-matroska";
+        if (s != null && VideoCard.isVideo(s)) return "video/*";
+        return "application/vnd.android.package-archive";
+    }
     @Override public Cursor query(Uri u, String[] p, String s, String[] a, String o) { return null; }
     @Override public Uri insert(Uri u, ContentValues v) { return null; }
     @Override public int delete(Uri u, String s, String[] a) { return 0; }

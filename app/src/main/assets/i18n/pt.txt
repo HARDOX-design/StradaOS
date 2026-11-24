@@ -1862,3 +1862,27 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 Odómetro	Hodômetro
 Kilometraje del auto (escáner OBD)	Quilometragem do carro (scanner OBD)
 El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	A quilometragem do carro é {} e já está na hora da troca de óleo (a cada {}).
+# video en lugar del mapa (VideoCard)
+En la tarjeta del centro	No cartão do centro
+Mapa y video: desliza la tarjeta para pasar del mapa a los videos de la memoria y las USB	Mapa e vídeo: deslize o cartão para passar do mapa aos vídeos da memória e dos pendrives
+Mapa y video	Mapa e vídeo
+Carpeta de videos	Pasta de vídeos
+Toca para elegir. Si no eliges una, busca en toda la memoria y en las USB	Toque para escolher. Se não escolher, procura em toda a memória e nos pendrives
+Todas	Todas
+Video en movimiento	Vídeo em movimento
+Sobre 5 km/h. La ley prohíbe ver video mientras se conduce	Acima de 5 km/h. A lei proíbe assistir vídeo dirigindo
+Tapar la imagen	Cobrir a imagem
+Seguir con un aviso	Continuar com um aviso
+Sin permiso de almacenamiento no se pueden buscar videos	Sem permissão de armazenamento não dá para procurar vídeos
+Buscando videos…	Procurando vídeos…
+videos	vídeos
+No se puede reproducir aquí	Não dá para reproduzir aqui
+ábrelo en pantalla completa	abra em tela cheia
+Buscando videos en la memoria y las USB…	Procurando vídeos na memória e nos pendrives…
+No hay videos. Copia videos (MP4 o MKV) a la memoria o a una USB, o elige la carpeta en Ajustes → Mapa y clima.	Nenhum vídeo. Copie vídeos (MP4 ou MKV) para a memória ou um pendrive, ou escolha a pasta em Ajustes → Mapa e clima.
+Ver en pantalla completa	Ver em tela cheia
+No hay una app de video para la pantalla completa	Nenhum app de vídeo para a tela cheia
+No te distraigas mientras conduces	Não se distraia enquanto dirige
+Imagen en pausa mientras manejas · el audio sigue	Imagem pausada enquanto você dirige · o áudio continua
+Solo se muestra con el carro detenido	Só aparece com o carro parado
+Sin GPS ni escáner no se sabe si el carro va andando	Sem GPS nem scanner não dá para saber se o carro está andando

@@ -12,6 +12,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.util.LruCache;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 
 import java.io.File;
@@ -26,6 +29,11 @@ import java.util.LinkedList;
  *
  * Movimiento: el GPS da una posición por segundo; entre una y otra la posición y el rumbo se interpolan y el mapa
  * se redibuja a ~30 cuadros por segundo, para que la flecha avance suave y no a saltos.
+ *
+ * Dos modos (2.35): «Seguir» (centrado en el carro, como siempre) y «Explorar» (se entra tocando el mapa: se arrastra
+ * con el dedo, se acerca o aleja con dos dedos, doble toque o los botones + y −, del zoom 4 —todo el país— al máximo de
+ * la fuente). En «Explorar» el norte queda arriba; el botón de centrar vuelve a «Seguir», y con el carro andando vuelve
+ * solo tras {@link #RETURN_MS} sin tocarlo.
  */
 public class LiveMapView extends View {
     // proveedores en orden: si uno falla en esta pantalla (TLS antiguo, bloqueo), se prueba el siguiente
@@ -83,6 +91,31 @@ public class LiveMapView extends View {
             fileErr = e.getMessage() != null ? e.getMessage() : e.getClass().getSimpleName();
         }
     }
+
+    // ── «Explorar» (2.35) ──
+    /** Avisa al entrar o salir de «Explorar» (Carbono esconde el reproductor y el clima flotantes). */
+    interface Listener { void onExplore(boolean on); }
+    /** La velocidad de ahora en km/h (GPS o escáner); NaN si no se sabe. La pone Main. */
+    interface Speed { float kmh(); }
+    static Speed speedSrc;
+    static final int MINZ = 4;
+    /** Con el carro andando, vuelve a «Seguir» tras este tiempo sin tocar el mapa (decisión de Andrés: 10 a 15 s). */
+    static final long RETURN_MS = 12000;
+    Listener exploreListener;
+    private boolean exploring, ownButtons, dragExplores = true;
+    /** Centro explorado en coordenadas del mundo (0 a 1 en x y en y, Mercator). */
+    private double eX, eY;
+    private int savedZoom;
+    private boolean savedUserZoom;
+    private long lastTouch;
+    /** Pellizco en curso: escala sobre el zoom entero (entre 0,5 y 2) alrededor del punto entre los dedos. */
+    private float pinch = 1f, pinchX, pinchY;
+    private float ctlTop, ctlBottom;
+    private int pressedBtn = -1;
+    private final RectF[] btn = {new RectF(), new RectF(), new RectF()};   // +, −, centrar
+    private final Paint btnBg = new Paint(Paint.ANTI_ALIAS_FLAG), btnFg = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private GestureDetector gd;
+    private ScaleGestureDetector sgd;
 
     private final float s;
     private final float radius;
@@ -365,7 +398,7 @@ public class LiveMapView extends View {
         }
         aStart = now;
         lastFixAt = now;
-        if (!userZoom) zoom = speedKmh > 70 ? 15 : speedKmh > 35 ? 16 : 17;
+        if (!userZoom && !exploring) zoom = speedKmh > 70 ? 15 : speedKmh > 35 ? 16 : 17;
         trimDisk();
         invalidate();
     }
@@ -395,11 +428,226 @@ public class LiveMapView extends View {
         invalidate();
     }
 
-    /** Faro: acercar (+1) o alejar (-1) con los botones del mapa. */
-    void zoomBy(int d) { userZoom = true; zoom = Math.max(11, Math.min(18, zoom + d)); invalidate(); }
+    /** Acercar (+1) o alejar (-1) con los botones del mapa (Faro y Carbono, y los de «Explorar»). */
+    void zoomBy(int d) {
+        if (exploring) { lastTouch = SystemClock.uptimeMillis(); zoom = Math.max(MINZ, Math.min(maxZoom(), zoom + d)); invalidate(); return; }
+        userZoom = true; zoom = Math.max(11, Math.min(18, zoom + d)); invalidate();
+    }
 
-    /** Faro: botón de centrar: vuelve al zoom automático según la velocidad. */
-    void autoZoom() { userZoom = false; zoom = 16; invalidate(); }
+    /** Botón de centrar (Faro y Carbono): vuelve a «Seguir» y al zoom automático según la velocidad. */
+    void autoZoom() { if (exploring) follow(); userZoom = false; zoom = 16; invalidate(); }
+
+    // ───────────────────────── «Explorar» ─────────────────────────
+
+    boolean isExploring() { return exploring; }
+
+    /** Faro y Carbono traen sus propios botones de zoom y de centrar: el mapa no dibuja los suyos. */
+    void setOwnButtons(boolean own) { ownButtons = own; invalidate(); }
+
+    /** Sin carrusel, arrastrar el mapa también entra a «Explorar»; en el carrusel, arrastrar de lado cambia de página. */
+    void setDragExplores(boolean on) { dragExplores = on; }
+
+    /** Espacio de arriba y de abajo que tapan otras cosas del tema (px): los botones de «Explorar» van entre ambos. */
+    void setControlsInset(float top, float bottom) { ctlTop = top; ctlBottom = bottom; invalidate(); }
+
+    /** Entra a «Explorar» desde donde está el carro (sin ubicación todavía no hay nada que explorar). */
+    void explore() {
+        if (exploring) return;
+        double la = !Double.isNaN(dLat) ? dLat : tLat, lo = !Double.isNaN(dLon) ? dLon : tLon;
+        if (Double.isNaN(la)) return;
+        eX = wx(lo); eY = wy(la);
+        savedZoom = zoom; savedUserZoom = userZoom;
+        exploring = true;
+        lastTouch = SystemClock.uptimeMillis();
+        ui.removeCallbacks(returnCheck);
+        ui.postDelayed(returnCheck, 1000);
+        if (exploreListener != null) exploreListener.onExplore(true);
+        invalidate();
+    }
+
+    /** Vuelve a «Seguir»: centrado en el carro y con el zoom que tenía antes de explorar. */
+    void follow() {
+        if (!exploring) return;
+        exploring = false;
+        pinch = 1f;
+        zoom = savedZoom; userZoom = savedUserZoom;
+        ui.removeCallbacks(returnCheck);
+        if (exploreListener != null) exploreListener.onExplore(false);
+        invalidate();
+    }
+
+    private final Runnable returnCheck = new Runnable() { public void run() {
+        if (!exploring) return;
+        Speed sp = speedSrc;
+        float v = sp != null ? sp.kmh() : Float.NaN;
+        if (!Float.isNaN(v) && v > 5 && SystemClock.uptimeMillis() - lastTouch > RETURN_MS) { follow(); return; }
+        ui.postDelayed(this, 1000);
+    }};
+
+    @Override protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        ui.removeCallbacks(returnCheck);
+    }
+
+    private int maxZoom() {
+        OfflineMap fm = fileMap;
+        if (fm != null && (exploring ? fm.contains(lat(eY), lon(eX)) : !Double.isNaN(dLat) && fm.contains(dLat, dLon))) return 18;
+        return MAXZ[provider];
+    }
+
+    static double wx(double lon) { return (lon + 180.0) / 360.0; }
+    static double wy(double lat) {
+        double r = Math.toRadians(Math.max(-85.0511, Math.min(85.0511, lat)));
+        return (1.0 - Math.log(Math.tan(r) + 1.0 / Math.cos(r)) / Math.PI) / 2.0;
+    }
+    static double lon(double x) { return x * 360.0 - 180.0; }
+    static double lat(double y) { return Math.toDegrees(Math.atan(Math.sinh(Math.PI * (1 - 2 * y)))); }
+
+    /** Mueve el centro explorado (px de pantalla, en el sentido contrario al dedo). */
+    private void pan(float dx, float dy) {
+        double k = 256 * s * (double) (1 << zoom) * pinch;
+        eX += dx / k; eY += dy / k;
+        eX -= Math.floor(eX);
+        eY = Math.max(0, Math.min(1, eY));
+        invalidate();
+    }
+
+    /** Cambia el zoom dejando quieto lo que está bajo (px, py). */
+    private void zoomAt(int dz, float px, float py) {
+        int nz = Math.max(MINZ, Math.min(maxZoom(), zoom + dz));
+        if (nz == zoom) return;
+        float cx = getWidth() / 2f, cy = getHeight() / 2f;
+        double k0 = 256 * s * (double) (1 << zoom), k1 = 256 * s * (double) (1 << nz);
+        double wxp = eX + (px - cx) / k0, wyp = eY + (py - cy) / k0;
+        eX = wxp - (px - cx) / k1; eY = wyp - (py - cy) / k1;
+        eX -= Math.floor(eX);
+        eY = Math.max(0, Math.min(1, eY));
+        zoom = nz;
+        invalidate();
+    }
+
+    /** Termina el pellizco: queda en el zoom entero más cercano. */
+    private void endPinch() {
+        if (pinch == 1f) return;
+        int dz = pinch >= 1.41f ? 1 : pinch <= 0.71f ? -1 : 0;
+        float p = pinch;
+        pinch = 1f;
+        if (dz != 0) zoomAt(dz, pinchX, pinchY);
+        else invalidate();
+        if (p != 1f) lastTouch = SystemClock.uptimeMillis();
+    }
+
+    private void initGestures() {
+        gd = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
+            @Override public boolean onDown(MotionEvent e) { return true; }
+            @Override public boolean onSingleTapConfirmed(MotionEvent e) { if (!exploring) explore(); return true; }
+            @Override public boolean onDoubleTap(MotionEvent e) {
+                if (!exploring) explore();
+                if (exploring) zoomAt(1, e.getX(), e.getY());
+                return true;
+            }
+            @Override public boolean onScroll(MotionEvent a, MotionEvent b, float dx, float dy) {
+                if (sgd != null && sgd.isInProgress()) return true;
+                if (!exploring) {
+                    if (!dragExplores) return false;
+                    explore();
+                    if (!exploring) return false;
+                    if (getParent() != null) getParent().requestDisallowInterceptTouchEvent(true);
+                }
+                pan(dx, dy);
+                return true;
+            }
+            @Override public void onLongPress(MotionEvent e) { if (sgd == null || !sgd.isInProgress()) performLongClick(); }
+        });
+        gd.setIsLongpressEnabled(true);
+        sgd = new ScaleGestureDetector(getContext(), new ScaleGestureDetector.SimpleOnScaleGestureListener() {
+            @Override public boolean onScaleBegin(ScaleGestureDetector d) {
+                if (!exploring) explore();
+                if (!exploring) return false;
+                if (getParent() != null) getParent().requestDisallowInterceptTouchEvent(true);
+                pinchX = d.getFocusX(); pinchY = d.getFocusY(); pinch = 1f;
+                return true;
+            }
+            @Override public boolean onScale(ScaleGestureDetector d) {
+                pinch *= d.getScaleFactor();
+                int mz = maxZoom();
+                // pasa de zoom entero sobre la marcha: la escala queda entre 0,5 y 2 (pocas teselas a la vez)
+                while (pinch >= 2f && zoom < mz) { zoomAt(1, pinchX, pinchY); pinch /= 2f; }
+                while (pinch <= 0.5f && zoom > MINZ) { zoomAt(-1, pinchX, pinchY); pinch *= 2f; }
+                if (zoom >= mz) pinch = Math.min(pinch, 1.25f);
+                if (zoom <= MINZ) pinch = Math.max(pinch, 0.8f);
+                lastTouch = SystemClock.uptimeMillis();
+                invalidate();
+                return true;
+            }
+            @Override public void onScaleEnd(ScaleGestureDetector d) { endPinch(); }
+        });
+    }
+
+    private int hitButton(float x, float y) {
+        if (!exploring || ownButtons) return -1;
+        float pad = 6 * s;
+        for (int i = 0; i < btn.length; i++) {
+            RectF r = btn[i];
+            if (x >= r.left - pad && x <= r.right + pad && y >= r.top - pad && y <= r.bottom + pad) return i;
+        }
+        return -1;
+    }
+
+    @Override public boolean onTouchEvent(MotionEvent e) {
+        if (gd == null) initGestures();
+        int a = e.getActionMasked();
+        lastTouch = SystemClock.uptimeMillis();
+        // explorando, el carrusel no se lleva el arrastre (el mapa se mueve con el dedo)
+        if (a == MotionEvent.ACTION_DOWN && exploring && getParent() != null) getParent().requestDisallowInterceptTouchEvent(true);
+        if (a == MotionEvent.ACTION_DOWN) { pressedBtn = hitButton(e.getX(), e.getY()); if (pressedBtn >= 0) { invalidate(); return true; } }
+        if (pressedBtn >= 0) {
+            if (a == MotionEvent.ACTION_UP && hitButton(e.getX(), e.getY()) == pressedBtn) {
+                if (pressedBtn == 0) zoomBy(1); else if (pressedBtn == 1) zoomBy(-1); else follow();
+            }
+            if (a == MotionEvent.ACTION_UP || a == MotionEvent.ACTION_CANCEL) { pressedBtn = -1; invalidate(); }
+            return true;
+        }
+        sgd.onTouchEvent(e);
+        gd.onTouchEvent(e);
+        if ((a == MotionEvent.ACTION_UP || a == MotionEvent.ACTION_CANCEL) && !sgd.isInProgress()) endPinch();
+        return true;
+    }
+
+    /** Botones de «Explorar» (+, −, centrar), a la derecha y antes del difuminado de Cobalto. */
+    private void drawButtons(Canvas c, float w, float h) {
+        if (!exploring || ownButtons) return;
+        float b = 40 * s, gap = 8 * s;
+        float right = fadeEdge == 1 && fadeLen > 0 ? Math.max(b + 24 * s, w - fadeLen * 0.85f) : w - 12 * s;
+        float top = ctlTop + 8 * s, bottom = h - ctlBottom - 8 * s;
+        if (fadeEdge == 2 && fadeLen > 0) bottom = Math.min(bottom, h - fadeLen * 0.6f);
+        float total = 3 * b + 2 * gap, y0 = top + Math.max(0, (bottom - top - total) / 2f);
+        for (int i = 0; i < 3; i++) btn[i].set(right - b, y0 + i * (b + gap), right, y0 + i * (b + gap) + b);
+        btnBg.setColor(Main.LIGHT ? 0xF2FFFFFF : 0xEB1C1E23);
+        int fg = Main.LIGHT ? 0xFF1A1D24 : 0xFFFFFFFF;
+        btnFg.setStrokeWidth(2.4f * s);
+        btnFg.setStrokeCap(Paint.Cap.ROUND);
+        for (int i = 0; i < 3; i++) {
+            RectF r = btn[i];
+            btnBg.setAlpha(pressedBtn == i ? 150 : 255);
+            c.drawRoundRect(r, b / 2, b / 2, btnBg);
+            float mx = r.centerX(), my = r.centerY(), l = 8 * s;
+            btnFg.setColor(i == 2 ? Main.RED : fg);
+            btnFg.setStyle(Paint.Style.STROKE);
+            if (i < 2) {
+                c.drawLine(mx - l, my, mx + l, my, btnFg);
+                if (i == 0) c.drawLine(mx, my - l, mx, my + l, btnFg);
+            } else {
+                c.drawCircle(mx, my, 7 * s, btnFg);
+                c.drawLine(mx, my - 11 * s, mx, my - 8 * s, btnFg);
+                c.drawLine(mx, my + 8 * s, mx, my + 11 * s, btnFg);
+                c.drawLine(mx - 11 * s, my, mx - 8 * s, my, btnFg);
+                c.drawLine(mx + 8 * s, my, mx + 11 * s, my, btnFg);
+                btnFg.setStyle(Paint.Style.FILL);
+                c.drawCircle(mx, my, 3 * s, btnFg);
+            }
+        }
+    }
 
     /** Pruebas: fija el zoom (14–18). */
     void setZoom(int z) { userZoom = true; zoom = Math.max(10, Math.min(18, z)); invalidate(); }
@@ -411,20 +659,33 @@ public class LiveMapView extends View {
         if (bd) c.drawRect(0, 0, w, h, back);
         else c.drawColor(Main.LIGHT ? 0xFFE8EBF0 : 0xFF15171C);
         boolean moving = step(SystemClock.uptimeMillis());
+        final boolean ex = exploring;
 
-        if (!Double.isNaN(dLat)) {
+        if (ex || !Double.isNaN(dLat)) {
             OfflineMap fm = fileMap;
-            boolean fileHere = fm != null && fm.contains(dLat, dLon);
-            if (!fileHere && zoom > MAXZ[provider]) zoom = MAXZ[provider];
+            int mz = maxZoom();
+            if (zoom > mz) zoom = mz;
             int n = 1 << zoom;
-            double fx = (dLon + 180.0) / 360.0 * n;
-            double latR = Math.toRadians(dLat);
-            double fy = (1.0 - Math.log(Math.tan(latR) + 1.0 / Math.cos(latR)) / Math.PI) / 2.0 * n;
+            double fx, fy;
+            if (ex) { fx = eX * n; fy = eY * n; }
+            else {
+                fx = (dLon + 180.0) / 360.0 * n;
+                double latR = Math.toRadians(dLat);
+                fy = (1.0 - Math.log(Math.tan(latR) + 1.0 / Math.cos(latR)) / Math.PI) / 2.0 * n;
+            }
             float ts = 256 * s;                                    // tamaño de tesela en pantalla
-            boolean rot = headingUp && !Float.isNaN(dBr);
-            float cx = w / 2f, cy = Nav.active != null ? (rot ? h * 0.54f : h * 0.50f) : h * 0.42f;
-            int tx0 = (int) Math.floor(fx - cx / ts) - 1, tx1 = (int) Math.floor(fx + (w - cx) / ts) + 1;
-            int ty0 = (int) Math.floor(fy - cy / ts) - 1, ty1 = (int) Math.floor(fy + (h - cy) / ts) + 1;
+            boolean rot = !ex && headingUp && !Float.isNaN(dBr);   // explorando: norte arriba
+            float cx = w / 2f, cy = ex ? h / 2f : Nav.active != null ? (rot ? h * 0.54f : h * 0.50f) : h * 0.42f;
+            // pellizco en curso: lo que se ve de la pantalla, antes de la escala
+            float vl = 0, vr = w, vt = 0, vb = h;
+            if (ex && pinch != 1f) {
+                vl = pinchX - pinchX / pinch; vr = pinchX + (w - pinchX) / pinch;
+                vt = pinchY - pinchY / pinch; vb = pinchY + (h - pinchY) / pinch;
+                c.save();
+                c.scale(pinch, pinch, pinchX, pinchY);
+            }
+            int tx0 = (int) Math.floor(fx + (vl - cx) / ts) - 1, tx1 = (int) Math.floor(fx + (vr - cx) / ts) + 1;
+            int ty0 = (int) Math.floor(fy + (vt - cy) / ts) - 1, ty1 = (int) Math.floor(fy + (vb - cy) / ts) + 1;
             if (rot) {
                 // al girar hacen falta teselas en un círculo alrededor de la posición (hasta la esquina más lejana)
                 float rr = (float) Math.sqrt(Math.max(cx, w - cx) * Math.max(cx, w - cx) + Math.max(cy, h - cy) * Math.max(cy, h - cy)) / ts;
@@ -442,7 +703,8 @@ public class LiveMapView extends View {
                     int wx = ((tx % n) + n) % n;
                     float left = cx + (float) ((tx - fx) * ts), top = cy + (float) ((ty - fy) * ts);
                     dst.set(Math.round(left), Math.round(top), Math.round(left + ts) + 1, Math.round(top + ts) + 1);
-                    boolean fromFile = fm != null && fm.coversFast(zoom, wx, ty);
+                    // explorando lejos (zoom < 9) el archivo no se dibuja: serían teselas enormes y lentas
+                    boolean fromFile = fm != null && (!ex || zoom >= 9) && fm.coversFast(zoom, wx, ty);
                     Bitmap b = get(zoom, wx, ty, fromFile ? L_FILE : L_BASE);
                     if (b != null) {
                         tile.setFilterBitmap(rot || b.getWidth() != dst.width());
@@ -466,7 +728,9 @@ public class LiveMapView extends View {
             }
             drawRoute(c, fx, fy, cx, cy, ts, n);
             if (rot) c.restore();
-            drawMarker(c, cx, cy, rot);
+            if (!ex) drawMarker(c, cx, cy, rot);
+            else if (!Double.isNaN(dLat)) drawMarker(c, mapX(dLon, fx, cx, ts, n), mapY(dLat, fy, cy, ts, n), false);
+            if (ex && pinch != 1f) c.restore();
             if (bd) drawFade(c, w, h);
             String attr = anyFile ? I18n.t("© colaboradores de OpenStreetMap") + " · mapsforge"
                     : provider == 5 ? "© Esri, HERE, Garmin, © OpenStreetMap" : provider == 4 ? "© OpenStreetMap, SRTM · © OpenTopoMap" : I18n.t("© colaboradores de OpenStreetMap");
@@ -485,6 +749,7 @@ public class LiveMapView extends View {
             corner.setColor(Main.BG);
             c.drawPath(corners, corner);
         }
+        drawButtons(c, w, h);
         if (moving) postInvalidateDelayed(FRAME_MS);
     }
 
@@ -658,6 +923,8 @@ public class LiveMapView extends View {
             if (!pending.contains(k) && !failed.contains(k)) {
                 pending.add(k);
                 queue.addFirst(k);
+                // explorando se piden muchas teselas seguidas: las más viejas (ya fuera de la vista) se descartan
+                while (queue.size() > 64) pending.remove(queue.removeLast());
                 if (workers < 2) { workers++; new Thread(worker).start(); }
             }
         }

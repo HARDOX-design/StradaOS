@@ -77,6 +77,52 @@ if part 1; then
   step solo-mapa solo-mapa:1 6
   step solo-mapa-off solo-mapa:0 4
   step nav-salir nav-salir 4
+  # ── 2.35: tarjeta del centro con mapa y video (carrusel), mapa explorable y video detenido / en movimiento ──
+  adb shell mkdir -p /sdcard/Movies >/dev/null 2>&1
+  adb push "$(dirname "$0")/prueba-video.mp4" /sdcard/Movies/prueba-stradaos.mp4 >/dev/null 2>&1
+  [ "$API" -ge 23 ] && adb shell pm grant $PKG android.permission.READ_EXTERNAL_STORAGE >/dev/null 2>&1
+  step centro-mapa centro:mapa 6
+  step explorar explorar:1 4
+  step explorar-lejos explorar-zoom:-8 6
+  step explorar-cerca explorar-zoom:4 5
+  adb shell input keyevent 4; sleep 2; shot "$(printf %03d $N)-explorar-atras"
+  step seguir explorar:0 3
+  # toques reales sobre la tarjeta: tocar (entra a Explorar), arrastrar el mapa y doble toque
+  adb shell input tap 760 300; sleep 2; adb shell input swipe 760 300 640 360 300; sleep 1
+  adb shell input tap 760 300; adb shell input tap 760 300; sleep 2
+  shot "$(printf %03d $N)-explorar-toques"
+  step seguir-2 explorar:0 2
+  step video-vel-0 video-vel:0 1
+  step centro-video centro:video 9
+  step video-solo video-modo:1 5
+  step video-completo video-modo:2 5
+  step video-tarjeta video-modo:0 4
+  step video-andando video-vel:40 3
+  step video-sin-vel video-vel:nan 3
+  step video-aviso video-aviso:warn 3
+  step video-detenido video-vel:0 8
+  step pagina-mapa pagina:1 3
+  # deslizar de verdad sobre la tarjeta (de mapa a video y de vuelta)
+  adb shell input swipe 900 300 450 300 250; sleep 3
+  shot "$(printf %03d $N)-deslizar-video"
+  adb shell input swipe 450 300 900 300 250; sleep 3
+  shot "$(printf %03d $N)-deslizar-mapa"
+  # el carrusel en cada tema (página del video y del mapa)
+  for t in tema-premium:aurora tema-premium:cobalto tema-premium:faro tema-premium:carbono tema-premium: ; do
+    n=${t#tema-premium:}; [ -z "$n" ] && n=clasico
+    step "centro-$n" "$t" 6
+    step "centro-$n-video" centro:video 6
+    step "centro-$n-solo-video" video-modo:1 4
+    step "centro-$n-tarjeta" video-modo:0 3
+    step "centro-$n-mapa" centro:mapa 5
+    step "centro-$n-explorar" explorar:1 3
+    step "centro-$n-seguir" explorar:0 2
+  done
+  step ajustes-mapa-video ajustes:7 4
+  scroll; scroll; shot "$(printf %03d $N)-ajustes-mapa-video-medio"
+  step centro-solo centro:solo 5
+  step video-aviso-tapar video-aviso:cover 1
+  step video-vel-real video-vel:x 2
 fi
 # ════ Parte 2: diálogos, música, idiomas y asistente ════
 if part 2; then

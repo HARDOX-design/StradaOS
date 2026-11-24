@@ -1859,3 +1859,27 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 Odómetro	Odometer
 Kilometraje del auto (escáner OBD)	Perbatuan kereta (pengimbas OBD)
 El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	Odometer kereta ialah {} dan sudah tiba masa tukar minyak (setiap {}).
+# video en lugar del mapa (VideoCard)
+En la tarjeta del centro	Dalam kad tengah
+Mapa y video: desliza la tarjeta para pasar del mapa a los videos de la memoria y las USB	Peta dan video: leret kad untuk beralih dari peta ke video dalam memori dan pemacu USB
+Mapa y video	Peta dan video
+Carpeta de videos	Folder video
+Toca para elegir. Si no eliges una, busca en toda la memoria y en las USB	Ketik untuk memilih. Jika tidak dipilih, ia mencari dalam seluruh memori dan pemacu USB
+Todas	Semua
+Video en movimiento	Video semasa bergerak
+Sobre 5 km/h. La ley prohíbe ver video mientras se conduce	Melebihi 5 km/j. Undang-undang melarang menonton video semasa memandu
+Tapar la imagen	Tutup gambar
+Seguir con un aviso	Teruskan dengan amaran
+Sin permiso de almacenamiento no se pueden buscar videos	Tanpa kebenaran storan, video tidak boleh dicari
+Buscando videos…	Mencari video…
+videos	video
+No se puede reproducir aquí	Tidak boleh dimainkan di sini
+ábrelo en pantalla completa	buka dalam skrin penuh
+Buscando videos en la memoria y las USB…	Mencari video dalam memori dan pemacu USB…
+No hay videos. Copia videos (MP4 o MKV) a la memoria o a una USB, o elige la carpeta en Ajustes → Mapa y clima.	Tiada video. Salin video (MP4 atau MKV) ke memori atau pemacu USB, atau pilih folder dalam Tetapan → Peta & cuaca.
+Ver en pantalla completa	Tonton dalam skrin penuh
+No hay una app de video para la pantalla completa	Tiada aplikasi video untuk skrin penuh
+No te distraigas mientras conduces	Jangan terganggu semasa memandu
+Imagen en pausa mientras manejas · el audio sigue	Gambar dijeda semasa memandu · audio diteruskan
+Solo se muestra con el carro detenido	Hanya dipaparkan ketika kereta berhenti
+Sin GPS ni escáner no se sabe si el carro va andando	Tanpa GPS atau pengimbas, tidak diketahui sama ada kereta sedang bergerak

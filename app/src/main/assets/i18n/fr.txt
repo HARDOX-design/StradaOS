@@ -1859,3 +1859,27 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 Odómetro	Compteur kilométrique
 Kilometraje del auto (escáner OBD)	Kilométrage de la voiture (scanner OBD)
 El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	Le kilométrage de la voiture est de {} et la vidange est due (tous les {}).
+# video en lugar del mapa (VideoCard)
+En la tarjeta del centro	Dans la carte du centre
+Mapa y video: desliza la tarjeta para pasar del mapa a los videos de la memoria y las USB	Carte et vidéo : faites glisser la carte pour passer de la carte aux vidéos de la mémoire et des clés USB
+Mapa y video	Carte et vidéo
+Carpeta de videos	Dossier des vidéos
+Toca para elegir. Si no eliges una, busca en toda la memoria y en las USB	Touchez pour choisir. Sans choix, la recherche porte sur toute la mémoire et les clés USB
+Todas	Toutes
+Video en movimiento	Vidéo en mouvement
+Sobre 5 km/h. La ley prohíbe ver video mientras se conduce	Au-dessus de 5 km/h. La loi interdit de regarder une vidéo en conduisant
+Tapar la imagen	Masquer l'image
+Seguir con un aviso	Continuer avec un avertissement
+Sin permiso de almacenamiento no se pueden buscar videos	Sans autorisation de stockage, impossible de chercher les vidéos
+Buscando videos…	Recherche des vidéos…
+videos	vidéos
+No se puede reproducir aquí	Lecture impossible ici
+ábrelo en pantalla completa	ouvrez-la en plein écran
+Buscando videos en la memoria y las USB…	Recherche des vidéos dans la mémoire et les clés USB…
+No hay videos. Copia videos (MP4 o MKV) a la memoria o a una USB, o elige la carpeta en Ajustes → Mapa y clima.	Aucune vidéo. Copiez des vidéos (MP4 ou MKV) dans la mémoire ou sur une clé USB, ou choisissez le dossier dans Réglages → Carte et météo.
+Ver en pantalla completa	Voir en plein écran
+No hay una app de video para la pantalla completa	Aucune app vidéo pour le plein écran
+No te distraigas mientras conduces	Ne vous laissez pas distraire en conduisant
+Imagen en pausa mientras manejas · el audio sigue	Image en pause pendant la conduite · le son continue
+Solo se muestra con el carro detenido	S'affiche seulement voiture à l'arrêt
+Sin GPS ni escáner no se sabe si el carro va andando	Sans GPS ni scanner, impossible de savoir si la voiture roule
