@@ -745,6 +745,7 @@ public class Main extends Activity {
                 else if ("video-controles".equals(v)) { if (videoCard != null) videoCard.showControls(); }
                 else if (v.startsWith("video-ir:")) { if (videoCard != null) videoCard.seekTest(Integer.parseInt(v.substring(9)) * 1000); }
                 else if ("video-cuidado".equals(v)) { if (videoCard != null) confirmVideoMoving(videoCard); }
+                else if ("video-diag".equals(v)) { showVideoDiag(); }
                 else if (v.startsWith("explorar:")) { if (liveMap != null) { if (v.endsWith("1")) liveMap.explore(); else liveMap.follow(); } }
                 else if (v.startsWith("explorar-zoom:")) { if (liveMap != null) { int d = Integer.parseInt(v.substring(14)); for (int k = 0; k < Math.abs(d); k++) liveMap.zoomBy(d > 0 ? 1 : -1); } }
                 else if ("obd-panel".equals(v)) openVehiclePanel();
@@ -10185,6 +10186,7 @@ public class Main extends Activity {
             segmented(mo, "Video en movimiento", "Sobre 5 km/h. La ley prohíbe ver video mientras se conduce",
                 new String[]{"Preguntar", "Tapar siempre"}, "cover".equals(prefs.getString("video_moving", "ask")) ? 1 : 0, new IntCb() { public void on(int i) {
                     prefs.edit().putString("video_moving", i == 1 ? "cover" : "ask").apply(); showSettings(settingsCat); }});
+            row(mo, "Diagnóstico del video", "Formato de cada video y lo que decodifica la pantalla", null, new Runnable() { public void run() { showVideoDiag(); } });
         }
         segmented(mo, "El mapa apunta", "Según tu dirección: gira con el carro mientras te mueves", new String[]{"Norte arriba", "Según tu dirección"},
             prefs.getBoolean("map_heading", false) ? 1 : 0, new IntCb() { public void on(int i) {
@@ -10457,6 +10459,20 @@ public class Main extends Activity {
             return true;
         }});
         videoPicker = vp;
+    }
+
+    /**
+     * 2.35 r5: diagnóstico del video: la pantalla, sus decodificadores de video (qué perfiles y niveles de H.264 declara)
+     * y lo último que pasó con cada video (formato, errores, reintentos, primer cuadro). También queda en
+     * StradaDiag/video.txt.
+     */
+    private void showVideoDiag() {
+        String log = VideoLog.text();
+        String msg = VideoLog.device()
+                + "\n\n" + I18n.t("Decodificadores de video") + ":\n" + VideoLog.decoders()
+                + "\n" + I18n.t("Últimos videos") + ":\n" + (log.length() > 0 ? log : I18n.t("Todavía no se ha abierto ningún video") + "\n")
+                + "\n" + I18n.t("Se guarda en StradaDiag/video.txt");
+        new TB(this, dlg()).diag().setTitle("Diagnóstico del video").setMessage(msg).setPositiveButton("OK", null).show();
     }
 
     /** El selector de videos abierto (para los ganchos de prueba). */

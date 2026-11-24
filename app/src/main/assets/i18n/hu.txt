@@ -1875,3 +1875,20 @@ Almacenamientos	Tárolók
 No hay videos en esta carpeta	Ebben a mappában nincs videó
 Sin videos	Nincs videó
 Reproduciendo	Lejátszás
+Miniatura en curso: se abre igual	Bélyegkép készül: megnyitás mégis
+Abrir	Megnyitás
+reintento	újrapróbálás
+Preparado	Kész
+Primer cuadro	Első képkocka
+sin imagen	nincs kép
+La pantalla no puede mostrar la imagen de este video	A kijelző nem tudja megjeleníteni ennek a videónak a képét
+Mantén presionado el botón de pantalla completa para abrirlo en VLC u otra app	Tartsd lenyomva a teljes képernyő gombot, hogy VLC-ben vagy más alkalmazásban nyisd meg
+Ningún video de la lista se pudo abrir	A lista egyik videóját sem sikerült megnyitni
+sin video	nincs videó
+Diagnóstico del video	Videó diagnosztika
+Formato de cada video y lo que decodifica la pantalla	Az egyes videók formátuma és amit a kijelző dekódolni tud
+Decodificadores de video	Videó dekóderek
+Últimos videos	Legutóbbi videók
+Todavía no se ha abierto ningún video	Még nem nyílt meg videó
+Se guarda en StradaDiag/video.txt	Mentve: StradaDiag/video.txt
+se leen con el video detenido	leállított videónál olvasva

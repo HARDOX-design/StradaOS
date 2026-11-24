@@ -666,20 +666,46 @@ class VideoPicker extends LinearLayout {
                 long d = -1;
                 Bitmap b = null;
                 try {
-                    File jpg = new File(dir, k + ".jpg"), txt = new File(dir, k + ".d");
-                    if (txt.exists()) {
+                    File jpg = new File(dir, k + ".jpg"), txt = new File(dir, k + ".d"), none = new File(dir, k + ".n");
+                    // 2.35 r5: «.d» sin imagen ni «.n» = una miniatura que falló antes (quizá con un video sonando): se
+                    // vuelve a intentar. «.n» = de verdad no se pudo sacar (sin video sonando): no se reintenta.
+                    if (txt.exists() && (jpg.exists() || none.exists())) {
                         d = readLong(txt);
                         if (jpg.exists()) b = decode(jpg);
                     } else {
+                        // 2.35 r5: en muchas radios hay un solo decodificador de video. No se saca un cuadro (ni se le pide a
+                        // Android, que también lo saca con el decodificador) mientras el video de la tarjeta está abriendo:
+                        // le quitaría el decodificador. Y el reproductor espera a que termine el que está en curso
+                        // (VideoCard.extracting).
+                        // (se anota antes de mirar la hora: así, o el reproductor ve esta miniatura y espera, o la
+                        // miniatura ve que el reproductor está abriendo y espera ella)
+                        boolean got = false;
+                        while (!stopped && !got) {
+                            while (!stopped && android.os.SystemClock.uptimeMillis() < VideoCard.openingUntil) {
+                                try { Thread.sleep(150); } catch (InterruptedException e) { break; }
+                            }
+                            if (stopped) break;
+                            VideoCard.extracting.incrementAndGet();
+                            if (android.os.SystemClock.uptimeMillis() >= VideoCard.openingUntil) got = true;
+                            else VideoCard.extracting.decrementAndGet();
+                        }
+                        if (!got) { synchronized (queue) { busy.remove(k); } continue; }
+                        boolean playing = VideoCard.playerBusy, busyFail = false;
                         long[] ms;
                         synchronized (MS) { ms = MS.get(f.getAbsolutePath()); }
-                        if (ms != null) { b = system(ms[0]); if (ms[1] > 0) d = ms[1]; }
-                        if (b == null || d <= 0) {
-                            Object[] r = extract(f, b == null);
-                            if (d <= 0) d = (Long) r[0];
-                            if (b == null) b = (Bitmap) r[1];
-                        }
+                        try {
+                            if (ms != null) { b = system(ms[0]); if (ms[1] > 0) d = ms[1]; }
+                            if (b == null || d <= 0) {
+                                boolean frame = b == null;
+                                Object[] r = extract(f, frame);
+                                if (d <= 0) d = (Long) r[0];
+                                if (b == null) b = (Bitmap) r[1];
+                                // con un video sonando, el decodificador puede estar ocupado: se reintenta más tarde
+                                busyFail = frame && b == null && (playing || VideoCard.playerBusy);
+                            }
+                        } finally { VideoCard.extracting.decrementAndGet(); }
                         dir.mkdirs();
+                        if (b == null && !busyFail) new FileOutputStream(none).close();
                         if (b != null) {
                             FileOutputStream o = new FileOutputStream(jpg);
                             try { b.compress(Bitmap.CompressFormat.JPEG, 82, o); } finally { o.close(); }
@@ -691,10 +717,11 @@ class VideoPicker extends LinearLayout {
                 } catch (Throwable ignored) { }
                 final Bitmap fb = b;
                 final long fd = d;
+                final boolean retry = b == null && !new File(dir, k + ".n").exists();
                 synchronized (queue) { busy.remove(k); }
                 ui.post(new Runnable() { public void run() {
                     if (fb != null) MEM.put(k, fb);
-                    synchronized (DUR) { DUR.put(k, fd); if (fb == null) NONE.add(k); }
+                    synchronized (DUR) { DUR.put(k, fd); if (fb == null && !retry) NONE.add(k); }
                     if (k.equals(v.key)) v.set(fb, fd);
                 }});
             }

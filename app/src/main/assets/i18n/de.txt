@@ -1890,3 +1890,20 @@ Almacenamientos	Speicher
 No hay videos en esta carpeta	Keine Videos in diesem Ordner
 Sin videos	Keine Videos
 Reproduciendo	Wird abgespielt
+Miniatura en curso: se abre igual	Vorschaubild wird erstellt: wird trotzdem geöffnet
+Abrir	Öffnen
+reintento	neuer Versuch
+Preparado	Bereit
+Primer cuadro	Erstes Bild
+sin imagen	kein Bild
+La pantalla no puede mostrar la imagen de este video	Der Bildschirm kann das Bild dieses Videos nicht anzeigen
+Mantén presionado el botón de pantalla completa para abrirlo en VLC u otra app	Halte die Vollbild-Taste gedrückt, um es in VLC oder einer anderen App zu öffnen
+Ningún video de la lista se pudo abrir	Keines der Videos in der Liste konnte geöffnet werden
+sin video	kein Video
+Diagnóstico del video	Video-Diagnose
+Formato de cada video y lo que decodifica la pantalla	Format jedes Videos und was der Bildschirm dekodieren kann
+Decodificadores de video	Video-Decoder
+Últimos videos	Letzte Videos
+Todavía no se ha abierto ningún video	Es wurde noch kein Video geöffnet
+Se guarda en StradaDiag/video.txt	Gespeichert in StradaDiag/video.txt
+se leen con el video detenido	werden bei gestopptem Video gelesen

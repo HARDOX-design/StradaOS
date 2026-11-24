@@ -1890,3 +1890,20 @@ Almacenamientos	أماكن التخزين
 No hay videos en esta carpeta	لا توجد فيديوهات في هذا المجلد
 Sin videos	لا توجد فيديوهات
 Reproduciendo	قيد التشغيل
+Miniatura en curso: se abre igual	جارٍ إنشاء صورة مصغّرة: يُفتح على أي حال
+Abrir	فتح
+reintento	إعادة محاولة
+Preparado	جاهز
+Primer cuadro	أول إطار
+sin imagen	بلا صورة
+La pantalla no puede mostrar la imagen de este video	لا تستطيع الشاشة عرض صورة هذا الفيديو
+Mantén presionado el botón de pantalla completa para abrirlo en VLC u otra app	اضغط مطولاً على زر ملء الشاشة لفتحه في VLC أو تطبيق آخر
+Ningún video de la lista se pudo abrir	تعذّر فتح أي فيديو في القائمة
+sin video	بلا فيديو
+Diagnóstico del video	تشخيص الفيديو
+Formato de cada video y lo que decodifica la pantalla	صيغة كل فيديو وما تستطيع الشاشة فك ترميزه
+Decodificadores de video	مفككات ترميز الفيديو
+Últimos videos	آخر الفيديوهات
+Todavía no se ha abierto ningún video	لم يُفتح أي فيديو بعد
+Se guarda en StradaDiag/video.txt	يُحفظ في StradaDiag/video.txt
+se leen con el video detenido	تُقرأ والفيديو متوقف

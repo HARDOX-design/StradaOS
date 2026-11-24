@@ -1890,3 +1890,20 @@ Almacenamientos	Archivi
 No hay videos en esta carpeta	Nessun video in questa cartella
 Sin videos	Nessun video
 Reproduciendo	In riproduzione
+Miniatura en curso: se abre igual	Miniatura in corso: si apre comunque
+Abrir	Apri
+reintento	nuovo tentativo
+Preparado	Pronto
+Primer cuadro	Primo fotogramma
+sin imagen	nessuna immagine
+La pantalla no puede mostrar la imagen de este video	Lo schermo non può mostrare l'immagine di questo video
+Mantén presionado el botón de pantalla completa para abrirlo en VLC u otra app	Tieni premuto il pulsante schermo intero per aprirlo in VLC o in un'altra app
+Ningún video de la lista se pudo abrir	Nessun video della lista si è potuto aprire
+sin video	nessun video
+Diagnóstico del video	Diagnostica video
+Formato de cada video y lo que decodifica la pantalla	Formato di ogni video e cosa può decodificare lo schermo
+Decodificadores de video	Decodificatori video
+Últimos videos	Ultimi video
+Todavía no se ha abierto ningún video	Nessun video è stato ancora aperto
+Se guarda en StradaDiag/video.txt	Salvato in StradaDiag/video.txt
+se leen con el video detenido	letti con il video fermo

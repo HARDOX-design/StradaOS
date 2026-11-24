@@ -85,6 +85,9 @@ if part 1; then
   # una subcarpeta con otro video, para el selector tipo gestor de archivos
   adb shell mkdir -p /sdcard/Movies/Viajes >/dev/null 2>&1
   adb push "$(dirname "$0")/prueba-video.mp4" /sdcard/Movies/Viajes/otro-stradaos.mp4 >/dev/null 2>&1
+  # 2.35 r5: un «video» dañado en Viajes (no abre): reintentos con superficie nueva, aviso en el centro y salto al siguiente
+  head -c 300000 /dev/urandom > /tmp/roto-stradaos.mp4
+  adb push /tmp/roto-stradaos.mp4 /sdcard/Movies/Viajes/roto-stradaos.mp4 >/dev/null 2>&1
   [ "$API" -ge 23 ] && adb shell pm grant $PKG android.permission.READ_EXTERNAL_STORAGE >/dev/null 2>&1
   step centro-mapa centro:mapa 6
   step explorar explorar:1 4
@@ -133,6 +136,10 @@ if part 1; then
   # línea de tiempo: a la vista con los controles y saltar al segundo 6
   step video-controles video-controles 2
   step video-ir video-ir:6 3
+  # 2.35 r5: el video termina (12 s) y pasa al dañado: 3 intentos, aviso y vuelta al primero; y el diagnóstico del video
+  sleep 8; shot "$(printf %03d $N)-video-danado"
+  sleep 6; shot "$(printf %03d $N)-video-danado-aviso"
+  step video-diag video-diag 3 1
   step pagina-mapa pagina:1 3
   # deslizar de verdad sobre la tarjeta (de mapa a video y de vuelta)
   adb shell input swipe 700 200 330 200 250; sleep 3

@@ -1894,3 +1894,20 @@ Almacenamientos	Storage
 No hay videos en esta carpeta	No videos in this folder
 Sin videos	No videos
 Reproduciendo	Playing
+Miniatura en curso: se abre igual	Thumbnail in progress: opening anyway
+Abrir	Open
+reintento	retry
+Preparado	Ready
+Primer cuadro	First frame
+sin imagen	no picture
+La pantalla no puede mostrar la imagen de este video	The screen can't show the picture of this video
+Mantén presionado el botón de pantalla completa para abrirlo en VLC u otra app	Press and hold the full-screen button to open it in VLC or another app
+Ningún video de la lista se pudo abrir	None of the videos in the list could be opened
+sin video	no video
+Diagnóstico del video	Video diagnostics
+Formato de cada video y lo que decodifica la pantalla	Format of each video and what the screen can decode
+Decodificadores de video	Video decoders
+Últimos videos	Latest videos
+Todavía no se ha abierto ningún video	No video has been opened yet
+Se guarda en StradaDiag/video.txt	Saved to StradaDiag/video.txt
+se leen con el video detenido	read with the video stopped

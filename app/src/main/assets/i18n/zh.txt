@@ -1890,3 +1890,20 @@ Almacenamientos	存储位置
 No hay videos en esta carpeta	此文件夹中没有视频
 Sin videos	没有视频
 Reproduciendo	正在播放
+Miniatura en curso: se abre igual	正在生成缩略图：仍然打开
+Abrir	打开
+reintento	重试
+Preparado	就绪
+Primer cuadro	第一帧
+sin imagen	无画面
+La pantalla no puede mostrar la imagen de este video	屏幕无法显示此视频的画面
+Mantén presionado el botón de pantalla completa para abrirlo en VLC u otra app	长按全屏按钮，用 VLC 或其他应用打开
+Ningún video de la lista se pudo abrir	列表中的视频都无法打开
+sin video	无视频
+Diagnóstico del video	视频诊断
+Formato de cada video y lo que decodifica la pantalla	每个视频的格式以及屏幕能解码的内容
+Decodificadores de video	视频解码器
+Últimos videos	最近的视频
+Todavía no se ha abierto ningún video	尚未打开任何视频
+Se guarda en StradaDiag/video.txt	已保存到 StradaDiag/video.txt
+se leen con el video detenido	在视频停止时读取

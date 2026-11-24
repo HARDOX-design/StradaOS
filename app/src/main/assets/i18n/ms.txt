@@ -1890,3 +1890,20 @@ Almacenamientos	Storan
 No hay videos en esta carpeta	Tiada video dalam folder ini
 Sin videos	Tiada video
 Reproduciendo	Sedang dimainkan
+Miniatura en curso: se abre igual	Lakaran kecil sedang dibuat: dibuka juga
+Abrir	Buka
+reintento	cuba semula
+Preparado	Sedia
+Primer cuadro	Bingkai pertama
+sin imagen	tiada gambar
+La pantalla no puede mostrar la imagen de este video	Skrin tidak dapat memaparkan gambar video ini
+Mantén presionado el botón de pantalla completa para abrirlo en VLC u otra app	Tekan lama butang skrin penuh untuk membukanya dalam VLC atau apl lain
+Ningún video de la lista se pudo abrir	Tiada video dalam senarai yang dapat dibuka
+sin video	tiada video
+Diagnóstico del video	Diagnostik video
+Formato de cada video y lo que decodifica la pantalla	Format setiap video dan apa yang skrin boleh nyahkod
+Decodificadores de video	Penyahkod video
+Últimos videos	Video terkini
+Todavía no se ha abierto ningún video	Belum ada video yang dibuka
+Se guarda en StradaDiag/video.txt	Disimpan dalam StradaDiag/video.txt
+se leen con el video detenido	dibaca semasa video dihentikan

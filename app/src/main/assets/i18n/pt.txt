@@ -1893,3 +1893,20 @@ Almacenamientos	Armazenamentos
 No hay videos en esta carpeta	Não há vídeos nesta pasta
 Sin videos	Sem vídeos
 Reproduciendo	Reproduzindo
+Miniatura en curso: se abre igual	Miniatura em andamento: abrindo mesmo assim
+Abrir	Abrir
+reintento	nova tentativa
+Preparado	Pronto
+Primer cuadro	Primeiro quadro
+sin imagen	sem imagem
+La pantalla no puede mostrar la imagen de este video	A tela não consegue mostrar a imagem deste vídeo
+Mantén presionado el botón de pantalla completa para abrirlo en VLC u otra app	Mantenha pressionado o botão de tela cheia para abri-lo no VLC ou em outro app
+Ningún video de la lista se pudo abrir	Nenhum vídeo da lista pôde ser aberto
+sin video	sem vídeo
+Diagnóstico del video	Diagnóstico do vídeo
+Formato de cada video y lo que decodifica la pantalla	Formato de cada vídeo e o que a tela consegue decodificar
+Decodificadores de video	Decodificadores de vídeo
+Últimos videos	Últimos vídeos
+Todavía no se ha abierto ningún video	Nenhum vídeo foi aberto ainda
+Se guarda en StradaDiag/video.txt	Salvo em StradaDiag/video.txt
+se leen con el video detenido	lidos com o vídeo parado

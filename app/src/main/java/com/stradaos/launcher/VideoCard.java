@@ -87,7 +87,39 @@ public class VideoCard extends FrameLayout {
     /** 0 en su tarjeta, 1 «Solo video», 2 pantalla completa. */
     int mode;
     private final float s;
-    private final TextureView tex;
+    /**
+     * Donde se dibuja el video. 2.35 r5: se cambia por uno nuevo en cada video y en cada reintento. En la radio del
+     * Picanto (Android 4.2), después de un video que no abrió, la misma superficie ya no recibía el siguiente (no se veía
+     * nada hasta cambiar de tema, que la recreaba) y el último cuadro del video anterior se quedaba a la vista.
+     */
+    private TextureView tex;
+    /** La transformación de {@link #fit} (se aplica también al TextureView nuevo). */
+    private android.graphics.Matrix texMatrix;
+    /** Cuadros que llegaron desde que se abrió el video de ahora (0 = todavía no se ve nada). */
+    private int frames;
+    /** El reproductor ya está listo: antes, en las radios MediaTek, getDuration/getCurrentPosition dan basura. */
+    private boolean prepared;
+    /** Reintentos del video de ahora (se reinician al cambiar de video). */
+    private int tries;
+    /** Videos seguidos que no se pudieron abrir (si son todos los de la lista, se deja de saltar). */
+    private int failStreak;
+    /** Lo que se sabe del archivo de ahora (códec, tamaño), para los avisos y el diagnóstico. */
+    private VideoLog.Info info;
+    private long openAt;
+    /** Archivo esperando a que terminen las miniaturas para abrirse. */
+    private File pending;
+    private long waitSince;
+
+    /**
+     * 2.35 r5: en muchas radios hay un solo decodificador de video. Si el selector está sacando una miniatura cuando se
+     * abre un video, el reproductor no consigue el decodificador y el video «no se puede reproducir» (o suena sin
+     * imagen). Por eso: el reproductor espera a que terminen las miniaturas en curso ({@link #extracting}) y las
+     * miniaturas no empiezan mientras un video está abriendo ({@link #openingUntil}).
+     */
+    static final java.util.concurrent.atomic.AtomicInteger extracting = new java.util.concurrent.atomic.AtomicInteger();
+    static volatile long openingUntil;
+    /** Hay un reproductor abierto (las miniaturas que fallen ahora se reintentan después). */
+    static volatile boolean playerBusy;
     /** El video, del tamaño que le toca para no deformarse, con los bordes desvanecidos. */
     private final Feather videoBox;
     /** La línea iluminada alrededor del video, como las tarjetas del tema Cobalto. */
@@ -126,21 +158,7 @@ public class VideoCard extends FrameLayout {
         super(c);
         s = scale; prefs = p; speed = sp; host = hs;
         // sin fondo: alrededor del video (y en sus bordes desvanecidos) se ve el fondo del tema
-        tex = new TextureView(c);
-        tex.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
-            public void onSurfaceTextureAvailable(SurfaceTexture st, int w, int hh) {
-                surface = new Surface(st);
-                if (current != null && active) open(current);
-            }
-            public void onSurfaceTextureSizeChanged(SurfaceTexture st, int w, int hh) { }
-            public boolean onSurfaceTextureDestroyed(SurfaceTexture st) {
-                // la pantalla se fue al fondo o la tarjeta se quitó: se guarda dónde iba y se suelta el reproductor
-                if (mp != null) { try { resumeMs = mp.getCurrentPosition(); } catch (Throwable ignored) { } closePlayer(); }
-                if (surface != null) { surface.release(); surface = null; }
-                return true;
-            }
-            public void onSurfaceTextureUpdated(SurfaceTexture st) { }
-        });
+        tex = makeTexture();
         videoBox = new Feather(c);
         videoBox.addView(tex, new LayoutParams(-1, -1));
         addView(videoBox, new LayoutParams(-1, -1, Gravity.CENTER));
@@ -202,7 +220,7 @@ public class VideoCard extends FrameLayout {
         bar.setVisibility(INVISIBLE);     // aparecen con el primer video (sin videos no hay controles vacíos)
         line = new Timeline(c, s, new Timeline.L() {
             public void seek(int ms) {
-                try { if (mp != null) mp.seekTo(ms); else resumeMs = ms; } catch (Throwable ignored) { }
+                try { if (mp != null && prepared) mp.seekTo(ms); else resumeMs = ms; } catch (Throwable ignored) { }
                 controls(true);
             }
             public void touching() { h.removeCallbacks(hideControls); }
@@ -272,6 +290,47 @@ public class VideoCard extends FrameLayout {
         addView(coverBox, new LayoutParams(-1, -1));
 
         empty.setVisibility(GONE);
+    }
+
+    /** Un TextureView con su escucha: solo el que está puesto ({@link #tex}) abre y cierra el reproductor. */
+    private TextureView makeTexture() {
+        final TextureView t = new TextureView(getContext());
+        t.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
+            private Surface mine;
+            public void onSurfaceTextureAvailable(SurfaceTexture st, int w, int hh) {
+                if (t != tex) return;
+                mine = new Surface(st);
+                surface = mine;
+                if (current != null && active) open(current);
+            }
+            public void onSurfaceTextureSizeChanged(SurfaceTexture st, int w, int hh) { }
+            public boolean onSurfaceTextureDestroyed(SurfaceTexture st) {
+                // la pantalla se fue al fondo o la tarjeta se quitó: se guarda dónde iba y se suelta el reproductor
+                if (t == tex) {
+                    if (mp != null) { resumeMs = position(); closePlayer(); }
+                    surface = null;
+                }
+                if (mine != null) { mine.release(); mine = null; }
+                return true;
+            }
+            public void onSurfaceTextureUpdated(SurfaceTexture st) {
+                if (t != tex) return;
+                if (frames++ == 0) firstFrame();
+            }
+        });
+        if (texMatrix != null) t.setTransform(texMatrix);
+        return t;
+    }
+
+    /** Cambia el TextureView por uno nuevo (sin el último cuadro del video anterior y con una superficie limpia). */
+    private void newTexture() {
+        closePlayer();
+        TextureView old = tex;
+        tex = makeTexture();
+        surface = null;
+        hdrOn = null;
+        videoBox.addView(tex, 0, new LayoutParams(-1, -1));
+        if (old != null) videoBox.removeView(old);     // su escucha suelta su superficie
     }
 
     /**
@@ -400,6 +459,9 @@ public class VideoCard extends FrameLayout {
         final String dir = prefs.getString("video_dir", "");
         final boolean flat = prefs.getBoolean("video_flat", false);
         new Thread(new Runnable() { public void run() {
+            // lo que decodifica la pantalla, una sola vez y antes del primer video (en Android 4.x leerlo abre los
+            // decodificadores: con un video sonando podría trabarlo)
+            try { VideoLog.ensureDecoders(); } catch (Throwable ignored) { }
             List<File> f0 = flat ? folder(new File(dir)) : find(dir);
             // la carpeta elegida en «Elegir video» ya no está (USB quitada): se buscan todos
             if (flat && f0.isEmpty()) f0 = find("");
@@ -495,81 +557,185 @@ public class VideoCard extends FrameLayout {
         title.setText((at + 1) + "/" + list.size() + " · " + f.getName());
         controls(true);
         prefs.edit().putString("video_last", f.getAbsolutePath()).putInt("video_pos", 0).apply();
+        tries = 0;
+        h.removeCallbacks(pictureCheck);
+        empty.setVisibility(GONE);
+        // superficie nueva para cada video: sin el último cuadro del anterior y sin arrastrar un fallo
+        if (frames > 0 || current != null) newTexture();
         open(f);
     }
 
     /** Abre el video en el TextureView; si todavía no hay superficie, se abre cuando aparezca. */
     private void open(final File f) {
+        if (current != f) { info = null; tries = 0; probing = null; }
         current = f;
         closePlayer();
+        h.removeCallbacks(pendingOpen);
         line.set(0, 0);
         if (surface == null || !active) return;
-        checkHdr(f);
+        long now = android.os.SystemClock.uptimeMillis();
+        // las miniaturas no empiezan mientras abre; si hay una en curso, se espera a que suelte el decodificador (hasta 3 s)
+        openingUntil = now + 6000;
+        if (extracting.get() > 0) {
+            if (pending != f) { pending = f; waitSince = now; }
+            if (now - waitSince < 3000) { h.postDelayed(pendingOpen, 120); return; }
+            VideoLog.log(I18n.t("Miniatura en curso: se abre igual") + " · " + f.getName());
+        }
+        pending = null;
+        if (info == null && probing != f) { probing = f; probe(f); }
         final MediaPlayer m = new MediaPlayer();
         mp = m;
+        playerBusy = true;
+        prepared = false;
+        frames = 0;
+        openAt = now;
+        VideoLog.log(I18n.t("Abrir") + " " + f.getName() + " · " + (f.length() / 1024) + " KB" + (tries > 0 ? " · " + I18n.t("reintento") + " " + tries : ""));
         try {
             m.setDataSource(f.getAbsolutePath());
             m.setSurface(surface);
             m.setOnPreparedListener(new MediaPlayer.OnPreparedListener() { public void onPrepared(MediaPlayer p) {
                 if (mp != m) return;
-                retryOf = null;
+                prepared = true;
+                openingUntil = android.os.SystemClock.uptimeMillis() + 1500;
                 fit(m.getVideoWidth(), m.getVideoHeight());
                 int start = resumeMs;
                 if (resumeMs > 0) { m.seekTo(resumeMs); resumeMs = 0; }
                 if (!paused) m.start();
-                try { line.set(start, Math.max(0, m.getDuration())); } catch (Throwable ignored) { line.set(0, 0); }
+                int d = duration(m);
+                line.set(start, d);
                 if (bar.getVisibility() == VISIBLE) line.setVisibility(line.dur > 0 ? VISIBLE : INVISIBLE);
+                VideoLog.log(I18n.t("Preparado") + " " + m.getVideoWidth() + "×" + m.getVideoHeight() + " · " + VideoPicker.time(d)
+                        + " · " + (android.os.SystemClock.uptimeMillis() - openAt) + " ms");
+                // si en unos segundos no llega ningún cuadro (suena sin imagen), se reintenta o se avisa
+                h.removeCallbacks(pictureCheck);
+                h.postDelayed(pictureCheck, 4000);
             }});
             m.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() { public void onVideoSizeChanged(MediaPlayer p, int w, int hh) { if (mp == m) fit(w, hh); } });
             m.setOnCompletionListener(new MediaPlayer.OnCompletionListener() { public void onCompletion(MediaPlayer p) { if (mp == m) next(); } });
-            m.setOnErrorListener(new MediaPlayer.OnErrorListener() { public boolean onError(MediaPlayer p, int what, int extra) { if (mp == m) failedOrRetry(f); return true; } });
+            m.setOnInfoListener(new MediaPlayer.OnInfoListener() { public boolean onInfo(MediaPlayer p, int what, int extra) {
+                // 3 = primer cuadro (se anota aparte); el mismo aviso seguido se anota una vez
+                String k = what + "/" + extra;
+                if (mp == m && what != 3 && !k.equals(lastInfo)) { lastInfo = k; VideoLog.log("info " + k); }
+                return false;
+            }});
+            m.setOnErrorListener(new MediaPlayer.OnErrorListener() { public boolean onError(MediaPlayer p, int what, int extra) {
+                if (mp == m) failedOrRetry(f, "error " + what + "/" + extra);
+                return true;
+            }});
             m.prepareAsync();
         } catch (Throwable t) {
-            failedOrRetry(f);
+            failedOrRetry(f, t.getClass().getSimpleName());
         }
     }
 
-    /** El video que ya se reintentó una vez (null = el último sí abrió). */
-    private File retryOf;
+    private String lastInfo;
+    /** Archivo cuyo formato se está leyendo (no se lee dos veces al reintentar). */
+    private File probing;
+
+    /** Abre el video que esperaba a las miniaturas. */
+    private final Runnable pendingOpen = new Runnable() { public void run() {
+        File f = pending;
+        if (f != null && active && current == f && mp == null && surface != null) open(f);
+    }};
+
+    /** Duración del reproductor ya listo (0 si no se sabe; las radios a veces dan cientos de horas). */
+    private static int duration(MediaPlayer m) {
+        try { int d = m.getDuration(); return d > 0 && d < 24 * 3600 * 1000 ? d : 0; } catch (Throwable t) { return 0; }
+    }
+
+    /** Llegó el primer cuadro del video de ahora. */
+    private void firstFrame() {
+        failStreak = 0;
+        h.removeCallbacks(pictureCheck);
+        if (empty.getVisibility() == VISIBLE && !list.isEmpty() && !scanning) empty.setVisibility(GONE);
+        VideoLog.log(I18n.t("Primer cuadro") + " · " + (android.os.SystemClock.uptimeMillis() - openAt) + " ms");
+    }
+
+    /** Listo y sonando, pero sin ningún cuadro: el decodificador de video no arrancó (el audio sí). */
+    private final Runnable pictureCheck = new Runnable() { public void run() {
+        if (mp == null || !prepared || frames > 0 || paused || !active || current == null) return;
+        boolean playing;
+        try { playing = mp.isPlaying(); } catch (Throwable t) { playing = false; }
+        if (!playing) return;
+        if (info != null && !info.video) return;      // solo audio (un .mp4 sin video): nada que mostrar
+        final File f = current;
+        if (tries < 2) { failedOrRetry(f, I18n.t("sin imagen")); return; }
+        VideoLog.log(I18n.t("sin imagen") + " · " + f.getName());
+        String d = info != null ? info.shortText() : "";
+        showProblem(I18n.t("La pantalla no puede mostrar la imagen de este video") + (d.length() > 0 ? "\n" + d : ""));
+    }};
+
+    /** Aviso en el centro del video (no se esconde con los controles) y la forma de verlo igual. */
+    private void showProblem(String msg) {
+        empty.setText(msg + "\n\n" + I18n.t("Mantén presionado el botón de pantalla completa para abrirlo en VLC u otra app"));
+        empty.setVisibility(VISIBLE);
+    }
 
     /**
-     * Al cambiar de video, el decodificador del anterior a veces todavía no está libre (pasa con videos 4K/8K o de mucho
-     * peso: el primer intento falla aunque el video sí se puede ver). Se reintenta una vez, sin aviso, medio segundo
-     * después; solo si vuelve a fallar se avisa y se pasa al siguiente.
+     * Si un video no abre (o suena sin imagen), se reintenta hasta dos veces con una superficie nueva: al cambiar de
+     * video el decodificador del anterior a veces todavía no está libre (videos 4K/8K), y en radios con un solo
+     * decodificador puede estar ocupado un momento. Solo si vuelve a fallar se avisa y se pasa al siguiente.
      */
-    private void failedOrRetry(final File f) {
-        if (retryOf != f) {
-            retryOf = f;
-            final int pos = resumeMs;
-            closePlayer();
+    private void failedOrRetry(final File f, String why) {
+        VideoLog.log("[!] " + why + " · " + f.getName() + (info != null && info.ok != null && !info.ok ? " · " + info.why : ""));
+        final int pos = prepared ? position() : resumeMs;
+        closePlayer();
+        if (tries < 2) {
+            tries++;
             h.postDelayed(new Runnable() { public void run() {
                 if (!active || current != f || mp != null) return;
                 resumeMs = pos;
-                open(f);
-            }}, 500);
+                newTexture();         // el TextureView nuevo abre el video cuando tenga su superficie
+                current = f;
+            }}, tries == 1 ? 700 : 1500);
             return;
         }
-        retryOf = null;
         failed();
     }
 
-    /** Formato que la radio no decodifica: se avisa y se pasa al siguiente (en pantalla completa, VLC sí lo lee). */
+    /** Formato que la radio no decodifica: se avisa y se pasa al siguiente (VLC u otra app quizá sí lo lean). */
     private void failed() {
         closePlayer();
         if (!active) return;
-        title.setText(I18n.t("No se puede reproducir aquí") + ": " + name() + " · " + I18n.t("ábrelo en pantalla completa"));
+        failStreak++;
+        String d = info != null ? info.shortText() : "";
+        title.setText(I18n.t("No se puede reproducir aquí") + ": " + name());
+        showProblem(I18n.t("No se puede reproducir aquí") + ": " + name() + (d.length() > 0 ? "\n" + d : ""));
+        if (failStreak >= list.size()) {
+            // ninguno abre: no se sigue dando vueltas
+            VideoLog.log(I18n.t("Ningún video de la lista se pudo abrir"));
+            return;
+        }
         final File f = current;
-        h.postDelayed(new Runnable() { public void run() { if (current == f && mp == null) next(); } }, 2000);
+        h.postDelayed(new Runnable() { public void run() { if (current == f && mp == null && active) next(); } }, 3000);
     }
 
     private void closePlayer() {
+        h.removeCallbacks(pictureCheck);
+        prepared = false;
+        playerBusy = false;
         if (mp == null) return;
         try { mp.release(); } catch (Throwable ignored) { }
         mp = null;
     }
 
     private int position() {
-        try { return mp != null ? mp.getCurrentPosition() : resumeMs; } catch (Throwable t) { return 0; }
+        try { return mp != null && prepared ? mp.getCurrentPosition() : resumeMs; } catch (Throwable t) { return 0; }
+    }
+
+    /** Lee el formato del archivo en otro hilo (para los avisos, el diagnóstico y los videos HDR). */
+    private void probe(final File f) {
+        if (android.os.Build.VERSION.SDK_INT >= 17) setHdr(false);
+        new Thread(new Runnable() { public void run() {
+            final VideoLog.Info in = VideoLog.probe(f);
+            VideoLog.log(f.getName() + " · " + (in.video ? in.shortText() : I18n.t("sin video"))
+                    + (in.ok == null ? "" : in.ok ? " · OK" : " · [!] " + in.why) + (in.hdr ? " · HDR" : ""));
+            h.post(new Runnable() { public void run() {
+                if (f != current) return;
+                info = in;
+                if (android.os.Build.VERSION.SDK_INT >= 17) setHdr(in.hdr);
+            }});
+        }}, "StradaVideoInfo").start();
     }
 
     /**
@@ -596,6 +762,7 @@ public class VideoCard extends FrameLayout {
         if (natH > bh + 1) sy = natH / bh;
         android.graphics.Matrix m = new android.graphics.Matrix();
         m.setScale(sx, sy, bw / 2f, bh / 2f);
+        texMatrix = m;
         tex.setTransform(m);
         LayoutParams l = (LayoutParams) videoBox.getLayoutParams();
         l.width = bw;
@@ -633,9 +800,8 @@ public class VideoCard extends FrameLayout {
     private final Runnable timeTick = new Runnable() { public void run() {
         if (!active || bar.getVisibility() != VISIBLE) return;
         try {
-            if (mp != null) {
-                int d = mp.getDuration();
-                line.set(mp.getCurrentPosition(), d > 0 ? d : 0);
+            if (mp != null && prepared) {
+                line.set(mp.getCurrentPosition(), duration(mp));
                 line.setVisibility(line.dur > 0 ? VISIBLE : INVISIBLE);
             }
         } catch (Throwable ignored) { }
@@ -667,17 +833,18 @@ public class VideoCard extends FrameLayout {
         loaded = true;
         empty.setVisibility(GONE);
         resumeMs = 0; paused = false; playIco.set(CtlIcon.PAUSE);
+        failStreak = 0;
         i = Math.max(0, Math.min(i, list.size() - 1));
         if (active) play(i);
         else { at = i; current = list.get(i); prefs.edit().putString("video_last", current.getAbsolutePath()).putInt("video_pos", 0).apply(); }
     }
     int index() { return at; }
     /** Reproduce el video i de la lista (elegido en la lista de Main). */
-    void playAt(int i) { if (!list.isEmpty() && active) { resumeMs = 0; paused = false; playIco.set(CtlIcon.PAUSE); play(i); } }
+    void playAt(int i) { if (!list.isEmpty() && active) { resumeMs = 0; paused = false; failStreak = 0; playIco.set(CtlIcon.PAUSE); play(i); } }
 
     /** Ganchos de prueba: controles a la vista y saltar a un momento (como soltar la línea de tiempo ahí). */
     void showControls() { controls(true); }
-    void seekTest(int ms) { try { if (mp != null) mp.seekTo(ms); } catch (Throwable ignored) { } line.set(ms, line.dur); controls(true); }
+    void seekTest(int ms) { try { if (mp != null && prepared) mp.seekTo(ms); } catch (Throwable ignored) { } line.set(ms, line.dur); controls(true); }
 
     /** Revisa ya la velocidad y la tapa (sin duplicar la revisión de cada segundo). */
     private void refresh() { h.removeCallbacks(tick); if (active) tick.run(); }
@@ -690,7 +857,7 @@ public class VideoCard extends FrameLayout {
 
     void toggle() {
         paused = !paused;
-        try { if (mp != null) { if (paused) mp.pause(); else mp.start(); } } catch (Throwable ignored) { }
+        try { if (mp != null && prepared) { if (paused) mp.pause(); else mp.start(); } } catch (Throwable ignored) { }
         playIco.set(paused ? CtlIcon.PLAY : CtlIcon.PAUSE);
     }
 
@@ -699,7 +866,7 @@ public class VideoCard extends FrameLayout {
         if (at < 0 || at >= list.size()) return;
         File f = list.get(at);
         int pos = position();
-        try { if (mp != null && mp.isPlaying()) mp.pause(); } catch (Throwable ignored) { }
+        try { if (mp != null && prepared && mp.isPlaying()) mp.pause(); } catch (Throwable ignored) { }
         paused = true;
         playIco.set(CtlIcon.PLAY);
         String ext = f.getName().substring(f.getName().lastIndexOf('.'));
@@ -721,10 +888,10 @@ public class VideoCard extends FrameLayout {
     /** La pantalla de inicio se va al fondo: se guarda dónde iba. */
     void onPause() {
         if (at >= 0 && active) prefs.edit().putInt("video_pos", position()).apply();
-        try { if (mp != null && mp.isPlaying()) mp.pause(); } catch (Throwable ignored) { }
+        try { if (mp != null && prepared && mp.isPlaying()) mp.pause(); } catch (Throwable ignored) { }
     }
 
-    void onResume() { try { if (active && !paused && mp != null) mp.start(); } catch (Throwable ignored) { } }
+    void onResume() { try { if (active && !paused && mp != null && prepared) mp.start(); } catch (Throwable ignored) { } }
 
     /** La tarjeta se reemplaza (cambio de tema o de ajustes): suelta el reproductor. */
     void release() {
@@ -732,6 +899,7 @@ public class VideoCard extends FrameLayout {
         h.removeCallbacks(blurTick);
         h.removeCallbacks(hideControls);
         h.removeCallbacks(timeTick);
+        h.removeCallbacks(pendingOpen);
         onPause();
         closePlayer();
         active = false;
@@ -925,39 +1093,6 @@ public class VideoCard extends FrameLayout {
     // ───────────────────────── videos HDR ─────────────────────────
 
     private Boolean hdrOn;
-
-    /**
-     * Videos HDR (los .MOV del iPhone, HLG o Dolby Vision; HDR10): en una pantalla normal Android los muestra sin
-     * convertir y se ven lavados, grises. Si el archivo dice que es HDR, se le sube un poco el color y el contraste al
-     * dibujarlo (aproximado: no es una conversión exacta). Los demás videos no se tocan. Android 4.2+ (setLayerPaint).
-     */
-    private void checkHdr(final File f) {
-        if (android.os.Build.VERSION.SDK_INT < 17) return;
-        setHdr(false);
-        new Thread(new Runnable() { public void run() {
-            final boolean on = isHdr(f);
-            h.post(new Runnable() { public void run() { if (f == current) setHdr(on); } });
-        }}, "StradaHdr").start();
-    }
-
-    static boolean isHdr(File f) {
-        android.media.MediaExtractor ex = new android.media.MediaExtractor();
-        try {
-            ex.setDataSource(f.getAbsolutePath());
-            for (int i = 0; i < ex.getTrackCount(); i++) {
-                android.media.MediaFormat fm = ex.getTrackFormat(i);
-                String mime = fm.getString(android.media.MediaFormat.KEY_MIME);
-                if (mime == null || !mime.startsWith("video/")) continue;
-                if (mime.contains("dolby-vision")) return true;
-                // «color-transfer»: 6 = ST 2084 (HDR10/PQ), 7 = HLG (Android 7+ lo informa)
-                if (fm.containsKey("color-transfer")) { int t = fm.getInteger("color-transfer"); if (t == 6 || t == 7) return true; }
-            }
-        } catch (Throwable ignored) {
-        } finally {
-            try { ex.release(); } catch (Throwable ignored) { }
-        }
-        return false;
-    }
 
     private void setHdr(boolean on) {
         if (android.os.Build.VERSION.SDK_INT < 17 || (hdrOn != null && hdrOn == on)) return;

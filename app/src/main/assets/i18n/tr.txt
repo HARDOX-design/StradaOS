@@ -1892,3 +1892,20 @@ Almacenamientos	Depolama alanları
 No hay videos en esta carpeta	Bu klasörde video yok
 Sin videos	Video yok
 Reproduciendo	Oynatılıyor
+Miniatura en curso: se abre igual	Küçük resim hazırlanıyor: yine de açılıyor
+Abrir	Aç
+reintento	yeniden deneme
+Preparado	Hazır
+Primer cuadro	İlk kare
+sin imagen	görüntü yok
+La pantalla no puede mostrar la imagen de este video	Ekran bu videonun görüntüsünü gösteremiyor
+Mantén presionado el botón de pantalla completa para abrirlo en VLC u otra app	VLC'de veya başka bir uygulamada açmak için tam ekran düğmesini basılı tutun
+Ningún video de la lista se pudo abrir	Listedeki videoların hiçbiri açılamadı
+sin video	video yok
+Diagnóstico del video	Video tanılama
+Formato de cada video y lo que decodifica la pantalla	Her videonun biçimi ve ekranın çözebildikleri
+Decodificadores de video	Video kod çözücüleri
+Últimos videos	Son videolar
+Todavía no se ha abierto ningún video	Henüz hiç video açılmadı
+Se guarda en StradaDiag/video.txt	StradaDiag/video.txt dosyasına kaydedildi
+se leen con el video detenido	video durdurulmuşken okunur

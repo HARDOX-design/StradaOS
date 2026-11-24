@@ -1869,3 +1869,20 @@ Almacenamientos	Pamięci
 No hay videos en esta carpeta	Brak filmów w tym folderze
 Sin videos	Brak filmów
 Reproduciendo	Odtwarzanie
+Miniatura en curso: se abre igual	Trwa tworzenie miniatury: otwieranie mimo to
+Abrir	Otwórz
+reintento	ponowna próba
+Preparado	Gotowe
+Primer cuadro	Pierwsza klatka
+sin imagen	brak obrazu
+La pantalla no puede mostrar la imagen de este video	Ekran nie może wyświetlić obrazu tego wideo
+Mantén presionado el botón de pantalla completa para abrirlo en VLC u otra app	Przytrzymaj przycisk pełnego ekranu, aby otworzyć je w VLC lub innej aplikacji
+Ningún video de la lista se pudo abrir	Nie udało się otworzyć żadnego wideo z listy
+sin video	brak wideo
+Diagnóstico del video	Diagnostyka wideo
+Formato de cada video y lo que decodifica la pantalla	Format każdego wideo i co ekran potrafi zdekodować
+Decodificadores de video	Dekodery wideo
+Últimos videos	Ostatnie wideo
+Todavía no se ha abierto ningún video	Nie otwarto jeszcze żadnego wideo
+Se guarda en StradaDiag/video.txt	Zapisano w StradaDiag/video.txt
+se leen con el video detenido	odczytywane przy zatrzymanym wideo
