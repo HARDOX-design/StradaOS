@@ -1868,8 +1868,7 @@ Toca para elegir. Si no eliges una, busca en toda la memoria y en las USB	Tocca 
 Todas	Tutte
 Video en movimiento	Video in movimento
 Sobre 5 km/h. La ley prohíbe ver video mientras se conduce	Sopra i 5 km/h. La legge vieta di guardare video mentre si guida
-Tapar la imagen	Coprire l'immagine
-Seguir con un aviso	Continuare con un avviso
+Tapar siempre	Copri sempre
 Sin permiso de almacenamiento no se pueden buscar videos	Senza il permesso di archiviazione non si possono cercare i video
 Buscando videos…	Ricerca dei video…
 videos	video
@@ -1879,7 +1878,11 @@ Buscando videos en la memoria y las USB…	Ricerca dei video nella memoria e nel
 No hay videos. Copia videos (MP4 o MKV) a la memoria o a una USB, o elige la carpeta en Ajustes → Mapa y clima.	Nessun video. Copia dei video (MP4 o MKV) nella memoria o su una chiavetta USB, oppure scegli la cartella in Impostazioni → Mappa e meteo.
 Ver en pantalla completa	Guarda a schermo intero
 No hay una app de video para la pantalla completa	Nessuna app video per lo schermo intero
-No te distraigas mientras conduces	Non distrarti mentre guidi
+¿Quieres seguir viendo el video?	Vuoi continuare a guardare il video?
 Imagen en pausa mientras manejas · el audio sigue	Immagine in pausa durante la guida · l'audio continua
 Solo se muestra con el carro detenido	Si vede solo con l'auto ferma
 Sin GPS ni escáner no se sabe si el carro va andando	Senza GPS né scanner non si sa se l'auto è in movimento
+Elegir video	Scegli video
+Cuidado al manejar	Attenzione alla guida
+Mantén la vista en el camino. Ver video mientras manejas es peligroso y en muchos países está prohibido. Si sigues, lo haces bajo tu responsabilidad.	Tieni gli occhi sulla strada. Guardare video mentre guidi è pericoloso e in molti paesi è vietato. Se continui, lo fai sotto la tua responsabilità.
+Seguir viendo	Continua a guardare

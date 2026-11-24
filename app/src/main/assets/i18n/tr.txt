@@ -1870,8 +1870,7 @@ Toca para elegir. Si no eliges una, busca en toda la memoria y en las USB	Seçme
 Todas	Tümü
 Video en movimiento	Hareket halinde video
 Sobre 5 km/h. La ley prohíbe ver video mientras se conduce	5 km/s üzerinde. Sürüş sırasında video izlemek yasaktır
-Tapar la imagen	Görüntüyü kapat
-Seguir con un aviso	Uyarıyla devam et
+Tapar siempre	Her zaman kapat
 Sin permiso de almacenamiento no se pueden buscar videos	Depolama izni olmadan videolar aranamaz
 Buscando videos…	Videolar aranıyor…
 videos	video
@@ -1881,7 +1880,11 @@ Buscando videos en la memoria y las USB…	Bellekte ve USB belleklerde videolar 
 No hay videos. Copia videos (MP4 o MKV) a la memoria o a una USB, o elige la carpeta en Ajustes → Mapa y clima.	Video yok. Videoları (MP4 veya MKV) belleğe ya da bir USB belleğe kopyala veya klasörü Ayarlar → Harita ve hava durumu'ndan seç.
 Ver en pantalla completa	Tam ekranda izle
 No hay una app de video para la pantalla completa	Tam ekran için video uygulaması yok
-No te distraigas mientras conduces	Sürerken dikkatin dağılmasın
+¿Quieres seguir viendo el video?	Videoyu izlemeye devam etmek istiyor musunuz?
 Imagen en pausa mientras manejas · el audio sigue	Sürüş sırasında görüntü duraklatıldı · ses devam ediyor
 Solo se muestra con el carro detenido	Yalnızca araç dururken gösterilir
 Sin GPS ni escáner no se sabe si el carro va andando	GPS veya tarayıcı olmadan aracın hareket edip etmediği bilinmez
+Elegir video	Video seç
+Cuidado al manejar	Sürerken dikkat
+Mantén la vista en el camino. Ver video mientras manejas es peligroso y en muchos países está prohibido. Si sigues, lo haces bajo tu responsabilidad.	Gözünüzü yoldan ayırmayın. Araç kullanırken video izlemek tehlikelidir ve birçok ülkede yasaktır. Devam ederseniz sorumluluk size aittir.
+Seguir viendo	İzlemeye devam et

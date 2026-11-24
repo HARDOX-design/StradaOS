@@ -735,7 +735,9 @@ public class Main extends Activity {
                     testKmh = "nan".equals(k) || !testKmhOn ? Float.NaN : Float.parseFloat(k);
                 }
                 else if (v.startsWith("video-modo:")) { if (videoCard != null) videoMode(videoCard, Integer.parseInt(v.substring(11))); }
-                else if (v.startsWith("video-aviso:")) { prefs.edit().putString("video_moving", v.endsWith("warn") ? "warn" : "cover").apply(); }
+                else if (v.startsWith("video-aviso:")) { prefs.edit().putString("video_moving", v.endsWith("cover") ? "cover" : "ask").apply(); }
+                else if ("video-elegir".equals(v)) { if (videoCard != null) pickVideo(videoCard); }
+                else if ("video-cuidado".equals(v)) { if (videoCard != null) confirmVideoMoving(videoCard); }
                 else if (v.startsWith("explorar:")) { if (liveMap != null) { if (v.endsWith("1")) liveMap.explore(); else liveMap.follow(); } }
                 else if (v.startsWith("explorar-zoom:")) { if (liveMap != null) { int d = Integer.parseInt(v.substring(14)); for (int k = 0; k < Math.abs(d); k++) liveMap.zoomBy(d > 0 ? 1 : -1); } }
                 else if ("obd-panel".equals(v)) openVehiclePanel();
@@ -2911,7 +2913,11 @@ public class Main extends Activity {
             centerPager.addPage(card);
             FrameLayout vp = new FrameLayout(this);
             videoCard = new VideoCard(this, s, prefs, new VideoCard.Speed() { public float kmh() { return currentKmh(); } },
-                new VideoCard.Host() { public void videoMode(VideoCard v, int mode) { Main.this.videoMode(v, mode); } });
+                new VideoCard.Host() {
+                    public void videoMode(VideoCard v, int mode) { Main.this.videoMode(v, mode); }
+                    public void pickVideo(VideoCard v) { Main.this.pickVideo(v); }
+                    public void confirmMoving(VideoCard v) { Main.this.confirmVideoMoving(v); }
+                });
             vp.addView(videoCard, new FrameLayout.LayoutParams(-1, -1));
             centerPager.addPage(vp);
         }
@@ -10170,8 +10176,8 @@ public class Main extends Activity {
             row(mo, "Carpeta de videos", "Toca para elegir. Si no eliges una, busca en toda la memoria y en las USB", vd.length() > 0 ? new File(vd).getName() : I18n.t("Todas"),
                 new Runnable() { public void run() { pickVideoDir(); } });
             segmented(mo, "Video en movimiento", "Sobre 5 km/h. La ley prohíbe ver video mientras se conduce",
-                new String[]{"Tapar la imagen", "Seguir con un aviso"}, "warn".equals(prefs.getString("video_moving", "cover")) ? 1 : 0, new IntCb() { public void on(int i) {
-                    prefs.edit().putString("video_moving", i == 1 ? "warn" : "cover").apply(); showSettings(settingsCat); }});
+                new String[]{"Preguntar", "Tapar siempre"}, "cover".equals(prefs.getString("video_moving", "ask")) ? 1 : 0, new IntCb() { public void on(int i) {
+                    prefs.edit().putString("video_moving", i == 1 ? "cover" : "ask").apply(); showSettings(settingsCat); }});
         }
         segmented(mo, "El mapa apunta", "Según tu dirección: gira con el carro mientras te mueves", new String[]{"Norte arriba", "Según tu dirección"},
             prefs.getBoolean("map_heading", false) ? 1 : 0, new IntCb() { public void on(int i) {
@@ -10417,6 +10423,31 @@ public class Main extends Activity {
     }
 
     private static final int REQ_STORAGE = 79, REQ_STORAGE_W = 80, REQ_VIDEO = 85;
+
+    /** Elegir el video a reproducir entre los encontrados (botón ☰ o el título del video). */
+    private void pickVideo(final VideoCard v) {
+        final java.util.List<File> fs = new java.util.ArrayList<File>(v.files());
+        if (fs.isEmpty()) return;
+        String[] items = new String[fs.size()];
+        for (int i = 0; i < fs.size(); i++) {
+            File f = fs.get(i), p = f.getParentFile();
+            items[i] = (i == v.index() ? "▶  " : "") + f.getName() + (p != null ? "\n" + p.getName() : "");
+        }
+        new TB(this, dlg()).setTitle("Elegir video")
+            .setItems(items, new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) { v.playAt(w); } })
+            .setNegativeButton("Cancelar", null).show();
+    }
+
+    /**
+     * En movimiento, «Sí, seguir viendo»: aviso de cuidado al manejar. Solo si lo confirma se ve el video (hasta que el
+     * carro se detenga); la decisión queda en manos del conductor, avisado.
+     */
+    private void confirmVideoMoving(final VideoCard v) {
+        new TB(this, dlg()).setTitle("Cuidado al manejar")
+            .setMessage("Mantén la vista en el camino. Ver video mientras manejas es peligroso y en muchos países está prohibido. Si sigues, lo haces bajo tu responsabilidad.")
+            .setPositiveButton("Seguir viendo", new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) { v.acceptMoving(); } })
+            .setNegativeButton("Cancelar", null).show();
+    }
 
     /** Elegir la carpeta de videos entre las que tienen videos (memoria y USB), o «Todas». */
     private void pickVideoDir() {

@@ -1853,8 +1853,7 @@ Toca para elegir. Si no eliges una, busca en toda la memoria y en las USB	Koppin
 Todas	Összes
 Video en movimiento	Videó menet közben
 Sobre 5 km/h. La ley prohíbe ver video mientras se conduce	5 km/h felett. A törvény tiltja a videónézést vezetés közben
-Tapar la imagen	Kép eltakarása
-Seguir con un aviso	Folytatás figyelmeztetéssel
+Tapar siempre	Mindig takarja
 Sin permiso de almacenamiento no se pueden buscar videos	Tárhely-engedély nélkül nem lehet videókat keresni
 Buscando videos…	Videók keresése…
 videos	videó
@@ -1864,7 +1863,11 @@ Buscando videos en la memoria y las USB…	Videók keresése a memóriában és 
 No hay videos. Copia videos (MP4 o MKV) a la memoria o a una USB, o elige la carpeta en Ajustes → Mapa y clima.	Nincsenek videók. Másolj videókat (MP4 vagy MKV) a memóriába vagy egy pendrive-ra, vagy válaszd ki a mappát itt: Beállítások → Térkép és időjárás.
 Ver en pantalla completa	Megtekintés teljes képernyőn
 No hay una app de video para la pantalla completa	Nincs videóalkalmazás a teljes képernyőhöz
-No te distraigas mientras conduces	Ne hagyd, hogy vezetés közben elvonja a figyelmed
+¿Quieres seguir viendo el video?	Szeretnéd tovább nézni a videót?
 Imagen en pausa mientras manejas · el audio sigue	Kép szüneteltetve vezetés közben · a hang szól tovább
 Solo se muestra con el carro detenido	Csak álló autónál látható
 Sin GPS ni escáner no se sabe si el carro va andando	GPS és szkenner nélkül nem tudni, hogy az autó halad-e
+Elegir video	Videó kiválasztása
+Cuidado al manejar	Vigyázz vezetés közben
+Mantén la vista en el camino. Ver video mientras manejas es peligroso y en muchos países está prohibido. Si sigues, lo haces bajo tu responsabilidad.	Figyeld az utat. Vezetés közben videót nézni veszélyes, és sok országban tilos. Ha folytatod, a saját felelősségedre teszed.
+Seguir viendo	Tovább nézem

@@ -94,15 +94,25 @@ if part 1; then
   adb shell input tap 520 190; adb shell input tap 520 190; sleep 2
   shot "$(printf %03d $N)-explorar-toques"
   step seguir-2 explorar:0 2
+  # explorar con una ruta activa (la ruta sale del carro, no del centro de la vista)
+  step nav-demo-ruta nav-demo 8
+  step nav-explorar explorar:1 3
+  step nav-explorar-lejos explorar-zoom:-2 5
+  adb shell input swipe 520 190 400 260 300; sleep 2; shot "$(printf %03d $N)-nav-explorar-arrastre"
+  step nav-seguir explorar:0 2
+  step nav-salir-2 nav-salir 3
   step video-vel-0 video-vel:0 1
   step centro-video centro:video 9
   step video-solo video-modo:1 5
   step video-completo video-modo:2 5
   step video-tarjeta video-modo:0 4
-  step video-andando video-vel:40 3
+  step video-andando video-vel:40 4
+  step video-cuidado video-cuidado 3 1
+  step video-tapar-siempre video-aviso:cover 3
   step video-sin-vel video-vel:nan 3
-  step video-aviso video-aviso:warn 3
+  step video-preguntar video-aviso:ask 3
   step video-detenido video-vel:0 8
+  step video-elegir video-elegir 3 1
   step pagina-mapa pagina:1 3
   # deslizar de verdad sobre la tarjeta (de mapa a video y de vuelta)
   adb shell input swipe 700 200 330 200 250; sleep 3
@@ -123,7 +133,7 @@ if part 1; then
   step ajustes-mapa-video ajustes:7 4
   scroll; scroll; shot "$(printf %03d $N)-ajustes-mapa-video-medio"
   step centro-solo centro:solo 5
-  step video-aviso-tapar video-aviso:cover 1
+  step video-aviso-preguntar video-aviso:ask 1
   step video-vel-real video-vel:x 2
 fi
 # ════ Parte 2: diálogos, música, idiomas y asistente ════

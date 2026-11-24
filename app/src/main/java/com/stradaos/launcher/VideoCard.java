@@ -42,13 +42,15 @@ import java.util.Locale;
  * Se dibuja en un TextureView (no en un VideoView, que va en una capa aparte y no admite transparencia): el video se ajusta
  * a la tarjeta sin deformarse y sus bordes se desvanecen hacia el fondo del tema ({@link Feather}), sin cortes rectos.
  *
- * En movimiento (más de 5 km/h por el GPS o el escáner), según «video_moving»:
- *   «cover» (de fábrica): se tapa la imagen y sigue el audio; al detenerse vuelve la imagen.
- *   «warn»: un aviso «No te distraigas mientras conduces» con OK; al tocarlo el video sigue a la vista hasta la próxima
- *   detención. La ley de tránsito prohíbe ver video mientras se conduce: este modo lo elige el conductor.
- * Sin datos de velocidad (sin GPS ni escáner) cuenta como en movimiento: con «cover» se tapa («Solo se muestra con el
- * carro detenido») y con «warn» sale el aviso. El aviso vuelve a salir cada vez que el carro arranca después de estar
- * detenido unos segundos. Abrir el video en VLC (mantener ⛶) también solo funciona detenido.
+ * En movimiento (más de 5 km/h por el GPS o el escáner) la imagen se tapa y el audio sigue. La tapa es oscura y deja
+ * ver el video muy difuminado detrás (una copia chiquita del cuadro, cada 0,7 s). Según «video_moving»:
+ *   «ask» (de fábrica): pregunta «¿Quieres seguir viendo el video?» con Sí / No. «Sí» abre un aviso de cuidado al
+ *   manejar (Main, {@link Host#confirmMoving}) y solo si el conductor lo confirma se ve el video, hasta la próxima
+ *   detención. «No» deja la tapa (tocarla vuelve a preguntar). Así la decisión es del conductor, avisado.
+ *   «cover»: tapa siempre, sin pregunta.
+ * («warn», de la Prueba anterior, cuenta como «ask».) Sin datos de velocidad (sin GPS ni escáner) cuenta como en
+ * movimiento. La pregunta vuelve a salir cada vez que el carro arranca después de estar detenido 5 s. Abrir el video
+ * en VLC (mantener ⛶) solo funciona detenido.
  *
  * 2.35 (carrusel del centro): la tarjeta empieza inactiva y no busca videos hasta que se muestra por primera vez
  * ({@link #setActive}). Al pasar al mapa se guarda el segundo y se suelta el reproductor.
@@ -59,7 +61,13 @@ public class VideoCard extends FrameLayout {
     public interface Speed { float kmh(); }
 
     /** Quien muestra la tarjeta: la agranda dentro de StradaOS (0 en su lugar, 1 «Solo video», 2 pantalla completa). */
-    public interface Host { void videoMode(VideoCard v, int mode); }
+    public interface Host {
+        void videoMode(VideoCard v, int mode);
+        /** Lista para elegir un video ({@link #files()}, {@link #playAt}). */
+        void pickVideo(VideoCard v);
+        /** «Sí, seguir viendo» en movimiento: aviso de cuidado; si lo confirma, {@link #acceptMoving()}. */
+        void confirmMoving(VideoCard v);
+    }
 
     static final String[] EXT = {".mp4", ".m4v", ".mkv", ".webm", ".3gp", ".mov", ".avi", ".ts"};
     private static final float MOVING_KMH = 5;
@@ -89,7 +97,11 @@ public class VideoCard extends FrameLayout {
     /** Capa del tamaño del video con el título y los controles. */
     private final FrameLayout ui;
     private final FrameLayout cover;
-    private final TextView coverText, coverSub, coverOk;
+    private final TextView coverText, coverSub, coverAsk;
+    private final LinearLayout coverBtns;
+    /** El video difuminado detrás de la tapa, del tamaño y en el lugar del video. */
+    private final android.widget.ImageView blurImg;
+    private boolean declined;
     private final Handler h = new Handler(Looper.getMainLooper());
     private List<File> list = new ArrayList<File>();
     private int at = -1, resumeMs;
@@ -136,7 +148,9 @@ public class VideoCard extends FrameLayout {
         bar = new LinearLayout(c);
         bar.setGravity(Gravity.CENTER);
         playBtn = button("❚❚");
-        TextView prev = button("⏮"), nxt = button("⏭"), big = button(""), fb = button("⛶");
+        TextView prev = button("⏮"), nxt = button("⏭"), big = button(""), fb = button("⛶"), pick = button("☰");
+        pick.setOnClickListener(new OnClickListener() { public void onClick(View v) { if (host != null && !list.isEmpty()) host.pickVideo(VideoCard.this); controls(true); } });
+        title.setOnClickListener(new OnClickListener() { public void onClick(View v) { if (host != null && !list.isEmpty()) host.pickVideo(VideoCard.this); controls(true); } });
         FrameLayout bigBox = new FrameLayout(c);
         bigIcon = new Aurora.Corners(c, Color.WHITE, 1.8f * s);
         LayoutParams il = new LayoutParams(Math.round(22 * s), Math.round(22 * s), Gravity.CENTER);
@@ -159,7 +173,7 @@ public class VideoCard extends FrameLayout {
             else { title.setText(I18n.t("Solo se muestra con el carro detenido")); controls(true); }
             return true;
         }});
-        for (View b : new View[]{prev, playBtn, nxt, bigBox, fb}) {
+        for (View b : new View[]{pick, prev, playBtn, nxt, bigBox, fb}) {
             LinearLayout.LayoutParams l = new LinearLayout.LayoutParams(Math.round(46 * s), Math.round(40 * s));
             l.setMargins(Math.round(4 * s), 0, Math.round(4 * s), 0);
             bar.addView(b, l);
@@ -175,10 +189,18 @@ public class VideoCard extends FrameLayout {
         empty.setPadding(Math.round(24 * s), 0, Math.round(24 * s), 0);
         addView(empty, new LayoutParams(-1, -1, Gravity.CENTER));
 
-        // tapa para cuando el auto avanza (también con los bordes desvanecidos)
+        // tapa para cuando el auto avanza (también con los bordes desvanecidos): oscura, con el video muy difuminado detrás
         cover = new FrameLayout(c);
-        cover.setBackgroundColor(0xFF101214);       // opaca: que no se vea nada del video
-        cover.setClickable(true);
+        cover.setBackgroundColor(0xFF0B0C0E);
+        cover.setOnClickListener(new OnClickListener() { public void onClick(View v) {
+            if (declined) { declined = false; refresh(); }    // dijo «No» y tocó: vuelve a preguntar
+        }});
+        blurImg = new android.widget.ImageView(c);
+        blurImg.setScaleType(android.widget.ImageView.ScaleType.FIT_XY);
+        cover.addView(blurImg, new LayoutParams(0, 0, Gravity.CENTER));
+        View scrim = new View(c);
+        scrim.setBackgroundColor(0x8C000000);
+        cover.addView(scrim, new LayoutParams(-1, -1));
         LinearLayout cv = new LinearLayout(c);
         cv.setOrientation(LinearLayout.VERTICAL);
         cv.setGravity(Gravity.CENTER);
@@ -189,13 +211,28 @@ public class VideoCard extends FrameLayout {
         coverSub.setGravity(Gravity.CENTER);
         coverSub.setPadding(Math.round(20 * s), Math.round(6 * s), Math.round(20 * s), 0);
         coverSub.setVisibility(GONE);
-        coverOk = button(I18n.t("OK"));
-        coverOk.setOnClickListener(new OnClickListener() { public void onClick(View v) { warnAccepted = true; setCovered(false); } });
+        coverText.setShadowLayer(6 * s, 0, 0, Color.BLACK);
+        coverAsk = text(15, Color.WHITE, false);
+        coverAsk.setGravity(Gravity.CENTER);
+        coverAsk.setPadding(Math.round(20 * s), Math.round(16 * s), Math.round(20 * s), 0);
+        coverAsk.setText(I18n.t("¿Quieres seguir viendo el video?"));
+        coverBtns = new LinearLayout(c);
+        coverBtns.setGravity(Gravity.CENTER);
+        TextView yes = button(I18n.t("Sí")), no = button(I18n.t("No"));
+        yes.setTextSize(0, 16 * s); no.setTextSize(0, 16 * s);
+        yes.setOnClickListener(new OnClickListener() { public void onClick(View v) { if (host != null) host.confirmMoving(VideoCard.this); else acceptMoving(); } });
+        no.setOnClickListener(new OnClickListener() { public void onClick(View v) { declined = true; refresh(); } });
+        for (TextView b : new TextView[]{yes, no}) {
+            LinearLayout.LayoutParams bp = new LinearLayout.LayoutParams(Math.round(96 * s), Math.round(44 * s));
+            bp.setMargins(Math.round(6 * s), 0, Math.round(6 * s), 0);
+            coverBtns.addView(b, bp);
+        }
         cv.addView(coverText, new LinearLayout.LayoutParams(-2, -2));
         cv.addView(coverSub, new LinearLayout.LayoutParams(-2, -2));
-        LinearLayout.LayoutParams ol = new LinearLayout.LayoutParams(Math.round(120 * s), Math.round(46 * s));
-        ol.topMargin = Math.round(14 * s);
-        cv.addView(coverOk, ol);
+        cv.addView(coverAsk, new LinearLayout.LayoutParams(-2, -2));
+        LinearLayout.LayoutParams ol = new LinearLayout.LayoutParams(-2, -2);
+        ol.topMargin = Math.round(12 * s);
+        cv.addView(coverBtns, ol);
         cover.addView(cv, new LayoutParams(-1, -1, Gravity.CENTER));
         cover.setVisibility(GONE);
         Feather coverBox = new Feather(c);
@@ -414,9 +451,14 @@ public class VideoCard extends FrameLayout {
         LayoutParams el = (LayoutParams) edge.getLayoutParams();
         el.width = l.width; el.height = l.height; el.gravity = Gravity.CENTER;
         edge.setLayoutParams(el);
+        // los controles nunca más angostos que sus 6 botones (con videos verticales se cortaban)
         LayoutParams ul = (LayoutParams) ui.getLayoutParams();
-        ul.width = l.width; ul.height = l.height; ul.gravity = Gravity.CENTER;
+        ul.width = Math.min(cw, Math.max(l.width, Math.round(6 * 54 * s + 16 * s)));
+        ul.height = l.height; ul.gravity = Gravity.CENTER;
         ui.setLayoutParams(ul);
+        LayoutParams gl = (LayoutParams) blurImg.getLayoutParams();
+        gl.width = l.width; gl.height = l.height; gl.gravity = Gravity.CENTER;
+        blurImg.setLayoutParams(gl);
     }
 
     private final Runnable hideControls = new Runnable() { public void run() { if (!paused) controls(false); } };
@@ -442,6 +484,17 @@ public class VideoCard extends FrameLayout {
         fullBtn.setText(m == 2 ? "✕" : "⛶");
         if (vw > 0) post(new Runnable() { public void run() { fit(vw, vh); } });
     }
+
+    List<File> files() { return list; }
+    int index() { return at; }
+    /** Reproduce el video i de la lista (elegido en la lista de Main). */
+    void playAt(int i) { if (!list.isEmpty() && active) { resumeMs = 0; paused = false; playBtn.setText("❚❚"); play(i); } }
+
+    /** Revisa ya la velocidad y la tapa (sin duplicar la revisión de cada segundo). */
+    private void refresh() { h.removeCallbacks(tick); if (active) tick.run(); }
+
+    /** Confirmó el aviso de cuidado: el video se ve hasta que el carro se detenga. */
+    void acceptMoving() { warnAccepted = true; declined = false; setCovered(false); }
 
     void next() { if (!list.isEmpty() && active) { resumeMs = 0; play(at + 1); } }
     void prev() { if (!list.isEmpty()) { resumeMs = 0; play(at - 1); } }
@@ -487,6 +540,7 @@ public class VideoCard extends FrameLayout {
     /** La tarjeta se reemplaza (cambio de tema o de ajustes): suelta el reproductor. */
     void release() {
         h.removeCallbacks(tick);
+        h.removeCallbacks(blurTick);
         h.removeCallbacks(hideControls);
         onPause();
         closePlayer();
@@ -608,9 +662,56 @@ public class VideoCard extends FrameLayout {
      * en algunas radios se traba también el audio).
      */
     private void setCovered(boolean on) {
+        boolean was = cover.getVisibility() == VISIBLE;
         cover.setVisibility(on ? VISIBLE : GONE);
         videoBox.setAlpha(on ? 0.02f : 1f);
         edge.setVisibility(on ? INVISIBLE : VISIBLE);
+        h.removeCallbacks(blurTick);
+        if (on) { if (!was) blurTick.run(); else h.postDelayed(blurTick, 700); }
+    }
+
+    /**
+     * El video difuminado de la tapa: una copia chiquita del cuadro de ahora (48 px de ancho), agrandada al doble y
+     * pasada dos veces por un difuminado de caja; la ImageView la estira al tamaño del video. Barato también en la radio.
+     */
+    private final Runnable blurTick = new Runnable() { public void run() {
+        if (!active || cover.getVisibility() != VISIBLE) return;
+        try {
+            if (vw > 0 && vh > 0 && mp != null && tex.isAvailable()) {
+                int w0 = 48, h0 = Math.max(4, Math.round(48f * vh / vw));
+                Bitmap small = tex.getBitmap(w0, h0);
+                if (small != null) {
+                    Bitmap big = Bitmap.createScaledBitmap(small, w0 * 2, h0 * 2, true);
+                    if (big != small) small.recycle();
+                    boxBlur(big, 4); boxBlur(big, 4);
+                    blurImg.setImageBitmap(big);
+                }
+            }
+        } catch (Throwable ignored) { }
+        h.postDelayed(this, 700);
+    }};
+
+    /** Difuminado de caja (horizontal y vertical) en el lugar; para bitmaps chiquitos. */
+    static void boxBlur(Bitmap b, int r) {
+        int w = b.getWidth(), hh = b.getHeight();
+        int[] px = new int[w * hh], out = new int[w * hh];
+        b.getPixels(px, 0, w, 0, 0, w, hh);
+        for (int pass = 0; pass < 2; pass++) {
+            boolean horiz = pass == 0;
+            int lines = horiz ? hh : w, len = horiz ? w : hh;
+            for (int L = 0; L < lines; L++) {
+                for (int i = 0; i < len; i++) {
+                    int rs = 0, gs = 0, bs = 0, n = 0;
+                    for (int k = Math.max(0, i - r); k <= Math.min(len - 1, i + r); k++) {
+                        int c = px[horiz ? L * w + k : k * w + L];
+                        rs += (c >> 16) & 255; gs += (c >> 8) & 255; bs += c & 255; n++;
+                    }
+                    out[horiz ? L * w + i : i * w + L] = 0xFF000000 | ((rs / n) << 16) | ((gs / n) << 8) | (bs / n);
+                }
+            }
+            int[] t = px; px = out; out = t;
+        }
+        b.setPixels(px, 0, w, 0, 0, w, hh);
     }
 
     private final Runnable tick = new Runnable() { public void run() {
@@ -620,22 +721,16 @@ public class VideoCard extends FrameLayout {
         long now = android.os.SystemClock.elapsedRealtime();
         if (!moving) { if (stoppedSince == 0) stoppedSince = now; } else stoppedSince = 0;
         // detenido unos segundos: el próximo arranque vuelve a avisar (no solo la primera vez)
-        if (stoppedSince != 0 && now - stoppedSince > STOP_RESET_MS) warnAccepted = false;
-        boolean warn = "warn".equals(prefs.getString("video_moving", "cover"));
+        if (stoppedSince != 0 && now - stoppedSince > STOP_RESET_MS) { warnAccepted = false; declined = false; }
+        boolean ask = !"cover".equals(prefs.getString("video_moving", "ask"));
         if (moving && !list.isEmpty()) {
-            if (warn) {
-                coverText.setText(I18n.t("No te distraigas mientras conduces"));
-                coverSub.setText(I18n.t("Sin GPS ni escáner no se sabe si el carro va andando"));
-                coverSub.setVisibility(unknown ? VISIBLE : GONE);
-                coverOk.setVisibility(VISIBLE);
-                setCovered(!warnAccepted);
-            } else {
-                coverText.setText(I18n.t(unknown ? "Solo se muestra con el carro detenido" : "Imagen en pausa mientras manejas · el audio sigue"));
-                coverSub.setText(I18n.t("Sin GPS ni escáner no se sabe si el carro va andando"));
-                coverSub.setVisibility(unknown ? VISIBLE : GONE);
-                coverOk.setVisibility(GONE);
-                setCovered(true);
-            }
+            coverText.setText(I18n.t(unknown ? "Solo se muestra con el carro detenido" : "Imagen en pausa mientras manejas · el audio sigue"));
+            coverSub.setText(I18n.t("Sin GPS ni escáner no se sabe si el carro va andando"));
+            coverSub.setVisibility(unknown ? VISIBLE : GONE);
+            boolean showAsk = ask && !declined;
+            coverAsk.setVisibility(showAsk ? VISIBLE : GONE);
+            coverBtns.setVisibility(showAsk ? VISIBLE : GONE);
+            setCovered(!(ask && warnAccepted));
         } else {
             setCovered(false);
         }

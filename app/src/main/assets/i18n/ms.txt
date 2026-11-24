@@ -1868,8 +1868,7 @@ Toca para elegir. Si no eliges una, busca en toda la memoria y en las USB	Ketik 
 Todas	Semua
 Video en movimiento	Video semasa bergerak
 Sobre 5 km/h. La ley prohíbe ver video mientras se conduce	Melebihi 5 km/j. Undang-undang melarang menonton video semasa memandu
-Tapar la imagen	Tutup gambar
-Seguir con un aviso	Teruskan dengan amaran
+Tapar siempre	Sentiasa tutup
 Sin permiso de almacenamiento no se pueden buscar videos	Tanpa kebenaran storan, video tidak boleh dicari
 Buscando videos…	Mencari video…
 videos	video
@@ -1879,7 +1878,11 @@ Buscando videos en la memoria y las USB…	Mencari video dalam memori dan pemacu
 No hay videos. Copia videos (MP4 o MKV) a la memoria o a una USB, o elige la carpeta en Ajustes → Mapa y clima.	Tiada video. Salin video (MP4 atau MKV) ke memori atau pemacu USB, atau pilih folder dalam Tetapan → Peta & cuaca.
 Ver en pantalla completa	Tonton dalam skrin penuh
 No hay una app de video para la pantalla completa	Tiada aplikasi video untuk skrin penuh
-No te distraigas mientras conduces	Jangan terganggu semasa memandu
+¿Quieres seguir viendo el video?	Mahu terus menonton video?
 Imagen en pausa mientras manejas · el audio sigue	Gambar dijeda semasa memandu · audio diteruskan
 Solo se muestra con el carro detenido	Hanya dipaparkan ketika kereta berhenti
 Sin GPS ni escáner no se sabe si el carro va andando	Tanpa GPS atau pengimbas, tidak diketahui sama ada kereta sedang bergerak
+Elegir video	Pilih video
+Cuidado al manejar	Berhati-hati semasa memandu
+Mantén la vista en el camino. Ver video mientras manejas es peligroso y en muchos países está prohibido. Si sigues, lo haces bajo tu responsabilidad.	Pastikan mata anda di jalan. Menonton video semasa memandu adalah berbahaya dan dilarang di banyak negara. Jika anda teruskan, ia atas tanggungjawab anda sendiri.
+Seguir viendo	Terus menonton

@@ -841,11 +841,15 @@ public class LiveMapView extends View {
         int nPts = r.pts.length / 2;
         int start = Math.max(0, Math.min(nPts - 1, Nav.curPtIdx));
         boolean offRoute = Nav.offlineOffRoute;
-        float startX = offRoute ? mapX(r.pts[start * 2 + 1], fx, cx, ts, n) : cx;
-        float startY = offRoute ? mapY(r.pts[start * 2], fy, cy, ts, n) : cy;
+        // dónde está el carro en pantalla: en «Seguir» es el centro; explorando, donde cae su posición (si no, la ruta
+        // salía del centro de la vista y la raya seguía al dedo)
+        float carX = cx, carY = cy;
+        if (exploring && !Double.isNaN(dLat)) { carX = mapX(dLon, fx, cx, ts, n); carY = mapY(dLat, fy, cy, ts, n); }
+        float startX = offRoute ? mapX(r.pts[start * 2 + 1], fx, cx, ts, n) : carX;
+        float startY = offRoute ? mapY(r.pts[start * 2], fy, cy, ts, n) : carY;
         if (offRoute) {
             routePath.reset();
-            routePath.moveTo(cx, cy);
+            routePath.moveTo(carX, carY);
             routePath.lineTo(startX, startY);
             routeBack.setColor(Main.LIGHT ? 0xAA000000 : 0xCCFFFFFF);
             c.drawPath(routePath, routeBack);

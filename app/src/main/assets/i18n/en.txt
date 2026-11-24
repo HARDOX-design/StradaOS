@@ -1872,8 +1872,7 @@ Toca para elegir. Si no eliges una, busca en toda la memoria y en las USB	Tap to
 Todas	All
 Video en movimiento	Video while moving
 Sobre 5 km/h. La ley prohíbe ver video mientras se conduce	Above 5 km/h. The law forbids watching video while driving
-Tapar la imagen	Cover the picture
-Seguir con un aviso	Keep going with a warning
+Tapar siempre	Always cover
 Sin permiso de almacenamiento no se pueden buscar videos	Without storage permission videos can't be searched
 Buscando videos…	Searching for videos…
 videos	videos
@@ -1883,7 +1882,11 @@ Buscando videos en la memoria y las USB…	Searching for videos in the memory an
 No hay videos. Copia videos (MP4 o MKV) a la memoria o a una USB, o elige la carpeta en Ajustes → Mapa y clima.	No videos. Copy videos (MP4 or MKV) to the memory or a USB drive, or choose the folder in Settings → Map & weather.
 Ver en pantalla completa	Watch in full screen
 No hay una app de video para la pantalla completa	No video app for full screen
-No te distraigas mientras conduces	Don't get distracted while driving
+¿Quieres seguir viendo el video?	Do you want to keep watching the video?
 Imagen en pausa mientras manejas · el audio sigue	Picture paused while driving · audio keeps playing
 Solo se muestra con el carro detenido	Only shown when the car is stopped
 Sin GPS ni escáner no se sabe si el carro va andando	Without GPS or scanner, it's unknown whether the car is moving
+Elegir video	Choose video
+Cuidado al manejar	Careful while driving
+Mantén la vista en el camino. Ver video mientras manejas es peligroso y en muchos países está prohibido. Si sigues, lo haces bajo tu responsabilidad.	Keep your eyes on the road. Watching video while driving is dangerous and illegal in many countries. If you continue, you do so at your own risk.
+Seguir viendo	Keep watching
