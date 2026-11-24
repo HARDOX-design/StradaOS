@@ -10369,7 +10369,7 @@ public class Main extends Activity {
                 catch (Throwable e) { notifAccessAdb(); }
             }});
         final boolean online = prefs.getBoolean("cover_online", false);
-        toggle(c, "Buscar carátulas en internet", "Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive. Solo se envían el título y el artista",
+        toggle(c, "Buscar carátulas en internet", "Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes. Solo se envían el título y el artista",
             online, new IntCb() { public void on(int i) {
                 prefs.edit().putBoolean("cover_online", i == 1).apply();
                 coverAsked = null;

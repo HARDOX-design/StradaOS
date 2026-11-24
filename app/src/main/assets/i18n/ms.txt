@@ -1860,7 +1860,7 @@ Odómetro	Odometer
 Kilometraje del auto (escáner OBD)	Perbatuan kereta (pengimbas OBD)
 El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	Odometer kereta ialah {} dan sudah tiba masa tukar minyak (setiap {}).
 Buscar carátulas en internet	Cari kulit album di internet
-Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive. Solo se envían el título y el artista	Jika lagu tiba tanpa kulit album (cth. melalui Bluetooth), ia dicari di MusicBrainz dan Cover Art Archive. Hanya tajuk dan artis dihantar
+Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes. Solo se envían el título y el artista	Jika lagu tiba tanpa kulit album (cth. melalui Bluetooth), ia dicari di MusicBrainz dan Cover Art Archive, dan jika tiada, di iTunes. Hanya tajuk dan artis dihantar
 Borrar carátulas guardadas	Padam kulit album tersimpan
 Las que se bajaron de internet y se guardaron en el equipo	Yang dimuat turun dari internet dan disimpan dalam peranti
 Carátulas borradas	Kulit album dipadam

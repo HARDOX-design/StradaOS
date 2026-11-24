@@ -27,7 +27,7 @@ import java.util.Locale;
 /**
  * Carátula desde internet (opcional, Ajustes → Música) para las canciones que llegan sin ella, sobre todo por
  * Bluetooth. Busca la canción en MusicBrainz y baja la portada del álbum de Cover Art Archive (bases abiertas, sin
- * clave). Solo se envían el título y el artista. Lo encontrado se guarda en el equipo: la misma canción no se vuelve
+ * clave); si ahí no está, o no responden, la busca en iTunes (también sin clave). Solo se envían el título y el artista. Lo encontrado se guarda en el equipo: la misma canción no se vuelve
  * a pedir y se ve aunque no haya señal.
  */
 public class CoverFetch {
@@ -71,6 +71,26 @@ public class CoverFetch {
         String a = clean(artist), t = clean(title);
         if (a.length() == 0 || t.length() == 0) return null;
         Net.init(c);   // TLS 1.2 y certificados actuales en Android 4.x
+        Bitmap b = null;
+        Throwable err = null;
+        boolean mbAnswered = false, itAnswered = false;
+        try { b = musicBrainz(t, a, dir, f); mbAnswered = true; }
+        catch (Throwable e) { err = e; }
+        if (b != null) { lastInfo = title + ": descargada de Cover Art Archive"; return b; }
+        try { b = itunes(t, a, dir, f); itAnswered = true; }
+        catch (Throwable e) { if (err == null) err = e; }
+        if (b != null) { lastInfo = title + ": descargada de iTunes"; return b; }
+        if (mbAnswered && itAnswered) {
+            // las dos respondieron y no hay portada: se anota (sin internet no se llega aquí)
+            save(dir, none, new byte[0]);
+            lastInfo = title + ": no está en MusicBrainz ni en iTunes";
+            return null;
+        }
+        throw err instanceof Exception ? (Exception) err : new Exception(String.valueOf(err));
+    }
+
+    /** MusicBrainz + Cover Art Archive. null si respondieron y no hay portada. */
+    private static Bitmap musicBrainz(String t, String a, File dir, File f) throws Exception {
         String base = "recording:\"" + lucene(t) + "\" AND artist:\"" + lucene(a) + "\"";
         // Primero solo álbumes, sencillos y EP oficiales: las canciones famosas tienen cientos de grabaciones y las
         // primeras suelen ser directos o recopilatorios (Bohemian Rhapsody daba un disco en vivo). Si no, sin filtro.
@@ -91,14 +111,60 @@ public class CoverFetch {
                 Bitmap b = BitmapFactory.decodeByteArray(img, 0, img.length);
                 if (b == null) continue;
                 save(dir, f, img);
-                lastInfo = title + ": descargada de Cover Art Archive";
                 return b;
             }
         }
-        // la búsqueda respondió y no hay portada: se anota (sin internet no se llega aquí)
-        save(dir, none, new byte[0]);
-        lastInfo = title + ": no está en MusicBrainz / Cover Art Archive";
         return null;
+    }
+
+    /** Discos que no son el original: si hay otro, mejor ese (Bohemian Rhapsody daba la banda sonora de la película). */
+    private static final String[] NOT_ORIGINAL = {"live", "directo", "vivo", "concierto", "unplugged", "acoustic", "acustico",
+        "soundtrack", "banda sonora", "greatest", "hits", "best of", "essential", "esencial", "lo mejor", "grandes exitos",
+        "collection", "coleccion", "remix", "karaoke", "tribute", "tributo"};
+
+    /**
+     * iTunes Search (sin clave). Solo vale un resultado del mismo artista con el mismo título: la búsqueda es por
+     * palabras y también devuelve otras canciones. Entre los que valen, primero los discos originales.
+     */
+    private static Bitmap itunes(String t, String a, File dir, File f) throws Exception {
+        String country = Locale.getDefault().getCountry();
+        if (country == null || country.length() != 2) country = "US";
+        JSONObject root = new JSONObject(new String(get("https://itunes.apple.com/search?media=music&entity=song&limit=25&country="
+                + country + "&term=" + URLEncoder.encode(a + " " + t, "UTF-8"), 10000), "UTF-8"));
+        JSONArray res = root.optJSONArray("results");
+        String nt = norm(t), na = artistKey(a);
+        String best = null;
+        int bestPenalty = Integer.MAX_VALUE;
+        for (int i = 0; res != null && i < res.length(); i++) {
+            JSONObject r = res.getJSONObject(i);
+            String art = r.optString("artworkUrl100", "");
+            if (art.length() == 0 || !nt.equals(norm(clean(r.optString("trackName"))))) continue;
+            String ra = artistKey(r.optString("artistName"));
+            if (ra.length() == 0 || !(ra.contains(na) || na.contains(ra))) continue;
+            String va = norm(r.optString("collectionArtistName"));
+            if (va.startsWith("various") || va.startsWith("varios")) continue;   // recopilatorio de varios artistas
+            String col = " " + norm(r.optString("collectionName")) + " ";
+            int penalty = 0;
+            for (String w : NOT_ORIGINAL) if (col.contains(" " + w + " ")) penalty++;
+            if (penalty < bestPenalty) { bestPenalty = penalty; best = art; }
+        }
+        if (best == null) return null;
+        byte[] img = get(best.replace("100x100bb", "600x600bb"), 12000);
+        Bitmap b = BitmapFactory.decodeByteArray(img, 0, img.length);
+        if (b != null) save(dir, f, img);
+        return b;
+    }
+
+    /** Artista para comparar: «Fito & Fitipaldis» = «Fito y Fitipaldis». */
+    private static String artistKey(String s) {
+        return (" " + norm(s) + " ").replaceAll(" (y|and|e|et|und|the) ", " ").replaceAll("\\s+", " ").trim();
+    }
+
+    /** Para comparar nombres: minúsculas, sin tildes ni signos («ROSALÍA» = «Rosalía»). */
+    private static String norm(String s) {
+        if (s == null) return "";
+        s = java.text.Normalizer.normalize(s.toLowerCase(Locale.US), java.text.Normalizer.Form.NFD);
+        return s.replaceAll("\\p{M}+", "").replaceAll("[^\\p{L}\\p{N}]+", " ").trim();
     }
 
     /** «Various Artists» en MusicBrainz: sus recopilatorios traen otra portada, mejor ninguna. */
