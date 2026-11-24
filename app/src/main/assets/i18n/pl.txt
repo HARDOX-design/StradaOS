@@ -1838,3 +1838,8 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 Odómetro	Licznik przebiegu
 Kilometraje del auto (escáner OBD)	Przebieg auta (skaner OBD)
 El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	Przebieg auta wynosi {} i nadszedł czas na wymianę oleju (co {}).
+Buscar carátulas en internet	Szukaj okładek w internecie
+Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive. Solo se envían el título y el artista	Jeśli utwór przychodzi bez okładki (np. przez Bluetooth), jest ona wyszukiwana w MusicBrainz i Cover Art Archive. Wysyłany jest tylko tytuł i wykonawca
+Borrar carátulas guardadas	Usuń zapisane okładki
+Las que se bajaron de internet y se guardaron en el equipo	Pobrane z internetu i zapisane w urządzeniu
+Carátulas borradas	Okładki usunięte

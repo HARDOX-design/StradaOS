@@ -1859,3 +1859,8 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 Odómetro	里程表
 Kilometraje del auto (escáner OBD)	车辆里程（OBD 扫描仪）
 El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	车辆里程为 {}，已到更换机油的时间（每 {} 更换一次）。
+Buscar carátulas en internet	在网上查找专辑封面
+Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive. Solo se envían el título y el artista	如果歌曲没有封面（例如通过蓝牙播放），会在 MusicBrainz 和 Cover Art Archive 中查找。只发送歌名和歌手
+Borrar carátulas guardadas	删除已保存的封面
+Las que se bajaron de internet y se guardaron en el equipo	从网上下载并保存在设备上的封面
+Carátulas borradas	封面已删除

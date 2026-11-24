@@ -1859,3 +1859,8 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 Odómetro	عداد المسافات
 Kilometraje del auto (escáner OBD)	المسافة المقطوعة للسيارة (ماسح OBD)
 El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	عدّاد المسافة في السيارة {} وقد حان وقت تغيير الزيت (كل {}).
+Buscar carátulas en internet	البحث عن غلاف الألبوم على الإنترنت
+Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive. Solo se envían el título y el artista	إذا وصلت الأغنية بدون غلاف (مثلاً عبر البلوتوث)، يتم البحث عنه في MusicBrainz وCover Art Archive. يُرسل العنوان والفنان فقط
+Borrar carátulas guardadas	حذف الأغلفة المحفوظة
+Las que se bajaron de internet y se guardaron en el equipo	التي نُزّلت من الإنترنت وحُفظت على الجهاز
+Carátulas borradas	تم حذف الأغلفة

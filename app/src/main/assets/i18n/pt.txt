@@ -1862,3 +1862,8 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 Odómetro	Hodômetro
 Kilometraje del auto (escáner OBD)	Quilometragem do carro (scanner OBD)
 El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	A quilometragem do carro é {} e já está na hora da troca de óleo (a cada {}).
+Buscar carátulas en internet	Buscar capas na internet
+Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive. Solo se envían el título y el artista	Se a música chegar sem capa (por ex. via Bluetooth), ela é buscada no MusicBrainz e no Cover Art Archive. Só são enviados o título e o artista
+Borrar carátulas guardadas	Apagar capas salvas
+Las que se bajaron de internet y se guardaron en el equipo	As que foram baixadas da internet e salvas no aparelho
+Carátulas borradas	Capas apagadas

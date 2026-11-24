@@ -1859,3 +1859,8 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 Odómetro	Kilometerzähler
 Kilometraje del auto (escáner OBD)	Kilometerstand des Autos (OBD-Scanner)
 El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	Der Kilometerstand des Autos ist {}, der Ölwechsel ist fällig (alle {}).
+Buscar carátulas en internet	Albumcover im Internet suchen
+Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive. Solo se envían el título y el artista	Kommt ein Titel ohne Cover (z. B. über Bluetooth), wird es bei MusicBrainz und im Cover Art Archive gesucht. Gesendet werden nur Titel und Interpret
+Borrar carátulas guardadas	Gespeicherte Cover löschen
+Las que se bajaron de internet y se guardaron en el equipo	Aus dem Internet geladene und auf dem Gerät gespeicherte Cover
+Carátulas borradas	Cover gelöscht

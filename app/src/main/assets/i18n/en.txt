@@ -1863,3 +1863,8 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 Odómetro	Odometer
 Kilometraje del auto (escáner OBD)	Car mileage (OBD scanner)
 El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	The car's odometer is {} and the oil change is due (every {}).
+Buscar carátulas en internet	Find album art online
+Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive. Solo se envían el título y el artista	If a song arrives without album art (e.g. over Bluetooth), it is looked up on MusicBrainz and Cover Art Archive. Only the title and artist are sent
+Borrar carátulas guardadas	Delete saved album art
+Las que se bajaron de internet y se guardaron en el equipo	Covers downloaded from the internet and saved on this unit
+Carátulas borradas	Album art deleted
