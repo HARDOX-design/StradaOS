@@ -1,0 +1,1 @@
+Mapa y video en la tarjeta del centro (desliza para cambiar), selector de videos con miniaturas y línea de tiempo, video tapado con el carro en movimiento, mapa que se puede mover con el dedo. Escáner OBD: sin reconexiones cada 5 s con ELM327 genéricos. Novedades en tu idioma. Videos en radios viejas: H.264 horizontal, 720p/1080p, 30 fps.

@@ -178,6 +178,40 @@ public class Updates {
     }
 
     /** Notas de la versión sin marcas de Markdown, para mostrarlas en pantalla. */
+    /**
+     * Notas en el idioma de la pantalla. changelogs/X.md trae primero el español y después secciones que empiezan con
+     * una línea «[](#lang-en)», «[](#lang-pt)»…: un enlace vacío que GitHub no muestra y que {@link #plain} de las
+     * versiones anteriores convierte en una línea en blanco (así a ellas les salen las dos, sin marcas raras). Sin
+     * sección para el idioma elegido, en inglés; en español, la primera. Se quita lo que va después de una línea «---»
+     * (las instrucciones de instalación del Release: el aviso ya descarga e instala).
+     */
+    public static String localNotes(String md) {
+        if (md == null) return "";
+        java.util.Map<String, StringBuilder> secs = new java.util.LinkedHashMap<String, StringBuilder>();
+        String cur = "es";
+        secs.put(cur, new StringBuilder());
+        boolean cut = false;
+        for (String line : md.replace("\r", "").split("\n")) {
+            java.util.regex.Matcher m = LANG_MARK.matcher(line);
+            if (m.matches()) {
+                cur = m.group(1).toLowerCase(java.util.Locale.US);
+                if (!secs.containsKey(cur)) secs.put(cur, new StringBuilder());
+                cut = false;
+                continue;
+            }
+            if (line.trim().equals("---")) cut = true;
+            if (!cut) secs.get(cur).append(line).append('\n');
+        }
+        String lang = I18n.lang != null ? I18n.lang : "es";
+        StringBuilder pick = secs.get(lang);
+        if ((pick == null || pick.toString().trim().length() == 0) && !"es".equals(lang)) pick = secs.get("en");
+        if (pick == null || pick.toString().trim().length() == 0) pick = secs.get("es");
+        return pick.toString().trim();
+    }
+
+    private static final java.util.regex.Pattern LANG_MARK =
+        java.util.regex.Pattern.compile("^\\s*\\[\\]\\(#lang-([a-zA-Z]{2})\\)\\s*$");
+
     public static String plain(String md) {
         if (md == null) return "";
         StringBuilder b = new StringBuilder();

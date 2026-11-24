@@ -717,6 +717,13 @@ public class Main extends Activity {
                 else if ("cajon".equals(v)) openDrawer();
                 else if ("obd-demo".equals(v)) obdDialogs().choose("demo", I18n.t("Auto simulado"));
                 else if ("obd-off".equals(v)) obdDialogs().turnOff();
+                else if ("actualizacion-demo".equals(v)) {
+                    // 2.35 r7: la ventana de «Nueva versión» con notas en español e inglés (sale la del idioma elegido)
+                    Updates.Release r = new Updates.Release();
+                    r.version = "9.9.9";
+                    r.notes = "# StradaOS 9.9.9\n\n- **Prueba.** Notas en español.\n\n[](#lang-en)\n# StradaOS 9.9.9 (English)\n\n- **Test.** Notes in English.\n\n---\n**Cómo instalar:** …";
+                    updateDialog(r);
+                }
                 else if ("obd-elegir".equals(v)) obdDialogs().pickAdapter();
                 else if ("obd-usb".equals(v)) obdDialogs().pickUsb();
                 else if (v.startsWith("obd-addr:")) obdDialogs().choose(v.substring(9), "Prueba " + v.substring(9));
@@ -11181,7 +11188,10 @@ public class Main extends Activity {
         TextView v = tv("Tienes la " + Updates.currentVersion(this) + " · nueva: " + r.version, 13, MUTED, false);
         box.addView(v);
         android.widget.ScrollView sc = new android.widget.ScrollView(this);
-        TextView notes = tv(Updates.plain(r.notes).length() > 0 ? Updates.plain(r.notes) : "Mejoras y correcciones.", 14, TEXT, false);
+        // las notas vienen en español y en inglés (y a veces en más idiomas): se muestra la del idioma elegido
+        String nt = Updates.plain(Updates.localNotes(r.notes));
+        TextView notes = tv("Mejoras y correcciones.", 14, TEXT, false);
+        if (nt.length() > 0) notes.setText(nt);
         notes.setSingleLine(false);
         notes.setPadding(0, (int) (10 * s), 0, (int) (10 * s));
         sc.addView(notes);
@@ -12608,6 +12618,15 @@ public class Main extends Activity {
                 String.format(java.util.Locale.US, "%.1f L", prefs.getFloat("obd_displacement", 2.4f)), new Runnable() { public void run() { d.askDisplacement(); } });
             row(m, "Protocolo", "Automático casi siempre; fuerza uno si el escáner no lo detecta", ObdDialogs.protocolName(prefs.getString("obd_protocol", "auto")),
                 new Runnable() { public void run() { d.pickProtocol(); } });
+            // #77: algunos ELM327 clon no entienden varios datos por consulta; se detecta solo, pero se puede apagar a mano
+            final boolean multiBad = prefs.getString("obd_multi_bad", "").length() > 0
+                && prefs.getString("obd_multi_bad", "").equals(prefs.getString("obd_addr", "demo"));
+            toggle(m, "Leer varios datos por consulta", multiBad
+                    ? "Tu escáner no lo entiende: StradaOS lee de a un dato. Actívalo para volver a probar"
+                    : "Más rápido. Apágalo si tu escáner se desconecta a cada rato",
+                prefs.getBoolean("obd_multi", true) && !multiBad, new IntCb() { public void on(int i) {
+                    prefs.edit().putBoolean("obd_multi", i == 1).remove("obd_multi_bad").apply();
+                    d.reconnect(); }});
             LinearLayout ve = section(body, "Velocímetro");
             toggle(ve, "Usar la velocidad del escáner", "Con el escáner conectado, el inicio muestra la velocidad del carro en vez de la del GPS: más exacta y sin retraso",
                 prefs.getBoolean("obd_speed", true), new IntCb() { public void on(int i) {

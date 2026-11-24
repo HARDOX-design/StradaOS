@@ -1,0 +1,1 @@
+Map and video on the center card (swipe to switch), video picker with thumbnails and a timeline, video covered while the car is moving, map you can drag with your finger. OBD scanner: no more reconnecting every 5 s with generic ELM327 adapters. What's new in your language. Videos on old head units: H.264 landscape, 720p/1080p, 30 fps.

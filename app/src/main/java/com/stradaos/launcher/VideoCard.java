@@ -651,8 +651,53 @@ public class VideoCard extends FrameLayout {
     private void firstFrame() {
         failStreak = 0;
         h.removeCallbacks(pictureCheck);
+        if (current != null) {
+            final File mark = badMark(current);
+            new Thread(new Runnable() { public void run() { try { if (mark.exists()) mark.delete(); } catch (Throwable ignored) { } } }, "StradaVideoMark").start();
+        }
+        thumbTries = 0;
+        h.removeCallbacks(grabThumb);
+        h.postDelayed(grabThumb, 2500);
         if (empty.getVisibility() == VISIBLE && !list.isEmpty() && !scanning) empty.setVisibility(GONE);
         VideoLog.log(I18n.t("Primer cuadro") + " · " + (android.os.SystemClock.uptimeMillis() - openAt) + " ms");
+    }
+
+    private int thumbTries;
+
+    /**
+     * 2.35 r7: miniatura tomada del video que suena, si el selector no la tiene. En el Picanto (Android 4.2, un solo
+     * decodificador) sacar un cuadro aparte no funciona con ningún video; así, los que se ven una vez ya quedan con
+     * miniatura. Se toma a los 2,5 s (no el primer cuadro, que suele ser negro) y, si sale casi negra, se reintenta.
+     */
+    private final Runnable grabThumb = new Runnable() { public void run() {
+        final File f = current;
+        if (f == null || mp == null || !prepared || frames < 5 || tex == null || vw <= 0 || vh <= 0 || !active) return;
+        if (new File(new File(getContext().getCacheDir(), "vthumbs"), VideoPicker.Thumbs.key(f) + ".jpg").exists()) return;
+        Bitmap b = null;
+        try {
+            int w = 192, hh = Math.max(1, Math.round(192f * vh / vw));
+            if (hh > 340) { hh = 340; w = Math.max(1, Math.round(340f * vw / vh)); }
+            b = tex.getBitmap(w, hh);
+        } catch (Throwable ignored) { }
+        if (b == null) return;
+        if (dark(b)) {
+            b.recycle();
+            if (++thumbTries < 4) h.postDelayed(this, 3000);
+            return;
+        }
+        VideoPicker.Thumbs.fromPlayer(getContext(), f, b, line.dur);
+    }};
+
+    /** Casi negra (fundido de entrada o cuadro vacío). */
+    private static boolean dark(Bitmap b) {
+        long sum = 0;
+        int n = 0, w = b.getWidth(), hh = b.getHeight();
+        for (int y = 1; y < 6; y++) for (int x = 1; x < 6; x++) {
+            int c = b.getPixel(x * w / 6, y * hh / 6);
+            sum += ((c >> 16) & 0xFF) + ((c >> 8) & 0xFF) + (c & 0xFF);
+            n++;
+        }
+        return sum / (n * 3) < 10;
     }
 
     /** Listo y sonando, pero sin ningún cuadro: el decodificador de video no arrancó (el audio sí). */
@@ -704,6 +749,12 @@ public class VideoCard extends FrameLayout {
         closePlayer();
         if (!active) return;
         failStreak++;
+        if (current != null) {
+            final File mark = badMark(current);
+            new Thread(new Runnable() { public void run() {
+                try { mark.getParentFile().mkdirs(); new java.io.FileOutputStream(mark).close(); } catch (Throwable ignored) { }
+            }}, "StradaVideoMark").start();
+        }
         String d = detail();
         title.setText(I18n.t("No se puede reproducir aquí") + ": " + name());
         showProblem(I18n.t("No se puede reproducir aquí") + ": " + name() + (d.length() > 0 ? "\n" + d : ""));
@@ -718,6 +769,7 @@ public class VideoCard extends FrameLayout {
 
     private void closePlayer() {
         h.removeCallbacks(pictureCheck);
+        h.removeCallbacks(grabThumb);
         prepared = false;
         playerBusy = false;
         if (mp != null) { try { mp.release(); } catch (Throwable ignored) { } mp = null; }
@@ -889,8 +941,29 @@ public class VideoCard extends FrameLayout {
     /** Confirmó el aviso de cuidado: el video se ve hasta que el carro se detenga. */
     void acceptMoving() { warnAccepted = true; declined = false; setCovered(false); }
 
-    void next() { if (!list.isEmpty() && active) { resumeMs = 0; play(at + 1); } }
-    void prev() { if (!list.isEmpty()) { resumeMs = 0; play(at - 1); } }
+    void next() { if (!list.isEmpty() && active) { resumeMs = 0; play(step(at, 1)); } }
+    void prev() { if (!list.isEmpty()) { resumeMs = 0; play(step(at, -1)); } }
+
+    /**
+     * 2.35 r7: el siguiente (o anterior) que no se marcó como «no se pudo reproducir en esta pantalla»: en el Picanto
+     * cada video que no abre costaba 3–5 s de aviso en cada vuelta. Si todos están marcados, el de al lado. Desde
+     * «Elegir video» se puede volver a probar cualquiera.
+     */
+    private int step(int from, int dir) {
+        int n = list.size();
+        for (int k = 1; k < n; k++) {
+            int i = ((from + dir * k) % n + n) % n;
+            if (!badMark(list.get(i)).exists()) return i;
+        }
+        return from + dir;
+    }
+
+    /** Marca de «no se pudo reproducir en esta pantalla» (en la caché de las miniaturas; la lee también el selector). */
+    private File badMark(File f) { return badMark(getContext(), f); }
+
+    static File badMark(android.content.Context c, File f) {
+        return new File(new File(c.getCacheDir(), "vthumbs"), VideoPicker.Thumbs.key(f) + ".x");
+    }
 
     void toggle() {
         paused = !paused;

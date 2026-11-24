@@ -103,6 +103,21 @@ fase nocount; echo nocount > $ELM_MODE; sleep 20; vivo nocount
 fase nomulti; echo nomulti > $ELM_MODE; sleep 30; vivo nomulti
 go obd-ajustes:obd_adv 5; shot b10-avanzado-registro; go inicio 3
 
+# 4b. #77: clon que se queda callado con varios PIDs (ELM327 v1.5 del Golf VI). Antes: reconectaba cada ~5 s sin fin.
+# Ahora: vuelve a la lectura de a uno sin reconectar, lo recuerda y la conexión siguiente ya no agrupa
+go obd-off 5
+fase hang; echo hang > $ELM_MODE
+go obd-addr:$ADDR 45
+vivo hang
+[ "$(pref obd_multi_bad)" = "$ADDR" ] && okk "#77: recordó que este escáner no agrupa" || falla "#77: obd_multi_bad=$(pref obd_multi_bad)"
+go obd-ajustes:obd_adv 5; shot b10b-avanzado-no-agrupa; go inicio 3
+go obd-off 5
+fase hang2
+go obd-addr:$ADDR 30
+vivo hang2
+go obd-off 5
+go pref:obd_multi_bad= 3
+
 # 5. auto sin odómetro: el kilometraje se suma con la velocidad del escáner (60 km/h ≈ 1 km por minuto)
 go obd-off 5
 fase noodo; echo noodo > $ELM_MODE; echo 60 > $ELM_SPEED

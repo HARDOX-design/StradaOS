@@ -10,6 +10,7 @@ Modo (se lee en cada comando del archivo MODE_FILE, así el guion lo cambia sin 
   nomulti  contesta «?» a cualquier consulta con más de un PID
   lose     como multi, pero se «traga» una de cada 15 respuestas (no manda nada, ni el «>»)
   noodo    como multi, pero el auto no tiene odómetro (PID A6); se aplica al conectar (lee los PIDs disponibles)
+  hang     nunca contesta una consulta de más de un PID (ni el «>»), como el ELM327 v1.5 clon del #77
 
 Cada comando recibido queda en LOG_FILE como una línea JSON: {"t": segundos, "c": comando, "m": modo}.
 La velocidad sube y baja entre 0 y 80 km/h (o fija con SPEED_FILE); el odómetro suma lo recorrido.
@@ -145,6 +146,8 @@ def answer(c, m, counter):
         return ["?"]
     if len(pids) > 1 and m == "nomulti":
         return ["?"]
+    if len(pids) > 1 and m == "hang":
+        return None                                   # se queda callado con la consulta agrupada
     if m == "lose" and counter % 15 == 14:
         return None                                   # respuesta perdida: ni el «>»
     sup = supported(m)

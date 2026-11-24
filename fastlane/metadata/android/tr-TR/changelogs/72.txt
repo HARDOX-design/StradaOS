@@ -1,0 +1,1 @@
+Orta kartta harita ve video (değiştirmek için kaydırın), küçük resimli ve zaman çizelgeli video seçici, araç hareket ederken video örtülür, parmakla kaydırılabilen harita. OBD tarayıcı: genel ELM327 adaptörlerle 5 saniyede bir yeniden bağlanma sona erdi. Yenilikler kendi dilinizde. Eski ünitelerde videolar: yatay H.264, 720p/1080p, 30 fps.

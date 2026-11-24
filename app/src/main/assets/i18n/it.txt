@@ -1912,3 +1912,7 @@ pide más de lo que decodifica la pantalla	richiede più di quanto lo schermo po
 No compatible con esta pantalla	Non compatibile con questo schermo
 Conviértelo a H.264 de 720p o 1080p horizontal, a 30 cuadros por segundo	Convertilo in H.264 a 720p o 1080p orizzontale, 30 fotogrammi al secondo
 Sin miniatura	Nessuna miniatura
+Leer varios datos por consulta	Leggi più dati per richiesta
+Tu escáner no lo entiende: StradaOS lee de a un dato. Actívalo para volver a probar	Il tuo scanner non lo supporta: StradaOS legge un dato alla volta. Attivalo per riprovare
+Más rápido. Apágalo si tu escáner se desconecta a cada rato	Più veloce. Disattivalo se lo scanner si disconnette di continuo
+Miniatura tomada del video	Miniatura presa dal video

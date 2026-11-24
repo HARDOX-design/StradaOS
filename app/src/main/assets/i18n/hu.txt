@@ -1897,3 +1897,7 @@ pide más de lo que decodifica la pantalla	többet kér, mint amit a kijelző de
 No compatible con esta pantalla	Nem kompatibilis ezzel a kijelzővel
 Conviértelo a H.264 de 720p o 1080p horizontal, a 30 cuadros por segundo	Alakítsd át H.264 formátumba, 720p vagy 1080p fekvő, 30 képkocka/másodperc
 Sin miniatura	Nincs bélyegkép
+Leer varios datos por consulta	Több adat lekérése egyszerre
+Tu escáner no lo entiende: StradaOS lee de a un dato. Actívalo para volver a probar	A szkenner nem támogatja: a StradaOS egyesével olvassa az adatokat. Kapcsold be az újrapróbáláshoz
+Más rápido. Apágalo si tu escáner se desconecta a cada rato	Gyorsabb. Kapcsold ki, ha a szkenner folyton lecsatlakozik
+Miniatura tomada del video	Bélyegkép a videóból

@@ -1912,3 +1912,7 @@ pide más de lo que decodifica la pantalla	memerlukan lebih daripada yang skrin 
 No compatible con esta pantalla	Tidak serasi dengan skrin ini
 Conviértelo a H.264 de 720p o 1080p horizontal, a 30 cuadros por segundo	Tukar kepada H.264 720p atau 1080p mendatar, 30 bingkai sesaat
 Sin miniatura	Tiada lakaran kecil
+Leer varios datos por consulta	Baca beberapa data setiap permintaan
+Tu escáner no lo entiende: StradaOS lee de a un dato. Actívalo para volver a probar	Pengimbas anda tidak menyokongnya: StradaOS membaca satu data pada satu masa. Hidupkan untuk mencuba semula
+Más rápido. Apágalo si tu escáner se desconecta a cada rato	Lebih pantas. Matikan jika pengimbas anda kerap terputus
+Miniatura tomada del video	Lakaran kecil diambil daripada video

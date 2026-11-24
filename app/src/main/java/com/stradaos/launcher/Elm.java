@@ -308,14 +308,24 @@ public class Elm {
         String plain = q.toString();
         boolean withCount = alone && counted;
         if (withCount) q.append(Integer.toHexString(bytes <= 7 ? 1 : 1 + bytes / 7).toUpperCase(Locale.US));
-        // el Sorento contesta en ~60 ms (lo más lento medido: ~600 ms): si en 1,2 s no llegó, se perdió (ver cmd)
-        String r = cmd(q.toString(), 1200);
+        // el Sorento contesta en ~60 ms (lo más lento medido: ~600 ms). Sin el número de tramas el escáner espera por
+        // si contesta otro computador: más margen
+        lastTimeout = false;
+        String r = soft(q.toString(), withCount ? 1200 : 2000);
         // un clon que no entiende el número de tramas contesta «?»: se deja de indicar y se repite sin él (sin esto,
         // cinco «?» seguidos apagarían la lectura agrupada aunque el escáner sí la entienda)
-        if (withCount && r.contains("?")) {
+        if (withCount && r != null && r.contains("?")) {
             counted = false;
             Obd.log("el escáner no entiende el número de tramas: se deja de indicar");
-            r = cmd(plain, 1200);
+            r = soft(plain, 2000);
+        }
+        if (r == null) {
+            // #77 (ELM327 v1.5 clon, Golf VI): hay clones que nunca contestan una consulta de varios PIDs. Antes esto
+            // contaba como «respuesta perdida» y a la tercera se reconectaba (cada ~5 s, sin fin). Ahora no: queda
+            // marcado y Obd decide si vuelve a la lectura de a uno
+            lastTimeout = true;
+            lastSilent = false;
+            return new java.util.HashMap<Integer, byte[]>();
         }
         lastSilent = r.length() == 0 || r.contains("NODATA");
         return multiData(r, list);
@@ -323,6 +333,28 @@ public class Elm {
 
     /** La última consulta agrupada no trajo nada porque el auto no contestó (contacto apagado), no por no entenderla. */
     boolean lastSilent;
+    /** La última consulta agrupada se quedó sin respuesta (ni el «>»): el escáner no la entiende o se colgó con ella. */
+    boolean lastTimeout;
+
+    /**
+     * Como {@link #cmd}, pero si no llega el «>» no cuenta como respuesta perdida: devuelve null después de comprobar
+     * que el escáner sigue vivo. Solo lanza la excepción si tampoco contesta a eso.
+     */
+    private synchronized String soft(String c, int timeoutMs) throws IOException {
+        if (demo != null) return demo.answer(c);
+        if (out == null) throw new IOException("Sin conexión");
+        while (in.available() > 0) in.read();
+        out.write((c + "\r").getBytes("US-ASCII"));
+        out.flush();
+        String r = readPrompt(timeoutMs);
+        if (r == null) {
+            if (!resync()) throw new IOException("El escáner no responde");
+            return null;
+        }
+        String s = r.toUpperCase(Locale.US).replace("SEARCHING...", "").replace(" ", "");
+        if (s.contains("STOPPED")) return "";
+        return s.trim();
+    }
 
     /**
      * Separa la respuesta a una consulta de varios PIDs. Larga: «00E», «0:41…», «1:…» (tramas ISO-TP que se juntan

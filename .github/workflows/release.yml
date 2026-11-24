@@ -77,6 +77,8 @@ jobs:
             echo ""
             echo "---"
             echo "**Cómo instalar:** descarga \`StradaOS-$VERSION.apk\`, cópialo a una memoria USB, pásalo a la memoria interna de la pantalla e instálalo. Guía completa: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY#-instalación"
+            echo ""
+            echo "**How to install:** download \`StradaOS-$VERSION.apk\`, copy it to a USB stick, move it to the screen's internal storage and install it. Full guide: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY#-instalación"
           } >> "$RUNNER_TEMP/notes.md"
 
       - name: Crear el Release

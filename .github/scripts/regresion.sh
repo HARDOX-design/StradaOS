@@ -181,6 +181,8 @@ if part 2; then
   for l in en pt it de ms ar tr fr zh hu pl es; do
     step "idioma-$l" "idioma:$l" 6; step "ajustes-$l" "ajustes:9" 4
     [ "$l" != es ] && { step "diagr-$l" diag-reproductor 4 1; step "diagm-$l" diag-mapa 4 1; }
+    # 2.35 r7: la ventana de actualización con las notas en el idioma elegido (inglés si no hay sección del idioma)
+    case $l in en|pt|es) step "actualizacion-$l" actualizacion-demo 4 1;; esac
   done
   step final inicio 4
 fi

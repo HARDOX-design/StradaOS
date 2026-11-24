@@ -1912,3 +1912,7 @@ pide más de lo que decodifica la pantalla	يتطلب أكثر مما تستطي
 No compatible con esta pantalla	غير متوافق مع هذه الشاشة
 Conviértelo a H.264 de 720p o 1080p horizontal, a 30 cuadros por segundo	حوّله إلى H.264 بدقة 720p أو 1080p أفقياً و30 إطاراً في الثانية
 Sin miniatura	بلا صورة مصغّرة
+Leer varios datos por consulta	قراءة عدة بيانات في كل طلب
+Tu escáner no lo entiende: StradaOS lee de a un dato. Actívalo para volver a probar	الماسح لا يدعم ذلك: يقرأ StradaOS بيانًا واحدًا في كل مرة. فعّله للمحاولة مجددًا
+Más rápido. Apágalo si tu escáner se desconecta a cada rato	أسرع. أوقفه إذا كان الماسح ينقطع باستمرار
+Miniatura tomada del video	صورة مصغرة مأخوذة من الفيديو

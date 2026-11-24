@@ -77,6 +77,19 @@ def main():
     check("nomulti", len(grp) == 0 and len(tail) >= 8,
           "%d agrupadas y %d sueltas en los últimos 10 s" % (len(grp), len(tail) - len(grp)))
 
+    # 4b. #77: clon que se queda callado con varios PIDs: sin reconectar, vuelve a la lectura de a uno
+    rs = phases.get("hang", [])
+    atz = [r for r in rs if r["c"] == "ATZ"]
+    grp = [r for r in q01(rs) if len(pids(r["c"])[0]) > 1]
+    tail = [r for r in q01(rs) if rs and r["t"] >= rs[-1]["t"] - 10]
+    tgrp = [r for r in tail if len(pids(r["c"])[0]) > 1]
+    check("hang (#77)", len(atz) == 1 and len(grp) <= 3 and len(tgrp) == 0 and len(tail) >= 8,
+          "%d conexiones, %d agrupadas en total, %d sueltas en los últimos 10 s" % (len(atz), len(grp), len(tail) - len(tgrp)))
+    rs = phases.get("hang2", [])
+    grp = [r for r in q01(rs) if len(pids(r["c"])[0]) > 1 and r["c"] not in ("0100",)]
+    check("hang recordado", len(q01(rs)) >= 8 and len(grp) == 0,
+          "%d consultas, %d agrupadas en la conexión siguiente" % (len(q01(rs)), len(grp)))
+
     # 5. auto sin odómetro: reconecta y no lo pide
     rs = phases.get("noodo", [])
     atz = [r for r in rs if r["c"] == "ATZ"]

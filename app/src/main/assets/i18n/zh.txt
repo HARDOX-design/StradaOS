@@ -1912,3 +1912,7 @@ pide más de lo que decodifica la pantalla	超出屏幕的解码能力
 No compatible con esta pantalla	与此屏幕不兼容
 Conviértelo a H.264 de 720p o 1080p horizontal, a 30 cuadros por segundo	请转换为 H.264、720p 或 1080p 横屏、每秒 30 帧
 Sin miniatura	无缩略图
+Leer varios datos por consulta	每次查询读取多个数据
+Tu escáner no lo entiende: StradaOS lee de a un dato. Actívalo para volver a probar	你的扫描器不支持：StradaOS 逐个读取数据。打开以重新尝试
+Más rápido. Apágalo si tu escáner se desconecta a cada rato	更快。如果扫描器频繁断开，请关闭
+Miniatura tomada del video	从视频截取的缩略图

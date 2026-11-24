@@ -188,3 +188,25 @@ video sigue a la vista. **Falta:** probarlo en la radio real (formatos que decod
 completa en VLC.
 
 Textos: traducidos a los 11 idiomas (`i18n_check.py` sin errores).
+
+## Ronda 7 (24-nov): conclusiones del Picanto y cierre
+
+Diagnóstico de Andrés con la r6 (Picanto, Autochips AC8227, API 17; `OMX.mtk.video.decoder.avc` hasta H.264 4.1):
+
+- `lv_0_…mp4` (1080×1920, H.264 High 4.2, de CapCut): el selector ya lo marca «No compatible con esta pantalla»; se
+  prepara como 0×0 y suena sin imagen; tampoco se ve en el reproductor de la radio. **Límite del decodificador.**
+- `naturaleza.mp4` (1280×720, H.264 Main 3.1, de Pixabay; también renombrado sin espacios): `error 1/303` al instante
+  por ruta, por descriptor y en el segundo reintento. Dentro de lo que declara la pantalla, pero el reproductor de la
+  radio lo rechaza (algo del archivo que el Stagefright de 4.2 no lee). **Límite de la radio**, no de StradaOS.
+- `.mov` 480×270: se ve (aunque `MediaExtractor` diga «sin video» en 4.2).
+- Miniaturas: `MediaMetadataRetriever` no saca ningún cuadro en esta radio, ni con el video detenido.
+
+Hecho en la r7: los videos que no abrieron quedan marcados (`vthumbs/<clave>.x`, se borra si un día se ve) y salen en
+rojo en el selector; ⏮ ⏭ y el salto automático se los saltan (desde el selector se pueden volver a probar). La miniatura
+se toma del video mientras suena (`VideoCard.grabThumb`: a los 2,5 s, reintenta si sale casi negra) y se guarda como las
+demás (`Thumbs.fromPlayer`).
+
+**Recomendación para radios viejas** (va en las notas de la 2.35.0): H.264, horizontal, 720p o 1080p, 30 fps, audio
+AAC (HandBrake «Fast 720p30»/«Fast 1080p30»; CapCut a 1080p 30 fps). Nada vertical, 60 fps, 4K/8K, HEVC ni HDR. VLC con
+la aceleración por hardware apagada como último recurso. Las pantallas Android 9+ con chips actuales (UIS7862, SC9863A,
+PX6) no tienen estos límites; la versión real de Android se ve en Ajustes → Acerca de (API).

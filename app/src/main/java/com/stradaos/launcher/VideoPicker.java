@@ -455,6 +455,13 @@ class VideoPicker extends LinearLayout {
      * 4.1), la fila lo avisa en rojo antes de elegirlo: «No compatible con esta pantalla · 1080×1920 · H.264 High 4.2».
      */
     private void verdict(final File f, final Thumb v, final TextView sub, final boolean now) {
+        // 2.35 r7: ya se probó y no abrió en esta pantalla (lo marca la tarjeta del video)
+        if (!now && VideoCard.badMark(getContext(), f).exists()) {
+            VideoLog.Info c = VideoLog.cached(f);
+            sub.setText(I18n.t("No se puede reproducir aquí") + (c != null && c.shortText().length() > 0 ? " · " + c.shortText() : ""));
+            sub.setTextColor(Main.RED);
+            if (c != null) return;
+        }
         VideoLog.Info in = VideoLog.cached(f);
         if (in != null) { showVerdict(in, sub, now); return; }
         final String k = v.key;
@@ -468,7 +475,13 @@ class VideoPicker extends LinearLayout {
     }
 
     private static void showVerdict(VideoLog.Info in, TextView sub, boolean now) {
-        if (in == null || in.ok == null || in.ok || now) return;
+        if (in == null || now) return;
+        // marcado como «no se puede reproducir aquí»: se le suma el formato en cuanto se sabe
+        if (sub.getCurrentTextColor() == Main.RED && in.shortText().length() > 0 && (in.ok == null || in.ok)) {
+            sub.setText(I18n.t("No se puede reproducir aquí") + " · " + in.shortText());
+            return;
+        }
+        if (in.ok == null || in.ok) return;
         sub.setText(I18n.t("No compatible con esta pantalla") + " · " + in.shortText());
         sub.setTextColor(Main.RED);
     }
@@ -647,6 +660,32 @@ class VideoPicker extends LinearLayout {
         }
 
         void cancel(Thumb v) { v.key = null; }
+
+        /**
+         * 2.35 r7: miniatura tomada por la tarjeta del video mientras suena ({@code VideoCard.grabThumb}). Reemplaza
+         * la marca «no se pudo sacar» (.n): en el Picanto sacar un cuadro aparte nunca funciona.
+         */
+        static void fromPlayer(Context c, final File f, final Bitmap b, final long d) {
+            final String k = key(f);
+            final File dir = new File(c.getCacheDir(), "vthumbs");
+            MEM.put(k, b);
+            synchronized (DUR) { NONE.remove(k); if (d > 0) DUR.put(k, (long) d); }
+            new Thread(new Runnable() { public void run() {
+                try {
+                    dir.mkdirs();
+                    File jpg = new File(dir, k + ".jpg");
+                    FileOutputStream o = new FileOutputStream(jpg);
+                    try { b.compress(Bitmap.CompressFormat.JPEG, 82, o); } finally { o.close(); }
+                    File txt = new File(dir, k + ".d");
+                    long dd = d;
+                    if (dd <= 0 && txt.exists()) dd = readLong(txt);
+                    o = new FileOutputStream(txt);
+                    try { o.write(String.valueOf(dd).getBytes("UTF-8")); } finally { o.close(); }
+                    new File(dir, k + ".n").delete();
+                    VideoLog.log(I18n.t("Miniatura tomada del video") + " · " + f.getName());
+                } catch (Throwable ignored) { }
+            }}, "StradaThumbSave").start();
+        }
 
         void request(File f, Thumb v) {
             String k = key(f);

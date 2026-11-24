@@ -417,6 +417,17 @@ public class Obd {
                 elm.open(addr);
                 adapterInfo = elm.version + " · " + elm.protocol;
                 log("conectado: " + adapterInfo);
+                addrNow = addr;
+                groupFails = 0;
+                groupTimeouts = 0;
+                // lectura agrupada: apagada a mano (Avanzado) o recordada como no entendida por este escáner (#77)
+                if (elm.multi && !prefs(app).getBoolean("obd_multi", true)) {
+                    elm.multi = false;
+                    log("lectura de a un dato (elegida en Avanzado)");
+                } else if (elm.multi && addr.equals(prefs(app).getString("obd_multi_bad", ""))) {
+                    elm.multi = false;
+                    log("lectura de a un dato: este escáner no entiende varios datos por consulta");
+                }
                 status = LIVE;
                 statusMsg = "Conectado";
                 fails = 0;
@@ -527,7 +538,9 @@ public class Obd {
      * cambian en menos de un segundo y los que distinguen una falta de combustible de una desaceleración.
      */
     private static final Sensor[] QUICK = {STFT, O2_1, PEDAL_D};
-    private static int slowAt, groupFails;
+    private static int slowAt, groupFails, groupTimeouts;
+    /** Dirección del escáner de la conexión actual (para recordar si no entiende la lectura agrupada). */
+    private static String addrNow = "";
 
     private static boolean quick(Sensor s) {
         if (s.fast) return true;
@@ -577,15 +590,24 @@ public class Obd {
         java.util.Map<Integer, byte[]> r = elm.pids(pids);
         if (r.isEmpty() && elm.lastSilent) return 0;      // contacto apagado: no es culpa de la consulta agrupada
         if (r.isEmpty()) {
-            if (++groupFails >= 5 && elm.multi) {
+            boolean timeout = elm.lastTimeout;
+            int got = 0;
+            for (Sensor s : group) { Float v = read(s); if (v != null) { s.push(v); got++; } }
+            // #77: la consulta agrupada se quedó sin respuesta, pero los mismos datos de a uno sí llegan → es el escáner
+            // el que no la entiende. A la segunda vez se deja (y se recuerda para este escáner). Si de a uno tampoco
+            // llega nada, el auto está callado (contacto apagado) y no se cuenta
+            if (timeout && got > 0 && ++groupTimeouts >= 2 && elm.multi) {
+                elm.multi = false;
+                prefs(app).edit().putString("obd_multi_bad", addrNow).apply();
+                log("el escáner se queda callado con varios datos por consulta: se leen de a uno (queda recordado)");
+            } else if (!timeout && ++groupFails >= 5 && elm.multi) {
                 elm.multi = false;
                 log("el escáner no entiende varios datos por consulta: se leen de a uno");
             }
-            int got = 0;
-            for (Sensor s : group) { Float v = read(s); if (v != null) { s.push(v); got++; } }
             return got;
         }
         groupFails = 0;
+        groupTimeouts = 0;
         // si el escáner cortó la respuesta (el número de tramas no le calzó), se deja de indicar
         if (r.size() < pids.length && elm.counted) {
             elm.counted = false;
