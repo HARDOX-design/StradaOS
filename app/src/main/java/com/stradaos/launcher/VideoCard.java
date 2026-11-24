@@ -572,7 +572,7 @@ public class VideoCard extends FrameLayout {
         closePlayer();
         h.removeCallbacks(pendingOpen);
         line.set(0, 0);
-        if (surface == null || !active) return;
+        if (surface == null || !active || held) return;
         long now = android.os.SystemClock.uptimeMillis();
         // las miniaturas no empiezan mientras abre; si hay una en curso, se espera a que suelte el decodificador (hasta 3 s)
         openingUntil = now + 6000;
@@ -589,9 +589,13 @@ public class VideoCard extends FrameLayout {
         prepared = false;
         frames = 0;
         openAt = now;
-        VideoLog.log(I18n.t("Abrir") + " " + f.getName() + " · " + (f.length() / 1024) + " KB" + (tries > 0 ? " · " + I18n.t("reintento") + " " + tries : ""));
+        VideoLog.log(I18n.t("Abrir") + " " + f.getName() + " · " + (f.length() / 1024) + " KB" + (tries > 0 ? " · " + I18n.t("reintento") + " " + tries : "") + (tries == 1 ? " · fd" : ""));
+        // 2.35 r6: el primer reintento abre el archivo y le pasa el descriptor (FileDescriptor) en vez de la ruta: algunas
+        // radios MediaTek leen distinto por la ruta (nombres con espacios, extensión) y por el archivo abierto
+        final boolean byFd = tries == 1;
         try {
-            m.setDataSource(f.getAbsolutePath());
+            if (byFd) { fdStream = new java.io.FileInputStream(f); m.setDataSource(fdStream.getFD()); }
+            else m.setDataSource(f.getAbsolutePath());
             m.setSurface(surface);
             m.setOnPreparedListener(new MediaPlayer.OnPreparedListener() { public void onPrepared(MediaPlayer p) {
                 if (mp != m) return;
@@ -659,15 +663,17 @@ public class VideoCard extends FrameLayout {
         if (!playing) return;
         if (info != null && !info.video) return;      // solo audio (un .mp4 sin video): nada que mostrar
         final File f = current;
-        if (tries < 2) { failedOrRetry(f, I18n.t("sin imagen")); return; }
+        // si la pantalla ya dijo que no puede con este video, no se reintenta (el audio sigue)
+        if (tries < 2 && !knownBad()) { failedOrRetry(f, I18n.t("sin imagen")); return; }
         VideoLog.log(I18n.t("sin imagen") + " · " + f.getName());
-        String d = info != null ? info.shortText() : "";
+        String d = detail();
         showProblem(I18n.t("La pantalla no puede mostrar la imagen de este video") + (d.length() > 0 ? "\n" + d : ""));
     }};
 
     /** Aviso en el centro del video (no se esconde con los controles) y la forma de verlo igual. */
     private void showProblem(String msg) {
-        empty.setText(msg + "\n\n" + I18n.t("Mantén presionado el botón de pantalla completa para abrirlo en VLC u otra app"));
+        empty.setText(msg + "\n\n" + (knownBad() ? I18n.t("Conviértelo a H.264 de 720p o 1080p horizontal, a 30 cuadros por segundo") + "\n" : "")
+                + I18n.t("Mantén presionado el botón de pantalla completa para abrirlo en VLC u otra app"));
         empty.setVisibility(VISIBLE);
     }
 
@@ -680,7 +686,7 @@ public class VideoCard extends FrameLayout {
         VideoLog.log("[!] " + why + " · " + f.getName() + (info != null && info.ok != null && !info.ok ? " · " + info.why : ""));
         final int pos = prepared ? position() : resumeMs;
         closePlayer();
-        if (tries < 2) {
+        if (tries < 2 && !knownBad()) {
             tries++;
             h.postDelayed(new Runnable() { public void run() {
                 if (!active || current != f || mp != null) return;
@@ -698,7 +704,7 @@ public class VideoCard extends FrameLayout {
         closePlayer();
         if (!active) return;
         failStreak++;
-        String d = info != null ? info.shortText() : "";
+        String d = detail();
         title.setText(I18n.t("No se puede reproducir aquí") + ": " + name());
         showProblem(I18n.t("No se puede reproducir aquí") + ": " + name() + (d.length() > 0 ? "\n" + d : ""));
         if (failStreak >= list.size()) {
@@ -714,9 +720,39 @@ public class VideoCard extends FrameLayout {
         h.removeCallbacks(pictureCheck);
         prepared = false;
         playerBusy = false;
-        if (mp == null) return;
-        try { mp.release(); } catch (Throwable ignored) { }
-        mp = null;
+        if (mp != null) { try { mp.release(); } catch (Throwable ignored) { } mp = null; }
+        if (fdStream != null) { try { fdStream.close(); } catch (Throwable ignored) { } fdStream = null; }
+    }
+
+    /** El selector está abierto en Android 4: el video soltó el decodificador para que se puedan hacer las miniaturas. */
+    private boolean held;
+
+    /**
+     * 2.35 r6: en Android 4 (radios con un solo decodificador, como el Picanto), mientras el selector está abierto el
+     * video se detiene y suelta el decodificador: con el video sonando, las miniaturas no salían. Queda el último
+     * cuadro a la vista y, si se cierra sin elegir, sigue desde donde iba. Las miniaturas quedan guardadas.
+     */
+    void holdForPicker(boolean on) {
+        if (on == held) return;
+        held = on;
+        if (on) {
+            h.removeCallbacks(pendingOpen);
+            if (mp != null) { resumeMs = position(); closePlayer(); }
+        } else if (active && current != null && mp == null && surface != null) open(current);
+    }
+
+    /** El archivo abierto cuando el reproductor lee por descriptor (se cierra al soltarlo). */
+    private java.io.FileInputStream fdStream;
+
+    /** La pantalla dice que no puede con este video (ya se leyó su formato). */
+    private boolean knownBad() { return info != null && info.ok != null && !info.ok; }
+
+    /** El formato y, si se sabe, por qué no se puede: «1080×1920 · H.264 High 4.2\npide más de… (H.264 4.1)». */
+    private String detail() {
+        if (info == null) return "";
+        String d = info.shortText();
+        if (knownBad() && info.why.length() > 0) d += (d.length() > 0 ? "\n" : "") + info.why;
+        return d;
     }
 
     private int position() {
@@ -727,8 +763,8 @@ public class VideoCard extends FrameLayout {
     private void probe(final File f) {
         if (android.os.Build.VERSION.SDK_INT >= 17) setHdr(false);
         new Thread(new Runnable() { public void run() {
-            final VideoLog.Info in = VideoLog.probe(f);
-            VideoLog.log(f.getName() + " · " + (in.video ? in.shortText() : I18n.t("sin video"))
+            final VideoLog.Info in = VideoLog.probeCached(f);
+            VideoLog.log(f.getName() + " · " + (in.video ? in.longText() : I18n.t("sin video"))
                     + (in.ok == null ? "" : in.ok ? " · OK" : " · [!] " + in.why) + (in.hdr ? " · HDR" : ""));
             h.post(new Runnable() { public void run() {
                 if (f != current) return;
@@ -834,6 +870,7 @@ public class VideoCard extends FrameLayout {
         empty.setVisibility(GONE);
         resumeMs = 0; paused = false; playIco.set(CtlIcon.PAUSE);
         failStreak = 0;
+        held = false;
         i = Math.max(0, Math.min(i, list.size() - 1));
         if (active) play(i);
         else { at = i; current = list.get(i); prefs.edit().putString("video_last", current.getAbsolutePath()).putInt("video_pos", 0).apply(); }

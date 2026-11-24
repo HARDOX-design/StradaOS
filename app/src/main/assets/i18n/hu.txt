@@ -1892,3 +1892,8 @@ Decodificadores de video	Videó dekóderek
 Todavía no se ha abierto ningún video	Még nem nyílt meg videó
 Se guarda en StradaDiag/video.txt	Mentve: StradaDiag/video.txt
 se leen con el video detenido	leállított videónál olvasva
+la pantalla no tiene decodificador	a kijelzőnek nincs dekódere ehhez:
+pide más de lo que decodifica la pantalla	többet kér, mint amit a kijelző dekódolni tud
+No compatible con esta pantalla	Nem kompatibilis ezzel a kijelzővel
+Conviértelo a H.264 de 720p o 1080p horizontal, a 30 cuadros por segundo	Alakítsd át H.264 formátumba, 720p vagy 1080p fekvő, 30 képkocka/másodperc
+Sin miniatura	Nincs bélyegkép

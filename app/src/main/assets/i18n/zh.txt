@@ -1907,3 +1907,8 @@ Decodificadores de video	视频解码器
 Todavía no se ha abierto ningún video	尚未打开任何视频
 Se guarda en StradaDiag/video.txt	已保存到 StradaDiag/video.txt
 se leen con el video detenido	在视频停止时读取
+la pantalla no tiene decodificador	屏幕没有此解码器
+pide más de lo que decodifica la pantalla	超出屏幕的解码能力
+No compatible con esta pantalla	与此屏幕不兼容
+Conviértelo a H.264 de 720p o 1080p horizontal, a 30 cuadros por segundo	请转换为 H.264、720p 或 1080p 横屏、每秒 30 帧
+Sin miniatura	无缩略图

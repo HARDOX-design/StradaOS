@@ -1909,3 +1909,8 @@ Decodificadores de video	Video kod çözücüleri
 Todavía no se ha abierto ningún video	Henüz hiç video açılmadı
 Se guarda en StradaDiag/video.txt	StradaDiag/video.txt dosyasına kaydedildi
 se leen con el video detenido	video durdurulmuşken okunur
+la pantalla no tiene decodificador	ekranda şunun için kod çözücü yok:
+pide más de lo que decodifica la pantalla	ekranın çözebildiğinden fazlasını istiyor
+No compatible con esta pantalla	Bu ekranla uyumlu değil
+Conviértelo a H.264 de 720p o 1080p horizontal, a 30 cuadros por segundo	Yatay 720p veya 1080p, saniyede 30 kare H.264'e dönüştürün
+Sin miniatura	Küçük resim yok

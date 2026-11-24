@@ -1907,3 +1907,8 @@ Decodificadores de video	مفككات ترميز الفيديو
 Todavía no se ha abierto ningún video	لم يُفتح أي فيديو بعد
 Se guarda en StradaDiag/video.txt	يُحفظ في StradaDiag/video.txt
 se leen con el video detenido	تُقرأ والفيديو متوقف
+la pantalla no tiene decodificador	لا تملك الشاشة مفكك ترميز
+pide más de lo que decodifica la pantalla	يتطلب أكثر مما تستطيع الشاشة فك ترميزه
+No compatible con esta pantalla	غير متوافق مع هذه الشاشة
+Conviértelo a H.264 de 720p o 1080p horizontal, a 30 cuadros por segundo	حوّله إلى H.264 بدقة 720p أو 1080p أفقياً و30 إطاراً في الثانية
+Sin miniatura	بلا صورة مصغّرة

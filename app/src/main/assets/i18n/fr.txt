@@ -1907,3 +1907,8 @@ Decodificadores de video	Décodeurs vidéo
 Todavía no se ha abierto ningún video	Aucune vidéo n'a encore été ouverte
 Se guarda en StradaDiag/video.txt	Enregistré dans StradaDiag/video.txt
 se leen con el video detenido	lus avec la vidéo à l'arrêt
+la pantalla no tiene decodificador	l'écran n'a pas de décodeur
+pide más de lo que decodifica la pantalla	demande plus que ce que l'écran peut décoder
+No compatible con esta pantalla	Non compatible avec cet écran
+Conviértelo a H.264 de 720p o 1080p horizontal, a 30 cuadros por segundo	Convertissez-la en H.264 720p ou 1080p à l'horizontale, 30 images par seconde
+Sin miniatura	Pas de miniature

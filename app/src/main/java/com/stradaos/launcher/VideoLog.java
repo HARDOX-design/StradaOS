@@ -36,6 +36,12 @@ final class VideoLog {
         /** null = no se sabe; false = la pantalla dice que no lo puede decodificar. */
         Boolean ok;
         String why = "";
+        /** Lo máximo que declara la pantalla para ese códec, p. ej. «H.264 hasta 4.1» (para el aviso). */
+        String limit = "";
+        /** Pista de audio («mp4a-latm», «sin audio») y cuadros por segundo, para el diagnóstico. */
+        String audio = "", fps = "";
+        /** La pista de video solo se vio abriendo el archivo (no por la ruta). */
+        boolean fd;
 
         /** «1080×1920 · H.264 High 4.0», para los avisos. */
         String shortText() {
@@ -43,6 +49,15 @@ final class VideoLog {
             if (w > 0 && h > 0) b.append(w).append('×').append(h);
             if (codec.length() > 0) { if (b.length() > 0) b.append(" · "); b.append(codec); }
             if (profile.length() > 0) b.append(' ').append(profile);
+            return b.toString();
+        }
+
+        /** Para el diagnóstico: lo de {@link #shortText} y además fps, audio y si se leyó por el archivo abierto. */
+        String longText() {
+            StringBuilder b = new StringBuilder(shortText());
+            if (fps.length() > 0) b.append(" · ").append(fps).append(" fps");
+            if (audio.length() > 0) b.append(" · audio ").append(audio);
+            if (fd) b.append(" · fd");
             return b.toString();
         }
     }
@@ -214,18 +229,39 @@ final class VideoLog {
      * algún decodificador de la pantalla dice que puede con él. Tarda unos milisegundos; va en otro hilo.
      */
     static Info probe(File f) {
+        Info in = probeWith(f, false);
+        // 2.35 r6: en el Picanto el lector de Android no veía la pista de video de un .mov por la ruta; por el archivo
+        // abierto (FileDescriptor) a veces sí
+        if (!in.video) {
+            Info b = probeWith(f, true);
+            if (b.video) { b.fd = true; return b; }
+        }
+        return in;
+    }
+
+    private static Info probeWith(File f, boolean fd) {
         Info in = new Info();
         MediaExtractor ex = new MediaExtractor();
+        java.io.FileInputStream is = null;
         try {
-            ex.setDataSource(f.getAbsolutePath());
+            if (fd) { is = new java.io.FileInputStream(f); ex.setDataSource(is.getFD()); }
+            else ex.setDataSource(f.getAbsolutePath());
+            int videoTrack = -1;
             for (int i = 0; i < ex.getTrackCount(); i++) {
                 MediaFormat fm = ex.getTrackFormat(i);
                 String mime = fm.getString(MediaFormat.KEY_MIME);
-                if (mime == null || !mime.startsWith("video/")) continue;
+                if (mime != null && mime.startsWith("audio/") && in.audio.length() == 0) in.audio = mime.substring(6);
+                if (mime != null && mime.startsWith("video/") && videoTrack < 0) videoTrack = i;
+            }
+            if (in.audio.length() == 0) in.audio = "-";
+            if (videoTrack >= 0) {
+                MediaFormat fm = ex.getTrackFormat(videoTrack);
+                String mime = fm.getString(MediaFormat.KEY_MIME);
                 in.video = true;
                 in.mime = mime;
                 in.codec = codecName(mime);
                 try { in.w = fm.getInteger(MediaFormat.KEY_WIDTH); in.h = fm.getInteger(MediaFormat.KEY_HEIGHT); } catch (Throwable ignored) { }
+                try { if (fm.containsKey("frame-rate")) in.fps = String.valueOf(fm.getInteger("frame-rate")); } catch (Throwable ignored) { }
                 if (mime.contains("dolby-vision")) in.hdr = true;
                 try { if (fm.containsKey("color-transfer")) { int t = fm.getInteger("color-transfer"); if (t == 6 || t == 7) in.hdr = true; } } catch (Throwable ignored) { }
                 int prof = -1, lvl = -1;
@@ -243,12 +279,12 @@ final class VideoLog {
                     if (prof > 0) in.profile = avcProfile(prof) + " " + (lvl / 10) + "." + (lvl % 10);
                 }
                 check(in, prof, lvl);
-                break;
             }
         } catch (Throwable e) {
             in.why = "MediaExtractor: " + e.getClass().getSimpleName();
         } finally {
             try { ex.release(); } catch (Throwable ignored) { }
+            try { if (is != null) is.close(); } catch (Throwable ignored) { }
         }
         return in;
     }
@@ -270,24 +306,51 @@ final class VideoLog {
     private static void check(Info in, int profIdc, int lvlIdc) {
         java.util.List<Dec> decs = VideoLog.decs;
         if (decs == null) return;     // se leen antes del primer video (VideoCard.load), nunca mientras abre uno
-        boolean any = false, fits = false;
         int want = profIdc == 66 ? 1 : profIdc == 77 ? 2 : profIdc == 100 ? 8 : profIdc == 110 ? 16 : 0;
+        // 2.35 r6: los decodificadores que no declaran niveles (en el Picanto, OMX.mtkwfd…avc: el de duplicar la
+        // pantalla por Wi-Fi) no cuentan si otro del mismo códec sí declara; si no, el aviso diría «OK» de más
+        boolean anyDeclared = false;
+        for (Dec d : decs) if (d.mime.equalsIgnoreCase(in.mime) && d.pl.length > 0) anyDeclared = true;
+        boolean any = false, fits = false;
+        int maxLevel = 0;
         for (Dec d : decs) {
             if (!d.mime.equalsIgnoreCase(in.mime)) continue;
+            if (anyDeclared && d.pl.length == 0) continue;
             any = true;
             boolean ok = true;
             if (want > 0 && lvlIdc > 0 && d.pl.length > 0) {
                 ok = false;
                 int lb = levelBit(lvlIdc);
-                for (int[] pl : d.pl) if (pl[0] >= want && pl[1] >= lb) { ok = true; break; }   // un perfil mayor cubre los menores
+                for (int[] pl : d.pl) {
+                    if (pl[0] >= want) maxLevel = Math.max(maxLevel, pl[1]);
+                    if (pl[0] >= want && pl[1] >= lb) ok = true;   // un perfil mayor cubre los menores
+                }
             }
             if (ok && Build.VERSION.SDK_INT >= 21 && d.caps != null) {
                 try { ok = Modern.videoSizeOk((MediaCodecInfo.CodecCapabilities) d.caps, in.w, in.h); } catch (Throwable ignored) { }
             }
-            if (ok) { fits = true; break; }
+            if (ok) fits = true;
         }
         in.ok = fits;
-        if (!any) in.why = "sin decodificador " + in.codec;
-        else if (!fits) in.why = "más de lo que declara la pantalla";
+        if (maxLevel > 0) in.limit = in.codec + " " + levelName(maxLevel);
+        if (!any) in.why = I18n.t("la pantalla no tiene decodificador") + " " + in.codec;
+        else if (!fits) in.why = I18n.t("pide más de lo que decodifica la pantalla") + (in.limit.length() > 0 ? " (" + in.limit + ")" : "");
+    }
+
+    /** Lo ya leído de cada archivo (ruta|tamaño|fecha), para el selector y para no volver a leerlo. */
+    private static final java.util.HashMap<String, Info> CACHE = new java.util.HashMap<String, Info>();
+
+    private static String key(File f) { return f.getAbsolutePath() + "|" + f.length() + "|" + f.lastModified(); }
+
+    /** El veredicto ya leído (null si todavía no se leyó o si no hay decodificadores leídos). */
+    static Info cached(File f) { synchronized (CACHE) { return CACHE.get(key(f)); } }
+
+    /** {@link #probe} con caché (el veredicto solo se guarda si ya se leyeron los decodificadores). */
+    static Info probeCached(File f) {
+        String k = key(f);
+        synchronized (CACHE) { Info i = CACHE.get(k); if (i != null) return i; }
+        Info i = probe(f);
+        if (decs != null) synchronized (CACHE) { CACHE.put(k, i); }
+        return i;
     }
 }

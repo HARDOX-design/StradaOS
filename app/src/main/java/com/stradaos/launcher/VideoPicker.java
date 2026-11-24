@@ -440,9 +440,37 @@ class VideoPicker extends LinearLayout {
             hd.name.setText(f.getName());
             hd.name.setTextColor(now ? Main.RED : Main.TEXT);
             hd.sub.setText(now ? I18n.t("Reproduciendo") : size(f.length()));
+            hd.sub.setTextColor(Main.MUTED);
             hd.arrow.setVisibility(GONE);
+            verdict(f, hd.thumb, hd.sub, now);
         }
         return r;
+    }
+
+    /** 2.35 r6: lee el formato de los videos de la lista sin decodificar nada (en un hilo aparte, de a uno). */
+    private static final java.util.concurrent.ExecutorService INFO = java.util.concurrent.Executors.newSingleThreadExecutor();
+
+    /**
+     * 2.35 r6: si la pantalla dice que no puede con ese video (p. ej. 1080×1920 H.264 High 4.2 en una radio que llega a
+     * 4.1), la fila lo avisa en rojo antes de elegirlo: «No compatible con esta pantalla · 1080×1920 · H.264 High 4.2».
+     */
+    private void verdict(final File f, final Thumb v, final TextView sub, final boolean now) {
+        VideoLog.Info in = VideoLog.cached(f);
+        if (in != null) { showVerdict(in, sub, now); return; }
+        final String k = v.key;
+        try {
+            INFO.execute(new Runnable() { public void run() {
+                if (stopped || k == null || !k.equals(v.key)) return;
+                final VideoLog.Info r = VideoLog.probeCached(f);
+                h.post(new Runnable() { public void run() { if (!stopped && k.equals(v.key)) showVerdict(r, sub, now); } });
+            }});
+        } catch (Throwable ignored) { }
+    }
+
+    private static void showVerdict(VideoLog.Info in, TextView sub, boolean now) {
+        if (in == null || in.ok == null || in.ok || now) return;
+        sub.setText(I18n.t("No compatible con esta pantalla") + " · " + in.shortText());
+        sub.setTextColor(Main.RED);
     }
 
     private android.graphics.drawable.Drawable rowBg() {
@@ -702,6 +730,7 @@ class VideoPicker extends LinearLayout {
                                 if (b == null) b = (Bitmap) r[1];
                                 // con un video sonando, el decodificador puede estar ocupado: se reintenta más tarde
                                 busyFail = frame && b == null && (playing || VideoCard.playerBusy);
+                                if (frame && b == null && !busyFail) VideoLog.log(I18n.t("Sin miniatura") + " · " + f.getName());
                             }
                         } finally { VideoCard.extracting.decrementAndGet(); }
                         dir.mkdirs();
@@ -770,11 +799,24 @@ class VideoPicker extends LinearLayout {
          * negro). Sin frame solo lee los datos del archivo: no decodifica nada.
          */
         static Object[] extract(File f, boolean frame) {
+            Object[] a = extract(f, frame, false);
+            // 2.35 r6: si por la ruta no se leyó nada, se prueba abriendo el archivo (algunas radios MediaTek leen
+            // distinto por la ruta y por el archivo abierto)
+            if ((Long) a[0] <= 0 && a[1] == null) {
+                Object[] b = extract(f, frame, true);
+                if ((Long) b[0] > 0 || b[1] != null) return b;
+            }
+            return a;
+        }
+
+        private static Object[] extract(File f, boolean frame, boolean fd) {
             long d = -1;
             Bitmap out = null;
             MediaMetadataRetriever r = new MediaMetadataRetriever();
+            java.io.FileInputStream is = null;
             try {
-                r.setDataSource(f.getAbsolutePath());
+                if (fd) { is = new java.io.FileInputStream(f); r.setDataSource(is.getFD()); }
+                else r.setDataSource(f.getAbsolutePath());
                 try { d = Long.parseLong(r.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)); } catch (Throwable ignored) { }
                 if (frame) {
                     long us = d > 0 ? Math.min(d * 150, 15000000L) : 1000000L;
@@ -790,6 +832,7 @@ class VideoPicker extends LinearLayout {
             } catch (Throwable ignored) {     // formato que la radio no lee, o sin memoria para un video 4K
             } finally {
                 try { r.release(); } catch (Throwable ignored) { }
+                try { if (is != null) is.close(); } catch (Throwable ignored) { }
             }
             return new Object[]{d, out};
         }

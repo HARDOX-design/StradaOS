@@ -74,6 +74,25 @@ Código: [`VideoCard.java`](../app/src/main/java/com/stradaos/launcher/VideoCard
     (códec, tamaño, perfil/nivel de H.264 leído del SPS de `csd-0`), si la pantalla dice que lo decodifica, y qué pasó
     (preparado, primer cuadro, errores `what/extra`, avisos `info`, reintentos). Los decodificadores se leen una sola vez
     antes del primer video: en Android 4.x leerlos abre cada decodificador.
+- **Lo que mostró el diagnóstico del Picanto (2.35 r6):** `ATC AC8227 (autochipsac83xx)`; su decodificador de H.264
+  (`OMX.mtk.video.decoder.avc`) declara **hasta nivel 4.1** (Baseline/Main/High/High10). `lv_0…mp4` (CapCut) es
+  **1080×1920 H.264 High 4.2**: el reproductor queda «Preparado 0×0» (descarta la pista de video, `info 1000/0`) y suena
+  sin imagen; el reproductor de la radio también lo muestra negro. Es el límite de la radio. `Naturaleza - Pixabay.mp4`
+  (1280×720 Main 3.1, dentro de lo que declara) falla al instante con `error 1/303` (propio de MediaTek). El `.mov` se
+  ve, pero `MediaExtractor` no encontraba su pista de video por la ruta. Cambios:
+  - **Veredicto correcto:** el decodificador `OMX.mtkwfd…avc` (el de duplicar la pantalla por Wi-Fi) no declara
+    niveles y hacía que todo saliera «OK»; ahora los que no declaran no cuentan si otro del mismo códec sí. `Info.limit`
+    («H.264 4.1») y `why` traducidos.
+  - **Si la pantalla dice que no puede:** no se reintenta; aviso con el formato, el porqué y «Conviértelo a H.264 de 720p
+    o 1080p horizontal, a 30 cuadros por segundo».
+  - **En el selector:** cada video se lee sin decodificar (`VideoLog.probeCached`, un hilo aparte) y los que no son
+    compatibles lo dicen en rojo: «No compatible con esta pantalla · 1080×1920 · H.264 High 4.2».
+  - **Por descriptor:** el primer reintento abre el archivo y pasa el `FileDescriptor` en vez de la ruta; el lector de
+    formato y las miniaturas también lo prueban si por la ruta no leen nada.
+  - **Miniaturas en Android 4:** con el selector abierto, el video suelta el decodificador (`holdForPicker`; queda el
+    último cuadro y, si se cierra sin elegir, sigue donde iba). Las miniaturas que fallan sin video sonando se anotan en
+    el diagnóstico («Sin miniatura»).
+  - El diagnóstico anota también fps, la pista de audio y si se leyó por descriptor (`longText`).
 - **Línea de tiempo (2.35 r3):** `VideoCard.Timeline`, encima de los botones: lo que va, la barra con su punto y lo que
   dura. Tocar o arrastrar mueve el punto y al soltar salta ahí (`seekTo`); mientras se arrastra el carrusel no se lleva
   el gesto (`requestDisallowInterceptTouchEvent`) y los controles no se esconden. Se esconde con los controles.

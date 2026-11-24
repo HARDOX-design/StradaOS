@@ -10444,14 +10444,21 @@ public class Main extends Activity {
         final AlertDialog[] dd = new AlertDialog[1];
         final VideoPicker vp = new VideoPicker(this, v.currentPath(), start, new VideoPicker.Cb() {
             public void chosen(File folder, java.util.List<File> videos, int index) {
+                if (!videos.isEmpty() && index >= 0) {
+                    prefs.edit().putString("video_dir", folder.getAbsolutePath()).putBoolean("video_flat", true).apply();
+                    v.playList(videos, index);
+                }
+                // después de elegir: así, al cerrarse, el video de antes no vuelve a abrirse (Android 4)
                 try { if (dd[0] != null) dd[0].dismiss(); } catch (Throwable ignored) { }
-                if (videos.isEmpty() || index < 0) return;
-                prefs.edit().putString("video_dir", folder.getAbsolutePath()).putBoolean("video_flat", true).apply();
-                v.playList(videos, index);
             }
         });
+        // 2.35 r6: Android 4 (un solo decodificador): el video suelta el decodificador mientras se elige, para las miniaturas
+        if (SDK < 21) v.holdForPicker(true);
         dd[0] = new TB(this, dlg()).wide().setTitle("Elegir video").setView(vp).setNegativeButton("Cancelar", null).show();
-        dd[0].setOnDismissListener(new DialogInterface.OnDismissListener() { public void onDismiss(DialogInterface d) { vp.stop(); if (videoPicker == vp) videoPicker = null; } });
+        dd[0].setOnDismissListener(new DialogInterface.OnDismissListener() { public void onDismiss(DialogInterface d) {
+            vp.stop(); if (videoPicker == vp) videoPicker = null;
+            v.holdForPicker(false);     // se cerró sin elegir: el video sigue desde donde iba
+        }});
         // Atrás sube una carpeta; en los almacenamientos, cierra
         dd[0].setOnKeyListener(new DialogInterface.OnKeyListener() { public boolean onKey(DialogInterface d, int code, android.view.KeyEvent e) {
             if (code != android.view.KeyEvent.KEYCODE_BACK) return false;

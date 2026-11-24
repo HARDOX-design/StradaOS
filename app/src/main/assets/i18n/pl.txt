@@ -1886,3 +1886,8 @@ Decodificadores de video	Dekodery wideo
 Todavía no se ha abierto ningún video	Nie otwarto jeszcze żadnego wideo
 Se guarda en StradaDiag/video.txt	Zapisano w StradaDiag/video.txt
 se leen con el video detenido	odczytywane przy zatrzymanym wideo
+la pantalla no tiene decodificador	ekran nie ma dekodera
+pide más de lo que decodifica la pantalla	wymaga więcej, niż ekran potrafi zdekodować
+No compatible con esta pantalla	Niezgodne z tym ekranem
+Conviértelo a H.264 de 720p o 1080p horizontal, a 30 cuadros por segundo	Przekonwertuj na H.264 720p lub 1080p w poziomie, 30 klatek na sekundę
+Sin miniatura	Brak miniatury

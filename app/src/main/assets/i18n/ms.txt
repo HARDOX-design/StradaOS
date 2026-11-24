@@ -1907,3 +1907,8 @@ Decodificadores de video	Penyahkod video
 Todavía no se ha abierto ningún video	Belum ada video yang dibuka
 Se guarda en StradaDiag/video.txt	Disimpan dalam StradaDiag/video.txt
 se leen con el video detenido	dibaca semasa video dihentikan
+la pantalla no tiene decodificador	skrin tiada penyahkod
+pide más de lo que decodifica la pantalla	memerlukan lebih daripada yang skrin boleh nyahkod
+No compatible con esta pantalla	Tidak serasi dengan skrin ini
+Conviértelo a H.264 de 720p o 1080p horizontal, a 30 cuadros por segundo	Tukar kepada H.264 720p atau 1080p mendatar, 30 bingkai sesaat
+Sin miniatura	Tiada lakaran kecil
