@@ -1,0 +1,1837 @@
+# StradaOS · traducción ru (русский). Formato: español<TAB>traducción. Ver I18n.java.
+Radio	Радио
+Cámara	Камера
+Archivos	Файлы
+Ajustes	Настройки
+Música	Музыка
+Navegación	Навигация
+Navegador	Браузер
+Navegador web	Веб-браузер
+Equipo	Головное устройство
+Elige primero la app de música Bluetooth	Сначала выберите приложение для музыки по Bluetooth
+Música Bluetooth	Музыка по Bluetooth
+No se pudo abrir la app	Не удалось открыть приложение
+Mi app	Моё приложение
+Mi vehículo	Мой автомобиль
+Toca para poner la foto de tu vehículo	Нажмите, чтобы добавить фото автомобиля
+Velocidad	Скорость
+Diagnóstico del mapa	Диагностика карты
+Buscando GPS…	Поиск GPS…
+Buscando GPS	Поиск GPS
+En vivo · sin internet	В реальном времени · без интернета
+Última posición · sin internet	Последняя позиция · без интернета
+Mapa en vivo	Карта в реальном времени
+Última posición conocida	Последнее известное местоположение
+Nada sonando	Ничего не играет
+Radio, Bluetooth o USB	Радио, Bluetooth или USB
+Internet desde la pantalla	Интернет на экране
+No se pudo abrir «{}». Déjalo presionado para elegir otra app.	Не удалось открыть «{}». Нажмите и удерживайте, чтобы выбрать другое приложение.
+Botón {} · {}	Кнопка {} · {}
+Cambiar app o función	Сменить приложение или функцию
+Cambiar el nombre	Переименовать
+Restablecer ({})	Сбросить ({})
+Botón restablecido	Кнопка сброшена
+Cerrar	Закрыть
+Cerrar  ✕	Закрыть  ✕
+★  Funciones de StradaOS (Música, Navegación, Android Auto…)	★  Функции StradaOS (Музыка, Навигация, Android Auto…)
+¿Qué abre el botón {}?	Что открывает кнопка {}?
+Función del botón {}	Функция кнопки {}
+Nombre del botón {} (vacío = el de la app)	Название кнопки {} (пусто = название приложения)
+Guardar	Сохранить
+Cancelar	Отмена
+Guardado: {}	Сохранено: {}
+Elige tu app de música	Выберите приложение для музыки
+Elige tu app de navegación	Выберите приложение для навигации
+Automático · {}	Автоматически · {}
+{}\n    → {}	{}\n    → {}
+Buenos días	Доброе утро
+Buenas tardes	Добрый день
+Buenas noches	Добрый вечер
+Diagnóstico del reproductor	Диагностика плеера
+Accesibilidad	Специальные возможности
+Activa «Carátula de Android Auto» (StradaOS)	Включите «Обложку Android Auto» (StradaOS)
+No se pudo abrir Accesibilidad	Не удалось открыть специальные возможности
+Activa «Pista actual de AA» en Open Headunit	Включите «Текущий трек AA» в Open Headunit
+«Ninguna aplic. funciona con este accesorio USB»	«Ни одно приложение не работает с этим USB-аксессуаром»
+Ese aviso lo causa una app de espejo de fábrica (EasyConnection/CarbitLink) que toma el USB antes que la app que elegiste.\n\n1. Desconecta el celular.\n2. Ajustes → Aplicaciones → EasyConnection → «Borrar datos».\n3. Apaga y enciende el carro.\n4. En Open Headunit → USB, si tu celular aparece como «Ignorado», tócalo para permitirlo.	Это сообщение вызвано заводским приложением зеркалирования (EasyConnection/CarbitLink), которое занимает USB раньше выбранного вами приложения.\n\n1. Отключите телефон.\n2. Настройки → Приложения → EasyConnection → «Очистить данные».\n3. Выключите и включите автомобиль.\n4. В Open Headunit → USB, если ваш телефон отображается как «Игнорируется», нажмите на него, чтобы разрешить.
+Abrir EasyConnection	Открыть EasyConnection
+No hay apps de espejo instaladas	Приложения для зеркалирования не установлены
+Exportando… puede tardar un minuto	Экспорт… это может занять около минуты
+Diagnóstico listo	Диагностика готова
+Se guardó en:\n{}\n\nCopia la carpeta StradaDiag a una memoria USB y adjúntala en un «issue» del repositorio de StradaOS en GitHub.	Сохранено в:\n{}\n\nСкопируйте папку StradaDiag на USB-накопитель и прикрепите её к «issue» в репозитории StradaOS на GitHub.
+12 horas	12 часов
+24 horas	24 часа
+Automático	Автоматически
+Automática	Автоматический
+Auto	Авто
+12 horas (a.m./p.m.)	12 часов (AM/PM)
+Formato de hora	Формат времени
+Se aplicará al reiniciar StradaOS	Применится после перезапуска StradaOS
+Rojo	Красный
+Naranja	Оранжевый
+Amarillo	Жёлтый
+Verde	Зелёный
+Turquesa	Бирюзовый
+Azul	Синий
+Morado	Фиолетовый
+Rosa	Розовый
+Plata	Серебристый
+Bienvenido a StradaOS	Добро пожаловать в StradaOS
+Vamos a dejar el launcher a tu gusto: tu nombre, tu vehículo, el color y la foto. Toma menos de un minuto y lo puedes cambiar después en el engranaje ⚙.	Настроим лаунчер под вас: имя, автомобиль, цвет и фото. Это займёт меньше минуты, а позже можно изменить в шестерёнке ⚙.
+Empezar	Начать
+¿Cómo te llamas?	Как вас зовут?
+Nombre del vehículo (ej.: Mazda 2, Spark GT)	Название автомобиля (напр.: Mazda 2, Spark GT)
+Etiqueta corta (versión o placa). Déjalo vacío si no quieres	Короткая метка (комплектация или номер). Оставьте пустым, если не нужна
+Después	Позже
+No encontrada	Не найдено
+¿Qué app abre cada botón?	Какое приложение открывает каждая кнопка?
+Están bien	Всё верно
+Siguiente	Далее
+Color de acento	Цвет акцента
+Elegir otra foto	Выбрать другое фото
+Quitar la foto	Удалить фото
+Elegir foto	Выбрать фото
+Foto del vehículo	Фото автомобиля
+¿De dónde sacamos la foto?	Откуда взять фото?
+Consejo: usa una foto del carro de lado o de frente con fondo liso (blanco, gris o cielo). El fondo se quita solo.	Совет: используйте фото автомобиля сбоку или спереди на однотонном фоне (белом, сером или небе). Фон удаляется автоматически.
+Memoria / USB	Память / USB
+Galería	Галерея
+Elige la foto	Выберите фото
+Buscando fotos…	Поиск фото…
+No encontré fotos (.jpg/.png). Cópialas a la memoria USB o a Download.	Фото (.jpg/.png) не найдены. Скопируйте их на USB-накопитель или в папку Download.
+Quitando el fondo…	Удаление фона…
+No se pudo abrir la imagen	Не удалось открыть изображение
+No se pudo abrir la imagen: {}	Не удалось открыть изображение: {}
+La foto ya trae fondo transparente	На фото уже прозрачный фон
+No se detectó un fondo liso (se usará tal cual)	Однотонный фон не обнаружен (фото будет использовано как есть)
+Vista previa · nivel {} de 4	Предпросмотр · уровень {} из 4
+Vista previa · nivel {} de 4 (también quita el reflejo del piso)	Предпросмотр · уровень {} из 4 (также убирает отражение пола)
+Usar esta	Использовать это
+Foto guardada	Фото сохранено
+No se pudo guardar la foto	Не удалось сохранить фото
+Quitar más fondo	Удалить больше фона
+Quitando más fondo…	Удаление большего фона…
+No es una imagen válida	Недопустимое изображение
+App elegida	Выбранное приложение
+CarPlay necesita un chip de autenticación de Apple dentro del equipo, así que no se puede activar solo con una app.\n\n• Si tu pantalla trae CarPlay integrado, deja presionado este botón y elige su app (ZLink, CarLink, TLink…).\n• Si no, puedes usar un adaptador CarPlay USB para pantallas Android (tipo Carlinkit/AutoKit): instala su app y este botón la abrirá.	Для CarPlay нужен чип аутентификации Apple внутри головного устройства, поэтому включить его одним приложением нельзя.\n\n• Если в вашем экране есть встроенный CarPlay, нажмите и удерживайте эту кнопку и выберите его приложение (ZLink, CarLink, TLink…).\n• Если нет, можно использовать USB-адаптер CarPlay для Android-экранов (вроде Carlinkit/AutoKit): установите его приложение, и эта кнопка будет его открывать.
+Entendido	Понятно
+Elegir app	Выбрать приложение
+Volver al inicio	Вернуться на главный экран
+Tu vehículo	Ваш автомобиль
+Apariencia	Оформление
+Conexión	Подключение
+Accesos y apps	Ярлыки и приложения
+Mapa y clima	Карта и погода
+Sistema	Система
+Acerca de	О программе
+Datos	Данные
+Tu nombre	Ваше имя
+Aparece en el saludo de la pantalla de inicio	Отображается в приветствии на главном экране
+Nombre del vehículo	Название автомобиля
+Etiqueta	Метка
+Versión o placa. Déjala vacía para ocultarla	Комплектация или номер. Оставьте пустым, чтобы скрыть
+Etiqueta (vacío para ocultarla)	Метка (пусто — скрыть)
+Foto	Фото
+Se recorta y se le quita el fondo automáticamente	Фото обрезается и фон удаляется автоматически
+Configurada	Задано
+Sin foto	Нет фото
+Idioma	Язык
+Automático: el del sistema	Автоматически: язык системы
+Tema	Тема
+Modo	Режим
+Automático: claro de 6 a.m. a 6 p.m.	Автоматически: светлая с 6:00 до 18:00
+Oscuro	Тёмный
+Claro	Светлый
+Color	Цвет
+Botones, anillo del reproductor, ruta y etiquetas	Кнопки, кольцо плеера, маршрут и метки
+Reloj	Часы
+Celular	Телефон
+Cómo conectar el celular	Как подключить телефон
+La app que se abre al conectar por USB	Приложение, которое открывается при подключении по USB
+Preguntar	Спрашивать
+App de Android Auto	Приложение Android Auto
+Botón naranja de la tarjeta central	Оранжевая кнопка на центральной карточке
+App de CarPlay	Приложение CarPlay
+Requiere pantalla con CarPlay o un adaptador	Нужен экран с CarPlay или адаптер
+Ninguna	Нет
+Ninguno	Нет
+Ayuda	Справка
+El celular dice «Ninguna aplic. funciona…»	Телефон пишет «Ни одно приложение не работает…»
+Cómo evitar que EasyConnection tome el USB	Как не дать EasyConnection занять USB
+Barra inferior (déjalos presionados en el inicio para cambiarlos)	Нижняя панель (нажмите и удерживайте их на главном экране, чтобы изменить)
+App: {}	Приложение: {}
+Función: {}	Функция: {}
+Apps preferidas	Предпочитаемые приложения
+Se abre al tocar el reproductor	Открывается при нажатии на плеер
+Toca para elegir	Нажмите, чтобы выбрать
+Se abre con el botón del mapa	Открывается кнопкой карты
+Apps de cada función	Приложения для каждой функции
+La app que hace sonar el Bluetooth (se usa para pasar el sonido)	Приложение, воспроизводящее звук по Bluetooth (используется для переключения звука)
+Revisar todos los botones	Проверить все кнопки
+Lista rápida de qué abre cada uno, como en el asistente	Краткий список того, что открывает каждая, как в мастере настройки
+Restablecer	Сбросить
+Restablecer accesos	Сбросить ярлыки
+La barra vuelve a lo de siempre y se buscan las apps de fábrica	Панель вернётся к стандартной, и заводские приложения будут найдены заново
+Accesos restablecidos	Ярлыки сброшены
+Clima	Погода
+Mostrar el clima	Показывать погоду
+Arriba, junto al saludo (necesita internet)	Вверху, рядом с приветствием (нужен интернет)
+Unidad	Единицы
+Ciudad	Город
+Vacío = automática por GPS	Пусто = определяется по GPS
+{} (GPS)	{} (GPS)
+Ciudad (vacío = automática por GPS)	Город (пусто = определяется по GPS)
+App de navegación preferida	Предпочитаемое приложение навигации
+Se abre con el botón del mapa (Waze, Maps, OsmAnd…)	Открывается кнопкой карты (Waze, Maps, OsmAnd…)
+Mapa	Карта
+Brillo del mapa	Яркость карты
+Solo en modo oscuro	Только в тёмном режиме
+Bajo	Низкая
+Medio	Средняя
+Alto	Высокая
+Fuentes probadas y errores	Проверенные источники и ошибки
+Mapa no disponible	Карта недоступна
+Fuente del mapa (avanzado)	Источник карты (дополнительно)
+URL propia con {z}/{x}/{y}	Свой URL с {z}/{x}/{y}
+Personalizada	Своя
+URL de teselas {z}/{x}/{y} (vacío = automático)	URL тайлов {z}/{x}/{y} (пусто = автоматически)
+© colaboradores de OpenStreetMap	© участники OpenStreetMap
+App de música	Приложение для музыки
+App de música preferida	Предпочитаемое приложение для музыки
+Se abre al tocar el reproductor del inicio	Открывается при нажатии на плеер на главном экране
+Pista en reproducción	Текущий трек
+Carátula de Android Auto	Обложка Android Auto
+Lee la notificación de Open Headunit (accesibilidad)	Читает уведомление Open Headunit (специальные возможности)
+Activada	Включено
+Desactivada	Выключено
+Activado	Вкл.
+Desactivado	Выкл.
+Música de cualquier app	Музыка из любого приложения
+Android 5+: acceso a notificaciones	Android 5+: доступ к уведомлениям
+No se pudo abrir el ajuste	Не удалось открыть настройку
+Fuente activa, lector de notificaciones y Bluetooth	Активный источник, чтение уведомлений и Bluetooth
+Audio Bluetooth	Аудио Bluetooth
+Volver al Bluetooth al desconectar Android Auto	Возврат к Bluetooth при отключении Android Auto
+Al quitar el cable, abre un instante la app de música Bluetooth para que el sonido siga por Bluetooth	При отключении кабеля ненадолго открывается приложение музыки Bluetooth, чтобы звук продолжал идти по Bluetooth
+Escuchar el Bluetooth	Слушать Bluetooth
+En esta pantalla, toca ▶ en el inicio: StradaOS pasa el sonido a Bluetooth (por ejemplo, si venías de la radio)	На этом экране нажмите ▶ на главном экране: StradaOS переключит звук на Bluetooth (например, если вы слушали радио)
+Pasar a Bluetooth al dar play en el celular (en prueba)	Переключаться на Bluetooth при нажатии play на телефоне (тест)
+Abre un instante «Audio Bluetooth» y vuelve. En algunas pantallas no detecta el play del celular	Ненадолго открывает «Аудио Bluetooth» и возвращается. На некоторых экранах не определяет play на телефоне
+Probar ahora	Проверить сейчас
+Abre «Audio Bluetooth» un instante y vuelve al inicio	Ненадолго открывает «Аудио Bluetooth» и возвращается на главный экран
+Abrir la app de música Bluetooth al conectar el celular	Открывать приложение музыки Bluetooth при подключении телефона
+Para pantallas que solo dejan sonar el Bluetooth con su app abierta: la abre un momento y vuelve al inicio	Для экранов, которые воспроизводят Bluetooth только при открытом приложении: открывает его на время и возвращается на главный экран
+App de música Bluetooth	Приложение музыки Bluetooth
+La que hace sonar el Bluetooth en esta pantalla	То, которое воспроизводит Bluetooth на этом экране
+Tiempo antes de volver al inicio	Время до возврата на главный экран
+Súbelo si el audio se corta al volver	Увеличьте, если звук прерывается при возврате
+Abre la app de música Bluetooth y vuelve al inicio	Открывает приложение музыки Bluetooth и возвращается на главный экран
+Avanzado	Дополнительно
+Avisos extra de música	Дополнительные сообщения музыки
+Nombres de avisos (broadcast) de otros equipos	Названия широковещательных сообщений других устройств
+Configurados	Задано
+Acciones de aviso extra (separadas por coma)	Действия дополнительных сообщений (через запятую)
+Ajustes del equipo	Настройки головного устройства
+Los ajustes de la pantalla (los de la marca si los tiene)	Настройки экрана (фирменные, если есть)
+Asistente de configuración inicial	Мастер первоначальной настройки
+Nombre, vehículo, color y foto	Имя, автомобиль, цвет и фото
+Compatibilidad	Совместимость
+Qué funciona en esta pantalla	Что работает на этом экране
+Cada función, desde qué Android sirve y su estado aquí	Каждая функция: нужная версия Android и её состояние здесь
+Soporte	Поддержка
+Exportar diagnóstico	Экспорт диагностики
+Guarda información de las apps de audio en la memoria interna	Сохраняет сведения о приложениях аудио во внутреннюю память
+Esta pantalla:	Этот экран:
+Ojo: la pantalla dice Android {}, pero por dentro es {}.	Внимание: экран показывает Android {}, но внутри — {}.
+Requiere:	Требуется:
+Aquí:	Здесь:
+Inicio, mapa, clima, velocímetro	Главная, карта, погода, спидометр
+Pista y carátula por Bluetooth	Трек и обложка по Bluetooth
+app Bluetooth de fábrica detectada	обнаружено штатное приложение Bluetooth
+depende de la marca	зависит от марки
+Botón ▶ del inicio pasa el sonido a Bluetooth	Кнопка ▶ на главной переключает звук на Bluetooth
+Pantallas Clinkway / Autochips	Экраны Clinkway / Autochips
+funciona aunque vengas de la radio	работает, даже если вы пришли из радио
+en otras marcas: «Abrir la app de música Bluetooth al conectar»	на других марках: «Открывать приложение музыки Bluetooth при подключении»
+activado	включено
+activada	включено
+desactivado; en algunas pantallas no detecta el play del celular	выключено; на некоторых экранах не видит воспроизведение с телефона
+Carátula de Android Auto (Open Headunit)	Обложка Android Auto (Open Headunit)
+Android 4.1+ · accesibilidad	Android 4.1+ · спец. возможности
+falta activar la accesibilidad	специальные возможности ещё не включены
+Música de cualquier app (Spotify, YouTube…)	Музыка из любого приложения (Spotify, YouTube…)
+falta dar acceso a notificaciones	доступ к уведомлениям ещё не выдан
+no disponible en {}	недоступно на {}
+Android Auto con Open Headunit	Android Auto через Open Headunit
+Android 4.1+ · cable USB	Android 4.1+ · кабель USB
+Open Headunit instalado	Open Headunit установлено
+falta instalar Open Headunit	Open Headunit ещё не установлено
+Android Auto / CarPlay de la pantalla	Android Auto / CarPlay самого экрана
+Si la pantalla lo trae	Если есть на экране
+no detectado	не обнаружено
+Pantalla con CarPlay o adaptador USB	Экран с CarPlay или адаптер USB
+Mapa con internet seguro (TLS 1.2)	Карта через защищённое соединение (TLS 1.2)
+Android 4.1+ (StradaOS lo activa)	Android 4.1+ (StradaOS включает)
+en Android 4.x solo algunos servidores de mapas responden	на Android 4.x отвечают только некоторые картографические серверы
+Instalar actualizaciones desde la app	Устанавливать обновления из приложения
+pide permiso «Instalar apps desconocidas»	запрашивает разрешение «Установка неизвестных приложений»
+No hay fallos registrados	Сбоев не зафиксировано
+Registro de fallos	Журнал сбоев
+Borrar	Очистить
+Registro borrado	Журнал очищен
+Gratis y de código abierto. Una nueva vida para las pantallas Android del carro.	Бесплатно и с открытым кодом. Вторая жизнь для Android-экранов в автомобиле.
+Versión	Версия
+Android de la pantalla	Android экрана
+Real: {} · ver qué funciona aquí	Фактически: {} · посмотреть, что работает здесь
+Cierres inesperados o bloqueos de StradaOS en esta pantalla	Неожиданные закрытия или зависания StradaOS на этом экране
+Sin fallos	Без сбоев
+Ver	Смотреть
+Actualizaciones	Обновления
+Instalado desde {}	Установлено из {}
+Las actualizaciones llegan por esa app	Обновления приходят через это приложение
+Avisar también de versiones en GitHub	Сообщать также о версиях на GitHub
+Comprobar actualizaciones automáticamente	Проверять обновления автоматически
+Opcional: las descargas de GitHub no pasan por la revisión de la tienda	Необязательно: загрузки с GitHub не проходят проверку магазина
+Al abrir StradaOS con internet, una vez al día	При открытии StradaOS с интернетом, раз в день
+Actualizaciones desde GitHub	Обновления с GitHub
+Instalaste StradaOS desde {}. Si activas esto, StradaOS revisará una vez al día las versiones publicadas en github.com/{} y te ofrecerá descargarlas desde ahí.\n\nEsas descargas no pasan por la revisión de la tienda. Puede que GitHub tenga una versión un poco antes que la tienda.	Вы установили StradaOS из {}. Если включить это, StradaOS раз в день будет проверять версии, опубликованные на github.com/{}, и предложит скачать их оттуда.\n\nЭти загрузки не проходят проверку магазина. GitHub может выпустить версию чуть раньше магазина.
+Activar	Включить
+Canal de actualizaciones	Канал обновлений
+Buscar actualizaciones	Проверить обновления
+Aún no se ha comprobado	Ещё не проверялось
+Última comprobación: {}	Последняя проверка: {}
+Comunidad	Сообщество
+Dar una estrella en GitHub	Поставить звезду на GitHub
+Ayuda a que más personas encuentren StradaOS	Помогает другим найти StradaOS
+Dar una estrella ⭐	Поставить звезду ⭐
+Abre el repositorio y toca «Star». ¡Gracias!	Откройте репозиторий и нажмите «Star». Спасибо!
+Donar	Поддержать
+Si StradaOS revivió tu pantalla, invítame un café	Если StradaOS вернул к жизни ваш экран, угостите меня кофе
+Apoya el proyecto ☕	Поддержите проект ☕
+StradaOS es gratis. Las donaciones ayudan a mantenerlo y a probarlo en más pantallas.	StradaOS бесплатен. Пожертвования помогают поддерживать его и тестировать на большем числе экранов.
+Reportar un problema o sugerir algo	Сообщить о проблеме или предложить идею
+Crea un «issue» en GitHub (adjunta el diagnóstico)	Создайте «issue» на GitHub (приложите диагностику)
+Reportar un problema	Сообщить о проблеме
+Cuenta tu modelo de pantalla y su versión de Android. Puedes adjuntar la carpeta StradaDiag (Sistema → Exportar diagnóstico).	Укажите модель экрана и версию Android. Можно приложить папку StradaDiag (Система → Экспорт диагностики).
+Código fuente	Исходный код
+Licencia GPL-3.0	Лицензия GPL-3.0
+Créditos y licencias	Авторство и лицензии
+Licencia	Лицензия
+Mapas	Карты
+© colaboradores de OpenStreetMap, OpenTopoMap, Esri	© участники OpenStreetMap, OpenTopoMap, Esri
+Open Headunit (GPL-3.0) · Android Auto es marca de Google	Open Headunit (GPL-3.0) · Android Auto — торговая марка Google
+Códigos QR	QR-коды
+Íconos	Значки
+Certificados raíz	Корневые сертификаты
+Buscando actualizaciones…	Поиск обновлений…
+No se pudo comprobar	Не удалось проверить
+Esta pantalla no logró conectarse con GitHub ({}). Puedes revisar las versiones desde tu celular:	Этому экрану не удалось подключиться к GitHub ({}). Проверьте версии с телефона:
+Tienes la última versión ({})	У вас последняя версия ({})
+Fuentes consultadas:\n{}	Проверенные источники:\n{}
+cifrado no compatible	несовместимое шифрование
+sin internet	нет интернета
+sin internet / DNS	нет интернета / DNS
+tiempo agotado	время ожидания истекло
+error de red	ошибка сети
+tu tienda de apps	ваш магазин приложений
+Tienes la {} · nueva: {}	У вас {} · новая: {}
+Mejoras y correcciones.	Улучшения и исправления.
+Nueva versión de StradaOS	Новая версия StradaOS
+Tienes la {} · en GitHub: {}\nActualiza desde {} cuando llegue. Descargar de GitHub omite la revisión de la tienda.	У вас {} · на GitHub: {}\nОбновите из {}, когда она появится. Загрузка с GitHub обходит проверку магазина.
+Ver en GitHub	Открыть на GitHub
+Descarga desde GitHub:	Скачать с GitHub:
+Descargar e instalar	Скачать и установить
+Descarga la nueva versión desde:	Скачайте новую версию отсюда:
+Omitir esta versión	Пропустить эту версию
+Más tarde	Позже
+Descargando StradaOS {}…	Загрузка StradaOS {}…
+Descárgala desde tu celular	Скачайте с телефона
+Esta pantalla no pudo descargar el archivo. Escanea el código, descarga el APK y pásalo por USB.	Этому экрану не удалось скачать файл. Отсканируйте код, скачайте APK и перенесите по USB.
+¿Disfrutando StradaOS?	Нравится StradaOS?
+Si te gusta usar StradaOS, dale una estrella en GitHub. Y si revivió tu pantalla, considera invitarme un café ☕	Если вам нравится StradaOS, поставьте звезду на GitHub. А если он вернул к жизни ваш экран, подумайте о том, чтобы угостить меня кофе ☕
+Dar una estrella	Поставить звезду
+StradaOS es gratis. Las donaciones ayudan a mantenerlo.	StradaOS бесплатен. Пожертвования помогают его поддерживать.
+Escanéalo con la cámara de tu celular o entra a:	Отсканируйте камерой телефона или откройте:
+Abrir aquí	Открыть здесь
+No hay navegador disponible	Браузер недоступен
+Open Headunit · USB	Open Headunit · USB
+Toca para instalar	Нажмите, чтобы установить
+Pantalla o adaptador	Экран или адаптер
+Elige la app de ajustes de tu pantalla	Выберите приложение настроек вашего экрана
+No se pudieron abrir los ajustes	Не удалось открыть настройки
+No encontré la app de {}. Elígela de la lista.	Приложение {} не найдено. Выберите его из списка.
+↺  Automático (por defecto)	↺  Автоматически (по умолчанию)
+¿Qué app abre «{}»?	Какое приложение открывает «{}»?
+Restablecido	Сброшено
+Esta pantalla no trae Android Auto integrado.\n\nInstala la app gratuita «Open Headunit» (github.com/andreknieriem/headunit-revived): copia su APK en la memoria USB o en Download y vuelve a tocar el botón. Luego conecta el celular por cable USB.	Этот экран не имеет встроенного Android Auto.\n\nУстановите бесплатное приложение «Open Headunit» (github.com/andreknieriem/headunit-revived): скопируйте его APK на USB-накопитель или в Download и снова нажмите кнопку. Затем подключите телефон USB-кабелем.
+Android Auto por cable USB (necesita la app Android Auto en el celular)	Android Auto по USB-кабелю (нужно приложение Android Auto на телефоне)
+Espejo de pantalla (necesita la app CarbitLink en el celular)	Дублирование экрана (нужно приложение CarbitLink на телефоне)
+Android Auto / CarPlay integrados en la pantalla	Встроенные в экран Android Auto / CarPlay
+Otra app…	Другое приложение…
+¿Cómo quieres conectar tu celular?	Как подключить телефон?
+Conexión: {}. Cámbiala dejando presionado el botón.	Подключение: {}. Измените, удерживая кнопку.
+el navegador	браузер
+«{}» necesita un Android más nuevo que el de esta pantalla. Abro el navegador de fábrica.	«{}» требует более новую версию Android, чем на этом экране. Открываю штатный браузер.
+No encontré un navegador. Déjalo presionado para elegir uno.	Браузер не найден. Удержите, чтобы выбрать.
+Permite «Instalar apps desconocidas» para StradaOS y vuelve a tocar.	Разрешите «Установка неизвестных приложений» для StradaOS и нажмите снова.
+Activa «Orígenes desconocidos» y vuelve a tocar.	Включите «Неизвестные источники» и нажмите снова.
+No se pudo preparar {}	Не удалось подготовить {}
+No se pudo abrir el instalador para {}	Не удалось открыть установщик для {}
+Aplicaciones  ·  Android {} (API {})	Приложения  ·  Android {} (API {})
+Despejado	Ясно
+Parcialmente nublado	Переменная облачность
+Nublado	Облачно
+Niebla	Туман
+Llovizna	Морось
+Lluvia	Дождь
+Nieve	Снег
+Tormenta	Гроза
+Mapa en vivo apagado	Живая карта выключена
+Rendimiento	Производительность
+Apágalo si la pantalla va lenta: queda un mapa de adorno y el velocímetro sigue funcionando	Выключите, если экран тормозит: останется декоративная карта, а спидометр продолжит работать
+StradaOS aún no es tu pantalla de inicio	StradaOS пока не является вашим главным экраном
+Por eso al encender el carro o al tocar Inicio aparece el menú de fábrica.\n\nToca «Fijar ahora», elige StradaOS y luego «Siempre».	Поэтому при запуске автомобиля или нажатии «Домой» появляется штатное меню.\n\nНажмите «Задать сейчас», выберите StradaOS, затем «Всегда».
+Fijar ahora	Задать сейчас
+Ahora no	Не сейчас
+No volver a preguntar	Больше не спрашивать
+Elige StradaOS y toca «Siempre»	Выберите StradaOS и нажмите «Всегда»
+Listo: StradaOS es tu pantalla de inicio	Готово: StradaOS теперь главный экран
+Fijar StradaOS a mano	Задать StradaOS вручную
+Algunas pantallas no muestran la lista para elegir. Prueba así:\n\n1. Toca el botón Inicio (la casita) de la pantalla. Si pregunta qué app usar, elige StradaOS → Siempre.\n2. Si no pregunta: en los ajustes de la pantalla busca Aplicaciones → Aplicaciones predeterminadas → Pantalla de inicio (o «App de inicio») y elige StradaOS.\n3. Con Android 10 o más nuevo, no lo elijas desde el modo fábrica de la pantalla («Launcher», «Interfaz» o «UI»): en algunas marcas eso deja las demás apps sin poder abrirse. En Android 4 a 9 sí puedes usar esa opción.\n\nSi tu pantalla siempre vuelve a su menú de fábrica al encender, activa «Abrir StradaOS al encender» en Ajustes → Sistema.	Некоторые экраны не показывают список для выбора. Попробуйте так:\n\n1. Нажмите кнопку «Домой» (домик) на экране. Если спросит, какое приложение использовать, выберите StradaOS → Всегда.\n2. Если не спрашивает: в настройках экрана найдите Приложения → Приложения по умолчанию → Главный экран («Приложение главного экрана») и выберите StradaOS.\n3. На Android 10 и новее не выбирайте это из заводского режима экрана («Launcher», «Interface» или «UI»): на некоторых марках после этого другие приложения не смогут открыться. На Android с 4 по 9 эту опцию можно использовать.\n\nЕсли экран всегда возвращается в заводское меню при включении, включите «Открывать StradaOS при включении» в Настройки → Система.
+Pantalla de inicio	Главный экран
+La que aparece al encender y al tocar Inicio	Тот, что появляется при включении и при нажатии «Домой»
+StradaOS ✓	StradaOS ✓
+Otra · toca para cambiar	Другой · нажмите, чтобы сменить
+Abrir StradaOS al encender	Открывать StradaOS при включении
+Para pantallas que siempre arrancan en su menú de fábrica (Android 4 a 9)	Для экранов, которые всегда запускаются в заводском меню (Android с 4 по 9)
+¿La música Bluetooth se corta o no aparece?	Музыка Bluetooth прерывается или не появляется?
+Qué hacer en cada caso	Что делать в каждом случае
+• Se corta al salir de la app Bluetooth: sal con el botón Inicio (la casita), no con Atrás. Atrás cierra la app de fábrica y con ella la música.\n\n• No suena hasta abrir la app Bluetooth: activa «Abrir la app de música Bluetooth al conectar el celular» (aquí mismo). Abre la app un instante y vuelve al inicio.\n\n• La canción no aparece en el inicio (Android 5 o más nuevo): activa «Música de cualquier app» arriba y dale acceso a notificaciones a StradaOS.\n\n• Revisa en Ajustes → Accesos y apps que «Música Bluetooth» sea la app Bluetooth de tu pantalla.	• Прерывается при выходе из приложения Bluetooth: выходите кнопкой «Домой» (домик), а не «Назад». «Назад» закрывает штатное приложение, а вместе с ним и музыку.\n\n• Не играет, пока не открыто приложение Bluetooth: включите «Открывать приложение музыки Bluetooth при подключении телефона» (прямо здесь). Оно откроется на мгновение и вернёт на главный экран.\n\n• Песня не появляется на главном экране (Android 5 и новее): включите «Музыка из любого приложения» выше и выдайте StradaOS доступ к уведомлениям.\n\n• Проверьте в Настройки → Ярлыки и приложения, что «Музыка Bluetooth» — это приложение Bluetooth вашего экрана.
+Sin permiso	Нет разрешения
+GPS apagado	GPS выключен
+Unidades	Единицы
+Automático: mph en EE. UU. y Reino Unido	Автоматически: мили/ч в США и Великобритании
+Permisos → Ubicación → Permitir	Разрешения → Геолокация → Разрешить
+Activa la ubicación para StradaOS en los ajustes de la pantalla	Включите геолокацию для StradaOS в настройках экрана
+Activa la ubicación (GPS)	Включите геолокацию (GPS)
+Activa la ubicación (GPS) en los ajustes de la pantalla	Включите геолокацию (GPS) в настройках экрана
+Sin permiso de ubicación · toca aquí	Нет доступа к геолокации · нажмите здесь
+Ubicación apagada · toca aquí	Геолокация выключена · нажмите здесь
+Sin señal GPS · toca aquí	Нет сигнала GPS · нажмите здесь
+Versión de prueba	Тестовая версия
+Simular pantalla	Имитация экрана
+Para probar otros tamaños en una tablet o celular	Чтобы проверить другие размеры на планшете или телефоне
+Real	Реальный
+Aceite	Масло
+Configurar	Настроить
+¡Cambiar!	Заменить!
+Kilometraje estimado	Расчётный пробег
+Próximo cambio	Следующая замена
+Faltan {}	Осталось {}
+¡Ya toca!	Пора!
+Cambio de aceite	Замена масла
+Ya hice el cambio de aceite	Замену масла сделал
+Corregir el kilometraje actual	Исправить текущий пробег
+Cambiar cada cuánto se hace	Изменить периодичность
+Desactivar el recordatorio	Отключить напоминание
+Recordatorio de cambio de aceite	Напоминание о замене масла
+StradaOS no puede leer el kilometraje del tablero del carro. Escríbelo una vez y StradaOS le irá sumando lo que recorras con el GPS, para avisarte cuando toque el cambio.\n\nDe vez en cuando puedes corregirlo con el valor real del tablero.	StradaOS не может считать пробег с приборной панели автомобиля. Введите его один раз, и StradaOS будет добавлять пройденное расстояние по GPS, чтобы предупредить, когда пора менять масло.\n\nВремя от времени можно исправить его по реальному показанию приборной панели.
+¿A cuántos {} fue el último cambio de aceite?	Пробег на момент последней замены масла ({})
+Kilometraje actual del tablero	Текущий пробег по приборной панели
+¿Cada cuántos {} cambias el aceite?	Через сколько {} менять масло?
+Escribe un número válido	Введите корректное число
+Kilometraje del tablero al hacer el cambio	Пробег по приборной панели при замене
+Es hora del cambio de aceite	Пора менять масло
+El kilometraje estimado es ≈ {} y ya toca el cambio de aceite (cada {}).	Расчётный пробег ≈ {}, и пора менять масло (каждые {}).
+¿Ya lo hiciste?	Уже сделали?
+Ya lo hice	Сделано
+Aún no	Ещё не
+Se muestra al lado de la velocidad y avisa cuando toca	Показывается рядом со скоростью и предупреждает, когда пора
+Kilometraje actual	Текущий пробег
+Estimado con el GPS. Corrígelo con el del tablero cuando quieras	Расчёт по GPS. Исправьте по приборной панели в любое время
+Cada cuánto	Как часто
+Orientación del mapa	Ориентация карты
+El mapa apunta	Карта ориентирована
+Según tu dirección: gira con el carro mientras te mueves	По направлению движения: поворачивается вместе с автомобилем
+Norte arriba	Север вверху
+Según tu dirección	По направлению движения
+Último cambio	Последняя замена
+Corregir el último cambio	Исправить последнюю замену
+¿Tu tablero marca kilómetros o millas?	Приборная панель показывает километры или мили?
+Kilómetros (km)	Километры (км)
+Millas (mi)	Мили (mi)
+Revisa el último cambio	Проверьте последнюю замену
+El último cambio ({}) queda por encima del kilometraje actual ({}). ¿Lo escribiste en otra unidad?	Последняя замена ({}) больше текущего пробега ({}). Вы ввели в другой единице?
+Corregir	Исправить
+Guardar igual	Всё равно сохранить
+Kilometraje del tablero cuando se hizo	Пробег по приборной панели на момент замены
+Ocultas: {}	Скрыто: {}
+Ocultar del cajón	Скрыть из списка приложений
+Información de la app	Сведения о приложении
+Oculta. Para volver a verla: Ajustes → Accesos y apps → Apps ocultas	Скрыто. Чтобы вернуть: Настройки → Ярлыки и приложения → Скрытые приложения
+Cajón de apps	Список приложений
+Apps ocultas	Скрытые приложения
+No se ven en el cajón, pero siguen instaladas y se pueden poner en los botones	Не показываются в списке, но установлены и доступны для кнопок
+Buscar app	Поиск приложений
+Apps ocultas en el cajón	Приложения, скрытые из списка
+Se muestran todas las apps	Показываются все приложения
+Apps ocultas: {}	Скрытых приложений: {}
+Desinstalar	Удалить
+Salir de StradaOS	Выйти из StradaOS
+Abrir el launcher de fábrica	Открыть заводской лаунчер
+Sale de StradaOS sin desinstalarlo	Выход из StradaOS без удаления
+Desactivar StradaOS	Отключить StradaOS
+Si la pantalla quedó atrapada en StradaOS: se apaga solo, sin ventanas de Android	Если экран завис на StradaOS: он выключится сам, без окон Android
+Desinstalar StradaOS	Удалить StradaOS
+Android pide confirmar	Android просит подтвердить
+No encontré otra pantalla de inicio en este equipo	Не нашёл другой домашний экран на этом устройстве
+¿Cuál es el launcher de fábrica?	Какой лаунчер заводской?
+No se pudo abrir	Не удалось открыть
+No encontré otra pantalla de inicio: StradaOS no se puede desactivar en este equipo	Не нашёл другой домашний экран: StradaOS нельзя отключить на этом устройстве
+¿Desactivar StradaOS?	Отключить StradaOS?
+StradaOS deja de ser la pantalla de inicio, ya no se abre al encender y vuelve el launcher de fábrica. No pide confirmaciones de Android, así que sirve aunque la pantalla haya quedado atrapada.\n\nPara volver a usarlo después: desinstálalo desde los ajustes de la pantalla e instálalo de nuevo.	StradaOS перестаёт быть домашним экраном, больше не открывается при включении, и возвращается заводской лаунчер. Android не запрашивает подтверждения, поэтому это работает, даже если экран завис.\n\nЧтобы снова им пользоваться: удалите его в настройках экрана и установите заново.
+Desactivar	Отключить
+Diseño del inicio	Раскладка главного экрана
+Reproductor de música	Музыкальный плеер
+Ponlo del lado del conductor para tenerlo a la mano	Поставьте со стороны водителя, чтобы был под рукой
+Derecha	Справа
+Izquierda	Слева
+Tarjeta del vehículo	Карточка автомобиля
+Si la ocultas, la velocidad pasa arriba y el mapa y el reproductor ganan espacio	Если скрыть, скорость переедет наверх, а карта и плеер получат больше места
+Barra de botones	Панель кнопок
+Lateral: los botones van al costado y todo se ve más grande en pantallas bajas como 1280×480	Боковая: кнопки сбоку, всё крупнее на низких экранах, например 1280×480
+Normal	Обычная
+Compacta	Компактная
+Lateral	Боковая
+Aceite: configurar	Масло: настроить
+¡Cambiar aceite!	Пора поменять масло!
+Aceite: {}	Масло: {}
+Mapa sin conexión	Офлайн-карта
+Archivo del mapa	Файл карты
+Un archivo .map (p. ej. colombia.map) en la memoria de la pantalla o en una USB: el mapa se ve sin internet	Файл .map (например, colombia.map) в памяти экрана или на USB-накопителе: карта работает без интернета
+Error	Ошибка
+No se pudo abrir: {}	Не удалось открыть: {}
+Toca para dejar de usarlo	Нажмите, чтобы перестать использовать
+Mapa sin conexión quitado	Офлайн-карта удалена
+¿Dónde consigo el mapa?	Где взять карту?
+Mapas gratis de OpenStreetMap por país	Бесплатные карты OpenStreetMap по странам
+Buscando mapas…	Поиск карт…
+No se encontró ningún mapa	Карта не найдена
+No hay archivos .map en la memoria de la pantalla ni en las USB conectadas. Toca «Cómo conseguirlo» para ver de dónde bajarlo.	В памяти экрана и на подключённых USB-накопителях нет файлов .map. Нажмите «Как получить», чтобы узнать, откуда скачать.
+Cómo conseguirlo	Как получить
+Elige el mapa	Выберите карту
+No se pudo usar este archivo	Не удалось использовать этот файл
+Debe ser un mapa de mapsforge (.map) copiado completo.	Нужна карта mapsforge (.map), скопированная полностью.
+Mapa sin conexión listo: {}	Офлайн-карта готова: {}
+Sin permiso de almacenamiento no se pueden buscar mapas	Без разрешения на хранилище карты не найти
+Última posición · mapa sin conexión	Последняя позиция · офлайн-карта
+no se encuentra el archivo	файл не найден
+sin permiso para leer el archivo	нет разрешения на чтение файла
+no es un mapa de mapsforge (.map)	это не карта mapsforge (.map)
+el archivo está incompleto (¿se copió entero?)	файл неполный (он скопировался полностью?)
+1. En un computador o celular, descarga el mapa de tu país (formato mapsforge, gratis):\ndownload.mapsforge.org/maps/v5\n\nColombia:\ndownload.mapsforge.org/maps/v5/south-america/colombia.map\n\n2. Cópialo a una memoria USB o a la carpeta Download de la pantalla.\n\n3. En Ajustes → Mapa y clima → Mapa sin conexión, toca «Archivo del mapa» y elígelo.\n\nEl mapa se usa en el inicio incluso con internet. Para actualizarlo, descarga uno nuevo y reemplaza el archivo.	1. На компьютере или телефоне скачайте карту своей страны (формат mapsforge, бесплатно):\ndownload.mapsforge.org/maps/v5\n\nКолумбия:\ndownload.mapsforge.org/maps/v5/south-america/colombia.map\n\n2. Скопируйте её на USB-накопитель или в папку Download экрана.\n\n3. В Настройках → Карта и погода → Офлайн-карта нажмите «Файл карты» и выберите его.\n\nКарта используется на главном экране даже с интернетом. Чтобы обновить, скачайте новую и замените файл.
+Toca para dejar de usarlo o borrarlo	Нажмите, чтобы перестать использовать или удалить
+Descargar un mapa	Скачать карту
+Elige tu país: se descarga gratis de OpenStreetMap (mapsforge) y se usa sin internet	Выберите страну: карта скачивается бесплатно с OpenStreetMap (mapsforge) и работает без интернета
+Cargando la lista de mapas…	Загрузка списка карт…
+No se pudo cargar la lista de mapas	Не удалось загрузить список карт
+Revisa la conexión a internet e inténtalo de nuevo.	Проверьте подключение к интернету и попробуйте снова.
+por regiones	по регионам
+Elige el continente	Выберите континент
+Tamaño	Размер
+Se guarda en	Сохраняется в
+Espacio libre	Свободно
+memoria	память
+Usa datos: mejor con WiFi o un plan amplio. Puedes seguir usando la pantalla; si se corta la señal o la apagas, la descarga continúa después.	Использует данные: лучше через Wi-Fi или с большим тарифом. Экраном можно пользоваться дальше; если сигнал пропадёт или вы выключите экран, загрузка продолжится позже.
+No hay espacio suficiente en la memoria.	Недостаточно свободного места в памяти.
+Descargar	Скачать
+Descargando el mapa… puedes seguir usando la pantalla	Загружается карта… экраном можно пользоваться
+Descarga en curso	Загрузка идёт
+Descarga en pausa	Загрузка приостановлена
+Pausar	Пауза
+Continuar	Продолжить
+Cancelar descarga	Отменить загрузку
+Descarga cancelada	Загрузка отменена
+Este mapa lo descargó StradaOS. Puedes dejar de usarlo o borrarlo para liberar espacio.	Эту карту скачал StradaOS. Вы можете перестать её использовать или удалить, чтобы освободить место.
+Puedes dejar de usar este mapa (el archivo no se borra).	Можно перестать использовать эту карту (файл не удаляется).
+Dejar de usarlo	Перестать использовать
+Borrar el archivo	Удалить файл
+Mapa borrado	Карта удалена
+Mapa descargado y listo: {}	Карта скачана и готова: {}
+Descargando	Загрузка
+África	Африка
+Australia y Oceanía	Австралия и Океания
+Centroamérica y el Caribe	Центральная Америка и Карибы
+Europa	Европа
+Norteamérica	Северная Америка
+Rusia	Россия
+Sudamérica	Южная Америка
+sin conexión, reintentando…	нет соединения, повторная попытка…
+el archivo quedó incompleto	файл неполный
+no se pudo guardar el archivo	не удалось сохранить файл
+no hay espacio suficiente	недостаточно места
+se cortó la descarga	загрузка прервалась
+Sin señal GPS · mapa sin conexión	Нет GPS · офлайн-карта
+Sin señal GPS ni internet	Нет GPS и интернета
+Sin señal GPS · última posición	Нет GPS · последняя позиция
+Auto: por horario. Sistema: sigue el modo oscuro de la pantalla (algunas lo cambian al encender las luces)	Авто: по расписанию. Система: следует тёмной теме экрана (некоторые переключают её при включении фар)
+Oscuro desde	Тёмная с
+Claro desde	Светлая с
+Íconos de Wi-Fi y Bluetooth	Значки Wi-Fi и Bluetooth
+Arriba, junto al clima. Toca para encender o apagar; déjalo presionado para abrir sus ajustes	Наверху, рядом с погодой. Нажмите, чтобы включить или выключить; удерживайте, чтобы открыть настройки
+¿Apagar el Wi-Fi?	Выключить Wi-Fi?
+La pantalla se queda sin internet (mapa en vivo, clima y actualizaciones).	Экран потеряет интернет (живая карта, погода и обновления).
+Apagar	Выключить
+Esta pantalla no deja cambiar el Wi-Fi desde otra app: abre sus ajustes	Этот экран не позволяет менять Wi-Fi из других приложений: открываются его настройки
+Encendiendo el Wi-Fi…	Включение Wi-Fi…
+Wi-Fi apagado	Wi-Fi выключен
+¿Apagar el Bluetooth?	Выключить Bluetooth?
+Se desconecta el celular (música y llamadas).	Телефон отключится (музыка и звонки).
+Esta pantalla no deja cambiar el Bluetooth desde otra app: abre sus ajustes	Этот экран не позволяет менять Bluetooth из других приложений: открываются его настройки
+Encendiendo el Bluetooth…	Включение Bluetooth…
+Bluetooth apagado	Bluetooth выключен
+Lado de la barra lateral	Сторона боковой панели
+Automático: del lado del reproductor	Автоматически: со стороны плеера
+Nombres de los botones	Названия кнопок
+Debajo de cada ícono de la barra	Под каждым значком панели
+Permiso de ubicación: {}	Разрешение на геолокацию: {}
+NO (toca el letrero del mapa)	НЕТ (нажмите на надпись на карте)
+sí	да
+GPS del equipo: {} · ubicación por red: {}	GPS устройства: {} · геолокация по сети: {}
+no encontrado	не найдено
+encendido	включён
+apagado	выключен
+encendida	включена
+apagada	выключена
+Última señal: {}	Последний сигнал: {}
+ninguna desde que abrió StradaOS	нет с момента запуска StradaOS
+hace {} s	{} с назад
+hace {} min	{} мин назад
+Buscando desde hace {} min	Поиск уже {} мин
+Posición: {}	Позиция: {}
+sin GPS	нет GPS
+Zoom: {}	Масштаб: {}
+Mapa sin conexión: {}	Офлайн-карта: {}
+ninguno	нет
+error: {}	ошибка: {}
+{} · en uso	{} · используется
+{} · fuera del área del archivo	{} · вне области файла
+Teselas dibujadas desde el archivo: {} · {} ms cada una	Тайлы, отрисованные из файла: {} · по {} мс каждый
+Proveedor: {}	Провайдер: {}
+{} · ninguna fuente respondió ({} vueltas)	{} · ни один источник не ответил ({} циклов)
+Teselas descargadas: {} · en caché: {}	Загружено тайлов: {} · в кэше: {}
+Errores seguidos: {}	Ошибок подряд: {}
+Último error: {}	Последняя ошибка: {}
+Fuentes probadas:	Проверенные источники:
+• {}: {}	• {}: {}
+sin probar	не проверялось
+certificado	сертификат
+OSM Alemania	OSM Германия
+OSM Francia	OSM Франция
+OSM Humanitario	OSM Гуманитарная
+Esri gris oscuro	Esri тёмно-серая
+sin iniciar	не запущено
+TLS listo ({}), {} raíces	TLS готов ({}), {} корней
+TLS listo ({}), {} raíces, {} omitidas	TLS готов ({}), {} корней, {} пропущено
+TLS no disponible: {}	TLS недоступен: {}
+Íconos de Wi-Fi y Bluetooth arriba	Значки Wi-Fi и Bluetooth наверху
+Bluetooth: estado del celular desde la app de fábrica; toca para abrirla	Bluetooth: состояние телефона из заводского приложения; нажмите, чтобы открыть его
+Tema según el modo oscuro del sistema	Тема по тёмному режиму системы
+Pantallas que lo cambian (p. ej. con las luces)	Экраны, которые её переключают (например, при включении фар)
+el sistema está en modo oscuro	система в тёмном режиме
+el sistema está en modo claro	система в светлом режиме
+Cargando…	Загрузка…
+Esperando la ubicación…	Ожидание геолокации…
+Máx {} · Mín {}	Макс {} · Мин {}
+Sensación {}	Ощущается {}
+Humedad {}	Влажность {}
+Viento {}	Ветер {}
+PRÓXIMAS HORAS	БЛИЖАЙШИЕ ЧАСЫ
+PRÓXIMOS DÍAS	БЛИЖАЙШИЕ ДНИ
+Ahora	Сейчас
+Hoy	Сегодня
+El clima está apagado en Ajustes → Mapa y clima	Погода выключена в Настройках → Карта и погода
+Esperando la ubicación para el clima…	Ожидание геолокации для погоды…
+Cargando el clima…	Загрузка погоды…
+Velocidad y servicio	Скорость и сервис
+En la tarjeta del vehículo (o arriba si la ocultas). Apágalo si tu carro o pantalla no tiene GPS: la foto ocupa ese espacio	На карточке автомобиля (или наверху, если её скрыть). Выключите, если в машине или на экране нет GPS: фото занимает это место
+Aceite en el inicio	Масло на главном экране
+Junto a la velocidad. Aunque lo ocultes, el aviso del cambio de aceite sigue saliendo	Рядом со скоростью. Даже если скрыть, напоминание о замене масла всё равно появится
+Tarjeta del reproductor	Карточка плеера
+Si la ocultas, el mapa gana espacio	Если скрыть, карта получит больше места
+Botones de conexión	Кнопки подключения
+Con uno o ninguno, el clima ocupa el espacio libre del mapa	При одной или без кнопок погода занимает свободное место на карте
+Android Auto y CarPlay	Android Auto и CarPlay
+Solo Android Auto	Только Android Auto
+Solo CarPlay	Только CarPlay
+Botón del navegador	Кнопка навигатора
+El botón redondo del mapa que abre tu app de navegación	Круглая кнопка на карте, открывающая ваше навигационное приложение
+Grande	Большая
+Muy grande	Очень большая
+Oculto	Скрыта
+Lado del botón del navegador	Сторона кнопки навигатора
+Automático: del lado del reproductor (el del conductor)	Автоматически: со стороны плеера (со стороны водителя)
+Usar la foto original, sin recortar ni quitar el fondo	Использовать исходное фото без обрезки и удаления фона
+Se le quita el fondo automáticamente, o la puedes usar tal cual	Фон удаляется автоматически, или можно использовать фото как есть
+Lluvia {}	Дождь {}
+Abriendo la foto…	Открываем фото…
+Vista previa	Предпросмотр
+Sin fondo · nivel {} de 4	Без фона · уровень {} из 4
+Sin fondo · nivel {} de 4 (también quita el reflejo del piso)	Без фона · уровень {} из 4 (также убирает отражение пола)
+Usar la foto original, con fondo	Использовать исходное фото с фоном
+Quitar el fondo	Убрать фон
+No se detectó un fondo liso: se usa la foto tal cual	Ровный фон не найден: используется фото как есть
+Se usa tal cual; si quieres, le puedes quitar el fondo	Используется как есть; при желании можно убрать фон
+Cantidad de botones	Количество кнопок
+«Apps» siempre queda al final	«Приложения» всегда остаётся последней
+Tamaño de los íconos	Размер значков
+Pequeño	Маленький
+Pequeña	Маленькая
+Íconos de la barra	Значки панели
+Apps: el ícono de la app que abre cada botón (radio, cámara…)	Приложения: значок приложения, которое открывает каждая кнопка (радио, камера…)
+Pack de íconos	Набор значков
+Instala uno (los de Nova o ADW sirven) y elígelo aquí	Установите один (подходят наборы Nova или ADW) и выберите его здесь
+Cambia los íconos de la barra y del cajón de apps	Меняет значки панели и ящика приложений
+Ninguno (íconos de siempre)	Нет (стандартные значки)
+No hay packs de íconos instalados	Наборы значков не установлены
+Ese pack no trae la lista de íconos (appfilter)	В этом наборе нет списка значков (appfilter)
+Pack listo: {} íconos	Набор готов: {} значков
+Lateral: los botones van al costado y todo se ve más grande en pantallas bajas como 1280×480. Oculta: el botón Apps va arriba	Боковая: кнопки сбоку, всё крупнее на низких экранах, например 1280×480. Скрытая: кнопка «Приложения» наверху
+Oculta	Скрыта
+Tamaño de la letra	Размер текста
+Para leer mejor de lejos o que quepa más	Чтобы лучше читать издалека или поместилось больше
+Velocímetro	Спидометр
+En la tarjeta del vehículo. Toma el color de acento	На карточке автомобиля. Использует акцентный цвет
+Digital	Цифровой
+Analógico	Аналоговый
+Mixto	Смешанный
+Velocímetro sobre el mapa	Спидометр на карте
+Redondo, en una esquina del mapa (en vez de la velocidad de arriba)	Круглый, в углу карты (вместо скорости наверху)
+Mantenimiento	Обслуживание
+Otros mantenimientos	Другое обслуживание
+Agregar mantenimiento	Добавить обслуживание
+Filtros, bujías, frenos, correa, SOAT… Avisa por kilómetros, por tiempo o lo que llegue primero	Фильтры, свечи, тормоза, ремень, SOAT… Напоминает по пробегу, по времени или что наступит раньше
+Filtro de aire	Воздушный фильтр
+Bujías	Свечи зажигания
+Pastillas de freno	Тормозные колодки
+Líquido de frenos	Тормозная жидкость
+Refrigerante	Охлаждающая жидкость
+Correa de distribución	Ремень ГРМ
+Rotación de llantas	Ротация шин
+Alineación y balanceo	Развал-схождение и балансировка
+Revisión de la batería	Проверка аккумулятора
+Seguro obligatorio (SOAT)	Обязательная страховка (SOAT)
+Revisión técnico-mecánica	Техосмотр
+Otro (escribe el nombre)	Другое (введите название)
+Nombre del mantenimiento	Название обслуживания
+Por kilómetros	По пробегу
+Por tiempo	По времени
+Lo que llegue primero	Что наступит раньше
+¿Cada cuántos meses?	Через сколько месяцев?
+¿Cada cuántos {}?	Через сколько {}?
+¿A cuántos {} fue la última vez?	На скольких {} было в последний раз?
+¿Cuándo fue la última vez?	Когда было в последний раз?
+Kilometraje del tablero	Пробег по приборной панели
+StradaOS no puede leer el kilometraje del carro. Escríbelo una vez y StradaOS le suma lo que recorras con el GPS.	StradaOS не может считать пробег автомобиля. Введите его один раз, и StradaOS будет прибавлять пройденное расстояние по GPS.
+Escribirlo	Ввести
+Última vez	Последний раз
+Cambiar cada cuánto	Изменить периодичность
+Corregir la última vez	Исправить последний раз
+¿Borrar «{}»?	Удалить «{}»?
+Kilometraje del tablero al hacerlo	Пробег по приборной панели на момент выполнения
+Es hora de: {}	Пора: {}
+¡Toca: {}!	Срок: {}!
+Cada {}	Каждые {}
+cada {} mes	каждые {} мес.
+cada {} meses	каждые {} мес.
+¿Cada cuánto tiempo?	Как часто?
+Días	Дни
+Semanas	Недели
+Meses	Месяцы
+cada día	каждый день
+cada semana	каждую неделю
+cada mes	каждый месяц
+cada {} días	каждые {} дн.
+cada {} semanas	каждые {} нед.
+(lo primero)	(что наступит раньше)
+{} meses	{} мес.
+{} día	{} день
+{} días	{} дн.
+Mantenimientos	Обслуживание
+Barra de apps	Панель приложений
+Tarjetas	Карточки
+Barra de arriba	Верхняя панель
+Diseño de la barra	Расположение панели
+Botones (déjalos presionados en el inicio para cambiarlos)	Кнопки (зажмите их на главном экране, чтобы изменить)
+Texto	Текст
+Kilometraje	Пробег
+Escríbelo una vez y StradaOS le suma lo que recorras con el GPS	Введите один раз, и StradaOS будет прибавлять пройденное по GPS
+Avisa cuando toca el cambio	Напоминает, когда пора менять
+En el inicio	На главном экране
+Mantenimiento en el inicio	Обслуживание на главном экране
+Junto a la velocidad se ve el más próximo (el aceite u otro). Los avisos siguen saliendo aunque lo ocultes	Рядом со скоростью показывается ближайшее (масло или другое). Напоминания всё равно появляются, даже если вы их скроете
+Se muestra junto a la velocidad: activa «Velocidad y servicio» en Pantalla de inicio	Показывается рядом со скоростью: включите «Скорость и сервис» в разделе «Главный экран»
+Aceite, filtros, SOAT y más	Масло, фильтры, SOAT и другое
+Ahora están en su propia sección	Теперь они в отдельном разделе
+Al encender	При включении
+Launcher predeterminado	Лаунчер по умолчанию
+Esquina del velocímetro	Угол спидометра
+Automático: arriba, en el lado contrario al botón del navegador	Автоматически: сверху, с противоположной стороны от кнопки навигатора
+Arriba a la izquierda	Вверху слева
+Arriba a la derecha	Вверху справа
+Abajo a la izquierda	Внизу слева
+Abajo a la derecha	Внизу справа
+Tamaño del velocímetro	Размер спидометра
+En pantallas bajas se limita para no tapar el mapa	На низких экранах размер ограничивается, чтобы не закрывать карту
+Elige un ícono	Выберите значок
+Cambiar el ícono	Сменить значок
+Filtro de combustible	Топливный фильтр
+Aire acondicionado	Кондиционер
+Lavado	Мойка
+Fuente: {}	Источник: {}
+Pista: {}	Трек: {}
+Carátula: {}	Обложка: {}
+Lector de notificaciones (accesibilidad): {}	Чтение уведомлений (спец. возможности): {}
+ACTIVO	АКТИВНО
+Última notificación de Open Headunit: {}	Последнее уведомление Open Headunit: {}
+ninguna	нет
+{} s, carátula {}, textos {}	{} с, обложка {}, тексты {}
+Open Headunit corriendo: {} · celular por USB en modo Android Auto: {}	Open Headunit запущен: {} · телефон по USB в режиме Android Auto: {}
+no se sabe	неизвестно
+Android Auto conectado (para StradaOS): {}	Android Auto подключён (для StradaOS): {}
+App Bluetooth conectada: {}	Приложение Bluetooth подключено: {}
+Audio Bluetooth automático: {}	Автоматический аудио-Bluetooth: {}
+desactivado	выключено
+no aplica (otra marca)	не применимо (другая марка)
+App de música Bluetooth: {} · abrir al conectar: {}	Музыкальное приложение Bluetooth: {} · открывать при подключении: {}
+no encontrada	не найдено
+Sonido en Bluetooth (estimado): {} · app al frente: {}	Звук по Bluetooth (оценка): {} · приложение на переднем плане: {}
+Activaciones: {}	Включений: {}
+Eventos Bluetooth:	События Bluetooth:
+(sin eventos)	(нет событий)
+no	нет
+conectado a la app Bluetooth	подключено к приложению Bluetooth
+la app Bluetooth se cerró	приложение Bluetooth закрылось
+se reinicia muy seguido: pausa de 15 min	перезапускается слишком часто: пауза 15 мин
+activar audio: el celular no está conectado por Bluetooth	включить звук: телефон не подключён по Bluetooth
+activar audio: el celular está en pausa	включить звук: телефон на паузе
+modo de audio Bluetooth solicitado	запрошен режим аудио Bluetooth
+activar audio falló: {}	не удалось включить звук: {}
+el celular empezó a sonar	телефон начал воспроизведение
+revisión falló: {}	проверка не удалась: {}
+otra fuente al frente: {}	на переднем плане другой источник: {}
+no se cambió: StradaOS acaba de arrancar	не переключено: StradaOS только что запустился
+no se cambió: llamada en curso	не переключено: идёт звонок
+no se cambió: Android Auto tiene el sonido	не переключено: звук у Android Auto
+el sonido ya es Bluetooth	звук уже через Bluetooth
+celular conectado por Bluetooth	телефон подключён по Bluetooth
+no se abrió la app BT: cámara de reversa al frente	приложение BT не открыто: на переднем плане камера заднего хода
+no se abrió la app BT: no sé qué app está al frente	приложение BT не открыто: неизвестно, что на переднем плане
+no se abrió la app BT: ajustes abiertos	приложение BT не открыто: открыты настройки
+abierta {} para tomar el sonido (luego vuelve a {})	открыто {}, чтобы взять звук (затем возврат в {})
+abierta {} para tomar el sonido	открыто {}, чтобы взять звук
+no se volvió: el usuario abrió {}	возврата не было: пользователь открыл {}
+Android Auto se desconectó	Android Auto отключился
+Registro técnico para enviar al desarrollador (se guarda en español).	Технический журнал для отправки разработчику (хранится на испанском языке).
+Preparando {}…	Подготовка {}…
+Copia de seguridad	Резервная копия
+Guardar una copia	Сохранить копию
+Ajustes, mantenimientos, kilometraje y la foto del vehículo en un archivo, en la pantalla o en una USB. Nada se sube a internet	Настройки, обслуживание, пробег и фото автомобиля в одном файле на экране или на USB-накопителе. Ничего не загружается в интернет
+Restaurar una copia	Восстановить из копии
+Recupera todo después de restablecer la pantalla, o pásalo a otra pantalla	Восстановите всё после сброса экрана или перенесите на другой экран
+Copia automática	Автоматическая копия
+Cada vez que cambias algo se actualiza una copia en la pantalla y en la USB que esté conectada	При каждом изменении копия обновляется на экране и на подключённом USB-накопителе
+Memoria de la pantalla	Память экрана
+Memoria USB	Память USB
+Elegir otra carpeta…	Выбрать другую папку…
+¿Dónde guardar la copia?	Где сохранить копию?
+No se pudo abrir el selector de archivos	Не удалось открыть выбор файлов
+No se pudo guardar la copia	Не удалось сохранить копию
+Esa memoria no dejó escribir el archivo. Prueba con otra memoria o con «Elegir otra carpeta…».	Этот накопитель не позволил записать файл. Попробуйте другой или «Выбрать другую папку…».
+Copia guardada	Копия сохранена
+Se guardó en:	Сохранено в:
+Al restablecer la pantalla de fábrica también se puede borrar su memoria: guarda otra copia en una USB para tenerla a salvo.	При сбросе экрана к заводским настройкам его память тоже может быть стерта: сохраните ещё одну копию на USB-накопитель, чтобы она была в безопасности.
+No se pudo leer el archivo	Не удалось прочитать файл
+Buscando copias…	Поиск копий…
+No se encontró ninguna copia	Копии не найдены
+No hay copias de StradaOS en la memoria de la pantalla ni en las USB conectadas. El archivo se llama «StradaOS-backup» y termina en .json.	На памяти экрана и подключённых USB-накопителях нет копий StradaOS. Файл называется «StradaOS-backup» и имеет расширение .json.
+automática	автоматическая
+Buscar el archivo…	Найти файл…
+Elige la copia	Выберите копию
+No se pudo restaurar	Не удалось восстановить
+Este archivo no es una copia de seguridad de StradaOS	Это не резервная копия StradaOS
+Copia del	Копия от
+Pantalla:	Экран:
+Ajustes guardados:	Сохранено настроек:
+con la foto del vehículo	с фото автомобиля
+Se reemplaza toda la configuración actual de StradaOS por la de la copia.	Вся текущая настройка StradaOS будет заменена настройкой из копии.
+¿Restaurar esta copia?	Восстановить эту копию?
+Restaurar	Восстановить
+Copia restaurada	Копия восстановлена
+Esta copia se hizo con una versión más nueva de StradaOS. Actualiza StradaOS y vuelve a intentarlo	Эта копия создана в более новой версии StradaOS. Обновите StradaOS и повторите попытку
+No se pudo guardar la configuración	Не удалось сохранить настройки
+La copia está dañada o incompleta	Копия повреждена или неполная
+Abrir una app al encender	Открывать приложение при включении
+StradaOS la abre un momento al arrancar (por ejemplo la radio, para que empiece a sonar) y vuelve al inicio	StradaOS открывает его на короткое время при запуске (например, радио, чтобы оно начало играть) и возвращается на главный экран
+Copia de seguridad en un archivo (pantalla o USB)	Резервная копия в файл (экран или USB)
+en Android 10+ la carpeta se elige con el selector de archivos	на Android 10+ папку выбирают через выбор файлов
+Diseño vertical	Вертикальная раскладка
+Pantallas en vertical (tipo Tesla)	Вертикальные экраны (как у Tesla)
+en uso	используется
+esta pantalla es horizontal	этот экран горизонтальный
+Pantalla completa	Полноэкранный режим
+Ocultar la barra del sistema	Скрыть системную панель
+Esconde también la barra de navegación de tu pantalla (abajo o al costado). Desliza desde el borde para verla un momento	Также скрывает панель навигации экрана (снизу или сбоку). Проведите от края, чтобы ненадолго её показать
+Corrección del velocímetro	Корректировка спидометра
+Suma o resta a la velocidad del GPS para que coincida con el tablero de tu carro	Прибавляет или вычитает из скорости GPS, чтобы она совпадала с приборной панелью автомобиля
+Diseño	Раскладка
+Diseño de la pantalla	Раскладка экрана
+Automático: según la forma de la pantalla. Elige Vertical si tu pantalla es vertical y se ve chica en el medio	Автоматически: по форме экрана. Выберите «Вертикальная», если экран вертикальный и в середине выглядит маленьким
+Horizontal	Горизонтальная
+Vertical	Вертикальная
+se puede elegir en Ajustes → Pantalla de inicio → Diseño	можно выбрать в Настройки → Главный экран → Раскладка
+Área útil de la pantalla:	Полезная область экрана:
+Horario	Расписание
+Amanecer y atardecer: se calcula con el GPS, sin internet	Рассвет и закат: вычисляются по GPS, без интернета
+Horas fijas	Фиксированное время
+Amanecer y atardecer	Рассвет и закат
+Amanecer	Рассвет
+Atardecer	Закат
+oscuro desde el atardecer hasta el amanecer	тёмная тема с заката до рассвета
+Esperando la ubicación del GPS	Ожидание местоположения GPS
+Mientras tanto usa las horas fijas	Пока используется фиксированное время
+Orden	Порядок
+Usadas recientemente	Недавно использованные
+Instaladas recientemente	Недавно установленные
+A mano	Вручную
+Orden de las apps	Порядок приложений
+Deja presionada una app y elige «Mover» para cambiarla de lugar	Зажмите приложение и выберите «Переместить», чтобы изменить его место
+Mover	Переместить
+Toca el lugar donde quieres poner «{}»	Нажмите место, куда хотите поставить «{}»
+Pantalla en reposo	Режим ожидания экрана
+Si no tocas la pantalla un rato, se pone negra con la hora, la fecha y la velocidad. Un toque la quita	Если не трогать экран некоторое время, он станет чёрным с временем, датой и скоростью. Одно касание возвращает изображение
+1 minuto	1 минута
+{} minutos	{} мин.
+Después de	Через
+Tiempo sin tocar la pantalla	Время без касания экрана
+Con el diseño de velocímetro que prefieras	С выбранным вами стилем спидометра
+Sin velocidad	Без скорости
+Color de la letra	Цвет текста
+Blanco	Белый
+Gris suave	Мягкий серый
+Ámbar	Янтарный
+Ver ahora	Посмотреть сейчас
+Toca la pantalla para volver	Коснитесь экрана, чтобы вернуться
+Ir a…	Перейти к…
+Recalculando…	Перестроение маршрута…
+Llegaste a tu destino	Вы прибыли в пункт назначения
+Activa el mapa en vivo en Ajustes → Mapa y clima	Включите живую карту в Настройки → Карта и погода
+Escribe una dirección o lugar	Введите адрес или место
+RECIENTES	НЕДАВНИЕ
+¿A dónde vamos?	Куда едем?
+Buscar	Поиск
+Detener	Остановить
+Buscando…	Поиск…
+No se pudo buscar	Не удалось выполнить поиск
+No se encontraron resultados	Результаты не найдены
+Resultados	Результаты
+Esperando señal GPS para calcular la ruta	Ожидание сигнала GPS для расчёта маршрута
+Calculando ruta…	Расчёт маршрута…
+No se pudo calcular la ruta	Не удалось рассчитать маршрут
+Cambiar destino	Изменить пункт назначения
+Silenciar voz de guía	Выключить голосовые подсказки
+Activar voz de guía	Включить голосовые подсказки
+Vista Norte arriba	Вид: север сверху
+Vista en dirección de marcha	Вид по направлению движения
+Abrir en otra app	Открыть в другом приложении
+Detener navegación	Остановить навигацию
+Navegación en el mapa	Навигация на карте
+Voz activada	Голос включён
+Voz silenciada	Голос выключен
+En el mapa de StradaOS	На карте StradaOS
+Se abre con el botón del mapa (Waze, Maps, OsmAnd… o integrada en el mapa)	Открывается кнопкой карты (Waze, Maps, OsmAnd… или встроенной в карту)
+Voz de navegación	Голос навигации
+Indicaciones paso a paso habladas durante el recorrido	Голосовые пошаговые указания во время поездки
+★  En el mapa de StradaOS (integrada)	★  На карте StradaOS (встроенная)
+Guardado: Navegación en el mapa	Сохранено: Навигация на карте
+Coordenadas	Координаты
+No se encontró ruta	Маршрут не найден
+Ruta recalculada	Маршрут пересчитан
+Sal por {}	Съезд на {}
+Inicia el recorrido	Начать поездку
+En la rotonda, salida {} hacia {}	На круговом перекрёстке, съезд {} на {}
+En la rotonda, toma la salida {}	На круговом перекрёстке съезжайте на {}
+En la rotonda, sigue hacia {}	На круговом перекрёстке продолжайте на {}
+En la rotonda, toma la salida	На круговом перекрёстке съезжайте
+Haz un giro en U en {}	Развернитесь на {}
+Haz un giro en U	Развернитесь
+Gira levemente a la derecha en {}	Плавно направо на {}
+Gira levemente a la derecha	Плавно направо
+Gira a la derecha en {}	Направо на {}
+Gira a la derecha	Направо
+Gira fuerte a la derecha en {}	Резко направо на {}
+Gira fuerte a la derecha	Резко направо
+Gira levemente a la izquierda en {}	Плавно налево на {}
+Gira levemente a la izquierda	Плавно налево
+Gira a la izquierda en {}	Налево на {}
+Gira a la izquierda	Налево
+Gira fuerte a la izquierda en {}	Резко налево на {}
+Gira fuerte a la izquierda	Резко налево
+Incorpórate a {}	Выезд на {}
+Toma el desvío	Съезд
+Continúa por {}	Продолжайте по {}
+Sigue recto	Прямо
+En 500 metros	Через 500 метров
+En 150 metros	Через 150 метров
+En 500 pies	Через 500 футов
+En un cuarto de milla	Через четверть мили
+En {}	Через {}
+Sin conexión · vuelve a la ruta	Нет связи · вернитесь на маршрут
+Casa	Дом
+Trabajo	Работа
+Toca para guardar GPS	Нажмите, чтобы сохранить текущий GPS
+Ir ahora	Ехать сейчас
+Actualizar con GPS actual	Обновить по текущему GPS
+Eliminado	Удалено
+Esperando señal GPS para guardar ubicación	Ожидание сигнала GPS для сохранения места
+Guardado en Casa	Сохранено как Дом
+Guardado en Trabajo	Сохранено как Работа
+Gasolina	Топливо
+Salud	Здоровье
+Parqueo	Парковка
+Comida	Еда
+FAVORITOS	ИЗБРАННОЕ
+Quitar de favoritos	Убрать из избранного
+Añadir a favoritos	Добавить в избранное
+Guardar como Casa	Сохранить как Дом
+Guardar como Trabajo	Сохранить как Работа
+Añadido a favoritos	Добавлено в избранное
+Quitado de favoritos	Удалено из избранного
+Ruta aproximada (mapa local sin conexión)	Примерный маршрут (локальная офлайн-карта)
+Ruta guardada (sin conexión)	Сохранённый маршрут (офлайн)
+Recalcular ruta	Пересчитать маршрут
+ruta guardada	сохранённый маршрут
+sin conexión · aproximada	офлайн · примерный
+aproximada	примерный
+Para rutas largas o sin mapa local hace falta internet	Для длинных маршрутов или без локальной карты нужен интернет
+Mapa local	Локальная карта
+Pueblo	Посёлок
+Barrio	Район
+Calle	Улица
+Estación de servicio	Заправка
+Hospital	Больница
+Clínica	Клиника
+Farmacia	Аптека
+Parqueadero	Парковка
+Restaurante	Ресторан
+Cafetería	Кафе
+Supermercado	Супермаркет
+Hotel	Отель
+Aeropuerto	Аэропорт
+Estación	Вокзал
+Lugar	Место
+con tráfico	с учётом пробок
+Tráfico en vivo activado	Живые пробки включены
+Tráfico en vivo	Живые пробки
+Muestra congestión en el mapa y evita trancones (usa clave gratis de TomTom)	Показывает заторы на карте и помогает объезжать пробки (использует бесплатный ключ TomTom)
+Clave gratis de TomTom	Бесплатный ключ TomTom
+Para capas de tráfico y rutas con tráfico (regístrate gratis en developer.tomtom.com)	Для слоёв пробок и маршрутов с учётом пробок (бесплатная регистрация на developer.tomtom.com)
+Clave API gratis de TomTom	Бесплатный API-ключ TomTom
+Capa de tráfico propia (avanzado)	Свой слой пробок (для опытных)
+URL transparente de tráfico con {z}/{x}/{y}	Прозрачный URL слоя пробок с {z}/{x}/{y}
+URL capa de tráfico {z}/{x}/{y} (vacío = automático)	URL слоя пробок {z}/{x}/{y} (пусто = автоматически)
+Servidor de rutas OSRM (avanzado)	Сервер маршрутов OSRM (для опытных)
+URL propia compatible con OSRM (vacío = automático)	Свой URL, совместимый с OSRM (пусто = автоматически)
+URL servidor OSRM (vacío = automático)	URL сервера OSRM (пусто = автоматически)
+Compatibilidad TLS en rutas	Совместимость TLS для маршрутов
+Para radios antiguas donde falle el HTTPS de rutas o búsqueda	Для старых магнитол, где не работает HTTPS для маршрутов или поиска
+Mostrando hora de llegada	Показано время прибытия
+Mostrando tiempo restante	Показано оставшееся время
+Radar	Камера скорости
+Ir a Casa	Ехать домой
+Ir a Trabajo	Ехать на работу
+Configura «{}» primero en Navegación	Сначала настройте «{}» в разделе Навигация
+PARADAS	ОСТАНОВКИ
+Limpiar	Очистить
++ Añadir parada intermedia	+ Добавить промежуточную остановку
+Modo parada activo: elige una parada	Режим остановки включён: выберите остановку
+Buscar parada intermedia	Поиск промежуточной остановки
+Añadir parada en ruta	Добавить остановку по маршруту
+Elegir destino final	Выберите конечный пункт
+Añadir como parada	Добавить как остановку
+Parada añadida	Остановка добавлена
+Elegir parada	Выберите остановку
+Elegir ruta	Выбор маршрута
+Ruta	Маршрут
+Más rápida	Быстрее
+incidente	происшествие
+incidentes	происшествия
+incidente en la ruta	происшествие на маршруте
+incidentes en la ruta	происшествия на маршруте
+Incidentes en la ruta	Происшествия на маршруте
+Mostrar tiempo restante	Показывать оставшееся время
+Mostrar hora de llegada	Показывать время прибытия
+Evitar peajes	Избегать платных дорог
+Intenta evitar vías de peaje al calcular la ruta	Стараться объезжать платные дороги при построении маршрута
+Evitar autopistas	Избегать автомагистралей
+Intenta evitar autopistas o vías rápidas	Стараться объезжать автомагистрали и скоростные дороги
+Rutas alternativas	Альтернативные маршруты
+Muestra 2 o 3 opciones de ruta antes de iniciar	Показывать 2 или 3 варианта маршрута перед стартом
+Muestra la hora estimada en lugar del tiempo restante	Показывать расчётное время прибытия вместо оставшейся длительности
+Consulta cierres o accidentes una sola vez al calcular ruta (TomTom)	Проверять закрытия или ДТП один раз при построении маршрута (TomTom)
+Límite y alerta de velocidad	Ограничение и предупреждение о скорости
+Muestra la señal de límite en el mapa y avisa al excederlo	Показывать знак ограничения на карте и предупреждать при превышении
+Tolerancia de exceso	Порог превышения
+Margen sobre el límite antes de activar alerta	Допустимый запас над ограничением до срабатывания предупреждения
+Sonido al exceder límite	Звук при превышении
+Pitido de alerta cuando superas la tolerancia	Сигнал при превышении порога
+Alertas de radares sin conexión	Офлайн-предупреждения о камерах
+Avisa al acercarse a radares del mapa local .map	Предупреждать при приближении к камерам из локального файла .map
+Vía cerrada	Дорога закрыта
+Carril cerrado	Полоса закрыта
+Accidente	ДТП
+Obras en la vía	Дорожные работы
+Tráfico detenido	Остановившийся транспорт
+Incidente en la vía	Происшествие на дороге
+Radar de velocidad adelante	Камера скорости впереди
+Personalización	Персонализация
+Cambia el aspecto de la pantalla de inicio con un toque. Puedes seguir ajustando cada detalle en las demás secciones.	Измените внешний вид главного экрана одним касанием. Остальные детали можно настроить в других разделах.
+Temas gratis	Бесплатные темы
+Temas premium	Премиум-темы
+Próximamente	Скоро
+Temas exclusivos para quienes apoyan StradaOS con una donación. Todas las funciones siguen siendo gratis.	Эксклюзивные темы для тех, кто поддерживает StradaOS пожертвованием. Все функции по-прежнему бесплатны.
+En uso	Используется
+Tema aplicado:	Применена тема:
+Clásico	Классическая
+Música a la izquierda	Музыка слева
+Mapa amplio	Широкая карта
+Minimalista	Минимализм
+Vehículo a la izquierda, mapa en el centro y música a la derecha	Автомобиль слева, карта по центру и музыка справа
+Mapa arriba; debajo, vehículo a la izquierda y música a la derecha	Карта сверху; ниже — автомобиль слева и музыка справа
+Música a la izquierda, mapa en el centro y vehículo a la derecha	Музыка слева, карта по центру и автомобиль справа
+Mapa arriba; debajo, música a la izquierda y vehículo a la derecha	Карта сверху; ниже — музыка слева и автомобиль справа
+Sin tarjeta del vehículo: mapa más ancho, velocímetro abajo a la izquierda y música a la derecha	Без карточки автомобиля: карта шире, спидометр внизу слева и музыка справа
+Sin tarjeta del vehículo: mapa más alto con el velocímetro abajo a la izquierda y la música a lo ancho	Без карточки автомобиля: карта выше, спидометр внизу слева и музыка на всю ширину
+Música a la izquierda, velocímetro abajo a la derecha, panel de conexión plegado y barra compacta	Музыка слева, спидометр внизу справа, панель подключения свёрнута и компактная панель
+Mapa casi completo: velocímetro abajo a la derecha, panel de conexión plegado, música a lo ancho y barra compacta	Почти полная карта: спидометр внизу справа, панель подключения свёрнута, музыка на всю ширину и компактная панель
+Cada tema se adapta solo a la orientación de la pantalla.	Каждая тема сама подстраивается под ориентацию экрана.
+Tema premium	Премиум-тема
+Aurora en uso	Аврора используется
+El tema arma la pantalla de inicio. Las tarjetas, la barra y el velocímetro de aquí se usan otra vez al quitarlo en Personalización.	Тема формирует главный экран. Карточки, панель и спидометр отсюда снова используются, когда вы уберёте тему в разделе Персонализация.
+Tema premium quitado	Премиум-тема удалена
+Premium	Премиум
+Fondo con un arco de color difuminado y granulado, tarjetas translúcidas, la hora en grande con música, vehículo y clima arriba, el mapa a lo ancho y una barra tipo píldora. El botón «Solo mapa» agranda el mapa.	Фон с мягкой зернистой цветной дугой, полупрозрачные карточки, большие часы с музыкой, автомобилем и погодой сверху, карта на всю ширину и панель в форме таблетки. Кнопка «Только карта» увеличивает карту.
+Sigue el modo claro u oscuro de Apariencia.	Следует светлому или тёмному режиму из раздела Оформление.
+Quitar el tema premium	Убрать премиум-тему
+Aplicar	Применить
+Versión de prueba: se puede aplicar sin código.	Тестовая версия: можно применить без кода.
+Disponible pronto con una donación. Todas las funciones siguen siendo gratis.	Скоро будет доступно при пожертвовании. Все функции по-прежнему бесплатны.
+Cobalto	Кобальт
+Azul noche en tres columnas: el mapa se difumina hasta el reproductor de carátula redonda, y tu vehículo muestra el velocímetro arriba, su foto en el medio y el mantenimiento abajo. La temperatura va sobre el mapa.	Ночной синий в три колонки: карта плавно переходит в плеер с круглой обложкой, а ваш автомобиль показывает спидометр сверху, его фото посередине и обслуживание внизу. Температура находится над картой.
+Gratis	Бесплатно
+Gratis para todos. Los próximos temas premium se desbloquearán con una donación.	Бесплатно для всех. Следующие премиум-темы откроются при пожертвовании.
+Brillo de la pantalla	Яркость экрана
+Amanecer y atardecer: se calcula con el GPS, sin internet. Brillo: para pantallas que bajan el brillo al encender las luces	Восход и закат: рассчитываются по GPS, интернет не нужен. Яркость: для экранов, которые тускнеют при включении фар
+Brillo actual	Текущая яркость
+Prende y apaga las luces del carro para ver cuánto cambia	Включайте и выключайте габаритные огни автомобиля, чтобы увидеть, насколько меняется яркость
+Oscuro con brillo menor a	Тёмный при яркости ниже
+Elige un nivel entre el brillo de día y el de noche	Выберите уровень между дневной и ночной яркостью
+Esta pantalla no informa su brillo	Этот экран не сообщает свою яркость
+Países del Golfo	Страны Персидского залива
+Irlanda del Norte	Северная Ирландия
+Islas Canarias	Канарские острова
+Tiempo en StradaOS: {}	Время в StradaOS: {}
+Último tiempo por Bluetooth: {}	Последнее время по Bluetooth: {}
+Fondo carbón (o perla en claro) con un haz de luz diagonal. A la izquierda, el velocímetro y un carro visto desde arriba que enciende los faros de noche; en el centro, el mapa integrado al fondo; a la derecha, el clima por horas y tus próximos mantenimientos, con el reproductor y la barra de apps debajo.	Угольный фон (в светлом режиме — жемчужный) с диагональным лучом света. Слева спидометр и автомобиль, вид сверху, который ночью включает фары; в центре карта, встроенная в фон; справа почасовая погода и ближайшее обслуживание, внизу плеер и панель приложений.
+Color del carro	Цвет автомобиля
+El carro del tema Faro, visto desde arriba. También se cambia con una presión larga sobre el carro.	Автомобиль темы «Фара», вид сверху. Его также можно сменить долгим нажатием на автомобиль.
+Intensidad del mapa	Яркость карты
+Qué tan visible es el mapa sobre el fondo. Auto lo pone más fuerte en las pantallas sencillas de los radios y suave en las de alta gama. Súbela si al sol no se ve bien.	Насколько заметна карта на фоне. «Авто» делает её ярче на простых экранах магнитол и мягче на дорогих. Увеличьте, если плохо видно на солнце.
+Baja	Низкая
+Media	Средняя
+Alta	Высокая
+Negro	Чёрный
+Sin mantenimientos programados	Нет запланированного обслуживания
+Toca para agregar uno	Нажмите, чтобы добавить
+Navegar	Навигация
+Música sonando	Играет музыка
+Toca para ver la canción	Нажмите, чтобы посмотреть песню
+Ver la canción de tus apps	Смотрите песню из ваших приложений
+Para mostrar la canción, el artista y la carátula de Spotify, YouTube Music y otras apps, StradaOS necesita «Acceso a notificaciones». Solo lo usa para leer lo que suena: no guarda ni envía nada.	Чтобы показывать песню, исполнителя и обложку из Spotify, YouTube Music и других приложений, StradaOS нужен «Доступ к уведомлениям». Он используется только для чтения того, что играет: ничего не сохраняется и не отправляется.
+No volver a mostrar	Больше не показывать
+Esta pantalla no tiene el ajuste de «Acceso a notificaciones». Se puede activar una sola vez desde una computadora con ADB:	На этом экране нет настройки «Доступ к уведомлениям». Включить её можно один раз с компьютера через ADB:
+Spotify, YouTube Music y otras apps de la pantalla (acceso a notificaciones)	Spotify, YouTube Music и другие приложения на экране (доступ к уведомлениям)
+Encendidas	Вкл.
+Apagadas	Выкл.
+Espera para pasar a oscuro	Задержка перед переходом на тёмную тему
+Cuánto debe durar el cambio (luces encendidas, poco brillo…) antes de oscurecer	Сколько должно длиться изменение (включённые фары, низкая яркость…) перед затемнением
+Espera para pasar a claro	Задержка перед переходом на светлую тему
+Útil si al apagar el carro de noche se apagan las luces y la pantalla pasa a claro de golpe	Полезно, если при выключении автомобиля ночью гаснут фары и экран внезапно становится светлым
+Sin espera	Без задержки
+Marca de la pantalla	Марка головного устройства
+Genérica	Общая
+Detectada:	Определено:
+No se detectó una marca con funciones propias	Марка с собственными функциями не определена
+Datos del carro	Данные автомобиля
+Lectura actual	Текущее показание
+Servicio com.syu.ms:	Сервис com.syu.ms:
+sin caja CAN	без CAN-бокса
+Esperando datos	Ожидание данных
+Luces del carro	Фары автомобиля
+Sin datos	Нет данных
+sin conectar	не подключено
+conectando	подключение
+conectado	подключено
+desconectado	отключено
+no se encontró com.syu.ms	com.syu.ms не найден
+com.syu.ms no respondió	com.syu.ms не отвечает
+com.syu.ms se reinició	com.syu.ms перезапущен
+Tema según las luces, batería y temperatura exterior	Тема по свету фар, батарее и температуре снаружи
+Pantallas FYT (com.syu.ms)	Экраны FYT (com.syu.ms)
+luces detectadas	обнаружены фары
+Auto: por horario. Sistema: sigue las luces del carro (pantalla FYT)	Авто: по расписанию. Система: следует за фарами автомобиля (экран FYT)
+Espera para cambiar de tema	Задержка смены темы
+Evita cambios de golpe, p. ej. al apagar el carro de noche	Избегает резких изменений, например при выключении автомобиля ночью
+Para seguirlas, elige Apariencia → Tema → Modo → Sistema	Чтобы следовать им, выберите Оформление → Тема → Режим → Системный
+Elige qué datos del carro se ven arriba, junto al Wi-Fi	Выберите, какие данные автомобиля отображать вверху, рядом с Wi-Fi
+Tensión de la batería	Напряжение батареи
+Medida por la pantalla; no necesita la caja CAN	Измеряется головным устройством; CAN-бокс не нужен
+Temperatura exterior	Температура снаружи
+Del sensor del carro; necesita la caja CAN	С датчика автомобиля; нужен CAN-бокс
+pantalla FYT detectada: elígela en Tu vehículo → Equipo	Экран FYT обнаружен: выберите его в разделе Ваш автомобиль → Головное устройство
+esta pantalla no informa las luces	Этот экран не показывает индикаторы
+Vehículo	Автомобиль
+Monitor del vehículo	Монитор автомобиля
+Batería	Аккумулятор
+Carga del motor	Нагрузка двигателя
+Acelerador	Дроссельная заслонка
+Aire de admisión	Впускной воздух
+Combustible	Топливо
+Mezcla corta	Краткосрочная коррекция топлива
+Mezcla larga	Долгосрочная коррекция топлива
+Flujo de aire	Расход воздуха
+Presión del múltiple	Давление во впускном коллекторе
+Consumo del motor	Расход топлива двигателем
+Consumo por hora	Расход топлива в час
+Aceite del motor	Моторное масло
+Panel de datos	Панель данных
+Datos del panel	Данные панели
+Datos del motor	Данные двигателя
+Cilindrada del motor	Рабочий объём двигателя
+Cilindrada del motor (litros)	Рабочий объём двигателя (литры)
+Protocolo	Протокол
+CAN 11 bits · 500 kbps	CAN 11 бит · 500 kbps
+CAN 29 bits · 500 kbps	CAN 29 бит · 500 kbps
+CAN 11 bits · 250 kbps	CAN 11 бит · 250 kbps
+CAN 29 bits · 250 kbps	CAN 29 бит · 250 kbps
+Escribe un número entre 0,5 y 8	Введите число от 0,5 до 8
+Máximo 6 datos	Не более 6 значений
+Hasta 6 datos del escáner, por ejemplo RPM, velocidad, refrigerante y consumo	До 6 параметров сканера, например обороты, скорость, охлаждающая жидкость и расход топлива
+Conectando con el escáner…	Подключение к сканеру…
+Conectado	Подключено
+Esperando al auto (¿contacto apagado?)	Ожидание автомобиля (зажигание выключено?)
+Escáner conectado. Vigilando el motor.	Сканер подключён. Контроль двигателя.
+Se perdió la conexión con el escáner.	Связь со сканером потеряна.
+Códigos borrados.	Коды стёрты.
+El auto no aceptó borrar los códigos.	Автомобиль не принял команду стереть коды.
+El escáner no logra hablar con el auto. ¿Está el contacto puesto?	Сканер не может связаться с автомобилем. Зажигание включено?
+El escáner no responde	Сканер не отвечает
+El escáner cerró la conexión	Сканер закрыл соединение
+El Bluetooth está apagado	Bluetooth выключен
+Este equipo no tiene Bluetooth	В этом устройстве нет Bluetooth
+No se pudo conectar	Не удалось подключиться
+Motor sobrecalentado: {}	Перегрев двигателя: {}
+Refrigerante alto: {}	Высокая температура охлаждающей жидкости: {}
+El refrigerante sube rápido: {} °C	Охлаждающая жидкость быстро нагревается: {} °C
+Voltaje alto: {}	Высокое напряжение: {}
+Voltaje bajo: {}	Низкое напряжение: {}
+RPM muy altas: {}	Очень высокие обороты: {}
+Motor muy exigido: {}	Двигатель сильно нагружен: {}
+Aire de admisión muy caliente: {}	Впускной воздух очень горячий: {}
+Poco combustible: {}	Мало топлива: {}
+Mezcla pobre ({}): {}	Бедная смесь ({}): {}
+Mezcla rica ({}): {}	Богатая смесь ({}): {}
+Aceite del motor muy caliente: {}	Моторное масло очень горячее: {}
+Código de falla {}	Код неисправности {}
+Código pendiente {}	Ожидающий код {}
+revisa el detalle en la pantalla	подробности на экране
+Detente en un lugar seguro y apaga el motor. No abras la tapa del radiador en caliente. Espera que enfríe y revisa el nivel de refrigerante, el electroventilador y la correa.	Остановитесь в безопасном месте и заглушите двигатель. Не открывайте крышку радиатора в горячем состоянии. Дайте ему остыть и проверьте уровень охлаждающей жидкости, вентилятор радиатора и ремень.
+Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y, si sigue subiendo, pon la calefacción al máximo y busca dónde parar.	Снизьте нагрузку: включите более низкую передачу, выключите кондиционер и, если температура продолжит расти, включите печку на максимум и найдите место для остановки.
+Baja la exigencia: usa una marcha más baja, apaga el aire acondicionado y vigila que el electroventilador encienda.	Снизьте нагрузку: включите более низкую передачу, выключите кондиционер и проверьте, включился ли вентилятор радиатора.
+El alternador está cargando de más y puede dañar la batería. Revísalo pronto.	Генератор заряжает слишком сильно и может повредить аккумулятор. Проверьте его как можно скорее.
+El alternador no está cargando bien: apaga lo que no necesites (aire, luces extra) y ve a un taller antes de que se descargue la batería. Revisa la correa.	Генератор заряжает плохо: выключите всё лишнее (кондиционер, дополнительные фары) и доедьте до сервиса, пока аккумулятор не разрядился. Проверьте ремень.
+Baja la velocidad o usa una marcha más alta. En bajadas, frena con motor sin pasar la zona roja.	Снизьте скорость или включите более высокую передачу. На спусках тормозите двигателем, не заходя в красную зону.
+El motor va al máximo hace rato. En cuestas largas usa una marcha más baja y deja descansar el motor y la caja.	Двигатель давно работает на полной нагрузке. На длинных подъёмах включайте более низкую передачу и давайте отдохнуть двигателю и коробке.
+El aire que entra al motor está muy caliente: pierde potencia. Si estás detenido, avanza para que circule aire.	Воздух, поступающий в двигатель, очень горячий, поэтому мощность падает. Если стоите, троньтесь, чтобы воздух продувал.
+Carga combustible en la próxima estación. En la montaña puede no haber más adelante.	Заправьтесь на следующей станции. В горах дальше может не быть заправок.
+El motor recibe menos combustible del que necesita: puede ser una fuga de vacío, el filtro de combustible o el sensor MAF. Puede perder fuerza en subidas.	Двигатель получает меньше топлива, чем нужно: возможно, подсос воздуха, топливный фильтр или датчик MAF. На подъёмах может терять мощность.
+El motor recibe más combustible del necesario: revisa el filtro de aire, el sensor MAF o un inyector que gotee.	Двигатель получает больше топлива, чем нужно: проверьте воздушный фильтр, датчик MAF или подтекающую форсунку.
+Baja la exigencia y revisa el nivel de aceite cuando puedas parar.	Снизьте нагрузку и, когда сможете остановиться, проверьте уровень масла.
+código	код
+códigos	коды
+Carrocería (airbag, cinturones, luces, cierre…)	Кузов (подушки безопасности, ремни, освещение, замки…)
+Chasis (frenos ABS, dirección, suspensión, 4x4)	Шасси (тормоза ABS, рулевое управление, подвеска, 4x4)
+Comunicación entre computadores del auto	Обмен между блоками управления автомобиля
+Motor: mezcla de aire y combustible	Двигатель: смесь воздуха и топлива
+Motor: encendido y fallas de encendido	Двигатель: зажигание и пропуски зажигания
+Control de emisiones	Контроль выбросов
+Velocidad, ralentí y entradas auxiliares	Скорость, холостой ход и дополнительные входы
+Computador del motor y sus salidas	Блок управления двигателем и его выходы
+Caja de cambios	Коробка передач
+Motor o caja (sistema híbrido u otro)	Двигатель или коробка (гибридная система или другая)
+código propio de la marca	код производителя
+La API key no es válida	API-ключ недействителен
+La IA está ocupada o sin saldo. Intenta más tarde.	ИИ занят или на счёте нет средств. Попробуйте позже.
+La IA no quiso responder	ИИ отказался отвечать
+La IA respondió vacío	ИИ вернул пустой ответ
+Luz del motor	Лампа неисправности двигателя
+Conectar	Подключить
+Auto simulado	Симулированный автомобиль
+Apagado	Выкл.
+En vivo	В реальном времени
+Conecta tu escáner OBD-II	Подключите сканер OBD-II
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Si es Bluetooth, emparéjalo primero en los ajustes de Bluetooth del equipo (clave 1234 o 0000).\n3. Toca ⚙ para elegirlo y luego Conectar.\n\nStradaOS vigila la temperatura, el voltaje, la mezcla y los códigos de falla, y te avisa por voz aunque estés en otra app.	1. Подключите сканер ELM327 к разъёму OBD (под рулём) и включите зажигание.\n2. Если сканер Bluetooth, сначала сопрягите его в настройках Bluetooth устройства (PIN 1234 или 0000).\n3. Нажмите ⚙, чтобы выбрать его, затем «Подключить».\n\nStradaOS контролирует температуру, напряжение, состав смеси и коды неисправностей и предупреждает голосом, даже когда вы пользуетесь другим приложением.
+Elegir escáner	Выбрать сканер
+Probar con un auto simulado	Попробовать с симулированным автомобилем
+Alertas	Оповещения
+Todo normal por ahora.	Пока всё в норме.
+Sin monitor activo.	Монитор не запущен.
+Códigos de falla	Коды неисправностей
+El auto no tiene códigos guardados.	В автомобиле нет сохранённых кодов.
+Se revisan al conectar y cada 30 segundos.	Проверяются при подключении и каждые 30 секунд.
+Pendiente	Ожидающий
+Grave	Серьёзный
+Leve	Незначительный
+Revisar	Проверить
+Toca para ver qué hacer	Нажмите, чтобы узнать, что делать
+Borrar códigos	Стереть коды
+Hace {} min	{} мин назад
+Qué hacer	Что делать
+Explicación de la IA	Объяснение от ИИ
+Este código no está en la tabla sin conexión: suele ser un código propio de la marca. La IA puede explicarlo.	Этого кода нет в офлайн-таблице: обычно это код производителя. ИИ может его объяснить.
+Ojo: los códigos de airbag, ABS y carrocería normalmente no se leen con OBD-II genérico; si aparece aquí es porque el auto lo reporta al computador del motor.	Внимание: коды подушек безопасности, ABS и кузова обычно не читаются через стандартный OBD-II; если они здесь отображаются, значит, автомобиль передаёт их в блок управления двигателем.
+Volver a preguntar a la IA	Спросить ИИ ещё раз
+Explicar con IA	Объяснить с помощью ИИ
+Para que una IA explique los códigos, pon tu API key (Claude, Groq, Gemini u otra) en ⚙ → Inteligencia artificial. Las explicaciones se guardan en el equipo y después funcionan sin internet.	Чтобы ИИ объяснял коды, добавьте API-ключ (Claude, Groq, Gemini или другой) в ⚙ → Искусственный интеллект. Объяснения сохраняются на устройстве и потом работают без интернета.
+Preguntando a la IA…	Запрос к ИИ…
+No se pudo consultar la IA	Не удалось обратиться к ИИ
+Apaga el motor y deja solo el contacto puesto para borrar los códigos.	Заглушите двигатель и оставьте только включённое зажигание, чтобы стереть коды.
+¿Borrar los códigos de falla?	Стереть коды неисправностей?
+Se apaga la luz del motor y se borran los datos que usa el taller para diagnosticar. Si la falla sigue, el código volverá a aparecer. Anota los códigos antes.	Лампа двигателя погаснет, а данные, которые сервис использует для диагностики, будут стёрты. Если неисправность сохраняется, код появится снова. Сначала запишите коды.
+Escáner	Сканер
+Mi vehículo (para la IA)	Мой автомобиль (для ИИ)
+Inteligencia artificial	Искусственный интеллект
+Sin configurar	Не настроено
+Avisos por voz	Голосовые оповещения
+Sí	Да
+Encender el monitor al iniciar StradaOS	Запускать монитор при старте StradaOS
+Registro de la conexión	Журнал подключения
+Ajustes del vehículo	Настройки автомобиля
+Tu vehículo: marca, modelo, año, motor y caja	Ваш автомобиль: марка, модель, год, двигатель и коробка передач
+Ej.: Kia Sorento 2010 2.4 bencina 4x4 automático	Напр.: Kia Sorento 2010 2.4 бензин 4x4 автомат
+Escáner Wi-Fi (escribir IP y puerto)	Сканер Wi-Fi (ввести IP и порт)
+Auto simulado (para probar)	Симулированный автомобиль (для теста)
+No hay escáneres Bluetooth emparejados: emparéjalo en los ajustes del equipo	Нет сопряжённых сканеров Bluetooth: сопрягите его в настройках устройства
+Elige tu escáner	Выберите сканер
+IP y puerto del escáner Wi-Fi	IP и порт Wi-Fi сканера
+Escribe IP:puerto, por ejemplo 192.168.0.10:35000	Введите IP:порт, например 192.168.0.10:35000
+Proveedor	Провайдер
+Modelo	Модель
+Dirección de la API	Адрес API
+Borrar la API key	Удалить API-ключ
+La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. Cada consulta la cobra tu proveedor con tu API key.	ИИ получает только код, указанный вами автомобиль и данные двигателя; никогда ваше местоположение. Каждый запрос оплачивается вашим провайдером с вашего API-ключа.
+Aviso sobre	Предупреждение о превышении
+alerta sobre	тревога при превышении
+Aviso bajo	Предупреждение о снижении
+alerta bajo	тревога при снижении
+Aviso sobre ±	Предупреждение при превышении ±
+alerta sobre ±	тревога при превышении ±
+Con el motor en marcha debe estar entre 13,5 y 14,8 V. Con el motor apagado, 12,4 a 12,8 V es normal.	При работающем двигателе должно быть от 13,5 до 14,8 В. При выключенном двигателе нормально 12,4–12,8 В.
+Normal en marcha: 85 a 98 °C. También avisa si sube más de 4 °C por minuto sobre 95 °C.	В норме при работе: 85–98 °C. Также предупреждает, если выше 95 °C температура растёт более чем на 4 °C в минуту.
+Cuánto corrige el computador la mezcla. Positivo = le falta combustible (fuga de aire); negativo = le sobra.	Насколько блок управления корректирует смесь. Плюс = не хватает топлива (подсос воздуха); минус = топлива в избытке.
+Solo informativo: este dato no genera alertas.	Только информация: это значение не вызывает оповещений.
+Otra compatible con OpenAI	Другой совместимый с OpenAI
+elegir…	выбрать…
+Probar la IA	Проверить ИИ
+Primero escribe la API key	Сначала введите API-ключ
+Buscando los modelos del proveedor…	Поиск моделей провайдера…
+recomendado	рекомендуется
+Escribir otro…	Ввести другой…
+Preguntando por el código de ejemplo P0711…	Запрос по примеру кода P0711…
+La IA funciona · P0711 de ejemplo	ИИ работает · пример P0711
+Volver	Назад
+Elige el modelo de la IA en los ajustes	Выберите модель ИИ в настройках
+Escribe la dirección de la API en los ajustes	Введите адрес API в настройках
+Escaneando	Сканирование
+Escaneo terminado.	Сканирование завершено.
+El escaneo se cortó	Сканирование прервано
+Escanear todo lo que entrega el auto	Сканировать все данные, которые выдаёт автомобиль
+Conecta el escáner con el contacto puesto (mejor con el motor en marcha) y vuelve a intentarlo.	Подключите сканер при включённом зажигании (лучше при работающем двигателе) и попробуйте снова.
+Pregunta al auto por cada dato estándar y por los datos propios de la marca del motor y la caja. Tarda hasta 2 minutos y mientras tanto las alertas se pausan: hazlo detenido. Solo lee, no cambia nada en el auto.	Запрашивает у автомобиля каждый стандартный параметр и данные двигателя и коробки производителя. Занимает до 2 минут, всё это время оповещения приостановлены, поэтому выполняйте на стоянке. Только чтение, ничего в автомобиле не меняет.
+Escanear	Сканировать
+Guardado en	Сохранено в
+Lo que entrega tu auto	Что выдаёт ваш автомобиль
+Consumo	Расход топлива
+calculado	расчётный
+Panel	Панель
+Todos los datos	Все данные
+Datos en vivo	Данные в реальном времени
+Monitores de emisiones	Мониторы выбросов
+✓ listo · ✗ aún no termina su prueba (normal después de borrar códigos o desconectar la batería).	✓ готово · ✗ тест ещё не завершён (нормально после стирания кодов или отключения аккумулятора).
+Fallas de encendido	Пропуски зажигания
+Sistema de combustible	Топливная система
+Componentes	Компоненты
+Catalizador	Катализатор
+Catalizador calefaccionado	Подогреваемый катализатор
+Vapores de combustible (EVAP)	Пары топлива (EVAP)
+Aire secundario	Вторичный воздух
+Sensores de oxígeno	Датчики кислорода
+Calefactor de sensores de oxígeno	Подогрев датчиков кислорода
+Recirculación de gases (EGR)	Рециркуляция выхлопных газов (EGR)
+Preguntar a la IA	Спросить ИИ
+Ajustar esta alerta	Настроить это оповещение
+Alertas a vigilar	Оповещения для контроля
+Subida rápida del refrigerante	Быстрый рост температуры охлаждающей жидкости
+Códigos de falla nuevos (aviso por voz)	Новые коды неисправностей (голосовое оповещение)
+aviso	предупреждение
+alerta	тревога
+bajo	низкое
+Vigilar	Контролировать
+Valores de fábrica	Заводские значения
+Escribe un número	Введите число
+Datos del motor cuando se registró la falla	Данные двигателя при фиксации неисправности
+Buscar escáneres Bluetooth cercanos	Искать сканеры Bluetooth поблизости
+Emparejado	Сопряжено
+emparejado	сопряжено
+No se pudo emparejar. Prueba con la clave 1234 o 0000.	Не удалось сопрячь. Попробуйте PIN 1234 или 0000.
+Sin el permiso de ubicación Android no deja buscar equipos Bluetooth	Без разрешения на геолокацию Android не позволяет искать устройства Bluetooth
+No se encontraron equipos. ¿Está el escáner enchufado y el contacto puesto?	Устройства не найдены. Сканер подключён и зажигание включено?
+Buscando… (enchufa el escáner y pon el contacto)	Поиск… (подключите сканер и включите зажигание)
+Emparejando… si pide clave, escribe 1234 o 0000	Сопряжение… если запросит PIN, введите 1234 или 0000
+Emparéjalo en los ajustes de Bluetooth del equipo	Сопрягите его в настройках Bluetooth устройства
+Los escáneres suelen llamarse OBDII, OBD2, V-LINK o Vgate.	Сканеры обычно называются OBDII, OBD2, V-LINK или Vgate.
+Buscar de nuevo	Искать снова
+Gráficos en vivo	Графики в реальном времени
+Desliza el dedo sobre un gráfico para ver el valor de cada momento. Toca los datos de arriba para comparar hasta 3.	Проведите пальцем по графику, чтобы увидеть значение в каждый момент. Нажмите на данные выше, чтобы сравнить до 3.
+mín	мин
+máx	макс
+prom	сред
+ahora	сейчас
+hace	назад
+Esperando datos…	Ожидание данных…
+Monitor apagado · toca para conectar	Монитор выключен · нажмите, чтобы подключить
+monitor apagado	монитор выключен
+VEHÍCULO	АВТОМОБИЛЬ
+Qué muestra cada tarjeta	Что показывает каждая карточка
+Música, el monitor del vehículo (temperatura, voltaje, RPM y alertas) o un gráfico en vivo	Музыка, монитор автомобиля (температура, напряжение, обороты и оповещения) или график в реальном времени
+Gráfico en vivo	График в реальном времени
+Gráfico del reproductor	График плеера
+Dato del escáner que se grafica (últimos 5 minutos)	Параметр сканера для графика (последние 5 минут)
+Tarjeta del centro	Центральная карточка
+El mapa, el monitor del vehículo o un gráfico en vivo. Sin el mapa, Android Auto y CarPlay se abren desde la barra de botones	Карта, монитор автомобиля или график в реальном времени. Без карты Android Auto и CarPlay открываются с панели кнопок.
+Gráfico del centro	График в центре
+Velocidad (GPS)	Скорость (GPS)
+Recuadro de la velocidad	Блок скорости
+La velocidad del GPS o, en grande, otro dato del escáner (por ejemplo la temperatura del refrigerante)	Скорость по GPS или, крупно, другой параметр сканера (например, температура охлаждающей жидкости)
+Esta tarjeta	Эта карточка
+Cambiar esta tarjeta…	Изменить эту карточку…
+¿Qué dato graficar?	Какой параметр построить на графике?
+Monitor apagado	Монитор выключен
+Cambiar qué muestra…	Изменить, что показывает…
+◀  Mover a la izquierda	◀  Переместить влево
+Mover a la derecha  ▶	Переместить вправо  ▶
+Ancho de la tarjeta…	Ширина карточки…
+Ancho de la tarjeta	Ширина карточки
+Volver al orden y tamaño de siempre	Вернуть обычный порядок и размер
+Ya está a la izquierda	Уже слева
+Ya está a la derecha	Уже справа
+Ancha	Широкая
+Muy ancha	Очень широкая
+✋  Ajustar con el dedo (mover y cambiar tamaño)	✋  Настроить касанием (перемещение и изменение размера)
+Arrastra la manija entre dos tarjetas para cambiar el ancho · arrastra una tarjeta para moverla	Перетащите маркер между двумя карточками, чтобы изменить ширину · перетащите карточку, чтобы переместить её
+Listo	Готово
+límite	предел
+se ajusta solo	подстраивается само
+ancho	ширина
+VIAJE	ПОЕЗДКА
+ALTITUD	ВЫСОТА
+APPS	ПРИЛОЖЕНИЯ
+pendiente —	уклон —
+normal	обычный
+Mantén presionado para reiniciar el viaje o cambiar los widgets	Удерживайте, чтобы сбросить поездку или изменить виджеты
+Quitar este acceso	Убрать этот ярлык
+Acceso directo {}	Ярлык {}
+Altitud, pendiente y rumbo	Высота, уклон и курс
+Viaje (km, tiempo, consumo)	Поездка (км, время, расход)
+Dato del vehículo…	Показатель авто…
+Accesos directos (3 apps)	Ярлыки (3 приложения)
+Dato del vehículo	Показатель авто
+Widget	Виджет
+Reiniciar el viaje	Сбросить поездку
+Quitar la franja	Убрать полосу
+Franja de widgets	Полоса виджетов
+¿Qué dato mostrar?	Какой показатель показать?
+Viaje reiniciado	Поездка сброшена
+Quitar la franja de widgets de abajo	Убрать нижнюю полосу виджетов
+Franja de widgets debajo (altitud, viaje, apps…)	Нижняя полоса виджетов (высота, поездка, приложения…)
+Arrastra las manijas para cambiar tamaños · arrastra una tarjeta para moverla · toca un widget para cambiarlo	Перетаскивайте маркеры, чтобы менять размеры · перетащите карточку, чтобы переместить её · нажмите на виджет, чтобы заменить его
+Agregar franja de widgets	Добавить полосу виджетов
+Agregar un widget	Добавить виджет
+Ajustar tamaños con el dedo	Настроить размеры касанием
+Quitar este widget	Убрать этот виджет
+Accesos directos (apps)	Ярлыки (приложения)
+MÚSICA	МУЗЫКА
+Música (canción y controles)	Музыка (трек и управление)
+Arrastra las manijas para cambiar tamaños · arrastra una tarjeta para moverla · toca un widget para cambiarlo · ✕ oculta una tarjeta	Перетаскивайте маркеры, чтобы менять размеры · перетащите карточку, чтобы переместить её · нажмите на виджет, чтобы заменить его · ✕ скрывает карточку
+Ocultar la tarjeta del vehículo	Скрыть карточку авто
+Ocultar la tarjeta de música	Скрыть карточку музыки
+Mostrar la tarjeta del vehículo	Показать карточку авто
+Mostrar la tarjeta de música	Показать карточку музыки
+Avance del encendido	Опережение зажигания
+Sonda O2 banco 1	Датчик O2, банк 1
+Sonda O2 banco 1 sensor 2	Датчик O2, банк 1, датчик 2
+Tiempo de marcha	Время работы двигателя
+Distancia con la luz del motor	Пробег с горящей лампой двигателя
+EGR comandada	Команда EGR
+Arranques desde borrar códigos	Прогревов после сброса кодов
+Distancia desde borrar códigos	Пробег после сброса кодов
+Presión barométrica	Атмосферное давление
+Catalizador banco 1	Катализатор, банк 1
+Catalizador banco 1 sensor 2	Катализатор, банк 1, датчик 2
+Carga absoluta	Абсолютная нагрузка
+Mezcla comandada	Заданное соотношение смеси
+Acelerador relativo	Относительное положение дросселя
+Acelerador B	Дроссель B
+Pedal D	Педаль D
+Pedal E	Педаль E
+Acelerador comandado	Заданное положение дросселя
+Tiempo con la luz del motor	Время с горящей лампой двигателя
+Tiempo desde borrar códigos	Время после сброса кодов
+Mezcla O2 banco 1	Коррекция смеси O2, банк 1
+Mezcla O2 banco 1 sensor 2	Коррекция смеси O2, банк 1, датчик 2
+API key	API key
+Enviar el VIN a la IA	Отправлять VIN в ИИ
+La IA recibe solo el código, el vehículo que escribiste y los datos del motor; nunca tu ubicación. El VIN solo se envía si lo activas aquí. Cada consulta la cobra tu proveedor con tu API key.	ИИ получает только код, введённый вами автомобиль и данные двигателя; никогда ваше местоположение. VIN отправляется, только если вы включили это здесь. Каждый запрос оплачивает ваш провайдер по вашему API key.
+RPM	RPM
+Escáner OBD-II	Сканер OBD-II
+Enciende el monitor del motor en «Escáner OBD-II»	Включите монитор двигателя в «Сканер OBD-II»
+Conectando…	Подключение…
+Monitor del motor	Монитор двигателя
+Está apagado: enciéndelo para conectar el escáner	Выключен: включите, чтобы подключить сканер
+Estado	Состояние
+Abrir el panel del vehículo	Открыть панель авто
+Medidores, alertas y códigos encima del tema que tengas	Датчики, оповещения и коды поверх вашей темы
+Diagnóstico	Диагностика
+Qué vigila StradaOS y cuándo avisa por voz	За чем следит StradaOS и когда сообщает голосом
+Todo normal	Всё в норме
+Qué significan y qué hacer; borrarlos con el motor apagado	Что они значат и что делать; стирать при выключенном двигателе
+Cada dato que entrega tu auto, con gráficos	Каждый показатель автомобиля, с графиками
+Más	Ещё
+Opcional: explica los códigos para tu auto en particular	Необязательно: объясняет коды для вашего конкретного авто
+Motor, protocolo, panel y escaneo completo	Двигатель, протокол, панель и полное сканирование
+Bluetooth emparejado, Wi-Fi (IP y puerto) o un auto simulado para probar	Сопряжённый Bluetooth, Wi-Fi (IP и порт) или имитация авто для проверки
+Empareja el escáner sin salir de StradaOS (clave 1234 o 0000)	Сопрягите сканер, не выходя из StradaOS (PIN 1234 или 0000)
+Reconectar	Переподключить
+Conectar al iniciar StradaOS	Подключаться при запуске StradaOS
+Las alertas funcionan aunque estés en otra app (con una notificación fija)	Оповещения работают, даже когда вы в другом приложении (постоянным уведомлением)
+Cómo conectar el escáner	Как подключить сканер
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Bluetooth: emparéjalo con la clave 1234 o 0000. Wi-Fi: conecta la pantalla a la red del escáner y escribe su IP y puerto (casi siempre 192.168.0.10:35000).\n3. Elígelo arriba en «Escáner».	1. Подключите сканер ELM327 к разъёму OBD (под рулём) и включите зажигание.\n2. Bluetooth: сопрягите его с PIN 1234 или 0000. Wi-Fi: подключите головное устройство к сети сканера и введите его IP и порт (почти всегда 192.168.0.10:35000).\n3. Выберите его выше в «Сканер».
+Lo que respondió el escáner (para reportar un problema)	Ответ сканера (для сообщения о проблеме)
+Todo normal por ahora	Пока всё в норме
+Alerta	Тревога
+Aviso	Предупреждение
+Avisos	Уведомления
+Habla aunque estés en Waze o con música	Говорит, даже в Waze или при музыке
+Abrir el panel con una alerta grave	Открыть панель при серьёзной тревоге
+Por ejemplo, el motor muy caliente o la batería que no carga	Например, двигатель сильно перегрет или батарея не заряжается
+Más de 4 °C por minuto con el motor caliente	Более 4 °C в минуту при прогретом двигателе
+Cuándo avisa cada dato	Когда каждый показатель подаёт сигнал
+Códigos guardados en el auto	Коды, сохранённые в авто
+El auto no tiene códigos guardados	В авто нет сохранённых кодов
+Se revisan al conectar y cada 30 segundos	Проверяются при подключении и каждые 30 секунд
+Luz del motor encendida	Горит лампа двигателя
+El computador del motor confirmó una falla	Компьютер двигателя подтвердил неисправность
+Con el motor apagado y el contacto puesto. Anota los códigos antes: no se puede deshacer	При выключенном двигателе и включённом зажигании. Сначала запишите коды: это нельзя отменить
+Conecta el escáner para ver los datos	Подключите сканер, чтобы увидеть данные
+Gráficos	Графики
+Hasta 3 datos a la vez, de 1 a 30 minutos	До 3 показателей одновременно, от 1 до 30 минут
+La tuya: cada consulta la cobra tu proveedor	Ваш собственный: каждый запрос оплачивает ваш провайдер
+Privacidad	Конфиденциальность
+Qué se envía	Что отправляется
+Solo el código, el vehículo que escribas y los datos del motor de ese momento; nunca tu ubicación. Las respuestas se guardan en la pantalla	Только код, введённый вами автомобиль и данные двигателя на тот момент; никогда ваше местоположение. Ответы сохраняются на головном устройстве
+Tu vehículo (para la IA)	Ваш автомобиль (для ИИ)
+Marca, modelo, año, motor y caja	Марка, модель, год, двигатель и коробка передач
+Identifica tu auto de forma única. Apagado por defecto	Однозначно определяет ваш авто. По умолчанию выключено
+Probar	Проверить
+Pregunta por un código de ejemplo	Спросить про пример кода
+Motor	Двигатель
+Para calcular el consumo en motores sin sensor MAF	Для расчёта расхода на двигателях без датчика MAF
+Automático casi siempre; fuerza uno si el escáner no lo detecta	Почти всегда автоматически; задайте вручную, если сканер не определяет
+Panel del vehículo	Панель авто
+Lado del panel	Сторона панели
+Pestaña en el borde	Вкладка на краю
+Toca o desliza la pestaña para abrir el panel. Sin ella, ábrelo con un botón de la barra	Нажмите или проведите по вкладке, чтобы открыть панель. Без неё откройте кнопкой на панели
+Informe de cada dato estándar y los propios de la marca. Solo lee	Отчёт по каждому стандартному показателю и показателям производителя. Только чтение
+Ver el último informe	Открыть последний отчёт
+Con un escáner ELM327 por Wi-Fi o Bluetooth: temperatura, batería, alertas por voz y códigos de falla	Со сканером ELM327 по Wi-Fi или Bluetooth: температура, батарея, голосовые оповещения и коды неисправностей
+También con la pestaña del borde o con un botón de la barra	Также с вкладкой на краю или кнопкой на панели
+Vehículo (OBD-II)	Авто (OBD-II)
+Sin elegir	Не выбрано
+Apagada	Выкл.
+Alerta sobre	Тревога выше
+Alerta bajo	Тревога ниже
+Alerta sobre ±	Тревога выше ±
+No	Нет
+Para que una IA explique los códigos, pon tu API key (Claude, Groq, Gemini u otra) en Ajustes → Tu vehículo → Escáner OBD-II → Inteligencia artificial. Las explicaciones se guardan en el equipo y después funcionan sin internet.	Чтобы ИИ объяснял коды, введите свой API key (Claude, Groq, Gemini или другой) в Настройки → Ваш автомобиль → Сканер OBD-II → Искусственный интеллект. Объяснения сохраняются на устройстве и потом работают без интернета.
+Se apaga la luz del motor y se borran los datos que usa el taller para diagnosticar; también se reinician los monitores de emisiones. No se puede deshacer y, si la falla sigue, el código volverá a aparecer. Anota los códigos antes.	Лампа двигателя гаснет, а данные, которые использует сервис для диагностики, стираются; также сбрасываются мониторы выбросов. Это нельзя отменить, и если неисправность останется, код появится снова. Сначала запишите коды.
+Ej.: Kia Picanto 2019 1.2 gasolina mecánico	Напр.: Kia Picanto 2019 1.2 бензин, механика
+Sin poner	Не задано
+Escaneando… el avance se ve en el estado del escáner	Сканирование… прогресс виден в состоянии сканера
+Todavía no hay un informe	Отчёта пока нет
+Sin monitor activo	Нет активного монитора
+Sin códigos guardados	Нет сохранённых кодов
+Se revisan al conectar	Проверяются при подключении
+Ver todo	Показать всё
+1 activa	1 активна
+{} activas	{} активных
+Parada intermedia	Промежуточная остановка
+Árbol de levas de admisión adelantado más de lo esperado (variador CVVT).	Распредвал впуска опережён больше ожидаемого (фазовращатель CVVT).
+Revisa nivel y estado del aceite: el variador funciona con presión de aceite. Si el aceite está bien, revisar la válvula solenoide OCV.	Проверьте уровень и состояние масла: фазовращатель работает от давления масла. Если масло в порядке, проверьте электромагнитный клапан OCV.
+Árbol de levas de admisión atrasado más de lo esperado (variador CVVT).	Распредвал впуска отстаёт больше ожидаемого (фазовращатель CVVT).
+Revisa nivel y estado del aceite. Si sigue, revisar la válvula OCV y la cadena de distribución.	Проверьте уровень и состояние масла. Если сохраняется, проверьте клапан OCV и цепь ГРМ.
+Árbol de levas de escape adelantado más de lo esperado.	Распредвал выпуска опережён больше ожидаемого.
+Revisa nivel y estado del aceite. Si sigue, revisar la válvula OCV de escape.	Проверьте уровень и состояние масла. Если сохраняется, проверьте клапан OCV выпуска.
+La posición del cigüeñal y del árbol de levas no coinciden.	Положения коленвала и распредвала не совпадают.
+Puede ser la cadena de distribución estirada o saltada. Evita exigir el motor y llévalo al taller pronto.	Возможно, растянулась или перескочила цепь ГРМ. Не нагружайте двигатель и скоро отвезите в сервис.
+El sensor de flujo de aire (MAF) marca fuera de lo esperado.	Датчик массового расхода воздуха (MAF) показывает вне нормы.
+Revisa el filtro de aire y que no haya mangueras sueltas después del sensor. Limpiar el MAF con limpiador especial.	Проверьте воздушный фильтр и отсутствие ослабших шлангов после датчика. Чистите MAF специальным очистителем.
+Señal baja del sensor de flujo de aire (MAF).	Низкий сигнал датчика массового расхода воздуха (MAF).
+Revisa el conector y el cableado del MAF.	Проверьте разъём и проводку MAF.
+Señal alta del sensor de flujo de aire (MAF).	Высокий сигнал датчика массового расхода воздуха (MAF).
+El sensor de presión del múltiple (MAP) marca fuera de lo esperado.	Датчик давления во впускном коллекторе (MAP) показывает вне нормы.
+Revisa mangueras de vacío y el conector del sensor MAP.	Проверьте вакуумные шланги и разъём датчика MAP.
+El sensor de temperatura del aire de admisión marca fuera de lo esperado.	Датчик температуры впускного воздуха показывает вне нормы.
+Revisa el conector del sensor. No suele dejarte botado.	Проверьте разъём датчика. Он редко подводит.
+Señal baja del sensor de temperatura del aire de admisión.	Низкий сигнал датчика температуры впускного воздуха.
+Revisa el conector y el cableado del sensor.	Проверьте разъём датчика и проводку.
+Señal alta del sensor de temperatura del aire de admisión.	Высокий сигнал датчика температуры впускного воздуха.
+El sensor de temperatura del refrigerante marca fuera de lo esperado.	Датчик температуры охлаждающей жидкости показывает вне нормы.
+No confíes en el indicador de temperatura hasta revisarlo. Vigila que el electroventilador encienda.	Не доверяйте указателю температуры, пока не проверите. Убедитесь, что включается вентилятор радиатора.
+Señal baja del sensor de temperatura del refrigerante.	Низкий сигнал датчика температуры охлаждающей жидкости.
+Sin este dato el motor puede sobrecalentarse sin avisar. Revisa nivel de refrigerante y el conector del sensor.	Без этого показателя двигатель может перегреться без предупреждения. Проверьте уровень охлаждающей жидкости и разъём датчика.
+Señal alta del sensor de temperatura del refrigerante.	Высокий сигнал датчика температуры охлаждающей жидкости.
+El sensor de posición del acelerador marca fuera de lo esperado.	Датчик положения дросселя показывает вне нормы.
+El motor puede entrar en modo de emergencia (poca potencia). Revisa el cuerpo de aceleración y su conector.	Двигатель может перейти в аварийный режим (малая мощность). Проверьте корпус дроссельной заслонки и его разъём.
+Señal baja del sensor de posición del acelerador.	Низкий сигнал датчика положения дросселя.
+Puede entrar en modo de emergencia. Revisa el conector del cuerpo de aceleración.	Может перейти в аварийный режим. Проверьте разъём корпуса дросселя.
+Señal alta del sensor de posición del acelerador.	Высокий сигнал датчика положения дросселя.
+El motor tarda mucho en llegar a temperatura para el control de mezcla.	Двигатель слишком долго прогревается для управления смесью.
+Suele ser el termostato abierto o el sensor de temperatura. Revisa en el taller.	Обычно это термостат, застрявший открытым, или датчик температуры. Проверьте в сервисе.
+El refrigerante no llega a la temperatura del termostato.	Охлаждающая жидкость не достигает температуры срабатывания термостата.
+Casi siempre es el termostato pegado abierto. Gasta más combustible y calienta poco la cabina; cámbialo cuando puedas.	Почти всегда термостат застрял открытым. Расходует больше топлива и плохо греет салон; замените при первой возможности.
+Falla en el circuito del sensor de oxígeno delantero (banco 1).	Неисправность цепи переднего датчика кислорода (банк 1).
+Revisa el conector del sensor. Gastarás algo más de combustible.	Проверьте разъём датчика. Расход топлива будет немного выше.
+El sensor de oxígeno delantero responde lento.	Передний датчик кислорода медленно реагирует.
+El sensor está viejo. Cámbialo cuando puedas.	Датчик изношен. Замените при первой возможности.
+Falla en el calentador del sensor de oxígeno delantero.	Неисправность нагревателя переднего датчика кислорода.
+Revisa el fusible y el conector del sensor. Se puede seguir.	Проверьте предохранитель и разъём датчика. Ехать можно.
+Falla en el calentador del sensor de oxígeno trasero.	Неисправность нагревателя заднего датчика кислорода.
+Mezcla pobre: entra más aire o llega menos combustible de lo que debería.	Бедная смесь: поступает больше воздуха или приходит меньше топлива, чем нужно.
+Busca fugas de vacío (mangueras, junta de admisión), revisa el MAF, la presión de combustible y el filtro. En subidas largas puede perder fuerza.	Ищите подсосы воздуха (шланги, прокладка впуска), проверьте MAF, давление топлива и фильтр. На длинных подъёмах может терять мощность.
+Mezcla rica: llega más combustible del que debería.	Богатая смесь: поступает больше топлива, чем нужно.
+Revisa el filtro de aire, el MAF, inyectores que goteen y el regulador de presión.	Проверьте воздушный фильтр, MAF, подтекающие форсунки и регулятор давления.
+Temperatura del motor excesiva.	Чрезмерная температура двигателя.
+Detente en un lugar seguro y apaga el motor. No abras la tapa del radiador en caliente. Revisa refrigerante, ventilador y correa.	Остановитесь в безопасном месте и заглушите двигатель. Не открывайте крышку радиатора в горячем состоянии. Проверьте охлаждающую жидкость, вентилятор и ремень.
+Falla en el circuito del relé de la bomba de combustible.	Неисправность цепи реле топливного насоса.
+El motor puede apagarse sin aviso. Revisa relé y fusible de la bomba.	Двигатель может заглохнуть без предупреждения. Проверьте реле и предохранитель насоса.
+Falla en el inyector del cilindro {}.	Неисправность форсунки цилиндра {}.
+Puede fallar el cilindro {}. Revisa el conector del inyector.	Цилиндр {} может пропускать воспламенение. Проверьте разъём форсунки.
+Fallas de encendido en varios cilindros.	Пропуски зажигания в нескольких цилиндрах.
+Si la luz del motor parpadea, baja la velocidad y no exijas el motor: el catalizador se puede dañar. Revisa bujías, bobinas, combustible y fugas de vacío.	Если лампа двигателя мигает, снизьте скорость и не нагружайте двигатель: катализатор может повредиться. Проверьте свечи, катушки, топливо и подсосы воздуха.
+Falla de encendido en el cilindro {}.	Пропуск зажигания в цилиндре {}.
+Si la luz parpadea, no exijas el motor. Intercambia la bobina del cilindro {} con otra para ver si la falla se mueve; revisa la bujía.	Если лампа мигает, не нагружайте двигатель. Поменяйте катушку цилиндра {} местами с другой, чтобы увидеть, переместится ли пропуск; проверьте свечу.
+Falla en el circuito del sensor de detonación.	Неисправность цепи датчика детонации.
+El motor se protege atrasando el encendido: tendrá menos fuerza. Usa el combustible recomendado y revisa el conector del sensor.	Двигатель защищается, отодвигая зажигание: мощности будет меньше. Используйте рекомендованное топливо и проверьте разъём датчика.
+Falla en el sensor de posición del cigüeñal.	Неисправность датчика положения коленчатого вала.
+El motor puede apagarse o no volver a arrancar. Evita lugares aislados y revisa el sensor y su conector.	Двигатель может заглохнуть или не запуститься снова. Избегайте безлюдных мест и проверьте датчик и его разъём.
+El sensor de posición del cigüeñal marca fuera de lo esperado.	Датчик положения коленвала показывает вне нормы.
+El motor puede apagarse o no volver a arrancar. Revisa el sensor y su conector.	Двигатель может заглохнуть или не запуститься снова. Проверьте датчик и его разъём.
+Falla en el sensor de posición del árbol de levas.	Неисправность датчика положения распредвала.
+Puede costar arrancar o apagarse. Revisa el sensor y su conector.	Может быть трудно завести или он может заглохнуть. Проверьте датчик и его разъём.
+El sensor del árbol de levas marca fuera de lo esperado.	Датчик распредвала показывает вне нормы.
+Revisa el sensor, su conector y la distribución.	Проверьте датчик, его разъём и ГРМ.
+Falla en el circuito de la bobina del cilindro {}.	Неисправность цепи катушки цилиндра {}.
+Puede fallar el cilindro {}. Revisa la bobina y su conector.	Цилиндр {} может пропускать воспламенение. Проверьте катушку и её разъём.
+El catalizador (banco 1) ya no limpia los gases como debería.	Катализатор (банк 1) уже не очищает выхлоп как должен.
+Se puede seguir manejando. Antes de cambiarlo, descarta fallas de encendido, fugas de escape y sensores de oxígeno.	Ехать можно. Перед заменой исключите пропуски зажигания, утечки выхлопа и датчики кислорода.
+Flujo incorrecto en el sistema de vapores de combustible (EVAP).	Неверный поток в системе улавливания паров топлива (EVAP).
+No afecta cómo maneja. Revisa la válvula de purga.	На управление не влияет. Проверьте клапан продувки.
+Pequeña fuga en el sistema de vapores de combustible (EVAP).	Небольшая утечка в системе улавливания паров топлива (EVAP).
+Revisa que la tapa del estanque cierre bien. No afecta cómo maneja.	Проверьте, плотно ли закрывается крышка бензобака. На управление не влияет.
+Fuga grande en el sistema de vapores de combustible (EVAP).	Большая утечка в системе улавливания паров топлива (EVAP).
+Revisa que la tapa del estanque esté puesta y bien cerrada.	Проверьте, стоит ли крышка бензобака и плотно ли она закрыта.
+Fuga muy pequeña en el sistema de vapores de combustible (EVAP).	Очень малая утечка в системе улавливания паров топлива (EVAP).
+Revisa la tapa del estanque. No afecta cómo maneja.	Проверьте крышку бензобака. На управление не влияет.
+Falla en el sensor de velocidad del vehículo.	Неисправность датчика скорости автомобиля.
+La caja automática puede cambiar mal y el velocímetro fallar. Revisa el sensor y su conector.	Автоматическая коробка может переключаться плохо, а спидометр — отказать. Проверьте датчик и его разъём.
+Falla en el control de ralentí.	Неисправность управления холостым ходом.
+El motor puede quedar acelerado o apagarse en ralentí. Limpia el cuerpo de aceleración.	Двигатель может работать на повышенных оборотах или глохнуть на холостом ходу. Очистите корпус дроссельной заслонки.
+Ralentí más bajo de lo esperado.	Холостой ход ниже ожидаемого.
+Limpia el cuerpo de aceleración y revisa fugas de vacío.	Очистите корпус дроссельной заслонки и проверьте подсосы воздуха.
+Ralentí más alto de lo esperado.	Холостой ход выше ожидаемого.
+Suele ser una fuga de vacío o el cuerpo de aceleración sucio.	Обычно это утечка вакуума или загрязнённый корпус дроссельной заслонки.
+Voltaje del sistema bajo.	Низкое напряжение системы.
+El alternador puede no estar cargando. Revisa la correa, los bornes de la batería y el alternador antes de un viaje largo.	Генератор может не заряжать. Проверьте ремень, клеммы аккумулятора и генератор перед дальней поездкой.
+Voltaje del sistema alto.	Высокое напряжение системы.
+El regulador del alternador puede estar fallando y dañar la batería. Revísalo pronto.	Регулятор генератора может выходить из строя и повредить аккумулятор. Проверьте его как можно скорее.
+Falla de comunicación interna del computador del motor.	Внутренний сбой связи компьютера двигателя.
+Revisa masas (tierras) y conectores del computador.	Проверьте массы и разъёмы компьютера.
+Falla de memoria del computador del motor.	Сбой памяти компьютера двигателя.
+Llévalo al taller.	Отвезите в сервис.
+La caja automática registró una falla (pide leer el computador de la caja).	Автоматическая коробка передач зафиксировала сбой (считайте данные блока управления КПП).
+Hay otro código guardado en el computador de la caja. Si la caja queda en un solo cambio (modo de emergencia), maneja suave hasta el taller.	В блоке управления КПП есть ещё один сохранённый код. Если коробка остаётся на одной передаче (аварийный режим), езжайте плавно до сервиса.
+Falla en el sensor de posición de la palanca de cambios.	Неисправность датчика положения рычага переключения передач.
+Puede no arrancar en P o N o mostrar mal el cambio. Revisa el interruptor de rango.	Двигатель может не запускаться в P или N или неверно показывать передачу. Проверьте переключатель диапазонов.
+Falla en el circuito del sensor de temperatura del aceite de la caja automática.	Неисправность цепи датчика температуры масла автоматической коробки передач.
+La caja puede cambiar brusco. Revisa el nivel y el color del aceite de la caja y el conector del sensor. Evita remolcar o subir pendientes largas exigiendo la caja.	Переключения могут быть резкими. Проверьте уровень и цвет масла КПП и разъём датчика. Избегайте буксировки и длинных крутых подъёмов, которые нагружают коробку.
+El sensor de temperatura del aceite de la caja automática marca fuera de lo esperado.	Датчик температуры масла АКПП показывает значение вне диапазона.
+La caja puede cambiar brusco o quedar en modo de emergencia. Revisa nivel y color del aceite de la caja (oscuro u olor a quemado es mala señal) y el conector del sensor. En subidas largas usa una marcha baja y descansa la caja.	Переключения могут быть резкими или коробка может перейти в аварийный режим. Проверьте уровень и цвет масла КПП (тёмный цвет или запах гари — плохой признак) и разъём датчика. На длинных подъёмах используйте низкую передачу и давайте коробке отдохнуть.
+Señal baja del sensor de temperatura del aceite de la caja automática.	Низкий сигнал датчика температуры масла АКПП.
+Revisa el conector y el cableado del sensor. La caja puede cambiar brusco.	Проверьте разъём и проводку датчика. Переключения могут быть резкими.
+Señal alta del sensor de temperatura del aceite de la caja automática.	Высокий сигнал датчика температуры масла АКПП.
+Falla en el sensor de velocidad de entrada de la caja.	Неисправность датчика скорости на входе КПП.
+La caja puede cambiar brusco o quedar en modo de emergencia. Revisa el sensor y su conector.	Переключения могут быть резкими или коробка может перейти в аварийный режим. Проверьте датчик и его разъём.
+Falla en el sensor de velocidad de salida de la caja.	Неисправность датчика скорости на выходе КПП.
+La caja puede cambiar brusco y el velocímetro fallar. Revisa el sensor y su conector.	Переключения могут быть резкими, а спидометр может не работать. Проверьте датчик и его разъём.
+La relación de cambios no es la correcta (la caja patina).	Неверное передаточное число (коробка пробуксовывает).
+Revisa el nivel del aceite de la caja de inmediato. Maneja suave: seguir exigiéndola puede dañarla.	Немедленно проверьте уровень масла КПП. Езжайте плавно: дальнейшая нагрузка может повредить коробку.
+Relación incorrecta en 1ª: la caja patina en primera.	Неверное передаточное число на 1-й передаче: коробка пробуксовывает на первой.
+Revisa el nivel del aceite de la caja. Maneja suave hasta el taller.	Проверьте уровень масла КПП. Езжайте плавно до сервиса.
+Relación incorrecta en 2ª: la caja patina en segunda.	Неверное передаточное число на 2-й передаче: коробка пробуксовывает на второй.
+Relación incorrecta en 3ª: la caja patina en tercera.	Неверное передаточное число на 3-й передаче: коробка пробуксовывает на третьей.
+Relación incorrecta en 4ª: la caja patina en cuarta.	Неверное передаточное число на 4-й передаче: коробка пробуксовывает на четвёртой.
+Falla en el circuito del embrague del convertidor de torque.	Неисправность цепи блокировки гидротрансформатора.
+Gastará más combustible y la caja se calentará más. Revisa el aceite de la caja.	Расход топлива вырастет, а коробка будет нагреваться сильнее. Проверьте масло КПП.
+El embrague del convertidor de torque no acopla o patina.	Блокировка гидротрансформатора не включается или пробуксовывает.
+La caja se calienta más: evita subidas largas exigentes y revisa el aceite de la caja.	КПП нагревается сильнее: избегайте длинных тяжёлых подъёмов и проверьте масло КПП.
+Falla eléctrica en el embrague del convertidor de torque.	Электрическая неисправность блокировки гидротрансформатора.
+Revisa el conector de la caja. Gastará más combustible.	Проверьте разъём КПП. Расход топлива вырастет.
+Falla en el solenoide de cambio {}.	Неисправность соленоида переключения {}.
+La caja puede quedar en un solo cambio. Maneja suave hasta el taller.	Коробка может оставаться на одной передаче. Езжайте плавно до сервиса.
+El sensor de oxígeno trasero ve mezcla pobre después del catalizador.	Задний датчик кислорода видит бедную смесь после катализатора.
+Revisa fugas de escape antes del sensor.	Проверьте выхлопную систему на утечки до датчика.
+El sensor de oxígeno trasero ve mezcla rica después del catalizador.	Задний датчик кислорода видит богатую смесь после катализатора.
+Revisa sensores de oxígeno y el catalizador.	Проверьте датчики кислорода и катализатор.
+Mezcla pobre en ralentí.	Бедная смесь на холостом ходу.
+Suele ser una fuga de vacío. Revisa mangueras y la válvula PCV.	Обычно это утечка вакуума. Проверьте шланги и клапан PCV.
+Mezcla rica en ralentí.	Богатая смесь на холостом ходу.
+Revisa inyectores y la válvula de purga del EVAP.	Проверьте форсунки и клапан продувки адсорбера (EVAP).
+Escaneando: {}	Сканирование: {}
+Datos estándar (modo 01)…	Стандартные данные (режим 01)…
+Información del vehículo (modo 09)…	Информация о транспортном средстве (режим 09)…
+Modo 01 · PID {}	Режим 01 · PID {}
+Sin conexión	Нет связи
+Interrumpido	Прервано
+Dirección no válida: {}	Недопустимый адрес: {}
+Apps	Приложения
+Guía del escáner	Руководство по сканеру
+Guía	Руководство
+Qué comprar, cómo conectarlo y qué significa cada cosa · sin internet	Что купить, как подключить и что означает каждый параметр · работает без интернета
+Desbloquear	Разблокировать
+Se desbloquea con una donación. Todas las funciones de StradaOS siguen siendo gratis.	Разблокируется пожертвованием. Все функции StradaOS остаются бесплатными.
+Desbloqueado en esta pantalla. ¡Gracias por tu donación!	Разблокировано на этом экране. Спасибо за пожертвование!
+Prueba: volver a aplicar sin código	Тест: применить снова без кода
+Prueba: desbloquear como en la versión normal	Тест: разблокировать как в обычной версии
+1. Dona 5 USD en Ko-fi: escanea el código con tu celular o entra a {}.	1. Пожертвуйте 5 USD в Ko-fi: отсканируйте код телефоном или перейдите по адресу {}.
+2. En el mensaje de la donación escribe el ID de esta pantalla:	2. В сообщении к пожертвованию напишите ID этого экрана:
+3. Te enviamos un código STRD-XXXX-XXXX, casi siempre el mismo día. Escríbelo en «Tengo un código».	3. Мы пришлём код STRD-XXXX-XXXX, обычно в тот же день. Введите его в разделе «У меня есть код».
+El tema queda en esta pantalla. Si cambias de radio o la restableces, escríbenos con el ID nuevo y te enviamos otro código sin costo.	Тема остаётся на этом экране. Если вы смените головное устройство или сбросите его, напишите нам с новым ID, и мы бесплатно пришлём другой код.
+Desbloquear {}	Разблокировать {}
+Tengo un código	У меня есть код
+Archivo por USB	Файл через USB
+ID de esta pantalla: {}. Necesitas internet solo esta vez.	ID этого экрана: {}. Интернет нужен только один раз.
+Escribe tu código	Введите код
+El código tiene 8 letras o números después de STRD, por ejemplo STRD-7KQ2-M9XA.	Код состоит из 8 букв или цифр после STRD, например STRD-7KQ2-M9XA.
+Comprobando el código…	Проверка кода…
+No hay internet. Conéctate un momento (por ejemplo, con el celular como módem) y vuelve a intentarlo, o pide el archivo de licencia y pásalo por USB.	Нет интернета. Подключитесь ненадолго (например, через телефон как точку доступа) и повторите попытку, или запросите файл лицензии и передайте его через USB.
+No encontramos ese código para esta pantalla. Revisa que esté bien escrito y que el ID que enviaste sea {}.	Не нашли этот код для данного экрана. Проверьте правильность написания и то, что ID, который вы отправили, — {}.
+No se pudo desbloquear	Не удалось разблокировать
+Intentar de nuevo	Повторить
+Buscando la licencia en la pantalla y en las USB…	Поиск лицензии на экране и USB-накопителях…
+No encontramos la licencia	Лицензия не найдена
+Copia el archivo que te enviamos (stradaos-licencia.txt) en la raíz de una USB, conéctala y vuelve a intentarlo. Tiene que ser para el ID {}.	Скопируйте присланный файл (stradaos-licencia.txt) в корневой каталог USB-накопителя, подключите его и повторите попытку. Он должен быть для ID {}.
+¡Listo!	Готово!
+{} quedó desbloqueado en esta pantalla. Gracias por apoyar StradaOS.	{} разблокирован на этом экране. Спасибо за поддержку StradaOS.
+Aplicar ahora	Применить сейчас
+1. Dona en Ko-fi 5 USD por un tema o 8 USD por dos: escanea el código con tu celular o entra a {}.	1. Пожертвуйте в Ko-fi 5 USD за одну тему или 8 USD за две: отсканируйте код телефоном или перейдите по адресу {}.
+2. En el mensaje de la donación escribe el ID de esta pantalla y qué temas quieres:	2. В сообщении к пожертвованию напишите ID этого экрана и какие темы вы хотите:
+Se desbloquea con una donación de 5 USD, o 8 USD por dos temas. Todas las funciones de StradaOS siguen siendo gratis.	Разблокируется пожертвованием 5 USD или 8 USD за две темы. Все функции StradaOS остаются бесплатными.
+Usar la velocidad del escáner	Использовать скорость сканера
+Con el escáner conectado, el inicio muestra la velocidad del carro en vez de la del GPS: más exacta y sin retraso	Если сканер подключён, на главном экране отображается скорость автомобиля вместо скорости GPS: точнее и без задержки
+1. Enchufa el escáner ELM327 en el conector OBD (bajo el volante) y pon el contacto.\n2. Bluetooth: emparéjalo con la clave 1234 o 0000. Wi-Fi: conecta la pantalla a la red del escáner y escribe su IP y puerto (casi siempre 192.168.0.10:35000). Cable USB: conéctalo a la pantalla y acepta el permiso que pide Android.\n3. Elígelo arriba en «Escáner».	1. Вставьте сканер ELM327 в разъём OBD (под рулём) и включите зажигание.\n2. Bluetooth: сопрягите его с PIN-кодом 1234 или 0000. Wi-Fi: подключите головное устройство к сети сканера и введите его IP и порт (почти всегда 192.168.0.10:35000). USB-кабель: подключите его к экрану и разрешите доступ, который запрашивает Android.\n3. Выберите его сверху в разделе «Сканер».
+Escáner por cable USB	Сканер по USB-кабелю
+Cable ELM327 USB (chips CH340, FTDI, PL2303 o CP2102)	USB-кабель ELM327 (чипы CH340, FTDI, PL2303 или CP2102)
+Bluetooth emparejado, Wi-Fi (IP y puerto), cable USB o un auto simulado para probar	Сопряжённый Bluetooth, Wi-Fi (IP и порт), USB-кабель или имитация автомобиля для тестов
+No veo ningún escáner USB conectado. Conecta el cable ELM327 USB a la pantalla (si hace falta, con un adaptador OTG), enchúfalo en el conector OBD con el contacto puesto y vuelve a intentar. Sirven los cables con chip CH340, FTDI, PL2303 o CP2102.	Не вижу подключённого USB-сканера. Подключите USB-кабель ELM327 к экрану (при необходимости через адаптер OTG), вставьте его в разъём OBD при включённом зажигании и повторите попытку. Подходят кабели с чипом CH340, FTDI, PL2303 или CP2102.
+No veo el cable USB del escáner: revisa que esté conectado	Не вижу USB-кабеля сканера: проверьте, что он подключён
+Falta el permiso para usar el cable USB: acéptalo en la pantalla	Нет разрешения на использование USB-кабеля: разрешите его на экране
+El cable USB no responde como un escáner ELM327	USB-кабель не отвечает как сканер ELM327
+Este cable USB no parece un escáner	Этот USB-кабель не похож на сканер
+Android no dejó abrir el cable USB	Android не позволил открыть USB-кабель
+Este equipo no tiene USB para accesorios	Это устройство не поддерживает USB для аксессуаров
+No se pudo preparar el cable USB	Не удалось подготовить USB-кабель
+El cable USB no tiene canal de datos	У USB-кабеля нет канала передачи данных
+Otra app está usando el cable USB	USB-кабелем пользуется другое приложение
+El cable USB no aceptó la velocidad	USB-кабель не принял скорость обмена
+Se desconectó el cable USB	USB-кабель отключён
+Apps de Android Auto / CarPlay con notificación: {} · multimedia: {}	Приложения Android Auto / CarPlay с уведомлением: {} · медиа: {}
+▶ sin nada sonando abre tu app de música: {}	▶ если ничего не играет, открывает ваше музыкальное приложение: {}
+no (Android Auto / CarPlay conectado)	нет (Android Auto / CarPlay подключён)
+Música de cualquier app (Android 5+): {}	Музыка из любого приложения (Android 5+): {}
+no aplica en este Android	недоступно на этом Android
+acceso a notificaciones {} · lector conectado {}	доступ к уведомлениям {} · считыватель подключён {}
+SÍ	ДА
+NO	НЕТ
+Sonido de música en el sistema: {}	Звук музыки в системе: {}
+Sesiones multimedia: {}	Медиасессии: {}
+ninguna (ninguna app publica lo que suena)	нет (ни одно приложение не публикует, что играет)
+el lector no arrancó	считыватель не запустился
+sin acceso ({})	нет доступа ({})
+Pantalla HCN (servicio sourceinfo): {}	Экран HCN (служба sourceinfo): {}
+no aplica (esta pantalla no es HCN)	не применимо (этот экран не HCN)
+no se probó	не проверялось
+conectado, se consulta cada 2 s (sin avisos)	подключено, опрос каждые 2 с (без событий)
+conectado, con avisos del servicio	подключено, с событиями службы
+Bluetooth del sistema (AVRCP): {}	Системный Bluetooth (AVRCP): {}
+ningún aviso	событий нет
+{} avisos, el último hace {} s: {}	{} событий, последнее — {} с назад: {}
+Tráfico en vivo: {}	Живой трафик: {}
+activo	активен
+inactivo	неактивен
+fuente del equipo: {}	источник в устройстве: {}
+última lectura: {}	последнее показание: {}
+avisos recibidos: {}	получено событий: {}
+etiquetas del archivo: {}	метки файла: {}
+{} s, hace {} s	{} с, {} с назад
+simulado (gancho de prueba)	имитация (тестовый хук)
+leída: «{}» — {} · {}/{} s · {}	прочитано: «{}» — {} · {}/{} с · {}
+«{}» — {} · {} · {} s	«{}» — {} · {} · {} с
+sonando	играет
+en pausa	на паузе
+estado ?	состояние ?
+Gris magnético	Магнитный серый
+Blanco perla	Жемчужно-белый
+Negro profundo	Глубокий чёрный
+Gris platino	Платиновый серый
+Grafito	Графит
+Rojo carrera	Гоночный красный
+Azul ártico	Арктический синий
+Beige moderno	Современный бежевый
+Próximo mantenimiento	Следующее ТО
+El carro del tema Carbono, visto desde arriba. También se cambia con una presión larga sobre el carro.	Автомобиль темы «Карбон», вид сверху. Также его можно сменить долгим нажатием на автомобиль.
+Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo (o gris perla en claro). Tu vehículo en grande con el velocímetro y los dos mantenimientos más cercanos, el mapa con el reproductor y el clima flotando encima, y una barra de apps tipo píldora.	Чистые карточки на текстурированном угольном фоне с мягкой подсветкой снизу (или жемчужно-серый в светлом режиме). Ваш автомобиль крупно со спидометром и двумя ближайшими ТО, карта с плеером и погодой поверх, и панель приложений в виде таблетки.
+Revoluciones junto al velocímetro	Обороты рядом со спидометром
+Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientras está conectado)	Небольшой тахометр рядом, с оборотами двигателя со сканера OBD (только пока он подключён)
+Odómetro	Одометр
+Kilometraje del auto (escáner OBD)	Пробег автомобиля (сканер OBD)
+El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	Пробег автомобиля: {}, и пора менять масло (каждые {}).

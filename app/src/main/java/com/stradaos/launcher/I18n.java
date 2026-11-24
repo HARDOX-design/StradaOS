@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Idiomas de StradaOS (español, inglés, portugués, italiano, alemán, malayo, árabe, turco, francés, chino, húngaro, polaco). El código se escribe en español y cada texto se traduce al
+ * Idiomas de StradaOS (español, inglés, portugués, italiano, alemán, malayo, árabe, turco, francés, chino, húngaro, polaco, ruso). El código se escribe en español y cada texto se traduce al
  * mostrarse (tv(), toast(), ventanas TB, etc.) buscándolo en assets/i18n/LANG.txt.
  *
  * Formato del archivo: una línea por texto, «español<TAB>traducción». «\n» representa un salto de línea.
@@ -21,8 +21,8 @@ import java.util.regex.Pattern;
  * tabla. En la traducción, {1}, {2}… permiten cambiar el orden. Si un texto no está en la tabla queda en español.
  */
 public class I18n {
-    static final String[] CODES = {"es", "en", "pt", "it", "de", "ms", "ar", "tr", "fr", "zh", "hu", "pl"};
-    static final String[] NAMES = {"Español", "English", "Português", "Italiano", "Deutsch", "Melayu", "العربية", "Türkçe", "Français", "中文", "Magyar", "Polski"};
+    static final String[] CODES = {"es", "en", "pt", "it", "de", "ms", "ar", "tr", "fr", "zh", "hu", "pl", "ru"};
+    static final String[] NAMES = {"Español", "English", "Português", "Italiano", "Deutsch", "Melayu", "العربية", "Türkçe", "Français", "中文", "Magyar", "Polski", "Русский"};
 
     static String lang = "es";
     static Locale loc = new Locale("es", "CO");
@@ -74,7 +74,7 @@ public class I18n {
             : "ms".equals(code) ? new Locale("ms", "MY") : "ar".equals(code) ? new Locale("ar")
             : "tr".equals(code) ? new Locale("tr", "TR") : "fr".equals(code) ? Locale.FRANCE
             : "zh".equals(code) ? Locale.SIMPLIFIED_CHINESE : "hu".equals(code) ? new Locale("hu", "HU")
-            : "pl".equals(code) ? new Locale("pl", "PL")
+            : "pl".equals(code) ? new Locale("pl", "PL") : "ru".equals(code) ? new Locale("ru", "RU")
             : new Locale("es", "CO");
         num = "ar".equals(code) ? Locale.US : loc;
         map.clear();
@@ -229,7 +229,7 @@ public class I18n {
         if ("ar".equals(lang)) return "EEEE، d MMMM";
         if ("zh".equals(lang)) return "EEEE, M月d日";
         if ("hu".equals(lang)) return "MMMM d., EEEE";
-        if ("pl".equals(lang)) return "EEEE, d MMMM";
+        if ("pl".equals(lang) || "ru".equals(lang)) return "EEEE, d MMMM";
         return "EEEE, d 'de' MMMM";
     }
 }
