@@ -52,6 +52,28 @@ Código: [`VideoCard.java`](../app/src/main/java/com/stradaos/launcher/VideoCard
 - **Reintento al cambiar de video (2.35 r4):** si un video falla al abrir, se reintenta una vez, sin aviso, a los
   0,5 s (con videos 4K/8K el decodificador del anterior a veces todavía no está libre). Si vuelve a fallar: «No se
   puede reproducir aquí» y a los 2 s el siguiente, salvo que ya se haya cambiado de video.
+- **Radios con un solo decodificador (2.35 r5):** en el Picanto (Android 4.2, Autochips AC8227) un video 720p «no se
+  podía reproducir», otro de 51 MB sonaba sin imagen (quedaba el último cuadro del anterior) y, después de un fallo, ni
+  el video chico abría hasta cambiar de tema. Causas y arreglos:
+  - **Superficie nueva para cada video** (`newTexture`): cada video y cada reintento usan un `TextureView` nuevo. La
+    superficie de un video que no abrió quedaba inservible (cambiar de tema la recreaba) y conservaba el último cuadro.
+  - **Miniaturas y reproductor por turnos:** muchas radios tienen un solo decodificador de video, y el selector saca
+    miniaturas con él (en Android 4.x, `MediaMetadataRetriever` prueba el decodificador por software, que solo lee
+    H.264 Baseline, y si no, el de la radio). Ahora el reproductor espera hasta 3 s a que terminen las miniaturas en
+    curso (`VideoCard.extracting`) y las miniaturas no empiezan mientras un video abre (`VideoCard.openingUntil`; se
+    anotan antes de mirar la hora, así uno de los dos siempre espera al otro). Una miniatura que falla con un video
+    sonando no se guarda como «sin miniatura» (marca `<hash>.n` solo si falló sin video sonando); las de antes se
+    reintentan.
+  - **Reintentos:** hasta 2, a los 0,7 s y 1,5 s, con superficie nueva. Si suena pero en 4 s no llega ningún cuadro
+    (`pictureCheck`, por `onSurfaceTextureUpdated`), cuenta como fallo. Al final: aviso en el centro del video (no se
+    esconde con los controles) con el formato («1080×1920 · H.264 High 4.0») y «Mantén presionado el botón de pantalla
+    completa para abrirlo en VLC u otra app». Si no abre ninguno de la lista, deja de saltar.
+  - **Duración y posición solo con el reproductor listo** (`prepared`): antes de estar listo, la radio daba 514:54:48.
+  - **Diagnóstico del video** (Ajustes → Mapa y clima, y `StradaDiag/video.txt`, `VideoLog`): la pantalla, sus
+    decodificadores de video (H.264: nivel máximo por perfil; Android 5+: tamaño máximo) y por cada video el formato
+    (códec, tamaño, perfil/nivel de H.264 leído del SPS de `csd-0`), si la pantalla dice que lo decodifica, y qué pasó
+    (preparado, primer cuadro, errores `what/extra`, avisos `info`, reintentos). Los decodificadores se leen una sola vez
+    antes del primer video: en Android 4.x leerlos abre cada decodificador.
 - **Línea de tiempo (2.35 r3):** `VideoCard.Timeline`, encima de los botones: lo que va, la barra con su punto y lo que
   dura. Tocar o arrastrar mueve el punto y al soltar salta ahí (`seekTo`); mientras se arrastra el carrusel no se lleva
   el gesto (`requestDisallowInterceptTouchEvent`) y los controles no se esconden. Se esconde con los controles.
@@ -125,6 +147,7 @@ la r2 era una copia cada 0,7 s, sin fundido.
 
 **2.35:** pasos nuevos en `regresion.sh` con un MP4 de prueba (`.github/scripts/prueba-video.mp4`, 480×270, 12 s):
 carrusel en cada tema, «Solo video», pantalla completa, velocidad simulada (`video-vel:`), aviso y «Explorar».
+Ronda 5: un «video» dañado en `Movies/Viajes` (bytes al azar): reintentos, aviso y salto; y el diagnóstico del video.
 Ronda 3: una subcarpeta `Movies/Viajes` con otro video; el selector en la carpeta del video, entrar a Viajes, Atrás
 hasta cerrar, abrir en los almacenamientos (`video-elegir:arriba`), elegir el video de Viajes (`video-fila:N`) y la
 línea de tiempo (`video-controles`, `video-ir:6`).
