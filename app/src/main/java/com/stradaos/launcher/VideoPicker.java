@@ -81,6 +81,8 @@ class VideoPicker extends LinearLayout {
     private final List<Object> rows = new ArrayList<Object>();
     private final BaseAdapter adapter;
     private volatile boolean stopped;
+    /** Ya entró o salió de alguna carpeta (al ponerse al día la lista, no se le cambia de lugar). */
+    private boolean moved;
 
     /**
      * @param playing ruta del video que suena (se marca y se abre en su carpeta)
@@ -171,55 +173,148 @@ class VideoPicker extends LinearLayout {
     /** Sube una carpeta; false si ya está en los almacenamientos (Atrás cierra la ventana). */
     boolean up() {
         if (cur == null || cur.parent == null) return false;
+        moved = true;
         show(cur.parent, cur);
         return true;
     }
 
     // ───────────────────────── búsqueda ─────────────────────────
 
-    private void load(final Context c) {
+    /** Última búsqueda (se muestra al instante al abrir; luego se pone al día sola). */
+    private static Node cache;
+    private static long cacheAt;
+    private static volatile boolean building;
+    /** Lo que Android ya sabe de cada video (MediaStore): ruta → {id, duración ms}. */
+    static final java.util.HashMap<String, long[]> MS = new java.util.HashMap<String, long[]>();
+
+    /** Arma la búsqueda en segundo plano (al cargar la tarjeta), para que «Elegir video» abra al instante. */
+    static void prewarm(final Context c) {
+        synchronized (VideoPicker.class) {
+            if (building || (cache != null && android.os.SystemClock.uptimeMillis() - cacheAt < 60000)) return;
+            building = true;
+        }
+        final Context app = c.getApplicationContext();
         new Thread(new Runnable() { public void run() {
-            final Node t = index(c);
-            h.post(new Runnable() { public void run() {
-                if (stopped) return;
-                top = t;
-                Node start = top;
-                String target = startAt == null ? new File(playing).getParent() : startAt;
-                if (target != null && target.length() > 0) {
-                    Node n = find(top, target);
-                    if (n != null) start = n;
-                }
-                // con una sola memoria y sin USB, se entra directo a ella
-                if (start == top && top.kids.size() == 1 && !"".equals(startAt)) start = top.kids.values().iterator().next();
-                show(start, null);
-            }});
+            try {
+                Node t = index(app, true);
+                synchronized (VideoPicker.class) { cache = t; cacheAt = android.os.SystemClock.uptimeMillis(); }
+            } catch (Throwable ignored) {
+            } finally { building = false; }
+        }}, "StradaVideoIndex").start();
+    }
+
+    /**
+     * Muestra al instante la última búsqueda (o, la primera vez, lo que Android ya tiene indexado) y en otro hilo
+     * vuelve a buscar en la memoria y las USB; al terminar, pone la lista al día sin moverla de carpeta ni de lugar.
+     */
+    private void load(final Context c) {
+        final Node cached;
+        synchronized (VideoPicker.class) { cached = cache; }
+        if (cached != null) apply(cached);
+        final Context app = c.getApplicationContext();
+        new Thread(new Runnable() { public void run() {
+            if (cached == null) {
+                final Node quick = index(app, false);
+                if (quick.total > 0) h.post(new Runnable() { public void run() { apply(quick); } });
+            }
+            final Node full = index(app, true);
+            synchronized (VideoPicker.class) { cache = full; cacheAt = android.os.SystemClock.uptimeMillis(); }
+            h.post(new Runnable() { public void run() { apply(full); } });
         }}, "StradaVideoPicker").start();
     }
 
-    /** Arma el árbol de carpetas con videos de cada almacenamiento. */
-    static Node index(Context c) {
+    /** Pone un árbol nuevo: la primera vez abre donde toca; después conserva la carpeta y el lugar de la lista. */
+    private void apply(Node t) {
+        if (stopped || t == null) return;
+        // mientras no haya navegado, se vuelve a abrir donde toca (la búsqueda completa puede traer la carpeta del video)
+        boolean first = top == null || !moved;
+        Node was = cur;
+        top = t;
+        if (first) {
+            Node start = top;
+            String target = startAt == null ? new File(playing).getParent() : startAt;
+            if (target != null && target.length() > 0) {
+                Node n = find(top, target);
+                if (n != null) start = n;
+            }
+            // con una sola memoria y sin USB, se entra directo a ella
+            if (start == top && top.kids.size() == 1 && !"".equals(startAt)) start = top.kids.values().iterator().next();
+            show(start, null);
+            return;
+        }
+        Node n = top;
+        if (was != null && was.parent != null && was.dir != null) {
+            Node f = find(top, was.dir.getAbsolutePath());
+            if (f != null) n = f;
+        }
+        int pos = lv.getFirstVisiblePosition();
+        View v0 = lv.getChildAt(0);
+        int off = v0 != null ? v0.getTop() : 0;
+        show(n, null);
+        if (n.dir != null && was != null && was.dir != null && n.dir.getAbsolutePath().equals(was.dir.getAbsolutePath())) lv.setSelectionFromTop(pos, off);
+    }
+
+    /** Los videos que Android ya tiene indexados (instantáneo); llena {@link #MS} con su id y duración. */
+    static List<File> msVideos(Context c) {
+        List<File> out = new ArrayList<File>();
+        android.database.Cursor cu = null;
+        try {
+            cu = c.getContentResolver().query(android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+                    new String[]{android.provider.MediaStore.Video.Media._ID, android.provider.MediaStore.Video.Media.DATA,
+                            android.provider.MediaStore.Video.Media.DURATION},
+                    android.provider.MediaStore.Video.Media.SIZE + " > 102400", null, null);
+            if (cu != null) {
+                java.util.HashMap<String, long[]> m = new java.util.HashMap<String, long[]>();
+                while (cu.moveToNext()) {
+                    String path = cu.getString(1);
+                    if (path == null || !VideoCard.isVideo(new File(path).getName())) continue;
+                    m.put(path, new long[]{cu.getLong(0), cu.isNull(2) ? -1 : cu.getLong(2)});
+                    out.add(new File(path));
+                }
+                synchronized (MS) { MS.putAll(m); }
+            }
+        } catch (Throwable ignored) {
+        } finally {
+            try { if (cu != null) cu.close(); } catch (Throwable ignored) { }
+        }
+        return out;
+    }
+
+    /**
+     * Arma el árbol de carpetas con videos de cada almacenamiento. Junta lo que Android ya tiene indexado con la
+     * búsqueda en las carpetas (fs = true; las USB de muchas radios no se indexan); con fs = false, solo lo indexado.
+     */
+    static Node index(Context c, boolean fs) {
         Node top = new Node(null, "", 0, null);
         ArrayList<File> roots = new ArrayList<File>();
         ArrayList<Integer> kinds = new ArrayList<Integer>();
         roots.add(Backup.primary()); kinds.add(1);
         try { for (File u : Backup.removable(c)) { roots.add(u); kinds.add(2); } } catch (Throwable ignored) { }
-        java.util.HashSet<String> seen = new java.util.HashSet<String>();
-        int[] budget = {6000};
+        java.util.LinkedHashMap<String, File> all = new java.util.LinkedHashMap<String, File>();
+        for (File f : msVideos(c)) if (f.exists()) all.put(f.getAbsolutePath(), f);
+        if (fs) {
+            java.util.HashSet<String> seen = new java.util.HashSet<String>();
+            int[] budget = {6000};
+            for (File r : roots) {
+                List<File> found = new ArrayList<File>();
+                try { VideoCard.scan(r, 0, found, seen, budget); } catch (Throwable ignored) { }
+                for (File f : found) all.put(f.getAbsolutePath(), f);
+            }
+        }
         for (int i = 0; i < roots.size(); i++) {
             File r = roots.get(i);
             int kind = kinds.get(i);
             String label = kind == 1 ? I18n.t("Memoria de la pantalla") : I18n.t("Memoria USB") + " · " + r.getName();
             Node rn = new Node(r, label, kind, top);
             top.kids.put(String.format(Locale.US, "%03d", i), rn);
-            List<File> found = new ArrayList<File>();
-            try { VideoCard.scan(r, 0, found, seen, budget); } catch (Throwable ignored) { }
             String base = r.getAbsolutePath();
-            for (File f : found) {
+            for (File f : all.values()) {
                 String p = f.getAbsolutePath();
                 if (!p.startsWith(base + "/")) continue;
                 String[] parts = p.substring(base.length() + 1).split("/");
                 Node n = rn;
                 n.total++;
+                top.total++;
                 File d = r;
                 for (int k = 0; k < parts.length - 1; k++) {
                     d = new File(d, parts[k]);
@@ -289,7 +384,7 @@ class VideoPicker extends LinearLayout {
     private void tap(int p) {
         if (p < 0 || p >= rows.size()) return;
         Object o = rows.get(p);
-        if (o instanceof Node) show((Node) o, null);
+        if (o instanceof Node) { moved = true; show((Node) o, null); }
         else if (o instanceof File && cb != null) cb.chosen(cur.dir, new ArrayList<File>(cur.videos), cur.videos.indexOf(o));
     }
 
@@ -403,9 +498,14 @@ class VideoPicker extends LinearLayout {
             txt.setColor(Color.WHITE);
         }
 
-        void setIcon(int i) { icon = i; bmp = null; dur = -1; playing = false; invalidate(); }
+        void setIcon(int i) { icon = i; bmp = null; shader = null; dur = -1; playing = false; invalidate(); }
         void setPlaying(boolean on) { playing = on; invalidate(); }
-        void set(Bitmap b, long d) { bmp = b; dur = d; invalidate(); }
+        private BitmapShader shader;
+
+        void set(Bitmap b, long d) {
+            if (b != bmp) shader = b != null ? new BitmapShader(b, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP) : null;
+            bmp = b; dur = d; invalidate();
+        }
 
         @Override protected void onDraw(Canvas c) {
             float w = getWidth(), hh = getHeight(), r = 10 * s;
@@ -413,13 +513,12 @@ class VideoPicker extends LinearLayout {
             fill.setShader(null);
             fill.setColor(icon == FILM ? 0xFF15171B : Main.INNER);
             c.drawRoundRect(rf, r, r, fill);
-            if (bmp != null && !bmp.isRecycled()) {
+            if (bmp != null && shader != null && !bmp.isRecycled()) {
                 float k = Math.max(w / bmp.getWidth(), hh / bmp.getHeight());
                 m.setScale(k, k);
                 m.postTranslate((w - bmp.getWidth() * k) / 2f, (hh - bmp.getHeight() * k) / 2f);
-                BitmapShader sh = new BitmapShader(bmp, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-                sh.setLocalMatrix(m);
-                img.setShader(sh);
+                shader.setLocalMatrix(m);
+                img.setShader(shader);
                 c.drawRoundRect(rf, r, r, img);
             } else drawIcon(c, w, hh);
             if (icon == FILM && dur > 0) {
@@ -484,22 +583,31 @@ class VideoPicker extends LinearLayout {
     }
 
     /**
-     * Saca las miniaturas y la duración de a una, en otro hilo (las que se piden último van primero: las filas a la
-     * vista). Guarda cada una en la caché de la app (`vthumbs/`, unas 300 como mucho) para no recalcularla.
+     * Saca las miniaturas y la duración en otro hilo (dos a la vez en equipos de 4 núcleos o más con Android 5+; las
+     * que se piden último van primero: las filas a la vista). Orden: la caché de la app (`vthumbs/`, unas 300) → la
+     * miniatura que Android ya tiene hecha (la de la Galería, instantánea) → sacar un cuadro del video (lo más lento).
+     * La duración sale de lo indexado por Android cuando la tiene, así aparece en cuanto se ve la fila.
      */
     static final class Thumbs {
-        private static final LruCache<String, Bitmap> MEM = new LruCache<String, Bitmap>(3 * 1024 * 1024) {
+        private static final LruCache<String, Bitmap> MEM = new LruCache<String, Bitmap>(
+                (int) Math.max(3L * 1024 * 1024, Math.min(12L * 1024 * 1024, Runtime.getRuntime().maxMemory() / 16))) {
             @Override protected int sizeOf(String k, Bitmap b) { return b.getByteCount(); }
         };
         private static final java.util.HashMap<String, Long> DUR = new java.util.HashMap<String, Long>();
+        /** Videos de los que no se pudo sacar miniatura (no se reintentan). */
+        private static final java.util.HashSet<String> NONE = new java.util.HashSet<String>();
         private final File dir;
+        private final Context ctx;
         private final Handler ui;
         private final LinkedList<Object[]> queue = new LinkedList<Object[]>();
-        private Thread worker;
+        /** Claves que un hilo ya está sacando (ListView pide la misma fila varias veces; no se hace dos veces). */
+        private final java.util.HashSet<String> busy = new java.util.HashSet<String>();
+        private int workers;
         private volatile boolean stopped;
 
         Thumbs(Context c, Handler ui) {
             this.ui = ui;
+            ctx = c.getApplicationContext();
             dir = new File(c.getCacheDir(), "vthumbs");
         }
 
@@ -517,17 +625,26 @@ class VideoPicker extends LinearLayout {
             v.key = k;
             Bitmap b = MEM.get(k);
             Long d;
-            synchronized (DUR) { d = DUR.get(k); }
-            if (d != null) { v.set(b, d); return; }
+            boolean none;
+            synchronized (DUR) { d = DUR.get(k); none = NONE.contains(k); }
+            if (d == null) {
+                long[] ms;
+                synchronized (MS) { ms = MS.get(f.getAbsolutePath()); }
+                if (ms != null && ms[1] > 0) d = ms[1];
+            }
+            v.set(b, d != null ? d : -1);
+            if (b != null || none) return;
             synchronized (queue) {
                 queue.addFirst(new Object[]{f, k, v});
                 if (queue.size() > 60) queue.removeLast();
                 queue.notifyAll();
             }
-            if (worker == null) {
-                worker = new Thread(new Runnable() { public void run() { loop(); } }, "StradaThumbs");
-                worker.setPriority(Thread.MIN_PRIORITY);
-                worker.start();
+            int max = Build.VERSION.SDK_INT >= 21 && Runtime.getRuntime().availableProcessors() >= 4 ? 2 : 1;
+            while (workers < max) {
+                workers++;
+                Thread t = new Thread(new Runnable() { public void run() { loop(); } }, "StradaThumbs");
+                t.setPriority(Thread.MIN_PRIORITY);
+                t.start();
             }
         }
 
@@ -541,26 +658,32 @@ class VideoPicker extends LinearLayout {
                     while (queue.isEmpty() && !stopped) { try { queue.wait(); } catch (InterruptedException e) { return; } }
                     if (stopped) return;
                     job = queue.removeFirst();
+                    if (!((String) job[1]).equals(((Thumb) job[2]).key) || !busy.add((String) job[1])) continue;   // la fila ya muestra otro video, o ya se está sacando
                 }
                 final File f = (File) job[0];
                 final String k = (String) job[1];
                 final Thumb v = (Thumb) job[2];
-                if (!k.equals(v.key)) continue;     // la fila ya muestra otro video
                 long d = -1;
                 Bitmap b = null;
                 try {
                     File jpg = new File(dir, k + ".jpg"), txt = new File(dir, k + ".d");
                     if (txt.exists()) {
                         d = readLong(txt);
-                        if (jpg.exists()) b = BitmapFactory.decodeFile(jpg.getAbsolutePath());
+                        if (jpg.exists()) b = decode(jpg);
                     } else {
-                        Object[] r = extract(f);
-                        d = (Long) r[0];
-                        b = (Bitmap) r[1];
+                        long[] ms;
+                        synchronized (MS) { ms = MS.get(f.getAbsolutePath()); }
+                        if (ms != null) { b = system(ms[0]); if (ms[1] > 0) d = ms[1]; }
+                        if (b == null || d <= 0) {
+                            Object[] r = extract(f, b == null);
+                            if (d <= 0) d = (Long) r[0];
+                            if (b == null) b = (Bitmap) r[1];
+                        }
                         dir.mkdirs();
                         if (b != null) {
                             FileOutputStream o = new FileOutputStream(jpg);
                             try { b.compress(Bitmap.CompressFormat.JPEG, 82, o); } finally { o.close(); }
+                            b = small(b);
                         }
                         FileOutputStream o = new FileOutputStream(txt);
                         try { o.write(String.valueOf(d).getBytes("UTF-8")); } finally { o.close(); }
@@ -568,30 +691,74 @@ class VideoPicker extends LinearLayout {
                 } catch (Throwable ignored) { }
                 final Bitmap fb = b;
                 final long fd = d;
+                synchronized (queue) { busy.remove(k); }
                 ui.post(new Runnable() { public void run() {
                     if (fb != null) MEM.put(k, fb);
-                    synchronized (DUR) { DUR.put(k, fd); }
+                    synchronized (DUR) { DUR.put(k, fd); if (fb == null) NONE.add(k); }
                     if (k.equals(v.key)) v.set(fb, fd);
                 }});
             }
+            synchronized (queue) { workers--; }
         }
 
-        /** Duración y un cuadro chico (192 px de ancho como mucho) del 15 % del video (el primero suele ser negro). */
-        static Object[] extract(File f) {
+        /** La miniatura que Android ya tiene hecha para ese video (de la Galería). */
+        private Bitmap system(long id) {
+            try {
+                Bitmap b;
+                if (Build.VERSION.SDK_INT >= 29) b = Modern.videoThumb(ctx, id, 192, 192);
+                else {
+                    BitmapFactory.Options o = new BitmapFactory.Options();
+                    o.inSampleSize = 2;
+                    b = android.provider.MediaStore.Video.Thumbnails.getThumbnail(ctx.getContentResolver(), id,
+                            android.provider.MediaStore.Video.Thumbnails.MINI_KIND, o);
+                }
+                if (b == null) return null;
+                if (b.getWidth() > 192) {
+                    Bitmap s = Bitmap.createScaledBitmap(b, 192, Math.max(1, Math.round(192f * b.getHeight() / b.getWidth())), true);
+                    if (s != b) b.recycle();
+                    b = s;
+                }
+                return b;
+            } catch (Throwable e) { return null; }
+        }
+
+        /** En memoria van en RGB_565 (la mitad): caben el doble sin que se pierdan al ir y volver en la lista. */
+        private static Bitmap small(Bitmap b) {
+            if (b.getConfig() == Bitmap.Config.RGB_565) return b;
+            try {
+                Bitmap c = b.copy(Bitmap.Config.RGB_565, false);
+                if (c != null) { b.recycle(); return c; }
+            } catch (Throwable ignored) { }
+            return b;
+        }
+
+        private static Bitmap decode(File jpg) {
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inPreferredConfig = Bitmap.Config.RGB_565;
+            return BitmapFactory.decodeFile(jpg.getAbsolutePath(), o);
+        }
+
+        /**
+         * Duración y (si frame) un cuadro chico (192 px de ancho como mucho) del 15 % del video (el primero suele ser
+         * negro). Sin frame solo lee los datos del archivo: no decodifica nada.
+         */
+        static Object[] extract(File f, boolean frame) {
             long d = -1;
             Bitmap out = null;
             MediaMetadataRetriever r = new MediaMetadataRetriever();
             try {
                 r.setDataSource(f.getAbsolutePath());
                 try { d = Long.parseLong(r.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)); } catch (Throwable ignored) { }
-                long us = d > 0 ? Math.min(d * 150, 15000000L) : 1000000L;
-                Bitmap full = Build.VERSION.SDK_INT >= 27 ? Modern.scaledFrame(r, us, 192, 192) : r.getFrameAtTime(us, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
-                if (full != null) {
-                    int w = full.getWidth(), hh = full.getHeight();
-                    if (w > 192) {
-                        out = Bitmap.createScaledBitmap(full, 192, Math.max(1, Math.round(192f * hh / w)), true);
-                        if (out != full) full.recycle();
-                    } else out = full;
+                if (frame) {
+                    long us = d > 0 ? Math.min(d * 150, 15000000L) : 1000000L;
+                    Bitmap full = Build.VERSION.SDK_INT >= 27 ? Modern.scaledFrame(r, us, 192, 192) : r.getFrameAtTime(us, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
+                    if (full != null) {
+                        int w = full.getWidth(), hh = full.getHeight();
+                        if (w > 192) {
+                            out = Bitmap.createScaledBitmap(full, 192, Math.max(1, Math.round(192f * hh / w)), true);
+                            if (out != full) full.recycle();
+                        } else out = full;
+                    }
                 }
             } catch (Throwable ignored) {     // formato que la radio no lee, o sin memoria para un video 4K
             } finally {
@@ -611,7 +778,7 @@ class VideoPicker extends LinearLayout {
             } catch (Throwable e) { return -1; }
         }
 
-        /** Deja las 300 miniaturas más nuevas. */
+        /** Deja las 300 miniaturas más nuevas (600 archivos: imagen + duración). */
         private void trim() {
             try {
                 File[] fs = dir.listFiles();

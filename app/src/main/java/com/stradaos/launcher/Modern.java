@@ -74,6 +74,12 @@ public class Modern {
         return d.getProductName();
     }
 
+    /** 2.35: la miniatura que Android ya tiene hecha de un video (Android 10+, API 29). */
+    static android.graphics.Bitmap videoThumb(android.content.Context c, long id, int w, int h) throws java.io.IOException {
+        return c.getContentResolver().loadThumbnail(android.content.ContentUris.withAppendedId(
+                android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id), new android.util.Size(w, h), null);
+    }
+
     /** 2.35: cuadro de un video ya achicado (Android 8.1+, API 27): no arma la imagen a tamaño completo en memoria. */
     static android.graphics.Bitmap scaledFrame(android.media.MediaMetadataRetriever r, long us, int w, int h) {
         return r.getScaledFrameAtTime(us, android.media.MediaMetadataRetriever.OPTION_CLOSEST_SYNC, w, h);

@@ -416,6 +416,8 @@ public class VideoCard extends FrameLayout {
                     return;
                 }
                 empty.setVisibility(GONE);
+                // «Elegir video» abre al instante: su búsqueda se arma unos segundos después (sin estorbar al video)
+                h.postDelayed(new Runnable() { public void run() { try { VideoPicker.prewarm(getContext()); } catch (Throwable ignored) { } } }, 4000);
                 String last = prefs.getString("video_last", "");
                 int i = 0;
                 for (int k = 0; k < list.size(); k++) if (list.get(k).getAbsolutePath().equals(last)) i = k;
@@ -510,6 +512,7 @@ public class VideoCard extends FrameLayout {
             m.setSurface(surface);
             m.setOnPreparedListener(new MediaPlayer.OnPreparedListener() { public void onPrepared(MediaPlayer p) {
                 if (mp != m) return;
+                retryOf = null;
                 fit(m.getVideoWidth(), m.getVideoHeight());
                 int start = resumeMs;
                 if (resumeMs > 0) { m.seekTo(resumeMs); resumeMs = 0; }
@@ -519,11 +522,35 @@ public class VideoCard extends FrameLayout {
             }});
             m.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() { public void onVideoSizeChanged(MediaPlayer p, int w, int hh) { if (mp == m) fit(w, hh); } });
             m.setOnCompletionListener(new MediaPlayer.OnCompletionListener() { public void onCompletion(MediaPlayer p) { if (mp == m) next(); } });
-            m.setOnErrorListener(new MediaPlayer.OnErrorListener() { public boolean onError(MediaPlayer p, int what, int extra) { if (mp == m) failed(); return true; } });
+            m.setOnErrorListener(new MediaPlayer.OnErrorListener() { public boolean onError(MediaPlayer p, int what, int extra) { if (mp == m) failedOrRetry(f); return true; } });
             m.prepareAsync();
         } catch (Throwable t) {
-            failed();
+            failedOrRetry(f);
         }
+    }
+
+    /** El video que ya se reintentó una vez (null = el último sí abrió). */
+    private File retryOf;
+
+    /**
+     * Al cambiar de video, el decodificador del anterior a veces todavía no está libre (pasa con videos 4K/8K o de mucho
+     * peso: el primer intento falla aunque el video sí se puede ver). Se reintenta una vez, sin aviso, medio segundo
+     * después; solo si vuelve a fallar se avisa y se pasa al siguiente.
+     */
+    private void failedOrRetry(final File f) {
+        if (retryOf != f) {
+            retryOf = f;
+            final int pos = resumeMs;
+            closePlayer();
+            h.postDelayed(new Runnable() { public void run() {
+                if (!active || current != f || mp != null) return;
+                resumeMs = pos;
+                open(f);
+            }}, 500);
+            return;
+        }
+        retryOf = null;
+        failed();
     }
 
     /** Formato que la radio no decodifica: se avisa y se pasa al siguiente (en pantalla completa, VLC sí lo lee). */
@@ -531,7 +558,8 @@ public class VideoCard extends FrameLayout {
         closePlayer();
         if (!active) return;
         title.setText(I18n.t("No se puede reproducir aquí") + ": " + name() + " · " + I18n.t("ábrelo en pantalla completa"));
-        h.postDelayed(new Runnable() { public void run() { next(); } }, 2500);
+        final File f = current;
+        h.postDelayed(new Runnable() { public void run() { if (current == f && mp == null) next(); } }, 2000);
     }
 
     private void closePlayer() {

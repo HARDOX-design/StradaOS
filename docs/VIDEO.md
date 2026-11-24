@@ -40,7 +40,18 @@ Código: [`VideoCard.java`](../app/src/main/java/com/stradaos/launcher/VideoCard
   en todo. Elegir una carpeta en Ajustes deja `video_flat = false`. Miniaturas: `MediaMetadataRetriever` en un hilo de
   baja prioridad, de a una y primero las filas a la vista; cuadro del 15 % del video (máx. 15 s; el primero suele ser
   negro), 192 px de ancho (Android 8.1+ con `getScaledFrameAtTime`, sin armar el cuadro completo en memoria); caché en
-  `cache/vthumbs/` (`<hash>.jpg` + `<hash>.d` con la duración, hasta 300) y en memoria (3 MB).
+  `cache/vthumbs/` (`<hash>.jpg` + `<hash>.d` con la duración, hasta 300) y en memoria (RGB_565, 1/16 de la memoria
+  de la app entre 3 y 12 MB).
+- **Selector rápido (2.35 r4):** la búsqueda queda en memoria (`VideoPicker.cache`) y se arma sola 4 s después de que
+  carga la tarjeta (`prewarm`): al abrir se ve al instante y en otro hilo se pone al día sin mover la carpeta ni el
+  lugar de la lista. La primera vez, mientras busca, muestra lo que Android ya tiene indexado (`MediaStore`). Las
+  duraciones salen de `MediaStore` (aparecen apenas se ve la fila) y las miniaturas, de las que Android ya hizo
+  (`loadThumbnail` en Android 10+, `Video.Thumbnails` antes); solo si no hay, se saca un cuadro del video. Dos hilos de
+  miniaturas en equipos de 4 núcleos o más con Android 5+, uno en los demás. Las USB de muchas radios no se indexan:
+  para ellas sigue la búsqueda en carpetas.
+- **Reintento al cambiar de video (2.35 r4):** si un video falla al abrir, se reintenta una vez, sin aviso, a los
+  0,5 s (con videos 4K/8K el decodificador del anterior a veces todavía no está libre). Si vuelve a fallar: «No se
+  puede reproducir aquí» y a los 2 s el siguiente, salvo que ya se haya cambiado de video.
 - **Línea de tiempo (2.35 r3):** `VideoCard.Timeline`, encima de los botones: lo que va, la barra con su punto y lo que
   dura. Tocar o arrastrar mueve el punto y al soltar salta ahí (`seekTo`); mientras se arrastra el carrusel no se lleva
   el gesto (`requestDisallowInterceptTouchEvent`) y los controles no se esconden. Se esconde con los controles.
