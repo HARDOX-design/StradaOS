@@ -29,7 +29,25 @@ Código: [`VideoCard.java`](../app/src/main/java/com/stradaos/launcher/VideoCard
 - **Dónde busca:** la memoria interna, `SECONDARY_STORAGE`, `/storage` y `/mnt` (las USB), hasta 5 niveles y 1000
   videos, igual que el buscador de mapas `.map`. Formatos por extensión: `.mp4 .m4v .mkv .webm .3gp .mov .avi .ts`
   (más de 100 KB). En Android 6+ pide el permiso de almacenamiento al elegir «Video».
-- **Carpeta:** «Carpeta de videos» lista las carpetas que tienen videos (con cuántos) o «Todas».
+- **Carpeta:** «Carpeta de videos» (Ajustes) lista las carpetas que tienen videos (con cuántos) o «Todas» y busca también
+  en sus subcarpetas.
+- **Elegir video (☰ o tocar el título), 2.35 r3:** `VideoPicker`, un gestor de archivos dentro de una ventana de
+  StradaOS. Arriba los almacenamientos (memoria de la pantalla y cada USB o tarjeta de `Backup.removable`); adentro solo
+  las carpetas que llevan a algún video (con cuántos) y los videos con miniatura recortada al centro, duración y tamaño.
+  «‹» o Atrás sube una carpeta (en los almacenamientos, Atrás cierra). Abre en la carpeta del video que suena (marcado
+  con el borde del acento y «Reproduciendo»). Al elegir un video, la lista de reproducción pasa a ser **esa carpeta,
+  sin subcarpetas** (`video_dir` + `video_flat = true`); si después esa carpeta ya no está (USB quitada), vuelve a buscar
+  en todo. Elegir una carpeta en Ajustes deja `video_flat = false`. Miniaturas: `MediaMetadataRetriever` en un hilo de
+  baja prioridad, de a una y primero las filas a la vista; cuadro del 15 % del video (máx. 15 s; el primero suele ser
+  negro), 192 px de ancho (Android 8.1+ con `getScaledFrameAtTime`, sin armar el cuadro completo en memoria); caché en
+  `cache/vthumbs/` (`<hash>.jpg` + `<hash>.d` con la duración, hasta 300) y en memoria (3 MB).
+- **Línea de tiempo (2.35 r3):** `VideoCard.Timeline`, encima de los botones: lo que va, la barra con su punto y lo que
+  dura. Tocar o arrastrar mueve el punto y al soltar salta ahí (`seekTo`); mientras se arrastra el carrusel no se lleva
+  el gesto (`requestDisallowInterceptTouchEvent`) y los controles no se esconden. Se esconde con los controles.
+- **Videos HDR (2.35 r3):** los `.MOV` del iPhone (HLG o Dolby Vision) y los HDR10 se veían lavados: Android los dibuja
+  sin convertir en una pantalla normal. `VideoCard.isHdr` lee la pista con `MediaExtractor` (`color-transfer` 6 o 7, o
+  `video/dolby-vision`) y, si es HDR, `tex.setLayerPaint` con más saturación (×1,35) y contraste (×1,15). Aproximado,
+  no es una conversión exacta; los demás videos no se tocan. Android 4.2+.
 - **Reproducción:** `MediaPlayer` dibujando en un **`TextureView`** (el reproductor de Android de la radio: MP4/H.264 y
   la mayoría de los MKV, según el hardware). No se usa `VideoView` porque va en una capa aparte (`SurfaceView`) que no
   admite transparencia.
@@ -63,18 +81,23 @@ Código: [`VideoCard.java`](../app/src/main/java/com/stradaos/launcher/VideoCard
 
 ## En movimiento
 
-Sobre **5 km/h** (`currentKmh()`: la velocidad del GPS de hace menos de 5 s o la del escáner OBD, la mayor), según
-«Video en movimiento» (`video_moving`):
+Sobre **5 km/h** (`currentKmh()`: la velocidad del GPS de hace menos de 5 s o la del escáner OBD, la mayor). **Sin datos
+de velocidad** (sin GPS ni escáner) cuenta como en movimiento («Solo se muestra con el carro detenido» + «Sin GPS ni
+escáner no se sabe si el carro va andando»). Según «Video en movimiento» (`video_moving`):
 
 | Modo | Qué pasa |
 |---|---|
-| **Tapar la imagen** (`cover`, de fábrica) | una tapa opaca «Imagen en pausa mientras manejas · el audio sigue»; al detenerse vuelve la imagen |
-| **Seguir con un aviso** (`warn`) | «No te distraigas mientras conduces» con **OK**; al tocarlo el video sigue a la vista hasta la próxima detención (5 s detenido vuelve a armar el aviso: sale cada vez que el carro arranca) |
+| **Preguntar** (`ask`, de fábrica) | tapa con el video difuminado detrás y «¿Quieres seguir viendo el video?» **Sí / No**. Sí → aviso «Cuidado al manejar» (`Main.confirmVideoMoving`); solo con «Seguir viendo» se ve el video, hasta la próxima detención (5 s detenido). No → queda la tapa sin pregunta (tocarla vuelve a preguntar). |
+| **Tapar siempre** (`cover`) | la tapa, sin pregunta |
 
-La ley de tránsito prohíbe ver video mientras se conduce: de fábrica queda `cover`, y `warn` es una elección explícita del
-conductor (avisada en el propio ajuste); Andrés decidió conservarlo. **Sin datos de velocidad** (sin GPS ni escáner)
-cuenta como en movimiento: con `cover` se tapa con «Solo se muestra con el carro detenido» y con `warn` sale el aviso,
-las dos con la línea «Sin GPS ni escáner no se sabe si el carro va andando».
+(`warn`, de la primera Prueba, cuenta como `ask`.) El audio sigue siempre. VLC (mantener ⛶) solo detenido.
+
+**El difuminado de la tapa (2.35 r3):** en **Android 12+** el video mismo se difumina en vivo en la GPU
+(`VideoBlur31`, `RenderEffect.createBlurEffect`, radio 34 × escala) y la tapa queda transparente con el oscurecido
+encima: fluido. En **Android 4–11** se copia un cuadro chico (`tex.getBitmap(32, h)`, ×2, `boxBlur` r3 dos veces) unas
+8 veces por segundo; si en la pantalla tarda más de 30 ms copia menos seguido (hasta ~3/s) y si va sobrado, hasta ~12/s.
+Cada cuadro aparece sobre el anterior con un fundido de la misma duración (dos `ImageView`), así no se ve a saltos. En
+la r2 era una copia cada 0,7 s, sin fundido.
 
 ## Preferencias
 
@@ -83,13 +106,17 @@ las dos con la línea «Sin GPS ni escáner no se sabe si el carro va andando».
 | `center_card` | String | `map` | `map` (solo el mapa) o `both` (carrusel mapa y video) |
 | `center_page` | int | `0` | página del carrusel: 0 mapa, 1 video |
 | `video_dir` | String | `""` | carpeta de videos; vacía = toda la memoria y las USB |
-| `video_moving` | String | `cover` | `cover` o `warn` |
+| `video_flat` | boolean | `false` | `true` = solo los videos de `video_dir`, sin subcarpetas (elegido en «Elegir video») |
+| `video_moving` | String | `ask` | `ask` o `cover` |
 | `video_last`, `video_pos` | String, int | — | último video y segundo donde quedó |
 
 ## Probado
 
 **2.35:** pasos nuevos en `regresion.sh` con un MP4 de prueba (`.github/scripts/prueba-video.mp4`, 480×270, 12 s):
 carrusel en cada tema, «Solo video», pantalla completa, velocidad simulada (`video-vel:`), aviso y «Explorar».
+Ronda 3: una subcarpeta `Movies/Viajes` con otro video; el selector en la carpeta del video, entrar a Viajes, Atrás
+hasta cerrar, abrir en los almacenamientos (`video-elegir:arriba`), elegir el video de Viajes (`video-fila:N`) y la
+línea de tiempo (`video-controles`, `video-ir:6`).
 
 
 **Temas (22-nov):** con los controles dentro del video, sin choques en Aurora, Cobalto, Faro y el clásico; pantalla

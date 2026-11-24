@@ -44,7 +44,8 @@ import java.util.Locale;
  * a la tarjeta sin deformarse y sus bordes se desvanecen hacia el fondo del tema ({@link Feather}), sin cortes rectos.
  *
  * En movimiento (más de 5 km/h por el GPS o el escáner) la imagen se tapa y el audio sigue. La tapa es oscura y deja
- * ver el video muy difuminado detrás (una copia chiquita del cuadro, cada 0,7 s). Según «video_moving»:
+ * ver el video muy difuminado detrás (Android 12+: difuminado en vivo; Android 4–11: copias chiquitas unas 8 veces por
+ * segundo con fundido). Según «video_moving»:
  *   «ask» (de fábrica): pregunta «¿Quieres seguir viendo el video?» con Sí / No. «Sí» abre un aviso de cuidado al
  *   manejar (Main, {@link Host#confirmMoving}) y solo si el conductor lo confirma se ve el video, hasta la próxima
  *   detención. «No» deja la tapa (tocarla vuelve a preguntar). Así la decisión es del conductor, avisado.
@@ -79,6 +80,8 @@ public class VideoCard extends FrameLayout {
     private final Speed speed;
     private final Host host;
     private TextView fullBtn;
+    /** Íconos de pausa/reproducir y de pantalla completa/cerrar (cambian según el estado). */
+    private CtlIcon playIco, fullIco;
     /** «Solo video»: el ícono de cuatro esquinas del «Solo mapa» de Aurora (hacia afuera agranda, hacia adentro vuelve). */
     private Aurora.Corners bigIcon;
     /** 0 en su tarjeta, 1 «Solo video», 2 pantalla completa. */
@@ -158,8 +161,11 @@ public class VideoCard extends FrameLayout {
         ui.addView(title, tl);
         bar = new LinearLayout(c);
         bar.setGravity(Gravity.CENTER);
-        playBtn = button("❚❚");
-        TextView prev = button("⏮"), nxt = button("⏭"), big = button(""), fb = button("⛶"), pick = button("☰");
+        // íconos dibujados en código: Android 4.1/4.2 no tienen ⏮ ⏭ ☰ ⛶ ▶ en su letra (salían cuadros vacíos)
+        playBtn = button("");
+        TextView prev = button(""), nxt = button(""), big = button(""), fb = button(""), pick = button("");
+        playIco = new CtlIcon(c, CtlIcon.PAUSE);
+        fullIco = new CtlIcon(c, CtlIcon.FULL);
         pick.setOnClickListener(new OnClickListener() { public void onClick(View v) { if (host != null && !list.isEmpty()) host.pickVideo(VideoCard.this); controls(true); } });
         title.setOnClickListener(new OnClickListener() { public void onClick(View v) { if (host != null && !list.isEmpty()) host.pickVideo(VideoCard.this); controls(true); } });
         FrameLayout bigBox = new FrameLayout(c);
@@ -184,7 +190,8 @@ public class VideoCard extends FrameLayout {
             else { title.setText(I18n.t("Solo se muestra con el carro detenido")); controls(true); }
             return true;
         }});
-        for (View b : new View[]{pick, prev, playBtn, nxt, bigBox, fb}) {
+        for (View b : new View[]{iconBox(pick, new CtlIcon(c, CtlIcon.LIST)), iconBox(prev, new CtlIcon(c, CtlIcon.PREV)), iconBox(playBtn, playIco),
+                iconBox(nxt, new CtlIcon(c, CtlIcon.NEXT)), bigBox, iconBox(fb, fullIco)}) {
             LinearLayout.LayoutParams l = new LinearLayout.LayoutParams(Math.round(46 * s), Math.round(40 * s));
             l.setMargins(Math.round(4 * s), 0, Math.round(4 * s), 0);
             bar.addView(b, l);
@@ -295,6 +302,80 @@ public class VideoCard extends FrameLayout {
         t.setTextColor(color);
         if (bold) t.setTypeface(Typeface.DEFAULT_BOLD);
         return t;
+    }
+
+    /** El botón con su ícono encima, centrado (el ícono no toma los toques: van al botón). */
+    private View iconBox(TextView b, View icon) {
+        FrameLayout box = new FrameLayout(getContext());
+        box.addView(b, new LayoutParams(-1, -1));
+        box.addView(icon, new LayoutParams(Math.round(22 * s), Math.round(22 * s), Gravity.CENTER));
+        return box;
+    }
+
+    /** Íconos de los controles del video, dibujados (iguales en Android 4.1 y en Android 15). */
+    static class CtlIcon extends View {
+        static final int PREV = 0, NEXT = 1, LIST = 2, PLAY = 3, PAUSE = 4, FULL = 5, CLOSE = 6;
+        private int kind;
+        private final Paint p = new Paint(Paint.ANTI_ALIAS_FLAG), st = new Paint(Paint.ANTI_ALIAS_FLAG);
+        private final android.graphics.Path path = new android.graphics.Path();
+
+        CtlIcon(Context c, int kind) {
+            super(c);
+            this.kind = kind;
+            p.setColor(Color.WHITE);
+            st.setColor(Color.WHITE);
+            st.setStyle(Paint.Style.STROKE);
+            st.setStrokeCap(Paint.Cap.ROUND);
+            st.setStrokeJoin(Paint.Join.ROUND);
+        }
+
+        void set(int k) { if (k != kind) { kind = k; invalidate(); } }
+
+        @Override protected void onDraw(Canvas c) {
+            float w = getWidth(), hh = getHeight(), u = Math.min(w, hh) / 22f, cx = w / 2, cy = hh / 2;
+            st.setStrokeWidth(2.2f * u);
+            path.reset();
+            switch (kind) {
+                case PREV: case NEXT: {
+                    float d = kind == PREV ? -1 : 1;
+                    c.drawRect(cx + d * 6 * u - u, cy - 7 * u, cx + d * 6 * u + u, cy + 7 * u, p);
+                    path.moveTo(cx + d * 4 * u, cy);
+                    path.lineTo(cx - d * 7 * u, cy - 7 * u);
+                    path.lineTo(cx - d * 7 * u, cy + 7 * u);
+                    path.close();
+                    c.drawPath(path, p);
+                    break;
+                }
+                case LIST:
+                    for (int i = -1; i <= 1; i++) c.drawLine(cx - 7 * u, cy + i * 6 * u, cx + 7 * u, cy + i * 6 * u, st);
+                    break;
+                case PLAY:
+                    path.moveTo(cx - 5 * u, cy - 8 * u);
+                    path.lineTo(cx + 8 * u, cy);
+                    path.lineTo(cx - 5 * u, cy + 8 * u);
+                    path.close();
+                    c.drawPath(path, p);
+                    break;
+                case PAUSE:
+                    c.drawRect(cx - 6 * u, cy - 7 * u, cx - 2 * u, cy + 7 * u, p);
+                    c.drawRect(cx + 2 * u, cy - 7 * u, cx + 6 * u, cy + 7 * u, p);
+                    break;
+                case FULL: {
+                    float a = 8 * u, b = 3.5f * u;
+                    for (int sx = -1; sx <= 1; sx += 2) for (int sy = -1; sy <= 1; sy += 2) {
+                        path.moveTo(cx + sx * a, cy + sy * (a - b));
+                        path.lineTo(cx + sx * a, cy + sy * a);
+                        path.lineTo(cx + sx * (a - b), cy + sy * a);
+                    }
+                    c.drawPath(path, st);
+                    break;
+                }
+                case CLOSE:
+                    c.drawLine(cx - 6 * u, cy - 6 * u, cx + 6 * u, cy + 6 * u, st);
+                    c.drawLine(cx + 6 * u, cy - 6 * u, cx - 6 * u, cy + 6 * u, st);
+                    break;
+            }
+        }
     }
 
     private TextView button(String label) {
@@ -543,7 +624,7 @@ public class VideoCard extends FrameLayout {
         mode = m;
         bigIcon.inward = m == 1;
         bigIcon.invalidate();
-        fullBtn.setText(m == 2 ? "✕" : "⛶");
+        fullIco.set(m == 2 ? CtlIcon.CLOSE : CtlIcon.FULL);
         if (vw > 0) post(new Runnable() { public void run() { fit(vw, vh); } });
     }
 
@@ -557,14 +638,14 @@ public class VideoCard extends FrameLayout {
         list = new ArrayList<File>(l);
         loaded = true;
         empty.setVisibility(GONE);
-        resumeMs = 0; paused = false; playBtn.setText("❚❚");
+        resumeMs = 0; paused = false; playIco.set(CtlIcon.PAUSE);
         i = Math.max(0, Math.min(i, list.size() - 1));
         if (active) play(i);
         else { at = i; current = list.get(i); prefs.edit().putString("video_last", current.getAbsolutePath()).putInt("video_pos", 0).apply(); }
     }
     int index() { return at; }
     /** Reproduce el video i de la lista (elegido en la lista de Main). */
-    void playAt(int i) { if (!list.isEmpty() && active) { resumeMs = 0; paused = false; playBtn.setText("❚❚"); play(i); } }
+    void playAt(int i) { if (!list.isEmpty() && active) { resumeMs = 0; paused = false; playIco.set(CtlIcon.PAUSE); play(i); } }
 
     /** Ganchos de prueba: controles a la vista y saltar a un momento (como soltar la línea de tiempo ahí). */
     void showControls() { controls(true); }
@@ -582,7 +663,7 @@ public class VideoCard extends FrameLayout {
     void toggle() {
         paused = !paused;
         try { if (mp != null) { if (paused) mp.pause(); else mp.start(); } } catch (Throwable ignored) { }
-        playBtn.setText(paused ? "▶" : "❚❚");
+        playIco.set(paused ? CtlIcon.PLAY : CtlIcon.PAUSE);
     }
 
     /** Abrir en VLC (o la app de video que elija el usuario), desde donde iba: mantener presionado ⛶. */
@@ -592,7 +673,7 @@ public class VideoCard extends FrameLayout {
         int pos = position();
         try { if (mp != null && mp.isPlaying()) mp.pause(); } catch (Throwable ignored) { }
         paused = true;
-        playBtn.setText("▶");
+        playIco.set(CtlIcon.PLAY);
         String ext = f.getName().substring(f.getName().lastIndexOf('.'));
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setDataAndType(ApkProvider.share(f, ext), "video/*");
