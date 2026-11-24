@@ -1865,3 +1865,7 @@ Elegir video	Wybierz wideo
 Cuidado al manejar	Uwaga podczas jazdy
 Mantén la vista en el camino. Ver video mientras manejas es peligroso y en muchos países está prohibido. Si sigues, lo haces bajo tu responsabilidad.	Patrz na drogę. Oglądanie wideo podczas jazdy jest niebezpieczne i w wielu krajach zabronione. Jeśli kontynuujesz, robisz to na własną odpowiedzialność.
 Seguir viendo	Oglądaj dalej
+Almacenamientos	Pamięci
+No hay videos en esta carpeta	Brak filmów w tym folderze
+Sin videos	Brak filmów
+Reproduciendo	Odtwarzanie

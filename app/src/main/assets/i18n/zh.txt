@@ -1886,3 +1886,7 @@ Elegir video	选择视频
 Cuidado al manejar	驾驶时请注意安全
 Mantén la vista en el camino. Ver video mientras manejas es peligroso y en muchos países está prohibido. Si sigues, lo haces bajo tu responsabilidad.	请注视道路。驾驶时观看视频很危险，并且在许多国家是违法的。如果继续，责任由你自行承担。
 Seguir viendo	继续观看
+Almacenamientos	存储位置
+No hay videos en esta carpeta	此文件夹中没有视频
+Sin videos	没有视频
+Reproduciendo	正在播放

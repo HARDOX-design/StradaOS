@@ -1886,3 +1886,7 @@ Elegir video	Scegli video
 Cuidado al manejar	Attenzione alla guida
 Mantén la vista en el camino. Ver video mientras manejas es peligroso y en muchos países está prohibido. Si sigues, lo haces bajo tu responsabilidad.	Tieni gli occhi sulla strada. Guardare video mentre guidi è pericoloso e in molti paesi è vietato. Se continui, lo fai sotto la tua responsabilità.
 Seguir viendo	Continua a guardare
+Almacenamientos	Archivi
+No hay videos en esta carpeta	Nessun video in questa cartella
+Sin videos	Nessun video
+Reproduciendo	In riproduzione

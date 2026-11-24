@@ -73,4 +73,9 @@ public class Modern {
     static String usbProductName(android.hardware.usb.UsbDevice d) {
         return d.getProductName();
     }
+
+    /** 2.35: cuadro de un video ya achicado (Android 8.1+, API 27): no arma la imagen a tamaño completo en memoria. */
+    static android.graphics.Bitmap scaledFrame(android.media.MediaMetadataRetriever r, long us, int w, int h) {
+        return r.getScaledFrameAtTime(us, android.media.MediaMetadataRetriever.OPTION_CLOSEST_SYNC, w, h);
+    }
 }

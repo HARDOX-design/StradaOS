@@ -1890,3 +1890,7 @@ Elegir video	Choose video
 Cuidado al manejar	Careful while driving
 Mantén la vista en el camino. Ver video mientras manejas es peligroso y en muchos países está prohibido. Si sigues, lo haces bajo tu responsabilidad.	Keep your eyes on the road. Watching video while driving is dangerous and illegal in many countries. If you continue, you do so at your own risk.
 Seguir viendo	Keep watching
+Almacenamientos	Storage
+No hay videos en esta carpeta	No videos in this folder
+Sin videos	No videos
+Reproduciendo	Playing

@@ -737,6 +737,13 @@ public class Main extends Activity {
                 else if (v.startsWith("video-modo:")) { if (videoCard != null) videoMode(videoCard, Integer.parseInt(v.substring(11))); }
                 else if (v.startsWith("video-aviso:")) { prefs.edit().putString("video_moving", v.endsWith("cover") ? "cover" : "ask").apply(); }
                 else if ("video-elegir".equals(v)) { if (videoCard != null) pickVideo(videoCard); }
+                // 2.35 r3: selector en los almacenamientos («video-elegir:arriba») o en una carpeta («video-elegir:/ruta»)
+                else if (v.startsWith("video-elegir:")) { String a = v.substring(13); if (videoCard != null) pickVideo(videoCard, "arriba".equals(a) ? "" : a); }
+                // toca la fila n del selector abierto (carpeta: entra; video: lo elige)
+                else if (v.startsWith("video-fila:")) { if (videoPicker != null) videoPicker.tapRow(Integer.parseInt(v.substring(11))); }
+                // controles a la vista (con la línea de tiempo) y saltar a un segundo
+                else if ("video-controles".equals(v)) { if (videoCard != null) videoCard.showControls(); }
+                else if (v.startsWith("video-ir:")) { if (videoCard != null) videoCard.seekTest(Integer.parseInt(v.substring(9)) * 1000); }
                 else if ("video-cuidado".equals(v)) { if (videoCard != null) confirmVideoMoving(videoCard); }
                 else if (v.startsWith("explorar:")) { if (liveMap != null) { if (v.endsWith("1")) liveMap.explore(); else liveMap.follow(); } }
                 else if (v.startsWith("explorar-zoom:")) { if (liveMap != null) { int d = Integer.parseInt(v.substring(14)); for (int k = 0; k < Math.abs(d); k++) liveMap.zoomBy(d > 0 ? 1 : -1); } }
@@ -10424,19 +10431,36 @@ public class Main extends Activity {
 
     private static final int REQ_STORAGE = 79, REQ_STORAGE_W = 80, REQ_VIDEO = 85;
 
-    /** Elegir el video a reproducir entre los encontrados (botón ☰ o el título del video). */
-    private void pickVideo(final VideoCard v) {
-        final java.util.List<File> fs = new java.util.ArrayList<File>(v.files());
-        if (fs.isEmpty()) return;
-        String[] items = new String[fs.size()];
-        for (int i = 0; i < fs.size(); i++) {
-            File f = fs.get(i), p = f.getParentFile();
-            items[i] = (i == v.index() ? "▶  " : "") + f.getName() + (p != null ? "\n" + p.getName() : "");
-        }
-        new TB(this, dlg()).setTitle("Elegir video")
-            .setItems(items, new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) { v.playAt(w); } })
-            .setNegativeButton("Cancelar", null).show();
+    private void pickVideo(final VideoCard v) { pickVideo(v, null); }
+
+    /**
+     * 2.35: «Elegir video» como un gestor de archivos (botón ☰ o el título del video): almacenamientos, carpetas con
+     * «‹»/Atrás y videos con miniatura y duración. Al elegir uno, la lista de reproducción pasa a ser esa carpeta (se
+     * recuerda: «video_dir» + «video_flat»). start: null = carpeta del video de ahora, "" = almacenamientos, o una ruta.
+     */
+    private void pickVideo(final VideoCard v, String start) {
+        final AlertDialog[] dd = new AlertDialog[1];
+        final VideoPicker vp = new VideoPicker(this, v.currentPath(), start, new VideoPicker.Cb() {
+            public void chosen(File folder, java.util.List<File> videos, int index) {
+                try { if (dd[0] != null) dd[0].dismiss(); } catch (Throwable ignored) { }
+                if (videos.isEmpty() || index < 0) return;
+                prefs.edit().putString("video_dir", folder.getAbsolutePath()).putBoolean("video_flat", true).apply();
+                v.playList(videos, index);
+            }
+        });
+        dd[0] = new TB(this, dlg()).wide().setTitle("Elegir video").setView(vp).setNegativeButton("Cancelar", null).show();
+        dd[0].setOnDismissListener(new DialogInterface.OnDismissListener() { public void onDismiss(DialogInterface d) { vp.stop(); if (videoPicker == vp) videoPicker = null; } });
+        // Atrás sube una carpeta; en los almacenamientos, cierra
+        dd[0].setOnKeyListener(new DialogInterface.OnKeyListener() { public boolean onKey(DialogInterface d, int code, android.view.KeyEvent e) {
+            if (code != android.view.KeyEvent.KEYCODE_BACK) return false;
+            if (e.getAction() == android.view.KeyEvent.ACTION_UP && !vp.up()) d.dismiss();
+            return true;
+        }});
+        videoPicker = vp;
     }
+
+    /** El selector de videos abierto (para los ganchos de prueba). */
+    private VideoPicker videoPicker;
 
     /**
      * En movimiento, «Sí, seguir viendo»: aviso de cuidado al manejar. Solo si lo confirma se ve el video (hasta que el
@@ -10464,7 +10488,7 @@ public class Main extends Activity {
                 for (int i = 0; i < keys.size(); i++) items[i + 1] = new File(keys.get(i)).getName() + "  ·  " + dirs.get(keys.get(i)) + " " + I18n.t("videos") + "\n" + keys.get(i);
                 new TB(Main.this, dlg()).setTitle("Carpeta de videos")
                     .setItems(items, new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) {
-                        prefs.edit().putString("video_dir", w == 0 ? "" : keys.get(w - 1)).putString("video_last", "").apply();
+                        prefs.edit().putString("video_dir", w == 0 ? "" : keys.get(w - 1)).putBoolean("video_flat", false).putString("video_last", "").apply();
                         rebuild();
                         if (settingsView != null) showSettings(settingsCat);
                     }})

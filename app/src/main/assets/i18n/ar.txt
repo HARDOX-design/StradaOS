@@ -1886,3 +1886,7 @@ Elegir video	اختيار فيديو
 Cuidado al manejar	انتبه أثناء القيادة
 Mantén la vista en el camino. Ver video mientras manejas es peligroso y en muchos países está prohibido. Si sigues, lo haces bajo tu responsabilidad.	أبقِ عينيك على الطريق. مشاهدة الفيديو أثناء القيادة خطيرة وممنوعة في كثير من الدول. إذا تابعت فأنت تتحمل المسؤولية.
 Seguir viendo	متابعة المشاهدة
+Almacenamientos	أماكن التخزين
+No hay videos en esta carpeta	لا توجد فيديوهات في هذا المجلد
+Sin videos	لا توجد فيديوهات
+Reproduciendo	قيد التشغيل

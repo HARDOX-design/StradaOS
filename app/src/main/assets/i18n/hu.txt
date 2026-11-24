@@ -1871,3 +1871,7 @@ Elegir video	Videó kiválasztása
 Cuidado al manejar	Vigyázz vezetés közben
 Mantén la vista en el camino. Ver video mientras manejas es peligroso y en muchos países está prohibido. Si sigues, lo haces bajo tu responsabilidad.	Figyeld az utat. Vezetés közben videót nézni veszélyes, és sok országban tilos. Ha folytatod, a saját felelősségedre teszed.
 Seguir viendo	Tovább nézem
+Almacenamientos	Tárolók
+No hay videos en esta carpeta	Ebben a mappában nincs videó
+Sin videos	Nincs videó
+Reproduciendo	Lejátszás

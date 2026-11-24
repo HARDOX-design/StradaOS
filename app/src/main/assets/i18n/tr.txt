@@ -1888,3 +1888,7 @@ Elegir video	Video seç
 Cuidado al manejar	Sürerken dikkat
 Mantén la vista en el camino. Ver video mientras manejas es peligroso y en muchos países está prohibido. Si sigues, lo haces bajo tu responsabilidad.	Gözünüzü yoldan ayırmayın. Araç kullanırken video izlemek tehlikelidir ve birçok ülkede yasaktır. Devam ederseniz sorumluluk size aittir.
 Seguir viendo	İzlemeye devam et
+Almacenamientos	Depolama alanları
+No hay videos en esta carpeta	Bu klasörde video yok
+Sin videos	Video yok
+Reproduciendo	Oynatılıyor

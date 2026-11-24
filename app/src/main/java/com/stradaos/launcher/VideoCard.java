@@ -10,6 +10,7 @@ import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.SurfaceTexture;
 import android.graphics.Typeface;
@@ -94,13 +95,23 @@ public class VideoCard extends FrameLayout {
     private int vw, vh;
     private final TextView title, empty, playBtn;
     private final LinearLayout bar;
+    /** 2.35: barra de línea de tiempo (posición / duración; arrastrar para adelantar o retroceder). */
+    private final Timeline line;
     /** Capa del tamaño del video con el título y los controles. */
     private final FrameLayout ui;
     private final FrameLayout cover;
     private final TextView coverText, coverSub, coverAsk;
     private final LinearLayout coverBtns;
-    /** El video difuminado detrás de la tapa, del tamaño y en el lugar del video. */
-    private final android.widget.ImageView blurImg;
+    /**
+     * El video difuminado detrás de la tapa, del tamaño y en el lugar del video (Android 4–11). Son dos: cada cuadro
+     * nuevo aparece sobre el anterior con un fundido, así no se ve a saltos aunque se copie pocas veces.
+     */
+    private final android.widget.ImageView blurImg, blurImg2;
+    /** Android 12+: el video mismo se difumina en vivo (RenderEffect), sin copias. */
+    private static final boolean LIVE_BLUR = android.os.Build.VERSION.SDK_INT >= 31;
+    /** Cada cuánto se copia un cuadro para el difuminado (se ajusta solo según lo que tarda la pantalla). */
+    private int blurMs = 125;
+    private boolean blurFront, liveBlurOn, liveBlurFailed;
     private boolean declined;
     private final Handler h = new Handler(Looper.getMainLooper());
     private List<File> list = new ArrayList<File>();
@@ -182,6 +193,17 @@ public class VideoCard extends FrameLayout {
         bl.bottomMargin = Math.round(14 * s);
         ui.addView(bar, bl);
         bar.setVisibility(INVISIBLE);     // aparecen con el primer video (sin videos no hay controles vacíos)
+        line = new Timeline(c, s, new Timeline.L() {
+            public void seek(int ms) {
+                try { if (mp != null) mp.seekTo(ms); else resumeMs = ms; } catch (Throwable ignored) { }
+                controls(true);
+            }
+            public void touching() { h.removeCallbacks(hideControls); }
+        });
+        LayoutParams ll = new LayoutParams(-1, Math.round(30 * s), Gravity.BOTTOM);
+        ll.setMargins(Math.round(16 * s), 0, Math.round(16 * s), Math.round(60 * s));
+        ui.addView(line, ll);
+        line.setVisibility(INVISIBLE);
         addView(ui, new LayoutParams(-1, -1, Gravity.CENTER));
 
         empty = text(15, 0xFFB8BEC6, false);
@@ -198,6 +220,9 @@ public class VideoCard extends FrameLayout {
         blurImg = new android.widget.ImageView(c);
         blurImg.setScaleType(android.widget.ImageView.ScaleType.FIT_XY);
         cover.addView(blurImg, new LayoutParams(0, 0, Gravity.CENTER));
+        blurImg2 = new android.widget.ImageView(c);
+        blurImg2.setScaleType(android.widget.ImageView.ScaleType.FIT_XY);
+        cover.addView(blurImg2, new LayoutParams(0, 0, Gravity.CENTER));
         View scrim = new View(c);
         scrim.setBackgroundColor(0x8C000000);
         cover.addView(scrim, new LayoutParams(-1, -1));
@@ -258,6 +283,7 @@ public class VideoCard extends FrameLayout {
             if (at >= 0) { resumeMs = position(); prefs.edit().putInt("video_pos", resumeMs).apply(); }
             closePlayer();
             h.removeCallbacks(hideControls);
+            h.removeCallbacks(timeTick);
         }
     }
 
@@ -291,8 +317,12 @@ public class VideoCard extends FrameLayout {
         empty.setText(I18n.t("Buscando videos en la memoria y las USB…"));
         empty.setVisibility(VISIBLE);
         final String dir = prefs.getString("video_dir", "");
+        final boolean flat = prefs.getBoolean("video_flat", false);
         new Thread(new Runnable() { public void run() {
-            final List<File> found = find(dir);
+            List<File> f0 = flat ? folder(new File(dir)) : find(dir);
+            // la carpeta elegida en «Elegir video» ya no está (USB quitada): se buscan todos
+            if (flat && f0.isEmpty()) f0 = find("");
+            final List<File> found = f0;
             h.post(new Runnable() { public void run() {
                 scanning = false;
                 list = found;
@@ -333,7 +363,7 @@ public class VideoCard extends FrameLayout {
         return out;
     }
 
-    private static void scan(File d, int depth, List<File> out, java.util.Set<String> seen, int[] budget) {
+    static void scan(File d, int depth, List<File> out, java.util.Set<String> seen, int[] budget) {
         if (depth > 5 || budget[0]-- <= 0 || out.size() >= 1000) return;
         String canon;
         try { canon = d.getCanonicalPath(); } catch (Throwable e) { return; }
@@ -353,6 +383,16 @@ public class VideoCard extends FrameLayout {
                 if (seen.add(c)) out.add(f);
             }
         }
+    }
+
+    /** 2.35: los videos de una sola carpeta (sin subcarpetas), por nombre: la lista que se eligió en «Elegir video». */
+    static List<File> folder(File d) {
+        List<File> out = new ArrayList<File>();
+        File[] fs;
+        try { fs = d.listFiles(); } catch (Throwable e) { fs = null; }
+        if (fs != null) for (File f : fs) if (!f.getName().startsWith(".") && f.isFile() && isVideo(f.getName()) && f.length() > 100 * 1024) out.add(f);
+        Collections.sort(out, new Comparator<File>() { public int compare(File a, File b) { return a.getName().compareToIgnoreCase(b.getName()); } });
+        return out;
     }
 
     static boolean isVideo(String name) {
@@ -379,7 +419,9 @@ public class VideoCard extends FrameLayout {
     private void open(final File f) {
         current = f;
         closePlayer();
+        line.set(0, 0);
         if (surface == null || !active) return;
+        checkHdr(f);
         final MediaPlayer m = new MediaPlayer();
         mp = m;
         try {
@@ -388,8 +430,11 @@ public class VideoCard extends FrameLayout {
             m.setOnPreparedListener(new MediaPlayer.OnPreparedListener() { public void onPrepared(MediaPlayer p) {
                 if (mp != m) return;
                 fit(m.getVideoWidth(), m.getVideoHeight());
+                int start = resumeMs;
                 if (resumeMs > 0) { m.seekTo(resumeMs); resumeMs = 0; }
                 if (!paused) m.start();
+                try { line.set(start, Math.max(0, m.getDuration())); } catch (Throwable ignored) { line.set(0, 0); }
+                if (bar.getVisibility() == VISIBLE) line.setVisibility(line.dur > 0 ? VISIBLE : INVISIBLE);
             }});
             m.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() { public void onVideoSizeChanged(MediaPlayer p, int w, int hh) { if (mp == m) fit(w, hh); } });
             m.setOnCompletionListener(new MediaPlayer.OnCompletionListener() { public void onCompletion(MediaPlayer p) { if (mp == m) next(); } });
@@ -456,9 +501,11 @@ public class VideoCard extends FrameLayout {
         ul.width = Math.min(cw, Math.max(l.width, Math.round(6 * 54 * s + 16 * s)));
         ul.height = l.height; ul.gravity = Gravity.CENTER;
         ui.setLayoutParams(ul);
-        LayoutParams gl = (LayoutParams) blurImg.getLayoutParams();
-        gl.width = l.width; gl.height = l.height; gl.gravity = Gravity.CENTER;
-        blurImg.setLayoutParams(gl);
+        for (View bi : new View[]{blurImg, blurImg2}) {
+            LayoutParams gl = (LayoutParams) bi.getLayoutParams();
+            gl.width = l.width; gl.height = l.height; gl.gravity = Gravity.CENTER;
+            bi.setLayoutParams(gl);
+        }
     }
 
     private final Runnable hideControls = new Runnable() { public void run() { if (!paused) controls(false); } };
@@ -467,9 +514,24 @@ public class VideoCard extends FrameLayout {
     private void controls(boolean on) {
         bar.setVisibility(on ? VISIBLE : INVISIBLE);
         title.setVisibility(on ? VISIBLE : INVISIBLE);
+        line.setVisibility(on && line.dur > 0 ? VISIBLE : INVISIBLE);
         h.removeCallbacks(hideControls);
-        if (on) h.postDelayed(hideControls, 4000);
+        h.removeCallbacks(timeTick);
+        if (on) { h.postDelayed(hideControls, 4000); timeTick.run(); }
     }
+
+    /** Mientras se ven los controles, la línea de tiempo se pone al día dos veces por segundo. */
+    private final Runnable timeTick = new Runnable() { public void run() {
+        if (!active || bar.getVisibility() != VISIBLE) return;
+        try {
+            if (mp != null) {
+                int d = mp.getDuration();
+                line.set(mp.getCurrentPosition(), d > 0 ? d : 0);
+                line.setVisibility(line.dur > 0 ? VISIBLE : INVISIBLE);
+            }
+        } catch (Throwable ignored) { }
+        h.postDelayed(this, 500);
+    }};
 
     @Override protected void onSizeChanged(int w, int hh, int ow, int oh) {
         super.onSizeChanged(w, hh, ow, oh);
@@ -486,9 +548,27 @@ public class VideoCard extends FrameLayout {
     }
 
     List<File> files() { return list; }
+    /** Ruta del video de ahora (o el último que sonó). */
+    String currentPath() { return at >= 0 && at < list.size() ? list.get(at).getAbsolutePath() : prefs.getString("video_last", ""); }
+
+    /** 2.35: eligió un video en el selector: la lista pasa a ser su carpeta y arranca en ese video. */
+    void playList(List<File> l, int i) {
+        if (l == null || l.isEmpty()) return;
+        list = new ArrayList<File>(l);
+        loaded = true;
+        empty.setVisibility(GONE);
+        resumeMs = 0; paused = false; playBtn.setText("❚❚");
+        i = Math.max(0, Math.min(i, list.size() - 1));
+        if (active) play(i);
+        else { at = i; current = list.get(i); prefs.edit().putString("video_last", current.getAbsolutePath()).putInt("video_pos", 0).apply(); }
+    }
     int index() { return at; }
     /** Reproduce el video i de la lista (elegido en la lista de Main). */
     void playAt(int i) { if (!list.isEmpty() && active) { resumeMs = 0; paused = false; playBtn.setText("❚❚"); play(i); } }
+
+    /** Ganchos de prueba: controles a la vista y saltar a un momento (como soltar la línea de tiempo ahí). */
+    void showControls() { controls(true); }
+    void seekTest(int ms) { try { if (mp != null) mp.seekTo(ms); } catch (Throwable ignored) { } line.set(ms, line.dur); controls(true); }
 
     /** Revisa ya la velocidad y la tapa (sin duplicar la revisión de cada segundo). */
     private void refresh() { h.removeCallbacks(tick); if (active) tick.run(); }
@@ -542,6 +622,7 @@ public class VideoCard extends FrameLayout {
         h.removeCallbacks(tick);
         h.removeCallbacks(blurTick);
         h.removeCallbacks(hideControls);
+        h.removeCallbacks(timeTick);
         onPause();
         closePlayer();
         active = false;
@@ -648,6 +729,142 @@ public class VideoCard extends FrameLayout {
         }
     }
 
+    /**
+     * Línea de tiempo del video: a la izquierda lo que va, a la derecha lo que dura, y en medio la barra con su punto.
+     * Tocar o arrastrar mueve el punto (muestra el tiempo al que va) y al soltar salta ahí. Mientras se arrastra, el
+     * carrusel no se lleva el gesto ni se esconden los controles.
+     */
+    static class Timeline extends View {
+        interface L { void seek(int ms); void touching(); }
+        int pos, dur;
+        private int drag = -1;
+        private long seekAt;
+        private final float s;
+        private final L l;
+        private final RectF rect = new RectF();
+        private final Paint track = new Paint(Paint.ANTI_ALIAS_FLAG), fill = new Paint(Paint.ANTI_ALIAS_FLAG),
+                knob = new Paint(Paint.ANTI_ALIAS_FLAG), txt = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+        Timeline(Context c, float s, L l) {
+            super(c);
+            this.s = s; this.l = l;
+            track.setColor(0x55FFFFFF);
+            knob.setColor(Color.WHITE);
+            knob.setShadowLayer(3 * s, 0, 0, 0x99000000);
+            txt.setColor(Color.WHITE);
+            txt.setTextSize(12 * s);
+            txt.setTypeface(Typeface.DEFAULT_BOLD);
+            txt.setShadowLayer(3 * s, 0, 0, Color.BLACK);
+            if (android.os.Build.VERSION.SDK_INT < 28) setLayerType(LAYER_TYPE_SOFTWARE, null);   // sombras en Android 4–8
+        }
+
+        /** Posición y duración del reproductor (mientras arrastra, o justo después de saltar, la posición no se pisa). */
+        void set(int p, int d) {
+            dur = d;
+            if (drag < 0 && android.os.SystemClock.uptimeMillis() - seekAt > 900) pos = p;
+            invalidate();
+        }
+
+        private float labelW() { return txt.measureText(dur >= 3600000 ? "0:00:00" : "00:00") + 10 * s; }
+
+        @Override protected void onDraw(Canvas c) {
+            if (dur <= 0) return;
+            float w = getWidth(), hh = getHeight(), lw = labelW(), cy = hh / 2f;
+            float x0 = lw, x1 = w - lw, th = 4 * s;
+            int p = drag >= 0 ? drag : Math.min(pos, dur);
+            float x = x0 + (x1 - x0) * (p / (float) dur);
+            fill.setColor(Main.RED);
+            RectF r = rect;
+            r.set(x0, cy - th / 2, x1, cy + th / 2);
+            c.drawRoundRect(r, th, th, track);
+            r.right = x;
+            c.drawRoundRect(r, th, th, fill);
+            c.drawCircle(x, cy, (drag >= 0 ? 9 : 7) * s, knob);
+            float ty = cy - (txt.descent() + txt.ascent()) / 2;
+            txt.setTextAlign(Paint.Align.LEFT);
+            c.drawText(VideoPicker.time(p), 0, ty, txt);
+            txt.setTextAlign(Paint.Align.RIGHT);
+            c.drawText(VideoPicker.time(dur), w, ty, txt);
+        }
+
+        private int at(float x) {
+            float lw = labelW(), x0 = lw, x1 = getWidth() - lw;
+            float f = (x - x0) / Math.max(1, x1 - x0);
+            return Math.round(Math.max(0, Math.min(1, f)) * dur);
+        }
+
+        @Override public boolean onTouchEvent(android.view.MotionEvent e) {
+            if (dur <= 0) return false;
+            switch (e.getActionMasked()) {
+                case android.view.MotionEvent.ACTION_DOWN:
+                    if (getParent() != null) getParent().requestDisallowInterceptTouchEvent(true);
+                    drag = at(e.getX()); l.touching(); invalidate(); return true;
+                case android.view.MotionEvent.ACTION_MOVE:
+                    drag = at(e.getX()); l.touching(); invalidate(); return true;
+                case android.view.MotionEvent.ACTION_UP:
+                    int to = at(e.getX());
+                    drag = -1; pos = to; seekAt = android.os.SystemClock.uptimeMillis(); invalidate();
+                    l.seek(to);
+                    return true;
+                case android.view.MotionEvent.ACTION_CANCEL:
+                    drag = -1; invalidate(); l.seek(pos); return true;
+            }
+            return true;
+        }
+    }
+
+    // ───────────────────────── videos HDR ─────────────────────────
+
+    private Boolean hdrOn;
+
+    /**
+     * Videos HDR (los .MOV del iPhone, HLG o Dolby Vision; HDR10): en una pantalla normal Android los muestra sin
+     * convertir y se ven lavados, grises. Si el archivo dice que es HDR, se le sube un poco el color y el contraste al
+     * dibujarlo (aproximado: no es una conversión exacta). Los demás videos no se tocan. Android 4.2+ (setLayerPaint).
+     */
+    private void checkHdr(final File f) {
+        if (android.os.Build.VERSION.SDK_INT < 17) return;
+        setHdr(false);
+        new Thread(new Runnable() { public void run() {
+            final boolean on = isHdr(f);
+            h.post(new Runnable() { public void run() { if (f == current) setHdr(on); } });
+        }}, "StradaHdr").start();
+    }
+
+    static boolean isHdr(File f) {
+        android.media.MediaExtractor ex = new android.media.MediaExtractor();
+        try {
+            ex.setDataSource(f.getAbsolutePath());
+            for (int i = 0; i < ex.getTrackCount(); i++) {
+                android.media.MediaFormat fm = ex.getTrackFormat(i);
+                String mime = fm.getString(android.media.MediaFormat.KEY_MIME);
+                if (mime == null || !mime.startsWith("video/")) continue;
+                if (mime.contains("dolby-vision")) return true;
+                // «color-transfer»: 6 = ST 2084 (HDR10/PQ), 7 = HLG (Android 7+ lo informa)
+                if (fm.containsKey("color-transfer")) { int t = fm.getInteger("color-transfer"); if (t == 6 || t == 7) return true; }
+            }
+        } catch (Throwable ignored) {
+        } finally {
+            try { ex.release(); } catch (Throwable ignored) { }
+        }
+        return false;
+    }
+
+    private void setHdr(boolean on) {
+        if (android.os.Build.VERSION.SDK_INT < 17 || (hdrOn != null && hdrOn == on)) return;
+        hdrOn = on;
+        try {
+            if (!on) { tex.setLayerPaint(null); return; }
+            android.graphics.ColorMatrix cm = new android.graphics.ColorMatrix();
+            cm.setSaturation(1.35f);
+            float k = 1.15f, t = (-0.5f * k + 0.5f) * 255f;
+            cm.postConcat(new android.graphics.ColorMatrix(new float[]{k, 0, 0, 0, t, 0, k, 0, 0, t, 0, 0, k, 0, t, 0, 0, 0, 1, 0}));
+            Paint p = new Paint();
+            p.setColorFilter(new android.graphics.ColorMatrixColorFilter(cm));
+            tex.setLayerPaint(p);
+        } catch (Throwable ignored) { }
+    }
+
     // ───────────────────────── en movimiento ─────────────────────────
 
     /** ¿Se sabe que el carro está detenido? (velocidad conocida y de 5 km/h o menos) */
@@ -660,35 +877,70 @@ public class VideoCard extends FrameLayout {
      * La tapa es opaca, pero sus bordes se desvanecen: mientras está puesta, el video queda casi transparente para que
      * no se asome por ahí. No se oculta del todo: el reproductor necesita que alguien siga tomando sus cuadros (si no,
      * en algunas radios se traba también el audio).
+     *
+     * Android 12+: en vez de copias, el video mismo se difumina en vivo (fluido) y la tapa queda transparente con el
+     * oscurecido encima; el difuminado es tan fuerte que no se distingue nada.
      */
     private void setCovered(boolean on) {
         boolean was = cover.getVisibility() == VISIBLE;
         cover.setVisibility(on ? VISIBLE : GONE);
-        videoBox.setAlpha(on ? 0.02f : 1f);
         edge.setVisibility(on ? INVISIBLE : VISIBLE);
         h.removeCallbacks(blurTick);
-        if (on) { if (!was) blurTick.run(); else h.postDelayed(blurTick, 700); }
+        if (LIVE_BLUR && !liveBlurFailed) {
+            if (on && !liveBlurOn) { try { VideoBlur31.on(videoBox, 34 * s); liveBlurOn = true; } catch (Throwable t) { liveBlurFailed = true; } }
+            else if (!on && liveBlurOn) { try { VideoBlur31.off(videoBox); } catch (Throwable ignored) { } liveBlurOn = false; }
+            if (!liveBlurFailed) {
+                cover.setBackgroundColor(on ? Color.TRANSPARENT : 0xFF0B0C0E);
+                videoBox.setAlpha(1f);
+                return;
+            }
+            // si el sistema no lo deja, se usa lo de Android 4–11 (sin mostrar el video)
+            cover.setBackgroundColor(0xFF0B0C0E);
+        }
+        videoBox.setAlpha(on ? 0.02f : 1f);
+        if (on) {
+            if (!was) { blurImg.animate().cancel(); blurImg2.animate().cancel(); blurImg.setAlpha(1f); blurImg2.setAlpha(0f); blurFront = false; blurTick.run(); }
+            else h.postDelayed(blurTick, blurMs);
+        }
     }
 
     /**
-     * El video difuminado de la tapa: una copia chiquita del cuadro de ahora (48 px de ancho), agrandada al doble y
-     * pasada dos veces por un difuminado de caja; la ImageView la estira al tamaño del video. Barato también en la radio.
+     * El video difuminado de la tapa (Android 4–11): una copia chiquita del cuadro de ahora (32 px de ancho), agrandada
+     * al doble y pasada dos veces por un difuminado de caja; la ImageView la estira al tamaño del video. Unas 8 veces
+     * por segundo, con un fundido entre una y otra para que se vea fluido. Si en la pantalla tarda mucho (radios
+     * lentas), copia menos seguido (hasta 3 por segundo); si va sobrado, hasta 12.
      */
     private final Runnable blurTick = new Runnable() { public void run() {
         if (!active || cover.getVisibility() != VISIBLE) return;
+        long t0 = android.os.SystemClock.uptimeMillis();
         try {
             if (vw > 0 && vh > 0 && mp != null && tex.isAvailable()) {
-                int w0 = 48, h0 = Math.max(4, Math.round(48f * vh / vw));
+                int w0 = 32, h0 = Math.max(4, Math.round(32f * vh / vw));
                 Bitmap small = tex.getBitmap(w0, h0);
                 if (small != null) {
                     Bitmap big = Bitmap.createScaledBitmap(small, w0 * 2, h0 * 2, true);
                     if (big != small) small.recycle();
-                    boxBlur(big, 4); boxBlur(big, 4);
-                    blurImg.setImageBitmap(big);
+                    boxBlur(big, 3); boxBlur(big, 3);
+                    // fundido del cuadro anterior al nuevo, sin cambiar el orden (el oscurecido y el texto siguen
+                    // encima): si se ve la de arriba, el nuevo va abajo y la de arriba se desvanece; si no, el nuevo va
+                    // arriba y aparece
+                    if (blurFront) {
+                        blurImg.setImageBitmap(big);
+                        blurImg2.animate().alpha(0f).setDuration(blurMs).start();
+                    } else {
+                        blurImg2.setImageBitmap(big);
+                        blurImg2.animate().cancel();
+                        blurImg2.setAlpha(0f);
+                        blurImg2.animate().alpha(1f).setDuration(blurMs).start();
+                    }
+                    blurFront = !blurFront;
                 }
             }
         } catch (Throwable ignored) { }
-        h.postDelayed(this, 700);
+        long took = android.os.SystemClock.uptimeMillis() - t0;
+        if (took > 30) blurMs = Math.min(330, blurMs + 40);
+        else if (took < 12) blurMs = Math.max(85, blurMs - 10);
+        h.postDelayed(this, blurMs);
     }};
 
     /** Difuminado de caja (horizontal y vertical) en el lugar; para bitmaps chiquitos. */

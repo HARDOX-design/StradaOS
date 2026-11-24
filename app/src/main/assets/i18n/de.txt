@@ -1886,3 +1886,7 @@ Elegir video	Video auswählen
 Cuidado al manejar	Vorsicht beim Fahren
 Mantén la vista en el camino. Ver video mientras manejas es peligroso y en muchos países está prohibido. Si sigues, lo haces bajo tu responsabilidad.	Behalte die Straße im Blick. Videos während der Fahrt anzusehen ist gefährlich und in vielen Ländern verboten. Wenn du fortfährst, tust du das auf eigene Verantwortung.
 Seguir viendo	Weiter ansehen
+Almacenamientos	Speicher
+No hay videos en esta carpeta	Keine Videos in diesem Ordner
+Sin videos	Keine Videos
+Reproduciendo	Wird abgespielt

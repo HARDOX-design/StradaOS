@@ -1886,3 +1886,7 @@ Elegir video	Pilih video
 Cuidado al manejar	Berhati-hati semasa memandu
 Mantén la vista en el camino. Ver video mientras manejas es peligroso y en muchos países está prohibido. Si sigues, lo haces bajo tu responsabilidad.	Pastikan mata anda di jalan. Menonton video semasa memandu adalah berbahaya dan dilarang di banyak negara. Jika anda teruskan, ia atas tanggungjawab anda sendiri.
 Seguir viendo	Terus menonton
+Almacenamientos	Storan
+No hay videos en esta carpeta	Tiada video dalam folder ini
+Sin videos	Tiada video
+Reproduciendo	Sedang dimainkan

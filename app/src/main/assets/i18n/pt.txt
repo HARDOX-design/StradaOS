@@ -1889,3 +1889,7 @@ Elegir video	Escolher vídeo
 Cuidado al manejar	Cuidado ao dirigir
 Mantén la vista en el camino. Ver video mientras manejas es peligroso y en muchos países está prohibido. Si sigues, lo haces bajo tu responsabilidad.	Mantenha os olhos na estrada. Assistir a vídeos enquanto dirige é perigoso e proibido em muitos países. Se continuar, é por sua conta e risco.
 Seguir viendo	Continuar vendo
+Almacenamientos	Armazenamentos
+No hay videos en esta carpeta	Não há vídeos nesta pasta
+Sin videos	Sem vídeos
+Reproduciendo	Reproduzindo

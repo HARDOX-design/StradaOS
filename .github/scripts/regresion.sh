@@ -82,6 +82,9 @@ if part 1; then
   # ── 2.35: tarjeta del centro con mapa y video (carrusel), mapa explorable y video detenido / en movimiento ──
   adb shell mkdir -p /sdcard/Movies >/dev/null 2>&1
   adb push "$(dirname "$0")/prueba-video.mp4" /sdcard/Movies/prueba-stradaos.mp4 >/dev/null 2>&1
+  # una subcarpeta con otro video, para el selector tipo gestor de archivos
+  adb shell mkdir -p /sdcard/Movies/Viajes >/dev/null 2>&1
+  adb push "$(dirname "$0")/prueba-video.mp4" /sdcard/Movies/Viajes/otro-stradaos.mp4 >/dev/null 2>&1
   [ "$API" -ge 23 ] && adb shell pm grant $PKG android.permission.READ_EXTERNAL_STORAGE >/dev/null 2>&1
   step centro-mapa centro:mapa 6
   step explorar explorar:1 4
@@ -112,7 +115,24 @@ if part 1; then
   step video-sin-vel video-vel:nan 3
   step video-preguntar video-aviso:ask 3
   step video-detenido video-vel:0 8
-  step video-elegir video-elegir 3 1
+  # selector tipo gestor de archivos: abre en la carpeta del video (Viajes + el video, con miniatura y duración)
+  step video-elegir video-elegir 6
+  step video-elegir-viajes video-fila:0 5
+  # Atrás sube de carpeta (Viajes → Movies → memoria → almacenamientos) y en los almacenamientos cierra
+  adb shell input keyevent 4; sleep 2; shot "$(printf %03d $N)-video-elegir-atras"
+  adb shell input keyevent 4; sleep 2; shot "$(printf %03d $N)-video-elegir-memoria"
+  adb shell input keyevent 4; sleep 2; shot "$(printf %03d $N)-video-elegir-almacenamientos"
+  adb shell input keyevent 4; sleep 2; shot "$(printf %03d $N)-video-elegir-cerrado"
+  step video-elegir-arriba video-elegir:arriba 5
+  step video-elegir-memoria video-fila:0 4
+  adb shell input keyevent 4; sleep 1; adb shell input keyevent 4; sleep 2
+  # elegir el video de Viajes: la lista pasa a ser esa carpeta
+  step video-elegir-2 video-elegir 4
+  step video-elegir-entrar video-fila:0 4
+  step video-elegir-video video-fila:0 6
+  # línea de tiempo: a la vista con los controles y saltar al segundo 6
+  step video-controles video-controles 2
+  step video-ir video-ir:6 3
   step pagina-mapa pagina:1 3
   # deslizar de verdad sobre la tarjeta (de mapa a video y de vuelta)
   adb shell input swipe 700 200 330 200 250; sleep 3
