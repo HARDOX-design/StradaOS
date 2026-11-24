@@ -110,7 +110,9 @@ public class LiveMapView extends View {
     private long lastTouch;
     /** Pellizco en curso: escala sobre el zoom entero (entre 0,5 y 2) alrededor del punto entre los dedos. */
     private float pinch = 1f, pinchX, pinchY;
-    private float ctlTop, ctlBottom;
+    private float ctlTop, ctlBottom, navTopY = -1, navReserve;
+    /** Lado del botón redondo del navegador: 1 derecha, -1 izquierda, 0 no hay. */
+    private int navSide;
     private int pressedBtn = -1;
     private final RectF[] btn = {new RectF(), new RectF(), new RectF()};   // +, −, centrar
     private final Paint btnBg = new Paint(Paint.ANTI_ALIAS_FLAG), btnFg = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -447,8 +449,14 @@ public class LiveMapView extends View {
     /** Sin carrusel, arrastrar el mapa también entra a «Explorar»; en el carrusel, arrastrar de lado cambia de página. */
     void setDragExplores(boolean on) { dragExplores = on; }
 
-    /** Espacio de arriba y de abajo que tapan otras cosas del tema (px): los botones de «Explorar» van entre ambos. */
-    void setControlsInset(float top, float bottom) { ctlTop = top; ctlBottom = bottom; invalidate(); }
+    /**
+     * Lo que tapan otras cosas del tema (px), para ubicar los botones de «Explorar»: arriba, abajo (el panel de Android
+     * Auto y CarPlay) y el botón redondo del navegador (lado, dónde empieza y el ancho que ocupa con su margen).
+     */
+    void setControlsInset(float top, float bottom, int navSide, float navTop, float navReserve) {
+        ctlTop = top; ctlBottom = bottom; this.navSide = navSide; navTopY = navTop; this.navReserve = navReserve;
+        invalidate();
+    }
 
     /** Entra a «Explorar» desde donde está el carro (sin ubicación todavía no hay nada que explorar). */
     void explore() {
@@ -617,12 +625,29 @@ public class LiveMapView extends View {
     /** Botones de «Explorar» (+, −, centrar), a la derecha y antes del difuminado de Cobalto. */
     private void drawButtons(Canvas c, float w, float h) {
         if (!exploring || ownButtons) return;
-        float b = 40 * s, gap = 8 * s;
-        float right = fadeEdge == 1 && fadeLen > 0 ? Math.max(b + 24 * s, w - fadeLen * 0.85f) : w - 12 * s;
+        float b = 40 * s, gap = 8 * s, total = 3 * b + 2 * gap;
+        // Cobalto (el mapa se difumina a la derecha): a la izquierda, para no tapar la flecha del carro
+        boolean left = fadeEdge == 1 && fadeLen > 0;
+        int side = left ? -1 : 1;
+        float edge = left ? 12 * s : w - 12 * s;          // borde exterior de la columna
         float top = ctlTop + 8 * s, bottom = h - ctlBottom - 8 * s;
         if (fadeEdge == 2 && fadeLen > 0) bottom = Math.min(bottom, h - fadeLen * 0.6f);
-        float total = 3 * b + 2 * gap, y0 = top + Math.max(0, (bottom - top - total) / 2f);
-        for (int i = 0; i < 3; i++) btn[i].set(right - b, y0 + i * (b + gap), right, y0 + i * (b + gap) + b);
+        boolean navHere = navSide == side && navTopY >= 0;
+        float above = navHere ? Math.min(bottom, navTopY - 8 * s) : bottom;
+        float x0, y0;
+        boolean row = false;
+        if (above - top >= total) { x0 = edge; y0 = top + (above - top - total) / 2f; }
+        else if (navHere && bottom - top >= total) { x0 = edge - side * navReserve; y0 = top + (bottom - top - total) / 2f; }
+        else {
+            // tarjeta baja (Aurora): en fila, arriba, corrida al lado del botón del navegador si quedaría a su altura
+            row = true;
+            y0 = top;
+            x0 = navHere && navTopY < y0 + b + 8 * s ? edge - side * navReserve : edge;
+        }
+        for (int i = 0; i < 3; i++) {
+            float bx = row ? x0 - side * i * (b + gap) : x0, by = row ? y0 : y0 + i * (b + gap);
+            if (side > 0) btn[i].set(bx - b, by, bx, by + b); else btn[i].set(bx, by, bx + b, by + b);
+        }
         btnBg.setColor(Main.LIGHT ? 0xF2FFFFFF : 0xEB1C1E23);
         int fg = Main.LIGHT ? 0xFF1A1D24 : 0xFFFFFFFF;
         btnFg.setStrokeWidth(2.4f * s);

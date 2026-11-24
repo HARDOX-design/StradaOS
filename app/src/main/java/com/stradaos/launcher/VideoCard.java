@@ -167,6 +167,7 @@ public class VideoCard extends FrameLayout {
         LayoutParams bl = new LayoutParams(-2, -2, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
         bl.bottomMargin = Math.round(14 * s);
         ui.addView(bar, bl);
+        bar.setVisibility(INVISIBLE);     // aparecen con el primer video (sin videos no hay controles vacíos)
         addView(ui, new LayoutParams(-1, -1, Gravity.CENTER));
 
         empty = text(15, 0xFFB8BEC6, false);
@@ -189,7 +190,7 @@ public class VideoCard extends FrameLayout {
         coverSub.setPadding(Math.round(20 * s), Math.round(6 * s), Math.round(20 * s), 0);
         coverSub.setVisibility(GONE);
         coverOk = button(I18n.t("OK"));
-        coverOk.setOnClickListener(new OnClickListener() { public void onClick(View v) { warnAccepted = true; cover.setVisibility(GONE); } });
+        coverOk.setOnClickListener(new OnClickListener() { public void onClick(View v) { warnAccepted = true; setCovered(false); } });
         cv.addView(coverText, new LinearLayout.LayoutParams(-2, -2));
         cv.addView(coverSub, new LinearLayout.LayoutParams(-2, -2));
         LinearLayout.LayoutParams ol = new LinearLayout.LayoutParams(Math.round(120 * s), Math.round(46 * s));
@@ -262,6 +263,8 @@ public class VideoCard extends FrameLayout {
                     empty.setText(I18n.t("No hay videos. Copia videos (MP4 o MKV) a la memoria o a una USB, o elige la carpeta en Ajustes → Mapa y clima."));
                     empty.setVisibility(VISIBLE);
                     title.setText("");
+                    h.removeCallbacks(hideControls);
+                    bar.setVisibility(INVISIBLE);
                     return;
                 }
                 empty.setVisibility(GONE);
@@ -599,6 +602,17 @@ public class VideoCard extends FrameLayout {
         return !Float.isNaN(v) && v <= MOVING_KMH;
     }
 
+    /**
+     * La tapa es opaca, pero sus bordes se desvanecen: mientras está puesta, el video queda casi transparente para que
+     * no se asome por ahí. No se oculta del todo: el reproductor necesita que alguien siga tomando sus cuadros (si no,
+     * en algunas radios se traba también el audio).
+     */
+    private void setCovered(boolean on) {
+        cover.setVisibility(on ? VISIBLE : GONE);
+        videoBox.setAlpha(on ? 0.02f : 1f);
+        edge.setVisibility(on ? INVISIBLE : VISIBLE);
+    }
+
     private final Runnable tick = new Runnable() { public void run() {
         if (!active) return;
         float v = speed != null ? speed.kmh() : Float.NaN;
@@ -614,16 +628,16 @@ public class VideoCard extends FrameLayout {
                 coverSub.setText(I18n.t("Sin GPS ni escáner no se sabe si el carro va andando"));
                 coverSub.setVisibility(unknown ? VISIBLE : GONE);
                 coverOk.setVisibility(VISIBLE);
-                cover.setVisibility(warnAccepted ? GONE : VISIBLE);
+                setCovered(!warnAccepted);
             } else {
                 coverText.setText(I18n.t(unknown ? "Solo se muestra con el carro detenido" : "Imagen en pausa mientras manejas · el audio sigue"));
                 coverSub.setText(I18n.t("Sin GPS ni escáner no se sabe si el carro va andando"));
                 coverSub.setVisibility(unknown ? VISIBLE : GONE);
                 coverOk.setVisibility(GONE);
-                cover.setVisibility(VISIBLE);
+                setCovered(true);
             }
         } else {
-            cover.setVisibility(GONE);
+            setCovered(false);
         }
         h.postDelayed(this, 1000);
     }};

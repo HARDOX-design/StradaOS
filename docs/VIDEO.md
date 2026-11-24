@@ -1,11 +1,28 @@
-# Video en lugar del mapa
+# Mapa y video en la tarjeta del centro
 
-Opción nueva (de fábrica sigue el mapa): *Ajustes → Mapa y clima → Mapa → «En la tarjeta del centro: Video»*. La tarjeta
-del mapa de la pantalla de inicio reproduce los videos de la memoria y de las USB. El resto del inicio no cambia: el panel
-de Android Auto / CarPlay sigue abajo y se puede plegar con la flechita para ver más video.
+PR #64 de Jaacern, integrado en la 2.35 (Bloque 22) como carrusel. Opción nueva (de fábrica sigue solo el mapa):
+*Ajustes → Mapa y clima → Mapa → «En la tarjeta del centro: Mapa y video»*. La tarjeta del mapa pasa a ser un carrusel
+sin fin con dos páginas: el mapa (con todo lo de siempre: botones, clima, navegación) y los videos de la memoria y de
+las USB. Deslizar a cualquier lado pasa a la otra; unos puntitos abajo indican cuál se ve y se desvanecen a los 3,5 s.
 
-Código: [`VideoCard.java`](../app/src/main/java/com/stradaos/launcher/VideoCard.java); en `Main.java`: `buildAaCard()`
-(crea la tarjeta), `currentKmh()`, `onPause()`/`onResume()`, `pickVideoDir()` y los ajustes de la sección «Mapa».
+Código: [`VideoCard.java`](../app/src/main/java/com/stradaos/launcher/VideoCard.java),
+[`CenterPager.java`](../app/src/main/java/com/stradaos/launcher/CenterPager.java) (el carrusel); en `Main.java`:
+`buildAaCard()` (arma las páginas), `startCenterPager()`, `applyCenterOverlays()`, `currentKmh()`, `videoMode()`,
+`onPause()`/`onResume()`, `pickVideoDir()` y los ajustes de la sección «Mapa».
+
+## Carrusel
+
+- **Solo una página activa:** la que no se ve queda invisible (el mapa no dibuja ni pide teselas) y el video se pausa,
+  guarda el segundo y suelta el `MediaPlayer` (`VideoCard.setActive(false)`). La tarjeta del video no busca archivos
+  hasta que se muestra por primera vez. La página se recuerda (`center_page`).
+- **Mapa «Seguir» / «Explorar»** (`LiveMapView`): tocar el mapa entra a «Explorar»: se arrastra con el dedo, se acerca o
+  aleja con dos dedos, doble toque o los botones + − (zoom 4 a 18, o al máximo de la fuente), con el norte arriba. En
+  «Explorar» deslizar no cambia de página. El botón de centrar o «atrás» vuelven a «Seguir»; con el carro andando
+  (más de 5 km/h) vuelve solo tras 12 s sin tocarlo (`RETURN_MS`). Faro y Carbono usan sus propios botones de zoom y
+  centrar; los demás temas dibujan los suyos a la derecha. Sin carrusel, arrastrar el mapa también entra a «Explorar».
+  Lejos (zoom < 9) el mapa sin conexión no se dibuja desde el archivo (serían teselas enormes).
+- **Carbono:** el reproductor y el clima flotantes se esconden en la página del video y mientras se explora el mapa.
+- Si la pantalla tiene el mapa en vivo apagado, la página del mapa muestra lo de siempre (el dibujo de adorno).
 
 ## Cómo funciona
 
@@ -34,11 +51,12 @@ Código: [`VideoCard.java`](../app/src/main/java/com/stradaos/launcher/VideoCard
   **Aurora** el título se montaba sobre la etiqueta del GPS.
 - **Solo video (ícono de cuatro esquinas, el mismo del «Solo mapa» de Aurora):** en **todos los temas** el video ocupa el
   inicio entre la hora y el dock, sobre el color de fondo del tema (`Main.videoMode(v, 1)`: una capa dentro del tablero,
-  de `y = 62` a `dockTop − 12/16`, con elevación para quedar sobre las tarjetas con sombra).
+  de `y = 62` a `dockTop − 12/16`, con elevación para quedar sobre las tarjetas con sombra). En **Carbono** ocupa la
+  tarjeta del vehículo y el mapa, debajo de su barra de arriba y sin tapar la barra de apps.
 - **Pantalla completa (⛶):** dentro de StradaOS. `Main.videoMode(v, 2)` mueve la tarjeta a una capa negra sobre todo
   el inicio; el video sigue desde el mismo segundo (al cambiar de lugar, el `TextureView` recrea su superficie y la
   tarjeta reabre el video donde iba). ✕ o «atrás» la devuelven a su lugar. **Mantener presionado ⛶** abre el video en
-  **VLC** desde el segundo donde iba (extra `position`), o en otra app de video si VLC no está (esas apps no saben de la
+  **VLC** desde el segundo donde iba (solo con el carro detenido: en VLC no hay tapa) (extra `position`), o en otra app de video si VLC no está (esas apps no saben de la
   posición: empiezan de cero). El archivo se entrega con
   `ApkProvider.share(file, ext)`, que ahora da el tipo de video correcto.
 - No se puede meter VLC dentro de la tarjeta: VLC no ofrece un widget y su motor (libVLC) pesa ~30 MB.
@@ -51,22 +69,28 @@ Sobre **5 km/h** (`currentKmh()`: la velocidad del GPS de hace menos de 5 s o la
 | Modo | Qué pasa |
 |---|---|
 | **Tapar la imagen** (`cover`, de fábrica) | una tapa opaca «Imagen en pausa mientras manejas · el audio sigue»; al detenerse vuelve la imagen |
-| **Seguir con un aviso** (`warn`) | «No te distraigas mientras conduces» con **OK**; al tocarlo el video sigue a la vista hasta la próxima detención (10 s detenido vuelve a armar el aviso) |
+| **Seguir con un aviso** (`warn`) | «No te distraigas mientras conduces» con **OK**; al tocarlo el video sigue a la vista hasta la próxima detención (5 s detenido vuelve a armar el aviso: sale cada vez que el carro arranca) |
 
 La ley de tránsito prohíbe ver video mientras se conduce: de fábrica queda `cover`, y `warn` es una elección explícita del
-conductor (avisada en el propio ajuste). Si no se quiere en el original, se saca y queda solo `cover`. Si no hay GPS ni escáner, la velocidad es
-desconocida y el video se ve (no hay cómo saber si el auto avanza).
+conductor (avisada en el propio ajuste); Andrés decidió conservarlo. **Sin datos de velocidad** (sin GPS ni escáner)
+cuenta como en movimiento: con `cover` se tapa con «Solo se muestra con el carro detenido» y con `warn` sale el aviso,
+las dos con la línea «Sin GPS ni escáner no se sabe si el carro va andando».
 
 ## Preferencias
 
 | Clave | Tipo | Defecto | Descripción |
 |---|---|---|---|
-| `center_card` | String | `map` | `map` o `video` |
+| `center_card` | String | `map` | `map` (solo el mapa) o `both` (carrusel mapa y video) |
+| `center_page` | int | `0` | página del carrusel: 0 mapa, 1 video |
 | `video_dir` | String | `""` | carpeta de videos; vacía = toda la memoria y las USB |
 | `video_moving` | String | `cover` | `cover` o `warn` |
 | `video_last`, `video_pos` | String, int | — | último video y segundo donde quedó |
 
 ## Probado
+
+**2.35:** pasos nuevos en `regresion.sh` con un MP4 de prueba (`.github/scripts/prueba-video.mp4`, 480×270, 12 s):
+carrusel en cada tema, «Solo video», pantalla completa, velocidad simulada (`video-vel:`), aviso y «Explorar».
+
 
 **Temas (22-nov):** con los controles dentro del video, sin choques en Aurora, Cobalto, Faro y el clásico; pantalla
 completa dentro de StradaOS y vuelta con «atrás» probadas en Faro (el que fallaba). En Aurora, «Solo mapa» agranda la

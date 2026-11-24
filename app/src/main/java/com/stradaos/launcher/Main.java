@@ -3125,10 +3125,10 @@ public class Main extends Activity {
         } else mapGaugeBox = null;
         // 2.35: los botones de «Explorar» (a la derecha) quedan entre lo de arriba y lo de abajo de este tema
         if (liveMap != null && !faroT) {
-            float cb = hasPanel ? panelY - 28 : mapH;
-            if (nbSize != 3 && !nbLeft) cb = Math.min(cb, panelY - 12 - nb);
-            cb = Math.min(cb, ctlBottomEdge);
-            liveMap.setControlsInset(Math.max(56, ctlTopEdge) * s, (mapH - cb) * s);
+            float cb = Math.min(hasPanel ? panelY - 28 : mapH, ctlBottomEdge);
+            boolean nbShown = nbSize != 3;
+            liveMap.setControlsInset(Math.max(56, ctlTopEdge) * s, (mapH - cb) * s, !nbShown ? 0 : nbLeft ? -1 : 1,
+                    nbShown ? (panelY - 12 - nb) * s : -1, (nb + 12) * s);
         }
         ctlTopEdge = 0; ctlBottomEdge = 9999;
 

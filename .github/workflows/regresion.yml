@@ -67,6 +67,7 @@ jobs:
           api-level: ${{ matrix.api }}
           arch: ${{ matrix.arch }}
           target: default
+          sdcard-path-or-size: 64M   # Android 4.1/4.2 sin tarjeta no tienen memoria externa (el video de prueba)
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -skin 1024x600
           emulator-boot-timeout: 900

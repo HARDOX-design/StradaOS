@@ -88,8 +88,8 @@ if part 1; then
   adb shell input keyevent 4; sleep 2; shot "$(printf %03d $N)-explorar-atras"
   step seguir explorar:0 3
   # toques reales sobre la tarjeta: tocar (entra a Explorar), arrastrar el mapa y doble toque
-  adb shell input tap 760 300; sleep 2; adb shell input swipe 760 300 640 360 300; sleep 1
-  adb shell input tap 760 300; adb shell input tap 760 300; sleep 2
+  adb shell input tap 520 190; sleep 2; adb shell input swipe 520 190 420 240 300; sleep 1
+  adb shell input tap 520 190; adb shell input tap 520 190; sleep 2
   shot "$(printf %03d $N)-explorar-toques"
   step seguir-2 explorar:0 2
   step video-vel-0 video-vel:0 1
@@ -103,9 +103,9 @@ if part 1; then
   step video-detenido video-vel:0 8
   step pagina-mapa pagina:1 3
   # deslizar de verdad sobre la tarjeta (de mapa a video y de vuelta)
-  adb shell input swipe 900 300 450 300 250; sleep 3
+  adb shell input swipe 700 200 330 200 250; sleep 3
   shot "$(printf %03d $N)-deslizar-video"
-  adb shell input swipe 450 300 900 300 250; sleep 3
+  adb shell input swipe 330 200 700 200 250; sleep 3
   shot "$(printf %03d $N)-deslizar-mapa"
   # el carrusel en cada tema (página del video y del mapa)
   for t in tema-premium:aurora tema-premium:cobalto tema-premium:faro tema-premium:carbono tema-premium: ; do
