@@ -74,6 +74,8 @@ if part 1; then
   step inicio inicio 3
   # ── navegación ──
   step nav-buscar nav-buscar 6 1
+  # en Android 4.x el primer «atrás» solo cierra el teclado: otro más cierra el buscador
+  adb shell input keyevent 4; sleep 1
   step solo-mapa solo-mapa:1 6
   step solo-mapa-off solo-mapa:0 4
   step nav-salir nav-salir 4
