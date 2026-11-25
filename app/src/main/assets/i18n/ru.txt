@@ -1835,3 +1835,59 @@ Un cuentarrevoluciones chico al lado, con las RPM del escáner OBD (solo mientra
 Odómetro	Одометр
 Kilometraje del auto (escáner OBD)	Пробег автомобиля (сканер OBD)
 El kilometraje del auto es {} y ya toca el cambio de aceite (cada {}).	Пробег автомобиля: {}, и пора менять масло (каждые {}).
+En la tarjeta del centro	В центральной карточке
+Mapa y video: desliza la tarjeta para pasar del mapa a los videos de la memoria y las USB	Карта и видео: проведите по карточке, чтобы перейти от карты к видео из памяти и с USB
+Mapa y video	Карта и видео
+Carpeta de videos	Папка с видео
+Toca para elegir. Si no eliges una, busca en toda la memoria y en las USB	Нажмите, чтобы выбрать. Если не выбрать, поиск идёт по всей памяти и USB
+Todas	Все
+Video en movimiento	Видео в движении
+Sobre 5 km/h. La ley prohíbe ver video mientras se conduce	Выше 5 км/ч. Закон запрещает смотреть видео за рулём
+Tapar siempre	Всегда закрывать
+Sin permiso de almacenamiento no se pueden buscar videos	Без разрешения на доступ к памяти искать видео нельзя
+Buscando videos…	Поиск видео…
+videos	видео
+No se puede reproducir aquí	Здесь не воспроизводится
+ábrelo en pantalla completa	откройте на весь экран
+Buscando videos en la memoria y las USB…	Поиск видео в памяти и на USB…
+No hay videos. Copia videos (MP4 o MKV) a la memoria o a una USB, o elige la carpeta en Ajustes → Mapa y clima.	Видео нет. Скопируйте видео (MP4 или MKV) в память или на USB либо выберите папку в Настройки → Карта и погода.
+Ver en pantalla completa	Смотреть на весь экран
+No hay una app de video para la pantalla completa	Нет видеоприложения для полноэкранного режима
+¿Quieres seguir viendo el video?	Продолжить просмотр видео?
+Imagen en pausa mientras manejas · el audio sigue	Изображение на паузе во время движения · звук идёт
+Solo se muestra con el carro detenido	Показывается только когда машина стоит
+Sin GPS ni escáner no se sabe si el carro va andando	Без GPS и сканера неизвестно, едет ли машина
+Elegir video	Выбрать видео
+Cuidado al manejar	Осторожно за рулём
+Mantén la vista en el camino. Ver video mientras manejas es peligroso y en muchos países está prohibido. Si sigues, lo haces bajo tu responsabilidad.	Следите за дорогой. Смотреть видео за рулём опасно и во многих странах запрещено. Продолжая, вы берёте ответственность на себя.
+Seguir viendo	Продолжить просмотр
+Almacenamientos	Хранилища
+No hay videos en esta carpeta	В этой папке нет видео
+Sin videos	Нет видео
+Reproduciendo	Воспроизводится
+Miniatura en curso: se abre igual	Миниатюра ещё готовится: открываем всё равно
+Abrir	Открыть
+reintento	повтор
+Preparado	Готово
+Primer cuadro	Первый кадр
+sin imagen	без изображения
+La pantalla no puede mostrar la imagen de este video	Экран не может показать изображение этого видео
+Mantén presionado el botón de pantalla completa para abrirlo en VLC u otra app	Нажмите и удерживайте кнопку полного экрана, чтобы открыть его в VLC или другом приложении
+Ningún video de la lista se pudo abrir	Ни одно видео из списка не открылось
+sin video	без видео
+Diagnóstico del video	Диагностика видео
+Formato de cada video y lo que decodifica la pantalla	Формат каждого видео и что умеет декодировать экран
+Decodificadores de video	Видеодекодеры
+Últimos videos	Последние видео
+Todavía no se ha abierto ningún video	Ещё не открывалось ни одно видео
+Se guarda en StradaDiag/video.txt	Сохраняется в StradaDiag/video.txt
+se leen con el video detenido	считываются при остановленном видео
+la pantalla no tiene decodificador	у экрана нет декодера для
+pide más de lo que decodifica la pantalla	требует больше, чем декодирует экран
+No compatible con esta pantalla	Не поддерживается этим экраном
+Conviértelo a H.264 de 720p o 1080p horizontal, a 30 cuadros por segundo	Сконвертируйте в H.264 720p или 1080p, горизонтально, 30 кадров в секунду
+Sin miniatura	Без миниатюры
+Leer varios datos por consulta	Читать несколько параметров за запрос
+Tu escáner no lo entiende: StradaOS lee de a un dato. Actívalo para volver a probar	Ваш сканер это не поддерживает: StradaOS читает по одному параметру. Включите, чтобы проверить снова
+Más rápido. Apágalo si tu escáner se desconecta a cada rato	Быстрее. Выключите, если сканер постоянно отключается
+Miniatura tomada del video	Миниатюра взята из видео

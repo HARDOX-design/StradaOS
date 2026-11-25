@@ -178,7 +178,7 @@ if part 2; then
   step diag-final diag-reproductor 5 1
   # ── idiomas: inicio y ajustes en cada uno ──
   # los diagnósticos también, para que StradaOS Prueba anote las frases sin traducir (sin-traducir.txt)
-  for l in en pt it de ms ar tr fr zh hu pl es; do
+  for l in en pt it de ms ar tr fr zh hu pl ru es; do
     step "idioma-$l" "idioma:$l" 6; step "ajustes-$l" "ajustes:9" 4
     [ "$l" != es ] && { step "diagr-$l" diag-reproductor 4 1; step "diagm-$l" diag-mapa 4 1; }
     # 2.35 r7: la ventana de actualización con las notas en el idioma elegido (inglés si no hay sección del idioma)
