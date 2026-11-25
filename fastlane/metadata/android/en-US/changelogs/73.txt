@@ -1,1 +1,1 @@
-"Extra large" and "Huge" icons in the app bar (the side bar groups them in the middle). Russian: 13 languages. Optional album art from the internet (MusicBrainz and iTunes; only title and artist) with a test that tells you what fails.
+"Extra large" and "Huge" icons in the app bar (the side bar groups them in the middle). Russian: 13 languages. Optional album art from the internet (MusicBrainz, iTunes or Deezer; only title and artist) with a test that tells you what fails.
