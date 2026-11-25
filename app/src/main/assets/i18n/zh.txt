@@ -1923,3 +1923,8 @@ Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrai
 Borrar carátulas guardadas	删除已保存的封面
 Las que se bajaron de internet y se guardaron en el equipo	从网上下载并保存在设备上的封面
 Carátulas borradas	封面已删除
+Probando…	正在测试…
+Probar la búsqueda de carátulas	测试封面搜索
+Prueba cada servidor con la canción que suena y muestra el error exacto	用正在播放的歌曲测试每个服务器并显示确切错误
+Prueba de carátulas	封面测试
+Se guarda en StradaDiag/caratulas.txt	保存在 StradaDiag/caratulas.txt

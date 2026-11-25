@@ -186,6 +186,18 @@ if part 2; then
   step musica-hcn-off "hcn-sim:,stop,0,0" 3
   step musica-aa-off aa-simular:0 3
   step diag-final diag-reproductor 5 1
+  # ── 2.36 (#76): carátula por internet: ajuste, prueba paso a paso (con red real del emulador) y búsqueda con una pista ──
+  step caratulas-on pref:cover_online=true 3
+  step ajustes-musica-caratulas ajustes:8 4
+  scroll; scroll; shot "$(printf %03d $N)-ajustes-musica-caratulas-medio"
+  step caratula-prueba caratula-prueba 30 0
+  adb shell input swipe 600 450 600 150 400; sleep 1; shot "$(printf %03d $N)-caratula-prueba-fin"
+  adb shell input keyevent 4; sleep 2
+  # la búsqueda real va sin captura (no se guardan portadas de discos en el repositorio); el diagnóstico dice el resultado
+  adb shell am start -n $ACT --es prueba "pista-sin-caratula:La_Camisa_Negra,Juanes" >/dev/null 2>&1; sleep 14
+  adb shell am start -n $ACT --es prueba pista-demo >/dev/null 2>&1; sleep 2
+  step caratula-diag diag-reproductor 5 1
+  step caratulas-off pref:cover_online=false 3
   # ── idiomas: inicio y ajustes en cada uno ──
   # los diagnósticos también, para que StradaOS Prueba anote las frases sin traducir (sin-traducir.txt)
   for l in en pt it de ms ar tr fr zh hu pl ru es; do

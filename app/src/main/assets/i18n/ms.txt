@@ -1923,3 +1923,8 @@ Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrai
 Borrar carátulas guardadas	Padam kulit album tersimpan
 Las que se bajaron de internet y se guardaron en el equipo	Yang dimuat turun dari internet dan disimpan dalam peranti
 Carátulas borradas	Kulit album dipadam
+Probando…	Menguji…
+Probar la búsqueda de carátulas	Uji carian kulit album
+Prueba cada servidor con la canción que suena y muestra el error exacto	Menguji setiap pelayan dengan lagu yang sedang dimainkan dan menunjukkan ralat yang tepat
+Prueba de carátulas	Ujian kulit album
+Se guarda en StradaDiag/caratulas.txt	Disimpan dalam StradaDiag/caratulas.txt

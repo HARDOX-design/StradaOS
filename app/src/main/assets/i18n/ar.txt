@@ -1923,3 +1923,8 @@ Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrai
 Borrar carátulas guardadas	حذف الأغلفة المحفوظة
 Las que se bajaron de internet y se guardaron en el equipo	التي نُزّلت من الإنترنت وحُفظت على الجهاز
 Carátulas borradas	تم حذف الأغلفة
+Probando…	جارٍ الاختبار…
+Probar la búsqueda de carátulas	اختبار البحث عن الأغلفة
+Prueba cada servidor con la canción que suena y muestra el error exacto	يختبر كل خادم بالأغنية المشغّلة ويعرض الخطأ بدقة
+Prueba de carátulas	اختبار الأغلفة
+Se guarda en StradaDiag/caratulas.txt	يُحفظ في StradaDiag/caratulas.txt

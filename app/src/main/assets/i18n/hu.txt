@@ -1908,3 +1908,8 @@ Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrai
 Borrar carátulas guardadas	Mentett borítók törlése
 Las que se bajaron de internet y se guardaron en el equipo	Az internetről letöltött és az eszközön mentett borítók
 Carátulas borradas	Borítók törölve
+Probando…	Tesztelés…
+Probar la búsqueda de carátulas	Borítókeresés tesztelése
+Prueba cada servidor con la canción que suena y muestra el error exacto	Minden szervert tesztel az éppen szóló dallal, és megmutatja a pontos hibát
+Prueba de carátulas	Borítóteszt
+Se guarda en StradaDiag/caratulas.txt	Mentve ide: StradaDiag/caratulas.txt

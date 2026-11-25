@@ -1927,3 +1927,8 @@ Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrai
 Borrar carátulas guardadas	Delete saved album art
 Las que se bajaron de internet y se guardaron en el equipo	Covers downloaded from the internet and saved on this unit
 Carátulas borradas	Album art deleted
+Probando…	Testing…
+Probar la búsqueda de carátulas	Test the album art search
+Prueba cada servidor con la canción que suena y muestra el error exacto	Tests each server with the song that's playing and shows the exact error
+Prueba de carátulas	Album art test
+Se guarda en StradaDiag/caratulas.txt	Saved to StradaDiag/caratulas.txt

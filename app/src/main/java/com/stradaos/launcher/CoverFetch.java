@@ -52,7 +52,7 @@ public class CoverFetch {
             public void run() {
                 Bitmap b = null;
                 try { b = load(c, artist, title, key); }
-                catch (Throwable e) { lastInfo = title + ": " + e; }
+                catch (Throwable e) { lastInfo = title + ": " + brief(e); }
                 l.onCover(key, b);
             }
         }).start();
@@ -74,19 +74,26 @@ public class CoverFetch {
         Bitmap b = null;
         Throwable err = null;
         boolean mbAnswered = false, itAnswered = false;
-        try { b = musicBrainz(t, a, dir, f); mbAnswered = true; }
-        catch (Throwable e) { err = e; }
-        if (b != null) { lastInfo = title + ": descargada de Cover Art Archive"; return b; }
-        try { b = itunes(t, a, dir, f); itAnswered = true; }
-        catch (Throwable e) { if (err == null) err = e; }
-        if (b != null) { lastInfo = title + ": descargada de iTunes"; return b; }
+        // 2.36: el diagnóstico dice qué pasó en cada paso (el 11 nov. un «no encontrada» escondía el error real)
+        String mb, it = "no se probó";
+        plainUsed = false;
+        try { b = musicBrainz(t, a, dir, f); mbAnswered = true; mb = b != null ? "sí" : "sin portada"; }
+        catch (Throwable e) { err = e; mb = brief(e); }
+        if (plainUsed) mb += " (sin cifrar)";
+        if (b != null) { lastInfo = title + ": descargada de Cover Art Archive" + (plainUsed ? " (sin cifrar)" : ""); return b; }
+        plainUsed = false;
+        try { b = itunes(t, a, dir, f); itAnswered = true; it = b != null ? "sí" : "sin portada"; }
+        catch (Throwable e) { if (err == null) err = e; it = brief(e); }
+        if (plainUsed) it += " (sin cifrar)";
+        if (b != null) { lastInfo = title + ": descargada de iTunes" + (plainUsed ? " (sin cifrar)" : ""); return b; }
         if (mbAnswered && itAnswered) {
             // las dos respondieron y no hay portada: se anota (sin internet no se llega aquí)
             save(dir, none, new byte[0]);
             lastInfo = title + ": no está en MusicBrainz ni en iTunes";
             return null;
         }
-        throw err instanceof Exception ? (Exception) err : new Exception(String.valueOf(err));
+        lastInfo = title + ": falló · MusicBrainz: " + mb + " · iTunes: " + it;
+        return null;
     }
 
     /** MusicBrainz + Cover Art Archive. null si respondieron y no hay portada. */
@@ -223,19 +230,44 @@ public class CoverFetch {
 
     private static class NotFound extends Exception { }
 
-    /** GET siguiendo redirecciones a mano (Cover Art Archive manda a archive.org, en otro servidor). */
-    private static byte[] get(String url, int timeoutMs) throws Exception {
+    /** Se usó el respaldo sin cifrar en la última consulta (Android 4.x). */
+    private static volatile boolean plainUsed;
+
+    private static byte[] get(String url, int timeoutMs) throws Exception { return get(url, timeoutMs, null); }
+
+    /**
+     * GET siguiendo redirecciones a mano (Cover Art Archive manda a archive.org, en otro servidor). 2.36: en Android 4.x
+     * (API < 21), si el saludo seguro falla (cifrados o certificados que la pantalla no maneja), se reintenta esa misma
+     * dirección por http: solo viajan el título y el artista, o la imagen. {@code trace} anota cada salto (diagnóstico).
+     */
+    private static byte[] get(String url, int timeoutMs, StringBuilder trace) throws Exception {
         int busy = 0;
-        for (int hop = 0; hop < 5; hop++) {
+        for (int hop = 0; hop < 8; hop++) {
             HttpURLConnection h = Net.open(url, timeoutMs);
             h.setInstanceFollowRedirects(false);
             h.setRequestProperty("User-Agent", UA);
+            long t0 = SystemClock.elapsedRealtime();
             try {
-                int code = h.getResponseCode();
+                int code;
+                try { code = h.getResponseCode(); }
+                catch (javax.net.ssl.SSLException e) {
+                    if (trace != null) trace.append("  ").append(host(url)).append(": ").append(brief(e)).append('\n');
+                    if (android.os.Build.VERSION.SDK_INT >= 21 || !url.startsWith("https://")) throw e;
+                    url = "http://" + url.substring(8);
+                    plainUsed = true;
+                    if (trace != null) trace.append("  → sin cifrar\n");
+                    continue;
+                }
+                if (trace != null) trace.append("  ").append(url.startsWith("https") ? "https " : "http ").append(host(url))
+                        .append(": HTTP ").append(code).append(" (").append(SystemClock.elapsedRealtime() - t0).append(" ms)\n");
                 if (code >= 300 && code < 400) {
                     String loc = h.getHeaderField("Location");
                     if (loc == null) throw new Exception("HTTP " + code);
-                    url = new URL(new URL(url), loc).toString();
+                    String next = new URL(new URL(url), loc).toString();
+                    // ya sin cifrar: si el servidor manda de vuelta a https, se sigue sin cifrar (http → https → http…)
+                    if (plainUsed && next.startsWith("https://") && android.os.Build.VERSION.SDK_INT < 21 && url.startsWith("http://"))
+                        next = "http://" + next.substring(8);
+                    url = next;
                     continue;
                 }
                 if (code == 404) throw new NotFound();
@@ -254,6 +286,83 @@ public class CoverFetch {
             }
         }
         throw new Exception("demasiadas redirecciones");
+    }
+
+    private static String host(String url) {
+        try { return new URL(url).getHost(); } catch (Throwable e) { return url; }
+    }
+
+    /** Error en una línea: tipo y mensaje (SSLHandshakeException: …, UnknownHostException: …, HTTP 503…). */
+    static String brief(Throwable e) {
+        if (e instanceof NotFound) return "no está (404)";
+        Throwable c = e;
+        while (c.getCause() != null && c.getCause() != c && (c.getMessage() == null || c.getMessage().length() < 4)) c = c.getCause();
+        String m = c.getMessage();
+        String r = c.getClass().getSimpleName() + (m != null ? ": " + m : "");
+        return r.length() > 160 ? r.substring(0, 160) + "…" : r;
+    }
+
+    /**
+     * 2.36: «Probar la búsqueda de carátulas» (Ajustes → Música): recorre los cuatro pasos con la canción que suena (o
+     * una de ejemplo) y anota, servidor por servidor, el código o el error exacto y cuánto tardó. No guarda nada.
+     */
+    static String test(Context c, String artist, String title) {
+        Net.init(c);
+        StringBuilder b = new StringBuilder();
+        b.append("Android ").append(android.os.Build.VERSION.RELEASE).append(" (API ").append(android.os.Build.VERSION.SDK_INT).append(")\n");
+        b.append("Conexión segura: ").append(Net.initInfo).append('\n');
+        b.append("Fecha de la pantalla: ").append(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US).format(new java.util.Date()))
+         .append(" (si está mal, los certificados fallan)\n");
+        String a = clean(artist), t = clean(title);
+        if (a.length() == 0 || t.length() == 0) { a = "Juanes"; t = "La Camisa Negra"; b.append("Sin canción con artista: se prueba con una de ejemplo\n"); }
+        b.append("Canción: ").append(t).append(" — ").append(a).append("\n\n");
+        String group = null, art = null;
+        b.append("1. MusicBrainz (buscar la canción)\n");
+        try {
+            StringBuilder tr = new StringBuilder();
+            JSONObject root = new JSONObject(new String(get("https://musicbrainz.org/ws/2/recording/?fmt=json&limit=5&query="
+                    + URLEncoder.encode("recording:\"" + lucene(t) + "\" AND artist:\"" + lucene(a) + "\"", "UTF-8"), 10000, tr), "UTF-8"));
+            b.append(tr);
+            JSONArray recs = root.optJSONArray("recordings");
+            for (int i = 0; recs != null && i < recs.length() && group == null; i++) {
+                JSONArray rels = recs.getJSONObject(i).optJSONArray("releases");
+                for (int j = 0; rels != null && j < rels.length() && group == null; j++) {
+                    JSONObject rg = rels.getJSONObject(j).optJSONObject("release-group");
+                    if (rg != null && rg.optString("id", "").length() > 0) group = rg.getString("id");
+                }
+            }
+            b.append("  ").append(recs == null ? 0 : recs.length()).append(" resultados").append(group != null ? "" : ", sin álbum").append('\n');
+        } catch (Throwable e) { b.append("  ERROR: ").append(brief(e)).append('\n'); }
+        b.append("2. Cover Art Archive (bajar la portada)\n");
+        if (group == null) b.append("  no se probó (sin álbum de MusicBrainz)\n");
+        else try {
+            StringBuilder tr = new StringBuilder();
+            byte[] img = get("https://coverartarchive.org/release-group/" + group + "/front-250", 12000, tr);
+            b.append(tr).append("  imagen: ").append(img.length / 1024).append(" KB, ")
+             .append(BitmapFactory.decodeByteArray(img, 0, img.length) != null ? "se ve bien" : "NO se pudo leer").append('\n');
+        } catch (Throwable e) { b.append("  ERROR: ").append(brief(e)).append('\n'); }
+        b.append("3. iTunes (buscar la canción)\n");
+        try {
+            StringBuilder tr = new StringBuilder();
+            JSONObject root = new JSONObject(new String(get("https://itunes.apple.com/search?media=music&entity=song&limit=5&term="
+                    + URLEncoder.encode(a + " " + t, "UTF-8"), 10000, tr), "UTF-8"));
+            b.append(tr);
+            JSONArray res = root.optJSONArray("results");
+            for (int i = 0; res != null && i < res.length() && art == null; i++) {
+                String u = res.getJSONObject(i).optString("artworkUrl100", "");
+                if (u.length() > 0) art = u;
+            }
+            b.append("  ").append(res == null ? 0 : res.length()).append(" resultados\n");
+        } catch (Throwable e) { b.append("  ERROR: ").append(brief(e)).append('\n'); }
+        b.append("4. iTunes (bajar la portada)\n");
+        if (art == null) b.append("  no se probó (sin resultado de iTunes)\n");
+        else try {
+            StringBuilder tr = new StringBuilder();
+            byte[] img = get(art, 12000, tr);
+            b.append(tr).append("  imagen: ").append(img.length / 1024).append(" KB, ")
+             .append(BitmapFactory.decodeByteArray(img, 0, img.length) != null ? "se ve bien" : "NO se pudo leer").append('\n');
+        } catch (Throwable e) { b.append("  ERROR: ").append(brief(e)).append('\n'); }
+        return b.toString();
     }
 
     /** Quita lo que no forma parte del nombre: «(Remastered 2011)», «[Live]», «- Radio Edit», «feat. …». */

@@ -1923,3 +1923,8 @@ Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrai
 Borrar carátulas guardadas	Supprimer les pochettes enregistrées
 Las que se bajaron de internet y se guardaron en el equipo	Celles téléchargées depuis internet et enregistrées sur l'appareil
 Carátulas borradas	Pochettes supprimées
+Probando…	Test en cours…
+Probar la búsqueda de carátulas	Tester la recherche des pochettes
+Prueba cada servidor con la canción que suena y muestra el error exacto	Teste chaque serveur avec le morceau en cours et affiche l'erreur exacte
+Prueba de carátulas	Test des pochettes
+Se guarda en StradaDiag/caratulas.txt	Enregistré dans StradaDiag/caratulas.txt

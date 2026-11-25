@@ -1923,3 +1923,8 @@ Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrai
 Borrar carátulas guardadas	Elimina copertine salvate
 Las que se bajaron de internet y se guardaron en el equipo	Quelle scaricate da internet e salvate sul dispositivo
 Carátulas borradas	Copertine eliminate
+Probando…	Test in corso…
+Probar la búsqueda de carátulas	Prova la ricerca delle copertine
+Prueba cada servidor con la canción que suena y muestra el error exacto	Prova ogni server con il brano in riproduzione e mostra l'errore esatto
+Prueba de carátulas	Prova delle copertine
+Se guarda en StradaDiag/caratulas.txt	Salvato in StradaDiag/caratulas.txt

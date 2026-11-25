@@ -797,6 +797,14 @@ public class Main extends Activity {
                             a.length > 4 ? Long.parseLong(a[4]) * 1000 : 0));
                 }
                 else if ("diag-reproductor".equals(v)) showPlayerDiag();
+                else if ("caratula-prueba".equals(v)) testCovers();   // 2.36: prueba de la carátula por internet
+                else if (v.startsWith("pista-sin-caratula:")) {
+                    // 2.36: canción por Bluetooth sin carátula, para la búsqueda en internet: «pista-sin-caratula:Título,Artista»
+                    String[] a = v.substring(19).split(",");
+                    curTitle = a[0].replace('_', ' '); curArtist = a.length > 1 ? a[1].replace('_', ' ') : null; curSource = "Bluetooth";
+                    curArt = null; durMs = 215000; posBaseMs = 30000; posBaseAt = SystemClock.elapsedRealtime(); posKnown = true; playingState = true;
+                    renderTrack();
+                }
                 else if (v.startsWith("aa-notif:")) {
                     // notificación de Open Headunit con el tiempo: «aa-notif:Título,posición_s,duración_s»
                     String[] a = v.substring(9).split(",");
@@ -8182,6 +8190,33 @@ public class Main extends Activity {
         return null;
     }
 
+    /**
+     * 2.36: prueba de la carátula por internet, paso a paso (MusicBrainz, Cover Art Archive, iTunes y sus imágenes),
+     * con la canción que suena. También queda en StradaDiag/caratulas.txt para pedírsela a quien no le funcione.
+     */
+    private void testCovers() {
+        toast("Probando…");
+        final String ar = curArtist, ti = curTitle;
+        final String head = "Fuente: " + (curSource != null ? curSource : "—") + "\nPista: " + ti + " — " + ar
+                + "\nCarátula de la fuente: " + (curArt != null ? curArt.getWidth() + "x" + curArt.getHeight() + " (con ella no se busca)" : "no")
+                + "\nÚltima búsqueda: " + CoverFetch.lastInfo + "\n\n";
+        new Thread(new Runnable() { public void run() {
+            final String r = head + CoverFetch.test(Main.this, ar, ti);
+            try {
+                java.io.File d = new java.io.File(android.os.Environment.getExternalStorageDirectory(), "StradaDiag");
+                d.mkdirs();
+                java.io.FileOutputStream o = new java.io.FileOutputStream(new java.io.File(d, "caratulas.txt"));
+                o.write(r.getBytes("UTF-8"));
+                o.close();
+            } catch (Throwable ignored) { }
+            h.post(new Runnable() { public void run() {
+                if (isFinishing()) return;
+                new TB(Main.this, dlg()).diag().setTitle("Prueba de carátulas")
+                    .setMessage(r + "\n" + I18n.t("Se guarda en StradaDiag/caratulas.txt")).setPositiveButton("OK", null).show();
+            }});
+        }}).start();
+    }
+
     private void updateProgress() {
         if (playerArt == null || (curTitle == null && curArtist == null)) return;
         if (durMs > 0 && posKnown) {
@@ -10687,6 +10722,8 @@ public class Main extends Activity {
                 renderTrack();
                 showSettings(settingsCat);
             }});
+        if (online) row(c, "Probar la búsqueda de carátulas", "Prueba cada servidor con la canción que suena y muestra el error exacto", null,
+            new Runnable() { public void run() { testCovers(); } });
         if (online) row(c, "Borrar carátulas guardadas", "Las que se bajaron de internet y se guardaron en el equipo", null,
             new Runnable() { public void run() {
                 CoverFetch.clear(Main.this);

@@ -1926,3 +1926,8 @@ Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrai
 Borrar carátulas guardadas	Apagar capas salvas
 Las que se bajaron de internet y se guardaron en el equipo	As que foram baixadas da internet e salvas no aparelho
 Carátulas borradas	Capas apagadas
+Probando…	Testando…
+Probar la búsqueda de carátulas	Testar a busca de capas
+Prueba cada servidor con la canción que suena y muestra el error exacto	Testa cada servidor com a música que está tocando e mostra o erro exato
+Prueba de carátulas	Teste de capas
+Se guarda en StradaDiag/caratulas.txt	Salvo em StradaDiag/caratulas.txt

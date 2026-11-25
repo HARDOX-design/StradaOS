@@ -1925,3 +1925,8 @@ Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrai
 Borrar carátulas guardadas	Kayıtlı kapakları sil
 Las que se bajaron de internet y se guardaron en el equipo	İnternetten indirilip cihaza kaydedilenler
 Carátulas borradas	Kapaklar silindi
+Probando…	Test ediliyor…
+Probar la búsqueda de carátulas	Kapak aramasını test et
+Prueba cada servidor con la canción que suena y muestra el error exacto	Çalan şarkıyla her sunucuyu test eder ve tam hatayı gösterir
+Prueba de carátulas	Kapak testi
+Se guarda en StradaDiag/caratulas.txt	StradaDiag/caratulas.txt dosyasına kaydedilir
