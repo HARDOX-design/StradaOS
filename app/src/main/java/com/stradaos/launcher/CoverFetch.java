@@ -75,7 +75,18 @@ public class CoverFetch {
         Throwable err = null;
         boolean mbAnswered = false, itAnswered = false;
         // 2.36: el diagnóstico dice qué pasó en cada paso (el 11 nov. un «no encontrada» escondía el error real)
-        String mb, it = "no se probó";
+        String mb, it = "no se probó", dzEarlyErr = null;
+        boolean dzEarly = false;
+        if (android.os.Build.VERSION.SDK_INT < 21) {
+            // 2.36 r2: en Android 4.x (Picanto y emuladores 4.1/4.2) MusicBrainz, Cover Art Archive (archive.org) e iTunes
+            // rechazan su cifrado y exigen https; Deezer sí lo acepta. Se prueba primero para no esperar tres fallos.
+            plainUsed = false;
+            try {
+                b = deezer(t, a, dir, f);
+                dzEarly = true;
+                if (b != null) { lastInfo = title + ": descargada de Deezer" + (plainUsed ? " (sin cifrar)" : ""); return b; }
+            } catch (Throwable e) { dzEarlyErr = brief(e); }
+        }
         plainUsed = false;
         try { b = musicBrainz(t, a, dir, f); mbAnswered = true; mb = b != null ? "sí" : "sin portada"; }
         catch (Throwable e) { err = e; mb = brief(e); }
@@ -90,7 +101,9 @@ public class CoverFetch {
         boolean dzAnswered = false;
         String dz;
         plainUsed = false;
-        try { b = deezer(t, a, dir, f); dzAnswered = true; dz = b != null ? "sí" : "sin portada"; }
+        if (dzEarly) { dzAnswered = true; dz = "sin portada"; }          // ya se probó primero (Android 4.x)
+        else if (dzEarlyErr != null) dz = dzEarlyErr;
+        else try { b = deezer(t, a, dir, f); dzAnswered = true; dz = b != null ? "sí" : "sin portada"; }
         catch (Throwable e) { if (err == null) err = e; dz = brief(e); }
         if (plainUsed) dz += " (sin cifrar)";
         if (b != null) { lastInfo = title + ": descargada de Deezer" + (plainUsed ? " (sin cifrar)" : ""); return b; }
@@ -316,7 +329,7 @@ public class CoverFetch {
                 }
                 if (code == 404) throw new NotFound();
                 // MusicBrainz responde 503 cuando está saturado (o si se pregunta muy seguido): se reintenta
-                if (code == 503 && busy++ < 2) { Thread.sleep(2000); hop--; continue; }
+                if (code == 503 && busy++ < 2) { Thread.sleep(2000); hop--; seen.remove(url); continue; }   // ocupado: reintento, no bucle
                 if (code != 200) throw new Exception("HTTP " + code);
                 InputStream in = h.getInputStream();
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
