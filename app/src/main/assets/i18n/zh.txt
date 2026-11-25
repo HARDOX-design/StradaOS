@@ -1918,3 +1918,8 @@ Más rápido. Apágalo si tu escáner se desconecta a cada rato	更快。如果�
 Miniatura tomada del video	从视频截取的缩略图
 Enorme	超大
 «Muy grande» y «Enorme» también agrandan los nombres	“特大”和“超大”也会放大名称
+Buscar carátulas en internet	在网上查找专辑封面
+Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes. Solo se envían el título y el artista	如果歌曲没有封面（例如通过蓝牙播放），会在 MusicBrainz 和 Cover Art Archive 中查找，找不到时再到 iTunes 查找。只发送歌名和歌手
+Borrar carátulas guardadas	删除已保存的封面
+Las que se bajaron de internet y se guardaron en el equipo	从网上下载并保存在设备上的封面
+Carátulas borradas	封面已删除

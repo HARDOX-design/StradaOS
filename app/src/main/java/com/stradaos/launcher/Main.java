@@ -167,6 +167,14 @@ public class Main extends Activity {
     // estado de la pista
     private String curTitle, curArtist, curSource;
     private Bitmap curArt;
+    /** Canción cuya carátula de internet ya se pidió (clave de CoverFetch): no se pide dos veces. */
+    private String coverAsked;
+    /**
+     * Carátula de internet y su canción. Va aparte de curArt: algunas fuentes (ZLink por MediaSession) mandan «sin
+     * carátula» en cada aviso de tiempo o de play/pausa y borrarían la de internet a cada segundo.
+     */
+    private String coverKey;
+    private Bitmap coverArt;
     private long durMs = -1, posBaseMs = 0, posBaseAt = 0;
     // para el diagnóstico del reproductor: de dónde salió el tiempo y el último que mandó Bluetooth
     private String posSrc = "—";
@@ -8055,6 +8063,8 @@ public class Main extends Activity {
         String msg = "Fuente: " + (curOrigin != null ? curOrigin : "—") + " / " + (curSource != null ? curSource : "—")
                 + "\nPista: " + curTitle + " — " + curArtist
                 + "\nCarátula: " + (curArt != null ? curArt.getWidth() + "x" + curArt.getHeight() : "no")
+                + "\nCarátula de internet: " + (prefs.getBoolean("cover_online", false) ? CoverFetch.lastInfo
+                    + (coverArt != null ? " · en pantalla " + coverArt.getWidth() + "x" + coverArt.getHeight() : "") : "apagada")
                 + "\nTiempo en StradaOS: " + (currentPos() / 1000) + "/" + (durMs / 1000) + " s · " + posSrc
                 + "\nÚltimo tiempo por Bluetooth: " + (btPosMs < 0 ? "ninguno"
                     : (btPosMs / 1000) + " s, hace " + ((SystemClock.elapsedRealtime() - btPosAt) / 1000) + " s")
@@ -8134,7 +8144,7 @@ public class Main extends Activity {
             trackTv.setText(curTitle != null ? curTitle : (curSource != null ? I18n.t(curSource) : ""));
             artistTv.setText(aaOff ? I18n.t("Activa «Pista actual de AA» en Open Headunit") : (curArtist != null ? curArtist : ""));
             sourceTv.setText(curSource != null ? I18n.t(curSource).toUpperCase(I18n.loc) : "");
-            playerArt.setArt(curArt);
+            playerArt.setArt(curArt != null || aaOff ? curArt : onlineCover());
             updateProgress();
         }
         if (playIc != null) {
@@ -8142,6 +8152,34 @@ public class Main extends Activity {
                     : ((AudioManager) getSystemService(AUDIO_SERVICE)).isMusicActive();
             playIc.setImageBitmap(asset(on ? "ic/pause.png" : "ic/play_arrow.png"));
         }
+    }
+
+    /**
+     * Carátula de internet (Ajustes → Música) para la canción que llegó sin ella. Se espera 3 s: la notificación de
+     * Open Headunit o la app pueden mandar la suya un instante después, y esa siempre manda.
+     */
+    private Bitmap onlineCover() {
+        if (curTitle == null || curArtist == null || !prefs.getBoolean("cover_online", false)) return null;
+        if (curSource != null && curSource.toLowerCase(ES).contains("radio")) return null;   // nombre de la emisora, no una canción
+        final String k = CoverFetch.key(curArtist, curTitle);
+        if (k.equals(coverKey)) return coverArt;
+        if (k.equals(coverAsked)) return null;
+        coverAsked = k;
+        h.postDelayed(new Runnable() { public void run() {
+            if (curArt != null || curTitle == null || curArtist == null || !k.equals(CoverFetch.key(curArtist, curTitle))) return;
+            CoverFetch.fetch(Main.this, curArtist, curTitle, new CoverFetch.Listener() {
+                public void onCover(final String key, final Bitmap art) {
+                    if (art == null) return;
+                    h.post(new Runnable() { public void run() {
+                        // queda con su canción: solo se muestra mientras suene esa y la fuente no traiga carátula
+                        coverKey = key;
+                        coverArt = art;
+                        renderTrack();
+                    }});
+                }
+            });
+        }}, 3000);
+        return null;
     }
 
     private void updateProgress() {
@@ -10639,6 +10677,22 @@ public class Main extends Activity {
             new Runnable() { public void run() {
                 try { startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)); }
                 catch (Throwable e) { notifAccessAdb(); }
+            }});
+        final boolean online = prefs.getBoolean("cover_online", false);
+        toggle(c, "Buscar carátulas en internet", "Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes. Solo se envían el título y el artista",
+            online, new IntCb() { public void on(int i) {
+                prefs.edit().putBoolean("cover_online", i == 1).apply();
+                coverAsked = coverKey = null;
+                coverArt = null;
+                renderTrack();
+                showSettings(settingsCat);
+            }});
+        if (online) row(c, "Borrar carátulas guardadas", "Las que se bajaron de internet y se guardaron en el equipo", null,
+            new Runnable() { public void run() {
+                CoverFetch.clear(Main.this);
+                coverAsked = coverKey = null;
+                coverArt = null;
+                toast("Carátulas borradas");
             }});
         row(c, "Diagnóstico del reproductor", "Fuente activa, lector de notificaciones y Bluetooth", null, new Runnable() { public void run() { showPlayerDiag(); } });
         LinearLayout b = section(body, "Audio Bluetooth");

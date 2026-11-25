@@ -1921,3 +1921,8 @@ Más rápido. Apágalo si tu escáner se desconecta a cada rato	Mais rápido. De
 Miniatura tomada del video	Miniatura tirada do vídeo
 Enorme	Enorme
 «Muy grande» y «Enorme» también agrandan los nombres	«Muito grande» e «Enorme» também aumentam os nomes
+Buscar carátulas en internet	Buscar capas na internet
+Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes. Solo se envían el título y el artista	Se a música chegar sem capa (por ex. via Bluetooth), ela é buscada no MusicBrainz e no Cover Art Archive e, se não estiver lá, no iTunes. Só são enviados o título e o artista
+Borrar carátulas guardadas	Apagar capas salvas
+Las que se bajaron de internet y se guardaron en el equipo	As que foram baixadas da internet e salvas no aparelho
+Carátulas borradas	Capas apagadas

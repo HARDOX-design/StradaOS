@@ -1903,3 +1903,8 @@ Más rápido. Apágalo si tu escáner se desconecta a cada rato	Gyorsabb. Kapcso
 Miniatura tomada del video	Bélyegkép a videóból
 Enorme	Óriási
 «Muy grande» y «Enorme» también agrandan los nombres	Az «Extra nagy» és az «Óriási» a neveket is felnagyítja
+Buscar carátulas en internet	Albumborító keresése az interneten
+Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes. Solo se envían el título y el artista	Ha a dal borító nélkül érkezik (pl. Bluetooth-on), a MusicBrainz és a Cover Art Archive oldalon, ha ott nincs, az iTunes-ban keresi meg. Csak a cím és az előadó kerül elküldésre
+Borrar carátulas guardadas	Mentett borítók törlése
+Las que se bajaron de internet y se guardaron en el equipo	Az internetről letöltött és az eszközön mentett borítók
+Carátulas borradas	Borítók törölve

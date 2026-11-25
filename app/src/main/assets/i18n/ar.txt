@@ -1918,3 +1918,8 @@ Más rápido. Apágalo si tu escáner se desconecta a cada rato	أسرع. أوق
 Miniatura tomada del video	صورة مصغرة مأخوذة من الفيديو
 Enorme	ضخم
 «Muy grande» y «Enorme» también agrandan los nombres	«كبير جدًا» و«ضخم» يكبّران الأسماء أيضًا
+Buscar carátulas en internet	البحث عن غلاف الألبوم على الإنترنت
+Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes. Solo se envían el título y el artista	إذا وصلت الأغنية بدون غلاف (مثلاً عبر البلوتوث)، يتم البحث عنه في MusicBrainz وCover Art Archive، وإن لم يوجد ففي iTunes. يُرسل العنوان والفنان فقط
+Borrar carátulas guardadas	حذف الأغلفة المحفوظة
+Las que se bajaron de internet y se guardaron en el equipo	التي نُزّلت من الإنترنت وحُفظت على الجهاز
+Carátulas borradas	تم حذف الأغلفة
