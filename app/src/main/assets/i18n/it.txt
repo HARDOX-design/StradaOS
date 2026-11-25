@@ -1916,3 +1916,9 @@ Leer varios datos por consulta	Leggi più dati per richiesta
 Tu escáner no lo entiende: StradaOS lee de a un dato. Actívalo para volver a probar	Il tuo scanner non lo supporta: StradaOS legge un dato alla volta. Attivalo per riprovare
 Más rápido. Apágalo si tu escáner se desconecta a cada rato	Più veloce. Disattivalo se lo scanner si disconnette di continuo
 Miniatura tomada del video	Miniatura presa dal video
+# mapa: navegar hasta aquí y posición del carro (#68)
+Navegar hasta aquí	Naviga fin qui
+Posición del carro	Posizione dell'auto
+Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)	In basso: durante la navigazione vedi più strada davanti (con la mappa nella direzione di marcia)
+Centro	Centro
+Abajo	In basso

@@ -303,16 +303,63 @@ public class Nav {
         }
     }
 
+    /** Punto tocado en el mapa como destino: con sus coordenadas de nombre hasta saber la dirección (reverse). */
+    public static Place pointPlace(double lat, double lon) {
+        Place p = new Place();
+        p.lat = lat;
+        p.lon = lon;
+        p.name = String.format(Locale.US, "%.5f, %.5f", lat, lon);
+        p.sub = I18n.t("Coordenadas");
+        return p;
+    }
+
+    /**
+     * Dirección del punto (lat, lon) con Photon, lo más cercano a 200 m; sin internet o sin nada cerca, la lista
+     * vuelve vacía (el punto se queda con sus coordenadas). El nombre se usa, las coordenadas siguen siendo las tocadas.
+     */
+    public static void reverse(final Context c, final double lat, final double lon, final SearchCb cb) {
+        final Context app = c.getApplicationContext();
+        new Thread(new Runnable() {
+            public void run() {
+                Net.init(app);
+                List<Place> out = new ArrayList<Place>();
+                if (hasNetwork(app) && !LiveMapView.isOffline()) {
+                    try {
+                        String url = String.format(Locale.US, "https://photon.komoot.io/reverse?lat=%.6f&lon=%.6f&limit=1&radius=0.2", lat, lon)
+                                + photonLang();
+                        out = photonPlaces(new String(navGet(app, url, 8000), "UTF-8"));
+                    } catch (Throwable e) {
+                        android.util.Log.w("StradaNav", "dirección del punto: " + shortErr(e));
+                    }
+                }
+                final List<Place> fout = out;
+                UI.post(new Runnable() {
+                    public void run() { cb.onResult(fout, null); }
+                });
+            }
+        }).start();
+    }
+
+    /** Idioma de los nombres de Photon (solo tiene estos; los demás reciben el nombre local). */
+    private static String photonLang() {
+        if ("en".equals(I18n.lang) || "de".equals(I18n.lang) || "fr".equals(I18n.lang) || "it".equals(I18n.lang)) {
+            return "&lang=" + I18n.lang;
+        }
+        return "";
+    }
+
     private static List<Place> searchPhoton(Context c, String q, double biasLat, double biasLon) throws Exception {
         StringBuilder url = new StringBuilder("https://photon.komoot.io/api/?limit=6&q=");
         url.append(URLEncoder.encode(q, "UTF-8"));
-        if ("en".equals(I18n.lang) || "de".equals(I18n.lang) || "fr".equals(I18n.lang) || "it".equals(I18n.lang)) {
-            url.append("&lang=").append(I18n.lang);
-        }
+        url.append(photonLang());
         if (!Double.isNaN(biasLat) && !Double.isNaN(biasLon)) {
             url.append(String.format(Locale.US, "&lat=%.4f&lon=%.4f", biasLat, biasLon));
         }
-        String raw = new String(navGet(c, url.toString(), 10000), "UTF-8");
+        return photonPlaces(new String(navGet(c, url.toString(), 10000), "UTF-8"));
+    }
+
+    /** Lugares de una respuesta de Photon (búsqueda o dirección de un punto). */
+    private static List<Place> photonPlaces(String raw) throws Exception {
         JSONObject root = new JSONObject(raw);
         JSONArray feats = root.optJSONArray("features");
         List<Place> out = new ArrayList<Place>();

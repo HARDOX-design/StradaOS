@@ -1916,3 +1916,9 @@ Leer varios datos por consulta	Baca beberapa data setiap permintaan
 Tu escáner no lo entiende: StradaOS lee de a un dato. Actívalo para volver a probar	Pengimbas anda tidak menyokongnya: StradaOS membaca satu data pada satu masa. Hidupkan untuk mencuba semula
 Más rápido. Apágalo si tu escáner se desconecta a cada rato	Lebih pantas. Matikan jika pengimbas anda kerap terputus
 Miniatura tomada del video	Lakaran kecil diambil daripada video
+# mapa: navegar hasta aquí y posición del carro (#68)
+Navegar hasta aquí	Navigasi ke sini
+Posición del carro	Kedudukan kereta
+Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)	Bawah: semasa navigasi, lihat lebih banyak jalan di hadapan (dengan peta ikut arah anda)
+Centro	Tengah
+Abajo	Bawah

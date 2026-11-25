@@ -1920,3 +1920,9 @@ Leer varios datos por consulta	Read several values per request
 Tu escáner no lo entiende: StradaOS lee de a un dato. Actívalo para volver a probar	Your scanner doesn't support it: StradaOS reads one value at a time. Turn it on to try again
 Más rápido. Apágalo si tu escáner se desconecta a cada rato	Faster. Turn it off if your scanner keeps disconnecting
 Miniatura tomada del video	Thumbnail taken from the video
+# mapa: navegar hasta aquí y posición del carro (#68)
+Navegar hasta aquí	Navigate here
+Posición del carro	Car position
+Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)	Bottom: while navigating, see more of the road ahead (with the map in direction of travel)
+Centro	Center
+Abajo	Bottom

@@ -1919,3 +1919,9 @@ Leer varios datos por consulta	Ler vários dados por consulta
 Tu escáner no lo entiende: StradaOS lee de a un dato. Actívalo para volver a probar	Seu scanner não entende: o StradaOS lê um dado por vez. Ative para testar de novo
 Más rápido. Apágalo si tu escáner se desconecta a cada rato	Mais rápido. Desative se o seu scanner desconecta toda hora
 Miniatura tomada del video	Miniatura tirada do vídeo
+# mapa: navegar hasta aquí y posición del carro (#68)
+Navegar hasta aquí	Navegar até aqui
+Posición del carro	Posição do carro
+Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)	Abaixo: ao navegar você vê mais da estrada à frente (com o mapa na sua direção)
+Centro	Centro
+Abajo	Abaixo

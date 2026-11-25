@@ -142,6 +142,21 @@ public class LiveMapView extends View {
     private int zoom = 16;
     private int netErrors;
 
+    // Zoom suave (en «Seguir»): «zoom» es el nivel al que se va; zv es el que se ve, que llega a él en ZOOM_MS (antes
+    // saltaba de golpe, p. ej. al pasar de 70 km/h). Mientras cambia, se agrandan o achican las teselas que ya se estaban
+    // viendo y se piden las del nivel nuevo; lo que falte se cubre con lo que haya en memoria de otro nivel (drawFallback).
+    // En «Explorar» el zoom cambia como hasta ahora (zv = zoom): el pellizco y el doble toque llevan su propia escala.
+    private static final int ZOOM_MS = 800;
+    private float zv = 16, zFrom = 16;
+    private long zStart;
+    // Al terminar, las teselas que se veían se desvanecen encima de las nuevas en FADE_MS, para que los nombres no
+    // cambien de tamaño de golpe. Solo con el mapa opaco: con las teselas translúcidas (Aurora, Cobalto, Faro), dos
+    // capas juntas se verían más oscuras un momento.
+    private static final int FADE_MS = 250;
+    private int lastLv = -1, fadeLv = -1;
+    private long fadeAt;
+    private float lastKmh = Float.NaN;   // última velocidad (para volver al zoom según la velocidad)
+
     private final Paint tile = new Paint(Paint.FILTER_BITMAP_FLAG);
     private final Paint grid = new Paint();
     private final Paint arrow = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -400,9 +415,42 @@ public class LiveMapView extends View {
         }
         aStart = now;
         lastFixAt = now;
-        if (!userZoom && !exploring) zoom = speedKmh > 70 ? 15 : speedKmh > 35 ? 16 : 17;
+        lastKmh = speedKmh;
+        // si la posición saltó (primera lectura, sin GPS un rato) el zoom también va directo
+        if (!userZoom && !exploring) zoomTo(autoLevel(speedKmh), !snap);
         trimDisk();
         invalidate();
+    }
+
+    /**
+     * Zoom según la velocidad: 17 en ciudad, 16 desde 35 km/h y 15 desde 70. Para volver a acercar hay que bajar de
+     * 30 y 65 (5 km/h menos): así, andando justo alrededor de un límite (35 en ciudad), el zoom no va y viene.
+     */
+    private int autoLevel(float kmh) {
+        int near = kmh > 70 ? 15 : kmh > 35 ? 16 : 17;   // lo más cerca que puede estar a esta velocidad
+        int far = kmh > 65 ? 15 : kmh > 30 ? 16 : 17;    // lo más lejos (con el margen); entre los dos, se queda
+        return Math.max(far, Math.min(zoom, near));
+    }
+
+    /** Va al nivel z: con anim, desde el zoom que se ve ahora (también si iba a medio camino); si no, de golpe. */
+    private void zoomTo(int z, boolean anim) {
+        if (z == zoom && (anim || zv == z)) return;   // ya va hacia ahí: no se reinicia (el GPS llama cada segundo)
+        long now = SystemClock.uptimeMillis();
+        stepZoom(now);
+        zoom = z;
+        zFrom = anim ? zv : z;
+        if (!anim) zv = z;
+        zStart = now;
+        lastLv = fadeLv = -1;
+        invalidate();
+    }
+
+    /** Calcula el zoom que se ve ahora. Devuelve true si todavía va en camino. */
+    private boolean stepZoom(long now) {
+        if (zv == zoom) return false;
+        float t = Math.min(1f, Math.max(0f, (now - zStart) / (float) ZOOM_MS));
+        zv = t >= 1f ? zoom : zFrom + (zoom - zFrom) * t * t * (3 - 2 * t);   // arranca y frena suave
+        return zv != zoom;
     }
 
     /** Calcula la posición que se muestra ahora. Devuelve true si todavía va en camino. */
@@ -423,6 +471,54 @@ public class LiveMapView extends View {
     /** true: el mapa gira según la dirección del carro (arriba = hacia donde vas). false: norte arriba. */
     static boolean headingUp;
 
+    // ── Posición del carro «Abajo» (#68) ──
+    // Durante la navegación y con el mapa según tu dirección, el carro baja hasta ~78 % de lo que se ve del mapa (sin el
+    // panel de abajo ni el letrero de la guía arriba): se ve más camino por delante que por detrás. Sin ruta o con norte
+    // arriba queda donde estuvo siempre (con norte arriba «adelante» puede ser cualquier lado); en «Explorar», como
+    // siempre. Con «Centro», todo como antes. Al empezar o terminar la ruta, o al abrir o cerrar el panel, el carro se
+    // desliza a su nuevo sitio.
+    static boolean carLow;
+    private static final float LOW_AT = 0.78f;
+    private float coverB, lowY = -1;
+    private long lowAt;
+    private boolean lowMoving;   // todavía deslizándose: hace falta otro cuadro
+    private boolean holdLow;     // ruta recién empezada sin seguir al carro: la altura queda quieta hasta autoZoom()
+
+    /**
+     * Main: al empezar una ruta explorando o con zoom a mano, la altura del carro queda quieta para que la vista no se
+     * mueva; baja («Abajo») recién cuando vuelve a «Seguir» (autoZoom).
+     */
+    void holdLow(boolean hold) {
+        holdLow = hold;
+        invalidate();
+    }
+
+    /** Main: px de abajo del mapa que tapa el panel (Android Auto/CarPlay, o el reproductor y el clima de Carbono). */
+    void setBottomCover(float px) {
+        coverB = px;
+        invalidate();
+    }
+
+    /** Altura del carro en pantalla con «Abajo»; cy0 = la de siempre (nunca sube más que ella). */
+    private float lowCy(float cy0, boolean low, float h, long now) {
+        float t = cy0;
+        if (low) {
+            float cover = Math.max(coverB, fadeEdge == 2 ? fadeLen * 0.5f : 0);   // Cobalto vertical: se difumina abajo
+            float top = 84 * s, bottom = h - cover;   // arriba, el letrero de la guía
+            t = Math.max(cy0, Math.min(top + (bottom - top) * LOW_AT, h - 40 * s));
+        }
+        if (holdLow && lowY >= 0) t = lowY;   // esperando a autoZoom(): la vista no se mueve hasta que vuelve a seguir
+        if (lowY < 0) lowY = t;
+        else {   // deslizar: tras un rato sin dibujar, se cuenta como un cuadro (empieza a moverse desde donde estaba)
+            long dt = Math.min(50, Math.max(0, now - lowAt));
+            lowY += (t - lowY) * (1f - (float) Math.exp(-dt / 110.0));
+            if (Math.abs(t - lowY) < 0.5f) lowY = t;
+        }
+        lowAt = now;
+        lowMoving = lowY != t;
+        return lowY;
+    }
+
     /** Toque: cambia el nivel de zoom (14→17). */
     public void cycleZoom() {
         userZoom = true;
@@ -433,11 +529,68 @@ public class LiveMapView extends View {
     /** Acercar (+1) o alejar (-1) con los botones del mapa (Faro y Carbono, y los de «Explorar»). */
     void zoomBy(int d) {
         if (exploring) { lastTouch = SystemClock.uptimeMillis(); zoom = Math.max(MINZ, Math.min(maxZoom(), zoom + d)); invalidate(); return; }
-        userZoom = true; zoom = Math.max(11, Math.min(18, zoom + d)); invalidate();
+        userZoom = true; zoomTo(Math.max(11, Math.min(18, zoom + d)), true);
     }
 
-    /** Botón de centrar (Faro y Carbono): vuelve a «Seguir» y al zoom automático según la velocidad. */
-    void autoZoom() { if (exploring) follow(); userZoom = false; zoom = 16; invalidate(); }
+    /**
+     * Botón de centrar (Faro y Carbono) y al empezar una ruta (Main): vuelve a «Seguir» y al zoom según la velocidad
+     * (el que tendría ahora, aunque antes se hubiera alejado o acercado a mano; se desliza hasta él).
+     */
+    void autoZoom() {
+        holdLow = false;   // con «Abajo», el carro baja ahora, al volver a seguirlo
+        if (exploring) follow();
+        userZoom = false;
+        zoomTo(hasFix() ? autoLevel(lastKmh) : 16, true);
+    }
+
+    /** true si la vista sigue al carro con el zoom según la velocidad (ni explorando ni con zoom a mano). */
+    boolean isFollowing() { return !exploring && !userZoom; }
+
+    // ── «Navegar hasta aquí» (toque largo) ──
+    private float pressX, pressY;
+    // la vista tal como se dibujó por última vez (para pasar un punto de la pantalla a coordenadas)
+    private double viewFx, viewFy;
+    private int viewN = 1;
+    private float viewTs = 1, viewCx, viewCy = -1, viewBr, viewPinch = 1f, viewPX, viewPY;
+    private boolean viewRot;
+    // alfiler del punto elegido (mientras se pregunta si navegar hasta allí)
+    private double pinLat = Double.NaN, pinLon;
+    private final Paint pinPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Path pinPath = new Path();
+    private final RectF rf = new RectF();
+
+    /** Dónde fue el último toque largo, en px de la vista. */
+    float pressX() { return pressX; }
+    float pressY() { return pressY; }
+
+    /** Coordenadas {lat, lon} del último toque largo; null si el mapa aún no se dibujó. */
+    double[] pressedLatLon() { return latLonAt(pressX, pressY); }
+
+    /** Coordenadas {lat, lon} del punto (x, y) de la vista tal como se dibujó por última vez (zoom, giro, pellizco). */
+    double[] latLonAt(float x, float y) {
+        if (viewCy < 0) return null;
+        if (viewPinch != 1f) {   // pellizco en curso: se deshace la escala
+            x = viewPX + (x - viewPX) / viewPinch;
+            y = viewPY + (y - viewPY) / viewPinch;
+        }
+        double dx = x - viewCx, dy = y - viewCy;
+        if (viewRot) {   // el mapa está girado -viewBr alrededor del centro: se deshace el giro
+            double r = Math.toRadians(viewBr), cos = Math.cos(r), sin = Math.sin(r);
+            double ux = dx * cos - dy * sin, uy = dx * sin + dy * cos;
+            dx = ux;
+            dy = uy;
+        }
+        double mx = (viewFx + dx / viewTs) / viewN, my = Math.max(0, Math.min(1, (viewFy + dy / viewTs) / viewN));
+        mx -= Math.floor(mx);
+        return new double[]{lat(my), lon(mx)};
+    }
+
+    /** Muestra el alfiler en (lat, lon); NaN lo quita. */
+    void setPin(double lat, double lon) {
+        pinLat = lat;
+        pinLon = lon;
+        invalidate();
+    }
 
     // ───────────────────────── «Explorar» ─────────────────────────
 
@@ -479,6 +632,7 @@ public class LiveMapView extends View {
         exploring = false;
         pinch = 1f;
         zoom = savedZoom; userZoom = savedUserZoom;
+        zv = zFrom = zoom; lastLv = fadeLv = -1;   // la vista salta al carro: el zoom también, sin deslizarse
         ui.removeCallbacks(returnCheck);
         if (exploreListener != null) exploreListener.onExplore(false);
         invalidate();
@@ -565,7 +719,11 @@ public class LiveMapView extends View {
                 pan(dx, dy);
                 return true;
             }
-            @Override public void onLongPress(MotionEvent e) { if (sgd == null || !sgd.isInProgress()) performLongClick(); }
+            @Override public void onLongPress(MotionEvent e) {
+                if (sgd != null && sgd.isInProgress()) return;
+                pressX = e.getX(); pressY = e.getY();   // para «Navegar hasta aquí» (Main)
+                performLongClick();
+            }
         });
         gd.setIsLongpressEnabled(true);
         sgd = new ScaleGestureDetector(getContext(), new ScaleGestureDetector.SimpleOnScaleGestureListener() {
@@ -674,8 +832,8 @@ public class LiveMapView extends View {
         }
     }
 
-    /** Pruebas: fija el zoom (14–18). */
-    void setZoom(int z) { userZoom = true; zoom = Math.max(10, Math.min(18, z)); invalidate(); }
+    /** Pruebas: fija el zoom (14–18), de golpe para que la captura salga ya en ese nivel. */
+    void setZoom(int z) { userZoom = true; zoomTo(Math.max(10, Math.min(18, z)), false); }
 
     @Override
     protected void onDraw(Canvas c) {
@@ -683,14 +841,34 @@ public class LiveMapView extends View {
         boolean bd = syncBackdrop();
         if (bd) c.drawRect(0, 0, w, h, back);
         else c.drawColor(Main.LIGHT ? 0xFFE8EBF0 : 0xFF15171C);
-        boolean moving = step(SystemClock.uptimeMillis());
+        long now = SystemClock.uptimeMillis();
+        boolean moving = step(now);
         final boolean ex = exploring;
+        if (ex) { zv = zFrom = zoom; fadeLv = -1; }   // explorando, el zoom cambia de golpe como siempre
+        boolean wasZooming = zv != zoom;
+        boolean zooming = stepZoom(now), fading = false;
+        viewCy = -1;
 
         if (ex || !Double.isNaN(dLat)) {
             OfflineMap fm = fileMap;
             int mz = maxZoom();
-            if (zoom > mz) zoom = mz;
-            int n = 1 << zoom;
+            if (zoom > mz) {
+                zoom = mz;
+                zFrom = zv = Math.min(zv, zoom);   // sigue desde lo que se ve, sin pasar del máximo de la fuente
+                zStart = now;
+                zooming = zv != zoom;
+            }
+            // nivel de las teselas: mientras cambia el zoom, el del lado de donde se viene (al acercar, el de abajo
+            // agrandado hasta 2×; al alejar, el de arriba achicado hasta ½), que son las que ya están y se ven nítidas.
+            // Las del nivel nuevo se piden aparte (prefetch) y se ven al terminar.
+            int lv = zv > zoom ? (int) Math.ceil(zv - 0.001f) : (int) Math.floor(zv + 0.001f);
+            boolean ask = !zooming;
+            if (zooming) lastLv = lv;
+            else if (wasZooming) {   // acaba de llegar: lo que se veía se desvanece encima
+                fadeLv = lastLv != zoom && tile.getAlpha() == 255 ? lastLv : -1;
+                fadeAt = now;
+            }
+            int n = 1 << lv;
             double fx, fy;
             if (ex) { fx = eX * n; fy = eY * n; }
             else {
@@ -698,9 +876,14 @@ public class LiveMapView extends View {
                 double latR = Math.toRadians(dLat);
                 fy = (1.0 - Math.log(Math.tan(latR) + 1.0 / Math.cos(latR)) / Math.PI) / 2.0 * n;
             }
-            float ts = 256 * s;                                    // tamaño de tesela en pantalla
+            float ts = 256 * s * (float) Math.pow(2, zv - lv);   // tamaño de tesela en pantalla
             boolean rot = !ex && headingUp && !Float.isNaN(dBr);   // explorando: norte arriba
             float cx = w / 2f, cy = ex ? h / 2f : Nav.active != null ? (rot ? h * 0.54f : h * 0.50f) : h * 0.42f;
+            // eligiendo entre varias rutas (Nav.altRoutes) todavía no se navega: el carro baja al elegir una
+            if (carLow && !ex) cy = lowCy(cy, rot && Nav.active != null && Nav.altRoutes == null, h, now);
+            viewFx = fx; viewFy = fy; viewN = n; viewTs = ts; viewCx = cx; viewCy = cy;   // para latLonAt (toque largo)
+            viewRot = rot; viewBr = rot ? dBr : 0;
+            viewPinch = ex ? pinch : 1f; viewPX = pinchX; viewPY = pinchY;
             // pellizco en curso: lo que se ve de la pantalla, antes de la escala
             float vl = 0, vr = w, vt = 0, vb = h;
             if (ex && pinch != 1f) {
@@ -729,29 +912,36 @@ public class LiveMapView extends View {
                     float left = cx + (float) ((tx - fx) * ts), top = cy + (float) ((ty - fy) * ts);
                     dst.set(Math.round(left), Math.round(top), Math.round(left + ts) + 1, Math.round(top + ts) + 1);
                     // explorando lejos (zoom < 9) el archivo no se dibuja: serían teselas enormes y lentas
-                    boolean fromFile = fm != null && (!ex || zoom >= 9) && fm.coversFast(zoom, wx, ty);
-                    Bitmap b = get(zoom, wx, ty, fromFile ? L_FILE : L_BASE);
+                    boolean fromFile = fm != null && (!ex || lv >= 9) && fm.coversFast(lv, wx, ty);
+                    Bitmap b = get(lv, wx, ty, fromFile ? L_FILE : L_BASE, ask);   // al cambiar el zoom, solo de memoria
                     if (b != null) {
                         tile.setFilterBitmap(rot || b.getWidth() != dst.width());
                         Paint tp = tile;
                         if (toned) { tileTone.setAlpha(tile.getAlpha()); tileTone.setFilterBitmap(tile.isFilterBitmap()); tp = tileTone; }
                         c.drawBitmap(b, null, dst, tp);
-                        if (trTpl != null && zoom >= 11) {
-                            Bitmap tr = getTraffic(zoom, wx, ty, trPv);
+                        if (trTpl != null && lv >= 11) {
+                            Bitmap tr = getTraffic(lv, wx, ty, trPv, ask);
                             if (tr != null) c.drawBitmap(tr, null, dst, tile);
                         }
                         if (fromFile) anyFile = true;
                         else if (LABELS[provider] != null) {
-                            Bitmap l = get(zoom, wx, ty, L_LABELS);
+                            Bitmap l = get(lv, wx, ty, L_LABELS, ask);
                             if (l != null) c.drawBitmap(l, null, dst, toned ? tileTone : tile);
                         }
-                    } else {
+                    } else if (!drawFallback(c, fm, lv, wx, ty, left, top, ts, zv > zoom)) {
                         c.drawLine(dst.left, dst.top, dst.right, dst.top, grid);
                         c.drawLine(dst.left, dst.top, dst.left, dst.bottom, grid);
                     }
                 }
             }
+            if (zooming) prefetch(fm, fx, fy, lv, cx, cy, w, h, rot);
+            else if (fadeLv >= 0) {
+                float t = (now - fadeAt) / (float) FADE_MS;
+                if (t >= 1f) fadeLv = -1;
+                else { drawOld(c, fm, fx, fy, lv, cx, cy, w, h, rot, 1f - t); fading = true; }
+            }
             drawRoute(c, fx, fy, cx, cy, ts, n);
+            if (!Double.isNaN(pinLat)) drawPin(c, mapX(pinLon, fx, cx, ts, n), mapY(pinLat, fy, cy, ts, n), rot ? dBr : 0);
             if (rot) c.restore();
             if (!ex) drawMarker(c, cx, cy, rot);
             else if (!Double.isNaN(dLat)) drawMarker(c, mapX(dLon, fx, cx, ts, n), mapY(dLat, fy, cy, ts, n), false);
@@ -775,7 +965,108 @@ public class LiveMapView extends View {
             c.drawPath(corners, corner);
         }
         drawButtons(c, w, h);
-        if (moving) postInvalidateDelayed(FRAME_MS);
+        if (moving || zooming || fading || (carLow && !ex && lowMoving)) postInvalidateDelayed(FRAME_MS);
+    }
+
+    private final Rect src = new Rect(), sub = new Rect();
+
+    /**
+     * La tesela (z, x, y) todavía no está: se dibuja con lo que ya hay en memoria, sin pedir nada. El trozo que le
+     * toca de la de 1 a 3 niveles más arriba (más borrosa) y, si no hay o si se está alejando (out), encima las 4 del
+     * nivel de abajo (al alejar, las que se estaban viendo: más nítidas). Así, al cambiar el zoom no aparecen cuadros
+     * vacíos mientras llegan las nuevas. Devuelve false si no hay nada que dibujar.
+     */
+    private boolean drawFallback(Canvas c, OfflineMap fm, int z, int x, int y, float left, float top, float ts, boolean out) {
+        Paint tp = tile;
+        tile.setFilterBitmap(true);
+        if (toned) { tileTone.setAlpha(tile.getAlpha()); tileTone.setFilterBitmap(true); tp = tileTone; }
+        boolean any = false;
+        for (int d = 1; d <= 3 && d <= z; d++) {
+            Bitmap p = peek(fm, z - d, x >> d, y >> d);
+            if (p == null) continue;
+            int m = (1 << d) - 1, pw = p.getWidth() >> d, ph = p.getHeight() >> d;
+            if (pw < 1 || ph < 1) continue;
+            src.set((x & m) * pw, (y & m) * ph, (x & m) * pw + pw, (y & m) * ph + ph);
+            c.drawBitmap(p, src, dst, tp);
+            any = true;
+            break;
+        }
+        if (any && !out) return true;
+        float half = ts / 2f;
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                Bitmap ch = peek(fm, z + 1, x * 2 + i, y * 2 + j);
+                if (ch == null) continue;
+                float l = left + i * half, t = top + j * half;
+                sub.set(Math.round(l), Math.round(t), Math.round(l + half) + 1, Math.round(t + half) + 1);
+                c.drawBitmap(ch, null, sub, tp);
+                any = true;
+            }
+        }
+        return any;
+    }
+
+    private final Rect oldDst = new Rect();
+
+    /** Fin del cambio de zoom: las teselas del nivel fadeLv (las que se veían) encima, con opacidad a. Solo de memoria. */
+    private void drawOld(Canvas c, OfflineMap fm, double fx, double fy, int lv, float cx, float cy, float w, float h, boolean rot, float a) {
+        double m = Math.pow(2, fadeLv - lv), gx = fx * m, gy = fy * m;   // posición en teselas de ese nivel
+        float ts = (float) (256 * s / m);
+        int n = 1 << fadeLv;
+        int[] r = range(gx, gy, ts, cx, cy, w, h, rot);
+        Paint p = toned ? tileTone : tile;
+        int alpha = p.getAlpha();
+        p.setAlpha(Math.round(alpha * a));
+        p.setFilterBitmap(true);
+        for (int tx = r[0]; tx <= r[1]; tx++) {
+            for (int ty = r[2]; ty <= r[3]; ty++) {
+                if (ty < 0 || ty >= n) continue;
+                Bitmap b = peek(fm, fadeLv, ((tx % n) + n) % n, ty);
+                if (b == null) continue;
+                float left = cx + (float) ((tx - gx) * ts), top = cy + (float) ((ty - gy) * ts);
+                oldDst.set(Math.round(left), Math.round(top), Math.round(left + ts) + 1, Math.round(top + ts) + 1);
+                c.drawBitmap(b, null, oldDst, p);
+            }
+        }
+        p.setAlpha(alpha);
+    }
+
+    private final int[] rng = new int[4];
+
+    /** Teselas que cubren la vista {x0, x1, y0, y1}, con la posición (gx, gy) en teselas de ts px en pantalla. */
+    private int[] range(double gx, double gy, float ts, float cx, float cy, float w, float h, boolean rot) {
+        if (rot) {
+            // al girar, un círculo alrededor de la posición (hasta la esquina más lejana)
+            float rr = (float) Math.sqrt(Math.max(cx, w - cx) * Math.max(cx, w - cx) + Math.max(cy, h - cy) * Math.max(cy, h - cy)) / ts;
+            rng[0] = (int) Math.floor(gx - rr); rng[1] = (int) Math.floor(gx + rr);
+            rng[2] = (int) Math.floor(gy - rr); rng[3] = (int) Math.floor(gy + rr);
+        } else {
+            rng[0] = (int) Math.floor(gx - cx / ts); rng[1] = (int) Math.floor(gx + (w - cx) / ts);
+            rng[2] = (int) Math.floor(gy - cy / ts); rng[3] = (int) Math.floor(gy + (h - cy) / ts);
+        }
+        return rng;
+    }
+
+    /** Tesela que ya está en memoria (si no está, no la pide). */
+    private Bitmap peek(OfflineMap fm, int z, int x, int y) {
+        boolean f = fm != null && fm.coversFast(z, x, y);
+        return get(z, x, y, f ? L_FILE : L_BASE, false);
+    }
+
+    /** Mientras cambia el zoom: pide ya las teselas del nivel nuevo que se verán al terminar. */
+    private void prefetch(OfflineMap fm, double fx, double fy, int lv, float cx, float cy, float w, float h, boolean rot) {
+        double m = Math.pow(2, zoom - lv), gx = fx * m, gy = fy * m;   // posición en teselas del nivel nuevo
+        int n = 1 << zoom;
+        int[] r = range(gx, gy, 256 * s, cx, cy, w, h, rot);
+        for (int tx = r[0]; tx <= r[1]; tx++) {
+            for (int ty = r[2]; ty <= r[3]; ty++) {
+                if (ty < 0 || ty >= n) continue;
+                int wx = ((tx % n) + n) % n;
+                boolean f = fm != null && fm.coversFast(zoom, wx, ty);
+                get(zoom, wx, ty, f ? L_FILE : L_BASE, true);
+                if (!f && LABELS[provider] != null) get(zoom, wx, ty, L_LABELS, true);
+            }
+        }
     }
 
     private void drawMarker(Canvas c, float x, float y, boolean rotated) {
@@ -796,6 +1087,32 @@ public class LiveMapView extends View {
         arrow.setStrokeWidth(2 * s);
         arrow.setColor(0xFFFFFFFF);
         c.drawPath(tri, arrow);
+        c.restore();
+    }
+
+    /** Alfiler con la punta en (x, y); br deshace el giro del mapa para que quede derecho. */
+    private void drawPin(Canvas c, float x, float y, float br) {
+        float r = 12 * s, hh = 30 * s, cy = y - hh;
+        float a = (float) Math.toDegrees(Math.acos(r / hh));   // tangentes desde la punta hasta la cabeza
+        c.save();
+        if (br != 0) c.rotate(br, x, y);
+        pinPaint.setStyle(Paint.Style.FILL);
+        pinPaint.setColor(0x40000000);
+        rf.set(x - 7 * s, y - 2.5f * s, x + 7 * s, y + 2.5f * s);
+        c.drawOval(rf, pinPaint);
+        pinPath.reset();
+        pinPath.moveTo(x, y);
+        rf.set(x - r, cy - r, x + r, cy + r);
+        pinPath.arcTo(rf, 90 - a, -(360 - 2 * a), false);
+        pinPath.close();
+        pinPaint.setColor(Main.RED);
+        c.drawPath(pinPath, pinPaint);
+        pinPaint.setStyle(Paint.Style.STROKE);
+        pinPaint.setStrokeWidth(2.5f * s);
+        pinPaint.setColor(0xFFFFFFFF);
+        c.drawPath(pinPath, pinPaint);
+        pinPaint.setStyle(Paint.Style.FILL);
+        c.drawCircle(x, cy, 4.5f * s, pinPaint);
         c.restore();
     }
 
@@ -937,17 +1254,18 @@ public class LiveMapView extends View {
 
     // ── teselas ──
 
-    private Bitmap get(int z, int x, int y, int layer) {
-        return getKeyed(key(layer, layer == L_FILE ? 0 : provider, z, x, y));
+    /** ask: si no está en memoria, pedirla (false = solo mirar). */
+    private Bitmap get(int z, int x, int y, int layer, boolean ask) {
+        return getKeyed(key(layer, layer == L_FILE ? 0 : provider, z, x, y), ask);
     }
 
-    private Bitmap getTraffic(int z, int x, int y, int tpv) {
-        return getKeyed(key(L_TRAFFIC, tpv, z, x, y));
+    private Bitmap getTraffic(int z, int x, int y, int tpv, boolean ask) {
+        return getKeyed(key(L_TRAFFIC, tpv, z, x, y), ask);
     }
 
-    private Bitmap getKeyed(long k) {
+    private Bitmap getKeyed(long k, boolean ask) {
         Bitmap b = mem.get(k);
-        if (b != null) return b;
+        if (b != null || !ask) return b;
         synchronized (queue) {
             if (!pending.contains(k) && !failed.contains(k)) {
                 pending.add(k);
