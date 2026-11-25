@@ -1919,7 +1919,7 @@ Miniatura tomada del video	Vorschaubild aus dem Video
 Enorme	Riesig
 «Muy grande» y «Enorme» también agrandan los nombres	«Sehr groß» und «Riesig» vergrößern auch die Namen
 Buscar carátulas en internet	Albumcover im Internet suchen
-Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes. Solo se envían el título y el artista	Kommt ein Titel ohne Cover (z. B. über Bluetooth), wird es bei MusicBrainz und im Cover Art Archive gesucht, sonst bei iTunes. Gesendet werden nur Titel und Interpret
+Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes o Deezer. Solo se envían el título y el artista	Kommt ein Titel ohne Cover (z. B. über Bluetooth), wird es bei MusicBrainz und im Cover Art Archive gesucht, sonst bei iTunes oder Deezer. Gesendet werden nur Titel und Interpret
 Borrar carátulas guardadas	Gespeicherte Cover löschen
 Las que se bajaron de internet y se guardaron en el equipo	Aus dem Internet geladene und auf dem Gerät gespeicherte Cover
 Carátulas borradas	Cover gelöscht

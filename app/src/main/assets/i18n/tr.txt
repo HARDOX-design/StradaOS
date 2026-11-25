@@ -1921,7 +1921,7 @@ Miniatura tomada del video	Küçük resim videodan alındı
 Enorme	Dev
 «Muy grande» y «Enorme» también agrandan los nombres	«Çok büyük» ve «Dev» adları da büyütür
 Buscar carátulas en internet	Albüm kapağını internette ara
-Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes. Solo se envían el título y el artista	Şarkı kapaksız gelirse (ör. Bluetooth ile), MusicBrainz ve Cover Art Archive'da, bulunamazsa iTunes'da aranır. Yalnızca şarkı adı ve sanatçı gönderilir
+Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes o Deezer. Solo se envían el título y el artista	Şarkı kapaksız gelirse (ör. Bluetooth ile), MusicBrainz ve Cover Art Archive'da, bulunamazsa iTunes'da veya Deezer'da aranır. Yalnızca şarkı adı ve sanatçı gönderilir
 Borrar carátulas guardadas	Kayıtlı kapakları sil
 Las que se bajaron de internet y se guardaron en el equipo	İnternetten indirilip cihaza kaydedilenler
 Carátulas borradas	Kapaklar silindi

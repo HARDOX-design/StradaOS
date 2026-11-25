@@ -1923,7 +1923,7 @@ Miniatura tomada del video	Thumbnail taken from the video
 Enorme	Huge
 «Muy grande» y «Enorme» también agrandan los nombres	«Extra large» and «Huge» also make the names bigger
 Buscar carátulas en internet	Find album art online
-Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes. Solo se envían el título y el artista	If a song arrives without album art (e.g. over Bluetooth), it is looked up on MusicBrainz and Cover Art Archive and, if not found, on iTunes. Only the title and artist are sent
+Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes o Deezer. Solo se envían el título y el artista	If a song arrives without album art (e.g. over Bluetooth), it is looked up on MusicBrainz and Cover Art Archive and, if not found, on iTunes or Deezer. Only the title and artist are sent
 Borrar carátulas guardadas	Delete saved album art
 Las que se bajaron de internet y se guardaron en el equipo	Covers downloaded from the internet and saved on this unit
 Carátulas borradas	Album art deleted

@@ -8197,7 +8197,7 @@ public class Main extends Activity {
     private void testCovers() {
         toast("Probando…");
         final String ar = curArtist, ti = curTitle;
-        final String head = "Fuente: " + (curSource != null ? curSource : "—") + "\nPista: " + ti + " — " + ar
+        final String head = "Fuente: " + (curSource != null ? curSource : "—") + "\nPista: " + (ti != null ? ti : "—") + " — " + (ar != null ? ar : "—")
                 + "\nCarátula de la fuente: " + (curArt != null ? curArt.getWidth() + "x" + curArt.getHeight() + " (con ella no se busca)" : "no")
                 + "\nÚltima búsqueda: " + CoverFetch.lastInfo + "\n\n";
         new Thread(new Runnable() { public void run() {
@@ -10714,7 +10714,7 @@ public class Main extends Activity {
                 catch (Throwable e) { notifAccessAdb(); }
             }});
         final boolean online = prefs.getBoolean("cover_online", false);
-        toggle(c, "Buscar carátulas en internet", "Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes. Solo se envían el título y el artista",
+        toggle(c, "Buscar carátulas en internet", "Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes o Deezer. Solo se envían el título y el artista",
             online, new IntCb() { public void on(int i) {
                 prefs.edit().putBoolean("cover_online", i == 1).apply();
                 coverAsked = coverKey = null;

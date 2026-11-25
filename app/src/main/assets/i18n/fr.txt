@@ -1919,7 +1919,7 @@ Miniatura tomada del video	Miniature prise de la vidéo
 Enorme	Énorme
 «Muy grande» y «Enorme» también agrandan los nombres	«Très grand» et «Énorme» agrandissent aussi les noms
 Buscar carátulas en internet	Chercher les pochettes sur internet
-Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes. Solo se envían el título y el artista	Si un morceau arrive sans pochette (p. ex. en Bluetooth), elle est cherchée sur MusicBrainz et Cover Art Archive puis, à défaut, sur iTunes. Seuls le titre et l'artiste sont envoyés
+Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes o Deezer. Solo se envían el título y el artista	Si un morceau arrive sans pochette (p. ex. en Bluetooth), elle est cherchée sur MusicBrainz et Cover Art Archive puis, à défaut, sur iTunes ou Deezer. Seuls le titre et l'artiste sont envoyés
 Borrar carátulas guardadas	Supprimer les pochettes enregistrées
 Las que se bajaron de internet y se guardaron en el equipo	Celles téléchargées depuis internet et enregistrées sur l'appareil
 Carátulas borradas	Pochettes supprimées

@@ -1898,7 +1898,7 @@ Miniatura tomada del video	Miniatura pobrana z filmu
 Enorme	Ogromny
 «Muy grande» y «Enorme» también agrandan los nombres	«Bardzo duży» i «Ogromny» powiększają też nazwy
 Buscar carátulas en internet	Szukaj okładek w internecie
-Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes. Solo se envían el título y el artista	Jeśli utwór przychodzi bez okładki (np. przez Bluetooth), jest ona wyszukiwana w MusicBrainz i Cover Art Archive, a jeśli jej tam nie ma, w iTunes. Wysyłany jest tylko tytuł i wykonawca
+Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes o Deezer. Solo se envían el título y el artista	Jeśli utwór przychodzi bez okładki (np. przez Bluetooth), jest ona wyszukiwana w MusicBrainz i Cover Art Archive, a jeśli jej tam nie ma, w iTunes lub Deezerze. Wysyłany jest tylko tytuł i wykonawca
 Borrar carátulas guardadas	Usuń zapisane okładki
 Las que se bajaron de internet y se guardaron en el equipo	Pobrane z internetu i zapisane w urządzeniu
 Carátulas borradas	Okładki usunięte

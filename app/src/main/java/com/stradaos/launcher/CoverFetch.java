@@ -86,13 +86,21 @@ public class CoverFetch {
         catch (Throwable e) { if (err == null) err = e; it = brief(e); }
         if (plainUsed) it += " (sin cifrar)";
         if (b != null) { lastInfo = title + ": descargada de iTunes" + (plainUsed ? " (sin cifrar)" : ""); return b; }
-        if (mbAnswered && itAnswered) {
-            // las dos respondieron y no hay portada: se anota (sin internet no se llega aquí)
+        // 2.36 r2: Deezer, tercera fuente (su API y sus imágenes responden también sin cifrar)
+        boolean dzAnswered = false;
+        String dz;
+        plainUsed = false;
+        try { b = deezer(t, a, dir, f); dzAnswered = true; dz = b != null ? "sí" : "sin portada"; }
+        catch (Throwable e) { if (err == null) err = e; dz = brief(e); }
+        if (plainUsed) dz += " (sin cifrar)";
+        if (b != null) { lastInfo = title + ": descargada de Deezer" + (plainUsed ? " (sin cifrar)" : ""); return b; }
+        if (mbAnswered && itAnswered && dzAnswered) {
+            // las tres respondieron y no hay portada: se anota (sin internet no se llega aquí)
             save(dir, none, new byte[0]);
-            lastInfo = title + ": no está en MusicBrainz ni en iTunes";
+            lastInfo = title + ": no está en MusicBrainz, iTunes ni Deezer";
             return null;
         }
-        lastInfo = title + ": falló · MusicBrainz: " + mb + " · iTunes: " + it;
+        lastInfo = title + ": falló · MusicBrainz: " + mb + " · iTunes: " + it + " · Deezer: " + dz;
         return null;
     }
 
@@ -160,6 +168,38 @@ public class CoverFetch {
         Bitmap b = BitmapFactory.decodeByteArray(img, 0, img.length);
         if (b != null) save(dir, f, img);
         return b;
+    }
+
+    /** 2.36 r2: Deezer (api.deezer.com, sin clave). Mismo criterio que iTunes: título igual y artista que coincide. */
+    private static Bitmap deezer(String t, String a, File dir, File f) throws Exception {
+        String best = deezerFind(t, a, 10000, null);
+        if (best == null) return null;
+        byte[] img = get(best, 12000);
+        Bitmap b = BitmapFactory.decodeByteArray(img, 0, img.length);
+        if (b != null) save(dir, f, img);
+        return b;
+    }
+
+    private static String deezerFind(String t, String a, int timeoutMs, StringBuilder trace) throws Exception {
+        JSONObject root = new JSONObject(new String(get("https://api.deezer.com/search?limit=25&q="
+                + URLEncoder.encode("artist:\"" + a + "\" track:\"" + t + "\"", "UTF-8"), timeoutMs, trace), "UTF-8"));
+        JSONArray res = root.optJSONArray("data");
+        String nt = norm(t), na = artistKey(a);
+        String best = null;
+        int bestPenalty = Integer.MAX_VALUE;
+        for (int i = 0; res != null && i < res.length(); i++) {
+            JSONObject r = res.getJSONObject(i);
+            JSONObject al = r.optJSONObject("album"), ar = r.optJSONObject("artist");
+            String cover = al != null ? al.optString("cover_big", al.optString("cover_medium", "")) : "";
+            if (cover.length() == 0 || !nt.equals(norm(clean(r.optString("title"))))) continue;
+            String ra = artistKey(ar != null ? ar.optString("name") : "");
+            if (ra.length() == 0 || !(ra.contains(na) || na.contains(ra))) continue;
+            String col = " " + norm(al.optString("title")) + " ";
+            int penalty = 0;
+            for (String w : NOT_ORIGINAL) if (col.contains(" " + w + " ")) penalty++;
+            if (penalty < bestPenalty) { bestPenalty = penalty; best = cover; }
+        }
+        return best;
     }
 
     /** Artista para comparar: «Fito & Fitipaldis» = «Fito y Fitipaldis». */
@@ -242,7 +282,11 @@ public class CoverFetch {
      */
     private static byte[] get(String url, int timeoutMs, StringBuilder trace) throws Exception {
         int busy = 0;
+        java.util.HashSet<String> seen = new java.util.HashSet<String>();
         for (int hop = 0; hop < 8; hop++) {
+            // 2.36 r2: en el Picanto, sin cifrar, el servidor mandaba otra vez a https y se daba vueltas hasta «demasiadas
+            // redirecciones». Si una dirección se repite, ese servidor exige https y la pantalla no puede con su cifrado.
+            if (!seen.add(url)) throw new Exception("el servidor exige https y esta pantalla no puede con su cifrado (" + host(url) + ")");
             HttpURLConnection h = Net.open(url, timeoutMs);
             h.setInstanceFollowRedirects(false);
             h.setRequestProperty("User-Agent", UA);
@@ -318,8 +362,8 @@ public class CoverFetch {
         b.append("Canción: ").append(t).append(" — ").append(a).append("\n\n");
         String group = null, art = null;
         b.append("1. MusicBrainz (buscar la canción)\n");
+        StringBuilder tr = new StringBuilder();
         try {
-            StringBuilder tr = new StringBuilder();
             JSONObject root = new JSONObject(new String(get("https://musicbrainz.org/ws/2/recording/?fmt=json&limit=5&query="
                     + URLEncoder.encode("recording:\"" + lucene(t) + "\" AND artist:\"" + lucene(a) + "\"", "UTF-8"), 10000, tr), "UTF-8"));
             b.append(tr);
@@ -332,18 +376,18 @@ public class CoverFetch {
                 }
             }
             b.append("  ").append(recs == null ? 0 : recs.length()).append(" resultados").append(group != null ? "" : ", sin álbum").append('\n');
-        } catch (Throwable e) { b.append("  ERROR: ").append(brief(e)).append('\n'); }
+        } catch (Throwable e) { b.append(tr).append("  ERROR: ").append(brief(e)).append('\n'); }
         b.append("2. Cover Art Archive (bajar la portada)\n");
         if (group == null) b.append("  no se probó (sin álbum de MusicBrainz)\n");
         else try {
-            StringBuilder tr = new StringBuilder();
+            tr.setLength(0);
             byte[] img = get("https://coverartarchive.org/release-group/" + group + "/front-250", 12000, tr);
             b.append(tr).append("  imagen: ").append(img.length / 1024).append(" KB, ")
              .append(BitmapFactory.decodeByteArray(img, 0, img.length) != null ? "se ve bien" : "NO se pudo leer").append('\n');
-        } catch (Throwable e) { b.append("  ERROR: ").append(brief(e)).append('\n'); }
+        } catch (Throwable e) { b.append(tr).append("  ERROR: ").append(brief(e)).append('\n'); }
         b.append("3. iTunes (buscar la canción)\n");
         try {
-            StringBuilder tr = new StringBuilder();
+            tr.setLength(0);
             JSONObject root = new JSONObject(new String(get("https://itunes.apple.com/search?media=music&entity=song&limit=5&term="
                     + URLEncoder.encode(a + " " + t, "UTF-8"), 10000, tr), "UTF-8"));
             b.append(tr);
@@ -353,15 +397,30 @@ public class CoverFetch {
                 if (u.length() > 0) art = u;
             }
             b.append("  ").append(res == null ? 0 : res.length()).append(" resultados\n");
-        } catch (Throwable e) { b.append("  ERROR: ").append(brief(e)).append('\n'); }
+        } catch (Throwable e) { b.append(tr).append("  ERROR: ").append(brief(e)).append('\n'); }
         b.append("4. iTunes (bajar la portada)\n");
         if (art == null) b.append("  no se probó (sin resultado de iTunes)\n");
         else try {
-            StringBuilder tr = new StringBuilder();
+            tr.setLength(0);
             byte[] img = get(art, 12000, tr);
             b.append(tr).append("  imagen: ").append(img.length / 1024).append(" KB, ")
              .append(BitmapFactory.decodeByteArray(img, 0, img.length) != null ? "se ve bien" : "NO se pudo leer").append('\n');
-        } catch (Throwable e) { b.append("  ERROR: ").append(brief(e)).append('\n'); }
+        } catch (Throwable e) { b.append(tr).append("  ERROR: ").append(brief(e)).append('\n'); }
+        String dz = null;
+        b.append("5. Deezer (buscar la canción)\n");
+        try {
+            tr.setLength(0);
+            dz = deezerFind(t, a, 10000, tr);
+            b.append(tr).append("  ").append(dz != null ? "encontrada" : "sin resultado").append('\n');
+        } catch (Throwable e) { b.append(tr).append("  ERROR: ").append(brief(e)).append('\n'); }
+        b.append("6. Deezer (bajar la portada)\n");
+        if (dz == null) b.append("  no se probó (sin resultado de Deezer)\n");
+        else try {
+            tr.setLength(0);
+            byte[] img = get(dz, 12000, tr);
+            b.append(tr).append("  imagen: ").append(img.length / 1024).append(" KB, ")
+             .append(BitmapFactory.decodeByteArray(img, 0, img.length) != null ? "se ve bien" : "NO se pudo leer").append('\n');
+        } catch (Throwable e) { b.append(tr).append("  ERROR: ").append(brief(e)).append('\n'); }
         return b.toString();
     }
 

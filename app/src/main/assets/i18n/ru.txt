@@ -1894,7 +1894,7 @@ Miniatura tomada del video	Миниатюра взята из видео
 Enorme	Огромная
 «Muy grande» y «Enorme» también agrandan los nombres	«Очень большая» и «Огромная» также увеличивают подписи
 Buscar carátulas en internet	Искать обложки в интернете
-Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes. Solo se envían el título y el artista	Если трек приходит без обложки (например, по Bluetooth), она ищется в MusicBrainz и Cover Art Archive, а если её там нет — в iTunes. Отправляются только название и исполнитель
+Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes o Deezer. Solo se envían el título y el artista	Если трек приходит без обложки (например, по Bluetooth), она ищется в MusicBrainz и Cover Art Archive, а если её там нет — в iTunes или Deezer. Отправляются только название и исполнитель
 Borrar carátulas guardadas	Удалить сохранённые обложки
 Las que se bajaron de internet y se guardaron en el equipo	Загруженные из интернета и сохранённые на устройстве
 Carátulas borradas	Обложки удалены

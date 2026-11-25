@@ -190,7 +190,8 @@ if part 2; then
   step caratulas-on pref:cover_online=true 3
   step ajustes-musica-caratulas ajustes:8 4
   scroll; scroll; shot "$(printf %03d $N)-ajustes-musica-caratulas-medio"
-  step caratula-prueba caratula-prueba 30 0
+  step caratula-prueba caratula-prueba 40 0
+  adb shell cat /sdcard/StradaDiag/caratulas.txt > $OUT/caratulas.txt 2>/dev/null
   adb shell input swipe 600 450 600 150 400; sleep 1; shot "$(printf %03d $N)-caratula-prueba-fin"
   adb shell input keyevent 4; sleep 2
   # la búsqueda real va sin captura (no se guardan portadas de discos en el repositorio); el diagnóstico dice el resultado

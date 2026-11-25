@@ -1919,7 +1919,7 @@ Miniatura tomada del video	Miniatura presa dal video
 Enorme	Enorme
 «Muy grande» y «Enorme» también agrandan los nombres	«Molto grande» ed «Enorme» ingrandiscono anche i nomi
 Buscar carátulas en internet	Cerca copertine su internet
-Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes. Solo se envían el título y el artista	Se il brano arriva senza copertina (ad es. via Bluetooth), la cerca su MusicBrainz e Cover Art Archive e, se non c'è, su iTunes. Vengono inviati solo titolo e artista
+Si la canción llega sin carátula (p. ej. por Bluetooth), la busca en MusicBrainz y Cover Art Archive y, si no está, en iTunes o Deezer. Solo se envían el título y el artista	Se il brano arriva senza copertina (ad es. via Bluetooth), la cerca su MusicBrainz e Cover Art Archive e, se non c'è, su iTunes o Deezer. Vengono inviati solo titolo e artista
 Borrar carátulas guardadas	Elimina copertine salvate
 Las que se bajaron de internet y se guardaron en el equipo	Quelle scaricate da internet e salvate sul dispositivo
 Carátulas borradas	Copertine eliminate
