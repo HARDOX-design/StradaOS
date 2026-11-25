@@ -1918,3 +1918,5 @@ Leer varios datos por consulta	Sorgu başına birden çok veri oku
 Tu escáner no lo entiende: StradaOS lee de a un dato. Actívalo para volver a probar	Tarayıcınız bunu anlamıyor: StradaOS verileri tek tek okuyor. Yeniden denemek için açın
 Más rápido. Apágalo si tu escáner se desconecta a cada rato	Daha hızlı. Tarayıcınız sürekli bağlantıyı kesiyorsa kapatın
 Miniatura tomada del video	Küçük resim videodan alındı
+Enorme	Dev
+«Muy grande» y «Enorme» también agrandan los nombres	«Çok büyük» ve «Dev» adları da büyütür

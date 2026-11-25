@@ -1916,3 +1916,5 @@ Leer varios datos por consulta	قراءة عدة بيانات في كل طلب
 Tu escáner no lo entiende: StradaOS lee de a un dato. Actívalo para volver a probar	الماسح لا يدعم ذلك: يقرأ StradaOS بيانًا واحدًا في كل مرة. فعّله للمحاولة مجددًا
 Más rápido. Apágalo si tu escáner se desconecta a cada rato	أسرع. أوقفه إذا كان الماسح ينقطع باستمرار
 Miniatura tomada del video	صورة مصغرة مأخوذة من الفيديو
+Enorme	ضخم
+«Muy grande» y «Enorme» también agrandan los nombres	«كبير جدًا» و«ضخم» يكبّران الأسماء أيضًا

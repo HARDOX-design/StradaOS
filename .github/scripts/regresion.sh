@@ -65,6 +65,16 @@ if part 1; then
   for t in faro aurora cobalto; do step "premium-$t" "tema-premium:$t" 6; step "premium-$t-pista" pista-demo:Night_Drive 3; done
   for i in 0 1 2 3 4 5; do step "gratis-$i" "tema-gratis:$i" 5; done
   step gratis-1 tema-gratis:1 5
+  # ── 2.36 (#74): íconos «Muy grande» y «Enorme» en la barra lateral (agrupada al centro), abajo y compacta ──
+  step barra-lateral diseno:lateral 4
+  step barra-lateral-4 diseno:botones-4 4
+  step barra-lateral-enorme diseno:iconos-4 4
+  step barra-lateral-muygrande diseno:iconos-3 4
+  step barra-lateral-10 diseno:botones-10 4
+  step barra-abajo-muygrande diseno:normal 4
+  step barra-abajo-enorme diseno:iconos-4 4
+  step barra-compacta-enorme diseno:compacta 4
+  step barra-base diseno:base 4
   # ── ajustes: las 12 secciones, arriba, en medio y abajo ──
   for c in 0 1 2 3 4 5 6 7 8 9 10 11; do
     step "ajustes-$c" "ajustes:$c" 4

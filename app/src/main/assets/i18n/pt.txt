@@ -1919,3 +1919,5 @@ Leer varios datos por consulta	Ler vários dados por consulta
 Tu escáner no lo entiende: StradaOS lee de a un dato. Actívalo para volver a probar	Seu scanner não entende: o StradaOS lê um dado por vez. Ative para testar de novo
 Más rápido. Apágalo si tu escáner se desconecta a cada rato	Mais rápido. Desative se o seu scanner desconecta toda hora
 Miniatura tomada del video	Miniatura tirada do vídeo
+Enorme	Enorme
+«Muy grande» y «Enorme» también agrandan los nombres	«Muito grande» e «Enorme» também aumentam os nomes

@@ -4006,16 +4006,29 @@ public class Main extends Activity {
         // 2.19: cantidad de botones (4 a 10) y tamaño de los íconos (Tinoyevski #18, MIGSGx #12). 7 y normal = lo de siempre.
         final int n = dockCount;
         int isz = prefs.getInt("dock_icon_size", 1);
-        float ik = isz == 0 ? 0.82f : isz == 2 ? 1.2f : 1f;
-        final float railX = railLeft ? 16 : 1016 + ex, step = (boardH - 24) / (float) n;
+        // 2.36 (#74, shaharyarz): «Muy grande» (3) y «Enorme» (4). Con ellos los nombres también crecen y, en la barra
+        // lateral, los botones se juntan en el centro en vez de repartirse a lo alto. Pequeño/Normal/Grande, como siempre.
+        boolean big = isz >= 3;
+        float ik = isz == 0 ? 0.82f : isz == 2 ? 1.2f : isz == 3 ? 1.5f : isz >= 4 ? 1.8f : 1f;
+        float lk = isz == 3 ? 1.2f : isz >= 4 ? 1.35f : 1f;
+        final float lblSize = (sideDock ? 10 : compactDock ? 12 : 13) * lk, lblPad = sideDock ? 2 : compactDock ? 2 : 8;
+        final float lblH = dockLabels ? lblSize * FONT * 1.3f + lblPad : 0;
+        final float railX = railLeft ? 16 : 1016 + ex, step0 = (boardH - 24) / (float) n;
         float cs0 = (sideDock ? (dockLabels ? 40 : 48) : compactDock ? 50 : 64) * ik;
-        if (sideDock) cs0 = Math.min(cs0, step - (dockLabels ? 18 : 6));          // que quepan en la barra lateral
-        final float lblSize = sideDock ? 10 : compactDock ? 12 : 13, lblPad = sideDock ? 2 : compactDock ? 2 : 8;
+        if (sideDock) cs0 = Math.min(cs0, step0 - (dockLabels ? 18 : 6));          // que quepan en la barra lateral
+        if (sideDock && big) cs0 = Math.min(cs0, Math.min(RAIL - 10, step0 - lblH - 6));
+        if (big && !sideDock) {   // que el círculo y el nombre quepan en su franja
+            float hAvail = compactDock ? boardH - dockTop - 8 : dockLabels ? 110 : 132;
+            cs0 = Math.min(cs0, hAvail - lblH - 4);
+        }
+        // barra lateral agrupada (solo con los tamaños nuevos): cada botón ocupa lo justo y el grupo queda centrado
+        final float step = sideDock && big ? Math.min(step0, cs0 + lblH + 16) : step0;
+        final float railY0 = 12 + ((boardH - 24) - step * n) / 2;
         final boolean appStyle = "apps".equals(prefs.getString("dock_style", "circle"));
         // botones a lo ancho: con 7 se usan las posiciones de siempre; con otra cantidad se reparten parejo
         final float slotW = n == 7 && !vertical ? 138 + ex / 6 : (948 + ex) / (float) n, itemW = Math.min(120, slotW - 4);
         final float x0 = n == 7 && !vertical ? 38 : 38 + (slotW - itemW) / 2;
-        if (vertical) cs0 = Math.min(cs0, slotW - 10);                            // con muchos botones, que no se monten
+        if (vertical || big) cs0 = Math.min(cs0, (big ? itemW : slotW) - 10);     // con muchos botones, que no se monten
         final float cs = cs0;          // círculo
         if (sideDock) {
             View rail = new View(this);
@@ -4056,7 +4069,7 @@ public class Main extends Activity {
             } else {
                 b.setGravity(Gravity.CENTER);   // sin nombres: el círculo queda centrado en la franja
             }
-            if (sideDock) { b.setGravity(Gravity.CENTER); place(board, b, railX, 12 + step * i, RAIL, step); }
+            if (sideDock) { b.setGravity(Gravity.CENTER); place(board, b, railX, railY0 + step * i, RAIL, step); }
             else if (compactDock) { b.setGravity(Gravity.CENTER); place(board, b, x0 + slotW * i, dockTop + 4, itemW, boardH - dockTop - 8); }
             else place(board, b, x0 + slotW * i, dockTop + (dockLabels ? 18 : 6), itemW, dockLabels ? 110 : 132);
             b.setOnClickListener(new View.OnClickListener() {
@@ -5106,7 +5119,7 @@ public class Main extends Activity {
     private void buildFaroDock() {
         final int n = dockCount;
         int isz = prefs.getInt("dock_icon_size", 1);
-        float ik = isz == 0 ? 0.86f : isz == 2 ? 1.12f : 1f;
+        float ik = isz == 0 ? 0.86f : isz >= 2 ? 1.12f : 1f;   // 2.36: Muy grande y Enorme = Grande aquí
         float pillH = premPillH;
         // centrada en el reproductor y sin pasarse de sus bordes: crece desde el centro hacia los lados
         float areaX = faroPlX, areaW = faroPlW;
@@ -5786,7 +5799,7 @@ public class Main extends Activity {
     private void buildCarbDock() {
         final int n = dockCount;
         int isz = prefs.getInt("dock_icon_size", 1);
-        float ik = isz == 0 ? 0.86f : isz == 2 ? 1.12f : 1f;
+        float ik = isz == 0 ? 0.86f : isz >= 2 ? 1.12f : 1f;   // 2.36: Muy grande y Enorme = Grande aquí
         boolean vert = !vertical;
         float thick = premPillH, item = vert ? 58 : Math.max(60, Math.min(84, (cbDockW - 16) / Math.max(1, n)));
         View bg = new View(this);
@@ -6230,7 +6243,7 @@ public class Main extends Activity {
     private void buildPremiumDock() {
         final int n = dockCount;
         int isz = prefs.getInt("dock_icon_size", 1);
-        float ik = isz == 0 ? 0.82f : isz == 2 ? 1.2f : 1f;
+        float ik = isz == 0 ? 0.82f : isz >= 2 ? 1.2f : 1f;   // 2.36: Muy grande y Enorme = Grande aquí
         float W0 = premW(), avail = W0 - 32, pillH = premPillH;
         float itemW = Math.min(vertical ? 80 : 84, (avail - 24) / n), pillW = itemW * n + 24;
         float px = (W0 - pillW) / 2, py = dockTop;
@@ -10126,7 +10139,7 @@ public class Main extends Activity {
             choice(lay, "Cantidad de botones", "«Apps» siempre queda al final", counts, dockCount - 4, new IntCb() { public void on(int i) {
                 prefs.edit().putInt("dock_count", i + 4).apply(); rebuild(); showSettings(settingsCat);
             }});
-            segmented(lay, "Tamaño de los íconos", null, new String[]{"Pequeño", "Normal", "Grande"}, prefs.getInt("dock_icon_size", 1), new IntCb() { public void on(int i) {
+            choice(lay, "Tamaño de los íconos", "«Muy grande» y «Enorme» también agrandan los nombres", new String[]{"Pequeño", "Normal", "Grande", "Muy grande", "Enorme"}, Math.max(0, Math.min(4, prefs.getInt("dock_icon_size", 1))), new IntCb() { public void on(int i) {
                 prefs.edit().putInt("dock_icon_size", i).apply(); rebuild(); showSettings(settingsCat);
             }});
             LinearLayout c = section(body, "Botones (déjalos presionados en el inicio para cambiarlos)");

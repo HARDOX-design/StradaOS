@@ -1895,3 +1895,5 @@ Leer varios datos por consulta	Odczytuj kilka danych na zapytanie
 Tu escáner no lo entiende: StradaOS lee de a un dato. Actívalo para volver a probar	Twój skaner tego nie obsługuje: StradaOS czyta dane pojedynczo. Włącz, aby spróbować ponownie
 Más rápido. Apágalo si tu escáner se desconecta a cada rato	Szybciej. Wyłącz, jeśli skaner ciągle się rozłącza
 Miniatura tomada del video	Miniatura pobrana z filmu
+Enorme	Ogromny
+«Muy grande» y «Enorme» también agrandan los nombres	«Bardzo duży» i «Ogromny» powiększają też nazwy

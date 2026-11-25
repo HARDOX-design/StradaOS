@@ -1901,3 +1901,5 @@ Leer varios datos por consulta	Több adat lekérése egyszerre
 Tu escáner no lo entiende: StradaOS lee de a un dato. Actívalo para volver a probar	A szkenner nem támogatja: a StradaOS egyesével olvassa az adatokat. Kapcsold be az újrapróbáláshoz
 Más rápido. Apágalo si tu escáner se desconecta a cada rato	Gyorsabb. Kapcsold ki, ha a szkenner folyton lecsatlakozik
 Miniatura tomada del video	Bélyegkép a videóból
+Enorme	Óriási
+«Muy grande» y «Enorme» también agrandan los nombres	Az «Extra nagy» és az «Óriási» a neveket is felnagyítja

@@ -1916,3 +1916,5 @@ Leer varios datos por consulta	Baca beberapa data setiap permintaan
 Tu escáner no lo entiende: StradaOS lee de a un dato. Actívalo para volver a probar	Pengimbas anda tidak menyokongnya: StradaOS membaca satu data pada satu masa. Hidupkan untuk mencuba semula
 Más rápido. Apágalo si tu escáner se desconecta a cada rato	Lebih pantas. Matikan jika pengimbas anda kerap terputus
 Miniatura tomada del video	Lakaran kecil diambil daripada video
+Enorme	Sangat besar sekali
+«Muy grande» y «Enorme» también agrandan los nombres	«Sangat besar» dan «Sangat besar sekali» juga membesarkan nama

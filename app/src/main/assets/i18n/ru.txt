@@ -1891,3 +1891,5 @@ Leer varios datos por consulta	Читать несколько параметр�
 Tu escáner no lo entiende: StradaOS lee de a un dato. Actívalo para volver a probar	Ваш сканер это не поддерживает: StradaOS читает по одному параметру. Включите, чтобы проверить снова
 Más rápido. Apágalo si tu escáner se desconecta a cada rato	Быстрее. Выключите, если сканер постоянно отключается
 Miniatura tomada del video	Миниатюра взята из видео
+Enorme	Огромная
+«Muy grande» y «Enorme» también agrandan los nombres	«Очень большая» и «Огромная» также увеличивают подписи
