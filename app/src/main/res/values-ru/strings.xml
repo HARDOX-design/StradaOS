@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="acc_desc">Позволяет StradaOS показывать обложку и название трека Android Auto, считывая уведомление Open Headunit. Больше ничего не считывается.</string>
+    <string name="acc_label">Обложка Android Auto</string>
+    <string name="obd_label">Автомобиль</string>
+</resources>
