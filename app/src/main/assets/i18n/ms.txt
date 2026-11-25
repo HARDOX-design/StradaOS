@@ -1928,3 +1928,9 @@ Probar la búsqueda de carátulas	Uji carian kulit album
 Prueba cada servidor con la canción que suena y muestra el error exacto	Menguji setiap pelayan dengan lagu yang sedang dimainkan dan menunjukkan ralat yang tepat
 Prueba de carátulas	Ujian kulit album
 Se guarda en StradaDiag/caratulas.txt	Disimpan dalam StradaDiag/caratulas.txt
+# mapa: navegar hasta aquí y posición del carro (#68)
+Navegar hasta aquí	Navigasi ke sini
+Posición del carro	Kedudukan kereta
+Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)	Bawah: semasa navigasi, lihat lebih banyak jalan di hadapan (dengan peta ikut arah anda)
+Centro	Tengah
+Abajo	Bawah

@@ -202,6 +202,7 @@ public class Main extends Activity {
         prefs = getSharedPreferences("launcher", MODE_PRIVATE);
         I18n.init(this, prefs);
         LiveMapView.headingUp = prefs.getBoolean("map_heading", false);
+        LiveMapView.carLow = prefs.getInt("map_car_pos", 0) == 1;
         lm = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (getPackageName().endsWith(".debug") && getIntent() != null && "saltar".equals(getIntent().getStringExtra("prueba")))
             prefs.edit().putBoolean("setup_done", true).apply();
@@ -999,6 +1000,11 @@ public class Main extends Activity {
                     saveHidden(hs); closeDrawer(); openDrawer();
                 }
                 else if ("ocultar-limpiar".equals(v)) { prefs.edit().remove("hidden_apps").apply(); closeDrawer(); }
+                else if (v.startsWith("carro:")) {   // carro:abajo | carro:centro (#68)
+                    boolean low = "abajo".equals(v.substring(6));
+                    prefs.edit().putInt("map_car_pos", low ? 1 : 0).apply(); LiveMapView.carLow = low;
+                    if (liveMap != null) liveMap.invalidate();
+                }
                 else if (v.startsWith("rumbo:")) {
                     prefs.edit().putBoolean("map_heading", "1".equals(v.substring(6))).apply(); LiveMapView.headingUp = "1".equals(v.substring(6)); rebuild();
                     h.postDelayed(new Runnable() { public void run() {
@@ -2963,10 +2969,13 @@ public class Main extends Activity {
         // Cobalto: el mapa se difumina hasta donde empieza el reproductor (abajo, hacia las tarjetas, en vertical)
         if (premium && Prem.cob() && !mapOnly && premBg != null) liveMap.setFade(vertical ? 2 : 1, (vertical ? 150 : Math.max(260, mapW * 0.5f)) * s);
         liveMap.setVisibility(premium && Prem.faroFam() ? View.VISIBLE : View.INVISIBLE);
-        // 2.35: tocar el mapa entra a «Explorar» (antes cambiaba el zoom); mantener presionado abre el diagnóstico
+        // 2.35: tocar el mapa entra a «Explorar» (antes cambiaba el zoom); mantener presionado: con la navegación
+        // integrada, «Navegar hasta aquí» al punto tocado (también explorando); si no, el diagnóstico de siempre
         liveMap.setOnLongClickListener(new View.OnLongClickListener() {
             public boolean onLongClick(View v) {
-                showMapDiag();
+                double[] p = "internal".equals(prefs.getString("nav_app", null)) && liveMap != null ? liveMap.pressedLatLon() : null;
+                if (p != null) askNavHere(p[0], p[1]);
+                else showMapDiag();
                 return true;
             }
         });
@@ -3240,6 +3249,9 @@ public class Main extends Activity {
         final boolean open0 = prefs.getBoolean("aa_panel_open", true);
         for (View v : moving) v.setTranslationY(open0 ? 0 : shift);
         chev.setRotation(open0 ? 90 : -90);
+        // #68: lo que tapan abajo el panel y su flechita (abierto / plegado), para el carro «Abajo»
+        final float coverOpen = hasPanel ? (mapH - panelY + 28) * s : 0, coverShut = hasPanel ? 28 * s : 0;
+        if (liveMap != null) liveMap.setBottomCover(open0 ? coverOpen : coverShut);
         final Runnable[] setOpen = new Runnable[2];   // [0] mostrar, [1] esconder
         for (int k = 0; k < 2; k++) {
             final boolean show = k == 0;
@@ -3247,6 +3259,7 @@ public class Main extends Activity {
                 prefs.edit().putBoolean("aa_panel_open", show).apply();
                 for (View v : moving) v.animate().translationY(show ? 0 : shift).setDuration(220);
                 chev.animate().rotation(show ? 90 : -90).setDuration(220);
+                if (liveMap != null) liveMap.setBottomCover(show ? coverOpen : coverShut);
             }};
         }
         handle.setOnTouchListener(new View.OnTouchListener() {
@@ -3645,6 +3658,64 @@ public class Main extends Activity {
 
     private void showMapDiag() {
         new TB(this, dlg()).diag().setTitle("Diagnóstico del mapa").setMessage(mapDiag()).setPositiveButton("OK", null).show();
+    }
+
+    /**
+     * Toque largo en el mapa con la navegación integrada: alfiler en el punto y «Navegar hasta aquí» (solo Navegar y
+     * Cancelar; las paradas siguen en el botón del navegador y el diagnóstico en Ajustes → Mapa).
+     */
+    private void askNavHere(double lat, double lon) {
+        final Nav.Place p = Nav.pointPlace(lat, lon);
+        final TextView where = tv("", 16, SOFT, false);
+        where.setSingleLine(false);
+        where.setMaxLines(4);
+        where.setGravity(Gravity.CENTER_HORIZONTAL);
+        where.setLineSpacing(0, 1.22f);
+        where.setPadding((int) (28 * s), (int) (4 * s), (int) (28 * s), (int) (12 * s));
+        where.setText(p.name + "\n" + p.sub);
+        final boolean[] open = {true};
+        Nav.reverse(this, lat, lon, new Nav.SearchCb() {
+            public void onResult(List<Nav.Place> places, String error) {
+                if (!open[0] || places == null || places.isEmpty()) return;
+                Nav.Place r = places.get(0);   // el nombre de la dirección; las coordenadas siguen siendo las tocadas
+                p.name = r.name;
+                p.sub = r.sub;
+                where.setText(r.sub != null && r.sub.length() > 0 ? r.name + "\n" + r.sub : r.name);
+            }
+        });
+        AlertDialog d = new TB(this, dlg()).setTitle("Navegar hasta aquí").setView(where)
+            .setPositiveButton("Navegar", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface di, int w) { startInternalNav(p); }
+            })
+            .setNegativeButton("Cancelar", null)
+            .create();
+        d.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            public void onDismiss(DialogInterface di) {
+                open[0] = false;
+                if (liveMap != null) liveMap.setPin(Double.NaN, 0);
+            }
+        });
+        if (liveMap != null) {
+            liveMap.setPin(lat, lon);
+            // la ventana va al lado contrario del alfiler, para que se vea dónde se tocó
+            int[] at = new int[2];
+            liveMap.getLocationOnScreen(at);
+            float x = at[0] + liveMap.pressX(), y = at[1] + liveMap.pressY();
+            android.util.DisplayMetrics dm = getResources().getDisplayMetrics();
+            Window w = d.getWindow();
+            if (w != null) {
+                WindowManager.LayoutParams lp = w.getAttributes();
+                if (dm.widthPixels >= dm.heightPixels) {
+                    w.setGravity((x > dm.widthPixels / 2f ? Gravity.LEFT : Gravity.RIGHT) | Gravity.CENTER_VERTICAL);
+                    lp.x = (int) (16 * s);
+                } else {
+                    w.setGravity((y > dm.heightPixels / 2f ? Gravity.TOP : Gravity.BOTTOM) | Gravity.CENTER_HORIZONTAL);
+                    lp.y = (int) (16 * s);
+                }
+                w.setAttributes(lp);
+            }
+        }
+        d.show();
     }
 
     private void updateMapTag() {
@@ -5303,6 +5374,9 @@ public class Main extends Activity {
         final boolean open0 = prefs.getBoolean("carb_ov_open", true);
         for (View v : moving) v.setTranslationY(open0 ? 0 : shift);
         chev.setRotation(open0 ? 90 : -90);
+        // #68: lo que tapan abajo el reproductor, el clima y la flechita (abiertos / plegados), para el carro «Abajo»
+        final float coverOpen = (cbOvH + 12 + 32) * s, coverShut = coverOpen - shift;
+        if (liveMap != null) liveMap.setBottomCover(open0 ? coverOpen : coverShut);
         carbSetOpen = new Runnable[2];
         for (int k = 0; k < 2; k++) {
             final boolean show = k == 0;
@@ -5310,6 +5384,7 @@ public class Main extends Activity {
                 prefs.edit().putBoolean("carb_ov_open", show).apply();
                 for (View v : moving) v.animate().translationY(show ? 0 : shift).setDuration(220);
                 chev.animate().rotation(show ? 90 : -90).setDuration(220);
+                if (liveMap != null) liveMap.setBottomCover(show ? coverOpen : coverShut);
             }};
         }
         handle.setOnTouchListener(new View.OnTouchListener() {
@@ -7011,7 +7086,7 @@ public class Main extends Activity {
                                 }
                             }
                         })
-                        .setNegativeButton("Cancelar", null)
+                        .setNegativeButton(I18n.t("Cancelar"), null)
                         .show();
                     return true;
                 }
@@ -7102,7 +7177,7 @@ public class Main extends Activity {
                     }
                 }
             })
-            .setNegativeButton("Cerrar", null)
+            .setNegativeButton(I18n.t("Cerrar"), null)
             .show();
     }
 
@@ -7194,7 +7269,7 @@ public class Main extends Activity {
             .setAdapter(ad, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface d, int w) { handlePickedPlace(places.get(w), insertActive, asStop); }
             })
-            .setNegativeButton("Cancelar", null)
+            .setNegativeButton(I18n.t("Cancelar"), null)
             .show();
     }
 
@@ -7230,12 +7305,25 @@ public class Main extends Activity {
         });
     }
 
-    private void activateChosenRoute(Nav.Route r) {
+    private void activateChosenRoute(final Nav.Route r) {
         Nav.activate(this, r);
         Nav.announceStart(this, r);
         LiveMapView.headingUp = true;
         updateNavHud();
-        if (liveMap != null) liveMap.invalidate();
+        // si se estaba explorando el mapa o tenía zoom a mano (p. ej. alejado para el toque largo), la guía arranca
+        // mirando al carro con el zoom según la velocidad: primero se ve la ruta un momento y luego vuelve a «Seguir»,
+        // deslizándose (si la ruta sigue activa)
+        if (liveMap != null) {
+            liveMap.invalidate();
+            if (!liveMap.isFollowing()) {
+                final LiveMapView lmv = liveMap;
+                lmv.holdLow(true);   // con «Abajo», el carro baja recién cuando la vista vuelve a él
+                h.postDelayed(new Runnable() { public void run() {
+                    if (liveMap == lmv && Nav.active == r) lmv.backToCar();
+                    else lmv.holdLow(false);
+                }}, 700);
+            } else liveMap.holdLow(false);
+        }
         if (!r.incidents.isEmpty()) {
             toast(r.incidents.size() + " " + I18n.t(r.incidents.size() == 1 ? "incidente en la ruta" : "incidentes en la ruta"));
         } else if ("cache".equals(r.source)) {
@@ -7286,7 +7374,7 @@ public class Main extends Activity {
                     activateChosenRoute(routes.get(w));
                 }
             })
-            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            .setNegativeButton(I18n.t("Cancelar"), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface d, int w) {
                     if (!chosen[0]) {
                         Nav.active = prevActive;
@@ -7440,7 +7528,7 @@ public class Main extends Activity {
                     if (w >= 0 && w < actions.size()) actions.get(w).run();
                 }
             })
-            .setNegativeButton("Cerrar", null)
+            .setNegativeButton(I18n.t("Cerrar"), null)
             .show();
     }
 
@@ -10286,6 +10374,12 @@ public class Main extends Activity {
                 prefs.edit().putBoolean("map_heading", i == 1).apply(); LiveMapView.headingUp = i == 1;
                 if (liveMap != null) liveMap.invalidate(); showSettings(settingsCat);
             }});
+        // #68: «Abajo» deja ver más camino por delante al navegar con el mapa según la dirección (Centro = como siempre)
+        segmented(mo, "Posición del carro", "Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)",
+            new String[]{"Centro", "Abajo"}, prefs.getInt("map_car_pos", 0) == 1 ? 1 : 0, new IntCb() { public void on(int i) {
+                prefs.edit().putInt("map_car_pos", i).apply(); LiveMapView.carLow = i == 1;
+                if (liveMap != null) liveMap.invalidate(); showSettings(settingsCat);
+            }});
         toggle(ml, "Mapa en vivo", "Apágalo si la pantalla va lenta: queda un mapa de adorno y el velocímetro sigue funcionando", prefs.getBoolean("map_live", true), new IntCb() { public void on(int i) {
             prefs.edit().putBoolean("map_live", i == 1).apply(); rebuild(); showSettings(settingsCat);
         }});
@@ -11023,6 +11117,7 @@ public class Main extends Activity {
     private void reloadAll() {
         I18n.init(this, prefs);
         LiveMapView.headingUp = prefs.getBoolean("map_heading", false);
+        LiveMapView.carLow = prefs.getInt("map_car_pos", 0) == 1;
         applyThemeNow();
         applyAccent();
         try { lm.removeUpdates(odoListener); } catch (Throwable ignored) { }

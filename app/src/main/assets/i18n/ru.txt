@@ -1903,3 +1903,9 @@ Probar la búsqueda de carátulas	Проверить поиск обложек
 Prueba cada servidor con la canción que suena y muestra el error exacto	Проверяет каждый сервер с текущим треком и показывает точную ошибку
 Prueba de carátulas	Проверка обложек
 Se guarda en StradaDiag/caratulas.txt	Сохраняется в StradaDiag/caratulas.txt
+# mapa: navegar hasta aquí y posición del carro (#68)
+Navegar hasta aquí	Проложить маршрут сюда
+Posición del carro	Положение машины
+Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)	Внизу: при навигации видно больше дороги впереди (когда карта повёрнута по направлению движения)
+Centro	По центру
+Abajo	Внизу

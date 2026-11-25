@@ -1928,3 +1928,9 @@ Probar la búsqueda de carátulas	Prova la ricerca delle copertine
 Prueba cada servidor con la canción que suena y muestra el error exacto	Prova ogni server con il brano in riproduzione e mostra l'errore esatto
 Prueba de carátulas	Prova delle copertine
 Se guarda en StradaDiag/caratulas.txt	Salvato in StradaDiag/caratulas.txt
+# mapa: navegar hasta aquí y posición del carro (#68)
+Navegar hasta aquí	Naviga fin qui
+Posición del carro	Posizione dell'auto
+Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)	In basso: durante la navigazione vedi più strada davanti (con la mappa nella direzione di marcia)
+Centro	Centro
+Abajo	In basso

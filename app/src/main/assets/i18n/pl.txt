@@ -1907,3 +1907,9 @@ Probar la búsqueda de carátulas	Przetestuj wyszukiwanie okładek
 Prueba cada servidor con la canción que suena y muestra el error exacto	Testuje każdy serwer z odtwarzanym utworem i pokazuje dokładny błąd
 Prueba de carátulas	Test okładek
 Se guarda en StradaDiag/caratulas.txt	Zapisano w StradaDiag/caratulas.txt
+# mapa: navegar hasta aquí y posición del carro (#68)
+Navegar hasta aquí	Nawiguj tutaj
+Posición del carro	Pozycja samochodu
+Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)	Na dole: podczas nawigacji widać więcej drogi przed tobą (z mapą zgodną z kierunkiem jazdy)
+Centro	Środek
+Abajo	Na dole

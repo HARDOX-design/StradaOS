@@ -1913,3 +1913,9 @@ Probar la búsqueda de carátulas	Borítókeresés tesztelése
 Prueba cada servidor con la canción que suena y muestra el error exacto	Minden szervert tesztel az éppen szóló dallal, és megmutatja a pontos hibát
 Prueba de carátulas	Borítóteszt
 Se guarda en StradaDiag/caratulas.txt	Mentve ide: StradaDiag/caratulas.txt
+# mapa: navegar hasta aquí y posición del carro (#68)
+Navegar hasta aquí	Navigálás ide
+Posición del carro	Az autó helyzete
+Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)	Lent: navigáció közben többet látsz az előtted lévő útból (haladási irányú térképpel)
+Centro	Középen
+Abajo	Lent

@@ -1928,3 +1928,9 @@ Probar la búsqueda de carátulas	Cover-Suche testen
 Prueba cada servidor con la canción que suena y muestra el error exacto	Testet jeden Server mit dem laufenden Titel und zeigt den genauen Fehler
 Prueba de carátulas	Cover-Test
 Se guarda en StradaDiag/caratulas.txt	Gespeichert in StradaDiag/caratulas.txt
+# mapa: navegar hasta aquí y posición del carro (#68)
+Navegar hasta aquí	Hierhin navigieren
+Posición del carro	Position des Autos
+Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)	Unten: beim Navigieren mehr Straße voraus sehen (mit der Karte in Fahrtrichtung)
+Centro	Mitte
+Abajo	Unten

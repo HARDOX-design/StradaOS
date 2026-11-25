@@ -1931,3 +1931,9 @@ Probar la búsqueda de carátulas	Testar a busca de capas
 Prueba cada servidor con la canción que suena y muestra el error exacto	Testa cada servidor com a música que está tocando e mostra o erro exato
 Prueba de carátulas	Teste de capas
 Se guarda en StradaDiag/caratulas.txt	Salvo em StradaDiag/caratulas.txt
+# mapa: navegar hasta aquí y posición del carro (#68)
+Navegar hasta aquí	Navegar até aqui
+Posición del carro	Posição do carro
+Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)	Abaixo: ao navegar você vê mais da estrada à frente (com o mapa na sua direção)
+Centro	Centro
+Abajo	Abaixo

@@ -1928,3 +1928,9 @@ Probar la búsqueda de carátulas	Tester la recherche des pochettes
 Prueba cada servidor con la canción que suena y muestra el error exacto	Teste chaque serveur avec le morceau en cours et affiche l'erreur exacte
 Prueba de carátulas	Test des pochettes
 Se guarda en StradaDiag/caratulas.txt	Enregistré dans StradaDiag/caratulas.txt
+# mapa: navegar hasta aquí y posición del carro (#68)
+Navegar hasta aquí	Naviguer jusqu'ici
+Posición del carro	Position de la voiture
+Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)	En bas : pendant la navigation, voir plus de route devant vous (avec la carte selon votre direction)
+Centro	Centre
+Abajo	En bas
