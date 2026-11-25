@@ -7282,15 +7282,15 @@ public class Main extends Activity {
         LiveMapView.headingUp = true;
         updateNavHud();
         // si se estaba explorando el mapa o tenía zoom a mano (p. ej. alejado para el toque largo), la guía arranca
-        // mirando al carro con el zoom según la velocidad: primero se ve la ruta un momento y luego vuelve a «Seguir»
-        // (si la ruta sigue activa)
+        // mirando al carro con el zoom según la velocidad: primero se ve la ruta un momento y luego vuelve a «Seguir»,
+        // deslizándose (si la ruta sigue activa)
         if (liveMap != null) {
             liveMap.invalidate();
             if (!liveMap.isFollowing()) {
                 final LiveMapView lmv = liveMap;
                 lmv.holdLow(true);   // con «Abajo», el carro baja recién cuando la vista vuelve a él
                 h.postDelayed(new Runnable() { public void run() {
-                    if (liveMap == lmv && Nav.active == r) lmv.autoZoom();
+                    if (liveMap == lmv && Nav.active == r) lmv.backToCar();
                     else lmv.holdLow(false);
                 }}, 700);
             } else liveMap.holdLow(false);

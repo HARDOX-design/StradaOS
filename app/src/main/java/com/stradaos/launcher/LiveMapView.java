@@ -533,8 +533,8 @@ public class LiveMapView extends View {
     }
 
     /**
-     * Botón de centrar (Faro y Carbono) y al empezar una ruta (Main): vuelve a «Seguir» y al zoom según la velocidad
-     * (el que tendría ahora, aunque antes se hubiera alejado o acercado a mano; se desliza hasta él).
+     * Botón de centrar (Faro y Carbono) y al empezar una ruta (backToCar): vuelve a «Seguir» y al zoom según la
+     * velocidad (el que tendría ahora, aunque antes se hubiera alejado o acercado a mano; se desliza hasta él).
      */
     void autoZoom() {
         holdLow = false;   // con «Abajo», el carro baja ahora, al volver a seguirlo
@@ -545,6 +545,37 @@ public class LiveMapView extends View {
 
     /** true si la vista sigue al carro con el zoom según la velocidad (ni explorando ni con zoom a mano). */
     boolean isFollowing() { return !exploring && !userZoom; }
+
+    // ── Vuelta suave al carro al empezar una ruta ──
+    // Explorando cerca del carro (p. ej. alejado para elegir el destino con el toque largo), la vista vuelve a él
+    // deslizándose en BACK_MS (posición, giro y altura; el zoom en ZOOM_MS) en vez de saltar. Lejos (más de dos pantallas
+    // o muchos niveles de zoom) salta como follow(): por el camino no habría teselas. El botón de centrar y la vuelta
+    // sola de «Explorar» siguen saltando como siempre.
+    private static final int BACK_MS = 500;
+    private boolean backing;
+    private double backX, backY;   // desfase vista − carro al empezar, en Mercator (0..1)
+    private float backBr, backCy;  // giro de la vista respecto al rumbo y altura del centro, al empezar
+    private long backAt;
+
+    /** Main, al empezar una ruta: como autoZoom(), pero explorando cerca del carro vuelve a él deslizándose. */
+    void backToCar() {
+        if (!exploring || Double.isNaN(dLat)) { autoZoom(); return; }
+        double ox = eX - wx(dLon), oy = eY - wy(dLat);
+        ox -= Math.floor(ox + 0.5);   // por el camino corto (el mundo da la vuelta)
+        int z0 = zoom;
+        double px = Math.hypot(ox, oy) * 256 * s * (1 << z0);   // a cuántos px del centro estaba el carro
+        autoZoom();
+        if (px > 2 * Math.max(getWidth(), getHeight()) || Math.abs(zoom - z0) > 5) return;   // lejos: de golpe
+        long now = SystemClock.uptimeMillis();
+        zFrom = zv = z0; zStart = now; lastLv = fadeLv = -1;   // el zoom, desde el que se exploraba
+        backX = ox; backY = oy;
+        backBr = Float.isNaN(dBr) ? 0 : ((0 - dBr) % 360 + 540) % 360 - 180;   // explorando, norte arriba
+        backCy = getHeight() / 2f;
+        lowY = -1;   // «Abajo»: la altura final ya; el deslizamiento lo lleva backCy
+        backing = true;
+        backAt = now;
+        invalidate();
+    }
 
     // ── «Navegar hasta aquí» (toque largo) ──
     private float pressX, pressY;
@@ -844,7 +875,7 @@ public class LiveMapView extends View {
         long now = SystemClock.uptimeMillis();
         boolean moving = step(now);
         final boolean ex = exploring;
-        if (ex) { zv = zFrom = zoom; fadeLv = -1; }   // explorando, el zoom cambia de golpe como siempre
+        if (ex) { zv = zFrom = zoom; fadeLv = -1; backing = false; }   // explorando, el zoom cambia de golpe como siempre
         boolean wasZooming = zv != zoom;
         boolean zooming = stepZoom(now), fading = false;
         viewCy = -1;
@@ -869,20 +900,29 @@ public class LiveMapView extends View {
                 fadeAt = now;
             }
             int n = 1 << lv;
+            // volviendo al carro deslizándose (backToCar): bk va de 1 (lo que se exploraba) a 0 (el carro)
+            float bk = 0;
+            if (backing) {
+                float t = (now - backAt) / (float) BACK_MS;
+                if (t >= 1f) backing = false;
+                else bk = 1 - t * t * (3 - 2 * t);
+            }
             double fx, fy;
             if (ex) { fx = eX * n; fy = eY * n; }
             else {
-                fx = (dLon + 180.0) / 360.0 * n;
+                fx = ((dLon + 180.0) / 360.0 + backX * bk) * n;
                 double latR = Math.toRadians(dLat);
-                fy = (1.0 - Math.log(Math.tan(latR) + 1.0 / Math.cos(latR)) / Math.PI) / 2.0 * n;
+                fy = ((1.0 - Math.log(Math.tan(latR) + 1.0 / Math.cos(latR)) / Math.PI) / 2.0 + backY * bk) * n;
             }
             float ts = 256 * s * (float) Math.pow(2, zv - lv);   // tamaño de tesela en pantalla
             boolean rot = !ex && headingUp && !Float.isNaN(dBr);   // explorando: norte arriba
+            float mapBr = rot ? dBr + backBr * bk : 0;             // al volver al carro, el giro también se desliza
             float cx = w / 2f, cy = ex ? h / 2f : Nav.active != null ? (rot ? h * 0.54f : h * 0.50f) : h * 0.42f;
             // eligiendo entre varias rutas (Nav.altRoutes) todavía no se navega: el carro baja al elegir una
             if (carLow && !ex) cy = lowCy(cy, rot && Nav.active != null && Nav.altRoutes == null, h, now);
+            if (bk > 0) cy += (backCy - cy) * bk;
             viewFx = fx; viewFy = fy; viewN = n; viewTs = ts; viewCx = cx; viewCy = cy;   // para latLonAt (toque largo)
-            viewRot = rot; viewBr = rot ? dBr : 0;
+            viewRot = rot; viewBr = mapBr;
             viewPinch = ex ? pinch : 1f; viewPX = pinchX; viewPY = pinchY;
             // pellizco en curso: lo que se ve de la pantalla, antes de la escala
             float vl = 0, vr = w, vt = 0, vb = h;
@@ -900,7 +940,7 @@ public class LiveMapView extends View {
                 tx0 = (int) Math.floor(fx - rr); tx1 = (int) Math.floor(fx + rr);
                 ty0 = (int) Math.floor(fy - rr); ty1 = (int) Math.floor(fy + rr);
                 c.save();
-                c.rotate(-dBr, cx, cy);
+                c.rotate(-mapBr, cx, cy);
             }
             boolean anyFile = false;
             String trTpl = trafficTpl();
@@ -941,9 +981,11 @@ public class LiveMapView extends View {
                 else { drawOld(c, fm, fx, fy, lv, cx, cy, w, h, rot, 1f - t); fading = true; }
             }
             drawRoute(c, fx, fy, cx, cy, ts, n);
-            if (!Double.isNaN(pinLat)) drawPin(c, mapX(pinLon, fx, cx, ts, n), mapY(pinLat, fy, cy, ts, n), rot ? dBr : 0);
+            if (!Double.isNaN(pinLat)) drawPin(c, mapX(pinLon, fx, cx, ts, n), mapY(pinLat, fy, cy, ts, n), mapBr);
+            // volviendo al carro: la flecha en su sitio del mapa, dentro del giro (apunta según el rumbo)
+            if (bk > 0) drawMarker(c, mapX(dLon, fx, cx, ts, n), mapY(dLat, fy, cy, ts, n), false);
             if (rot) c.restore();
-            if (!ex) drawMarker(c, cx, cy, rot);
+            if (!ex) { if (bk == 0) drawMarker(c, cx, cy, rot); }
             else if (!Double.isNaN(dLat)) drawMarker(c, mapX(dLon, fx, cx, ts, n), mapY(dLat, fy, cy, ts, n), false);
             if (ex && pinch != 1f) c.restore();
             if (bd) drawFade(c, w, h);
@@ -965,7 +1007,7 @@ public class LiveMapView extends View {
             c.drawPath(corners, corner);
         }
         drawButtons(c, w, h);
-        if (moving || zooming || fading || (carLow && !ex && lowMoving)) postInvalidateDelayed(FRAME_MS);
+        if (moving || zooming || fading || backing || (carLow && !ex && lowMoving)) postInvalidateDelayed(FRAME_MS);
     }
 
     private final Rect src = new Rect(), sub = new Rect();
@@ -1161,7 +1203,7 @@ public class LiveMapView extends View {
         // dónde está el carro en pantalla: en «Seguir» es el centro; explorando, donde cae su posición (si no, la ruta
         // salía del centro de la vista y la raya seguía al dedo)
         float carX = cx, carY = cy;
-        if (exploring && !Double.isNaN(dLat)) { carX = mapX(dLon, fx, cx, ts, n); carY = mapY(dLat, fy, cy, ts, n); }
+        if ((exploring || backing) && !Double.isNaN(dLat)) { carX = mapX(dLon, fx, cx, ts, n); carY = mapY(dLat, fy, cy, ts, n); }
         float startX = offRoute ? mapX(r.pts[start * 2 + 1], fx, cx, ts, n) : carX;
         float startY = offRoute ? mapY(r.pts[start * 2], fy, cy, ts, n) : carY;
         if (offRoute) {
