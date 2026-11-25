@@ -1000,6 +1000,7 @@ public class Main extends Activity {
                     saveHidden(hs); closeDrawer(); openDrawer();
                 }
                 else if ("ocultar-limpiar".equals(v)) { prefs.edit().remove("hidden_apps").apply(); closeDrawer(); }
+                else if ("navegar-aqui".equals(v)) askNavHere(4.6097, -74.0817);   // 2.37: ventana del toque largo (PR #69)
                 else if (v.startsWith("carro:")) {   // carro:abajo | carro:centro (#68)
                     boolean low = "abajo".equals(v.substring(6));
                     prefs.edit().putInt("map_car_pos", low ? 1 : 0).apply(); LiveMapView.carLow = low;

@@ -117,6 +117,17 @@ if part 1; then
   adb shell input swipe 520 190 400 260 300; sleep 2; shot "$(printf %03d $N)-nav-explorar-arrastre"
   step nav-seguir explorar:0 2
   step nav-salir-2 nav-salir 3
+  # ── 2.37 (PR #69): carro «Abajo» con ruta, toque largo real sobre el mapa y la ventana «Navegar hasta aquí» ──
+  step carro-abajo carro:abajo 2
+  step nav-demo-abajo nav-demo 8
+  step nav-zoom-suave explorar-zoom:-2 1
+  shot "$(printf %03d $N)-nav-zoom-suave-fin"
+  step nav-volver-carro explorar:0 3
+  adb shell input swipe 520 230 521 231 1500; sleep 3; shot "$(printf %03d $N)-toque-largo"
+  adb shell input keyevent 4; sleep 2
+  step nav-salir-3 nav-salir 3
+  step navegar-aqui navegar-aqui 6 1
+  step carro-centro carro:centro 2
   step video-vel-0 video-vel:0 1
   step centro-video centro:video 9
   step video-solo video-modo:1 5
