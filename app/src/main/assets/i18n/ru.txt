@@ -1909,3 +1909,24 @@ Posición del carro	Положение машины
 Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)	Внизу: при навигации видно больше дороги впереди (когда карта повёрнута по направлению движения)
 Centro	По центру
 Abajo	Внизу
+# 2.38: bienvenida (#80, #48) y exportar la app Bluetooth de fábrica (#79)
+Bienvenida al encender	Приветствие при включении
+El logo de StradaOS pasa iluminando el nombre y te saluda (unos 5 segundos). Tócala para saltarla	Логотип StradaOS проходит над названием, подсвечивая его, и приветствует вас (около 5 секунд). Коснитесь, чтобы пропустить
+Saludo por voz	Голосовое приветствие
+Con la voz de la pantalla, sin internet. Si no hay voz para tu idioma, solo sale el texto	Голосом экрана, без интернета. Если для вашего языка нет голоса, будет только текст
+Ver la bienvenida	Посмотреть приветствие
+Para que te salude por tu nombre, escríbelo en Tu vehículo → Tu nombre	Чтобы приветствие было по имени, укажите его в Ваш автомобиль → Ваше имя
+No se encontró una voz en esta pantalla	На этом экране не найден голос
+No hay voz para este idioma en esta pantalla: solo se muestra el texto	На этом экране нет голоса для этого языка: показывается только текст
+Exportar la app de Bluetooth de fábrica	Экспортировать заводское приложение Bluetooth
+Si la música Bluetooth no aparece en el inicio: guarda esa app en un archivo .zip (en la pantalla o en una USB) para enviarlo y que StradaOS aprenda a leerla. Sin ADB	Если музыка Bluetooth не появляется на главном экране: сохраните это приложение в файл .zip (на экран или USB-накопитель), отправьте его, и StradaOS научится его читать. Без ADB
+Exportar app Bluetooth	Экспорт приложения Bluetooth
+No se encontraron apps de Bluetooth de fábrica	Заводские приложения Bluetooth не найдены
+Todas las de Bluetooth y música de fábrica (recomendado)	Все заводские приложения Bluetooth и музыки (рекомендуется)
+detectada	обнаружено
+¿Qué app exportar?	Какое приложение экспортировать?
+¿Dónde guardar el archivo?	Где сохранить файл?
+No se pudo exportar	Не удалось экспортировать
+No se pudo guardar el archivo	Не удалось сохранить файл
+Adjunta ese archivo .zip en tu reporte de GitHub (o en el mensaje donde te lo pidieron). Si pesa más de 25 MB, súbelo a Google Drive y comparte el enlace.	Прикрепите этот файл .zip к своему отчёту на GitHub (или к сообщению, где его попросили). Если он больше 25 МБ, загрузите его на Google Диск и поделитесь ссылкой.
+Exportación lista	Экспорт готов

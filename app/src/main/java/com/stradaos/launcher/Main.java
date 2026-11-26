@@ -306,6 +306,7 @@ public class Main extends Activity {
             sf.addAction(Intent.ACTION_SCREEN_ON);
             registerReceiver(screenReceiver, sf);
         } catch (Throwable ignored) { }
+        maybeWelcomeAtBoot();
         maybeBootApp();
         bt.onPhoneStarted = new Runnable() { public void run() { onPhoneStartedBt(); } };
         bt.onLost = new Runnable() { public void run() { btRouted = false; } };
@@ -462,6 +463,8 @@ public class Main extends Activity {
 
     @Override
     protected void onDestroy() {
+        removeWelcome();
+        try { if (welcomeVoice != null) welcomeVoice.shutdown(); } catch (Throwable ignored) { }
         try { getContentResolver().unregisterContentObserver(brightObs); } catch (Throwable ignored) { }
         try { getContentResolver().unregisterContentObserver(lightsObs); } catch (Throwable ignored) { }
         h.removeCallbacks(themeRecheck);
@@ -635,6 +638,10 @@ public class Main extends Activity {
             obdDialogs().onPermission(res.length > 0 && res[0] == android.content.pm.PackageManager.PERMISSION_GRANTED);
             return;
         }
+        if (req == REQ_BTEXP_W) {   // 2.38 (#79): con o sin permiso se sigue (sin él, se guarda en la carpeta de la app)
+            h.post(new Runnable() { public void run() { btExport0(); } });
+            return;
+        }
         if (req == REQ_STORAGE_W) {   // con o sin permiso se sigue (sin él, el mapa se guarda en la carpeta de la app)
             h.post(new Runnable() { public void run() { chooseMapToDownload(""); } });
             return;
@@ -718,9 +725,19 @@ public class Main extends Activity {
         }
         h.postDelayed(new Runnable() { public void run() {
             try {
+                if (!v.startsWith("bienvenida")) removeWelcome();
                 if (settingsView != null) closeSettings();
                 closeDrawer();
                 if (v.startsWith("ajustes:")) showSettings(Integer.parseInt(v.substring(8)));
+                // 2.38: bienvenida completa («bienvenida») o quieta en un instante («bienvenida:3500», en ms)
+                else if ("bienvenida".equals(v)) showWelcome(-1);
+                else if (v.startsWith("bienvenida:")) showWelcome(Long.parseLong(v.substring(11)));
+                // 2.38 (#79): lista de apps para exportar, y exportar todas a la memoria de la pantalla
+                else if ("exportar-bt".equals(v)) btExport0();
+                else if ("exportar-bt-todas".equals(v)) {
+                    ComponentName g = btMusicApp();
+                    btExportRun(BtExport.candidates(Main.this, g != null ? g.getPackageName() : null), Backup.primary());
+                }
                 else if (v.startsWith("boton:")) dockMenu(Integer.parseInt(v.substring(6)), null);
                 else if (v.startsWith("elegir:")) pickDock(Integer.parseInt(v.substring(7)), null);
                 else if ("cajon".equals(v)) openDrawer();
@@ -1135,6 +1152,7 @@ public class Main extends Activity {
 
     @Override
     public void onBackPressed() {
+        if (welcome != null) { welcome.skip(); return; }   // 2.38: Atrás salta la bienvenida
         if (videoBig != null && videoCard != null) { videoMode(videoCard, 0); return; }
         if (liveMap != null && liveMap.isExploring()) { liveMap.follow(); return; }
         if (vpanel != null && vpanel.isOpen()) { vpanel.close(); return; }
@@ -7649,10 +7667,15 @@ public class Main extends Activity {
         timeTv.setText(I18n.sdf(h24 ? "HH:mm" : "h:mm a").format(now));
         String d = I18n.sdf(vertical && !(premium && !mapOnly) ? "EEE d MMM" : I18n.datePattern()).format(now);
         dateTv.setText(d.substring(0, 1).toUpperCase(I18n.loc) + d.substring(1));
+        greetTv.setText(greetingText());
+    }
+
+    /** «Buenos días/Buenas tardes/Buenas noches, <nombre>» en el idioma del launcher (inicio y bienvenida). */
+    private String greetingText() {
         int hr = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         String saludo = I18n.t(hr >= 5 && hr < 12 ? "Buenos días" : (hr >= 12 && hr < 19 ? "Buenas tardes" : "Buenas noches"));
         String nombre = prefs.getString("user_name", "").trim();
-        greetTv.setText(nombre.length() > 0 ? saludo + ", " + nombre : saludo);
+        return nombre.length() > 0 ? saludo + ", " + nombre : saludo;
     }
 
     private final LocationListener gpsListener = new LocationListener() {
@@ -8200,7 +8223,129 @@ public class Main extends Activity {
             .setNeutralButton("Accesibilidad", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface d, int w) { openAccessibility(); }
             })
+            .setNegativeButton("Exportar app Bluetooth", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface d, int w) { btExport(); }
+            })
             .show();
+    }
+
+    // ───────────────────────── exportar la app Bluetooth de fábrica (2.38, #79) ─────────────────────────
+
+    private static final int REQ_BTEXP_W = 85, REQ_BTEXP_CREATE = 86;
+    private List<BtExport.App> btExportPending;
+
+    private void btExport() {
+        // Android 6 a 9: permiso para escribir en la memoria (en Android 10+ se usa el selector de archivos)
+        if (SDK >= 23 && SDK <= 28 && checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQ_BTEXP_W);
+            return;
+        }
+        btExport0();
+    }
+
+    /** Elegir qué apps: todas las de fábrica parecidas (recomendado) o una sola. */
+    private void btExport0() {
+        if (isFinishing()) return;
+        ComponentName g = btMusicApp();
+        final List<BtExport.App> apps = BtExport.candidates(this, clwBt ? BtBridge.PKG : g != null ? g.getPackageName() : null);
+        if (apps.isEmpty()) { toast("No se encontraron apps de Bluetooth de fábrica"); return; }
+        long total = 0;
+        for (BtExport.App a : apps) total += a.size;
+        String[] items = new String[apps.size() + 1];
+        items[0] = I18n.t("Todas las de Bluetooth y música de fábrica (recomendado)") + "\n" + apps.size() + " apps · " + mb(total);
+        for (int i = 0; i < apps.size(); i++) {
+            BtExport.App a = apps.get(i);
+            items[i + 1] = a.label + (a.guessed ? "  ★ " + I18n.t("detectada") : "") + "\n" + a.pkg + " · " + mb(a.size);
+        }
+        new TB(this, dlg()).raw().wide()
+            .setTitle(I18n.t("¿Qué app exportar?"))
+            .setItems(items, new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) {
+                btExportWhere(w == 0 ? apps : java.util.Collections.singletonList(apps.get(w - 1)));
+            }})
+            .setNegativeButton(I18n.t("Cancelar"), null)
+            .show();
+    }
+
+    private static String mb(long b) {
+        return b >= 1024 * 1024 ? String.format(I18n.num, "%.1f MB", b / 1048576f) : Math.max(1, b / 1024) + " KB";
+    }
+
+    /** Elegir dónde: la memoria de la pantalla o una USB conectada. */
+    private void btExportWhere(final List<BtExport.App> apps) {
+        final List<File> roots = new ArrayList<File>();
+        final List<String> items = new ArrayList<String>();
+        roots.add(Backup.primary());
+        items.add(I18n.t("Memoria de la pantalla") + "\n" + new File(Backup.primary(), "StradaDiag").getAbsolutePath());
+        for (File u : Backup.removable(this)) {
+            roots.add(u);
+            items.add(I18n.t("Memoria USB") + "  ·  " + u.getName() + "\n" + new File(u, "StradaDiag").getAbsolutePath());
+        }
+        // selector de archivos de Android (4.4+); en Android 10+ es el único camino a una carpeta a la vista sin permisos
+        Intent doc = null;
+        if (SDK >= 19) {
+            doc = new Intent("android.intent.action.CREATE_DOCUMENT");
+            doc.addCategory(Intent.CATEGORY_OPENABLE);
+            doc.setType("application/zip");
+            doc.putExtra(Intent.EXTRA_TITLE, BtExport.zipName());
+            try { if (getPackageManager().resolveActivity(doc, 0) == null) doc = null; } catch (Throwable e) { doc = null; }
+        }
+        final Intent fdoc = doc;
+        if (fdoc != null && SDK >= 29) { btExportPick(apps, fdoc); return; }
+        if (fdoc != null) items.add(I18n.t("Elegir otra carpeta…"));
+        if (items.size() == 1) { btExportRun(apps, roots.get(0)); return; }
+        new TB(this, dlg()).raw().wide()
+            .setTitle(I18n.t("¿Dónde guardar el archivo?"))
+            .setItems(items.toArray(new String[0]), new DialogInterface.OnClickListener() { public void onClick(DialogInterface d, int w) {
+                if (w < roots.size()) btExportRun(apps, roots.get(w));
+                else btExportPick(apps, fdoc);
+            }})
+            .setNegativeButton(I18n.t("Cancelar"), null)
+            .show();
+    }
+
+    private void btExportPick(List<BtExport.App> apps, Intent doc) {
+        btExportPending = apps;
+        try { startActivityForResult(doc, REQ_BTEXP_CREATE); }
+        catch (Throwable e) { btExportRun(apps, Backup.primary()); }   // sin selector: a la memoria de la pantalla
+    }
+
+    /** El archivo elegido en el selector de Android. */
+    private void btExportDocument(final Uri uri) {
+        final List<BtExport.App> apps = btExportPending;
+        btExportPending = null;
+        if (apps == null) return;
+        toast("Exportando… puede tardar un minuto");
+        new Thread(new Runnable() { public void run() {
+            BtExport.Result r;
+            try { r = BtExport.writeZip(Main.this, apps, getContentResolver().openOutputStream(uri)); }
+            catch (Throwable e) { r = new BtExport.Result(); r.error = String.valueOf(e); }
+            final BtExport.Result fr = r;
+            String name = uri.getLastPathSegment();
+            final String where = name != null ? name : uri.toString();
+            h.post(new Runnable() { public void run() { btExportDone(fr, where, fr.error == null ? fr.bytes : -1); } });
+        }}).start();
+    }
+
+    private void btExportRun(final List<BtExport.App> apps, final File root) {
+        toast("Exportando… puede tardar un minuto");
+        new Thread(new Runnable() { public void run() {
+            final BtExport.Result r = BtExport.export(Main.this, apps, root);
+            h.post(new Runnable() { public void run() {
+                btExportDone(r, r.zip != null ? r.zip.getAbsolutePath() : null, r.zip != null ? r.zip.length() : -1);
+            }});
+        }}).start();
+    }
+
+    private void btExportDone(BtExport.Result r, String where, long size) {
+        if (isFinishing()) return;
+        if (r.error != null || where == null) {
+            new TB(Main.this, dlg()).raw().setTitle(I18n.t("No se pudo exportar"))
+                .setMessage(I18n.t("No se pudo guardar el archivo") + "\n\n" + r.error).setPositiveButton("OK", null).show();
+            return;
+        }
+        String msg = I18n.t("Se guardó en:") + "\n" + where + "\n" + r.apps + " apps · " + mb(size) + "\n\n"
+            + I18n.t("Adjunta ese archivo .zip en tu reporte de GitHub (o en el mensaje donde te lo pidieron). Si pesa más de 25 MB, súbelo a Google Drive y comparte el enlace.");
+        new TB(Main.this, dlg()).raw().setTitle(I18n.t("Exportación lista")).setMessage(msg).setPositiveButton("OK", null).show();
     }
 
     private void openAccessibility() {
@@ -8683,6 +8828,11 @@ public class Main extends Activity {
     protected void onActivityResult(int req, int res, Intent data) {
         super.onActivityResult(req, res, data);
         if (req == REQ_HOME) { homeResult(); return; }
+        if (req == REQ_BTEXP_CREATE) {
+            if (res == RESULT_OK && data != null && data.getData() != null) btExportDocument(data.getData());
+            else btExportPending = null;
+            return;
+        }
         if (req == REQ_BACKUP_CREATE || req == REQ_BACKUP_OPEN) {
             if (res == RESULT_OK && data != null && data.getData() != null) backupDocument(data.getData(), req == REQ_BACKUP_CREATE);
             return;
@@ -10827,6 +10977,8 @@ public class Main extends Activity {
                 toast("Carátulas borradas");
             }});
         row(c, "Diagnóstico del reproductor", "Fuente activa, lector de notificaciones y Bluetooth", null, new Runnable() { public void run() { showPlayerDiag(); } });
+        row(c, "Exportar la app de Bluetooth de fábrica", "Si la música Bluetooth no aparece en el inicio: guarda esa app en un archivo .zip (en la pantalla o en una USB) para enviarlo y que StradaOS aprenda a leerla. Sin ADB",
+            null, new Runnable() { public void run() { btExport(); } });
         LinearLayout b = section(body, "Audio Bluetooth");
         row(b, "¿La música Bluetooth se corta o no aparece?", "Qué hacer en cada caso", null, new Runnable() { public void run() { btHelp(); } });
         toggle(b, "Volver al Bluetooth al desconectar Android Auto", "Al quitar el cable, abre un instante la app de música Bluetooth para que el sonido siga por Bluetooth",
@@ -10910,6 +11062,26 @@ public class Main extends Activity {
                     showSettings(settingsCat);
                 }});
             }});
+        // 2.38 (#80, #48): bienvenida con el logo y saludo por voz; al activarla la voz viene encendida y se muestra una vez
+        final boolean wOn = prefs.getBoolean("welcome_on", false);
+        toggle(hm, "Bienvenida al encender", "El logo de StradaOS pasa iluminando el nombre y te saluda (unos 5 segundos). Tócala para saltarla",
+            wOn, new IntCb() { public void on(int i) {
+                SharedPreferences.Editor e = prefs.edit().putBoolean("welcome_on", i == 1);
+                if (i == 1) e.putBoolean("welcome_voice", true);
+                e.apply();
+                showSettings(settingsCat);
+                if (i == 1) showWelcome(-1);
+            }});
+        if (wOn) {
+            String note = Welcome.voiceNote;
+            toggle(hm, "Saludo por voz", note != null ? note : "Con la voz de la pantalla, sin internet. Si no hay voz para tu idioma, solo sale el texto",
+                prefs.getBoolean("welcome_voice", true), new IntCb() { public void on(int i) {
+                    prefs.edit().putBoolean("welcome_voice", i == 1).apply(); showSettings(settingsCat);
+                }});
+            row(hm, "Ver la bienvenida", prefs.getString("user_name", "").trim().length() == 0
+                    ? "Para que te salude por tu nombre, escríbelo en Tu vehículo → Tu nombre" : null, null,
+                new Runnable() { public void run() { showWelcome(-1); } });
+        }
         // Salidas (issue #9): una pantalla Android 11 quedó atrapada en StradaOS tras elegirlo como launcher desde su
         // modo fábrica (toda app, incluso la ventana de desinstalar, se abría y volvía a StradaOS).
         LinearLayout out = section(body, "Salir de StradaOS");
@@ -11157,6 +11329,53 @@ public class Main extends Activity {
      * Abre la app elegida un momento y vuelve al inicio. Solo al encender la pantalla (los primeros minutos desde
      * que arrancó Android): si StradaOS se reinicia más tarde (una actualización, un cierre) no se abre nada.
      */
+    // ───────────────────────── bienvenida (2.38, #80 + #48) ─────────────────────────
+
+    private Welcome welcome;
+    private Welcome.Voice welcomeVoice;
+    /** Una sola vez por arranque del equipo (aunque Android vuelva a crear la actividad). */
+    private static boolean welcomeBootDone;
+
+    private boolean welcomeOn() {
+        return prefs.getBoolean("welcome_on", false) && prefs.getBoolean("setup_done", false);
+    }
+
+    /** Al encender: como la app de encendido, solo en los primeros 4 minutos desde que arrancó el equipo. */
+    private void maybeWelcomeAtBoot() {
+        if (welcomeBootDone) return;
+        welcomeBootDone = true;
+        if (!welcomeOn() || SystemClock.elapsedRealtime() > 4 * 60000L) return;
+        long boot = System.currentTimeMillis() - SystemClock.elapsedRealtime();
+        if (Math.abs(boot - prefs.getLong("welcome_boot", 0)) < 120000) return;   // ya salió en este arranque
+        prefs.edit().putLong("welcome_boot", boot).apply();
+        showWelcome(-1);
+    }
+
+    /** Muestra la bienvenida encima de todo (también de los Ajustes). freeze ≥ 0: quieta en ese instante (pruebas). */
+    private void showWelcome(long freeze) {
+        removeWelcome();
+        String g = greetingText();
+        final Welcome w = new Welcome(this, g);
+        w.freezeAt = freeze;
+        if (freeze < 0 && prefs.getBoolean("welcome_voice", true)) {
+            try { if (welcomeVoice != null) welcomeVoice.shutdown(); } catch (Throwable ignored) { }
+            final Welcome.Voice v = new Welcome.Voice(this, g, I18n.loc);
+            welcomeVoice = v;
+            w.onImpact = new Runnable() { public void run() { v.speak(); } };
+        }
+        w.onEnd = new Runnable() { public void run() { if (welcome == w) removeWelcome(); } };
+        welcome = w;
+        try { addContentView(w, new ViewGroup.LayoutParams(-1, -1)); }
+        catch (Throwable e) { welcome = null; }
+    }
+
+    private void removeWelcome() {
+        Welcome w = welcome;
+        welcome = null;
+        if (w == null) return;
+        try { ((ViewGroup) w.getParent()).removeView(w); } catch (Throwable ignored) { }
+    }
+
     private void maybeBootApp() {
         if (bootAppDone) return;
         bootAppDone = true;
@@ -11172,7 +11391,10 @@ public class Main extends Activity {
     private final BroadcastReceiver screenReceiver = new BroadcastReceiver() {
         public void onReceive(Context c, Intent i) {
             if (Intent.ACTION_SCREEN_OFF.equals(i.getAction())) { screenOffAt = SystemClock.elapsedRealtime(); return; }
-            if (screenOffAt > 0 && SystemClock.elapsedRealtime() - screenOffAt > 5 * 60000L && hasWindowFocus()) runBootApp(1500);
+            if (screenOffAt > 0 && SystemClock.elapsedRealtime() - screenOffAt > 5 * 60000L && hasWindowFocus()) {
+                if (welcomeOn()) showWelcome(-1);
+                runBootApp(1500);
+            }
             screenOffAt = 0;
         }
     };
@@ -11180,6 +11402,7 @@ public class Main extends Activity {
     private void runBootApp(long delay) {
         final String comp = prefs.getString("boot_app", "");
         if (comp.length() == 0 || !prefs.getBoolean("setup_done", false)) return;
+        if (welcome != null) delay = Math.max(delay, welcome.remaining() + 400);   // 2.38: primero termina la bienvenida
         h.postDelayed(new Runnable() { public void run() {
             if (isFinishing()) return;
             final ComponentName cn = ComponentName.unflattenFromString(comp);
@@ -11331,6 +11554,7 @@ public class Main extends Activity {
 
     /** Al volver al inicio: busca versión nueva (1 vez al día) o, si toca, el recuadro «¿Te gusta StradaOS?». */
     private void autoChecks() {
+        if (welcome != null) { h.postDelayed(new Runnable() { public void run() { autoChecks(); } }, welcome.remaining() + 800); return; }
         if (!hasWindowFocus() || settingsView != null || drawer != null) return;
         if (!homeAsked && prefs.getBoolean("setup_done", false) && !prefs.getBoolean("home_never", false) && askDefaultHome(null)) return;
         if (oilAlert()) return;

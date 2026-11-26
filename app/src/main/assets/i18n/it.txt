@@ -1934,3 +1934,24 @@ Posición del carro	Posizione dell'auto
 Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)	In basso: durante la navigazione vedi più strada davanti (con la mappa nella direzione di marcia)
 Centro	Centro
 Abajo	In basso
+# 2.38: bienvenida (#80, #48) y exportar la app Bluetooth de fábrica (#79)
+Bienvenida al encender	Benvenuto all'accensione
+El logo de StradaOS pasa iluminando el nombre y te saluda (unos 5 segundos). Tócala para saltarla	Il logo di StradaOS passa illuminando il nome e ti saluta (circa 5 secondi). Toccalo per saltarlo
+Saludo por voz	Saluto vocale
+Con la voz de la pantalla, sin internet. Si no hay voz para tu idioma, solo sale el texto	Usa la voce dello schermo, senza internet. Se non c'è una voce per la tua lingua, appare solo il testo
+Ver la bienvenida	Guarda il benvenuto
+Para que te salude por tu nombre, escríbelo en Tu vehículo → Tu nombre	Per essere salutato per nome, scrivilo in Il tuo veicolo → Il tuo nome
+No se encontró una voz en esta pantalla	Nessuna voce trovata su questo schermo
+No hay voz para este idioma en esta pantalla: solo se muestra el texto	Non c'è una voce per questa lingua su questo schermo: viene mostrato solo il testo
+Exportar la app de Bluetooth de fábrica	Esporta l'app Bluetooth di fabbrica
+Si la música Bluetooth no aparece en el inicio: guarda esa app en un archivo .zip (en la pantalla o en una USB) para enviarlo y que StradaOS aprenda a leerla. Sin ADB	Se la musica Bluetooth non appare nella schermata iniziale: salva quell'app in un file .zip (sullo schermo o su una chiavetta USB) per inviarlo e far sì che StradaOS impari a leggerla. Senza ADB
+Exportar app Bluetooth	Esporta app Bluetooth
+No se encontraron apps de Bluetooth de fábrica	Nessuna app Bluetooth di fabbrica trovata
+Todas las de Bluetooth y música de fábrica (recomendado)	Tutte le app di Bluetooth e musica di fabbrica (consigliato)
+detectada	rilevata
+¿Qué app exportar?	Quale app esportare?
+¿Dónde guardar el archivo?	Dove salvare il file?
+No se pudo exportar	Impossibile esportare
+No se pudo guardar el archivo	Impossibile salvare il file
+Adjunta ese archivo .zip en tu reporte de GitHub (o en el mensaje donde te lo pidieron). Si pesa más de 25 MB, súbelo a Google Drive y comparte el enlace.	Allega quel file .zip alla tua segnalazione su GitHub (o al messaggio in cui ti è stato chiesto). Se pesa più di 25 MB, caricalo su Google Drive e condividi il link.
+Exportación lista	Esportazione pronta

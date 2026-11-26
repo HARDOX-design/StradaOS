@@ -1934,3 +1934,24 @@ Posición del carro	Position des Autos
 Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)	Unten: beim Navigieren mehr Straße voraus sehen (mit der Karte in Fahrtrichtung)
 Centro	Mitte
 Abajo	Unten
+# 2.38: bienvenida (#80, #48) y exportar la app Bluetooth de fábrica (#79)
+Bienvenida al encender	Begrüßung beim Einschalten
+El logo de StradaOS pasa iluminando el nombre y te saluda (unos 5 segundos). Tócala para saltarla	Das StradaOS-Logo fährt leuchtend über den Namen und begrüßt dich (etwa 5 Sekunden). Tippen zum Überspringen
+Saludo por voz	Sprachbegrüßung
+Con la voz de la pantalla, sin internet. Si no hay voz para tu idioma, solo sale el texto	Mit der Stimme des Displays, ohne Internet. Gibt es keine Stimme für deine Sprache, erscheint nur der Text
+Ver la bienvenida	Begrüßung ansehen
+Para que te salude por tu nombre, escríbelo en Tu vehículo → Tu nombre	Damit du mit Namen begrüßt wirst, trage ihn unter Dein Fahrzeug → Dein Name ein
+No se encontró una voz en esta pantalla	Auf diesem Display wurde keine Stimme gefunden
+No hay voz para este idioma en esta pantalla: solo se muestra el texto	Für diese Sprache gibt es auf diesem Display keine Stimme: Es wird nur der Text angezeigt
+Exportar la app de Bluetooth de fábrica	Bluetooth-App ab Werk exportieren
+Si la música Bluetooth no aparece en el inicio: guarda esa app en un archivo .zip (en la pantalla o en una USB) para enviarlo y que StradaOS aprenda a leerla. Sin ADB	Wenn die Bluetooth-Musik nicht auf dem Startbildschirm erscheint: Speichere diese App als .zip-Datei (auf dem Display oder einem USB-Stick), damit du sie schicken kannst und StradaOS lernt, sie zu lesen. Ohne ADB
+Exportar app Bluetooth	Bluetooth-App exportieren
+No se encontraron apps de Bluetooth de fábrica	Keine Bluetooth-Apps ab Werk gefunden
+Todas las de Bluetooth y música de fábrica (recomendado)	Alle Bluetooth- und Musik-Apps ab Werk (empfohlen)
+detectada	erkannt
+¿Qué app exportar?	Welche App exportieren?
+¿Dónde guardar el archivo?	Wo soll die Datei gespeichert werden?
+No se pudo exportar	Export fehlgeschlagen
+No se pudo guardar el archivo	Die Datei konnte nicht gespeichert werden
+Adjunta ese archivo .zip en tu reporte de GitHub (o en el mensaje donde te lo pidieron). Si pesa más de 25 MB, súbelo a Google Drive y comparte el enlace.	Hänge diese .zip-Datei an deine Meldung auf GitHub an (oder an die Nachricht, in der sie angefragt wurde). Ist sie größer als 25 MB, lade sie bei Google Drive hoch und teile den Link.
+Exportación lista	Export fertig

@@ -1936,3 +1936,24 @@ Posición del carro	Arabanın konumu
 Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)	Aşağıda: navigasyon sırasında önünüzdeki yolu daha fazla görürsünüz (harita gidiş yönündeyken)
 Centro	Orta
 Abajo	Aşağıda
+# 2.38: bienvenida (#80, #48) y exportar la app Bluetooth de fábrica (#79)
+Bienvenida al encender	Açılışta karşılama
+El logo de StradaOS pasa iluminando el nombre y te saluda (unos 5 segundos). Tócala para saltarla	StradaOS logosu adı aydınlatarak geçer ve sizi selamlar (yaklaşık 5 saniye). Geçmek için dokunun
+Saludo por voz	Sesli selamlama
+Con la voz de la pantalla, sin internet. Si no hay voz para tu idioma, solo sale el texto	Ekranın sesiyle, internetsiz. Diliniz için ses yoksa yalnızca yazı görünür
+Ver la bienvenida	Karşılamayı izle
+Para que te salude por tu nombre, escríbelo en Tu vehículo → Tu nombre	Adınızla selamlanmak için Aracınız → Adınız bölümüne yazın
+No se encontró una voz en esta pantalla	Bu ekranda ses bulunamadı
+No hay voz para este idioma en esta pantalla: solo se muestra el texto	Bu ekranda bu dil için ses yok: yalnızca yazı gösterilir
+Exportar la app de Bluetooth de fábrica	Fabrika Bluetooth uygulamasını dışa aktar
+Si la música Bluetooth no aparece en el inicio: guarda esa app en un archivo .zip (en la pantalla o en una USB) para enviarlo y que StradaOS aprenda a leerla. Sin ADB	Bluetooth müziği ana ekranda görünmüyorsa: o uygulamayı bir .zip dosyasına kaydedin (ekrana veya USB belleğe), gönderin ve StradaOS onu okumayı öğrensin. ADB gerekmez
+Exportar app Bluetooth	Bluetooth uygulamasını dışa aktar
+No se encontraron apps de Bluetooth de fábrica	Fabrika Bluetooth uygulaması bulunamadı
+Todas las de Bluetooth y música de fábrica (recomendado)	Tüm fabrika Bluetooth ve müzik uygulamaları (önerilen)
+detectada	algılandı
+¿Qué app exportar?	Hangi uygulama dışa aktarılsın?
+¿Dónde guardar el archivo?	Dosya nereye kaydedilsin?
+No se pudo exportar	Dışa aktarılamadı
+No se pudo guardar el archivo	Dosya kaydedilemedi
+Adjunta ese archivo .zip en tu reporte de GitHub (o en el mensaje donde te lo pidieron). Si pesa más de 25 MB, súbelo a Google Drive y comparte el enlace.	Bu .zip dosyasını GitHub bildiriminize (veya istendiği mesaja) ekleyin. 25 MB'tan büyükse Google Drive'a yükleyip bağlantıyı paylaşın.
+Exportación lista	Dışa aktarma hazır

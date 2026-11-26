@@ -1934,3 +1934,24 @@ Posición del carro	车辆位置
 Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)	底部：导航时可看到前方更多道路（地图按行驶方向显示时）
 Centro	居中
 Abajo	底部
+# 2.38: bienvenida (#80, #48) y exportar la app Bluetooth de fábrica (#79)
+Bienvenida al encender	开机欢迎
+El logo de StradaOS pasa iluminando el nombre y te saluda (unos 5 segundos). Tócala para saltarla	StradaOS 标志从名称上方扫过并将其点亮，然后向你问候（约 5 秒）。轻触可跳过
+Saludo por voz	语音问候
+Con la voz de la pantalla, sin internet. Si no hay voz para tu idioma, solo sale el texto	使用屏幕自带的语音，无需联网。如果没有你所用语言的语音，只显示文字
+Ver la bienvenida	查看欢迎动画
+Para que te salude por tu nombre, escríbelo en Tu vehículo → Tu nombre	若想按名字问候你，请在 你的车辆 → 你的名字 中填写
+No se encontró una voz en esta pantalla	此屏幕上未找到语音
+No hay voz para este idioma en esta pantalla: solo se muestra el texto	此屏幕没有该语言的语音：只显示文字
+Exportar la app de Bluetooth de fábrica	导出原厂蓝牙应用
+Si la música Bluetooth no aparece en el inicio: guarda esa app en un archivo .zip (en la pantalla o en una USB) para enviarlo y que StradaOS aprenda a leerla. Sin ADB	如果主屏幕上不显示蓝牙音乐：把该应用保存为 .zip 文件（存到屏幕或 U 盘），发送出去，让 StradaOS 学会读取它。无需 ADB
+Exportar app Bluetooth	导出蓝牙应用
+No se encontraron apps de Bluetooth de fábrica	未找到原厂蓝牙应用
+Todas las de Bluetooth y música de fábrica (recomendado)	所有原厂蓝牙和音乐应用（推荐）
+detectada	已检测到
+¿Qué app exportar?	要导出哪个应用？
+¿Dónde guardar el archivo?	文件保存到哪里？
+No se pudo exportar	导出失败
+No se pudo guardar el archivo	无法保存文件
+Adjunta ese archivo .zip en tu reporte de GitHub (o en el mensaje donde te lo pidieron). Si pesa más de 25 MB, súbelo a Google Drive y comparte el enlace.	请把这个 .zip 文件附加到你的 GitHub 报告中（或附在要求你提供它的消息里）。如果超过 25 MB，请上传到 Google Drive 并分享链接。
+Exportación lista	导出完成
