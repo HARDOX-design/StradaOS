@@ -1937,3 +1937,24 @@ Posición del carro	Posição do carro
 Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)	Abaixo: ao navegar você vê mais da estrada à frente (com o mapa na sua direção)
 Centro	Centro
 Abajo	Abaixo
+# 2.38: bienvenida (#80, #48) y exportar la app Bluetooth de fábrica (#79)
+Bienvenida al encender	Boas-vindas ao ligar
+Una luz pasa detrás del logo y del nombre, todo se ilumina y te saluda (unos 7 segundos). Tócala para saltarla	Uma luz passa por trás do logo e do nome, tudo se ilumina e você é cumprimentado (uns 7 segundos). Toque para pular
+Saludo por voz	Saudação por voz
+Con la voz de la pantalla, sin internet. Si no hay voz para tu idioma, solo sale el texto	Usa a voz da tela, sem internet. Se não houver voz para o seu idioma, aparece só o texto
+Ver la bienvenida	Ver as boas-vindas
+Para que te salude por tu nombre, escríbelo en Tu vehículo → Tu nombre	Para ser cumprimentado pelo nome, escreva-o em Seu veículo → Seu nome
+No se encontró una voz en esta pantalla	Nenhuma voz foi encontrada nesta tela
+No hay voz para este idioma en esta pantalla: solo se muestra el texto	Não há voz para este idioma nesta tela: só o texto é exibido
+Exportar la app de Bluetooth de fábrica	Exportar o app Bluetooth de fábrica
+Si la música Bluetooth no aparece en el inicio: guarda esa app en un archivo .zip (en la pantalla o en una USB) para enviarlo y que StradaOS aprenda a leerla. Sin ADB	Se a música Bluetooth não aparece no início: salve esse app num arquivo .zip (na tela ou num pendrive) para enviá-lo e o StradaOS aprender a lê-lo. Sem ADB
+Exportar app Bluetooth	Exportar app Bluetooth
+No se encontraron apps de Bluetooth de fábrica	Nenhum app Bluetooth de fábrica foi encontrado
+Todas las de Bluetooth y música de fábrica (recomendado)	Todos os apps de Bluetooth e música de fábrica (recomendado)
+detectada	detectado
+¿Qué app exportar?	Qual app exportar?
+¿Dónde guardar el archivo?	Onde salvar o arquivo?
+No se pudo exportar	Não foi possível exportar
+No se pudo guardar el archivo	Não foi possível salvar o arquivo
+Adjunta ese archivo .zip en tu reporte de GitHub (o en el mensaje donde te lo pidieron). Si pesa más de 25 MB, súbelo a Google Drive y comparte el enlace.	Anexe esse arquivo .zip ao seu relato no GitHub (ou à mensagem em que ele foi pedido). Se tiver mais de 25 MB, envie-o ao Google Drive e compartilhe o link.
+Exportación lista	Exportação pronta

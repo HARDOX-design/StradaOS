@@ -1938,3 +1938,24 @@ Posición del carro	Car position
 Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)	Bottom: while navigating, see more of the road ahead (with the map in direction of travel)
 Centro	Center
 Abajo	Bottom
+# 2.38: bienvenida (#80, #48) y exportar la app Bluetooth de fábrica (#79)
+Bienvenida al encender	Welcome at startup
+Una luz pasa detrás del logo y del nombre, todo se ilumina y te saluda (unos 7 segundos). Tócala para saltarla	A light glides behind the logo and the name, everything lights up and it greets you (about 7 seconds). Tap it to skip
+Saludo por voz	Voice greeting
+Con la voz de la pantalla, sin internet. Si no hay voz para tu idioma, solo sale el texto	Uses the screen's voice, no internet needed. If there's no voice for your language, only the text appears
+Ver la bienvenida	Watch the welcome
+Para que te salude por tu nombre, escríbelo en Tu vehículo → Tu nombre	To be greeted by name, enter it in Your vehicle → Your name
+No se encontró una voz en esta pantalla	No voice was found on this screen
+No hay voz para este idioma en esta pantalla: solo se muestra el texto	There's no voice for this language on this screen: only the text is shown
+Exportar la app de Bluetooth de fábrica	Export the factory Bluetooth app
+Si la música Bluetooth no aparece en el inicio: guarda esa app en un archivo .zip (en la pantalla o en una USB) para enviarlo y que StradaOS aprenda a leerla. Sin ADB	If Bluetooth music doesn't show on the home screen: save that app to a .zip file (on the screen or a USB drive) so you can send it and StradaOS can learn to read it. No ADB needed
+Exportar app Bluetooth	Export Bluetooth app
+No se encontraron apps de Bluetooth de fábrica	No factory Bluetooth apps were found
+Todas las de Bluetooth y música de fábrica (recomendado)	All factory Bluetooth and music apps (recommended)
+detectada	detected
+¿Qué app exportar?	Which app should be exported?
+¿Dónde guardar el archivo?	Where should the file be saved?
+No se pudo exportar	Couldn't export
+No se pudo guardar el archivo	Couldn't save the file
+Adjunta ese archivo .zip en tu reporte de GitHub (o en el mensaje donde te lo pidieron). Si pesa más de 25 MB, súbelo a Google Drive y comparte el enlace.	Attach that .zip file to your GitHub report (or to the message where you were asked for it). If it's larger than 25 MB, upload it to Google Drive and share the link.
+Exportación lista	Export ready

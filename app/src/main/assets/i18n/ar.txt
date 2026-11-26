@@ -1934,3 +1934,24 @@ Posición del carro	موضع السيارة
 Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)	أسفل: أثناء التنقل ترى جزءًا أكبر من الطريق أمامك (مع الخريطة حسب اتجاهك)
 Centro	الوسط
 Abajo	أسفل
+# 2.38: bienvenida (#80, #48) y exportar la app Bluetooth de fábrica (#79)
+Bienvenida al encender	ترحيب عند التشغيل
+Una luz pasa detrás del logo y del nombre, todo se ilumina y te saluda (unos 7 segundos). Tócala para saltarla	يمر ضوء خلف الشعار والاسم، ثم يضيء كل شيء ويرحب بك (نحو 7 ثوانٍ). المسه للتخطي
+Saludo por voz	تحية صوتية
+Con la voz de la pantalla, sin internet. Si no hay voz para tu idioma, solo sale el texto	بصوت الشاشة، دون إنترنت. إن لم يوجد صوت للغتك يظهر النص فقط
+Ver la bienvenida	مشاهدة الترحيب
+Para que te salude por tu nombre, escríbelo en Tu vehículo → Tu nombre	لكي يرحب بك باسمك، اكتبه في مركبتك ← اسمك
+No se encontró una voz en esta pantalla	لم يُعثر على صوت في هذه الشاشة
+No hay voz para este idioma en esta pantalla: solo se muestra el texto	لا يوجد صوت لهذه اللغة في هذه الشاشة: يظهر النص فقط
+Exportar la app de Bluetooth de fábrica	تصدير تطبيق البلوتوث الأصلي
+Si la música Bluetooth no aparece en el inicio: guarda esa app en un archivo .zip (en la pantalla o en una USB) para enviarlo y que StradaOS aprenda a leerla. Sin ADB	إذا لم تظهر موسيقى البلوتوث في الشاشة الرئيسية: احفظ ذلك التطبيق في ملف ‎.zip (في الشاشة أو في ذاكرة USB) لإرساله حتى يتعلم StradaOS قراءته. دون ADB
+Exportar app Bluetooth	تصدير تطبيق البلوتوث
+No se encontraron apps de Bluetooth de fábrica	لم يُعثر على تطبيقات بلوتوث أصلية
+Todas las de Bluetooth y música de fábrica (recomendado)	كل تطبيقات البلوتوث والموسيقى الأصلية (موصى به)
+detectada	مكتشف
+¿Qué app exportar?	أي تطبيق تريد تصديره؟
+¿Dónde guardar el archivo?	أين تريد حفظ الملف؟
+No se pudo exportar	تعذر التصدير
+No se pudo guardar el archivo	تعذر حفظ الملف
+Adjunta ese archivo .zip en tu reporte de GitHub (o en el mensaje donde te lo pidieron). Si pesa más de 25 MB, súbelo a Google Drive y comparte el enlace.	أرفق ملف ‎.zip هذا ببلاغك في GitHub (أو بالرسالة التي طُلب فيها). إن كان أكبر من 25 MB فارفعه إلى Google Drive وشارك الرابط.
+Exportación lista	التصدير جاهز

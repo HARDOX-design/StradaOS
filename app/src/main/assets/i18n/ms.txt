@@ -1934,3 +1934,24 @@ Posición del carro	Kedudukan kereta
 Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)	Bawah: semasa navigasi, lihat lebih banyak jalan di hadapan (dengan peta ikut arah anda)
 Centro	Tengah
 Abajo	Bawah
+# 2.38: bienvenida (#80, #48) y exportar la app Bluetooth de fábrica (#79)
+Bienvenida al encender	Sambutan semasa dihidupkan
+Una luz pasa detrás del logo y del nombre, todo se ilumina y te saluda (unos 7 segundos). Tócala para saltarla	Cahaya melintas di belakang logo dan nama, semuanya menyala dan anda disapa (kira-kira 7 saat). Ketik untuk langkau
+Saludo por voz	Sapaan suara
+Con la voz de la pantalla, sin internet. Si no hay voz para tu idioma, solo sale el texto	Menggunakan suara skrin, tanpa internet. Jika tiada suara untuk bahasa anda, hanya teks dipaparkan
+Ver la bienvenida	Lihat sambutan
+Para que te salude por tu nombre, escríbelo en Tu vehículo → Tu nombre	Untuk disapa dengan nama, tulis nama anda di Kenderaan anda → Nama anda
+No se encontró una voz en esta pantalla	Tiada suara ditemui pada skrin ini
+No hay voz para este idioma en esta pantalla: solo se muestra el texto	Tiada suara untuk bahasa ini pada skrin ini: hanya teks dipaparkan
+Exportar la app de Bluetooth de fábrica	Eksport aplikasi Bluetooth kilang
+Si la música Bluetooth no aparece en el inicio: guarda esa app en un archivo .zip (en la pantalla o en una USB) para enviarlo y que StradaOS aprenda a leerla. Sin ADB	Jika muzik Bluetooth tidak muncul di skrin utama: simpan aplikasi itu dalam fail .zip (pada skrin atau pemacu USB) untuk dihantar supaya StradaOS belajar membacanya. Tanpa ADB
+Exportar app Bluetooth	Eksport aplikasi Bluetooth
+No se encontraron apps de Bluetooth de fábrica	Tiada aplikasi Bluetooth kilang ditemui
+Todas las de Bluetooth y música de fábrica (recomendado)	Semua aplikasi Bluetooth dan muzik kilang (disyorkan)
+detectada	dikesan
+¿Qué app exportar?	Aplikasi mana hendak dieksport?
+¿Dónde guardar el archivo?	Di mana hendak simpan fail?
+No se pudo exportar	Tidak dapat mengeksport
+No se pudo guardar el archivo	Tidak dapat menyimpan fail
+Adjunta ese archivo .zip en tu reporte de GitHub (o en el mensaje donde te lo pidieron). Si pesa más de 25 MB, súbelo a Google Drive y comparte el enlace.	Lampirkan fail .zip itu pada laporan GitHub anda (atau pada mesej yang memintanya). Jika melebihi 25 MB, muat naik ke Google Drive dan kongsi pautannya.
+Exportación lista	Eksport sedia

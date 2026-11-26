@@ -1919,3 +1919,24 @@ Posición del carro	Az autó helyzete
 Abajo: al navegar ves más camino por delante (con el mapa según tu dirección)	Lent: navigáció közben többet látsz az előtted lévő útból (haladási irányú térképpel)
 Centro	Középen
 Abajo	Lent
+# 2.38: bienvenida (#80, #48) y exportar la app Bluetooth de fábrica (#79)
+Bienvenida al encender	Üdvözlés indításkor
+Una luz pasa detrás del logo y del nombre, todo se ilumina y te saluda (unos 7 segundos). Tócala para saltarla	Egy fény suhan el a logó és a név mögött, minden kivilágosodik, és köszönt (kb. 7 másodperc). Koppints a kihagyáshoz
+Saludo por voz	Hangos köszöntés
+Con la voz de la pantalla, sin internet. Si no hay voz para tu idioma, solo sale el texto	A kijelző hangjával, internet nélkül. Ha nincs hang a nyelvedhez, csak a szöveg jelenik meg
+Ver la bienvenida	Üdvözlés megtekintése
+Para que te salude por tu nombre, escríbelo en Tu vehículo → Tu nombre	Hogy a neveden köszöntsön, írd be: Járműved → A neved
+No se encontró una voz en esta pantalla	Ezen a kijelzőn nem található hang
+No hay voz para este idioma en esta pantalla: solo se muestra el texto	Ehhez a nyelvhez nincs hang ezen a kijelzőn: csak a szöveg látszik
+Exportar la app de Bluetooth de fábrica	Gyári Bluetooth-alkalmazás exportálása
+Si la música Bluetooth no aparece en el inicio: guarda esa app en un archivo .zip (en la pantalla o en una USB) para enviarlo y que StradaOS aprenda a leerla. Sin ADB	Ha a Bluetooth-zene nem jelenik meg a kezdőképernyőn: mentsd az alkalmazást egy .zip fájlba (a kijelzőre vagy pendrive-ra), küldd el, és a StradaOS megtanulja olvasni. ADB nélkül
+Exportar app Bluetooth	Bluetooth-alkalmazás exportálása
+No se encontraron apps de Bluetooth de fábrica	Nem található gyári Bluetooth-alkalmazás
+Todas las de Bluetooth y música de fábrica (recomendado)	Minden gyári Bluetooth- és zenealkalmazás (ajánlott)
+detectada	észlelve
+¿Qué app exportar?	Melyik alkalmazást exportáljam?
+¿Dónde guardar el archivo?	Hová mentsem a fájlt?
+No se pudo exportar	Nem sikerült exportálni
+No se pudo guardar el archivo	Nem sikerült menteni a fájlt
+Adjunta ese archivo .zip en tu reporte de GitHub (o en el mensaje donde te lo pidieron). Si pesa más de 25 MB, súbelo a Google Drive y comparte el enlace.	Csatold ezt a .zip fájlt a GitHub-bejelentésedhez (vagy ahhoz az üzenethez, amelyben kérték). Ha nagyobb 25 MB-nál, töltsd fel a Google Drive-ra, és oszd meg a linket.
+Exportación lista	Az exportálás kész
