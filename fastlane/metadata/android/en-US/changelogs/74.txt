@@ -1,0 +1,1 @@
+Smoother map (gliding zoom), long-press "Navigate here", the map returns to the car when a route starts, and "Bottom" car position. Thanks, linorks-maker.
