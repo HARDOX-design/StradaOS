@@ -190,15 +190,15 @@ if part 2; then
   for d in diag-reproductor diag-mapa clima cajon ocultas musica demo-aceite reposo; do step "$d" "$d" 5 1; done
   step inicio inicio 3
   # ── 2.38 (#80, #48): bienvenida. Ajustes → Sistema con los interruptores, la animación quieta en varios instantes
-  # (las dos pasadas del logo, la caída, el rebote con la onda y todo iluminado) y la animación completa (al final se quita)
+  # (la luz de atrás en sus dos pasadas, el final abriéndose y todo iluminado) y la animación completa (al final se quita)
   step bienvenida-nombre pref:user_name=Andres 2
   step bienvenida-on pref:welcome_on=true 3
   step ajustes-sistema-bienvenida ajustes:9 4
-  scroll; scroll; shot "$(printf %03d $N)-ajustes-sistema-bienvenida-medio"
-  for ms in 150 800 1250 2200 3150 3420 3700 4400; do step "bienvenida-$ms" "bienvenida:$ms" 3; done
+  scroll; shot "$(printf %03d $N)-ajustes-sistema-bienvenida-medio"
+  for ms in 600 1300 1900 2600 3800 4700 5400 6400; do step "bienvenida-$ms" "bienvenida:$ms" 3; done
   step bienvenida-completa bienvenida 2
-  sleep 2; shot "$(printf %03d $N)-bienvenida-completa-4s"
-  sleep 3; shot "$(printf %03d $N)-bienvenida-completa-fin"
+  sleep 3; shot "$(printf %03d $N)-bienvenida-completa-5s"
+  sleep 6; shot "$(printf %03d $N)-bienvenida-completa-fin"
   step bienvenida-tocar bienvenida 1
   adb shell input tap 512 300; sleep 2; shot "$(printf %03d $N)-bienvenida-saltada"
   # ── 2.38 (#79): exportar la app Bluetooth de fábrica (lista y exportar todas a la memoria de la pantalla) ──
@@ -232,7 +232,7 @@ if part 2; then
   # los diagnósticos también, para que StradaOS Prueba anote las frases sin traducir (sin-traducir.txt)
   for l in en pt it de ms ar tr fr zh hu pl ru es; do
     step "idioma-$l" "idioma:$l" 6; step "ajustes-$l" "ajustes:9" 4
-    step "bienvenida-$l" "bienvenida:4400" 3
+    step "bienvenida-$l" "bienvenida:6400" 3
     [ "$l" != es ] && { step "diagr-$l" diag-reproductor 4 1; step "diagm-$l" diag-mapa 4 1; }
     # 2.35 r7: la ventana de actualización con las notas en el idioma elegido (inglés si no hay sección del idioma)
     case $l in en|pt|es) step "actualizacion-$l" actualizacion-demo 4 1;; esac

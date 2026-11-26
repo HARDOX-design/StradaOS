@@ -1936,7 +1936,7 @@ Centro	الوسط
 Abajo	أسفل
 # 2.38: bienvenida (#80, #48) y exportar la app Bluetooth de fábrica (#79)
 Bienvenida al encender	ترحيب عند التشغيل
-El logo de StradaOS pasa iluminando el nombre y te saluda (unos 5 segundos). Tócala para saltarla	يمر شعار StradaOS مضيئًا الاسم ويرحب بك (نحو 5 ثوانٍ). المسه للتخطي
+Una luz pasa detrás del logo y del nombre, todo se ilumina y te saluda (unos 7 segundos). Tócala para saltarla	يمر ضوء خلف الشعار والاسم، ثم يضيء كل شيء ويرحب بك (نحو 7 ثوانٍ). المسه للتخطي
 Saludo por voz	تحية صوتية
 Con la voz de la pantalla, sin internet. Si no hay voz para tu idioma, solo sale el texto	بصوت الشاشة، دون إنترنت. إن لم يوجد صوت للغتك يظهر النص فقط
 Ver la bienvenida	مشاهدة الترحيب

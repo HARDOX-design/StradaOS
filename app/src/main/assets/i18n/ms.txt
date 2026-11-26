@@ -1936,7 +1936,7 @@ Centro	Tengah
 Abajo	Bawah
 # 2.38: bienvenida (#80, #48) y exportar la app Bluetooth de fábrica (#79)
 Bienvenida al encender	Sambutan semasa dihidupkan
-El logo de StradaOS pasa iluminando el nombre y te saluda (unos 5 segundos). Tócala para saltarla	Logo StradaOS melintas menerangi nama dan menyapa anda (kira-kira 5 saat). Ketik untuk langkau
+Una luz pasa detrás del logo y del nombre, todo se ilumina y te saluda (unos 7 segundos). Tócala para saltarla	Cahaya melintas di belakang logo dan nama, semuanya menyala dan anda disapa (kira-kira 7 saat). Ketik untuk langkau
 Saludo por voz	Sapaan suara
 Con la voz de la pantalla, sin internet. Si no hay voz para tu idioma, solo sale el texto	Menggunakan suara skrin, tanpa internet. Jika tiada suara untuk bahasa anda, hanya teks dipaparkan
 Ver la bienvenida	Lihat sambutan

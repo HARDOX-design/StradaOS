@@ -1921,7 +1921,7 @@ Centro	Középen
 Abajo	Lent
 # 2.38: bienvenida (#80, #48) y exportar la app Bluetooth de fábrica (#79)
 Bienvenida al encender	Üdvözlés indításkor
-El logo de StradaOS pasa iluminando el nombre y te saluda (unos 5 segundos). Tócala para saltarla	A StradaOS logó végigsuhan a néven, megvilágítja, és köszönt (kb. 5 másodperc). Koppints a kihagyáshoz
+Una luz pasa detrás del logo y del nombre, todo se ilumina y te saluda (unos 7 segundos). Tócala para saltarla	Egy fény suhan el a logó és a név mögött, minden kivilágosodik, és köszönt (kb. 7 másodperc). Koppints a kihagyáshoz
 Saludo por voz	Hangos köszöntés
 Con la voz de la pantalla, sin internet. Si no hay voz para tu idioma, solo sale el texto	A kijelző hangjával, internet nélkül. Ha nincs hang a nyelvedhez, csak a szöveg jelenik meg
 Ver la bienvenida	Üdvözlés megtekintése

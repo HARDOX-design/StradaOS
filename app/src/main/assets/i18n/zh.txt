@@ -1936,7 +1936,7 @@ Centro	居中
 Abajo	底部
 # 2.38: bienvenida (#80, #48) y exportar la app Bluetooth de fábrica (#79)
 Bienvenida al encender	开机欢迎
-El logo de StradaOS pasa iluminando el nombre y te saluda (unos 5 segundos). Tócala para saltarla	StradaOS 标志从名称上方扫过并将其点亮，然后向你问候（约 5 秒）。轻触可跳过
+Una luz pasa detrás del logo y del nombre, todo se ilumina y te saluda (unos 7 segundos). Tócala para saltarla	一道光从标志和名称后方缓缓扫过，随后全部点亮并向你问候（约 7 秒）。轻触可跳过
 Saludo por voz	语音问候
 Con la voz de la pantalla, sin internet. Si no hay voz para tu idioma, solo sale el texto	使用屏幕自带的语音，无需联网。如果没有你所用语言的语音，只显示文字
 Ver la bienvenida	查看欢迎动画

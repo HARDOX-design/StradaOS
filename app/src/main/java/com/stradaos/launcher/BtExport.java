@@ -35,7 +35,7 @@ final class BtExport {
     }
 
     private static final String[] KEYS = {"bt", "blue", "a2dp", "avrcp", "music", "musica", "audio", "media", "nwd", "nowada",
-            "phone", "dial", "goc", "mcu", "canbus", "carservice", "sound"};
+            "phone", "dialer", "goc", "mcu", "canbus", "carservice", "sound"};
     private static final long MAX_APP = 80L * 1024 * 1024;
 
     /** Apps de fábrica que pueden tener el Bluetooth; la que StradaOS cree que es la de música Bluetooth va primero. */

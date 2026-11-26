@@ -1936,7 +1936,7 @@ Centro	Centre
 Abajo	En bas
 # 2.38: bienvenida (#80, #48) y exportar la app Bluetooth de fábrica (#79)
 Bienvenida al encender	Accueil au démarrage
-El logo de StradaOS pasa iluminando el nombre y te saluda (unos 5 segundos). Tócala para saltarla	Le logo StradaOS passe en illuminant le nom et vous salue (environ 5 secondes). Touchez pour passer
+Una luz pasa detrás del logo y del nombre, todo se ilumina y te saluda (unos 7 segundos). Tócala para saltarla	Une lumière passe derrière le logo et le nom, tout s'illumine et vous êtes salué (environ 7 secondes). Touchez pour passer
 Saludo por voz	Salutation vocale
 Con la voz de la pantalla, sin internet. Si no hay voz para tu idioma, solo sale el texto	Avec la voix de l'écran, sans internet. S'il n'y a pas de voix pour votre langue, seul le texte s'affiche
 Ver la bienvenida	Voir l'accueil

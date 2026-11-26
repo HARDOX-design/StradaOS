@@ -11064,7 +11064,7 @@ public class Main extends Activity {
             }});
         // 2.38 (#80, #48): bienvenida con el logo y saludo por voz; al activarla la voz viene encendida y se muestra una vez
         final boolean wOn = prefs.getBoolean("welcome_on", false);
-        toggle(hm, "Bienvenida al encender", "El logo de StradaOS pasa iluminando el nombre y te saluda (unos 5 segundos). Tócala para saltarla",
+        toggle(hm, "Bienvenida al encender", "Una luz pasa detrás del logo y del nombre, todo se ilumina y te saluda (unos 7 segundos). Tócala para saltarla",
             wOn, new IntCb() { public void on(int i) {
                 SharedPreferences.Editor e = prefs.edit().putBoolean("welcome_on", i == 1);
                 if (i == 1) e.putBoolean("welcome_voice", true);
@@ -11359,8 +11359,9 @@ public class Main extends Activity {
         w.freezeAt = freeze;
         if (freeze < 0 && prefs.getBoolean("welcome_voice", true)) {
             try { if (welcomeVoice != null) welcomeVoice.shutdown(); } catch (Throwable ignored) { }
-            final Welcome.Voice v = new Welcome.Voice(this, g, I18n.loc);
+            final Welcome.Voice v = new Welcome.Voice(this, g + ".", I18n.loc);
             welcomeVoice = v;
+            w.voice = v;
             w.onImpact = new Runnable() { public void run() { v.speak(); } };
         }
         w.onEnd = new Runnable() { public void run() { if (welcome == w) removeWelcome(); } };

@@ -1938,7 +1938,7 @@ Centro	Orta
 Abajo	Aşağıda
 # 2.38: bienvenida (#80, #48) y exportar la app Bluetooth de fábrica (#79)
 Bienvenida al encender	Açılışta karşılama
-El logo de StradaOS pasa iluminando el nombre y te saluda (unos 5 segundos). Tócala para saltarla	StradaOS logosu adı aydınlatarak geçer ve sizi selamlar (yaklaşık 5 saniye). Geçmek için dokunun
+Una luz pasa detrás del logo y del nombre, todo se ilumina y te saluda (unos 7 segundos). Tócala para saltarla	Logonun ve adın arkasından bir ışık geçer, her şey aydınlanır ve sizi selamlar (yaklaşık 7 saniye). Geçmek için dokunun
 Saludo por voz	Sesli selamlama
 Con la voz de la pantalla, sin internet. Si no hay voz para tu idioma, solo sale el texto	Ekranın sesiyle, internetsiz. Diliniz için ses yoksa yalnızca yazı görünür
 Ver la bienvenida	Karşılamayı izle
