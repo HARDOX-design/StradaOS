@@ -127,8 +127,9 @@ final class Welcome extends View {
         litP.setShader(litG);
         gLitP.setShader(gLitG);
         // la luz de atrás: blanca cálida en el centro que se vuelve roja y se apaga
-        backG = new RadialGradient(0, 0, GR, new int[]{0x3CFFF3EE, 0x1EFE5A3C, 0x0AFE3211, 0x00FE3211},
-                new float[]{0f, 0.35f, 0.7f, 1f}, Shader.TileMode.CLAMP);
+        // (solo 3 colores, como todos los degradados de aquí: con 4 el dibujo por software de Android 14 tumbaba el emulador)
+        backG = new RadialGradient(0, 0, GR, new int[]{0x3CFFF3EE, 0x18FE5A3C, 0x00FE3211},
+                new float[]{0f, 0.42f, 1f}, Shader.TileMode.CLAMP);
         backP.setShader(backG);
         // brillo rojo final detrás de todo el bloque
         glowG = new RadialGradient(0, 0, GR, new int[]{0x46FE3211, 0x1AFE3211, 0x00FE3211}, new float[]{0f, 0.55f, 1f}, Shader.TileMode.CLAMP);
