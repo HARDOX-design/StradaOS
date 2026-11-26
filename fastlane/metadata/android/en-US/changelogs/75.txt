@@ -1,0 +1,1 @@
+Welcome at startup: a soft light reveals the logo, the name and your greeting, with an optional voice greeting. Plus export the factory Bluetooth app to a .zip, no ADB needed.

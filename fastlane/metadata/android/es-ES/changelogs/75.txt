@@ -1,0 +1,1 @@
+Bienvenida al encender: una luz suave ilumina el logo, el nombre y tu saludo, con saludo por voz opcional. Y exportar la app de Bluetooth de fábrica a un .zip, sin ADB.
