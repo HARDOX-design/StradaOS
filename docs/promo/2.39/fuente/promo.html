@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:R;font-weight:400;src:url(fonts/roboto-latin-400-normal.woff2)}
+@font-face{font-family:R;font-weight:500;src:url(fonts/roboto-latin-500-normal.woff2)}
+@font-face{font-family:R;font-weight:700;src:url(fonts/roboto-latin-700-normal.woff2)}
+@font-face{font-family:R;font-weight:900;src:url(fonts/roboto-latin-900-normal.woff2)}
+:root{--bg:#0A0B0E;--t:#F2F3F5;--m:#A2A8B2;--a:#FE3211;--a2:#FF6A3D;--line:rgba(255,255,255,.09)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#000}
+body{font-family:R,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
+#s{position:relative;overflow:hidden;background:var(--bg)}
+.land #s{width:1600px;height:900px}
+.port #s{width:1080px;height:1350px}
+/* fondo: brillos rojos, haces y grano */
+.glow{position:absolute;inset:0;pointer-events:none}
+.glow:before{content:"";position:absolute;width:1100px;height:1100px;border-radius:50%;left:-420px;bottom:-640px;
+  background:radial-gradient(circle,rgba(254,50,17,.34),rgba(254,50,17,.10) 45%,transparent 70%)}
+.glow:after{content:"";position:absolute;width:1000px;height:1000px;border-radius:50%;right:-380px;top:-560px;
+  background:radial-gradient(circle,rgba(255,106,61,.26),rgba(254,50,17,.07) 45%,transparent 70%)}
+.beams{position:absolute;inset:0;pointer-events:none;opacity:.55;
+  background:repeating-linear-gradient(90deg,transparent 0 118px,rgba(254,50,17,.07) 118px 119px,transparent 119px 240px)}
+.beams{-webkit-mask:linear-gradient(180deg,transparent,#000 60%,transparent)}
+.grain{position:absolute;inset:0;pointer-events:none;opacity:.09;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.card{position:absolute;inset:26px;border-radius:34px;border:1px solid var(--line);
+  background:linear-gradient(160deg,rgba(255,255,255,.035),rgba(255,255,255,.01) 40%,rgba(0,0,0,.15))}
+.c{position:absolute;inset:26px;padding:52px 60px}
+.port .c{padding:56px 58px}
+/* marca */
+.brand{display:flex;align-items:center;gap:16px;font-weight:700;font-size:34px;letter-spacing:-.3px}
+.brand img{width:58px;height:58px;border-radius:14px}
+.pill{display:inline-flex;align-items:center;gap:8px;background:var(--a);color:#fff;font-weight:700;font-size:20px;
+  padding:9px 20px;border-radius:999px;box-shadow:0 8px 30px rgba(254,50,17,.35)}
+.pill.ghost{background:rgba(254,50,17,.12);color:#FF8A66;border:1px solid rgba(254,50,17,.45);box-shadow:none}
+.top{display:flex;justify-content:space-between;align-items:center}
+.kick{font-weight:700;font-size:21px;letter-spacing:2.4px;text-transform:uppercase;color:var(--a2)}
+h1{font-weight:900;letter-spacing:-1.6px;line-height:1.02}
+h1 em{font-style:normal;color:var(--a)}
+.land h1{font-size:64px}
+.port h1{font-size:76px}
+.land h1.xl{font-size:64px}
+p.sub{color:#C9CDD4;font-size:23px;line-height:1.42;font-weight:400}
+.port p.sub{font-size:28px}
+/* insignias tipo shields */
+.badges{display:flex;gap:9px;flex-wrap:wrap}
+.bd{display:flex;font-weight:700;font-size:15px;letter-spacing:1px;border-radius:6px;overflow:hidden;text-transform:uppercase}
+.bd b{background:#2A2E37;color:#D6D9DE;padding:8px 9px;font-weight:700}
+.bd i{font-style:normal;color:#fff;padding:8px 9px;text-transform:none}
+.port .bd{font-size:18px}
+/* viñetas */
+.bul{display:flex;flex-direction:column;gap:18px}
+.bul div{display:flex;align-items:center;gap:18px;font-size:22px;color:#E3E6EA;line-height:1.3}
+.port .bul div{font-size:27px}
+.ico{flex:none;width:46px;height:46px;border-radius:12px;background:rgba(254,50,17,.14);border:1px solid rgba(254,50,17,.35);
+  display:flex;align-items:center;justify-content:center}
+.ico span{width:26px;height:26px;background:var(--a2);-webkit-mask:var(--u) center/contain no-repeat}
+/* pantallas */
+.dev{position:absolute;background:#050608;border-radius:24px;padding:11px;border:1px solid rgba(255,255,255,.13);
+  box-shadow:0 30px 80px rgba(0,0,0,.65),0 0 0 1px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.08)}
+.dev img{display:block;width:100%;border-radius:14px}
+.dev .lab{position:absolute;left:22px;top:-17px;background:#1B1E25;border:1px solid var(--line);color:#E8EAED;font-weight:700;
+  font-size:17px;padding:6px 14px;border-radius:999px;white-space:nowrap}
+.dev .lab.a{background:var(--a);border-color:var(--a);color:#fff}
+.chips{display:flex;gap:12px;flex-wrap:wrap}
+.chip{font-size:19px;font-weight:500;color:#E3E6EA;background:rgba(255,255,255,.06);border:1px solid var(--line);
+  padding:9px 16px;border-radius:999px;display:flex;align-items:center;gap:9px}
+.chip:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--a)}
+.port .chip{font-size:22px}
+.foot{position:absolute;left:60px;right:60px;bottom:40px;display:flex;justify-content:space-between;align-items:center;
+  font-size:19px;color:#8E949E}
+.foot b{color:#E3E6EA;font-weight:500}
+.port .foot{font-size:21px;bottom:44px}
+.dots{display:flex;gap:9px}.dots i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.22)}.dots i.on{background:#fff;width:26px;border-radius:6px}
+.abs{position:absolute}
+/* temas */
+.th{position:absolute;border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.12);background:#050608;
+  box-shadow:0 24px 60px rgba(0,0,0,.6)}
+.th img{display:block;width:100%}
+.th .nm{position:absolute;left:0;right:0;bottom:0;padding:44px 20px 16px;background:linear-gradient(transparent,rgba(0,0,0,.85));
+  display:flex;justify-content:space-between;align-items:flex-end}
+.th .nm b{font-size:24px;font-weight:700}
+.th .nm span{font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff;background:var(--a);padding:5px 10px;border-radius:6px}
+.soon{position:absolute;border-radius:22px;overflow:hidden;border:1px dashed rgba(254,50,17,.6);background:#08090C}
+.soon .blur{position:absolute;inset:-20px;filter:blur(7px) saturate(1.3) brightness(1.35);opacity:1}
+.soon .veil{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(8,9,12,.62),rgba(8,9,12,.25) 75%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center}
+.soon .veil small{font-size:16px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#FF8A66}
+.soon .veil b{font-size:34px;font-weight:900;letter-spacing:-.5px}
+.soon .veil i{font-style:normal;font-size:19px;color:#C9CDD4}
+.grid{display:grid;gap:16px}
+.feat{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:18px;padding:24px 22px;display:flex;gap:16px;align-items:center}
+.feat .t{font-size:21px;font-weight:700;line-height:1.2}
+.feat .d{font-size:16px;color:var(--m);margin-top:3px;line-height:1.3}
+.port .feat .t{font-size:23px}.port .feat .d{font-size:18px}
+.qr{background:#fff;border-radius:16px;padding:12px}
+.qr img{display:block;width:100%}
+.claude{display:inline-flex;align-items:center;gap:10px;font-size:19px;color:#E3E6EA;background:rgba(255,255,255,.06);border:1px solid var(--line);padding:9px 16px;border-radius:999px}
+.claude:before{content:"";width:10px;height:10px;border-radius:50%;background:#D97757}
+.arrow{position:absolute;color:var(--a);font-size:44px;font-weight:900}
+.cover{position:absolute;border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.12);box-shadow:0 24px 60px rgba(0,0,0,.6)}
+.cover img{display:block;width:100%}
+</style></head>
+<body><div id="s"><div class="glow"></div><div class="beams"></div><div class="grain"></div><div class="card"></div><div class="c" id="c"></div></div>
+<script>
+const Q=new URLSearchParams(location.search);
+const L=Q.get('lang')||'es', F=Q.get('fmt')||'land', N=+(Q.get('n')||1);
+document.body.className=F;
+const T=(es,en)=>L==='es'?es:en;
+const cap=n=>`cap/${L}-${n}.png`;
+const ico=n=>`<div class="ico"><img src="ic2/${n}.png" style="width:26px;height:26px"></div>`;
+const brand=`<div class="brand"><img src="logo-512.png">StradaOS</div>`;
+const total=7;
+const dots=()=>`<div class="dots">${Array.from({length:total},(_,i)=>`<i class="${i+1===N?'on':''}"></i>`).join('')}</div>`;
+const foot=(extra)=>`<div class="foot"><span>${T('Sin anuncios · Sin root · Sin cuentas','No ads · No root · No accounts')} — <b>github.com/lordnordic-debug/StradaOS</b></span>${extra||""}</div>`;
+const dev=(src,x,y,w,lab,a)=>`<div class="dev" style="left:${x}px;top:${y}px;width:${w}px">${lab?`<div class="lab ${a?'a':''}">${lab}</div>`:''}<img src="${src}"></div>`;
+const badges=`<div class="badges">
+ <div class="bd"><b>${T('versión','release')}</b><i style="background:#3B6FE0">v2.39</i></div>
+ <div class="bd"><b>android</b><i style="background:#2FA84F">4.1+</i></div>
+ <div class="bd"><b>${T('licencia','license')}</b><i style="background:#E0402A">GPL-3.0</i></div>
+ <div class="bd"><b>${T('tamaño','size')}</b><i style="background:#2FA84F">≈1.5 MB</i></div></div>`;
+const topb=(k)=>`<div class="top">${brand}<span class="pill">${k||T('Código abierto','Open source')}</span></div>`;
+const S={};
+// 1 · portada
+S[1]=()=>F==='land'?`${topb()}
+ <div class="abs" style="left:60px;top:140px;width:680px">
+  <h1 class="xl">${T('Dale una <em>vida nueva</em> a la pantalla de tu carro.','Give your old car screen a <em>new life.</em>')}</h1>
+  <p class="sub" style="margin-top:22px">${T('Launcher gratis y de código abierto para pantallas Android de carro, incluso las baratas que dicen «Android 10» y por dentro son Android 4.','A free, open-source launcher for cheap Android car head units — even the ones that say "Android 10" but secretly run Android 4.')}</p>
+  <div style="margin-top:28px">${badges}</div>
+  <div class="bul" style="margin-top:34px">
+   <div>${ico('restart_alt')}${T('Nuevo: bienvenida al encender con saludo por voz','New: boot welcome that greets you by name')}</div>
+   <div>${ico('navigation')}${T('Navegación con destino y mapas sin conexión','Turn-by-turn navigation and offline maps')}</div>
+   <div>${ico('palette')}${T('Carrusel mapa/video, escáner OBD-II y temas premium','Map/video carousel, OBD-II scanner, premium themes')}</div>
+  </div></div>
+  ${dev(cap('nav-cards'),760,150,740,T('Premium Cards · navegando','Premium Cards · navigating'),1)}
+  ${dev(cap('faro-oscuro'),1040,500,450,'Faro')}
+  ${foot()}`
+ :`${topb()}
+  <div style="margin-top:56px"><h1>${T('Dale una <em>vida nueva</em> a la pantalla de tu carro.','Give your old car screen a <em>new life.</em>')}</h1>
+  <p class="sub" style="margin-top:24px">${T('Launcher gratis y de código abierto para pantallas Android de carro, incluso las baratas que dicen «Android 10» y por dentro son Android 4.','A free, open-source launcher for cheap Android car head units — even the ones that say "Android 10" but secretly run Android 4.')}</p>
+  <div style="margin-top:28px">${badges}</div></div>
+  ${dev(cap('nav-cards'),58,600,770,T('Premium Cards · navegando','Premium Cards · navigating'),1)}
+  ${dev(cap('faro-oscuro'),460,880,510,'Faro')}
+  ${foot()}`;
+// 2 · bienvenida
+S[2]=()=>{const h=T('Te saluda <em>por tu nombre.</em>','It greets you <em>by name.</em>');
+ const p=T('Al prender el carro, el logo se ilumina y StradaOS te da los buenos días por voz, en tu idioma. Se activa o se apaga en Ajustes, y la voz también.','When you start the car, the logo lights up and StradaOS says good morning out loud, in your language. Turn it on or off in Settings — the voice too.');
+ const ch=`<div class="chips"><div class="chip">${T('Saludo por voz','Spoken greeting')}</div><div class="chip">${T('13 idiomas','13 languages')}</div><div class="chip">${T('Se puede apagar','Can be turned off')}</div></div>`;
+ return F==='land'?`${topb(T('Nuevo en la 2.38','New in 2.38'))}
+  <div class="abs" style="left:60px;top:160px;width:560px"><div class="kick">${T('Bienvenida al encender','Boot welcome')}</div>
+  <h1 style="margin-top:14px">${h}</h1><p class="sub" style="margin-top:22px">${p}</p><div style="margin-top:30px">${ch}</div></div>
+  ${dev(cap('bienvenida-medio'),690,130,560,'1')}
+  ${dev(cap('bienvenida-6700'),900,450,600,'2',1)}
+  ${foot()}`
+ :`${topb(T('Nuevo en la 2.38','New in 2.38'))}
+  <div style="margin-top:50px"><div class="kick">${T('Bienvenida al encender','Boot welcome')}</div><h1 style="margin-top:14px">${h}</h1>
+  <p class="sub" style="margin-top:22px">${p}</p><div style="margin-top:26px">${ch}</div></div>
+  ${dev(cap('bienvenida-medio'),58,540,600,'1')}
+  ${dev(cap('bienvenida-6700'),370,820,600,'2',1)}
+  ${foot()}`};
+// 3 · navegación
+S[3]=()=>{const h=T('Ponle destino <em>y arranca.</em>','Pick a destination <em>and go.</em>');
+ const p=T('Escribe un lugar, toca Buscar y StradaOS te guía giro a giro en el mapa. Funciona en todos los temas y también con mapas sin conexión.','Type a place, tap Search and StradaOS guides you turn by turn on the map. Works with every theme and with offline maps too.');
+ const ch=`<div class="chips"><div class="chip">${T('Giro a giro','Turn by turn')}</div><div class="chip">${T('Mapas sin conexión','Offline maps')}</div><div class="chip">${T('Paradas intermedias','Extra stops')}</div></div>`;
+ return F==='land'?`${topb()}
+  <div class="abs" style="left:60px;top:160px;width:560px"><div class="kick">${T('Navegación','Navigation')}</div>
+  <h1 style="margin-top:14px">${h}</h1><p class="sub" style="margin-top:22px">${p}</p><div style="margin-top:30px">${ch}</div></div>
+  ${dev(cap(L==='en'?'nav-buscar-crop':'nav-buscar'),690,L==='en'?190:120,520,T('1 · Busca','1 · Search'))}
+  ${dev(cap('nav-faro'),880,430,620,T('2 · Te guía','2 · Get guided'),1)}
+  ${foot()}`
+ :`${topb()}
+  <div style="margin-top:50px"><div class="kick">${T('Navegación','Navigation')}</div><h1 style="margin-top:14px">${h}</h1>
+  <p class="sub" style="margin-top:22px">${p}</p><div style="margin-top:26px">${ch}</div></div>
+  ${dev(cap('nav-buscar'),58,540,600,T('1 · Busca','1 · Search'))}
+  ${dev(cap('nav-faro'),370,820,600,T('2 · Te guía','2 · Get guided'),1)}
+  ${foot()}`};
+// 4 · video
+S[4]=()=>{const h=T('Desliza el mapa <em>y pon tus videos.</em>','Swipe the map, <em>play your videos.</em>');
+ const p=T('Tus videos musicales guardados en la pantalla o en una USB, con miniaturas y línea de tiempo. Si el carro arranca, la imagen se tapa y el audio sigue.','Your music videos saved on the screen or a USB stick, with thumbnails and a timeline. Once the car moves, the picture is covered and the audio keeps playing.');
+ const ch=`<div class="chips"><div class="chip">${T('Memoria o USB','Storage or USB')}</div><div class="chip">${T('Se tapa al manejar','Covered while driving')}</div></div>`;
+ return F==='land'?`${topb(T('Nuevo en la 2.35','New in 2.35'))}
+  <div class="abs" style="left:60px;top:160px;width:560px"><div class="kick">${T('Carrusel mapa / video','Map / video carousel')}</div>
+  <h1 style="margin-top:14px">${h}</h1><p class="sub" style="margin-top:22px">${p}</p><div style="margin-top:30px">${ch}</div></div>
+  ${dev(cap('video-cards'),690,120,560,T('Detenido','Parked'),1)}
+  ${dev(cap('video-andando'),900,440,600,T('En movimiento','Moving'))}
+  ${foot()}`
+ :`${topb(T('Nuevo en la 2.35','New in 2.35'))}
+  <div style="margin-top:50px"><div class="kick">${T('Carrusel mapa / video','Map / video carousel')}</div><h1 style="margin-top:14px">${h}</h1>
+  <p class="sub" style="margin-top:22px">${p}</p><div style="margin-top:26px">${ch}</div></div>
+  ${dev(cap('video-cards'),58,630,570,T('Detenido','Parked'),1)}
+  ${dev(cap('video-andando'),400,880,570,T('En movimiento','Moving'))}
+  ${foot()}`};
+// 5 · OBD + carátulas
+S[5]=()=>{const h=T('Tu carro, <em>en datos.</em>','Your car, <em>in numbers.</em>');
+ const p=T('Con un adaptador ELM327: refrigerante, batería, revoluciones y códigos de falla explicados, con alertas por voz. Y con internet, la carátula de la canción aparece sola.','With an ELM327 adapter: coolant, battery, RPM and fault codes explained, with voice alerts. And with internet, the song’s album art shows up on its own.');
+ const ch=`<div class="chips"><div class="chip">${T('Escáner OBD-II','OBD-II scanner')}</div><div class="chip">${T('Alertas por voz','Voice alerts')}</div><div class="chip">${T('Carátula automática','Automatic album art')}</div></div>`;
+ const cov=(x,y,w)=>`<div class="dev" style="left:${x}px;top:${y}px;width:${w}px;padding:0;overflow:visible"><div class="lab a">${T('Carátula con internet','Album art via internet')}</div><img src="cap/${L}-caratula.png" style="border-radius:22px"></div>`;
+ return F==='land'?`${topb()}
+  <div class="abs" style="left:60px;top:160px;width:560px"><div class="kick">${T('Escáner OBD-II y música','OBD-II scanner & music')}</div>
+  <h1 style="margin-top:14px">${h}</h1><p class="sub" style="margin-top:22px">${p}</p><div style="margin-top:30px">${ch}</div></div>
+  ${dev(cap('obd-panel-crop'),660,140,560,T('Panel del vehículo','Vehicle panel'),1)}
+  ${cov(1240,300,260)}
+  ${foot()}`
+ :`${topb()}
+  <div style="margin-top:50px"><div class="kick">${T('Escáner OBD-II y música','OBD-II scanner & music')}</div><h1 style="margin-top:14px">${h}</h1>
+  <p class="sub" style="margin-top:22px">${p}</p><div style="margin-top:26px">${ch}</div></div>
+  ${dev(cap('obd-panel-crop'),58,700,600,T('Panel del vehículo','Vehicle panel'),1)}
+  ${cov(700,640,260)}
+  ${foot()}`};
+S[6]=()=>{const h=T('Temas <em>premium.</em>','Premium <em>themes.</em>');
+ const p=T('Faro, Carbono y el nuevo Premium Cards, cada uno en claro y oscuro. Se desbloquean con una donación y StradaOS sigue gratis para todos.','Faro, Carbono and the new Premium Cards, each in light and dark. Unlock them with a donation — StradaOS stays free for everyone.');
+ const th=(img,nm,tag,x,y,w)=>`<div class="th" style="left:${x}px;top:${y}px;width:${w}px"><img src="${img}"><div class="nm"><b>${nm}</b>${tag?`<span>${tag}</span>`:''}</div></div>`;
+ const soon=(x,y,w)=>`<div class="soon" style="left:${x}px;top:${y}px;width:${w}px;height:${w*0.586}px">${teaser()}<div class="veil"><small>${T('Muy pronto','Coming soon')}</small><b>Sport Cockpit</b><i>${T('El 4.º tema premium','The 4th premium theme')}</i></div></div>`;
+ return F==='land'?`${topb(T('Nuevo en la 2.39','New in 2.39'))}
+  <div class="abs" style="left:60px;top:150px;width:470px"><div class="kick">${T('Personalización','Customization')}</div>
+  <h1 style="margin-top:14px">${h}</h1><p class="sub" style="margin-top:22px">${p}</p>
+  <div class="chips" style="margin-top:28px"><div class="chip">${T('Gratis: Clásico, Aurora, Cobalto','Free: Classic, Aurora, Cobalto')}</div></div></div>
+  ${th(cap('cards-oscuro'),'Premium Cards',T('Nuevo','New'),570,130,460)}
+  ${th(cap('faro-oscuro'),'Faro','',1050,130,450)}
+  ${th(cap('carbono-oscuro'),'Carbono','',570,430,460)}
+  ${soon(1050,430,450)}
+  ${foot()}`
+ :`${topb(T('Nuevo en la 2.39','New in 2.39'))}
+  <div style="margin-top:50px"><div class="kick">${T('Personalización','Customization')}</div><h1 style="margin-top:14px">${h}</h1>
+  <p class="sub" style="margin-top:22px">${p}</p></div>
+  ${th(cap('cards-oscuro'),'Premium Cards',T('Nuevo','New'),58,450,440)}
+  ${th(cap('faro-oscuro'),'Faro','',530,450,440)}
+  ${th(cap('carbono-oscuro'),'Carbono','',58,750,440)}
+  ${soon(530,750,440)}
+  <div class="chips abs" style="left:58px;top:1060px"><div class="chip">${T('Gratis: Clásico, Aurora, Cobalto','Free: Classic, Aurora, Cobalto')}</div><div class="chip">${T('Claro y oscuro','Light and dark')}</div></div>
+  ${foot()}`};
+// 7 · todo lo que trae + descarga
+S[7]=()=>{const fs=[
+ ['favorite',T('Gratis y código abierto','Free and open source'),T('GPL-3.0, sin anuncios ni cuentas','GPL-3.0, no ads, no accounts')],
+ ['android',T('Android 4.1 o superior','Android 4.1 and up'),T('Sin root, en pantallas baratas','No root, runs on cheap units')],
+ ['phone_iphone','Android Auto · CarPlay',T('Botones directos (CarPlay con adaptador)','One-tap buttons (CarPlay via adapter)')],
+ ['map',T('Mapa en vivo y sin conexión','Live and offline maps'),T('Navegación giro a giro','Turn-by-turn navigation')],
+ ['music_note',T('Reproductor completo','Full music player'),T('Bluetooth, Android Auto y carátulas','Bluetooth, Android Auto, album art')],
+ ['speed',T('Escáner OBD-II','OBD-II scanner'),T('Datos en vivo, alertas y códigos','Live data, alerts and codes')],
+ ['fact_check',T('Mantenimientos','Maintenance reminders'),T('Aceite, SOAT, revisiones…','Oil, insurance, services…')],
+ ['public',T('13 idiomas','13 languages'),T('Copia de seguridad en USB','Backup to USB')]];
+ const g=fs.map(f=>`<div class="feat">${ico(f[0])}<div><div class="t">${f[1]}</div><div class="d">${f[2]}</div></div></div>`).join('');
+ const cta=T('Descárgalo gratis','Download it free');
+ return F==='land'?`${topb()}
+  <div class="abs" style="left:60px;top:150px;width:1000px"><h1>${T('Todo esto, <em>gratis.</em>','All of this, <em>free.</em>')}</h1>
+  <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:34px">${g}</div></div>
+  <div class="abs" style="left:1130px;top:150px;width:350px;text-align:center">
+   <div class="qr" style="width:250px;margin:0 auto"><img src="qr-descarga.svg"></div>
+   <div style="font-size:30px;font-weight:900;margin-top:22px">${cta}</div>
+   <div style="font-size:19px;color:#C9CDD4;margin-top:8px;line-height:1.4">${T('APK firmado en GitHub Releases<br>y avisos de actualización en la app','Signed APK on GitHub Releases<br>with in-app update alerts')}</div>
+   <div style="margin-top:24px"><span class="claude">${T('Hecho con Claude Code','Built with Claude Code')}</span></div>
+   <div style="margin-top:12px;font-size:18px;color:#8E949E">${T('Hecho en Colombia 🇨🇴','Made in Colombia 🇨🇴')}</div>
+  </div>
+  ${foot()}`
+ :`${topb()}
+  <div style="margin-top:46px"><h1>${T('Todo esto, <em>gratis.</em>','All of this, <em>free.</em>')}</h1></div>
+  <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:34px">${g}</div>
+  <div style="display:flex;gap:34px;align-items:center;margin-top:40px">
+   <div class="qr" style="width:210px;flex:none"><img src="qr-descarga.svg"></div>
+   <div><div style="font-size:36px;font-weight:900">${cta}</div>
+   <div style="font-size:22px;color:#C9CDD4;margin-top:8px;line-height:1.4">${T('APK firmado en GitHub Releases y avisos de actualización en la app','Signed APK on GitHub Releases with in-app update alerts')}</div>
+   <div style="margin-top:18px;display:flex;gap:14px;flex-wrap:wrap;align-items:center"><span class="claude">${T('Hecho con Claude Code','Built with Claude Code')}</span><span style="font-size:20px;color:#8E949E">${T('Hecho en Colombia 🇨🇴','Made in Colombia 🇨🇴')}</span></div></div>
+  </div>
+  ${foot()}`};
+// adelanto difuminado de «Sport Cockpit»: tablero en píldora con velocímetro y mapa redondo (formas originales, sin detalles)
+function teaser(){return `<div class="blur"><svg viewBox="0 0 500 300" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+ <defs><radialGradient id="rg" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FE3211" stop-opacity=".9"/><stop offset="1" stop-color="#FE3211" stop-opacity="0"/></radialGradient></defs>
+ <rect width="500" height="300" fill="#0b0c10"/>
+ <rect x="40" y="60" width="420" height="120" rx="60" fill="#16181e" stroke="#FE3211" stroke-width="3"/>
+ <circle cx="120" cy="120" r="70" fill="url(#rg)" opacity=".6"/>
+ <circle cx="120" cy="120" r="48" fill="none" stroke="#ff6a3d" stroke-width="8" stroke-dasharray="200 120"/>
+ <circle cx="380" cy="120" r="50" fill="#22303a"/><path d="M345 140 L370 100 L400 125 L420 95" stroke="#FE3211" stroke-width="5" fill="none"/>
+ <circle cx="250" cy="120" r="26" fill="#FE3211" opacity=".8"/>
+ <rect x="60" y="210" width="170" height="60" rx="20" fill="#1c1f26"/><rect x="250" y="210" width="190" height="60" rx="20" fill="#1c1f26"/>
+ <circle cx="290" cy="240" r="18" fill="#FE3211" opacity=".7"/></svg></div>`}
+document.getElementById('c').innerHTML=S[N]();
+</script></body></html>
