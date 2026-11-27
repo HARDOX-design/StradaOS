@@ -10,10 +10,10 @@ import android.graphics.Canvas;
 final class Prem {
     private Prem() { }
 
-    static final String[] IDS = {Aurora.ID, Cobalto.ID, Faro.ID, Carbono.ID};
+    static final String[] IDS = {Aurora.ID, Cobalto.ID, Faro.ID, Carbono.ID, Cards.ID};
     static String style = Aurora.ID;
 
-    static boolean known(String id) { return Aurora.ID.equals(id) || Cobalto.ID.equals(id) || Faro.ID.equals(id) || Carbono.ID.equals(id); }
+    static boolean known(String id) { return Aurora.ID.equals(id) || Cobalto.ID.equals(id) || Faro.ID.equals(id) || Carbono.ID.equals(id) || Cards.ID.equals(id); }
 
     /** Temas premium que se regalan a todos (lanzamiento de la 2.24). Los que vengan después se desbloquean con una donación (Fase 3). */
     static boolean free(String id) { return Aurora.ID.equals(id) || Cobalto.ID.equals(id); }
@@ -29,13 +29,16 @@ final class Prem {
     static boolean cob() { return Cobalto.ID.equals(style); }
     static boolean faro() { return Faro.ID.equals(style); }
     static boolean carb() { return Carbono.ID.equals(style); }
-    /** Faro y Carbono comparten el mapa limpio, el buscador de arriba y las piezas de las tarjetas. */
-    static boolean faroFam() { return faro() || carb(); }
+    static boolean cards() { return Cards.ID.equals(style); }
+    /** Faro, Carbono y Premium Cards comparten el mapa limpio, el buscador de arriba y las piezas de las tarjetas. */
+    static boolean faroFam() { return faro() || carb() || cards(); }
     /** Solo Aurora tiene «Solo mapa» (Cobalto y Faro son fijos). */
     static boolean mapOnlyOk() { return Aurora.ID.equals(style); }
 
-    static String name(String id) { return Cobalto.ID.equals(id) ? "Cobalto" : Faro.ID.equals(id) ? "Faro" : Carbono.ID.equals(id) ? "Carbono" : "Aurora"; }
+    static String name(String id) { return Cobalto.ID.equals(id) ? "Cobalto" : Faro.ID.equals(id) ? "Faro" : Carbono.ID.equals(id) ? "Carbono" : Cards.ID.equals(id) ? "Premium Cards" : "Aurora"; }
     static String desc(String id) {
+        if (Cards.ID.equals(id))
+            return "Tarjetas sobrias en tres columnas con tu color de acento: el reproductor alto con la carátula grande (se esconde hacia un lado y el mapa se agranda), el mapa con la ciudad, la hora en grande, el clima de los próximos días y el próximo mantenimiento con tres accesos a tus apps. La barra de apps va abajo o a un costado.";
         if (Carbono.ID.equals(id))
             return "Tarjetas limpias sobre un fondo carbón con textura y una luz suave desde abajo (o gris perla en claro). Tu vehículo en grande con el velocímetro y los dos mantenimientos más cercanos, el mapa con el reproductor y el clima flotando encima, y una barra de apps tipo píldora.";
         if (Faro.ID.equals(id))
@@ -71,11 +74,13 @@ final class Prem {
             return b;
         }
         Canvas c = new Canvas(b);
-        if (carb()) Carbono.paint(c, bw, bh, light, accent);
+        if (cards()) Cards.paint(c, bw, bh, light, accent);
+        else if (carb()) Carbono.paint(c, bw, bh, light, accent);
         else if (faro()) Faro.paint(c, bw, bh, light, accent);
         else if (cob()) Cobalto.paint(c, bw, bh, light, accent);
         else Aurora.paint(c, bw, bh, light, accent);
-        if (carb()) Carbono.texture(b, light);
+        if (cards()) Aurora.grain(b, Cards.grain(light));
+        else if (carb()) Carbono.texture(b, light);
         else if (faro()) Aurora.grain(b, Faro.grain(light)); else Aurora.grain(b, light);
         cache = b;
         cacheKey = key;

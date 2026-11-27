@@ -63,6 +63,17 @@ if part 1; then
   # ── temas y apariencias ──
   for t in tema:oscuro tema:claro tema:sistema tema:oscuro; do step tema "$t" 5; done
   for t in faro aurora cobalto; do step "premium-$t" "tema-premium:$t" 6; step "premium-$t-pista" pista-demo:Night_Drive 3; done
+  # ── 2.39: Premium Cards (reproductor escondido y la barra de apps en sus tres lugares) ──
+  step premium-cards tema-premium:cards 6
+  step premium-cards-pista pista-demo:Night_Drive 3
+  step premium-cards-acceso pref:cards_app_0=com.android.settings/com.android.settings.Settings 4
+  step premium-cards-escondido pref:cards_player_open=false 4
+  step premium-cards-izquierda pref:cards_dock=left 4
+  step premium-cards-derecha pref:cards_dock=right 4
+  step premium-cards-claro tema:claro 5
+  step premium-cards-abajo pref:cards_dock= 4
+  step premium-cards-visible pref:cards_player_open=true 4
+  step premium-cards-oscuro tema:oscuro 5
   for i in 0 1 2 3 4 5; do step "gratis-$i" "tema-gratis:$i" 5; done
   step gratis-1 tema-gratis:1 5
   # ── 2.36 (#74): íconos «Muy grande» y «Enorme» en la barra lateral (agrupada al centro), abajo y compacta ──
@@ -168,7 +179,7 @@ if part 1; then
   adb shell input swipe 330 200 700 200 250; sleep 3
   shot "$(printf %03d $N)-deslizar-mapa"
   # el carrusel en cada tema (página del video y del mapa)
-  for t in tema-premium:aurora tema-premium:cobalto tema-premium:faro tema-premium:carbono tema-premium: ; do
+  for t in tema-premium:aurora tema-premium:cobalto tema-premium:faro tema-premium:carbono tema-premium:cards tema-premium: ; do
     n=${t#tema-premium:}; [ -z "$n" ] && n=clasico
     step "centro-$n" "$t" 6
     step "centro-$n-video" centro:video 6

@@ -40,21 +40,21 @@ final class Faro {
     static final String ID = "faro";
 
     // ── colores (oscuro / claro) ──
-    static int base(boolean l) { return Prem.carb() ? Carbono.base(l) : l ? 0xFFECEEF1 : 0xFF0B0C0F; }
+    static int base(boolean l) { return Prem.carb() ? Carbono.base(l) : Prem.cards() ? Cards.base(l) : l ? 0xFFECEEF1 : 0xFF0B0C0F; }
     private static int base0(boolean l) { return l ? 0xFFECEEF1 : 0xFF0B0C0F; }
-    static int glass(boolean l) { return Prem.carb() ? Carbono.glass(l) : l ? 0xCCFFFFFF : 0x9E1A1C21; }
+    static int glass(boolean l) { return Prem.carb() ? Carbono.glass(l) : Prem.cards() ? Cards.glass(l) : l ? 0xCCFFFFFF : 0x9E1A1C21; }
     private static int glass0(boolean l) { return l ? 0xCCFFFFFF : 0x9E1A1C21; }
-    static int glassEdge(boolean l) { return Prem.carb() ? Carbono.glassEdge(l) : l ? 0xE6FFFFFF : 0x17FFFFFF; }
+    static int glassEdge(boolean l) { return Prem.carb() ? Carbono.glassEdge(l) : Prem.cards() ? Cards.glassEdge(l) : l ? 0xE6FFFFFF : 0x17FFFFFF; }
     private static int glassEdge0(boolean l) { return l ? 0xE6FFFFFF : 0x17FFFFFF; }
-    static int pill(boolean l) { return Prem.carb() ? Carbono.pill(l) : l ? 0xD9FFFFFF : 0xE6141519; }
+    static int pill(boolean l) { return Prem.carb() ? Carbono.pill(l) : Prem.cards() ? Cards.pill(l) : l ? 0xD9FFFFFF : 0xE6141519; }
     private static int pill0(boolean l) { return l ? 0xD9FFFFFF : 0xE6141519; }
-    static int pillEdge(boolean l) { return Prem.carb() ? Carbono.pillEdge(l) : l ? 0xF2FFFFFF : 0x1AFFFFFF; }
-    static int pillIcon(boolean l) { return Prem.carb() ? Carbono.pillIcon(l) : l ? 0xFF1C1E23 : 0xFFEDEEF1; }
-    static int soft(boolean l) { return Prem.carb() ? Carbono.soft(l) : l ? 0x0F000000 : 0x14FFFFFF; }
+    static int pillEdge(boolean l) { return Prem.carb() ? Carbono.pillEdge(l) : Prem.cards() ? Cards.pillEdge(l) : l ? 0xF2FFFFFF : 0x1AFFFFFF; }
+    static int pillIcon(boolean l) { return Prem.carb() ? Carbono.pillIcon(l) : Prem.cards() ? Cards.pillIcon(l) : l ? 0xFF1C1E23 : 0xFFEDEEF1; }
+    static int soft(boolean l) { return Prem.carb() ? Carbono.soft(l) : Prem.cards() ? Cards.soft(l) : l ? 0x0F000000 : 0x14FFFFFF; }
     /** Recuadro de los botones de la barra y de los controles del mapa. */
-    static int tile(boolean l) { return Prem.carb() ? Carbono.tile(l) : l ? 0xFFFFFFFF : 0xFF202328; }
+    static int tile(boolean l) { return Prem.carb() ? Carbono.tile(l) : Prem.cards() ? Cards.tile(l) : l ? 0xFFFFFFFF : 0xFF202328; }
     private static int tile0(boolean l) { return l ? 0xFFFFFFFF : 0xFF202328; }
-    static int track(boolean l) { return Prem.carb() ? Carbono.track(l) : l ? 0xFFD8DBE0 : 0xFF2A2D33; }
+    static int track(boolean l) { return Prem.carb() ? Carbono.track(l) : Prem.cards() ? Cards.track(l) : l ? 0xFFD8DBE0 : 0xFF2A2D33; }
     private static int track0(boolean l) { return l ? 0xFFD8DBE0 : 0xFF2A2D33; }
     /**
      * Mapa como en Cobalto: las teselas de siempre, translúcidas sobre el fondo y en el tono del tema. Nivel ya resuelto

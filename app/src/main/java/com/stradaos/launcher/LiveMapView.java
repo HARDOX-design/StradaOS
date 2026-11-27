@@ -288,11 +288,30 @@ public class LiveMapView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int ow, int oh) {
         super.onSizeChanged(w, h, ow, oh);
+        buildCorners(w, h);
+    }
+
+    private void buildCorners(float w, float h) {
         corners.reset();
         corners.setFillType(Path.FillType.EVEN_ODD);
         corners.addRect(-2, -2, w + 2, h + 2, Path.Direction.CW);
-        corners.addRoundRect(new RectF(0, 0, w, h), radius, radius, Path.Direction.CW);
+        corners.addRoundRect(new RectF(Math.min(leftInset, Math.max(0, w - 2 * radius)), 0, w, h), radius, radius, Path.Direction.CW);
     }
+
+    // Premium Cards (2.39): el reproductor tapa la parte izquierda del mapa. Ahí no se ve el mapa (queda el fondo del
+    // tema, con su esquina redonda en el borde nuevo) y el carro se centra en lo que sí se ve. Al esconder el
+    // reproductor, Main baja el valor cuadro a cuadro y el mapa «crece» hacia la izquierda sin rearmar la vista.
+    private float leftInset;
+
+    void setLeftInset(float px) {
+        px = Math.max(0, px);
+        if (px == leftInset) return;
+        leftInset = px;
+        buildCorners(getWidth(), getHeight());
+        invalidate();
+    }
+
+    float leftInset() { return leftInset; }
 
     private File tileFile(int pv, int layer, int z, int x, int y) {
         return new File(dir, pv + "_" + layer + "_" + z + "_" + x + "_" + y + (Main.LIGHT && pv == 5 ? "L" : "") + ".png");
@@ -709,7 +728,7 @@ public class LiveMapView extends View {
     private void zoomAt(int dz, float px, float py) {
         int nz = Math.max(MINZ, Math.min(maxZoom(), zoom + dz));
         if (nz == zoom) return;
-        float cx = getWidth() / 2f, cy = getHeight() / 2f;
+        float cx = leftInset + (getWidth() - leftInset) / 2f, cy = getHeight() / 2f;
         double k0 = 256 * s * (double) (1 << zoom), k1 = 256 * s * (double) (1 << nz);
         double wxp = eX + (px - cx) / k0, wyp = eY + (py - cy) / k0;
         eX = wxp - (px - cx) / k1; eY = wyp - (py - cy) / k1;
@@ -917,7 +936,7 @@ public class LiveMapView extends View {
             float ts = 256 * s * (float) Math.pow(2, zv - lv);   // tamaño de tesela en pantalla
             boolean rot = !ex && headingUp && !Float.isNaN(dBr);   // explorando: norte arriba
             float mapBr = rot ? dBr + backBr * bk : 0;             // al volver al carro, el giro también se desliza
-            float cx = w / 2f, cy = ex ? h / 2f : Nav.active != null ? (rot ? h * 0.54f : h * 0.50f) : h * 0.42f;
+            float cx = leftInset + (w - leftInset) / 2f, cy = ex ? h / 2f : Nav.active != null ? (rot ? h * 0.54f : h * 0.50f) : h * 0.42f;
             // eligiendo entre varias rutas (Nav.altRoutes) todavía no se navega: el carro baja al elegir una
             if (carLow && !ex) cy = lowCy(cy, rot && Nav.active != null && Nav.altRoutes == null, h, now);
             if (bk > 0) cy += (backCy - cy) * bk;
@@ -992,7 +1011,7 @@ public class LiveMapView extends View {
             String attr = anyFile ? I18n.t("© colaboradores de OpenStreetMap") + " · mapsforge"
                     : provider == 5 ? "© Esri, HERE, Garmin, © OpenStreetMap" : provider == 4 ? "© OpenStreetMap, SRTM · © OpenTopoMap" : I18n.t("© colaboradores de OpenStreetMap");
             float ax = w - text.measureText(attr) - 10 * s, ay = (Nav.active != null ? 96 : 14) * s;
-            if (attrY >= 0 && Nav.active == null) { ax = attrX; ay = attrY; }
+            if (attrY >= 0 && Nav.active == null) { ax = attrX + leftInset; ay = attrY; }
             if (bd && fadeEdge == 1 && fadeLen > 0) {
                 // Cobalto: antes del difuminado (si no, queda detrás de la tarjeta del reproductor) y un poco más
                 // arriba para no rozar los botones de la esquina
