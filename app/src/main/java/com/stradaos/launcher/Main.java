@@ -5805,7 +5805,7 @@ public class Main extends Activity {
         place(card, hide, w - 10 - 32, 10, 32, 32);
         hide.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { userCardsPlayer(false); } });
         // medidas: lo de abajo es fijo y la carátula toma lo que queda (hasta el ancho de la tarjeta)
-        float volH = 30, ctlH = 56, tlH = 30, artH = 18, titH = 26, srcH = 16;
+        float volH = 30, ctlH = 56, tlH = 30, artH = 18 * FONT, titH = 26 * FONT, srcH = 16 * FONT;
         float fixed = volH + ctlH + tlH + artH + 2 + titH + 2 + srcH;
         float top0 = 44, bottom0 = hh - 16, gaps = 4;
         float a = Math.min(w - 2 * 30, bottom0 - top0 - fixed - gaps * 8);
@@ -5976,6 +5976,7 @@ public class Main extends Activity {
         cdWxDay = tv("", 14, MUTED, false);
         place(card, cdWxDay, p, y0, lw - p, 18);
         cdWxTemp = tv("--°", tSize, TEXT, false);
+        cdWxTemp.setTextSize(TypedValue.COMPLEX_UNIT_PX, tSize * s);   // ya es grande: sin el tamaño de letra de Apariencia
         cdWxTemp.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
         place(card, cdWxTemp, p - 2, y0 + 22, lw - p, tSize * 1.1f);
         cdWxDesc = tv("", 12, MUTED, false);
@@ -6032,6 +6033,7 @@ public class Main extends Activity {
             r.setGravity(Gravity.CENTER_VERTICAL);
             TextView nt = tv("", 12, MUTED, false);
             nt.setText(name);
+            nt.setPadding(0, 0, (int) (8 * s), 0);
             r.addView(nt, new LinearLayout.LayoutParams(0, -2, 1f));
             TextView hi = tv("", 12, TEXT, true);
             hi.setText(deg(d.hi));
@@ -6094,9 +6096,9 @@ public class Main extends Activity {
             ilp.gravity = Gravity.CENTER;
             tile.addView(iv, ilp);
             TextView t1 = tv("Sin mantenimientos programados", 13, TEXT, true);
-            place(item, t1, tx, mh / 2 - 19, tw, 18);
+            place(item, t1, tx, mh / 2 - 19 * FONT, tw, 18 * FONT);
             TextView t2 = tv("Toca para agregar uno", 12, RED, true);
-            place(item, t2, tx, mh / 2 + 2, tw, 16);
+            place(item, t2, tx, mh / 2 + 2, tw, 16 * FONT);
             item.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { showSettings(C_MAINT); } });
         } else {
             String name, left, ic;
@@ -6117,23 +6119,30 @@ public class Main extends Activity {
             FrameLayout.LayoutParams ilp = new FrameLayout.LayoutParams((int) (ts * 0.52f * s), (int) (ts * 0.52f * s));
             ilp.gravity = Gravity.CENTER;
             tile.addView(iv, ilp);
-            boolean bar = mh >= 52;
-            float ty = (mh - (bar ? 46 : 36)) / 2;
-            TextView lab = tv("Próximo mantenimiento", 11, MUTED, false);
-            if (mh >= 60) { place(item, lab, tx, ty - 16, tw, 14); ty += 6; }
+            float nH = 18 * FONT, lH = 16 * FONT, labH = 14 * FONT;
+            boolean bar = mh >= nH + lH + 14;
+            boolean withLab = mh >= nH + lH + (bar ? 14 : 2) + labH + 6;
+            float block = (withLab ? labH + 4 : 0) + nH + 2 + lH + (bar ? 10 : 0);
+            float ty = (mh - block) / 2;
+            if (withLab) {
+                TextView lab = tv("Próximo mantenimiento", 11, MUTED, false);
+                place(item, lab, tx, ty, tw, labH);
+                ty += labH + 4;
+            }
             TextView nt = tv("", 14, TEXT, true);
             nt.setText(name);
-            place(item, nt, tx, ty, tw, 18);
+            place(item, nt, tx, ty, tw, nH);
             TextView lt = tv("", 12, best < 0.15 ? uc : MUTED, best < 0.15);
             lt.setText(left);
-            place(item, lt, tx, ty + 20, tw, 16);
+            place(item, lt, tx, ty + nH + 2, tw, lH);
             if (bar) {
+                float by = ty + nH + 2 + lH + 6;
                 View bg = new View(this);
                 bg.setBackground(round(Faro.track(LIGHT), 2));
-                place(item, bg, tx, ty + 42, tw, 4);
+                place(item, bg, tx, by, tw, 4);
                 View fg = new View(this);
                 fg.setBackground(round(uc, 2));
-                place(item, fg, tx, ty + 42, tw * (float) Math.max(0.04, Math.min(1, best)), 4);
+                place(item, fg, tx, by, tw * (float) Math.max(0.04, Math.min(1, best)), 4);
             }
             item.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { if (idx < 0) oilMenu(); else taskMenu(idx); } });
         }
