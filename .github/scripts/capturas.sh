@@ -106,6 +106,105 @@ PYX
   ls -l $OUT
   exit 0
 fi
+if [ "$MODO" = promo-239 ]; then
+  # Imágenes promocionales de la 2.39 (27 nov. 2026), en español e inglés: la bienvenida al encender, la navegación con
+  # destino (Medellín → Parque Explora, ciudad de ejemplo), el carrusel mapa/video con un video original de ejemplo
+  # (promo-video.mp4, carretera nocturna hecha por Claude), el escáner OBD-II simulado y los temas Faro, Carbono y Premium Cards.
+  geo() { kill $GEO 2>/dev/null; ( while true; do adb emu geo fix $2 $1 1495 8 ${3:-26} >/dev/null 2>&1; sleep 2; done ) & GEO=$!; sleep 3; }
+  geo 6.2442 -75.5680
+  adb root >/dev/null 2>&1; sleep 4; adb wait-for-device
+  adb shell sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
+  adb shell sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1
+  adb shell mkdir -p /sdcard/Movies
+  adb push "$(dirname "$0")/promo-video.mp4" "/sdcard/Movies/Night Drive.mp4" >/dev/null 2>&1
+  adb shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d "file:///sdcard/Movies/Night%20Drive.mp4" >/dev/null 2>&1
+  setprefs() {
+    adb shell am force-stop $PKG; sleep 2
+    adb shell "run-as $PKG cat shared_prefs/launcher.xml" > p.xml
+    python3 - <<'PYP'
+import re
+s=open('p.xml',encoding='utf-8').read()
+for k,v in [('user_name','Andrés'),('car_name','Kia Picanto'),('car_tag','GT Line')]:
+    s=re.sub(r'\s*<string name="%s">[^<]*</string>'%k,'',s)
+    s=s.replace('</map>','    <string name="%s">%s</string>\n</map>'%(k,v))
+open('p.xml','w',encoding='utf-8').write(s)
+PYP
+    adb push p.xml /data/local/tmp/p.xml >/dev/null; adb shell chmod 644 /data/local/tmp/p.xml
+    adb shell "run-as $PKG cp /data/local/tmp/p.xml shared_prefs/launcher.xml"
+    adb shell am start -n $ACT >/dev/null; sleep 8
+  }
+  if [ -s colombia.map ]; then
+    adb shell mkdir -p /sdcard/Download
+    adb push colombia.map /sdcard/Download/colombia.map | tail -1
+    go mapa-archivo:/sdcard/Download/colombia.map 8
+  fi
+  go idioma:es 8; go unidad:kmh 4; go tema:oscuro 6; go diseno:base 5; go diseno:velo-2 5
+  go pref:nav_app=internal 4; go demo-aceite 4; go demo-mant 4
+  setprefs
+  song() { go pista-demo:Night_Drive 3; }
+  cards() {
+    go tema-premium:cards 8; go pref:cards_player_open=true 4; go pref:cards_dock= 4
+    go pref:cards_app_0=com.android.settings/com.android.settings.Settings 3
+    go pref:cards_app_1=com.android.deskclock/com.android.deskclock.DeskClock 3
+  }
+  for L in es en; do
+    go idioma:$L 8; go inicio 4; go nav-salir 3; go obd-off 3; go centro:solo 5; go video-vel:x 2
+    cards; go tema:oscuro 7
+    # ── bienvenida al encender (quieta en un instante: la luz pasando y el final iluminado) ──
+    go bienvenida:2600 6; shot $L-bienvenida-luz
+    go bienvenida:4200 6; shot $L-bienvenida-medio
+    go bienvenida:7300 6; shot $L-bienvenida-final
+    go inicio 4
+    # ── Premium Cards ──
+    song; go vel:48 3; sleep 12; shot $L-cards-oscuro
+    go tema:claro 7; song; go vel:48 3; sleep 10; shot $L-cards-claro
+    go tema:oscuro 7
+    # ── navegación: buscar y poner destino (centro de Medellín → Parque Explora) ──
+    geo 6.2442 -75.5680; go pref:nav_alternatives=false 3
+    go nav-buscar 4; adb shell input text "Parque%sExplora"; sleep 3; shot $L-nav-buscar
+    adb shell input keyevent 4; sleep 1; adb shell input keyevent 4; sleep 2
+    go 'nav-ir:6.2702,-75.5660,Parque\ Explora' 25; song; go vel:42 3; sleep 6; shot $L-nav-cards
+    go tema:claro 7; song; go vel:42 3; sleep 8; shot $L-nav-cards-claro
+    go tema:oscuro 7
+    go tema-premium:faro 8; song; go vel:42 3; sleep 10; shot $L-nav-faro
+    go tema-premium:carbono 8; go pref:carb_car=red 4; song; go vel:42 3; sleep 10; shot $L-nav-carbono
+    go nav-salir 4
+    # ── carrusel mapa/video con el video guardado ──
+    cards; go tema:oscuro 6; song
+    go video-vel:0 1; go centro:video 10; sleep 3; shot $L-video-cards
+    go video-modo:1 5; shot $L-video-solo
+    go video-modo:0 4
+    go video-vel:40 5; shot $L-video-andando
+    go video-vel:0 6
+    go video-elegir 6; shot $L-video-elegir
+    adb shell input keyevent 4; sleep 2
+    go tema-premium:faro 8; go centro:video 8; sleep 2; shot $L-video-faro
+    go tema-premium:carbono 8; go centro:video 8; sleep 2; shot $L-video-carbono
+    go centro:solo 5; go video-vel:x 2
+    # ── escáner OBD-II con el auto simulado (revoluciones junto al velocímetro y panel) ──
+    go pref:speedo_rpm=true 3
+    go tema-premium:faro 8; go pref:speedo=2 4; go obd-demo 10; sleep 40
+    song; sleep 4; shot $L-obd-faro
+    go tema-premium:carbono 8; song; sleep 6; shot $L-obd-carbono
+    cards; go tema:oscuro 6; song; sleep 5; go obd-panel 6; shot $L-obd-panel-cards
+    adb shell input keyevent 4; sleep 2
+    go tema-premium:faro 8; go obd-panel 6; shot $L-obd-panel-faro
+    adb shell input keyevent 4; sleep 2
+    go obd-off 4
+    # ── temas de pago ──
+    go tema-premium:faro 8
+    go tema:oscuro 7; song; go vel:48 3; sleep 12; shot $L-faro-oscuro
+    go tema:claro 7; song; go vel:48 3; sleep 10; shot $L-faro-claro
+    go tema-premium:carbono 8; go pref:carb_car=red 4
+    go tema:oscuro 7; song; go vel:48 3; sleep 12; shot $L-carbono-oscuro
+    go tema:claro 7; song; go vel:48 3; sleep 10; shot $L-carbono-claro
+    go tema:oscuro 7; go tema-premium: 6
+  done
+  kill $GEO 2>/dev/null
+  adb logcat -d | grep -E "FATAL EXCEPTION|AndroidRuntime" | tail -60 > $OUT/registro.txt
+  ls -l $OUT
+  exit 0
+fi
 if [ "$MODO" = web ] || [ "$MODO" = sorteo ] || [ "$MODO" = web-cards ]; then
   # Imágenes de la página (2.26, nov. 2026) en español, inglés y portugués: los temas (Clásico, Aurora, Cobalto, Faro, Carbono),
   # la navegación guiada con el mapa sin conexión (Medellín, ciudad de ejemplo) y el escáner OBD-II con el auto simulado.
