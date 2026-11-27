@@ -1955,3 +1955,10 @@ No se pudo exportar	تعذر التصدير
 No se pudo guardar el archivo	تعذر حفظ الملف
 Adjunta ese archivo .zip en tu reporte de GitHub (o en el mensaje donde te lo pidieron). Si pesa más de 25 MB, súbelo a Google Drive y comparte el enlace.	أرفق ملف ‎.zip هذا ببلاغك في GitHub (أو بالرسالة التي طُلب فيها). إن كان أكبر من 25 MB فارفعه إلى Google Drive وشارك الرابط.
 Exportación lista	التصدير جاهز
+Tarjetas sobrias en tres columnas con tu color de acento: el reproductor alto con la carátula grande (se esconde hacia un lado y el mapa se agranda), el mapa con la ciudad, la hora en grande, el clima de los próximos días y el próximo mantenimiento con tres accesos a tus apps. La barra de apps va abajo o a un costado.	بطاقات أنيقة في ثلاثة أعمدة بلون التمييز الذي تختاره: مشغل طويل بغلاف كبير (يختفي إلى الجانب وتكبر الخريطة)، والخريطة مع اسم مدينتك، والساعة بخط كبير، وطقس الأيام القادمة، والصيانة التالية مع ثلاثة اختصارات لتطبيقاتك. شريط التطبيقات في الأسفل أو على أحد الجانبين.
+Acceso directo	اختصار
+Cambiar la app	تغيير التطبيق
+Quitar el acceso	إزالة الاختصار
+No se pudo abrir la app. Déjala presionada para elegir otra.	تعذّر فتح التطبيق. اضغط عليه مطولاً لاختيار تطبيق آخر.
+Está oculta en Barra de apps → Diseño de la barra. A los costados, las tarjetas llegan hasta abajo.	الشريط مخفي من تصميم الشريط ← شريط التطبيقات. على الجانبين تمتد البطاقات حتى الأسفل.
+A los costados, las tarjetas llegan hasta abajo.	على الجانبين تمتد البطاقات حتى الأسفل.

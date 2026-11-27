@@ -1955,3 +1955,10 @@ No se pudo exportar	Tidak dapat mengeksport
 No se pudo guardar el archivo	Tidak dapat menyimpan fail
 Adjunta ese archivo .zip en tu reporte de GitHub (o en el mensaje donde te lo pidieron). Si pesa más de 25 MB, súbelo a Google Drive y comparte el enlace.	Lampirkan fail .zip itu pada laporan GitHub anda (atau pada mesej yang memintanya). Jika melebihi 25 MB, muat naik ke Google Drive dan kongsi pautannya.
 Exportación lista	Eksport sedia
+Tarjetas sobrias en tres columnas con tu color de acento: el reproductor alto con la carátula grande (se esconde hacia un lado y el mapa se agranda), el mapa con la ciudad, la hora en grande, el clima de los próximos días y el próximo mantenimiento con tres accesos a tus apps. La barra de apps va abajo o a un costado.	Kad ringkas dalam tiga lajur dengan warna aksen anda: pemain muzik tinggi dengan kulit album besar (boleh disorok ke tepi dan peta membesar), peta dengan nama bandar, jam besar, cuaca beberapa hari akan datang dan penyelenggaraan seterusnya dengan tiga pintasan aplikasi. Bar aplikasi di bawah atau di tepi.
+Acceso directo	Pintasan
+Cambiar la app	Tukar aplikasi
+Quitar el acceso	Buang pintasan
+No se pudo abrir la app. Déjala presionada para elegir otra.	Aplikasi tidak dapat dibuka. Tekan lama untuk memilih yang lain.
+Está oculta en Barra de apps → Diseño de la barra. A los costados, las tarjetas llegan hasta abajo.	Ia disembunyikan dalam Bar aplikasi → Reka letak bar. Di tepi, kad memanjang hingga ke bawah.
+A los costados, las tarjetas llegan hasta abajo.	Di tepi, kad memanjang hingga ke bawah.

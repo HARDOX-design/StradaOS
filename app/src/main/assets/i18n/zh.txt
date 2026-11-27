@@ -1955,3 +1955,10 @@ No se pudo exportar	导出失败
 No se pudo guardar el archivo	无法保存文件
 Adjunta ese archivo .zip en tu reporte de GitHub (o en el mensaje donde te lo pidieron). Si pesa más de 25 MB, súbelo a Google Drive y comparte el enlace.	请把这个 .zip 文件附加到你的 GitHub 报告中（或附在要求你提供它的消息里）。如果超过 25 MB，请上传到 Google Drive 并分享链接。
 Exportación lista	导出完成
+Tarjetas sobrias en tres columnas con tu color de acento: el reproductor alto con la carátula grande (se esconde hacia un lado y el mapa se agranda), el mapa con la ciudad, la hora en grande, el clima de los próximos días y el próximo mantenimiento con tres accesos a tus apps. La barra de apps va abajo o a un costado.	三栏简洁卡片，使用你的强调色：带大封面的高播放器（可滑到一侧隐藏，地图随之变大）、显示城市的地图、大号时钟、未来几天的天气，以及下一次保养和三个应用快捷方式。应用栏位于底部或一侧。
+Acceso directo	快捷方式
+Cambiar la app	更换应用
+Quitar el acceso	移除快捷方式
+No se pudo abrir la app. Déjala presionada para elegir otra.	无法打开该应用。长按可选择其他应用。
+Está oculta en Barra de apps → Diseño de la barra. A los costados, las tarjetas llegan hasta abajo.	已在「应用栏 → 栏布局」中隐藏。放在两侧时，卡片会延伸到底部。
+A los costados, las tarjetas llegan hasta abajo.	放在两侧时，卡片会延伸到底部。

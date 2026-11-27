@@ -1957,3 +1957,10 @@ No se pudo exportar	Dışa aktarılamadı
 No se pudo guardar el archivo	Dosya kaydedilemedi
 Adjunta ese archivo .zip en tu reporte de GitHub (o en el mensaje donde te lo pidieron). Si pesa más de 25 MB, súbelo a Google Drive y comparte el enlace.	Bu .zip dosyasını GitHub bildiriminize (veya istendiği mesaja) ekleyin. 25 MB'tan büyükse Google Drive'a yükleyip bağlantıyı paylaşın.
 Exportación lista	Dışa aktarma hazır
+Tarjetas sobrias en tres columnas con tu color de acento: el reproductor alto con la carátula grande (se esconde hacia un lado y el mapa se agranda), el mapa con la ciudad, la hora en grande, el clima de los próximos días y el próximo mantenimiento con tres accesos a tus apps. La barra de apps va abajo o a un costado.	Vurgu renginle üç sütunda sade kartlar: büyük kapak görselli uzun oynatıcı (yana kaydırılarak gizlenir ve harita büyür), şehrinle birlikte harita, büyük saat, önümüzdeki günlerin hava durumu ve üç uygulama kısayoluyla bir sonraki bakım. Uygulama çubuğu altta ya da yanda durur.
+Acceso directo	Kısayol
+Cambiar la app	Uygulamayı değiştir
+Quitar el acceso	Kısayolu kaldır
+No se pudo abrir la app. Déjala presionada para elegir otra.	Uygulama açılamadı. Başka birini seçmek için basılı tut.
+Está oculta en Barra de apps → Diseño de la barra. A los costados, las tarjetas llegan hasta abajo.	Uygulama çubuğu → Çubuk düzeni bölümünde gizli. Yanlarda kartlar en alta kadar uzanır.
+A los costados, las tarjetas llegan hasta abajo.	Yanlarda kartlar en alta kadar uzanır.

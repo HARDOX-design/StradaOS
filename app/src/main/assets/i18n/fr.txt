@@ -1955,3 +1955,10 @@ No se pudo exportar	Échec de l'export
 No se pudo guardar el archivo	Impossible d'enregistrer le fichier
 Adjunta ese archivo .zip en tu reporte de GitHub (o en el mensaje donde te lo pidieron). Si pesa más de 25 MB, súbelo a Google Drive y comparte el enlace.	Joignez ce fichier .zip à votre signalement sur GitHub (ou au message où on vous l'a demandé). S'il dépasse 25 Mo, envoyez-le sur Google Drive et partagez le lien.
 Exportación lista	Export terminé
+Tarjetas sobrias en tres columnas con tu color de acento: el reproductor alto con la carátula grande (se esconde hacia un lado y el mapa se agranda), el mapa con la ciudad, la hora en grande, el clima de los próximos días y el próximo mantenimiento con tres accesos a tus apps. La barra de apps va abajo o a un costado.	Des cartes sobres sur trois colonnes avec ta couleur d'accent : le lecteur haut avec une grande pochette (il se range sur le côté et la carte s'agrandit), la carte avec ta ville, l'heure en grand, la météo des prochains jours et le prochain entretien avec trois raccourcis vers tes applis. La barre d'applis va en bas ou sur un côté.
+Acceso directo	Raccourci
+Cambiar la app	Changer d'appli
+Quitar el acceso	Retirer le raccourci
+No se pudo abrir la app. Déjala presionada para elegir otra.	Impossible d'ouvrir l'appli. Appuie longuement pour en choisir une autre.
+Está oculta en Barra de apps → Diseño de la barra. A los costados, las tarjetas llegan hasta abajo.	Elle est masquée dans Barre d'applis → Disposition de la barre. Sur les côtés, les cartes descendent jusqu'en bas.
+A los costados, las tarjetas llegan hasta abajo.	Sur les côtés, les cartes descendent jusqu'en bas.

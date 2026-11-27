@@ -1959,3 +1959,10 @@ No se pudo exportar	Couldn't export
 No se pudo guardar el archivo	Couldn't save the file
 Adjunta ese archivo .zip en tu reporte de GitHub (o en el mensaje donde te lo pidieron). Si pesa más de 25 MB, súbelo a Google Drive y comparte el enlace.	Attach that .zip file to your GitHub report (or to the message where you were asked for it). If it's larger than 25 MB, upload it to Google Drive and share the link.
 Exportación lista	Export ready
+Tarjetas sobrias en tres columnas con tu color de acento: el reproductor alto con la carátula grande (se esconde hacia un lado y el mapa se agranda), el mapa con la ciudad, la hora en grande, el clima de los próximos días y el próximo mantenimiento con tres accesos a tus apps. La barra de apps va abajo o a un costado.	Clean cards in three columns with your accent color: a tall player with big cover art (it slides away to one side and the map grows), the map with your city, a large clock, the weather for the coming days and your next maintenance with three app shortcuts. The app bar goes at the bottom or on one side.
+Acceso directo	Shortcut
+Cambiar la app	Change app
+Quitar el acceso	Remove shortcut
+No se pudo abrir la app. Déjala presionada para elegir otra.	Couldn't open the app. Long-press it to choose another one.
+Está oculta en Barra de apps → Diseño de la barra. A los costados, las tarjetas llegan hasta abajo.	It's hidden in App bar → Bar layout. On the sides, the cards reach all the way down.
+A los costados, las tarjetas llegan hasta abajo.	On the sides, the cards reach all the way down.

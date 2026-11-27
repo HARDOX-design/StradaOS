@@ -1940,3 +1940,10 @@ No se pudo exportar	Nem sikerült exportálni
 No se pudo guardar el archivo	Nem sikerült menteni a fájlt
 Adjunta ese archivo .zip en tu reporte de GitHub (o en el mensaje donde te lo pidieron). Si pesa más de 25 MB, súbelo a Google Drive y comparte el enlace.	Csatold ezt a .zip fájlt a GitHub-bejelentésedhez (vagy ahhoz az üzenethez, amelyben kérték). Ha nagyobb 25 MB-nál, töltsd fel a Google Drive-ra, és oszd meg a linket.
 Exportación lista	Az exportálás kész
+Tarjetas sobrias en tres columnas con tu color de acento: el reproductor alto con la carátula grande (se esconde hacia un lado y el mapa se agranda), el mapa con la ciudad, la hora en grande, el clima de los próximos días y el próximo mantenimiento con tres accesos a tus apps. La barra de apps va abajo o a un costado.	Letisztult kártyák három oszlopban a kiemelőszíneddel: magas lejátszó nagy borítóval (oldalra elrejthető, és a térkép megnő), a térkép a városoddal, nagy óra, a következő napok időjárása és a következő karbantartás három alkalmazás-parancsikonnal. Az alkalmazássáv alul vagy oldalt kap helyet.
+Acceso directo	Parancsikon
+Cambiar la app	Alkalmazás cseréje
+Quitar el acceso	Parancsikon eltávolítása
+No se pudo abrir la app. Déjala presionada para elegir otra.	Nem sikerült megnyitni az alkalmazást. Tartsd lenyomva, és válassz másikat.
+Está oculta en Barra de apps → Diseño de la barra. A los costados, las tarjetas llegan hasta abajo.	El van rejtve: Alkalmazássáv → Sáv elrendezése. Oldalt a kártyák egészen lenyúlnak.
+A los costados, las tarjetas llegan hasta abajo.	Oldalt a kártyák egészen lenyúlnak.

@@ -1958,3 +1958,10 @@ No se pudo exportar	Não foi possível exportar
 No se pudo guardar el archivo	Não foi possível salvar o arquivo
 Adjunta ese archivo .zip en tu reporte de GitHub (o en el mensaje donde te lo pidieron). Si pesa más de 25 MB, súbelo a Google Drive y comparte el enlace.	Anexe esse arquivo .zip ao seu relato no GitHub (ou à mensagem em que ele foi pedido). Se tiver mais de 25 MB, envie-o ao Google Drive e compartilhe o link.
 Exportación lista	Exportação pronta
+Tarjetas sobrias en tres columnas con tu color de acento: el reproductor alto con la carátula grande (se esconde hacia un lado y el mapa se agranda), el mapa con la ciudad, la hora en grande, el clima de los próximos días y el próximo mantenimiento con tres accesos a tus apps. La barra de apps va abajo o a un costado.	Cartões sóbrios em três colunas com a sua cor de destaque: o player alto com a capa grande (esconde-se para um lado e o mapa aumenta), o mapa com a cidade, a hora em tamanho grande, o clima dos próximos dias e a próxima manutenção com três atalhos para os seus apps. A barra de apps fica embaixo ou de lado.
+Acceso directo	Atalho
+Cambiar la app	Trocar o app
+Quitar el acceso	Remover o atalho
+No se pudo abrir la app. Déjala presionada para elegir otra.	Não foi possível abrir o app. Mantenha pressionado para escolher outro.
+Está oculta en Barra de apps → Diseño de la barra. A los costados, las tarjetas llegan hasta abajo.	Está oculta em Barra de apps → Layout da barra. Nas laterais, os cartões chegam até embaixo.
+A los costados, las tarjetas llegan hasta abajo.	Nas laterais, os cartões chegam até embaixo.

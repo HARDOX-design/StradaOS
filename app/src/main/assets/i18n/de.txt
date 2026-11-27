@@ -1955,3 +1955,10 @@ No se pudo exportar	Export fehlgeschlagen
 No se pudo guardar el archivo	Die Datei konnte nicht gespeichert werden
 Adjunta ese archivo .zip en tu reporte de GitHub (o en el mensaje donde te lo pidieron). Si pesa más de 25 MB, súbelo a Google Drive y comparte el enlace.	Hänge diese .zip-Datei an deine Meldung auf GitHub an (oder an die Nachricht, in der sie angefragt wurde). Ist sie größer als 25 MB, lade sie bei Google Drive hoch und teile den Link.
 Exportación lista	Export fertig
+Tarjetas sobrias en tres columnas con tu color de acento: el reproductor alto con la carátula grande (se esconde hacia un lado y el mapa se agranda), el mapa con la ciudad, la hora en grande, el clima de los próximos días y el próximo mantenimiento con tres accesos a tus apps. La barra de apps va abajo o a un costado.	Schlichte Karten in drei Spalten in deiner Akzentfarbe: der hohe Player mit großem Cover (er lässt sich zur Seite schieben und die Karte wird größer), die Karte mit deiner Stadt, die Uhrzeit groß, das Wetter der nächsten Tage und die nächste Wartung mit drei App-Verknüpfungen. Die App-Leiste sitzt unten oder seitlich.
+Acceso directo	Verknüpfung
+Cambiar la app	App ändern
+Quitar el acceso	Verknüpfung entfernen
+No se pudo abrir la app. Déjala presionada para elegir otra.	Die App ließ sich nicht öffnen. Gedrückt halten, um eine andere zu wählen.
+Está oculta en Barra de apps → Diseño de la barra. A los costados, las tarjetas llegan hasta abajo.	Sie ist unter App-Leiste → Leistenlayout ausgeblendet. Seitlich reichen die Karten bis ganz nach unten.
+A los costados, las tarjetas llegan hasta abajo.	Seitlich reichen die Karten bis ganz nach unten.

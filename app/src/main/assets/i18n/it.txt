@@ -1955,3 +1955,10 @@ No se pudo exportar	Impossibile esportare
 No se pudo guardar el archivo	Impossibile salvare il file
 Adjunta ese archivo .zip en tu reporte de GitHub (o en el mensaje donde te lo pidieron). Si pesa más de 25 MB, súbelo a Google Drive y comparte el enlace.	Allega quel file .zip alla tua segnalazione su GitHub (o al messaggio in cui ti è stato chiesto). Se pesa più di 25 MB, caricalo su Google Drive e condividi il link.
 Exportación lista	Esportazione pronta
+Tarjetas sobrias en tres columnas con tu color de acento: el reproductor alto con la carátula grande (se esconde hacia un lado y el mapa se agranda), el mapa con la ciudad, la hora en grande, el clima de los próximos días y el próximo mantenimiento con tres accesos a tus apps. La barra de apps va abajo o a un costado.	Schede sobrie su tre colonne con il tuo colore principale: il lettore alto con la copertina grande (si nasconde di lato e la mappa si allarga), la mappa con la città, l'ora in grande, il meteo dei prossimi giorni e la prossima manutenzione con tre scorciatoie alle tue app. La barra delle app va in basso o di lato.
+Acceso directo	Scorciatoia
+Cambiar la app	Cambia app
+Quitar el acceso	Rimuovi scorciatoia
+No se pudo abrir la app. Déjala presionada para elegir otra.	Impossibile aprire l'app. Tienila premuta per sceglierne un'altra.
+Está oculta en Barra de apps → Diseño de la barra. A los costados, las tarjetas llegan hasta abajo.	È nascosta in Barra delle app → Aspetto della barra. Ai lati, le schede arrivano fino in fondo.
+A los costados, las tarjetas llegan hasta abajo.	Ai lati, le schede arrivano fino in fondo.

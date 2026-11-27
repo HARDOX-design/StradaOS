@@ -5536,7 +5536,7 @@ public class Main extends Activity {
         right.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         addCarData(right);
         if (carSpeed) {
-            topSpeedTv = tv("-- km/h", 15, TEXT, true);
+            topSpeedTv = tv("", 15, TEXT, true);
             topSpeedTv.setPadding(0, 0, (int) (10 * s), 0);
             right.addView(topSpeedTv);
         }
@@ -11147,7 +11147,7 @@ public class Main extends Activity {
             if (Cards.ID.equals(pid)) {
                 final String[] dk = {"bottom", "left", "right"};
                 int di = Math.max(0, java.util.Arrays.asList(dk).indexOf(prefs.getString("cards_dock", "bottom")));
-                segmented(pn, "Barra de apps", noDock ? "Está oculta en Barra de apps → Diseño. A los costados, las tarjetas llegan hasta abajo."
+                segmented(pn, "Barra de apps", noDock ? "Está oculta en Barra de apps → Diseño de la barra. A los costados, las tarjetas llegan hasta abajo."
                         : "A los costados, las tarjetas llegan hasta abajo.",
                     new String[]{"Abajo", "Izquierda", "Derecha"}, di, new IntCb() { public void on(int i) {
                         prefs.edit().putString("cards_dock", dk[i]).apply(); rebuild(); showSettings(C_HOME);

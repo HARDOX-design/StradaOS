@@ -1930,3 +1930,10 @@ No se pudo exportar	Не удалось экспортировать
 No se pudo guardar el archivo	Не удалось сохранить файл
 Adjunta ese archivo .zip en tu reporte de GitHub (o en el mensaje donde te lo pidieron). Si pesa más de 25 MB, súbelo a Google Drive y comparte el enlace.	Прикрепите этот файл .zip к своему отчёту на GitHub (или к сообщению, где его попросили). Если он больше 25 МБ, загрузите его на Google Диск и поделитесь ссылкой.
 Exportación lista	Экспорт готов
+Tarjetas sobrias en tres columnas con tu color de acento: el reproductor alto con la carátula grande (se esconde hacia un lado y el mapa se agranda), el mapa con la ciudad, la hora en grande, el clima de los próximos días y el próximo mantenimiento con tres accesos a tus apps. La barra de apps va abajo o a un costado.	Строгие карточки в три колонки в вашем акцентном цвете: высокий плеер с большой обложкой (сдвигается в сторону, и карта становится больше), карта с вашим городом, крупные часы, погода на ближайшие дни и следующее обслуживание с тремя ярлыками приложений. Панель приложений — внизу или сбоку.
+Acceso directo	Ярлык
+Cambiar la app	Сменить приложение
+Quitar el acceso	Убрать ярлык
+No se pudo abrir la app. Déjala presionada para elegir otra.	Не удалось открыть приложение. Удерживайте, чтобы выбрать другое.
+Está oculta en Barra de apps → Diseño de la barra. A los costados, las tarjetas llegan hasta abajo.	Скрыта в разделе «Панель приложений → Расположение панели». По бокам карточки доходят до самого низа.
+A los costados, las tarjetas llegan hasta abajo.	По бокам карточки доходят до самого низа.
