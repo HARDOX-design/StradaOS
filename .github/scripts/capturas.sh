@@ -106,7 +106,7 @@ PYX
   ls -l $OUT
   exit 0
 fi
-if [ "$MODO" = promo-239 ]; then
+if [ "$MODO" = promo-239 ] || [ "$MODO" = promo-239b ]; then
   # Imágenes promocionales de la 2.39 (27 nov. 2026), en español e inglés: la bienvenida al encender, la navegación con
   # destino (Medellín → Parque Explora, ciudad de ejemplo), el carrusel mapa/video con un video original de ejemplo
   # (promo-video.mp4, carretera nocturna hecha por Claude), el escáner OBD-II simulado y los temas Faro, Carbono y Premium Cards.
@@ -150,6 +150,7 @@ PYP
   for L in es en; do
     go idioma:$L 8; go inicio 4; go nav-salir 3; go obd-off 3; go centro:solo 5; go video-vel:x 2
     cards; go tema:oscuro 7
+    if [ "$MODO" = promo-239 ]; then
     # ── bienvenida al encender (quieta en un instante: la luz pasando y el final iluminado) ──
     go bienvenida:2600 6; shot $L-bienvenida-luz
     go bienvenida:4200 6; shot $L-bienvenida-medio
@@ -177,7 +178,9 @@ PYP
     go video-vel:40 5; shot $L-video-andando
     go video-vel:0 6
     go video-elegir 6; shot $L-video-elegir
-    adb shell input keyevent 4; sleep 2
+    adb shell input tap 1024 1057; sleep 2   # «Cancelar» del selector (atrás solo sube de carpeta)
+    fi
+    go video-vel:0 1
     go tema-premium:faro 8; go centro:video 8; sleep 2; shot $L-video-faro
     go tema-premium:carbono 8; go centro:video 8; sleep 2; shot $L-video-carbono
     go centro:solo 5; go video-vel:x 2
@@ -191,6 +194,7 @@ PYP
     go tema-premium:faro 8; go obd-panel 6; shot $L-obd-panel-faro
     adb shell input keyevent 4; sleep 2
     go obd-off 4
+    [ "$MODO" = promo-239b ] && continue
     # ── temas de pago ──
     go tema-premium:faro 8
     go tema:oscuro 7; song; go vel:48 3; sleep 12; shot $L-faro-oscuro
