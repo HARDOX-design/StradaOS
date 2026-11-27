@@ -150,6 +150,11 @@ PYP
   for L in es en; do
     go idioma:$L 8; go inicio 4; go nav-salir 3; go obd-off 3; go centro:solo 5; go video-vel:x 2
     cards; go tema:oscuro 7
+    if [ "$MODO" = promo-239b ]; then
+      # el final de la bienvenida todo iluminado, antes de que entre el launcher
+      for ms in 5600 6200 6700; do go bienvenida:$ms 6; shot $L-bienvenida-$ms; done
+      go inicio 4
+    fi
     if [ "$MODO" = promo-239 ]; then
     # ── bienvenida al encender (quieta en un instante: la luz pasando y el final iluminado) ──
     go bienvenida:2600 6; shot $L-bienvenida-luz
