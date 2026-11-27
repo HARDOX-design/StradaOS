@@ -106,7 +106,7 @@ PYX
   ls -l $OUT
   exit 0
 fi
-if [ "$MODO" = web ] || [ "$MODO" = sorteo ]; then
+if [ "$MODO" = web ] || [ "$MODO" = sorteo ] || [ "$MODO" = web-cards ]; then
   # Imágenes de la página (2.26, nov. 2026) en español, inglés y portugués: los temas (Clásico, Aurora, Cobalto, Faro, Carbono),
   # la navegación guiada con el mapa sin conexión (Medellín, ciudad de ejemplo) y el escáner OBD-II con el auto simulado.
   geo() { kill $GEO 2>/dev/null; ( while true; do adb emu geo fix $2 $1 1495 8 ${3:-26} >/dev/null 2>&1; sleep 2; done ) & GEO=$!; sleep 3; }
@@ -142,6 +142,15 @@ PYW
   LANGS="es en pt"; [ "$MODO" = sorteo ] && LANGS="es en"
   for L in $LANGS; do
     go idioma:$L 8; go inicio 4; go nav-salir 3; go obd-off 3
+    if [ "$MODO" = web-cards ]; then
+      # Página 2.39: solo Premium Cards (oscuro y claro), con dos accesos directos puestos y uno libre
+      go tema-premium:cards 8; go pref:cards_player_open=true 4; go pref:cards_dock= 4
+      go pref:cards_app_0=com.android.settings/com.android.settings.Settings 4
+      go pref:cards_app_1=com.android.deskclock/com.android.deskclock.DeskClock 4
+      go tema:oscuro 7; song; go vel:48 3; sleep 15; shot $L-tema-cards-oscuro
+      go tema:claro 7; song; go vel:48 3; sleep 12; shot $L-tema-cards-claro
+      continue
+    fi
     if [ "$MODO" = sorteo ]; then
       # Sorteo de códigos (23 nov.): los dos temas de pago tal como se ven, Carbono con el carro rojo
       go tema-premium:faro 8; go pref:speedo=2 4
@@ -168,6 +177,9 @@ PYW
     go tema-premium:carbono 8
     go tema:oscuro 7; song; go vel:48 3; sleep 15; shot $L-tema-carbono-oscuro
     go tema:claro 7; song; go vel:48 3; sleep 12; shot $L-tema-carbono-claro
+    go tema-premium:cards 8
+    go tema:oscuro 7; song; go vel:48 3; sleep 15; shot $L-tema-cards-oscuro
+    go tema:claro 7; song; go vel:48 3; sleep 12; shot $L-tema-cards-claro
     go tema:oscuro 7
     go ajustes:11 6; shot $L-personalizacion
     adb shell input swipe $SW 400; sleep 2; adb shell input swipe $SW 400; sleep 3; shot $L-galeria-temas
