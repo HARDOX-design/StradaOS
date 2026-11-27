@@ -37,7 +37,7 @@
 - 🔧 **Escáner OBD-II (opcional):** con un ELM327 por Bluetooth clásico, Wi-Fi o cable USB, un panel encima de cualquier tema con temperatura, batería y RPM, alertas por voz, códigos de falla explicados sin internet, gráficos en vivo, IA opcional con tu propia clave y una guía dentro de la app. Viene apagado.
 
 **Diseña tu inicio**
-- **Temas:** Clásico (con 10 colores), **Aurora** y **Cobalto** gratis, **Faro** (tu carro visto desde arriba con los faros encendidos) y **Carbono** (tarjetas limpias sobre un fondo azul noche o seda clara, con tu carro en grande en 8 colores), que se desbloquean con una donación en Ko-fi: uno por 5 USD o los dos por 8 USD. Cada uno en versión oscura y clara.
+- **Temas:** Clásico (con 10 colores), **Aurora** y **Cobalto** gratis, **Faro** (tu carro visto desde arriba con los faros encendidos), **Carbono** (tarjetas limpias sobre un fondo azul noche o seda clara, con tu carro en grande en 8 colores) y **Premium Cards** (tres columnas de tarjetas sobrias con un reproductor que se esconde para agrandar el mapa), que se desbloquean con una donación en Ko-fi: uno por 5 USD o dos por 8 USD. Cada uno en versión oscura y clara.
 - Reproductor a la izquierda o a la derecha, tarjeta del vehículo visible u oculta, Android Auto y CarPlay plegables.
 - Barra de botones **normal, compacta o lateral** (con reproductor vertical para pantallas anchas como 1280×480).
 - Modo **claro, oscuro o automático** (por horario, con el amanecer y el atardecer o siguiendo al sistema).
@@ -120,7 +120,7 @@ StradaOS es un proyecto independiente, no afiliado a Google, Apple ni a ningún 
 
 ### English
 
-**StradaOS** is a free, ad-free, open-source launcher for Android car head units (Android 4.1+, about 1.5 MB). It installs like any app, without flashing. Live and **offline maps** (download your country from the app) with optional turn-by-turn navigation, themes (Classic, Aurora, Cobalto, Faro and Carbono), an optional OBD-II scanner panel with voice alerts and trouble codes, Android Auto and CarPlay buttons, a media card for Bluetooth and Android Auto, speedometer, weather, oil change reminder, a customizable layout (player left or right, compact or side bar), light/dark themes, portrait layout, settings backup to USB and 11 languages. *Why “OS”? It stands for **Open Source**: StradaOS is a launcher, not an operating system, and “Strada” means “road” in Italian.* [Website](https://lordnordic-debug.github.io/StradaOS/?lang=en) · [Download](https://github.com/lordnordic-debug/StradaOS/releases/latest)
+**StradaOS** is a free, ad-free, open-source launcher for Android car head units (Android 4.1+, about 1.5 MB). It installs like any app, without flashing. Live and **offline maps** (download your country from the app) with optional turn-by-turn navigation, themes (Classic, Aurora, Cobalto, Faro, Carbono and Premium Cards), an optional OBD-II scanner panel with voice alerts and trouble codes, Android Auto and CarPlay buttons, a media card for Bluetooth and Android Auto, speedometer, weather, oil change reminder, a customizable layout (player left or right, compact or side bar), light/dark themes, portrait layout, settings backup to USB and 11 languages. *Why “OS”? It stands for **Open Source**: StradaOS is a launcher, not an operating system, and “Strada” means “road” in Italian.* [Website](https://lordnordic-debug.github.io/StradaOS/?lang=en) · [Download](https://github.com/lordnordic-debug/StradaOS/releases/latest)
 
 ### Português
 

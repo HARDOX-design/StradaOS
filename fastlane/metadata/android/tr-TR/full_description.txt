@@ -10,7 +10,7 @@
 <li>GPS hız göstergesi, hava durumu, saat, yağ değişimi hatırlatıcısı ve aracınızın fotoğrafı.</li>
 <li>Ana ekranı tasarlayın: oynatıcı solda veya sağda, normal, kompakt ya da yan düğme çubuğu, katlanabilir Android Auto ve CarPlay düğmeleri.</li>
 <li>İstediğiniz alt çubuk ve gizlenebilir uygulamalar. Geri vites kamerası çalışmaya devam eder.</li>
-<li>Klasik, Aurora ve Cobalto temaları (ayrıca Faro ve Carbono: biri 5 USD, ikisi 8 USD bağışla), koyu, açık veya otomatik mod, 10 renk ve 12 dil.</li>
+<li>Klasik, Aurora ve Cobalto temaları (ayrıca Faro, Carbono ve Premium Cards: biri 5 USD, ikisi 8 USD bağışla), koyu, açık veya otomatik mod, 10 renk ve 12 dil.</li>
 <li>QR kodlu güncelleme bildirimleri.</li>
 </ul>
 <p>Android 4.1 ve üzerinde çalışır. Yaklaşık 1,5 MB. Ücretsiz, reklamsız, açık kaynak (GPL-3.0).</p>
