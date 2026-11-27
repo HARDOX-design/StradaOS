@@ -932,6 +932,7 @@ public class Main extends Activity {
                     String k = v.substring(5, v.indexOf('=')), val = v.substring(v.indexOf('=') + 1);
                     SharedPreferences.Editor e = prefs.edit();
                     if (val.length() == 0) e.remove(k);
+                    else if (val.startsWith("s:")) e.putString(k, val.substring(2));   // texto aunque parezca número («pref:clock=s:12»)
                     else if ("true".equals(val) || "false".equals(val)) e.putBoolean(k, Boolean.parseBoolean(val));
                     else if (val.matches("-?\\d{1,9}")) e.putInt(k, Integer.parseInt(val));
                     else e.putString(k, val);
@@ -2989,7 +2990,7 @@ public class Main extends Activity {
         card.addView(liveMap, new FrameLayout.LayoutParams(-1, -1));
         // Aurora: esquinas redondas de verdad sobre el fondo y el mapa un poco translúcido
         if (premium && premBg != null) liveMap.setBackdrop(premBg, premBgHolder, Prem.mapAlpha(LIGHT));
-        if (premium && Prem.faroFam()) { liveMap.setAttribution(14 * s, 70 * s); liveMap.setTone(Faro.mapTone(LIGHT)); }
+        if (premium && Prem.faroFam()) { liveMap.setAttribution(14 * s, (Prem.cards() ? 82 : 70) * s); liveMap.setTone(Faro.mapTone(LIGHT)); }
         // Cobalto: el mapa se difumina hasta donde empieza el reproductor (abajo, hacia las tarjetas, en vertical)
         if (premium && Prem.cob() && !mapOnly && premBg != null) liveMap.setFade(vertical ? 2 : 1, (vertical ? 150 : Math.max(260, mapW * 0.5f)) * s);
         liveMap.setVisibility(premium && Prem.faroFam() ? View.VISIBLE : View.INVISIBLE);
@@ -6015,8 +6016,13 @@ public class Main extends Activity {
         int rows = Math.max(1, Math.min(4, (int) (cdWxDaysH / 19)));
         boolean longNames = cdWxDaysW >= 150;
         SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        for (int i = 1; i < n.days.size() && i <= rows; i++) {
+        String todayIso = in.format(new Date());
+        int shown = 0;
+        for (int i = 0; i < n.days.size() && shown < rows; i++) {
             Weather.Day d = n.days.get(i);
+            // solo los días que vienen (el pronóstico guardado o un huso distinto pueden traer hoy o ayer primero)
+            if (d.date == null || d.date.compareTo(todayIso) <= 0) continue;
+            shown++;
             String name;
             try {
                 name = I18n.sdf(longNames ? "EEEE" : "EEE").format(in.parse(d.date));
